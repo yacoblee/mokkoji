@@ -13,9 +13,9 @@ function ProductIndex() {
 				{/* <Header /> */}
 
 				<Routes>
-					<Route path="/goods/:category" element={<ProductList />}></Route>
-					<Route path="/goods/:category/:id" element={<ProductDetails/>} />
 					<Route path="/goods" element={<ProductContainer />}></Route>
+					{/* <Route path="/goods/:category" element={<ProductList />}></Route> */}
+					{/* <Route path="/goods/:category/:id" element={<ProductDetails/>} /> */}
 				</Routes>
 			
 		</div>

@@ -15,8 +15,6 @@ function ProductContainer() {
             <ProductMainList title='베스트 상품' sort='count'/>
             
             <ProductMainList title='신상품' />
-            
-
         </div>
     );
 };
