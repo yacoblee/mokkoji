@@ -27,27 +27,6 @@ html {
     display: grid;
 }
 
-
-.active,
-.active .header_nav p {
-    background-color: white;
-    transition-duration: 0.5s;
-    transition-timing-function: ease;
-    -webkit-transition-duration: 0.4s;
-    -webkit-transition-timing-function: ease;
-    font-weight: 600;
-    color: rgba(0, 0, 0, 0.795);
-}
-
-.deactive {
-    background-color: transparent;
-    transition-duration: 0.5s;
-    transition-timing-function: ease;
-    -webkit-transition-duration: 0.4s;
-    -webkit-transition-timing-function: ease;
-}
-
-
 .section {
     min-width: 100vw;
     width: 100vw;
