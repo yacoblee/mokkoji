@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import './index.css';
-import Main from './components/main/main';
+import Main from './components/main/Main';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import ProductContainer from './components/product/ProductContainer';
+import Header from './components/modules/Header';
+
+
 
 const App = () => {
   useEffect(() => {
@@ -22,9 +27,15 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <Main />
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/*" element={<Main />} />
+        <Route path="/goods" element={<ProductContainer />} />
+        <Route path="/reserve" element={<div>Reserve Page</div>} />
+        <Route path="/login" element={<div>Login Page</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
