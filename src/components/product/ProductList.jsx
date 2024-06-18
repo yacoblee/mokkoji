@@ -1,6 +1,8 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink, Link, Route ,Routes} from 'react-router-dom';
 import GoodsItems from './ProductObject';
+import ProductDetails from './ProductDetails';
+
 
 // function findItem(){
 // }
@@ -9,20 +11,33 @@ const ProductList = () => {
     
     let selectItem = GoodsItems.filter((items)=>items.category === category);
 
+    // let discription = GoodsItems.map((items)=>{items.description});
+
     return (
-        <>
+        <>  
+            <div className='productMenu'>
+            {GoodsItems.map((items, i)=>
+                <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
+            )}
+            </div>
             <div className="productListInfo">
-                이 달의 <span>{selectItem[0].category}</span>을 만나보세요!
+                <span>{selectItem[0]?.description}</span>
             </div>
             <div className="productList">
                 {selectItem.map((product, i) => (
                     <div key={i} className="productItem">
+                        <NavLink to={`/goods/${product.category}/${product.id}`} key={i} selectItem={selectItem} >
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <p>{product.name}</p>
                         <p>- {product.price}</p>
+                        </NavLink>
                     </div>
                 ))}
+
             </div>
+                <Routes>
+                    <Route path="/goods/:category/:id" element={<ProductDetails />}></Route>
+                </Routes>
         </>
     );
 }

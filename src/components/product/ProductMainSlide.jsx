@@ -13,7 +13,7 @@ function ImgSlideList() {
 
     return productSlide.map((image) => {               
         return (
-            <Link to={`/${image.category}`}  key={image.id} className="ImgSlideList"
+            <Link to={`/goods/${image.category}`}  key={image.id} className="ImgSlideList"
             style={{ background: `url(${image.src}) center /cover `, opacity:'0.6'}}>
 
                 <span style={{opacity:'1'}}>{image.description}</span>
@@ -66,7 +66,7 @@ const ProductMainSlide = ()=>{
         <div className="ProductMainSlide">
         <ImgSlideList/>
         <Routes>
-        <Route path="/:category" element={<ProductList />}></Route>
+        <Route path="/goods/:category" element={<ProductList />}></Route>
         </Routes>
         </div>
     )

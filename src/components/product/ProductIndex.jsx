@@ -3,18 +3,21 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Header from './Routes/Header';
 import ProductContainer from './ProductContainer';
 import ProductList from './ProductList';
+import ProductDetails from './ProductDetails';
 
 function ProductIndex() {
 
 	return (
-		<div className='App'>
-			<BrowserRouter>
+		<div className='ProductIndex'>
+			
 				{/* <Header /> */}
+
 				<Routes>
-					<Route path="/:category" element={<ProductList />}></Route>
-					<Route path="/*" element={<ProductContainer />}></Route>
+					<Route path="/goods/:category" element={<ProductList />}></Route>
+					<Route path="/goods/:category/:id" element={<ProductDetails/>} />
+					<Route path="/goods" element={<ProductContainer />}></Route>
 				</Routes>
-			</BrowserRouter>
+			
 		</div>
 	);
 };
