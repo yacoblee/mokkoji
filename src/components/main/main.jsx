@@ -1,6 +1,6 @@
 import Header from "../modules/Header";
 import '../../css/main.css'
-import Section from './../modules/Section';
+import Section from '../modules/Section';
 
 const Main = () => {
 

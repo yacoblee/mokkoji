@@ -1,0 +1,12 @@
+.login-Area {
+    width: 1400px;
+    height: 1200px;
+    background-color: beige;
+    margin: auto;
+}
+
+.login_video {
+    width: 55%;
+    height: 100%;
+    display: flex;
+}
