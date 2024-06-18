@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Header from './Routes/Header';
+// import Header from '../modules/Header';
 
 function MyPageIndex() {
 
