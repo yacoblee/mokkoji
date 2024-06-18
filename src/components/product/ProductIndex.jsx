@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Header from './Routes/Header';
-import ProductContainer from './pages/ProductContainer';
-import ProductList from './ProductComponent/ProductList';
+import ProductContainer from './ProductContainer';
+import ProductList from './ProductList';
 
 function ProductIndex() {
 

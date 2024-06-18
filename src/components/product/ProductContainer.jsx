@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import ProductMainSlide from '../ProductComponent/ProductMainSlide';
-import ProductMain from '../ProductComponent/ProductMain';
+import ProductMainSlide from './ProductMainSlide';
+import ProductMainList from './ProductMainList';
 import '../ProductCSS/ProductMain.css';
 
 
@@ -12,9 +12,9 @@ function ProductContainer() {
             </h1>
             <ProductMainSlide />
             
-            <ProductMain title='베스트 상품' sort='count'/>
+            <ProductMainList title='베스트 상품' sort='count'/>
             
-            <ProductMain title='신상품' />
+            <ProductMainList title='신상품' />
             
 
         </div>
