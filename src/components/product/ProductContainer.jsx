@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import ProductMainSlide from './ProductMainSlide';
 import ProductMainList from './ProductMainList';
-import '../ProductCSS/ProductMain.css';
+import '../../css/Product/ProductMain.css';
 
 
 function ProductContainer() {
