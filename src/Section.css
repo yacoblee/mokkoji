@@ -1,0 +1,35 @@
+.section {
+    width: 100vw;
+    height: 55vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+    position: relative;
+    transition: transform 1s ease-out;
+}
+
+#section1 {
+    background: #3c97d3b3;
+}
+
+#section2 {
+    background: #2ecc71;
+}
+
+#section3 {
+    background: #e74c3c;
+}
+
+#section4 {
+    background: #9b59b6;
+}
+
+#section5 {
+    background: #f39c12;
+}
+
+.section.in-view {
+    transform: translateY(-100%);
+}
