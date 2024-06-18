@@ -30,10 +30,10 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/*" element={<Main />} />
-        <Route path="/goods" element={<ProductContainer />} />
-        <Route path="/reserve" element={<div>Reserve Page</div>} />
-        <Route path="/login" element={<div>Login Page</div>} />
+        <Route path="/" element={<Main />} />
+        <Route path="/goods/*" element={<ProductContainer />} />
+        <Route path="/reserve/*" element={<div>Reserve Page</div>} />
+        <Route path="/login/*" element={<div>Login Page</div>} />
       </Routes>
     </BrowserRouter>
   );

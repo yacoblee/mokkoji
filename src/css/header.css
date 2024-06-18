@@ -18,8 +18,6 @@ header {
     background-color: white;
     transition-duration: 0.5s;
     transition-timing-function: ease;
-    -webkit-transition-duration: 0.4s;
-    -webkit-transition-timing-function: ease;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.795);
 }
@@ -28,8 +26,6 @@ header {
     background-color: transparent;
     transition-duration: 0.5s;
     transition-timing-function: ease;
-    -webkit-transition-duration: 0.4s;
-    -webkit-transition-timing-function: ease;
 }
 
 .main_header {
@@ -81,14 +77,12 @@ nav ul {
 
 .header_nav ul li {
     margin: 0 10px;
-}
-
-.header_nav ul li a {
     cursor: pointer;
     vertical-align: baseline;
 }
 
-.header_nav ul li a p {
+
+.header_nav ul li p {
     font-family: 'orig_halant_regular';
     display: inline-block;
     text-align: left;
