@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, NavLink, Route, Routes ,Link} from 'react-router-dom';
+import { useParams, NavLink, Route, Routes, Link } from 'react-router-dom';
 import GoodsItems from './ProductObject';
 import ProductDetails from './ProductDetails';
 
@@ -8,10 +8,10 @@ const ProductList = () => {
     console.log('dk');
     // 선택된 카테고리의 상품들만 필터링
     let selectItem = GoodsItems.filter((items) => items.category === category);
-
+    console.log(`${selectItem[0]}`);
     return (
         <>
-            <div className='productMenu' style={{marginTop: "150px"}}>
+            <div className='productMenu' style={{ marginTop: "150px" }}>
                 {GoodsItems.map((items, i) => (
                     <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
                 ))}
@@ -19,21 +19,21 @@ const ProductList = () => {
             <div className="productListInfo">
                 <span>{selectItem[0]?.description}</span>
             </div>
-            <div className="productList">
+            <div className="productItemList">
                 {/* 선택된 카테고리의 상품들을 보여줌 */}
                 {selectItem.map((product, i) => (
-                    <div key={i} className="productItem">
-                        <Link to={`/goods/${product.category}/${product.id}`} key={i}>
+                    <Link to={`/goods/${product.category}/${product.id}`} key={i}>
+                        <div key={i} className="productItem">
                             <img src={product.slideSrc[0]} alt={product.name} />
-                            <p>{product.name}</p>
-                            <p>- {product.price}</p>
-                        </Link>
-                    </div>
+                            <div>
+                                <p>{product.name}</p>
+                                <p>- {product.price}</p>
+                            </div>
+                        </div>
+                    </Link>
                 ))}
             </div>
-            <Routes>
-                <Route path="/:id" element={<ProductDetails />} />
-            </Routes>
+
         </>
     );
 }
