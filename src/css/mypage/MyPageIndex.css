@@ -62,6 +62,7 @@ a {
         "MyLike MyCart  MyPost MyRecent MyList ";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
     gap: 10px;
     width: 100%;
 
@@ -152,6 +153,7 @@ a {
 }
 
 .MyOrder span:nth-child(2) {
+    flex: 0.5;
     text-align: left;
 }
 
@@ -162,8 +164,8 @@ a {
 .IconList {
     flex: 1;
     font-size: 30px;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-top: 1.5vw;
+    padding-bottom: 0.7vw;
 }
 
 .MyLike span,
@@ -172,5 +174,5 @@ a {
 .MyRecent span,
 .MyList span {
     flex: 1;
-    padding: 15px;
+    padding: 1vw;
 }

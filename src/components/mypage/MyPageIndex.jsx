@@ -17,13 +17,15 @@ function MyPageIndex() {
                     <div className='MyInfoGrid'>
                         <div className="MyInfo">
                             <h1>@ 안녕하세요!</h1>
-                            <div class="MyInfoSet">내정보수정</div>
+                            <div class="MyInfoSet">
+                                <a href='./MyPageInfo'>내 정보 수정</a>
+                            </div>
                         </div>
                         <div className="MyOrder">
                             <ul>
                                 <li>
                                     <span>
-                                        <h3>대기</h3>
+                                        <h3>구매 대기</h3>
                                     </span>
                                     <span>
                                         <a href="">0</a>
@@ -31,7 +33,7 @@ function MyPageIndex() {
                                 </li>
                                 <li>
                                     <span>
-                                        <h3>완료</h3>
+                                        <h3>구매 완료</h3>
                                     </span>
                                     <span>
                                         <a href="">0</a>
@@ -39,7 +41,7 @@ function MyPageIndex() {
                                 </li>
                                 <li>
                                     <span>
-                                        <h3>확정</h3>
+                                        <h3>구매 확정</h3>
                                     </span>
                                     <span>
                                         <a href="">0</a>
