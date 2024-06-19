@@ -1,6 +1,6 @@
 
+import { Link } from "react-router-dom";
 import GoodsItems from "./ProductObject";
-
 const ProductMainList = ({title , sort})=>{
 
     const sortItems = [...GoodsItems];
@@ -15,11 +15,16 @@ const ProductMainList = ({title , sort})=>{
             </div>
         <div className="productList">
             {sortItems.map((product,i) => (
+                <Link to={`/goods/${product.category}/${product.id}`} key={i}>
                 <div key={i} className="productItem">
                     <img src={product.slideSrc[0]} alt={product.name} />
+                    <div>
                     <p>{product.name} </p>
                     <p>- {product.price}</p>
+
+                    </div>
                 </div>
+                </Link>
             ))}
         </div>
         </>
