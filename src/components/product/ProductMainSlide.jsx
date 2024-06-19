@@ -10,7 +10,7 @@ const productSlide = [
     {
         id: 0,
         src: './images/product/pictureFlower2_6.jpg',
-        category : 'stationeryGoods',
+        category : 'interiorGoods',
         description: '인테리어 소품', // flower
     },
     {
