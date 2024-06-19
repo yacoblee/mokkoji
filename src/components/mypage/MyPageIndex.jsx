@@ -18,7 +18,7 @@ function MyPageIndex() {
                         <div className="MyInfo">
                             <h1>@ 안녕하세요!</h1>
                             <div class="MyInfoSet">
-                                <a href='./MyPageInfo'>내 정보 수정</a>
+                                <a href='./MyPageProfile'>내 정보 수정</a>
                             </div>
                         </div>
                         <div className="MyOrder">
@@ -53,7 +53,7 @@ function MyPageIndex() {
                 </div>
 
                 <div className='MyGrid'>
-                    <a href="">
+                    <a href="./MyPageLike">
                         <div className='MyLike'>
                             <div className='IconLike'>
                                 <FontAwesomeIcon icon={faHeartCirclePlus} />
@@ -61,7 +61,7 @@ function MyPageIndex() {
                             <span>찜목록</span>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="./MyPageLike">
                         <div className='MyCart'>
                             <div className='IconCart'>
                                 <FontAwesomeIcon icon={faCartShopping} />
@@ -69,7 +69,7 @@ function MyPageIndex() {
                             <span>장바구니</span>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="./MyPagePost">
                         <div className='MyPost'>
                             <div className='IconPost'>
                                 <FontAwesomeIcon icon={faTruckFast} />
@@ -77,7 +77,7 @@ function MyPageIndex() {
                             <span>배송 현황</span>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="./MyPageRecent">
                         <div className='MyRecent'>
                             <div className='IconRecent'>
                                 <FontAwesomeIcon icon={faClockRotateLeft} />
@@ -85,7 +85,7 @@ function MyPageIndex() {
                             <span>최근 본 상품</span>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="./MyPageList">
                         <div className='MyList'>
                             <div className='IconList'>
                                 <FontAwesomeIcon icon={faListCheck} />
