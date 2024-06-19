@@ -65,6 +65,7 @@ header {
 
 .MyGrid div {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -90,4 +91,27 @@ header {
 
 .MyList {
     grid-area: MyList;
+}
+
+.MyInfoGrid {
+    display: flex;
+}
+
+.MyInfo {
+    flex: 3;
+}
+
+.MyOrder {
+    flex: 1;
+
+}
+
+.MyOrder ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.MyOrder ul li {
+    padding: 5px;
 }
