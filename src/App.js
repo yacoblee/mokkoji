@@ -6,7 +6,7 @@ import ProductContainer from './components/product/ProductContainer';
 import Header from './components/modules/Header';
 import ProductList from './components/product/ProductList';
 import ProductDetails from './components/product/ProductDetails';
-
+import MyPageIndex from './components/mypage/MyPageIndex';
 
 
 const App = () => {
@@ -34,10 +34,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/goods/*" element={<ProductContainer />} />
-        <Route path='/goods/:category' element={<ProductList/>}></Route>
+        <Route path='/goods/:category' element={<ProductList />}></Route>
         <Route path="/goods/:category/:id" element={<ProductDetails />} />
         <Route path="/reserve/*" element={<div>Reserve Page</div>} />
-        <Route path="/login/*" element={<div>Login Page</div>} />
+        {/* <Route path="/login/*" element={<Login />} /> */}
+        <Route path="/mypage/*" element={<MyPageIndex />} />
       </Routes>
     </BrowserRouter>
   );
