@@ -6,9 +6,7 @@ import '../../css/mypage/MyPageIndex.css';
 function MyPageIndex() {
     return (
 
-        <div>
-            <header>여기는 헤더입니다 / 높이는 100px로 차지하고 있음</header>
-
+        <div className='MyPage'>
             <h1>내 정보</h1>
 
             <div className='MyPageIndex'>
@@ -73,7 +71,6 @@ function MyPageIndex() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
