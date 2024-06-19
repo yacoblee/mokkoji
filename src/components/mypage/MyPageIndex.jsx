@@ -6,7 +6,7 @@ import '../../css/mypage/MyPageIndex.css';
 function MyPageIndex() {
     return (
 
-        <div>
+        <div className='MyPage'>
             <h1>내 정보</h1>
 
             <div className='MyPageIndex'>
