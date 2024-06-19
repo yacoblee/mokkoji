@@ -28,9 +28,9 @@ html {
 }
 
 .section {
-    min-width: 100vw;
+    min-width: 80vw;
     width: 100vw;
-    height: 55vw;
+    height: 95vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,10 +40,13 @@ html {
     transition: transform 1s ease-out;
 }
 
+
+
 video {
     width: 100vw;
-
+    height: 100vh;
     position: fixed;
+    object-fit: cover;
 }
 
 .main_section {
@@ -67,11 +70,20 @@ video {
 }
 
 #section1 {
-    background: #3c97d3b3;
+    min-width: 80vw;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+    position: relative;
+    transition: transform 1s ease-out;
 }
 
 #section2 {
-    background: #2ecc71;
+    background: url(../../public/images/main/section1.jpg);
 }
 
 #section3 {
