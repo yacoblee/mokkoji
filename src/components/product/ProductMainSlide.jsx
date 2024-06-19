@@ -6,24 +6,6 @@ import GoodsItems from "./ProductObject";
 
 
 
-
-
-
-
-function ImgSlideList() {
-
-    return productSlide.map((image) => {               
-        return (
-            <Link to={`/goods/${image.category}`}  key={image.id} className="ImgSlideList"
-            style={{ background: `url(${image.src}) center /cover `, opacity:'0.6'}}>
-
-                <span style={{opacity:'1'}}>{image.description}</span>
-
-            </Link>
-        );
-    });
-}
-
 const productSlide = [
     {
         id: 0,
@@ -57,13 +39,31 @@ const productSlide = [
     },
 ];
 
+
+
+
+function ImgSlideList() {
+
+    return productSlide.map((image) => {               
+        return (
+            <Link to={`/goods/${image.category}`}  key={image.id} className="ImgSlideList"
+            style={{ background: `url(${image.src}) center /cover `, opacity:'0.6'}}>
+
+                <span style={{opacity:'1'}}>{image.description}</span>
+
+            </Link>
+        );
+    });
+}
+
 const ProductMainSlide = () => {
+    
     return (
         <div className="ProductMainSlide">
             <ImgSlideList />
-            <Routes>
-                <Route path="/goods/:category" element={<ProductList />} />
-            </Routes>
+            {/* <Routes>
+                <Route path="/:category" element={<ProductList />} />
+            </Routes> */}
         </div>
     );
 };
