@@ -11,7 +11,7 @@ const ProductList = () => {
 
     return (
         <>
-            <div className='productMenu'>
+            <div className='productMenu' style={{marginTop: "150px"}}>
                 {GoodsItems.map((items, i) => (
                     <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
                 ))}

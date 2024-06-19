@@ -59,11 +59,9 @@ function ImgSlideList() {
 const ProductMainSlide = () => {
     
     return (
-        <div className="ProductMainSlide">
+        <div className="ProductMainSlide" >
             <ImgSlideList />
-            {/* <Routes>
-                <Route path="/:category" element={<ProductList />} />
-            </Routes> */}
+
         </div>
     );
 };
