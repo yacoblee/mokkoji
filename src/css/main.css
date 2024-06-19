@@ -57,8 +57,6 @@ video {
 
 }
 
-
-
 .main_section:nth-child(3) {
     position: relative;
     margin: 0px 0px 10px calc((100% - 980px)* 0.5);

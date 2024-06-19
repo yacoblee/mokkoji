@@ -1,12 +1,5 @@
 /* App.css */
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
 h1 {
     display: flex;
     flex-direction: column;
@@ -29,12 +22,6 @@ h1 {
     overflow: hidden;
     padding: 0 20%;
 
-}
-
-
-header {
-    height: 100px;
-    /* header의 높이를 100px로 설정 */
 }
 
 .MyPageMain {
@@ -91,6 +78,7 @@ header {
 
 .MyList {
     grid-area: MyList;
+
 }
 
 .MyInfoGrid {

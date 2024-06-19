@@ -8,7 +8,6 @@ import ProductList from './components/product/ProductList';
 import ProductDetails from './components/product/ProductDetails';
 import MyPageIndex from './components/mypage/MyPageIndex';
 
-
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
