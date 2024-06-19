@@ -26,6 +26,6 @@ function MyPageIndex() {
 
         </div>
     );
-}
+};
 
 export default MyPageIndex;
