@@ -1,4 +1,3 @@
-import Header from "../modules/Header";
 import '../../css/main.css'
 import Section from './../modules/Section';
 
@@ -7,7 +6,7 @@ const Main = () => {
 
     return (
         <div className="master_page">
-            <Header />
+
             <Section id="section1" text="Section 1" color="#3c97d3b3" />
             <Section id="section2" text="Section 2" color="#2ecc71" />
             <Section id="section3" text="Section 3" color="#e74c3c" />

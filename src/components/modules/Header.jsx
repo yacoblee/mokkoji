@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import '../../css/header.css'
-import ProductContainer from '../product/ProductContainer';
 const Header = () => {
     return (
         <header id="header" className="deactive">

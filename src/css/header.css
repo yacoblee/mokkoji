@@ -19,7 +19,7 @@ header {
     transition-duration: 0.5s;
     transition-timing-function: ease;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.795);
+    color: rgb(0, 0, 0) !important;
 }
 
 .deactive {
