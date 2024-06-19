@@ -4,6 +4,8 @@ import Main from './components/main/main';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ProductContainer from './components/product/ProductContainer';
 import Header from './components/modules/Header';
+import ProductList from './components/product/ProductList';
+import ProductDetails from './components/product/ProductDetails';
 
 
 
@@ -26,17 +28,19 @@ const App = () => {
         };
     }, []);
 
-    return (
-        <BrowserRouter>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/goods/*" element={<ProductContainer />} />
-                <Route path="/reserve/*" element={<div>Reserve Page</div>} />
-                <Route path="/login/*" element={<div>Login Page</div>} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/goods/*" element={<ProductContainer />} />
+        <Route path='/goods/:category' element={<ProductList/>}></Route>
+        <Route path="/goods/:category/:id" element={<ProductDetails />} />
+        <Route path="/reserve/*" element={<div>Reserve Page</div>} />
+        <Route path="/login/*" element={<div>Login Page</div>} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

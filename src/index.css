@@ -12,7 +12,7 @@ html {
   overflow: auto;
   font-family: Arial, sans-serif;
 }
-
+/* 
 .master_page {
   width: 100%;
   min-height: 200vh;
@@ -96,4 +96,4 @@ nav ul {
   padding: 0 10px;
   color: rgba(255, 255, 255, 0.988);
   transition: color .4s ease 0s;
-}
+} */
