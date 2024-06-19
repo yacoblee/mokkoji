@@ -16,6 +16,7 @@ h1 {
     margin: 0;
     overflow: hidden;
     padding: 1% 20%;
+    top: 100px;
 }
 
 .MyPageIndex {
@@ -29,12 +30,6 @@ h1 {
     overflow: hidden;
     padding: 0 20%;
 
-}
-
-
-header {
-    height: 100px;
-    /* header의 높이를 100px로 설정 */
 }
 
 .MyPageMain {
