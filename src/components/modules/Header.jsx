@@ -17,9 +17,8 @@ const Header = () => {
                 <div className="header_right">
                     <nav className="header_nav">
                         <ul>
-                            <li><a href="#"><p>
-                                Login
-                            </p></a></li>
+                            <li><Link to="/mypage"><p>mypage</p></Link></li>
+                            <li><Link to="/login"><p>Login</p></Link></li>
                         </ul>
                     </nav>
                 </div>
