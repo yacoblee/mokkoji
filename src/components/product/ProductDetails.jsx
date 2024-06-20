@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react';
 
 import { useParams , Link , NavLink, Routes , Route} from "react-router-dom";
 import GoodsItems from "./ProductObject";
+import ProductDetailsInfo from './ProductDetailsInfo';
 
 const formatNumber = (number) => {
     return number.toLocaleString('en-US');
@@ -167,12 +168,12 @@ const ProductDetails = ()=>{ //=================================================
                         <NavLink to="reviews"><span>리뷰정보</span></NavLink>
                         <NavLink to="recommendations" ><span>추천리스트</span></NavLink>
                     </div>
-                    <div>
+                    <div className='ProductDetailsInfo'>
                         <Routes>
-                            <Route path="/" element={<p>상세보기</p>} />
-                            <Route path="shipping"element={<p>배송/사이즈</p>} />
-                            <Route path="reviews" element={<p>리뷰정보</p>} />
-                            <Route path="recommendations" element={<p>추천리스트</p>} />
+                            <Route path="/" element={<ProductDetailsInfo type="imgInfo" selectedProduct={selectedProduct}/>} />
+                            <Route path="shipping"element={<ProductDetailsInfo type="deliSizeInfo" selectedProduct={selectedProduct} />} />
+                            <Route path="reviews" element={<ProductDetailsInfo type="reveiwInfo" selectedProduct={selectedProduct} />}/>
+                            <Route path="recommendations" element={<ProductDetailsInfo type="recommendInfo" selectedProduct={selectedProduct} />} />
                         </Routes>
                     </div>
                 </div>

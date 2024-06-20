@@ -420,9 +420,7 @@
     /* height: 90vh; */
     /* align-items: center; */
 }
-.underbox input{
-    display: none;
-}
+
 .tabBox{
     height: 80px;
     width: 100%;
@@ -443,4 +441,52 @@
     cursor: pointer;
     justify-content: center;
     align-items: center;
+}
+
+.deliSizeInfo p{
+    white-space: pre-line;
+}
+.deliSizeInfo span{
+    color: blue;
+    font-size: 18px;
+}
+.imgInfo{
+    width: 100%;
+    /* height: 80vh; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    text-align: center;
+    
+}
+.imgInfoBox + div{
+    white-space: pre-line;
+}
+.imgInfoBox{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+}
+.imgInfoBox img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.reveiwInfo{
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.reveiwInfo span{
+    font-size: 18px;
+    color: blue;
+}
+.reveiwInfo p{
+    /* height: 30px; */
+    width: 150px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 5px;
 }
