@@ -1,7 +1,6 @@
-
-import { Link } from 'react-router-dom';
-import GoodsItems from './ProductObject';
-
+@ -1, 129 + 1, 129 @@
+import GoodsItems from "./ProductObject";
+import { Link } from "react-router-dom";
 const ProductDetailsInfo = ({ type, selectedProduct }) => {
     console.log('Type:', type); // 확인
     switch (type) {
@@ -66,8 +65,9 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                 <div className={type}>
                     {selectedProduct.reviews.map((it, i) => <>
                         <div key={i}>
-                            <p className="reveiwName">{i}.
-                                <p>{selectedProduct.name}</p></p>
+                            <p className="reveiwName">{i}
+                                <p>{selectedProduct.name}</p>
+                            </p>
                             <div>
                                 {it.reviewsSrc ? <img src={it.reviewsSrc} alt="" /> : <img src={selectedProduct.productSrc[0]} alt="" />}
                             </div>
@@ -102,13 +102,13 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                                     <img src={it.slideSrc[0]} alt="i" />
                                 </div>
                                 <p>
-                                    {it.category}
+                                    카테고리 : {it.description}
                                 </p>
                                 <span>
-                                    리뷰 수 : {it.reviews.length}
+                                    review : {it.reviews.length}
                                 </span>
                                 <p>
-                                    {it.price}
+                                    금액 : {it.price}
                                 </p>
                             </div>
                         </Link>
