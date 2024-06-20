@@ -7,7 +7,7 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
             return (
                 <div className={type}>
                     <div className="imgInfoBox">
-                        {selectedProduct.productSrc.map((src) => <img src={src} alt="" />)}
+                        {selectedProduct.productSrc.map((src , i) => <img src={src} key={i} alt={i}/>)}
                         {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
 
                     </div>
