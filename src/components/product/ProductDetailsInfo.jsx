@@ -1,4 +1,4 @@
-@ -1, 129 + 1, 129 @@
+// @ -1, 129 + 1, 129 @@
 import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 const ProductDetailsInfo = ({ type, selectedProduct }) => {
