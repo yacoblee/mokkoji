@@ -1,7 +1,7 @@
 import React from 'react';
-import { useParams, NavLink, Route, Routes, Link } from 'react-router-dom';
+import { useParams, NavLink, Link } from 'react-router-dom';
 import GoodsItems from './ProductObject';
-import ProductDetails from './ProductDetails';
+// import ProductDetails from './ProductDetails';
 
 const ProductList = () => {
     const { category } = useParams(); // useParams()를 통해 category 파라미터 가져오기

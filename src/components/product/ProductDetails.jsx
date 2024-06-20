@@ -7,6 +7,8 @@ import ProductDetailsInfo from './ProductDetailsInfo';
 const formatNumber = (number) => {
     return number.toLocaleString('en-US');
 }
+
+
 const ProductDetails = ()=>{ //=========================================================ProductDetails 컴포넌트
     const { category, id } = useParams();
     const [options, setOptions] = useState({
