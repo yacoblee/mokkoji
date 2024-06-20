@@ -4,6 +4,7 @@ import GoodsItems from "../product/ProductObject";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
 const SlideSection = ({ title, sort }) => {
     const sortItems = [...GoodsItems];
     if (sort === 'count') {
@@ -15,7 +16,7 @@ const SlideSection = ({ title, sort }) => {
     const btnPreRef = useRef();
     const btnNextRef = useRef();
     const slideIndexRef = useRef(0);
-
+    console.log(sortItems.length);
     const handlePrevClick = () => {
         slideIndexRef.current--;
         slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
@@ -31,7 +32,7 @@ const SlideSection = ({ title, sort }) => {
         slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
 
         btnPreRef.current.classList.remove('nonVisible');
-        if (slideIndexRef.current >= 4) {  // 슬라이드 개수에 따라 조정
+        if (slideIndexRef.current >= sortItems.length - 3) {
             btnNextRef.current.classList.add('nonVisible');
         }
     };
@@ -39,7 +40,7 @@ const SlideSection = ({ title, sort }) => {
         <>
             <div className="product_section">
                 <span><h1>인기 상품</h1></span>
-                
+
                 <div className="slide_container" ref={slideContainerRef}>
                     {sortItems.map((product, i) => (
                         <div className='slide_item' key={i}>
