@@ -75,9 +75,9 @@ const ProductDetails = ()=>{ //=================================================
             <>
             <div style={{marginTop:'100px'}} className='box'>
                 <div className='imgBox'>
-                    {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                    {selectedProduct.slideSrc.map((src, i)=><img src={src} alt={i}  key={i}/>)}
                     <div className='labelBox'>
-                        {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                        {selectedProduct.slideSrc.map((src, i)=><img src={src} alt={i}  key={i} />)}
                     </div>
                     <p>
                         {selectedProduct.name}
@@ -104,9 +104,9 @@ const ProductDetails = ()=>{ //=================================================
                                 value={options.contentSelect} 
                                 onChange={onChangeSelectItems}>
                                     <option value="selectcontent" hidden>선택옵션</option>
-                                    {selectedProduct.option.map((option)=>{
+                                    {selectedProduct.option.map((option , i)=>{
                                         return(
-                                            <option value={option} key="">{option}</option>
+                                            <option value={option} key={i}>{option}</option>
                                         )
                                     })}
                                 </select>
