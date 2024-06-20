@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import GoodsItems from './ProductObject';
 const ProductDetailsInfo = ({ type ,selectedProduct}) => {
     console.log('Type:', type); // 확인
     switch (type) {
@@ -5,7 +7,7 @@ const ProductDetailsInfo = ({ type ,selectedProduct}) => {
             return (
                 <div className={type}>
                     <div className="imgInfoBox">
-                        {selectedProduct.productSrc.map((src)=><img src={src} alt="" />)}
+                        {selectedProduct.productSrc.map((src , i)=><img src={src} alt={i} key={i} />)}
                         {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
 
                     </div>
@@ -57,19 +59,60 @@ const ProductDetailsInfo = ({ type ,selectedProduct}) => {
                 </div>
             );
 
-        case 'reveiwInfo':
+        case 'reveiwInfo' :
             return (
                 <div className={type}>
-                    {selectedProduct.reviews.map((it ,i)=><><p><span>{i}</span>. {it}</p><br/></>).reverse()}
+                    {selectedProduct.reviews.map((it ,i)=><>
+                    <div key={i}>
+                        <p className="reveiwName">{i}. 
+                            <p>{selectedProduct.name}</p></p>
+                        <div>
+                            {it.reviewsSrc ?<img src={it.reviewsSrc} alt="" /> : <img src={selectedProduct.productSrc[0]} alt="" /> }
+                        </div>
+                        <p>
+                            {it.content}
+                        </p>
+                        <span>
+                            {it.userName}
+                        </span>
+                        <p>
+                            {it.day}
+                        </p>
+                    </div><br/>
+                    </>).reverse()}
                 </div>
             );
-
-        case 'recommendInfo':
-            return (
-                <div className={type}>
-                    추천정보
-                </div>
-            );
+            
+            case 'recommendInfo':
+                const recommendItemid = selectedProduct.id ;
+                const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
+                                        .sort((a, b) => b.reviews.length - a.reviews.length)
+                                        .slice(0,5);
+        
+                return (
+                    <div className={type}>
+                        {recommendItem.map((it ,i)=><>
+                        <Link to={`/goods/${it.category}/${it.id}` } key={i}>
+                        <div>
+                            <p className="recommendItem">{i}. 
+                                <p>{it.name}</p></p>
+                            <div>
+                                <img src={it.slideSrc[0]} alt="i" />
+                            </div>
+                            <p>
+                                {it.category}
+                            </p>
+                            <span>
+                                리뷰 수 : {it.reviews.length}
+                            </span>
+                            <p>
+                                {it.price}
+                            </p>
+                        </div>
+                        </Link>
+                        </>)}
+                    </div>
+                );
 
         default:
             return (
