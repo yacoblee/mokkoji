@@ -224,32 +224,35 @@ html {
 }
 
 /* Section2 product section E */
-
 .slide_container {
     display: flex;
     transition: left 0.5s ease-in-out;
     position: relative;
-    left: 0;
+    /* left: 80%; */
+    transform: translateX(35%);
 }
 
 
 .btn_pre,
 .btn_next {
-    
     position: absolute;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.7);
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    font-size: 30px;
     border: none;
     cursor: pointer;
     z-index: 10;
 }
 
 .btn_pre {
-    left: 0;
+
+    top: 20%;
+    right: 35%;
 }
 
 .btn_next {
-    right: 0;
+    top: 20%;
+    right: 30%;
 }
 
 .nonVisible {
