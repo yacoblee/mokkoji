@@ -38,12 +38,81 @@ html {
     transition: transform 1s ease-out;
 }
 
-
+/* section2 도어 이벤트 S */
 .left_door,
-.right_door {
+.right_door,
+.start_door,
+.end_door {
+    border-radius: 1px;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    /* 상대적 위치 */
 
-    height: 83vh;
+    flex: 1;
+    max-width: 50%;
+    margin: 0;
 }
+
+/* .left_door {
+    left: -10%;
+    z-index: 1;
+}
+
+.right_door {
+    right: 50%;
+    z-index: 2;
+}
+
+.start_door {
+    left: -50%;
+    z-index: 1;
+}
+
+.end_door {
+    right: -50%;
+    z-index: 3;
+} */
+
+.left_motion,
+.right_motion,
+.start_motion,
+.end_motion {
+    border: 1px solid #802121;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.left_door.left_motion {
+    box-shadow: -5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(-100%);
+    z-index: 1;
+}
+
+.right_door.right_motion {
+    box-shadow: 5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(100%);
+    z-index: 2;
+}
+
+.start_door.start_motion {
+    box-shadow: -5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(-130%);
+    z-index: 1;
+}
+
+.end_door.end_motion {
+    box-shadow: 5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(130%);
+    z-index: 3;
+}
+
+
+/* section 도어 이벤트 E */
+
+
+
 
 .main_section {
     position: absolute;
@@ -79,6 +148,11 @@ html {
 }
 
 #section2 {
+    display: flex;
+    justify-content: space-around;
+    /* 이미지 간격 균등 배치 */
+    align-items: center;
+    position: relative;
     background: url(../../public/images/main/section1.jpg);
 }
 
