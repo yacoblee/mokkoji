@@ -49,32 +49,10 @@ html {
     opacity: 1;
     transform: translateX(0);
     position: relative;
-    /* 상대적 위치 */
-
     flex: 1;
     max-width: 50%;
     margin: 0;
 }
-
-/* .left_door {
-    left: -10%;
-    z-index: 1;
-}
-
-.right_door {
-    right: 50%;
-    z-index: 2;
-}
-
-.start_door {
-    left: -50%;
-    z-index: 1;
-}
-
-.end_door {
-    right: -50%;
-    z-index: 3;
-} */
 
 .left_motion,
 .right_motion,
@@ -154,6 +132,7 @@ html {
     /* 이미지 간격 균등 배치 */
     align-items: center;
     position: relative;
+    z-index: 1;
     background: url(../../public/images/main/section1.jpg);
 }
 
@@ -169,15 +148,80 @@ html {
     background: #f39c12;
 }
 
-/* .section.in-view {
-    transform: translateY(-50%);
-} */
 
-/* .fixed-section {
+
+/* Section2 product section S */
+.product_section {
+    overflow-x: hidden;
+    width: 1420px;
+    height: 83vh;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
     position: absolute;
-    top: 0;
-    width: 100%;
-    height: 95vh;
- 
- 
-} */
+    z-index: -1;
+
+}
+
+.product_section>span {
+    position: absolute;
+    top: 40px;
+    color: rgba(87, 73, 73, 0.864);
+}
+
+.slide_item {
+    margin-right: 10px;
+    width: 300px;
+    height: 400px;
+}
+
+.slide_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    width: 300px;
+    height: 400px;
+
+}
+
+.slide_inner img {
+    box-shadow: 5px 10px 15px -5px rgb(67, 62, 62);
+    border-radius: 10%;
+    width: 300px;
+    height: 300px;
+}
+
+.slide_content {
+    margin-top: 20px;
+    display: grid;
+    grid-template: .5fr .5fr /.5fr.5fr;
+    font-size: 0.9em;
+}
+
+.slide_name {
+    color: black;
+    font-weight: 400;
+    text-shadow: 3px 0 5px #666;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1.2em;
+    text-align: center;
+    font-size: 1.5rem;
+    grid-area: 1/1/ 1/ span 2
+}
+
+.slide_price {
+    color: #666;
+    font-weight: 300;
+    text-shadow: 3px 0 5px #666;
+    justify-content: center;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    margin-bottom: 5px;
+    grid-area: 2/1/2/span 2;
+}
+
+/* Section2 product section E */

@@ -1,7 +1,9 @@
 import '../../css/main.css';
 import { useEffect } from 'react';
+import SlideSection from './SliderSection';
 
 const ProductSection = () => {
+
     useEffect(() => {
         const sections = document.querySelectorAll('#section2');
         const options = {
@@ -14,6 +16,7 @@ const ProductSection = () => {
                 const rightImage = entry.target.querySelector('.right_door');
                 const startImage = entry.target.querySelector('.start_door');
                 const endImage = entry.target.querySelector('.end_door');
+
                 if (entry.isIntersecting) {
                     leftImage?.classList.add('left_motion');
                     rightImage?.classList.add('right_motion');
@@ -45,6 +48,9 @@ const ProductSection = () => {
             <img src="/images/main/traditional01.png" className='start_door' alt="" />
             <img src="/images/main/traditional01.png" className='end_door' alt="" />
             <img src="/images/main/traditional02.png" className='right_door' alt="" />
+
+            <SlideSection title='베스트 상품' sort='count' />
+
         </div>
     );
 };
