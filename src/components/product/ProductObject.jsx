@@ -1,5 +1,101 @@
 const GoodsItems = [
     {
+        name: '훈민정음 티셔츠',
+        id: 9,
+        category: 'fashionGoods',
+        description: '패션/생활',
+        slideSrc: [
+            '/images/product/characterNote3.jpg',
+            '/images/product/characterNote4.jpg',
+            '/images/product/characterNote5.jpg',
+        ],
+        productSrc: [
+            '/images/product/characterNote2_1.jpg',
+            '/images/product/characterNote2_1.jpg',
+        ],
+        count: 70,
+        price: 45000,
+        size: '상품 크기 : S, M, L, XL',
+        guideLine: '* 세탁 시 뒤집어서 세탁하세요.',
+        mainGuide: `훈민정음의 글자를 디자인한 한정판 티셔츠입니다.`,
+        sideGuide: `고급 원단을 사용하여 편안한 착용감을 제공합니다.`,
+        option: [
+            'S', 'M', 'L', 'XL'
+        ],
+    },
+    {
+        name: '전통 문양 고급 펜 세트',
+        id: 8,
+        category: 'stationeryGoods',
+        description: '문구/사무',
+        slideSrc: [
+            '/images/product/sillaKeyring3.jpg',
+            '/images/product/sillaKeyring1.jpg',
+            '/images/product/sillaKeyring2.jpg',
+        ],
+        productSrc: [
+            '/images/product/sillaKeyring2_1.jpg',
+            '/images/product/sillaKeyring2_2.jpg',
+        ],
+        count: 100,
+        price: 50000,
+        size: '상품 크기 : 펜 길이 140mm',
+        guideLine: '* 잉크 리필 가능',
+        mainGuide: `한국 전통 문양이 새겨진 고급 펜 세트입니다.`,
+        sideGuide: `선물용으로 좋은 패키지에 담겨 있습니다.`,
+        option: [
+            '청동', '은색', '금색'
+        ],
+    },
+    {
+        name: '조선 왕조 의궤 노트북',
+        id: 7,
+        category: 'stationeryGoods',
+        description: '문구/사무',
+        slideSrc: [
+            '/images/product/pictureFlower3.jpg',
+            '/images/product/pictureFlower4.jpg',
+            '/images/product/pictureFlower5.jpg',
+        ],
+        productSrc: [
+            '/images/product/pictureFlower2_2.jpg',
+            '/images/product/pictureFlower2_1.jpg',
+        ],
+        count: 200,
+        price: 18000,
+        size: '상품 크기 : 150x210mm',
+        guideLine: '* 표지가 물에 젖으면 변형될 수 있습니다.',
+        mainGuide: `조선 왕조의 의궤를 참고하여 디자인된 노트북입니다.`,
+        sideGuide: `튼튼한 제본과 두꺼운 종이로 오랫동안 사용할 수 있습니다.`,
+        option: [
+            'A5', 'A6', 'B5'
+        ],
+    },
+    {
+        name: '고려청자 모티브 아로마 캔들',
+        id: 6,
+        category: 'interiorGoods',
+        description: '인테리어 소품',
+        slideSrc: [
+            '/images/product/seonbiSojuCup3.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+            '/images/product/seonbiSojuCup1.jpg',
+        ],
+        productSrc: [
+            '/images/product/seonbiSojuCup1.jpg',
+            '/images/product/seonbiSojuCup2_1.jpg',
+        ],
+        count: 50,
+        price: 35000,
+        size: '상품 크기 : 90x120mm',
+        guideLine: '* 향의 강도는 개인에 따라 다를 수 있습니다.',
+        mainGuide: `고려청자의 고유한 디자인과 색감을 반영한 아로마 캔들입니다.`,
+        sideGuide: `천연 성분만을 사용하여 제작되었습니다.`,
+        option: [
+            '연꽃 향', '백단 향', '매화 향'
+        ],
+    },
+    {
         name : '롱롱타임플라워 초충도 에디션2', 
         id : 5,
         category : 'interiorGoods',

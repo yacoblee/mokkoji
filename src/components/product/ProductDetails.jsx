@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react';
 
-import { useParams , Link } from "react-router-dom";
+import { useParams , Link , NavLink, Routes , Route} from "react-router-dom";
 import GoodsItems from "./ProductObject";
 
 const formatNumber = (number) => {
@@ -41,7 +41,7 @@ const ProductDetails = ()=>{ //=================================================
             setTotalPrice( selectedProduct.price * btnValue.contentSelect + price * btnValue.packagingSelect);
             console.log(selectedProduct.price +'*'+ btnValue.contentSelect +'+'+price +'*'+btnValue.packagingSelect +'='+ totalPrice)
         }
-    }, [options, selectedProduct ,btnValue]);
+    }, [options, selectedProduct ,btnValue,totalPrice]);
 
     
     const onClickbtn = (type , name) => {
@@ -67,11 +67,12 @@ const ProductDetails = ()=>{ //=================================================
     };
     // ======================================================================================return
     if (!selectedProduct) {
-        return <div style={{marginTop:'150px'}}>Product not found</div>;
+        return <div style={{marginTop:'100px'}}>Product not found</div>;
     }else{
 
         return(
-            <div style={{marginTop:'150px'}} className='box'>
+            <>
+            <div style={{marginTop:'100px'}} className='box'>
                 <div className='imgBox'>
                     {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
                     <div className='labelBox'>
@@ -108,7 +109,10 @@ const ProductDetails = ()=>{ //=================================================
                                         )
                                     })}
                                 </select>
-                                <select name="packagingSelect" id="packagingSelect" value={options.packagingSelect} onChange={onChangeSelectItems}>
+                                <select name="packagingSelect" 
+                                id="packagingSelect" 
+                                value={options.packagingSelect} 
+                                onChange={onChangeSelectItems}>
                                     <option value="selectPackage" hidden>포장여부</option>
                                     <option value="굿즈 기본 포장(+0원)" >굿즈 기본 포장(+0원)</option>
                                     <option value="굿즈 부직포 가방(+2000원)"> 굿즈 부직포 가방(+2000원) </option>
@@ -156,6 +160,23 @@ const ProductDetails = ()=>{ //=================================================
                 </div>
     
             </div>
+                <div className='underbox'>
+                    <div className='tabBox'>
+                        <NavLink to="."><span>상세보기</span></NavLink>
+                        <NavLink to="shipping" ><span>배송/사이즈</span></NavLink>
+                        <NavLink to="reviews"><span>리뷰정보</span></NavLink>
+                        <NavLink to="recommendations" ><span>추천리스트</span></NavLink>
+                    </div>
+                    <div>
+                        <Routes>
+                            <Route path="/" element={<p>상세보기</p>} />
+                            <Route path="shipping"element={<p>배송/사이즈</p>} />
+                            <Route path="reviews" element={<p>리뷰정보</p>} />
+                            <Route path="recommendations" element={<p>추천리스트</p>} />
+                        </Routes>
+                    </div>
+                </div>
+            </>
         );
     }
 }
