@@ -43,6 +43,7 @@ html {
 .right_door,
 .start_door,
 .end_door {
+    height: 83vh;
     border-radius: 1px;
     transition: transform 1s ease-out, opacity 1s ease-out;
     opacity: 1;
