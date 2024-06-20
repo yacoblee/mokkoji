@@ -30,19 +30,27 @@ const ProductDetails = ()=>{ //=================================================
         contentSelect: 1,
         packagingSelect: 1,
     });
+    const calculateTotalPrice = () => {
+        if (!selectedProduct) return 0;
+        let price = 0;
+        let subprice = 0;
+
+        if (options.packagingSelect.includes('(+2000원)')) {
+            price = 2000;
+        } else if (options.packagingSelect.includes('(+4000원)')) {
+            price = 4000;
+        }
+        if (options.contentSelect.includes('(+220000원)')) {
+            subprice = 220000;
+        } else if (options.contentSelect.includes('(+722000원)')) {
+            subprice = 722000;
+        }
+        return (selectedProduct.price + subprice) * btnValue.contentSelect + price * btnValue.packagingSelect;
+    };
 
     useEffect(() => {
-        if (selectedProduct) {
-            let price = 0 * btnValue.packagingSelect;
-            if (options.packagingSelect.includes('(+2000원)')) {
-                price = 2000;
-            } else if (options.packagingSelect.includes('(+4000원)')) {
-                price = 4000;
-            }
-            setTotalPrice( selectedProduct.price * btnValue.contentSelect + price * btnValue.packagingSelect);
-            console.log(selectedProduct.price +'*'+ btnValue.contentSelect +'+'+price +'*'+btnValue.packagingSelect +'='+ totalPrice)
-        }
-    }, [options, selectedProduct ,btnValue,totalPrice]);
+        setTotalPrice(calculateTotalPrice());
+    }, [options, selectedProduct ,btnValue]);
 
     
     const onClickbtn = (type , name) => {
@@ -75,9 +83,9 @@ const ProductDetails = ()=>{ //=================================================
             <>
             <div style={{marginTop:'100px'}} className='box'>
                 <div className='imgBox'>
-                    {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                    {selectedProduct.slideSrc.map((src, i)=><img src={src} key={i} alt={i}/>)}
                     <div className='labelBox'>
-                        {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                        {selectedProduct.slideSrc.map((src ,i)=><img src={src} key={i} alt={i} />)}
                     </div>
                     <p>
                         {selectedProduct.name}

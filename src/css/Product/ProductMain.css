@@ -4,24 +4,28 @@
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Freesentation-9Black';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'KCC-Hanbit';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'omyu_pretty';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'SUITE-Regular';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
@@ -29,7 +33,7 @@
     font-style: normal;
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -42,7 +46,7 @@
 
 /* ============================================= */
 /* 상품 리스트 : ProductContainer.jsx , ProductList.jsx , ProductMainSlide , */
-.ProductContainer{
+.ProductContainer {
     width: 95vw;
     display: grid;
     margin: auto;
@@ -52,7 +56,8 @@
     align-items: center;
     margin-top: 50px;
 }
-.ProductMainSlide{
+
+.ProductMainSlide {
     display: flex;
     white-space: nowrap;
     width: 100%;
@@ -61,7 +66,7 @@
     background-color: rgba(243, 205, 205, 0.116);
 }
 
-.ImgSlideList{
+.ImgSlideList {
     display: inline-block;
     flex-basis: 20%;
     height: 100%;
@@ -71,8 +76,8 @@
     transition: 1s;
     border-radius: 15px;
     overflow: hidden;
-    
-    
+
+
 
 }
 
@@ -95,7 +100,7 @@
 
 
 .ImgSlideList:hover {
-    flex-basis: 80%; 
+    flex-basis: 80%;
 }
 
 .ImgSlideList:hover span {
@@ -104,7 +109,7 @@
 }
 
 
-.productList{
+.productList {
     width: 95vw;
     height: 50vh;
     padding: 1vw;
@@ -113,9 +118,11 @@
     border: 1px solid;
     margin: auto;
     position: relative;
+    min-height: 300px;
 
 }
-.productListInfo{
+
+.productListInfo {
     /* height: 100%; */
     /* width: 260px; */
     /* position: absolute; */
@@ -128,13 +135,15 @@
     box-shadow: 0 5px 5px white;
     font-size: 1.5em;
 }
-.productListInfo span{
+
+.productListInfo span {
     color: red;
     font-size: 1.2em;
     font-weight: 600;
-    box-shadow:inset 0 -10px 0  rgba(166, 255, 0, 0.233);
+    box-shadow: inset 0 -10px 0 rgba(166, 255, 0, 0.233);
 }
-.productItem{
+
+.productItem {
     height: 100%;
     width: 220px;
     background-color: white;
@@ -143,17 +152,19 @@
     overflow: hidden;
     box-shadow: 3px 3px 3px silver;
     cursor: pointer;
-    margin: 0 1vw;
+    margin-right: 1vw;
     display: inline-flex;
     flex-direction: column;
-    
+
 }
-.productItem img{
+
+.productItem img {
     flex-basis: 70%;
 
     object-fit: cover;
 }
-.productItem div{
+
+.productItem div {
     flex-basis: 30%;
     display: flex;
     flex-direction: column;
@@ -161,7 +172,7 @@
     justify-content: space-evenly;
 }
 
-.productMenu{
+.productMenu {
     width: 95vw;
     height: 50px;
     margin: auto;
@@ -171,22 +182,24 @@
     align-items: center;
     justify-content: space-evenly;
 }
-.productMenu a{
+
+.productMenu a {
     color: black;
     text-decoration: none;
 
     display: inline-flex;
 }
-.productMenu a.active{
+
+.productMenu a.active {
     font-weight: 600;
-    box-shadow:inset 0 -10px 0  rgba(166, 255, 0, 0.233);
+    box-shadow: inset 0 -10px 0 rgba(166, 255, 0, 0.233);
 }
 
-.productItemList{
+.productItemList {
     width: 95vw;
 
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: 50vh;
     padding: 1vw;
     border: 1px solid;
@@ -194,42 +207,43 @@
     position: relative;
 }
 
-.productItemList a{
+.productItemList a {
     display: flex;
     border: 1px solid;
     object-fit: cover;
 }
-.productItemList .productItem{
-    flex : 1;
+
+.productItemList .productItem {
+    flex: 1;
 
     object-fit: cover;
 }
 
 /* ====================================detail */
-.box{
+.box {
     width: 1200px;
     margin: auto;
     margin-top: 30px;
-    
+
     display: grid;
     grid-template-columns: 60% 40%;
     grid-auto-rows: 90vh;
-   
+
 }
 
-.imgBox>p{
+.imgBox>p {
     position: absolute;
     font-family: 'omyu_pretty';
     /* font-weight: 700; */
     font-size: 4em;
     right: -10%;
-    top : 10%;
+    top: 10%;
     letter-spacing: 4px;
     text-shadow: 3px 3px 3px silver;
     z-index: 10;
 }
 
-.imgBox{
+.imgBox {
     width: 100%;
     height: 100%;
     /* display: flex; */
@@ -242,36 +256,41 @@
     font-size: 0;
     /* left: -100%; */
 }
-.imgBox input{
+
+.imgBox input {
     display: none;
 }
-.imgBox>img{
+
+.imgBox>img {
     width: 100%;
     height: 80%;
     /* object-fit: cover; */
 }
 
-.labelBox{
+.labelBox {
     width: 100%;
     height: 20%;
     display: flex;
     /* grid-template-columns: repeat(5,1fr); */
     justify-content: space-between;
     align-items: end;
-    background-color:#d0c0a05e;
+    background-color: #d0c0a05e;
     gap: 0 10px;
     padding: 0 10px;
 }
+
 /* 
 .labelBox>img:nth-last-child(1){
     margin-right: 20px;
 } */
-.labelBox>img:hover, .selected_img{
+.labelBox>img:hover,
+.selected_img {
     opacity: 1;
     box-shadow: 5px -5px 5px silver;
     transform: scale(105%);
 }
-.labelBox img{
+
+.labelBox img {
     /* height: 80%;
     width: 17%; */
     height: 100%;
@@ -281,22 +300,24 @@
 }
 
 
-.formBox{
+.formBox {
     display: grid;
     width: 100%;
     justify-content: center;
     grid-auto-rows: 1fr 9fr;
     align-items: center;
-    background-color:#d0c0a01d;
-    
+    background-color: #d0c0a01d;
+
 }
-.routeBox{
+
+.routeBox {
     /* justify-self: end; */
     /* height: 100%; */
     width: 100%;
     display: flex;
     justify-content: end;
 }
+
 .routeBox a {
     height: 20px;
     display: inline-flex;
@@ -307,47 +328,57 @@
     padding: 0 10px;
     border-right: 0.5px solid silver;
 }
-.routeBox a:nth-last-child(1){
-    border-right : 0px 
+
+.routeBox a:nth-last-child(1) {
+    border-right: 0px
 }
-.forminner{
+
+.forminner {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
 }
-.forminner p{
+
+.forminner p {
     white-space: pre-line;
     /* margin-bottom: 50px; */
 }
-.forminner form{
+
+.forminner form {
     display: grid;
     row-gap: 20px;
     /* justify-content: center; */
 }
-.forminner select{
+
+.forminner select {
     width: 50%;
     height: 30px;
     font-size: 16px;
     border-radius: 5px;
-    border:1px solid #d0c0a0;
+    border: 1px solid #d0c0a0;
 }
-.forminner option{
-    background-color:  #d0c0a03e;
+
+.forminner option {
+    background-color: #d0c0a03e;
 }
-.price_box{
+
+.price_box {
     justify-self: end;
 }
-.content_price{
+
+.content_price {
     font-size: 1.8em;
     color: red;
     font-weight: 800;
 }
-.priceifo ul{
+
+.priceifo ul {
     display: flex;
     /* column-gap: 20px; */
     row-gap: 10px;
 }
-.priceifo{
+
+.priceifo {
     display: grid;
     /* row-gap: 20px; */
     padding: 20px;
@@ -356,61 +387,70 @@
     border-radius: 10px;
     /* box-shadow: inset 1px 1px 5px #d0c0a0b3; */
 }
-.priceifo li{
+
+.priceifo li {
     width: 100%;
     padding: 10px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
-.priceifo li:nth-of-type(1){
+
+.priceifo li:nth-of-type(1) {
     border-right: 1px solid;
 }
 
-.priceifo input{
+.priceifo input {
     width: 30px;
     text-align: center;
     height: 90%;
     border-radius: 5px;
-    border:1px solid #d0c0a0bf;
+    border: 1px solid #d0c0a0bf;
 }
-.priceifo button{
+
+.priceifo button {
     width: 20px;
     height: 90%;
     background-color: #d0c0a0bf;
     padding: 0 5px;
-    border:0px ;
+    border: 0px;
     border-radius: 20%;
 }
-.select_button{
+
+.select_button {
     height: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr 3fr;
-    gap : 10px;
+    gap: 10px;
 }
-.select_button button{
-    background-color:#d0c0a000;
-    border:0px solid #d08880;
+
+.select_button button {
+    background-color: #d0c0a000;
+    border: 0px solid #d08880;
     border-radius: 5px;
     cursor: pointer;
 
 }
-.select_button img{
+
+.select_button img {
     width: 50%;
     height: 100%;
 }
-.priceSelect{
+
+.priceSelect {
     display: flex;
     /* column-gap: 20px; */
     row-gap: 10px;
 }
-.priceSelect ul{
+
+.priceSelect ul {
     width: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
-.underbox{
+
+.underbox {
     width: 1200px;
     margin: auto;
     margin-top: 30px;
@@ -421,7 +461,7 @@
     /* align-items: center; */
 }
 
-.tabBox{
+.tabBox {
     height: 80px;
     width: 100%;
     display: flex;
@@ -431,62 +471,111 @@
     top: 0;
     background-color: white;
 }
-.tabBox span{
+
+.tabBox span {
     display: inline-flex;
     height: 30%;
     /* width: 70px; */
     font-size: 18px;
-    margin: 0 20px ;
+    margin: 0 20px;
     padding: 0 5px;
     cursor: pointer;
     justify-content: center;
     align-items: center;
 }
 
-.deliSizeInfo p{
+.deliSizeInfo p {
     white-space: pre-line;
 }
-.deliSizeInfo span{
+
+.deliSizeInfo span {
     color: blue;
     font-size: 18px;
 }
-.imgInfo{
+
+.imgInfo {
     width: 100%;
     /* height: 80vh; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     text-align: center;
-    
+
 }
-.imgInfoBox + div{
+
+.imgInfoBox+div {
     white-space: pre-line;
 }
-.imgInfoBox{
+
+.imgInfoBox {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
-.imgInfoBox img{
+
+.imgInfoBox img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 .reveiwInfo{
-    width: 100%;
-    padding: 2%;
+    width: 1200px;
+    margin-bottom: 2%;
     display: flex;
-    gap: 10px;
-    justify-content: center;
+
+    gap: 5px;
+    justify-content: flex-start; /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
+    overflow-x: auto; /* overflow-x: scroll 대신 overflow-x: auto를 사용합니다. */
+    /* white-space: nowrap;  */
+    /* 줄바꿈을 방지하여 모든 자식 요소가 한 줄에 있게 합니다. */
 }
-.reveiwInfo span{
+.recommendInfo{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 10px;
+    margin-bottom: 2%;
+
+    
+}
+.reveiwName,.recommendItem{
     font-size: 18px;
     color: blue;
 }
-.reveiwInfo p{
+.reveiwName p ,.recommendItem p{
+    color: initial;
+    font-weight: 800;
+}
+.reveiwInfo>div {
     /* height: 30px; */
-    width: 150px;
-    padding: 10px;
+
+    width: 230px;
+    height: 40vh;
+    min-height: 300px;
+    /* padding: 10px; */
     border: 1px solid;
     border-radius: 5px;
+    flex: 0 0 auto; 
+    
+    display: grid;
+    grid-template-rows: 15% 50% 22% 5% 5% ;
+
+    /*Flexbox 자식 요소가 줄바꿈 없이 가로 스크롤에 나타나도록 합니다.*/
+}
+.recommendInfo>a>div{
+    height: 40vh;
+    min-height: 300px;
+
+    border: 1px solid;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 15% 67% 5% 5% 5% ;
+    color: black;
+}
+.reveiwInfo img , .recommendInfo img{
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
 }
