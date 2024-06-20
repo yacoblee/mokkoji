@@ -6,6 +6,10 @@ const Header = () => {
     useEffect(() => {
         const handleScroll = () => {
             const header = document.getElementById('header');
+
+            if (!header)
+                return;
+
             if (window.scrollY > 10) {
                 header.classList.remove('deactive');
                 header.classList.add('active');
