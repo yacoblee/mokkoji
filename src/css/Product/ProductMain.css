@@ -523,19 +523,7 @@
     padding: 2%;
     display: flex;
     gap: 10px;
-    justify-content: flex-start;
-    /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
-    overflow-x: auto;
-    /* overflow-x: scroll 대신 overflow-x: auto를 사용합니다. */
-    /* white-space: nowrap;  */
-    /* 줄바꿈을 방지하여 모든 자식 요소가 한 줄에 있게 합니다. */
-}
-
-.recommendInfo {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-
+    justify-content: center;
 }
 
 .reveiwInfo span {
@@ -549,23 +537,4 @@
     padding: 10px;
     border: 1px solid;
     border-radius: 5px;
-}
-
-.reveiwInfo>div {
-    /* height: 30px; */
-    width: 200px;
-    padding: 10px;
-    border: 1px solid;
-    border-radius: 5px;
-    flex: 0 0 auto;
-    /*Flexbox 자식 요소가 줄바꿈 없이 가로 스크롤에 나타나도록 합니다.*/
-}
-
-.recommendInfo>a>div {
-    border: 1px solid;
-}
-
-.reveiwInfo img,
-.recommendInfo img {
-    width: 150px;
 }
