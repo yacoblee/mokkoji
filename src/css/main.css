@@ -15,22 +15,20 @@ body,
 html {
     margin: 0;
     padding: 0;
-    overflow: auto;
     font-family: Arial, sans-serif;
+
 }
 
 .master_page {
     width: 100%;
-    min-height: 200vh;
-    height: auto;
-    overflow-x: hidden;
+    min-height: 100vh;
     display: grid;
 }
 
 .section {
-    min-width: 100vw;
+    min-width: 80vw;
     width: 100vw;
-    height: 55vw;
+    height: 95vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,10 +38,19 @@ html {
     transition: transform 1s ease-out;
 }
 
+
+
 video {
     width: 100vw;
-
+    height: 100vh;
     position: fixed;
+    object-fit: cover;
+}
+
+.left_door,
+.right_door {
+
+    height: 95vh;
 }
 
 .main_section {
@@ -67,11 +74,20 @@ video {
 }
 
 #section1 {
-    background: #3c97d3b3;
+    min-width: 80vw;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+    position: relative;
+    transition: transform 1s ease-out;
 }
 
 #section2 {
-    background: #2ecc71;
+    background: url(../../public/images/main/section1.jpg);
 }
 
 #section3 {
@@ -86,6 +102,15 @@ video {
     background: #f39c12;
 }
 
-.section.in-view {
-    transform: translateY(-100%);
-}
+/* .section.in-view {
+    transform: translateY(-50%);
+} */
+
+/* .fixed-section {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 95vh;
+ 
+ 
+} */

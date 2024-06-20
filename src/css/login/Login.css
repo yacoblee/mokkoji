@@ -1,0 +1,24 @@
+.login-Area {
+    width: 85vw;
+    height: 100vh;
+    background-color: rgb(207, 224, 24);
+    margin: auto;
+}
+
+.login_video {
+    width: 50%;
+    height: 100%;
+    display: flex;
+   
+}
+
+.textarea{
+    width: 50%;
+    height: 100vh;
+    float:right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightslategray;
+}
