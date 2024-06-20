@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import '../../css/header.css'
 import { useLocation } from 'react-router-dom';
 const Header = () => {
-    // if (window.location.pathname === "/login")
-    //     console.log(window.location.pathname);
-    //     return
+    useEffect(() => {
+        const handleScroll = () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 10) {
+                header.classList.remove('deactive');
+                header.classList.add('active');
+            } else {
+                header.classList.remove('active');
+                header.classList.add('deactive');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const locationNow = useLocation();
     if (locationNow.pathname.toLowerCase().includes('login')) return null;

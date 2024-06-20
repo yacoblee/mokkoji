@@ -1,7 +1,15 @@
 import '../../css/main.css'
-
+import { useEffect } from 'react';
 const ProductSection = () => {
+    useEffect = () => {
 
+
+
+
+
+
+
+    }
 
 
     return (

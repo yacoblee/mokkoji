@@ -28,7 +28,7 @@ html {
 .section {
     min-width: 80vw;
     width: 100vw;
-    height: 95vh;
+    height: 83vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,18 +39,10 @@ html {
 }
 
 
-
-video {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    object-fit: cover;
-}
-
 .left_door,
 .right_door {
 
-    height: 95vh;
+    height: 83vh;
 }
 
 .main_section {
