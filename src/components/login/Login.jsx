@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import '../../css/login/Login.css';
 import Membership from "./Membership";
 import FindId from "./FindId";
 import FindPw from "./FindPw";
-import { Link } from 'react-router-dom'
+import { Link, useFetcher } from 'react-router-dom'
 import { useState } from "react";
 
 let a = 3;
@@ -14,8 +14,27 @@ const Login = () => {
 
     const onChangeId = (e) => { setInputId(e.target.value) }
     const onChangePw = (e) => { setInputePw(e.target.value) }
-    const isExistId = (inputId.length > 0);
-    const isExistPw = (inputPw.length > 0);
+    const labelIdRed = useRef(null);
+    const inputIdRef = useRef(null);
+
+    const labelPwRed = useRef(null);
+    const inputPwRef = useRef(null);
+
+    const MoveToOutLabel = (labelRef) => {
+        if (labelRef.current) {
+            labelRef.current.style.fontSize = '15px';
+            labelRef.current.style.top = '-20px';
+        }
+    }
+
+    const MoveToInLabel = (labelRef, inputRef) => {
+        if (inputRef.current && inputId.length === 0) {
+            if (labelRef.current) {
+                labelRef.current.style.fontSize = '20px';
+                labelRef.current.style.top = '0';
+            }
+        }
+    }
 
     return (
         <div className="login-body">
@@ -30,14 +49,29 @@ const Login = () => {
                     <div className="login-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
                     <h4>Welcom to MU:DS</h4>
                     <form className="login-Box">
-                        <div className="inputArea">
-                            <p>아이디</p>
-                            <input type="text" value={inputId} onChange={onChangeId} />
+
+                        <div className="login-inputArea">
+                            <label ref={labelIdRed} >아이디</label>
+                            <input
+                                ref={inputIdRef}
+                                type="text" value={inputId}
+                                onChange={onChangeId}
+                                onFocus={() => MoveToOutLabel(labelIdRed)}
+                                onBlur={() => MoveToInLabel(labelIdRed, inputIdRef)}
+                            />
                         </div>
-                        <div className="inputArea">
-                            <p>비밀번호</p>
-                            <input type='password' value={inputPw} onChange={onChangePw} />
+
+                        <div className="login-inputArea">
+                            <label ref={labelPwRed}>비밀번호</label>
+                            <input
+                                ref={inputPwRef}
+                                type='password' value={inputPw}
+                                onChange={onChangePw}
+                                onFocus={() => MoveToOutLabel(labelPwRed)}
+                                onBlur={() => MoveToInLabel(labelPwRed, inputPwRef)}
+                            />
                         </div>
+
                         <p>아이디 또는 비밀번호를 다시 입력해주세요</p>
                         <button>로그인</button>
                     </form>
