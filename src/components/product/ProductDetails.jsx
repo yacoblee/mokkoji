@@ -24,18 +24,25 @@ const ProductDetails = ()=>{ //=================================================
                     <div className='labelBox'>
                         {selectedProduct.slideSrc.map((src ,i)=><img src={src} key={i} alt={i} />)}
                     </div>
-                    <p>
-                        {selectedProduct.name}
-                    </p>
                 </div>
                 <div className='formBox'>
                     <div className='routeBox'>
+                    <button type='button'
+                    className='isLike_icon'>
+                        <img src="/images/buy/ht1.png" alt=""/>
+                    LIKE ME !
+                    </button>
+                    <div>
                     <Link to="/" >home</Link>
                     <Link to="/goods" >goods</Link> 
                     <Link to={`/goods/${selectedProduct.category}`} >goodsList</Link> 
                     </div>
+                    </div>
                     <div className='forminner'>
                         <p>
+                            <p className="productName">
+                                {selectedProduct.name}
+                            </p>
                         {selectedProduct.mainGuide}
                             <p className='deliveryifo'>
                                 * 30,000원 미만 3,000원 / 30,000원 이상 무료배송

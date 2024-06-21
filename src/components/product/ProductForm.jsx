@@ -131,17 +131,15 @@ const ProductForm = ({selectedProduct})=>{
         </div>
         </div>
         <div class="select_button">
-        <button type='button'
-        className='isLike_icon'>
-            <img src="/images/buy/ht1.png" alt=""/> 
-        </button>
+
         <button type='button'
         className='basket_icon'>
-        <img src="/images/buy/shopping-cart1.png" alt=""/> 
+    
+            장바구니
         </button>
         <button type='button'
         className='buy_icon'>
-        <img src="/images/buy/buy_icon_1.png" alt=""/> 
+            구매하기
         </button>
     </div>
     </form>
