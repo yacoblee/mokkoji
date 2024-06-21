@@ -3,7 +3,6 @@ import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 
 const ProductDetailsInfo = ({ type, selectedProduct }) => {
-    console.log('Type:', type); // 확인
     switch (type) {
         case 'imgInfo':
             return (

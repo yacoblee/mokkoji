@@ -50,7 +50,10 @@
     box-sizing: border-box;
 }
 
-
+a{
+    text-decoration: none;
+    color: black;
+}
 
 /* ============================================= */
 /* 상품 리스트 : ProductContainer.jsx , ProductList.jsx , ProductMainSlide , */
@@ -130,6 +133,18 @@
 
 }
 
+.productList button{
+    position: absolute;
+    top : 50%;
+    z-index: 1;
+}
+.silder{
+    height: 100%;
+    transition: 0.5s;
+}
+/* .silder{
+    transform: translateX(-240px);
+} */
 .productListInfo {
     /* height: 100%; */
     /* width: 260px; */
@@ -166,14 +181,27 @@
     flex-direction: column;
 
 }
+.productItemResult{
+    height: 100%;
+    width: 260px;
+    background-color: white;
+    border-radius: 10px;
+    /* border: 0.5px solid silver; */
+    overflow: hidden;
+    box-shadow: 3px 3px 3px silver;
+    cursor: pointer;
+    /* margin-bottom: 1vw; */
+    display: inline-flex;
+    flex-direction: column;
+}
 
-.productItem img {
+.productItem img ,.productItemResult img{
     flex-basis: 70%;
 
     object-fit: cover;
 }
 
-.productItem div {
+.productItem div ,.productItemResult div{
     flex-basis: 30%;
     display: flex;
     flex-direction: column;
@@ -207,11 +235,29 @@
 .productSearch{
     width: 95vw;
     height: 50px;
-    margin: 30px auto;
+    margin: 0px auto;
     border: 1px solid;
+    display: flex;
+    justify-content: center;
+    gap : 20px;
+    padding: 10px;
+}
+.productSearch button ,.SearchBar button{
+    background-color:rgba(153, 205, 50, 0.107);
+    padding:0 15px;
+    border: 0.5px solid #d0c0a0;
 }
 
+.SearchBar{
+    width: 95vw;
+    height: 50px;
+    margin: auto;
 
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
 .productItemList {
     width: 95vw;
 
@@ -220,18 +266,19 @@
     grid-auto-rows: 50vh;
     padding: 1vw;
     border: 1px solid;
-    margin: auto;
+    margin: 10px auto;
     position: relative;
     gap: 1vw;
 }
 
 .productItemList a {
+    width: 100%;
     display: flex;
     border: 1px solid;
     object-fit: cover;
 }
 
-.productItemList .productItem {
+.productItemList .productItem ,.productItemList .productItemResult {
     flex: 1;
 
     object-fit: cover;
