@@ -44,11 +44,14 @@ const ProductSection = () => {
 
     return (
         <div id="section2">
-            <img src="/images/main/traditional01.png" className='left_door' alt="" />
-            <img src="/images/main/traditional01.png" className='start_door' alt="" />
-            <img src="/images/main/traditional01.png" className='end_door' alt="" />
-            <img src="/images/main/traditional02.png" className='right_door' alt="" />
-
+            <div className='section2_inner'>
+                <img src="/images/main/traditional01.png" className='first_door' alt="" />
+                <img src="/images/main/traditional01.png" className='left_door' alt="" />
+                <img src="/images/main/traditional01.png" className='start_door' alt="" />
+                <img src="/images/main/traditional01.png" className='end_door' alt="" />
+                <img src="/images/main/traditional02.png" className='right_door' alt="" />
+                <img src="/images/main/traditional02.png" className='final_door' alt="" />
+            </div>
             <SlideSection title='베스트 상품' sort='count' />
 
         </div>
