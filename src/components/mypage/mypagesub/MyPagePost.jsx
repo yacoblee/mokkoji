@@ -4,7 +4,7 @@ function MyPagePost() {
     return (
 
         <div>
-            목록
+            배송
         </div>
     )
 }

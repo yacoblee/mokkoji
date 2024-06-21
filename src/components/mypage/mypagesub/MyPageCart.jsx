@@ -4,7 +4,7 @@ function MyPageCart() {
     return (
 
         <div>
-            목록
+            장바구니
         </div>
     )
 }

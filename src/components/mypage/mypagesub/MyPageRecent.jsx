@@ -4,7 +4,7 @@ function MyPageRecent() {
     return (
 
         <div>
-            목록
+            최근
         </div>
     )
 }

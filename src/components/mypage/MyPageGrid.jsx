@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function MyPageGrid() {
     return (
         <div className='MyGrid'>
-            <Link to='/mypage/like'>
+            <Link to='/mypage/like' >
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />

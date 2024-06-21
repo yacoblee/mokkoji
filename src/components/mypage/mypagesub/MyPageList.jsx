@@ -4,7 +4,7 @@ function MyPageList() {
     return (
 
         <div>
-            목록
+            구매내역
         </div>
     )
 }

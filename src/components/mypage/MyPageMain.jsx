@@ -6,6 +6,7 @@ function MyPageMain() {
 
     return (
         <div className='MyPageMain'>
+
             <div className='MyInfoGrid'>
                 <div className="MyInfo">
                     <h1>@ 안녕하세요!</h1>

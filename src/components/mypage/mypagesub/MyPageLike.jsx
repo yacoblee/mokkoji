@@ -4,7 +4,7 @@ function MyPageLike() {
     return (
 
         <div>
-            목록
+            찜 목록
         </div>
     )
 }
