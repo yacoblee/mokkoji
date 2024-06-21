@@ -57,7 +57,7 @@ a {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
     /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
-    gap: 10px;
+    gap: 1vw;
     width: 100%;
 
 }
@@ -159,7 +159,7 @@ a {
     flex: 1;
     font-size: 30px;
     padding-top: 1.5vw;
-    padding-bottom: 0.7vw;
+    padding-bottom: 0.5vw;
 }
 
 .MyLike span,
