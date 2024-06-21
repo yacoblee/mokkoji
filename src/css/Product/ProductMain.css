@@ -156,11 +156,12 @@
     width: 220px;
     background-color: white;
     border-radius: 10px;
-    border: 0.5px solid silver;
+    /* border: 0.5px solid silver; */
     overflow: hidden;
     box-shadow: 3px 3px 3px silver;
     cursor: pointer;
     margin-right: 1vw;
+    /* margin-bottom: 1vw; */
     display: inline-flex;
     flex-direction: column;
 
@@ -203,6 +204,14 @@
     box-shadow: inset 0 -10px 0 rgba(166, 255, 0, 0.233);
 }
 
+.productSearch{
+    width: 95vw;
+    height: 50px;
+    margin: 30px auto;
+    border: 1px solid;
+}
+
+
 .productItemList {
     width: 95vw;
 
@@ -213,6 +222,7 @@
     border: 1px solid;
     margin: auto;
     position: relative;
+    gap: 1vw;
 }
 
 .productItemList a {
