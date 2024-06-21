@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useMemo } from 'react';
+import { BrowserRouter, Routes, Route, Link, useLocation, NavLink } from 'react-router-dom';
 import '../../css/header.css'
-import { useLocation } from 'react-router-dom';
+
 const Header = () => {
     useEffect(() => {
         const handleScroll = () => {
@@ -12,9 +12,9 @@ const Header = () => {
 
             if (window.scrollY > 10) {
                 header.classList.remove('deactive');
-                header.classList.add('active');
+                header.classList.add('headactive');
             } else {
-                header.classList.remove('active');
+                header.classList.remove('headactive');
                 header.classList.add('deactive');
             }
         };
@@ -34,17 +34,17 @@ const Header = () => {
                 <div className="header_left">
                     <nav className="header_nav">
                         <ul>
-                            <li><Link to="/"><p>Introduction</p></Link></li>
-                            <li><Link to="/goods"><p>Goods</p></Link></li>
-                            <li><Link to="/reserve"><p>Reserve</p></Link></li>
+                            <li><NavLink to="/"><p>Introduction</p></NavLink></li>
+                            <li><NavLink to="/goods" className={({ isActive }) => (isActive ? 'active' : '')}><p>Goods</p></NavLink></li>
+                            <li><NavLink to="/reserve" className={({ isActive }) => (isActive ? 'active' : '')}><p>Reserve</p></NavLink></li>
                         </ul>
                     </nav>
                 </div>
                 <div className="header_right">
                     <nav className="header_nav">
                         <ul>
-                            <li><Link to="/mypage"><p>mypage</p></Link></li>
-                            <li><Link to="/Login"><p>Login</p></Link></li>
+                            <li><Link to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>mypage</p></Link></li>
+                            <li><Link to="/Login" className={({ isActive }) => (isActive ? 'active' : '')}><p>Login</p></Link></li>
                         </ul>
                     </nav>
                 </div>
@@ -53,4 +53,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default React.memo(Header);

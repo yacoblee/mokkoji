@@ -11,13 +11,31 @@ const SlideSection = ({ title, sort }) => {
         sortItems.sort((a, b) => b.count - a.count);
     }
 
+    //버튼 스로틀
+    const throlltle = (func) => {
+        let timer;
+
+        return () => {
+            if (!timer) {
+                timer = setTimeout(() => {
+                    timer = null;
+                    func();
+                }, 300);
+            }
+        }
+    };
+
+
+
     // 슬라이드 기능 추가
     const slideContainerRef = useRef();
     const btnPreRef = useRef();
     const btnNextRef = useRef();
     const slideIndexRef = useRef(0);
     console.log(sortItems.length);
-    const handlePrevClick = () => {
+
+
+    const handlePrevClick = (e) => {
         slideIndexRef.current--;
         slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
 
@@ -27,7 +45,8 @@ const SlideSection = ({ title, sort }) => {
         }
     };
 
-    const handleNextClick = () => {
+    const handleNextClick = (e) => {
+
         slideIndexRef.current++;
         slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
 
@@ -39,7 +58,7 @@ const SlideSection = ({ title, sort }) => {
     return (
         <>
             <div className="product_section">
-                <span><h1>인기 상품</h1></span>
+              <h1>인기 상품</h1>
 
                 <div className="slide_container" ref={slideContainerRef}>
                     {sortItems.map((product, i) => (
@@ -58,10 +77,10 @@ const SlideSection = ({ title, sort }) => {
                 </div>
 
 
-                <button className="btn_pre nonVisible" ref={btnPreRef} onClick={handlePrevClick}>
+                <button className="btn_pre nonVisible" ref={btnPreRef} onClick={throlltle(handlePrevClick)}>
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
-                <button className="btn_next" ref={btnNextRef} onClick={handleNextClick}>
+                <button className="btn_next" ref={btnNextRef} onClick={throlltle(handleNextClick)}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
             </div>
