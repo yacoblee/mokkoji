@@ -10,9 +10,10 @@ function MyPageMain() {
 
     return (
         <div className='MyPageMain'>
+
             <Routes>
                 <Route path='/' element={<MyPageFlex />} />
-                <Route path='/set' element={<MyPageSet />} />
+                <Route path='/asdf' element={<MyPageSet />} />
             </Routes>
         </div>
     )
