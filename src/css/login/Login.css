@@ -9,6 +9,7 @@
     width: (100vw-8px);
     height: (100vh-8px);
     background-color: antiquewhite;
+    user-select: none !important;
 }
 
 .login-Area {
@@ -47,15 +48,15 @@
 
 .textarea h4 {
     font-family: 'Chosunilbo_myungjo';
-    font-size: 25px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    font-size: 35px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
 }
 
 .login-imgBox {
-    width: 380px;
-    height: 120px;
-    margin-bottom: 10px;
+    width: 450px;
+    height: 150px;
+    margin-bottom: 35px;
 }
 
 .login-imgBox img {
@@ -71,10 +72,11 @@
 
 .login-Box input {
     width: 300px;
-    height: 30px;
+    height: 40px;
     border: none;
     border-bottom: solid #aaaaaa 1px;
     font-family: 'SUITE-Regular';
+    font-size: 23px;
 
 }
 
@@ -84,9 +86,10 @@
     position: relative;
 }
 
-label{
+label {
     transition: .5s;
 }
+
 .login-inputArea label {
     font-family: 'SUITE-Regular';
     position: absolute;
@@ -110,28 +113,44 @@ label{
 }
 
 .login-Box button {
-    height: 40px;
+    height: 60px;
     width: 350px;
     border-radius: 15px;
     border: none;
     color: black;
-    background-color: antiquewhite;
-    font-size: 20px;
     font-family: 'SUITE-Regular';
-    margin-bottom: 30px;
+    background-color: antiquewhite;
+    font-size: 25px;
+    font-family: 'SUITE-Regular';
+    margin-top: 30px;
+    margin-bottom: 10px;
+    letter-spacing: 5px;
+    transition: all 0.5s ease;
 }
 
 .login-Box button:hover {
     cursor: pointer;
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+}
+
+.textarea ul {
+    margin-top: 30px;
 }
 
 .textarea li {
     color: black;
     display: inline-block;
     margin: 0 5px 0 0;
+    font-size: 17px;
 }
 
 .textarea ul a {
     font-family: 'SUITE-Regular';
     color: black;
+    text-decoration: none;
+
 }

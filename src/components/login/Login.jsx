@@ -36,6 +36,12 @@ const Login = () => {
         }
     }
 
+    const LabelClick = (inputRef) => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }
+
     return (
         <div className="login-body">
             <div className="login-Area">
@@ -51,7 +57,10 @@ const Login = () => {
                     <form className="login-Box">
 
                         <div className="login-inputArea">
-                            <label ref={labelIdRed} >아이디</label>
+                            <label
+                                ref={labelIdRed}
+                                onClick={() => LabelClick(inputIdRef)}
+                            >아이디</label>
                             <input
                                 ref={inputIdRef}
                                 type="text" value={inputId}
@@ -62,7 +71,10 @@ const Login = () => {
                         </div>
 
                         <div className="login-inputArea">
-                            <label ref={labelPwRed}>비밀번호</label>
+                            <label
+                                ref={labelPwRed}
+                                onClick={() => LabelClick(inputPwRef)}>
+                                비밀번호</label>
                             <input
                                 ref={inputPwRef}
                                 type='password' value={inputPw}
@@ -72,8 +84,9 @@ const Login = () => {
                             />
                         </div>
 
+
                         <p>아이디 또는 비밀번호를 다시 입력해주세요</p>
-                        <button>로그인</button>
+                        <button>Login</button>
                     </form>
                     <ul>
                         <li><Link to='/Login/Membership'>회원가입 | </Link></li>
