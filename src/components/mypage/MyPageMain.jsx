@@ -4,16 +4,20 @@ import React from 'react';
 
 import MyPageFlex from './MyPageFlex';
 import MyPageSet from './MyPageSet'
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 
 function MyPageMain() {
 
     return (
         <div className='MyPageMain'>
 
+            <Link to='/mypage/asdf'>
+                sowjdasfjhagk
+            </Link>
+
             <Routes>
                 <Route path='/' element={<MyPageFlex />} />
-                <Route path='/asdf' element={<MyPageSet />} />
+                <Route path="/set" element={<MyPageSet />} />
             </Routes>
         </div>
     )
