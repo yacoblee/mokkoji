@@ -5,25 +5,26 @@ const Introduction = () => {
 
     useEffect(() => {
         const img = imgRef.current;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                const { top, height } = entry.boundingClientRect;
-                const speed = 0.5; // Adjust the speed as needed
-                const offset = window.innerHeight - top;
+        const section = img.closest('.section');
 
-                if (top <= window.innerHeight && top + height >= 0) {
-                    img.style.transform = `translate3d(0, ${-offset * speed}px, 0)`;
-                }
-            },
-            {
-                threshold: [0, 1.0]
+        const handleScroll = () => {
+            const { top } = section.getBoundingClientRect();
+            const visibleHeight = 540; // Visible height
+            const totalHeight = 940; // Total image height
+            const maxOffset = 120; // Maximum translation offset
+            const speed = 0.25; // Adjusted speed to limit movement to 120px
+
+            if (top <= window.innerHeight && top + visibleHeight >= 0) {
+                const offset = Math.max(-maxOffset, Math.min(maxOffset, (window.innerHeight - top - (visibleHeight / 2)) * speed));
+                img.style.transform = `translate3d(0, ${-offset}px, 0)`;
             }
-        );
+        };
 
-        observer.observe(img.closest('.section'));
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial call
 
         return () => {
-            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
@@ -38,5 +39,6 @@ const Introduction = () => {
         </div>
     );
 };
+
 
 export default Introduction;
