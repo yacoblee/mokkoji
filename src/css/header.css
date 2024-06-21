@@ -1,4 +1,12 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 header {
+    font-family: 'SUITE-Regular';
     grid-row: 1 / 2;
     width: 100%;
     height: 100px;
@@ -9,17 +17,20 @@ header {
     top: 0;
     z-index: 10;
     border-bottom: solid rgba(0, 0, 0, 0.244);
-    opacity: 1;
     transition: opacity 0.5s ease;
+    opacity: 1;
 }
 
-.active,
-.active .header_nav p {
+.headactive {
     background-color: white;
-    transition-duration: 0.5s;
+}
+
+.headactive .header_nav a:not(.active) p {
+    background-color: white;
+    transition-duration: 0.3s;
     transition-timing-function: ease;
     font-weight: 600;
-    color: rgb(0, 0, 0) !important;
+    color: rgb(0, 0, 0);
 }
 
 .deactive {
@@ -82,13 +93,19 @@ nav ul {
 }
 
 
-.header_nav ul li p {
-    font-family: 'orig_halant_regular';
+.header_nav ul li a {
     display: inline-block;
     text-align: left;
     line-height: 50px;
     padding: 0 10px;
-    color: rgba(97, 84, 84, 0.988);
+    color: rgba(97, 84, 84, 0.821);
     transition: color .4s ease 0s;
 
+}
+
+.header_nav ul li .active {
+    line-height: 50px;
+    text-decoration: underline;
+    font-weight: 600;
+    color: rgba(48, 47, 42, 0.727) !important;
 }

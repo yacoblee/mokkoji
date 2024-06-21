@@ -1,9 +1,10 @@
-/* styles.css */
-/* 
-style="opacity: 1; visibility: inherit; transform: translate3d(0px, 0px, 0px);
-style="opacity: 0; visibility: inherit; transform: translate3d(0px, 0px, 0px);"
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
 
-*/
 * {
     margin: 0;
     padding: 0;
@@ -39,19 +40,35 @@ html {
 }
 
 /* section2 도어 이벤트 S */
+.section2_inner {
+    display: grid;
+    width: 100vw;
+    height: 83vh;
+    grid-template: .5fr / repeat(6, 1fr);
+    justify-content: center;
+
+}
+
+.final_door {
+    z-index: -1;
+}
+
+.first_door,
+.final_door,
 .left_door,
 .right_door,
 .start_door,
 .end_door {
     height: 83vh;
     border-radius: 1px;
-    transition: transform 1s ease-out, opacity 1s ease-out;
+    transition: all 1s ease-out, opacity 1s ease-out;
     opacity: 1;
     transform: translateX(0);
     position: relative;
     flex: 1;
-    max-width: 50%;
+    min-width: 18vw;
     margin: 0;
+    opacity: 0.9;
 }
 
 .left_motion,
@@ -61,6 +78,21 @@ html {
     border: 1px solid #802121;
     margin: 0 auto;
     border-radius: 10px;
+}
+
+.first_door,
+.final_door {
+    z-index: 1;
+}
+
+.right_door,
+.left_door {
+    z-index: 2;
+}
+
+.start_door,
+.end_door {
+    z-index: 3;
 }
 
 .left_door.left_motion {
@@ -129,16 +161,13 @@ html {
 #section2 {
     display: flex;
     justify-content: space-around;
-    /* 이미지 간격 균등 배치 */
     align-items: center;
     position: relative;
     z-index: 1;
-    background: url(../../public/images/main/section1.jpg);
+    background-color: white;
+    /* background: url(../../public/images/main/section1.jpg); */
 }
 
-#section3 {
-    background: #e74c3c;
-}
 
 #section4 {
     background: #9b59b6;
@@ -150,7 +179,7 @@ html {
 
 
 
-/* Section2 product section S */
+/* SECTION2 product section S */
 .product_section {
     overflow-x: hidden;
     width: 1340px;
@@ -159,20 +188,38 @@ html {
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: -1;
+    z-index: 0;
+    text-align: center;
 
 }
 
-.product_section>span {
+.product_section h1 {
+    font-family: 'SUITE-Regular';
     position: absolute;
     top: 40px;
-    color: rgba(87, 73, 73, 0.864);
+    font-size: 3rem;
+    color: rgba(63, 60, 53, 0.866);
+    text-shadow: 4px 3px 4px #666666d7;
+    padding: 10px 20px;
 }
 
 .slide_item {
-    margin-right: 10px;
+    margin-right: 20px;
     width: 300px;
     height: 400px;
+}
+
+/* .slide_item:hover, */
+.slide_inner img:hover {
+    transform: scale(1.08);
+    transition: transform 0.3s ease-in-out;
+}
+
+.slide_container {
+    display: flex;
+    transition: left 0.5s ease-in-out;
+    position: relative;
+    transform: translateX(35%);
 }
 
 .slide_inner {
@@ -201,9 +248,10 @@ html {
 }
 
 .slide_name {
-    color: black;
-    font-weight: 400;
-    text-shadow: 3px 0 5px #666;
+    font-family: 'SUITE-Regular';
+    color: rgb(3, 3, 3);
+    font-weight: 500;
+    text-shadow: 4px 3px 4px #666666d7;
     margin-top: 5px;
     margin-bottom: 5px;
     line-height: 1.2em;
@@ -213,9 +261,10 @@ html {
 }
 
 .slide_price {
+    font-family: 'SUITE-Regular';
     color: #666;
-    font-weight: 300;
-    text-shadow: 3px 0 5px #666;
+    font-weight: 500;
+    text-shadow: 4px 3px 4px #666666d7;
     justify-content: center;
     font-size: 1.2rem;
     line-height: 1.2rem;
@@ -223,21 +272,10 @@ html {
     grid-area: 2/1/2/span 2;
 }
 
-/* Section2 product section E */
-.slide_container {
-    display: flex;
-    transition: left 0.5s ease-in-out;
-    position: relative;
-    /* left: 80%; */
-    transform: translateX(35%);
-}
-
-
 .btn_pre,
 .btn_next {
     position: absolute;
     transform: translateY(-50%);
-    /* background-color: rgba(255, 255, 255, 0.7); */
     font-size: 30px;
     border: none;
     cursor: pointer;
@@ -245,7 +283,6 @@ html {
 }
 
 .btn_pre {
-
     top: 20%;
     right: 35%;
 }
@@ -257,4 +294,53 @@ html {
 
 .nonVisible {
     visibility: hidden;
+}
+
+/* Section2 product section E */
+
+
+
+/* SECTION3 Intorduction section S */
+
+#section3 {
+    display: flex;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    height: 540px;
+    z-index: 1;
+    background: white;
+
+}
+
+.intro_container {
+    position: relative;
+    width: 100vw;
+    height: 540px;
+    overflow: hidden;
+}
+
+.intro_img {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100vw;
+    height: 940px;
+    z-index: -1;
+    transition: transform 0.1s ease-out;
+}
+
+.intro_img img {
+    width: 100vw;
+    height: 940px;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+.intro_content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    color: white;
+    font-size: 1.5em;
+    text-align: center;
 }

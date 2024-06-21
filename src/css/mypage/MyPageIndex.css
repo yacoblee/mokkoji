@@ -1,13 +1,16 @@
 /* App.css */
 
-
-a {
-    text-decoration: none;
-}
-
 .MyPage {
     position: relative;
-    top: 100px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: flex-start;
+    /* height: 100vh; */
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    padding: 0 20%;
 }
 
 .MyPage>h1 {
@@ -17,154 +20,6 @@ a {
     /* height: 100vh; */
     box-sizing: border-box;
     margin: 0;
-    overflow: hidden;
-    padding: 1% 20%;
-}
-
-.MyPageIndex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    /* height: 100vh; */
-    box-sizing: border-box;
-    margin-top: 0;
-    overflow: hidden;
-    padding: 0 20%;
-
-}
-
-.MyPageMain {
-    display: flex;
-    /* align-items: center; */
-    /* 세로 중앙 정렬 */
-    flex-direction: column;
-    justify-content: center;
-    /* text-align: center; */
-    padding: 10%;
-    background-color: #e9e9e9;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 30vh;
-}
-
-.MyGrid {
-    display: grid;
-    grid-template-areas:
-        "MyLike MyCart  MyPost MyRecent MyList ";
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 10px;
-    width: 100%;
-
-}
-
-.MyGrid a {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid #ccc;
-    font-weight: bold;
-}
-
-.MyLike,
-.MyCart,
-.MyPost,
-.MyRecent,
-.MyList {
-    display: flex;
-    flex-direction: column;
-    border: 0;
-    /* color: black; */
-}
-
-.MyCart {
-    grid-area: MyCart;
-}
-
-.MyLike {
-    grid-area: MyLike;
-}
-
-.MyRecent {
-    grid-area: MyRecent;
-}
-
-.MyPost {
-    grid-area: MyPost;
-}
-
-.MyList {
-    grid-area: MyList;
-
-}
-
-.MyInfoGrid {
-    display: flex;
-
-}
-
-.MyInfo {
-    flex: 3;
-}
-
-.MyInfo>h1,
-.MyInfoSet {
-    margin: 6px;
-}
-
-.MyInfo>h1,
-.MyInfoSet,
-.MyOrder span {
-    padding: 5px;
-}
-
-.MyOrder {
-    flex: 1;
-
-}
-
-.MyOrder ul {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-}
-
-.MyOrder ul li {
-    display: flex;
-    align-items: center;
-}
-
-.MyOrder span {
-    flex: 1;
-}
-
-.MyOrder span {
-    text-align: end;
-}
-
-.MyOrder span:nth-child(2) {
-    text-align: left;
-}
-
-.IconLike,
-.IconCart,
-.IconPost,
-.IconRecent,
-.IconList {
-    flex: 1;
-    font-size: 30px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-}
-
-.MyLike span,
-.MyCart span,
-.MyPost span,
-.MyRecent span,
-.MyList span {
-    flex: 1;
-    padding: 15px;
+    padding: 2%;
+    /* overflow: hidden; */
 }
