@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react';
 
 import { useParams , Link , NavLink, Routes , Route} from "react-router-dom";
 import GoodsItems from "./ProductObject";
+import ProductDetailsInfo from './ProductDetailsInfo';
 
 const formatNumber = (number) => {
     return number.toLocaleString('en-US');
@@ -29,19 +30,27 @@ const ProductDetails = ()=>{ //=================================================
         contentSelect: 1,
         packagingSelect: 1,
     });
+    const calculateTotalPrice = () => {
+        if (!selectedProduct) return 0;
+        let price = 0;
+        let subprice = 0;
+
+        if (options.packagingSelect.includes('(+2000원)')) {
+            price = 2000;
+        } else if (options.packagingSelect.includes('(+4000원)')) {
+            price = 4000;
+        }
+        if (options.contentSelect.includes('(+220000원)')) {
+            subprice = 220000;
+        } else if (options.contentSelect.includes('(+722000원)')) {
+            subprice = 722000;
+        }
+        return (selectedProduct.price + subprice) * btnValue.contentSelect + price * btnValue.packagingSelect;
+    };
 
     useEffect(() => {
-        if (selectedProduct) {
-            let price = 0 * btnValue.packagingSelect;
-            if (options.packagingSelect.includes('(+2000원)')) {
-                price = 2000;
-            } else if (options.packagingSelect.includes('(+4000원)')) {
-                price = 4000;
-            }
-            setTotalPrice( selectedProduct.price * btnValue.contentSelect + price * btnValue.packagingSelect);
-            console.log(selectedProduct.price +'*'+ btnValue.contentSelect +'+'+price +'*'+btnValue.packagingSelect +'='+ totalPrice)
-        }
-    }, [options, selectedProduct ,btnValue,totalPrice]);
+        setTotalPrice(calculateTotalPrice());
+    }, [options, selectedProduct ,btnValue]);
 
     
     const onClickbtn = (type , name) => {
@@ -74,9 +83,9 @@ const ProductDetails = ()=>{ //=================================================
             <>
             <div style={{marginTop:'100px'}} className='box'>
                 <div className='imgBox'>
-                    {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                    {selectedProduct.slideSrc.map((src, i)=><img src={src} key={i} alt={i}/>)}
                     <div className='labelBox'>
-                        {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)}
+                        {selectedProduct.slideSrc.map((src ,i)=><img src={src} key={i} alt={i} />)}
                     </div>
                     <p>
                         {selectedProduct.name}
@@ -167,12 +176,12 @@ const ProductDetails = ()=>{ //=================================================
                         <NavLink to="reviews"><span>리뷰정보</span></NavLink>
                         <NavLink to="recommendations" ><span>추천리스트</span></NavLink>
                     </div>
-                    <div>
+                    <div className='ProductDetailsInfo'>
                         <Routes>
-                            <Route path="/" element={<p>상세보기</p>} />
-                            <Route path="shipping"element={<p>배송/사이즈</p>} />
-                            <Route path="reviews" element={<p>리뷰정보</p>} />
-                            <Route path="recommendations" element={<p>추천리스트</p>} />
+                            <Route path="/" element={<ProductDetailsInfo type="imgInfo" selectedProduct={selectedProduct}/>} />
+                            <Route path="shipping"element={<ProductDetailsInfo type="deliSizeInfo" selectedProduct={selectedProduct} />} />
+                            <Route path="reviews" element={<ProductDetailsInfo type="reveiwInfo" selectedProduct={selectedProduct} />}/>
+                            <Route path="recommendations" element={<ProductDetailsInfo type="recommendInfo" selectedProduct={selectedProduct} />} />
                         </Routes>
                     </div>
                 </div>

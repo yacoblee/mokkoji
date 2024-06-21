@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import Main from './components/main/Main';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -15,23 +15,7 @@ import FindId from './components/login/FindId';
 const App = () => {
 
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.getElementById('header');
-      if (window.scrollY > 10) {
-        header.classList.remove('deactive');
-        header.classList.add('active');
-      } else {
-        header.classList.remove('active');
-        header.classList.add('deactive');
-      }
-    };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
   const noHeaderPaths = ['/login', '/login/membership', '/login/findid', '/login/findpw'];
   return (
     <BrowserRouter>

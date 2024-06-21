@@ -26,9 +26,14 @@ export default function Background() {
 
     return (
         <>
-            <video muted autoPlay loop ref={videoRef} >
+            <video muted autoPlay loop ref={videoRef} style={{
+                width: '100vw',
+                height: '100vh',
+                position: 'fixed',
+                objectFit: 'cover'
+            }}>
                 <source src='/images/main/mainMediea.mp4' type="video/mp4" />
-            </video>
+            </video >
         </>
     );
 }

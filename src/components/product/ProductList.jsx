@@ -1,7 +1,7 @@
 import React from 'react';
-import { useParams, NavLink, Route, Routes, Link } from 'react-router-dom';
+import { useParams, NavLink, Link } from 'react-router-dom';
 import GoodsItems from './ProductObject';
-import ProductDetails from './ProductDetails';
+// import ProductDetails from './ProductDetails';
 
 const ProductList = () => {
     const { category } = useParams(); // useParams()를 통해 category 파라미터 가져오기
@@ -9,23 +9,18 @@ const ProductList = () => {
     // 선택된 카테고리의 상품들만 필터링
     let selectItem = GoodsItems.filter((items) => items.category === category);
     console.log(`${selectItem[0]}`);
-    // const newCategory = new Set();
-    // GoodsItems.map((it)=>{newCategory.add(it.category,it.description)});
-    // const check = (text) => {
-    //     for ( let name of names ) {
-    //         if ( text==name ) return false;
-    //     } //for
-    //     return true;
-    // }
-    // for ( let name of str ) {
-    //     // 중복검사 후 담기
-    //     if ( unique(name) ) names.push(name) ;
-    // }
-    // console.log(newCategory);
+
+    const productMenu = [
+        {category: 'stationeryGoods',description: '문구/사무',},
+        {category: 'fashionGoods',description: '패션/생활',},
+        {category: 'interiorGoods',description: '인테리어 소품',},
+        {category: 'handicraftGoods',description: '공예품',},
+        {category: 'kitchGoods',description: '주방/식기',},
+    ];
     return (
         <>
             <div className='productMenu' style={{ marginTop: "150px" }}>
-                {GoodsItems.map((items, i) => (
+                {productMenu.map((items, i) => (
                     <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
                 ))}
             </div>
