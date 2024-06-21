@@ -1,5 +1,7 @@
 import '../../../css/mypage/MyPageIndex.css';
 
+import React from 'react';
+
 function MyPageLike() {
     return (
 
