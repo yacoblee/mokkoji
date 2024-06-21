@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, NavLink, Navigate, useNavigate,} from 'react-router-dom';
+import { useParams, NavLink , useNavigate,} from 'react-router-dom';
 import GoodsItems from './ProductObject';
 import ProductListResult from './ProductListResult';
 
