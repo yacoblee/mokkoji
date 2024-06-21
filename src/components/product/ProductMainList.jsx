@@ -1,19 +1,34 @@
-
+import { useState } from 'react';
 import { Link } from "react-router-dom";
 import GoodsItems from "./ProductObject";
 const ProductMainList = ({ title, sort }) => {
-
+    //필터를 위한 복사본 형성
     const sortItems = [...GoodsItems];
+
     if (sort === 'count') {
         sortItems.sort((a, b) => b.count - a.count);
     }
+    //슬라이드 구현을 위한 state
+    const [currentSlide ,setCurrentSlide] =useState(0);
 
+    const onclickMainList = (type)=>{
+        if(type ==='+'){
+
+            setCurrentSlide(currentSlide+1);
+        }else{
+            setCurrentSlide(currentSlide-1);
+        }
+    }
     return (
         <>
             <div className="productListInfo">
                 이 달의 <span>{title}</span>을 만나보세요 !
             </div>
             <div className="productList">
+                <button style={{left :0}}
+                onClick={()=>{onclickMainList('-')}}>왼쪽</button>
+                <div className="silder" 
+                style={{ transform: `translateX(-${currentSlide * 245}px)` }}>
                 {sortItems.map((product, i) => (
                     <Link to={`/goods/${product.category}/${product.id}`} key={i}>
                         <div key={i} className="productItem">
@@ -26,6 +41,9 @@ const ProductMainList = ({ title, sort }) => {
                         </div>
                     </Link>
                 ))}
+                </div>
+                <button style={{right :0}}
+                onClick={()=>{onclickMainList('+')}}>오른쪽</button>
             </div>
         </>
     );

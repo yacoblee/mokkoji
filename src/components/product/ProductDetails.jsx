@@ -8,9 +8,9 @@ import ProductForm from "./ProductForm";
 
 
 const ProductDetails = ()=>{ //=========================================================ProductDetails 컴포넌트
-    const { category, id } = useParams();
+    const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
     const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
-
+    
     // ======================================================================================return
     if (!selectedProduct) {
         return <div style={{marginTop:'100px'}}>Product not found</div>;
