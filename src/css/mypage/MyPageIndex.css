@@ -1,13 +1,16 @@
 /* App.css */
 
-
-a {
-    text-decoration: none;
-}
-
 .MyPage {
     position: relative;
     margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: flex-start;
+    /* height: 100vh; */
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    padding: 0 20%;
 }
 
 .MyPage>h1 {
@@ -17,22 +20,10 @@ a {
     /* height: 100vh; */
     box-sizing: border-box;
     margin: 0;
+    padding: 2%;
     /* overflow: hidden; */
-    padding: 1% 20%;
 }
 
-.MyPageIndex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    /* height: 100vh; */
-    box-sizing: border-box;
-    margin-top: 0;
-    /* overflow: hidden; */
-    padding: 0 20%;
-
-}
 
 .MyPageMain {
     display: flex;
@@ -59,7 +50,6 @@ a {
     /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
     gap: 1vw;
     width: 100%;
-
 }
 
 .MyGrid a {
@@ -68,6 +58,7 @@ a {
     text-align: center;
     border: 1px solid #ccc;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .MyLike,
