@@ -1,4 +1,4 @@
-import '../../css/mypage/MyPageIndex.css';
+import '../../css/mypage/MyPageMain.css';
 
 import React from 'react';
 
@@ -6,10 +6,10 @@ function MyPageMain() {
 
     return (
         <div className='MyPageMain'>
-
             <div className='MyInfoGrid'>
+
                 <div className="MyInfo">
-                    <h1>@ 안녕하세요!</h1>
+                    <h1>{localStorage.id} 안녕하세요!</h1>
                     <div className="MyInfoSet">
                         <a href=''>내 정보 수정</a>
                     </div>
@@ -19,7 +19,7 @@ function MyPageMain() {
                     <ul>
                         <li>
                             <span>
-                                <h3>구매 대기</h3>
+                                <h3>비밀번호</h3>
                             </span>
                             <span>
                                 <a href="">0</a>
@@ -27,7 +27,7 @@ function MyPageMain() {
                         </li>
                         <li>
                             <span>
-                                <h3>구매 완료</h3>
+                                <h3>휴대폰번호</h3>
                             </span>
                             <span>
                                 <a href="">0</a>
@@ -35,7 +35,7 @@ function MyPageMain() {
                         </li>
                         <li>
                             <span>
-                                <h3>구매 확정</h3>
+                                <h3>주소</h3>
                             </span>
                             <span>
                                 <a href="">0</a>
@@ -43,9 +43,10 @@ function MyPageMain() {
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
     )
 }
 
-export default MyPageMain;
+export default React.memo(MyPageMain);

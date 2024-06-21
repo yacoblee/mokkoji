@@ -1,0 +1,71 @@
+.MyGrid {
+    display: grid;
+    grid-template-areas:
+        "MyLike MyCart  MyPost MyRecent MyList ";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    gap: 1vw;
+    width: 100%;
+}
+
+.MyGrid a {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.MyLike,
+.MyCart,
+.MyPost,
+.MyRecent,
+.MyList {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    /* color: black; */
+}
+
+.MyCart {
+    grid-area: MyCart;
+}
+
+.MyLike {
+    grid-area: MyLike;
+}
+
+.MyRecent {
+    grid-area: MyRecent;
+}
+
+.MyPost {
+    grid-area: MyPost;
+}
+
+.MyList {
+    grid-area: MyList;
+
+}
+
+.IconLike,
+.IconCart,
+.IconPost,
+.IconRecent,
+.IconList {
+    flex: 1;
+    font-size: 30px;
+    padding-top: 1.5vw;
+    padding-bottom: 0.5vw;
+}
+
+.MyLike span,
+.MyCart span,
+.MyPost span,
+.MyRecent span,
+.MyList span {
+    flex: 1;
+    padding: 1vw;
+}
