@@ -1,7 +1,7 @@
 @font-face {
-    font-family: 'Chosunilbo_myungjo';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
-    font-weight: normal;
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -74,37 +74,42 @@
     height: 30px;
     border: none;
     border-bottom: solid #aaaaaa 1px;
-    font-family: 'Chosunilbo_myungjo';
+    font-family: 'SUITE-Regular';
 
 }
 
-.inputArea {
+.login-inputArea {
     margin-top: 45px;
+    /* outline: 1px solid; */
+    position: relative;
 }
 
-.inputArea p {
-    font-family: 'Chosunilbo_myungjo';
+label{
+    transition: .5s;
+}
+.login-inputArea label {
+    font-family: 'SUITE-Regular';
     position: absolute;
-    left: 25px;
     font-size: 20px;
+    /* top : -20px; */
 }
 
-.nputArea{
+/* .login-inputArea{
     position: absolute;
     left: 10px;
     top: 10px
-}
+} */
 
 
-.login-Box p:nth-child(3) {
-   margin-top: 20px;
-   margin-bottom: 20px;
+.login-Box p {
+    margin-top: 5px;
+    font-size: 15px;
+    margin-bottom: 15px;
     color: red;
-    /* visibility: hidden; */
+    visibility: hidden;
 }
 
 .login-Box button {
-    margin-top: 15px;
     height: 40px;
     width: 350px;
     border-radius: 15px;
@@ -112,8 +117,8 @@
     color: black;
     background-color: antiquewhite;
     font-size: 20px;
-    font-family: 'Chosunilbo_myungjo';
-    margin-bottom: 25px;
+    font-family: 'SUITE-Regular';
+    margin-bottom: 30px;
 }
 
 .login-Box button:hover {
@@ -127,6 +132,6 @@
 }
 
 .textarea ul a {
-    font-family: 'Chosunilbo_myungjo';
+    font-family: 'SUITE-Regular';
     color: black;
 }
