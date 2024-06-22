@@ -1,17 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
-import { faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageMain.css';
+
+import userInfo from "../login/UserInforData";
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 function MyPageFlex() {
+
+    const user = userInfo[0];   // 임의 지정
+
     return (
         <div className='MyInfoFlex'>
-
             <div className="MyInfo">
-                <h1>(아이디), 안녕하세요!</h1>
+                <h1>{user.id}, 안녕하세요!</h1>
 
                 <Link to='/mypage/set'>
                     <div className="MyInfoSet">
@@ -27,7 +31,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faUser} />
                     </div>
                     <span>
-                        (이름 나오는 곳)
+                        {user.name}
                     </span>
                 </div>
                 <div>
@@ -35,7 +39,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faMobileScreenButton} />
                     </div>
                     <span>
-                        (전화번호 나오는 곳)
+                        {user.phoneNumber}
                     </span>
                 </div>
                 <div>
@@ -43,7 +47,15 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faEnvelope} />
                     </div>
                     <span>
-                        (이메일 나오는 곳)
+                        유저.이메일
+                    </span>
+                </div>
+                <div>
+                    <div>
+                        <FontAwesomeIcon icon={faHome} />
+                    </div>
+                    <span>
+                        {user.address}
                     </span>
                 </div>
             </div>

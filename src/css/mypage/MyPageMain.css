@@ -17,11 +17,11 @@
 }
 
 .MyInfo {
-    flex: 2;
+    flex: 5;
 }
 
 .MyInfoBasic {
-    flex: 1;
+    flex: 4;
     display: flex;
     flex-direction: column;
 }

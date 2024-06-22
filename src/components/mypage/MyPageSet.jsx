@@ -1,9 +1,13 @@
 import '../../css/mypage/MyPageMain.css';
 
+import userInfo from "../login/UserInforData";
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function MyPageSet() {
+
+    const user = userInfo[0];   // 임의 지정
 
     const [emailType, setEmailType] = useState('');
     const [emailDisabled, setEmailDisabled] = useState(false);
@@ -23,13 +27,13 @@ function MyPageSet() {
         <div className='MyPageSet'>
             <div className='MyInfoList'>
                 <div>이름</div>
-                <div>이름 못바꿈 Data에서 이름값 갖고옴</div>
+                <div>{user.name}</div>
 
                 <div>생일</div>
-                <div>생일 못바꿈 Data에서 생일 갖고옴</div>
+                <div>{user.birth}</div>
 
                 <div>전화번호</div>
-                <div>(전화번호)</div>
+                <div></div>
 
                 <div>이메일</div>
                 <div>
@@ -53,9 +57,7 @@ function MyPageSet() {
                 </div>
 
                 <div>아이디</div>
-                <div>
-                    아이디 못바꿈 Data에서 아이디값 갖고오기
-                </div>
+                <div>{user.id}</div>
 
                 <div>비밀번호</div>
                 <div>
