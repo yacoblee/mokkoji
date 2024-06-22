@@ -24,6 +24,18 @@ export default function Background() {
         };
     }, []);
 
+    const chageSection = (event) => {
+        event.preventDefault();
+        const section2 = document.querySelector('#section2');
+        if (section2) {
+            const scrollPosition = section2.getBoundingClientRect().top + -(window.innerHeight - section2.clientHeight);
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <>
             <video muted autoPlay loop ref={videoRef} style={{
@@ -34,6 +46,14 @@ export default function Background() {
             }}>
                 <source src='/images/main/mainMediea.mp4' type="video/mp4" />
             </video >
+
+            <div className="video_intro">
+                <div><span>Meet a variety of character products</span></div>
+                <div><span>Traditional Korean character merchandise</span></div>
+                <div><a href="#section2" onClick={chageSection}><span>Learn More</span></a></div>
+            </div>
         </>
     );
 }
+
+
