@@ -8,7 +8,7 @@ import '../../css/Product/ProductMain.css';
 function ProductContainer() {
     return (
         <div className='ProductContainer' style={{ marginTop: "100px" }}>
-            <h1 style={{ padding: "2% 0" }}>
+            <h1 style={{ padding: "4%" }}>
                 Choose your GOODS:
             </h1>
             <ProductMainSlide />
