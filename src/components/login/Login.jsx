@@ -8,6 +8,7 @@ import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
 import userInfo from "./UserInforData";
 
+sessionStorage.setItem('LoginSuccess', 'false');
 
 
 const Login = () => {
@@ -55,14 +56,14 @@ const Login = () => {
         const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
         if (isLogin) {
             navi('/');
-            // sessionStorage.setItem('LoginSuccess','true');
+            sessionStorage.removeItem('LoginSuccess');
+            sessionStorage.setItem('LoginSuccess', 'true');
         }
         else if (!isLogin) {
             e.preventDefault();
             setErrorCount(prventCount => prventCount + 1);
             loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요. \n 로그인 실패 횟수: ${errorCount}`;
             loginP.current.style.visibility = 'visible'
-
         }
 
     }
