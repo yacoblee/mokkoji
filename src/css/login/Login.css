@@ -100,11 +100,12 @@
 
 
 .login-Box p {
-    margin-top: 5px;
+    margin-top: 15px;
     font-size: 15px;
-    margin-bottom: 15px;
+    /* margin-bottom: 5px; */
     color: red;
     visibility: hidden;
+    white-space: pre-wrap;
 }
 
 .login-Box button {

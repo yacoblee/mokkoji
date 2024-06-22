@@ -14,6 +14,7 @@ import FindId from './components/login/FindId';
 
 const App = () => {
 
+  // sessionStorage.setItem('LoginSuccess', 'false');
 
 
   const noHeaderPaths = ['/login', '/login/membership', '/login/findid', '/login/findpw'];
