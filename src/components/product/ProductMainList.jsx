@@ -14,7 +14,7 @@ const ProductMainList = ({ title, sort }) => {
     const [currentSlide ,setCurrentSlide] =useState(0);
 
     //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
-    const maxSlide = sortItems.length - 3; 
+    const maxSlide = sortItems.length - 4; 
     
     //버튼을 누르면 state값 증가와 감소
     const onclickMainList = (type)=>{
@@ -38,7 +38,7 @@ const ProductMainList = ({ title, sort }) => {
                 }
 
                 <div className="slider" 
-                style={{ transform: `translateX(-${currentSlide * 31.5}vw)` }}>
+                style={{ transform: `translateX(-${currentSlide * 23.7}vw)` }}>
 
                 {sortItems.map((product, i) => (
                     <Link to={`/goods/${product.category}/${product.id}`} key={i}
@@ -47,7 +47,9 @@ const ProductMainList = ({ title, sort }) => {
                             <img src={product.slideSrc[0]} alt={product.name} />
 
                             <div>
-                                <p>{product.name} {product.price} </p>
+                                <p>{product.name} </p>
+                                <p className='ProductPrice'>{product.price}</p>
+                                {/* <p>{product.count}</p> */}
                             </div>
                         
                     </Link>
