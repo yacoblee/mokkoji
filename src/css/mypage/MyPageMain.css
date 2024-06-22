@@ -66,11 +66,15 @@
 }
 
 .MyInfoList div {
-    padding: 1vw;
+    padding: .5vw;
     /* border: 1px solid #ccc; */
 }
 
 .MyInfoSave {
     margin: 1vw;
     float: right;
+}
+
+.ListTitle {
+    font-weight: bold;
 }
