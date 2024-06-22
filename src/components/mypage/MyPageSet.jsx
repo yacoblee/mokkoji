@@ -26,16 +26,18 @@ function MyPageSet() {
     return (
         <div className='MyPageSet'>
             <div className='MyInfoList'>
-                <div>이름</div>
+                <div className='ListTitle'>이름</div>
                 <div>{user.name}</div>
 
-                <div>생일</div>
+                <div className='ListTitle'>생일</div>
                 <div>{user.birth}</div>
 
-                <div>전화번호</div>
-                <div></div>
+                <div className='ListTitle'>전화번호</div>
+                <div>
+                    <input type="tel" placeholder='전화번호 입력' />
+                </div>
 
-                <div>이메일</div>
+                <div className='ListTitle'>이메일</div>
                 <div>
                     <input type="text" placeholder='이메일 입력' />
                     @
@@ -56,23 +58,25 @@ function MyPageSet() {
                     </select>
                 </div>
 
-                <div>아이디</div>
+                <div className='ListTitle'>아이디</div>
                 <div>{user.id}</div>
 
-                <div>비밀번호</div>
+                <div className='ListTitle'>비밀번호</div>
                 <div>
-                    <input type="password" />
+                    <input type="password" placeholder='비밀번호 변경' />
                 </div>
-                <div>비번 확인</div>
+                <div></div>
                 <div>
-                    <input type="password" />
+                    <input type="password" placeholder='비밀번호 확인' />
                 </div>
 
-                <div>주소</div>
-                <div>(주소) 옆에 주소 API</div>
-                <div>상세주소</div>
+                <div className='ListTitle'>주소</div>
                 <div>
                     <input type="text" />
+                </div>
+                <div></div>
+                <div>
+                    <input type="text" placeholder='상세 주소 입력' />
                 </div>
             </div>
 
