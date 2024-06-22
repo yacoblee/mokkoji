@@ -47,7 +47,7 @@
     padding: 0;
     list-style: none;
     scroll-behavior: smooth;
-    font-family: 'SUITE-Regular';
+    /* font-family: 'SUITE-Regular'; */
     box-sizing: border-box;
 }
 

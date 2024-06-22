@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'orig_halant_regular';
   scroll-behavior: smooth;
 }
 
@@ -12,6 +11,7 @@ html {
   overflow: auto;
   font-family: Arial, sans-serif;
 }
+
 /* 
 .master_page {
   width: 100%;

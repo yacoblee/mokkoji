@@ -5,10 +5,23 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumBarunpen';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
-    font-family: 'orig_halant_regular';
     scroll-behavior: smooth;
 }
 
@@ -37,6 +50,51 @@ html {
     color: white;
     position: relative;
     transition: transform 1s ease-out;
+}
+
+.video_intro {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10vh;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 4px 3px 4px #000;
+}
+
+.video_intro>div:nth-child(2) {
+    font-family: 'Chosunilbo_myungjo';
+    font-size: 3rem;
+    margin-bottom: 3vh;
+}
+
+.video_intro>div:nth-child(1) {
+    font-family: 'NanumBarunpen';
+    font-size: 2.2rem;
+    margin-bottom: 5vh;
+}
+
+.video_intro>div:nth-child(3) {
+    font-family: 'NanumBarunpen';
+    font-size: 1.8rem;
+    margin-bottom: 5vh;
+    scroll-behavior: smooth;
+    transition: all 5s ease-in;
+}
+
+.video_intro div>a {
+    color: white;
+    text-decoration: none;
+
+}
+
+.video_intro div>a:hover {
+    color: rgba(18, 18, 138, 0.564);
+    font-size: 2.1rem;
+    text-shadow: 0 0 0 #000;
+    transition: all 1s ease;
 }
 
 /* section2 도어 이벤트 S */
@@ -169,8 +227,8 @@ html {
 }
 
 
-#section4 {
-    background: #9b59b6;
+#section3 {
+    background-color: beige;
 }
 
 #section5 {
@@ -302,7 +360,7 @@ html {
 
 /* SECTION3 Intorduction section S */
 
-#section3 {
+#section4 {
     display: flex;
     grid-template-columns: 1fr 1fr;
     position: relative;
