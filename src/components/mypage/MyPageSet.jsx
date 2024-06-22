@@ -1,14 +1,21 @@
 import '../../css/mypage/MyPageMain.css';
-import '../../css/mypage/MyPageIndex.css';
-
 
 import React from 'react';
 
+
 function MyPageSet() {
-    console.log('ssssssssssssss')
     return (
         <div className='MyPageSet'>
-            <div>sss</div>
+            <div className='MyInfoFlex'>
+
+                <div className="MyInfo">
+                    <h1>(아이디), 안녕하세요!</h1>
+
+
+                </div>
+
+
+            </div>
         </div>
     )
 }
