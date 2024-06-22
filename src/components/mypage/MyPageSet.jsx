@@ -6,15 +6,18 @@ import React from 'react';
 function MyPageSet() {
     return (
         <div className='MyPageSet'>
-            <div className='MyInfoFlex'>
-
-                <div className="MyInfo">
-                    <h1>(아이디), 안녕하세요!</h1>
-
-
-                </div>
-
-
+            <div className='MyInfoList'>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
         </div>
     )

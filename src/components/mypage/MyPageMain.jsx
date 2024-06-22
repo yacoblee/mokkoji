@@ -11,14 +11,7 @@ function MyPageMain() {
     return (
         <div className='MyPageMain'>
 
-            <Link to='/mypage/asdf'>
-                sowjdasfjhagk
-            </Link>
-
-            <Routes>
-                <Route path='/' element={<MyPageFlex />} />
-                <Route path="/set" element={<MyPageSet />} />
-            </Routes>
+            
         </div>
     )
 }

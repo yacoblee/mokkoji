@@ -11,6 +11,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 /* 구매용 buy 글씨체 */
 
 @font-face {
@@ -50,10 +51,10 @@
     box-sizing: border-box;
 }
 
-/* a{
+a {
     text-decoration: none;
-    color: black;
-} */
+    /* color: black; */
+}
 
 /* ============================================= */
 /* 상품 리스트 : ProductContainer.jsx , ProductList.jsx , ProductMainSlide , */
@@ -133,15 +134,17 @@
 
 }
 
-.productList button{
+.productList button {
     position: absolute;
-    top : 50%;
+    top: 50%;
     z-index: 1;
 }
-.silder{
+
+.silder {
     height: 100%;
     transition: 0.5s;
 }
+
 /* .silder{
     transform: translateX(-240px);
 } */
@@ -181,7 +184,8 @@
     flex-direction: column;
 
 }
-.productItemResult{
+
+.productItemResult {
     height: 100%;
     width: 260px;
     background-color: white;
@@ -195,13 +199,15 @@
     flex-direction: column;
 }
 
-.productItem img ,.productItemResult img{
+.productItem img,
+.productItemResult img {
     flex-basis: 70%;
 
     object-fit: cover;
 }
 
-.productItem div ,.productItemResult div{
+.productItem div,
+.productItemResult div {
     flex-basis: 30%;
     display: flex;
     flex-direction: column;
@@ -232,23 +238,25 @@
     box-shadow: inset 0 -10px 0 rgba(166, 255, 0, 0.233);
 }
 
-.productSearch{
+.productSearch {
     width: 95vw;
     height: 50px;
     margin: 0px auto;
     border: 1px solid;
     display: flex;
     justify-content: center;
-    gap : 20px;
+    gap: 20px;
     padding: 10px;
 }
-.productSearch button ,.SearchBar button{
-    background-color:rgba(153, 205, 50, 0.107);
-    padding:0 15px;
+
+.productSearch button,
+.SearchBar button {
+    background-color: rgba(153, 205, 50, 0.107);
+    padding: 0 15px;
     border: 0.5px solid #d0c0a0;
 }
 
-.SearchBar{
+.SearchBar {
     width: 95vw;
     height: 50px;
     margin: auto;
@@ -258,6 +266,7 @@
     gap: 10px;
     padding: 10px;
 }
+
 .productItemList {
     width: 95vw;
 
@@ -278,7 +287,8 @@
     object-fit: cover;
 }
 
-.productItemList .productItem ,.productItemList .productItemResult {
+.productItemList .productItem,
+.productItemList .productItemResult {
     flex: 1;
 
     object-fit: cover;
@@ -373,12 +383,13 @@
     justify-content: space-between;
 }
 
-.isLike_icon{
+.isLike_icon {
     /* margin: auto ; */
     border: 0 solid;
     background-color: rgba(255, 255, 255, 0);
 }
-.isLike_icon img{
+
+.isLike_icon img {
 
     height: 30px;
 
@@ -412,11 +423,11 @@
     flex-basis: 40%;
     white-space: pre-line;
     display: grid;
-    gap : 20px;
+    gap: 20px;
     /* margin-bottom: 50px; */
 }
 
-.productName{
+.productName {
     /* position: absolute; */
     font-family: 'omyu_pretty';
     /* font-weight: 700; */
@@ -517,7 +528,7 @@
     padding: 5px 15px;
 }
 
-.basket_icon{
+.basket_icon {
     width: 40%;
     display: flex;
     /* flex-direction: column; */
@@ -531,12 +542,13 @@
 }
 
 .basket_icon img {
-   /* width: 100%; */
-   height: 30px;
-   object-fit: cover;
+    /* width: 100%; */
+    height: 30px;
+    object-fit: cover;
 
 }
-.buy_icon{
+
+.buy_icon {
     margin: auto;
     width: 40%;
     font-size: 25px;
@@ -545,10 +557,13 @@
     letter-spacing: 3px;
     /* border: 1px solid black; */
 }
-.buy_icon:hover , .basket_icon:hover{
+
+.buy_icon:hover,
+.basket_icon:hover {
     color: red;
     text-shadow: 3px 3px 3px silver;
 }
+
 .priceSelect {
     display: flex;
     /* column-gap: 20px; */
@@ -631,33 +646,42 @@
     height: 100%;
     object-fit: cover;
 }
-.reveiwInfo{
+
+.reveiwInfo {
     width: 1200px;
     margin-bottom: 2%;
     display: flex;
 
     gap: 5px;
-    justify-content: flex-start; /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
-    overflow-x: auto; /* overflow-x: scroll 대신 overflow-x: auto를 사용합니다. */
+    justify-content: flex-start;
+    /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
+    overflow-x: auto;
+    /* overflow-x: scroll 대신 overflow-x: auto를 사용합니다. */
     /* white-space: nowrap;  */
     /* 줄바꿈을 방지하여 모든 자식 요소가 한 줄에 있게 합니다. */
 }
-.recommendInfo{
+
+.recommendInfo {
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-bottom: 2%;
 
 
 }
-.reveiwName,.recommendItem{
+
+.reveiwName,
+.recommendItem {
     font-size: 18px;
     color: blue;
 }
-.reveiwName p ,.recommendItem p{
+
+.reveiwName p,
+.recommendItem p {
     color: initial;
     font-weight: 800;
 }
+
 .reveiwInfo>div {
     /* height: 30px; */
 
@@ -670,21 +694,24 @@
     flex: 0 0 auto;
 
     display: grid;
-    grid-template-rows: 15% 50% 22% 5% 5% ;
+    grid-template-rows: 15% 50% 22% 5% 5%;
 
     /*Flexbox 자식 요소가 줄바꿈 없이 가로 스크롤에 나타나도록 합니다.*/
 }
-.recommendInfo>a>div{
+
+.recommendInfo>a>div {
     height: 40vh;
     min-height: 300px;
 
     border: 1px solid;
     border-radius: 5px;
     display: grid;
-    grid-template-rows: 15% 67% 5% 5% 5% ;
+    grid-template-rows: 15% 67% 5% 5% 5%;
     color: black;
 }
-.reveiwInfo img , .recommendInfo img{
+
+.reveiwInfo img,
+.recommendInfo img {
 
     width: 100%;
     height: 100%;
