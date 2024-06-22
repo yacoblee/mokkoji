@@ -3,16 +3,19 @@ import '../../css/login/Login.css';
 import Membership from "./Membership";
 import FindId from "./FindId";
 import FindPw from "./FindPw";
-import { Link, useFetcher, useNavigate } from 'react-router-dom'
+import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom'
 import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
 import userInfo from "./UserInforData";
+
+
 
 const Login = () => {
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
     const [loginSuccese, setLoginSuccese] = useState('');
+    const [errorCount, setErrorCount] = useState(1);
     const onChangeId = (e) => { setInputId(e.target.value) }
     const onChangePw = (e) => { setInputePw(e.target.value) }
 
@@ -21,6 +24,9 @@ const Login = () => {
 
     const labelPwRed = useRef(null);
     const inputPwRef = useRef(null);
+
+    const params = useParams();
+
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
             labelRef.current.style.fontSize = '15px';
@@ -42,17 +48,20 @@ const Login = () => {
             inputRef.current.focus();
         }
     }
+    const loginP = useRef(null);
 
-    const loginFailure = useRef(null);
-    const CheckLogin = () => {
+    const CheckLogin = (e) => {
         const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
         if (isLogin) {
-            alert('로그인 완료')
+            navi('/');
         }
-        else {
-            alert('로그인 실패')
-            // loginFailure.current.style.visibility = 'visible';
+        else if (!isLogin) {
+            e.preventDefault();
+            setErrorCount(prventCount => prventCount + 1);
+            loginP.current.textContent = `로그인 실패 횟수: ${errorCount}`;
+            loginP.current.style.visibility = 'visible'
         }
+
     }
 
 
@@ -73,6 +82,7 @@ const Login = () => {
 
                         <div className="login-inputArea">
                             <label
+                                className="login-label"
                                 ref={labelIdRed}
                                 onClick={() => LabelClick(inputIdRef)}
                             >아이디</label>
@@ -87,6 +97,7 @@ const Login = () => {
 
                         <div className="login-inputArea">
                             <label
+                                className="login-label"
                                 ref={labelPwRed}
                                 onClick={() => LabelClick(inputPwRef)}>
                                 비밀번호</label>
@@ -100,7 +111,7 @@ const Login = () => {
                         </div>
 
                         <LoginValidityCheck inputId={inputId} inputPw={inputPw} />
-                        <p >아이디 또는 비밀번호를 다시 입력해주세요</p>
+                        <p ref={loginP}>아이디 또는 비밀번호를 다시 입력해주세요</p>
                         <button onClick={CheckLogin}>Login</button>
                     </form>
                     <ul>

@@ -86,11 +86,11 @@
     position: relative;
 }
 
-label {
+.login-label {
     transition: .5s;
 }
 
-.login-inputArea label {
+.login-inputArea .login-label {
     font-family: 'SUITE-Regular';
     position: absolute;
     font-size: 20px;

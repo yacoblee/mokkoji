@@ -28,6 +28,8 @@ const Header = () => {
     const locationNow = useLocation();
     if (locationNow.pathname.toLowerCase().includes('login')) return null;
     console.log(locationNow);
+
+    
     return (
         <header id="header" className="deactive">
             <section className="main_header"><div className="header_center">Header center</div>
