@@ -10,7 +10,8 @@ const ProductMainList = ({ title, sort }) => {
     }
     //슬라이드 구현을 위한 state
     const [currentSlide ,setCurrentSlide] =useState(0);
-
+    
+    //버튼을 누르면 state값 증가와 감소
     const onclickMainList = (type)=>{
         if(type ==='+'){
 
@@ -26,6 +27,7 @@ const ProductMainList = ({ title, sort }) => {
             </div>
             <div className="productList">
                 <button style={{left :0}}
+                type='button'
                 onClick={()=>{onclickMainList('-')}}>왼쪽</button>
                 <div className="silder" 
                 style={{ transform: `translateX(-${currentSlide * 245}px)` }}>
@@ -42,7 +44,8 @@ const ProductMainList = ({ title, sort }) => {
                     </Link>
                 ))}
                 </div>
-                <button style={{right :0}}
+                <button type='button' 
+                style={{right :0}}
                 onClick={()=>{onclickMainList('+')}}>오른쪽</button>
             </div>
         </>
