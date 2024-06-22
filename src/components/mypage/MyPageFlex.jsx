@@ -13,7 +13,7 @@ function MyPageFlex() {
             <div className="MyInfo">
                 <h1>(아이디), 안녕하세요!</h1>
 
-                <Link to='/mypage'>
+                <Link to='/mypage/set'>
                     <div className="MyInfoSet">
                         <button>내 정보 수정</button>
                     </div>
