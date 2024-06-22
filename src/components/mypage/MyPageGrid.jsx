@@ -40,7 +40,7 @@ function MyPageGrid() {
                     <div className='IconRecent'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </div>
-                    <span>뭐 넣지</span>
+                    <span>문의 예정</span>
                 </div>
             </Link>
             <Link to='/mypage/list'>

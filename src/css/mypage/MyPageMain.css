@@ -56,3 +56,21 @@
     text-align: start;
     padding-left: 10px;
 }
+
+.MyInfoList {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 5fr;
+    gap: 1vw;
+    padding: 1vw;
+}
+
+.MyInfoList div {
+    padding: 1vw;
+    /* border: 1px solid #ccc; */
+}
+
+.MyInfoSave {
+    margin: 1vw;
+    float: right;
+}
