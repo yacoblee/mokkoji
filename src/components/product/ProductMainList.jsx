@@ -25,6 +25,19 @@ const ProductMainList = ({ title, sort }) => {
             setCurrentSlide(currentSlide-1);
         }
     }
+
+    //버튼 호버시 true 아웃시 fasle  의 state
+    const [hover, setHover] = useState(false);
+
+    //버튼 호버시 true 설정
+    const onMouseEnterHover = ()=>{
+        setHover(true);
+    }
+
+    const onMouseOverHover = ()=>{
+        setHover(false);
+    }
+    console.log(hover);
     return (
         <>
             <div className="productListInfo">
@@ -32,9 +45,14 @@ const ProductMainList = ({ title, sort }) => {
             </div>
             <div className="productList">
                 {
-                    currentSlide>0 && <button style={{left :0}}
+                    currentSlide>0 && <button style={{left :5 ,transform: 'rotateY(180deg)'}}
                     type='button'
-                    onClick={()=>{onclickMainList('-')}}>왼쪽</button> 
+                    onClick={()=>{onclickMainList('-')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="left" />
+                    </button> 
                 }
 
                 <div className="slider" 
@@ -56,9 +74,14 @@ const ProductMainList = ({ title, sort }) => {
                 ))}
                 </div>
                 {
-                    currentSlide < maxSlide && <button style={{right :0}}
+                    currentSlide < maxSlide && <button style={{right :5}}
                     type='button'
-                    onClick={()=>{onclickMainList('+')}}>오른쪽</button> 
+                    onClick={()=>{onclickMainList('+')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="right" />
+                    </button> 
                 }
             </div>
         </>

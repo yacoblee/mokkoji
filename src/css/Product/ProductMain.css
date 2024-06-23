@@ -136,10 +136,20 @@ a {
 
 .productList button {
     position: absolute;
-    top: 50%;
+    top: 30%;
     z-index: 1;
+    border : 0px solid;
+    background-color: #d0888000;
 }
-
+.productList button img{
+    height: 50px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.productList button img:hover{
+    transform: scale(1.2);
+    transition: 0.3s;
+}
 
 .slider {
     height: 100%;
