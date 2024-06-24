@@ -1,12 +1,49 @@
 
+import { useState } from "react";
 import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 
-const ProductDetailsInfo = ({ type, selectedProduct }) => {
-    switch (type) {
-        case 'imgInfo':
+const ProductDetailsInfo = ({ selectedProduct }) => {
+        //슬라이드 구현을 위한 state
+        const [currentSlide ,setCurrentSlide] =useState(0);
+
+
+        let visibleSlide = 5;//현재 보여지는 슬라이드 갯수
+        
+        //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
+        const maxSlide = selectedProduct.reviews.length - visibleSlide; 
+        
+        //버튼을 누르면 state값 증가와 감소
+        const onclickreivewsList = (type)=>{
+            if(type ==='+'){
+                if(currentSlide === maxSlide) return;
+                setCurrentSlide(currentSlide+1);
+            }else{
+                setCurrentSlide(currentSlide-1);
+            }
+        }
+    
+        //버튼 호버시 true 아웃시 fasle  의 state
+        const [hover, setHover] = useState(false);
+    
+        //버튼 호버시 true 설정
+        const onMouseEnterHover = ()=>{
+            setHover(true);
+        }
+    
+        const onMouseOverHover = ()=>{
+            setHover(false);
+        }
+        const recommendItemid = selectedProduct.id;
+        const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
+            .sort((a, b) => b.reviews.length - a.reviews.length)
+            .slice(0, 5);
+        const formatNumber = (number) => {
+            return number.toLocaleString('en-US');
+        }
             return (
-                <div className={type}>
+                <>
+                <div className='imgInfo'>
                     <div className="imgInfoBox">
                         {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={i} />)}
                         {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
@@ -27,11 +64,8 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                         </p>
                     </div>
                 </div>
-            );
-
-        case 'deliSizeInfo':
-            return (
-                <div className={type}>
+                
+                <div className='deliSizeInfo'>
                     <p><span>배송 정보</span><br /><br />
 
                         -오전 9시 이전 주문건까지 당일출고되며 이 후 주문건은 익일 출고됩니다 (단, 재고가 있는 상품에 한함)<br />
@@ -58,13 +92,23 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
 
                     </p>
                 </div>
-            );
+                <div className='reveiwInfo'
+                >
+                                    {
+                    currentSlide>0 && <button style={{left :5 ,transform: 'rotateY(180deg)'}}
+                    type='button'
+                    onClick={()=>{onclickreivewsList('-')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="left" />
+                    </button> 
+                }
 
-        case 'reveiwInfo':
-            return (
-                <div className={type}>
                     {selectedProduct.reviews.map((it, i) => <>
-                        <div key={i}>
+                        <div key={i} 
+                        
+                        style={{ transform: `translateX(-${currentSlide * 240}px)` }}>
                             <p className="reveiwName">{i}
                                 <p>{selectedProduct.name}</p>
                             </p>
@@ -82,17 +126,18 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                             </p>
                         </div><br />
                     </>).reverse()}
+                    {
+                    currentSlide < maxSlide && <button style={{right :5}}
+                    type='button'
+                    onClick={()=>{onclickreivewsList('+')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="right" />
+                    </button> 
+                }
                 </div>
-            );
-
-        case 'recommendInfo':
-            const recommendItemid = selectedProduct.id;
-            const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
-                .sort((a, b) => b.reviews.length - a.reviews.length)
-                .slice(0, 5);
-
-            return (
-                <div className={type}>
+                <div className='recommendInfo'>
                     {recommendItem.map((it, i) => <>
                         <Link to={`/goods/${it.category}/${it.id}`} key={i}>
                             <div>
@@ -108,22 +153,17 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                                     review : {it.reviews.length}
                                 </span>
                                 <p>
-                                    금액 : {it.price}
+                                    금액 : {formatNumber(it.price)}
                                 </p>
                             </div>
                         </Link>
                     </>)}
                 </div>
+                </>
             );
 
-        default:
-            return (
-                <div>
-                    잘못된 타입 타입을 찾을 수 없음.
-                    오타 가능성을 염두
-                </div>
-            );
-    }
+
+    
 }
 
 export default ProductDetailsInfo;

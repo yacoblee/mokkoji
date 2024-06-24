@@ -40,7 +40,9 @@ const ProductMainList = ({ title, sort }) => {
     const onMouseOverHover = ()=>{
         setHover(false);
     }
-    console.log(hover);
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
+    }
     return (
         <>
             <div className="productListInfo">
@@ -69,7 +71,7 @@ const ProductMainList = ({ title, sort }) => {
 
                             <div>
                                 <p>{product.name} </p>
-                                <p className='ProductPrice'>{product.price}</p>
+                                <p className='ProductPrice'>{formatNumber(product.price)}</p>
                                 {/* <p>{product.count}</p> */}
                             </div>
                         
