@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
-import userInfo from "./UserInforData";
+import userInfo from "../login/UserInforData";
 
 import React from 'react';
 import { Link } from 'react-router-dom';

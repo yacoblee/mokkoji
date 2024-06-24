@@ -1,6 +1,6 @@
 import '../../css/mypage/MyPageMain.css';
 
-import userInfo from "./UserInforData";
+import userInfo from "../login/UserInforData";
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

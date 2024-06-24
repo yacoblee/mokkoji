@@ -3,7 +3,7 @@ import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageMain.css';
 
-import userInfo from "./UserInforData";
+import userInfo from "../login/UserInforData";
 
 import React from 'react';
 import { Link } from 'react-router-dom';
