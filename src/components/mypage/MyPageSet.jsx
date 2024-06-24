@@ -12,11 +12,12 @@ function MyPageSet() {
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
+    const [emailType, setEmailType] = useState('');
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [emailType, setEmailType] = useState('');
-    const [emailDisabled, setEmailDisabled] = useState(false);
     const [addressDetail, setAddressDetail] = useState('');
+
+    const [emailDisabled, setEmailDisabled] = useState(false);
 
     const history = useNavigate();
 
