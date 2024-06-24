@@ -13,8 +13,11 @@ const ProductMainList = ({ title, sort }) => {
     //슬라이드 구현을 위한 state
     const [currentSlide ,setCurrentSlide] =useState(0);
 
+
+    let visibleSlide = 4;//현재 보여지는 슬라이드 갯수
+    
     //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
-    const maxSlide = sortItems.length - 4; 
+    const maxSlide = sortItems.length - visibleSlide; 
     
     //버튼을 누르면 state값 증가와 감소
     const onclickMainList = (type)=>{
