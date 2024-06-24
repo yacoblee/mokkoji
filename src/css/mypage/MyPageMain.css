@@ -85,12 +85,9 @@
     font-weight: bold;
 }
 
-.MyInfoList input {
+.MyInfoList input,
+.MyInfoList select {
     border: none;
     border-bottom: solid #aaaaaa 1px;
-    height: 30px;
-}
-
-.MyInfoList select {
     height: 30px;
 }
