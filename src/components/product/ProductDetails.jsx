@@ -68,12 +68,7 @@ const ProductDetails = ()=>{ //=================================================
                         <NavLink to="recommendations" ><span>추천리스트</span></NavLink>
                     </div>
                     <div className='ProductDetailsInfo'>
-                        <Routes>
-                            <Route path="/" element={<ProductDetailsInfo type="imgInfo" selectedProduct={selectedProduct}/>} />
-                            <Route path="shipping"element={<ProductDetailsInfo type="deliSizeInfo" selectedProduct={selectedProduct} />} />
-                            <Route path="reviews" element={<ProductDetailsInfo type="reveiwInfo" selectedProduct={selectedProduct} />}/>
-                            <Route path="recommendations" element={<ProductDetailsInfo type="recommendInfo" selectedProduct={selectedProduct} />} />
-                        </Routes>
+                    <ProductDetailsInfo selectedProduct={selectedProduct}/>
                     </div>
                 </div>
             </>

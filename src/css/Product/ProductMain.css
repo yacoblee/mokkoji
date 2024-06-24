@@ -181,6 +181,9 @@ a {
 }
 .productItem div{
     height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 2px 10px;
     color: black;
 }
@@ -406,6 +409,7 @@ a {
 .imgBox {
     width: 100%;
     height: 100%;
+   
     /* display: flex; */
     /* align-items: center; */
     /* justify-content: center; */
@@ -425,15 +429,16 @@ a {
     width: 100%;
     height: 80%;
     /* object-fit: cover; */
+    border-radius: 15px;
 }
 
 .labelBox {
     width: 100%;
     height: 20%;
-    display: flex;
-    /* grid-template-columns: repeat(5,1fr); */
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     background-color: #d0c0a01d;
     gap: 0 10px;
     padding: 0 10px;
@@ -453,8 +458,9 @@ a {
 .labelBox img {
     /* height: 80%;
     width: 17%; */
-    height: 100%;
+    height: 80%;
     width: 100%;
+    border-radius: 15px;
     cursor: pointer;
 
 }
@@ -467,6 +473,7 @@ a {
     grid-auto-rows: 1fr 9fr;
     align-items: center;
     background-color: #d0c0a01d;
+    padding: 0 10px;
 
 }
 
@@ -689,6 +696,7 @@ a {
     font-family: 'SUITE-Regular';
     width: 1200px;
     margin: auto;
+    /* height: 300vh; */
     margin-top: 30px;
     grid-template-rows: 80px auto;
     display: grid;
@@ -704,10 +712,14 @@ a {
     align-items: center;
     border-bottom: 1px solid silver;
     position: sticky;
-    top: 0;
+    top: 200px;
     background-color: white;
 }
-
+.ProductDetailsInfo h2 {
+    height: 50px;
+    margin: 15px 20px;
+    padding: 0 5px;
+}
 .tabBox span {
     display: inline-flex;
     height: 30%;
@@ -719,22 +731,30 @@ a {
     justify-content: center;
     align-items: center;
 }
-
+.deliSizeInfo{
+    height: auto;
+    /* display: flex; */
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+}
 .deliSizeInfo p {
     white-space: pre-line;
+    font-size: 16px;
 }
 
 .deliSizeInfo span {
     color: blue;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .imgInfo {
     width: 100%;
-    /* height: 80vh; */
+    height: 90vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    align-items: center;
+    align-content: center;
     text-align: center;
 
 }
@@ -744,6 +764,7 @@ a {
 }
 
 .imgInfoBox {
+    height: 90vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -752,14 +773,15 @@ a {
 .imgInfoBox img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; 
+    overflow: hidden;
 }
 
 .reveiwInfo {
     width: 1200px;
     margin-bottom: 2%;
     display: flex;
-
+    
     gap: 5px;
     justify-content: flex-start;
     /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
@@ -787,26 +809,41 @@ a {
 }
 
 
-.reveiwInfo>div {
+.reviewInfoInner {
     /* height: 30px; */
 
-    width: 230px;
+    width: 25.4vw;
     height: 40vh;
     min-height: 300px;
     /* padding: 10px; */
-    border: 1px solid;
+    border: 1px solid #d0c0a0;
     border-radius: 5px;
+    overflow: hidden;
     flex: 0 0 auto;
 
     display: grid;
-    grid-template-rows: 15% 50% 22% 5% 5%;
+    grid-template-columns:  65% 35% ;
+    /* box-shadow:3px 3px 3px #d0c0a0; */
     transition: 0.5s;
     /*Flexbox 자식 요소가 줄바꿈 없이 가로 스크롤에 나타나도록 합니다.*/
 }
-
+.reviewContent{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.reviewContent>p{
+    flex-basis: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .recommendInfo {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     margin-bottom: 2%;
 
@@ -815,7 +852,7 @@ a {
 
 .reveiwName,
 .recommendItem {
-    font-size: 18px;
+    font-size: 16px;
     color: blue;
 }
 
@@ -827,13 +864,13 @@ a {
 
 
 .recommendInfo>a>div {
-    height: 40vh;
+    height: 60vh;
     min-height: 300px;
 
-    border: 1px solid;
+    border: 1px solid #d0c0a0;
     border-radius: 5px;
     display: grid;
-    grid-template-rows: 15% 67% 5% 5% 5%;
+    grid-template-rows: 10% 72% 5% 5% 5%;
     color: black;
 }
 
@@ -845,4 +882,7 @@ a {
 
     object-fit: cover;
 
+}
+.recommendInfo p{
+    padding: 5px;
 }
