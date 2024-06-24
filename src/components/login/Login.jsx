@@ -62,6 +62,7 @@ const Login = () => {
             sessionStorage.removeItem('LoginSuccess');
             sessionStorage.setItem('LoginSuccess', 'true');
             sessionStorage.setItem('LoginId', inputId);
+            sessionStorage.setItem('LoginPw', inputPw);
         }
         else {
             e.preventDefault();
