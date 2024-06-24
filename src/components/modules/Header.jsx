@@ -54,7 +54,8 @@ const Header = () => {
 
     return (
         <header id="header" className="deactive">
-            <section className="main_header"><div className="header_center">Header center</div>
+            <section className="main_header">
+                <Link to={'/'}><div className="header_center">Header center</div></Link>
                 <div className="header_left">
                     <nav className="header_nav">
                         <ul>

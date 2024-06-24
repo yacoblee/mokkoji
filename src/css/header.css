@@ -5,8 +5,15 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 header {
-    font-family: 'SUITE-Regular';
+    font-family: 'Chosunilbo_myungjo';
     grid-row: 1 / 2;
     width: 100%;
     height: 100px;
