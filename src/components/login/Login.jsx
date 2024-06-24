@@ -3,6 +3,8 @@ import '../../css/login/Login.css';
 import Membership from "./Membership";
 import FindId from "./FindId";
 import FindPw from "./FindPw";
+import { useDispatch } from 'react-redux';
+import { login } from '../modules/action';
 import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom'
 import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
@@ -53,15 +55,17 @@ const Login = () => {
             inputRef.current.focus();
         }
     }
-
+    const dispatch = useDispatch();
     // 로그인 검사 함수 (로그인 시 홈 화면으로 이동 : 로그인실패 횟수 p태그에 연결하여 텍스트 표현)
     const CheckLogin = (e) => {
         const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
         if (isLogin) {
+            const userInfo = { id: inputId, pw: inputPw }
+            dispatch(login(userInfo));
+            // sessionStorage.removeItem('LoginSuccess');
+            // sessionStorage.setItem('LoginSuccess', 'true');
+            // sessionStorage.setItem('LoginId', inputId);
             navi('/');
-            sessionStorage.removeItem('LoginSuccess');
-            sessionStorage.setItem('LoginSuccess', 'true');
-            sessionStorage.setItem('LoginId', inputId);
         }
         else {
             e.preventDefault();

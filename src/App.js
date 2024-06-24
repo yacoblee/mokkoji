@@ -14,6 +14,8 @@ import FindId from './components/login/FindId';
 
 const App = () => {
 
+
+
   const noHeaderPaths = ['/login', '/login/membership', '/login/findid', '/login/findpw'];
   return (
     <BrowserRouter>
