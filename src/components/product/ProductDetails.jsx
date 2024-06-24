@@ -1,10 +1,10 @@
 
 
-import { useParams , Link , NavLink, Routes , Route} from "react-router-dom";
+import { useParams , Link } from "react-router-dom";
 import GoodsItems from "./ProductObject";
 import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductForm from "./ProductForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -16,18 +16,41 @@ const ProductDetails = ()=>{ //=================================================
     const onClickLikeMe =()=>{
         setLike(!like);
     } 
+    const handleScroll = (event, id) => {
+        event.preventDefault();
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = element.getBoundingClientRect().top + window.scrollY -200;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+        } else {
+            console.error(`Element with id ${id} not found.`);
+        }
+    }
+    const [slideImgBox, SetSlideImgBox] = useState(0);
+    // const [inActive, SetInActive] = useState(false);
+    const onClickLabelBox = (index)=>{
+        // if (inActive) return;
+
+        // SetInActive(true);
+        SetSlideImgBox(index);
+        // setTimeout(() => {
+        //     SetInActive(false);
+        // }, 700);
+    }
     // ======================================================================================return
     if (!selectedProduct) {
         return <div style={{marginTop:'100px'}}>Product not found</div>;
     }else{
-
+    
         return(
             <>
-            <div style={{marginTop:'100px'}} className='box'>
+            <div style={{marginTop:'200px'}} className='box'>
                 <div className='imgBox'>
-                    {selectedProduct.slideSrc.map((src, i)=><img src={src} key={i} alt={i}/>)}
+                    {selectedProduct.slideSrc.map((src, i)=><img src={src} key={i} alt={i}
+                    style={{ transform: `translateX(-${slideImgBox * 100}%)` }}/>)}
                     <div className='labelBox'>
-                        {selectedProduct.slideSrc.map((src ,i)=><img src={src} key={i} alt={i} />)}
+                        {selectedProduct.slideSrc.map((src ,i)=><img src={src} key={i} alt={i} 
+                        onClick={()=>{onClickLabelBox(i)}}/>)}
                     </div>
                 </div>
                 <div className='formBox'>
@@ -60,12 +83,13 @@ const ProductDetails = ()=>{ //=================================================
                 </div>
     
             </div>
-                <div className='underbox'>
+                <div className='underbox' >
                     <div className='tabBox'>
-                        <NavLink to="."><span>상세보기</span></NavLink>
-                        <NavLink to="shipping" ><span>배송/사이즈</span></NavLink>
-                        <NavLink to="reviews"><span>리뷰정보</span></NavLink>
-                        <NavLink to="recommendations" ><span>추천리스트</span></NavLink>
+                        <a href="#"><span>위로</span></a>
+                        <a href="#details" onClick={(e) => handleScroll(e, 'details')}><span>상세보기</span></a>
+                        <a href="#shipping" onClick={(e) => handleScroll(e, 'shipping')}><span>배송/사이즈</span></a>
+                        <a href="#reviews" onClick={(e) => handleScroll(e, 'reviews')}><span>리뷰정보</span></a>
+                        <a href="#recommendations" onClick={(e) => handleScroll(e, 'recommendations')}><span>추천리스트</span></a>
                     </div>
                     <div className='ProductDetailsInfo'>
                     <ProductDetailsInfo selectedProduct={selectedProduct}/>

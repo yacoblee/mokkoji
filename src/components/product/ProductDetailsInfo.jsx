@@ -43,12 +43,12 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
         }
             return (
                 <>
-                <h2>
+                <h2 id="details">
                     상세보기
                 </h2>
-                <div className='imgInfo'>
+                <div className='imgInfo'  >
                     <div className="imgInfoBox">
-                        {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={i} />)}
+                        {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={selectedProduct.name} />)}
                         {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
 
                     </div>
@@ -67,10 +67,10 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                         </p>
                     </div>
                 </div>
-                <h2>
+                <h2 id="shipping">
                     배송 / 사이즈
                 </h2>
-                <div className='deliSizeInfo'>
+                <div className='deliSizeInfo' >
                     <div>
                         {selectedProduct.size}
                     </div>
@@ -101,7 +101,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     </p>
                     </div>
                 </div>
-                <h2>
+                <h2 id="reviews">
                     리뷰정보
                 </h2>
                 <div className='reveiwInfo'
@@ -118,7 +118,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                 }
 
                     {selectedProduct.reviews.map((it, i) => <>
-                        <div key={i} 
+                        <div key={it.name} 
                         
                         style={{ transform: `translateX(-${currentSlide * 26}vw)` }}
                         className="reviewInfoInner">
@@ -157,12 +157,12 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     </button> 
                 }
                 </div>
-                <h2>
+                <h2 id="recommendations">
                     추천리스트
                 </h2>
-                <div className='recommendInfo'>
+                <div className='recommendInfo' >
                     {recommendItem.map((it, i) => <>
-                        <Link to={`/goods/${it.category}/${it.id}`} key={i}>
+                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id}>
                             <div>
                                     <p><span className="recommendItem">{i}.</span>{it.name}</p>
                                 <div>

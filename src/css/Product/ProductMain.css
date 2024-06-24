@@ -419,6 +419,7 @@ a {
     position: relative;
     font-size: 0;
     /* left: -100%; */
+    
 }
 
 .imgBox input {
@@ -430,6 +431,7 @@ a {
     height: 80%;
     /* object-fit: cover; */
     border-radius: 15px;
+    transition: 0.7s;
 }
 
 .labelBox {
@@ -696,24 +698,24 @@ a {
     font-family: 'SUITE-Regular';
     width: 1200px;
     margin: auto;
-    /* height: 300vh; */
+    height: 2500px;
     margin-top: 30px;
     grid-template-rows: 80px auto;
     display: grid;
     gap: 30px;
-    /* height: 90vh; */
-    /* align-items: center; */
+    overflow: visible;
 }
 
 .tabBox {
     height: 80px;
-    width: 100%;
+    width: 1200px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid silver;
-    position: sticky;
-    top: 200px;
+    position: fixed;
+    top: 100px;
     background-color: white;
+    z-index: 1000;
 }
 .ProductDetailsInfo h2 {
     height: 50px;
