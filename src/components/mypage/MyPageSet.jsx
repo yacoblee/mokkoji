@@ -9,6 +9,25 @@ function MyPageSet() {
 
     const user = userInfo[0];   // 임의 지정
 
+    const [value, setValue] = useState({
+        phone: "",
+        email: "",
+        password: "",
+        passwordcheck: ""
+    })
+
+    const handleChange = e => {
+        setValue({
+            ...value,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        alert(JSON.stringify(value, null, 2))
+    }
+
     const [emailType, setEmailType] = useState('');
     const [emailDisabled, setEmailDisabled] = useState(false);
 
@@ -24,7 +43,7 @@ function MyPageSet() {
     }
 
     return (
-        <div className='MyPageSet'>
+        <form className='MyPageSet' onSubmit={handleSubmit}>
             <div className='MyInfoList'>
                 <div className='ListTitle'>이름</div>
                 <div>{user.name}</div>
@@ -34,12 +53,24 @@ function MyPageSet() {
 
                 <div className='ListTitle'>전화번호</div>
                 <div>
-                    <input type="tel" placeholder='전화번호 입력' />
+                    <input
+                        type="tel"
+                        name='phone'
+                        value={value.phone}
+                        onChange={handleChange}
+                        placeholder='전화번호 입력'
+                    />
                 </div>
 
                 <div className='ListTitle'>이메일</div>
                 <div>
-                    <input type="text" placeholder='이메일 입력' />
+                    <input
+                        type="text"
+                        name='email'
+                        value={value.email}
+                        onChange={handleChange}
+                        placeholder='이메일 입력'
+                    />
                     @
                     <input
                         type="text"
@@ -63,27 +94,40 @@ function MyPageSet() {
 
                 <div className='ListTitle'>비밀번호</div>
                 <div>
-                    <input type="password" placeholder='비밀번호 변경' />
+                    <input
+                        type="password"
+                        name='password'
+                        onChange={handleChange}
+                        placeholder='비밀번호 변경'
+                    />
                 </div>
                 <div></div>
                 <div>
-                    <input type="password" placeholder='비밀번호 확인' />
+                    <input
+                        type="password"
+                        name='passwordcheck'
+                        onChange={handleChange}
+                        placeholder='비밀번호 확인'
+                    />
                 </div>
 
                 <div className='ListTitle'>주소</div>
                 <div>
-                    <input type="text" />
+                    <input />
                 </div>
                 <div></div>
                 <div>
-                    <input type="text" placeholder='상세 주소 입력' />
+                    <input
+                        type="text"
+                        placeholder='상세 주소 입력'
+                    />
                 </div>
             </div>
 
             <Link to='/mypage'>
-                <button className='MyInfoSave'>수정 완료</button>
+                <button className='MyInfoSave' type='submit'>수정 완료</button>
             </Link>
-        </div>
+        </form>
     )
 }
 

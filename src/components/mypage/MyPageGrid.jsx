@@ -35,20 +35,20 @@ function MyPageGrid() {
                     <span>배송 현황</span>
                 </div>
             </Link>
-            <Link to='/mypage/recent'>
-                <div className='MyRecent'>
-                    <div className='IconRecent'>
-                        <FontAwesomeIcon icon={faClockRotateLeft} />
-                    </div>
-                    <span>문의 예정</span>
-                </div>
-            </Link>
             <Link to='/mypage/list'>
                 <div className='MyList'>
                     <div className='IconList'>
                         <FontAwesomeIcon icon={faListCheck} />
                     </div>
                     <span>구매내역</span>
+                </div>
+            </Link>
+            <Link to='/mypage/faq'>
+                <div className='MyFAQ'>
+                    <div className='IconFAQ'>
+                        <FontAwesomeIcon icon={faClockRotateLeft} />
+                    </div>
+                    <span>1대1 문의</span>
                 </div>
             </Link>
         </div>
