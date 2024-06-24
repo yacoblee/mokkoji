@@ -44,7 +44,7 @@ const ProductMainList = ({ title, sort }) => {
     return (
         <>
             <div className="productListInfo">
-                이 달의 <span>{title}</span>을 만나보세요 !
+                이 달의 <span className='NamedCategory'>{title}</span>을 만나보세요 !
             </div>
             <div className="productList">
                 {

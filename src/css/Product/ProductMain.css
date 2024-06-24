@@ -300,6 +300,7 @@ a {
     border: 0.5px solid #d0c0a092;
     border-radius: 5px;
     margin: 0 10px;
+    cursor: pointer;
 }
 
 .SearchBar {
