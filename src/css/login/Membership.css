@@ -1,0 +1,176 @@
+.membership-body {
+    width: (100vw-8px);
+    height: 100vh;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.membership-container {
+    width: 85vw;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boxshadowcontainer {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11),
+        0 2px 3px rgba(0, 0, 0, 0.11),
+        0 4px 5px rgba(0, 0, 0, 0.11),
+        0 8px 9px rgba(0, 0, 0, 0.11),
+        0 16px 17px rgba(0, 0, 0, 0.11),
+        0 32px 35px rgba(0, 0, 0, 0.11);
+}
+
+.hedertorow {
+    display: flex;
+    flex-direction: row;
+}
+
+.membership-img {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    box-shadow: 5px 0 10px rgb(140, 139, 139);
+}
+
+.route {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+}
+
+.route li {
+    font-size: 16px;
+    letter-spacing: 3px;
+    display: inline-block;
+    color: white;
+    text-shadow: 2px 1px 1px  rgb(48, 47, 47);
+}
+
+.membership-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+
+.membership-textArea {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: white;
+}
+
+.membership-textArea h4 {
+    font-size: 25px;
+    margin: 20px 0 30px 0;
+    letter-spacing: 1px;
+}
+
+.membership-logo {
+    width: 250px;
+    height: 60px;
+}
+
+.membership-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.membership-form {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    padding: 30px;
+    padding-top: 10px;
+    padding-bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.membership-form label {
+    margin-top: 10px;
+}
+
+.membership-form input {
+    margin-top: 10px;
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    width: 300px;
+    height: 25px;
+    overflow: hidden;
+}
+
+.joinus-button {
+    height: 60px;
+    width: 350px;
+    border-radius: 15px;
+    border: none;
+    color: black;
+    font-family: 'SUITE-Regular';
+    background-color: antiquewhite;
+    font-size: 20px;
+    font-family: 'SUITE-Regular';
+    margin-top: 30px;
+    margin-bottom: 10px;
+    letter-spacing: 5px;
+    transition: all 0.5s ease;
+}
+
+.membership-form button:hover {
+    cursor: pointer;
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+}
+
+.grid-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    font-size: 18px;
+    gap: 10px;
+}
+
+.gender input {
+    width: 30px;
+    height: 20px;
+    flex-direction: row;
+}
+
+.gender input:nth-child(2) {
+    margin-left: 10px;
+}
+
+.adress input:nth-child(1) {
+    width: 100px;
+}
+
+.adress-rowArea input {
+    flex-direction: row;
+    width: 150px;
+    margin-right: 10px;
+}

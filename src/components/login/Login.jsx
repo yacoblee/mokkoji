@@ -15,10 +15,7 @@ const Login = () => {
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
-    // const [loginSuccese, setLoginSuccese] = useState('');
     const [errorCount, setErrorCount] = useState(1);
-    const onChangeId = (e) => { setInputId(e.target.value) }
-    const onChangePw = (e) => { setInputePw(e.target.value) }
 
     const labelIdRed = useRef(null);
     const inputIdRef = useRef(null);
@@ -28,6 +25,10 @@ const Login = () => {
 
     const loginP = useRef(null);
 
+    // input창에 onChange이벤트 발생 시 입력값 저장 
+    const onChangeId = (e) => { setInputId(e.target.value) }
+    const onChangePw = (e) => { setInputePw(e.target.value) }
+
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
@@ -35,6 +36,7 @@ const Login = () => {
             labelRef.current.style.top = '-20px';
         }
     }
+
     // inputdp 포커스해제 이벤트 발생 시 라벨 안으로 이동
     const MoveToInLabel = (labelRef, inputRef) => {
         if (inputRef.current && inputRef.current.value.length === 0) {
@@ -44,6 +46,7 @@ const Login = () => {
             }
         }
     }
+
     // label과 input 포커스 기능 연결 
     const LabelClick = (inputRef) => {
         if (inputRef.current) {
@@ -58,14 +61,17 @@ const Login = () => {
             navi('/');
             sessionStorage.removeItem('LoginSuccess');
             sessionStorage.setItem('LoginSuccess', 'true');
+            sessionStorage.setItem('LoginId', inputId);
         }
-        else if (!isLogin) {
+        else {
             e.preventDefault();
             setErrorCount(prventCount => prventCount + 1);
             loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요. \n 로그인 실패 횟수: ${errorCount}`;
-            loginP.current.style.visibility = 'visible'
+            loginP.current.style.visibility = 'visible';
         }
-
+        // 버튼 클릭 후 input 빈문자열로 초기화 
+        setInputId("");
+        setInputePw("");
     }
 
 
@@ -73,56 +79,58 @@ const Login = () => {
     return (
         <div className="login-body">
             <div className="login-Area">
-                <div className="login_video">
-                    <video muted autoPlay loop >
-                        <source className="video" src="/images/login/login_.mp4" type="video/mp4" />
-                    </video>
-                </div>
+                <div className="boxshadowcontainer">
+                    <div className="login_video">
+                        <video muted autoPlay loop >
+                            <source className="video" src="/images/login/login_.mp4" type="video/mp4" />
+                        </video>
+                    </div>
 
-                <div className="textarea">
-                    <div className="login-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
-                    <h4>Welcom to MU:DS</h4>
-                    <form className="login-Box">
+                    <div className="textarea">
+                        <div className="login-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
+                        <h4>Welcom to MU:DS</h4>
+                        <form className="login-Box">
 
-                        <div className="login-inputArea">
-                            <label
-                                className="login-label"
-                                ref={labelIdRed}
-                                onClick={() => LabelClick(inputIdRef)}
-                            >아이디</label>
-                            <input
-                                ref={inputIdRef}
-                                type="text" value={inputId}
-                                onChange={onChangeId}
-                                onFocus={() => MoveToOutLabel(labelIdRed)}
-                                onBlur={() => MoveToInLabel(labelIdRed, inputIdRef)}
-                            />
-                        </div>
+                            <div className="login-inputArea">
+                                <label
+                                    className="login-label"
+                                    ref={labelIdRed}
+                                    onClick={() => LabelClick(inputIdRef)}
+                                >아이디</label>
+                                <input
+                                    ref={inputIdRef}
+                                    type="text" value={inputId}
+                                    onChange={onChangeId}
+                                    onFocus={() => MoveToOutLabel(labelIdRed)}
+                                    onBlur={() => MoveToInLabel(labelIdRed, inputIdRef)}
+                                />
+                            </div>
 
-                        <div className="login-inputArea">
-                            <label
-                                className="login-label"
-                                ref={labelPwRed}
-                                onClick={() => LabelClick(inputPwRef)}>
-                                비밀번호</label>
-                            <input
-                                ref={inputPwRef}
-                                type='password' value={inputPw}
-                                onChange={onChangePw}
-                                onFocus={() => MoveToOutLabel(labelPwRed)}
-                                onBlur={() => MoveToInLabel(labelPwRed, inputPwRef)}
-                            />
-                        </div>
+                            <div className="login-inputArea">
+                                <label
+                                    className="login-label"
+                                    ref={labelPwRed}
+                                    onClick={() => LabelClick(inputPwRef)}>
+                                    비밀번호</label>
+                                <input
+                                    ref={inputPwRef}
+                                    type='password' value={inputPw}
+                                    onChange={onChangePw}
+                                    onFocus={() => MoveToOutLabel(labelPwRed)}
+                                    onBlur={() => MoveToInLabel(labelPwRed, inputPwRef)}
+                                />
+                            </div>
 
-                        <LoginValidityCheck inputId={inputId} inputPw={inputPw} />
-                        <p ref={loginP} />
-                        <button onClick={CheckLogin}>Login</button>
-                    </form>
-                    <ul>
-                        <li><Link to='/Login/Membership'>회원가입 | </Link></li>
-                        <li><Link to='/Login/FindId'>아이디 찾기 | </Link></li>
-                        <li><Link to='/Login/FindPw'>비밀번호 찾기</Link></li>
-                    </ul>
+                            <LoginValidityCheck inputId={inputId} inputPw={inputPw} />
+                            <p ref={loginP} />
+                            <button onClick={CheckLogin}>Login</button>
+                        </form>
+                        <ul>
+                            <li><Link to='/Login/Membership'>회원가입 | </Link></li>
+                            <li><Link to='/Login/FindId'>아이디 찾기 | </Link></li>
+                            <li><Link to='/Login/FindPw'>비밀번호 찾기</Link></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
