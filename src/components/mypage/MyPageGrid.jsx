@@ -2,17 +2,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
+import userInfo from "./UserInforData";
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 function MyPageGrid() {
+
+    const user = userInfo[0];   // 임의 지정
+
     return (
         <div className='MyGrid'>
             <Link to='/mypage/like' >
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
-                        {localStorage.length}
+                        {user.mypage.isLike.length}
                     </div>
                     <span>찜목록</span>
                 </div>
@@ -21,7 +26,7 @@ function MyPageGrid() {
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
-                        {localStorage.length}
+                        {user.mypage.basket.length}
                     </div>
                     <span>장바구니</span>
                 </div>
