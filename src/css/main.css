@@ -227,9 +227,7 @@ html {
 }
 
 
-#section3 {
-    background-color: beige;
-}
+
 
 #section5 {
     background: #f39c12;
@@ -359,7 +357,87 @@ html {
 
 
 /* SECTION3 Intorduction section S */
+#section3 {
+    display: flex;
+    width: 100vw;
+    height: 800px;
+    justify-content: center;
+    flex-direction: column;
+    color: #000;
+    background-color: white;
+}
 
+.about_head {
+    display: inline-block;
+    text-align: center;
+    width: 100vw;
+    height: 100px;
+    position: relative;
+    top: 5%;
+}
+
+.about_head h1 {
+    color: #000;
+    font-family: 'Chosunilbo_myungjo';
+    font-size: 2.3rem;
+}
+
+.about_img {
+    cursor: pointer;
+    /* background-color: #666; */
+    background: url('/public/images/main/about.png') no-repeat;
+    display: flex;
+    background-position: center;
+    background-size: 80vw;
+    width: 80vw;
+    height: 550px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about_img>div {
+    width: 80vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'NanumBarunpen';
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    letter-spacing: 1px;
+
+    flex-direction: column;
+}
+
+.about_img.hide {
+    opacity: 0.6;
+}
+
+.about_content {
+    opacity: 0;
+    width: 80vw;
+    height: 550px;
+}
+
+.about_content.show {
+    opacity: 1;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    transition: opacity 1.4s linear;
+
+}
+
+.learn-more {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+/* SECTION3 Intorduction section E */
+
+/* SECTION4 Intorduction section S */
 #section4 {
     display: flex;
     grid-template-columns: 1fr 1fr;
