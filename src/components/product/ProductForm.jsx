@@ -83,7 +83,7 @@ const ProductForm = ({selectedProduct})=>{
     return(
 
         <form action="#">
-        <div>
+        <div className='productFormSelect'>
             <select 
             name="contentSelect" 
             id="contentSelect" 
