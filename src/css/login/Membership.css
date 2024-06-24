@@ -57,7 +57,7 @@
     letter-spacing: 3px;
     display: inline-block;
     color: white;
-    text-shadow: 2px 1px 1px  rgb(48, 47, 47);
+    text-shadow: 2px 1px 1px rgb(48, 47, 47);
 }
 
 .membership-img img {
@@ -81,7 +81,7 @@
 
 .membership-textArea h4 {
     font-size: 25px;
-    margin: 20px 0 30px 0;
+    margin: 2% 0 3% 0;
     letter-spacing: 1px;
 }
 
@@ -102,23 +102,25 @@
     display: flex;
     flex-direction: column;
     font-size: 18px;
-    padding: 30px;
-    padding-top: 10px;
+    padding: 3%;
+    padding-top: 1%;
     padding-bottom: 0;
     justify-content: center;
     align-items: center;
 }
 
 .membership-form label {
-    margin-top: 10px;
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
 }
 
 .membership-form input {
-    margin-top: 10px;
+    margin-top: 1%;
     border: none;
     border-bottom: solid #aaaaaa 1px;
-    width: 300px;
-    height: 25px;
+    width: 95%;
+    height: 70%;
     overflow: hidden;
 }
 
@@ -151,9 +153,34 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 30% 70%;
+    /* grid-template-columns: 30% 70%; */
+    grid-template: repeat(11, 1fr) / 1fr 2fr;
     font-size: 18px;
-    gap: 10px;
+    gap: .5%;
+}
+
+.columnsadd {
+    grid-row: 7 / span 3;
+}
+
+.address-button {
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+}
+
+.address-button input{
+    margin-right: 10%;
+}
+
+.address-button button {
+    width: 80%;
+    height: 70%;
+    align-self: center;
+}
+.adress-rowArea{
+    display: flex;
+    align-items: center;
 }
 
 .gender input {
@@ -174,4 +201,9 @@
     flex-direction: row;
     width: 150px;
     margin-right: 10px;
+}
+
+.membership-form p{
+    color: red;
+    font-size: 14px;
 }

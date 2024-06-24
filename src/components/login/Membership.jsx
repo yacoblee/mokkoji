@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import '../../css/login/Membership.css'
-import { useState } from "react";
+import { useRef, useState } from "react";
 import userInfo from "./UserInforData";
 const minDate = 110;
 const maxDate = 14;
@@ -19,6 +19,9 @@ const Membership = () => {
         id: '',
         pw: ''
     });
+    const [nameError, setNameError] = useState('');
+    const inputError = useRef(null);
+    const errorMeg = useRef(null)
 
     const userInputInforNameCheak = (e) => {
         const { name, value } = e.target;
@@ -26,8 +29,19 @@ const Membership = () => {
             ...prevState,
             [name]: value
         })
-
         )
+
+        const namePattern = /^[가-힣]{2,6}$/;
+        if (name === 'name' && !namePattern.test(value)) {
+            setNameError('이름은 2자에서 5자 사이의 한글이어야 합니다.');
+            errorMeg.current.textContent= '이름은 2자에서 5자 사이의 한글이어야 합니다.';
+            inputError.current.style.borderColor = 'red';
+
+        } else {
+            setNameError('');
+            inputError.current.style.border = '1px solid #aaaaaa'
+           
+        }
     };
 
     console.log(inputinfor.name);
@@ -57,10 +71,12 @@ const Membership = () => {
                                     id="userInputId"
                                     name="name"
                                     value={inputinfor.name}
+                                    ref={inputError}
                                     placeholder="2글자 이상 5글자 이하 글자를 입력해주세요"
                                     minLength={2}
                                     maxLength={5}
                                     onChange={userInputInforNameCheak}
+                                    onBlur={}
                                 />
 
                                 <label> 성별 </label>
@@ -79,15 +95,19 @@ const Membership = () => {
                                     id="inputBirthday"
                                     min={minDate}
                                     max={maxDate} />
-                                <label> 주소 </label>
-                                <div className="adress">
+
+                                <label className="columnsadd"> 주소 </label>
+
+                                <div className="address-button">
                                     <input type="text" placeholder="우편번호" />
                                     <button>우편번호</button>
-                                    <div className="adress-rowArea">
-                                        <input type="text" placeholder="주소1" />
-                                        <input type="text" placeholder="주소2" />
-                                    </div>
                                 </div>
+
+                                {/* <div className="adress-rowArea"> */}
+                                <input type="text" placeholder="주소1" />
+                                <input type="text" placeholder="주소2" />
+                                {/* </div> */}
+
                                 <label>핸드폰 번호</label>
                                 <input type="tel" />
                                 <label>이메일</label>
@@ -95,6 +115,7 @@ const Membership = () => {
 
                             </div>
                             <button className="joinus-button">회원가입</button>
+                            <p ref={errorMeg}></p>
 
                         </form>
                     </div>
