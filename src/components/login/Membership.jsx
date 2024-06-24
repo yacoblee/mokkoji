@@ -1,9 +1,36 @@
 import { Link } from "react-router-dom";
 import '../../css/login/Membership.css'
+import { useState } from "react";
+import userInfo from "./UserInforData";
 const minDate = 110;
 const maxDate = 14;
 
 const Membership = () => {
+
+    const [inputinfor, setinputinfo] = useState({
+        index: '10',
+        name: '',
+        birth: '',
+        address: '',
+        gender: '',
+        phoneNumber: '',
+        email: '',
+        emailtype: '',
+        id: '',
+        pw: ''
+    });
+
+    const userInputInforNameCheak = (e) => {
+        const { name, value } = e.target;
+        setinputinfo((prevState) => ({
+            ...prevState,
+            [name]: value
+        })
+
+        )
+    };
+
+    console.log(inputinfor.name);
 
     return (
         <div className="membership-body">
@@ -26,7 +53,15 @@ const Membership = () => {
 
                             <div className="grid-container">
                                 <label> 이름 </label>
-                                <input type="text" onClick={Membership} />
+                                <input type="text"
+                                    id="userInputId"
+                                    name="name"
+                                    value={inputinfor.name}
+                                    placeholder="2글자 이상 5글자 이하 글자를 입력해주세요"
+                                    minLength={2}
+                                    maxLength={5}
+                                    onChange={userInputInforNameCheak}
+                                />
 
                                 <label> 성별 </label>
                                 <div className="gender">
