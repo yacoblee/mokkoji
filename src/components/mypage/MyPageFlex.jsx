@@ -3,7 +3,7 @@ import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageMain.css';
 
-import userInfo from "../login/UserInforData";
+import userInfo from "./UserInforData";
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,11 +17,11 @@ function MyPageFlex() {
             <div className="MyInfo">
                 <h1>{user.id}, 안녕하세요!</h1>
 
-                <Link to='/mypage/set'>
-                    <div className="MyInfoSet">
+                <div className="MyInfoSet">
+                    <Link to='/mypage/set'>
                         <button>내 정보 수정</button>
-                    </div>
-                </Link>
+                    </Link>
+                </div>
 
             </div>
 
@@ -47,7 +47,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faEnvelope} />
                     </div>
                     <span>
-                        유저.이메일
+                        {user.email}@{user.emailType}
                     </span>
                 </div>
                 <div>
@@ -56,6 +56,8 @@ function MyPageFlex() {
                     </div>
                     <span>
                         {user.address}
+                        <br />
+                        {user.addressDetail}
                     </span>
                 </div>
             </div>

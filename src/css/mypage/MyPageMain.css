@@ -43,7 +43,7 @@
 }
 
 .MyInfoBasic>div div {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .MyInfoBasic>div>div {
@@ -51,10 +51,14 @@
     text-align: center;
 }
 
+.MyInfoBasic>div>div>svg {
+    align-items: center;
+    justify-content: center;
+}
+
 .MyInfoBasic>div>span {
-    flex: 3;
+    flex: 4;
     text-align: start;
-    padding-left: 10px;
 }
 
 .MyInfoList {
@@ -63,10 +67,12 @@
     grid-template-columns: 2fr 5fr;
     gap: 1vw;
     padding: 1vw;
+    font-size: 20px;
+    align-items: center;
 }
 
 .MyInfoList div {
-    padding: .5vw;
+    padding: .3vw;
     /* border: 1px solid #ccc; */
 }
 
@@ -77,4 +83,14 @@
 
 .ListTitle {
     font-weight: bold;
+}
+
+.MyInfoList input {
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    height: 30px;
+}
+
+.MyInfoList select {
+    height: 30px;
 }
