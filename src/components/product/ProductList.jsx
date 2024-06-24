@@ -1,122 +1,185 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import GoodsItems from './ProductObject';
 import ProductListResult from './ProductListResult';
 
 const ProductList = () => {
-    const { category } = useParams(); // useParams()를 통해 category 파라미터 가져오기
-    // 선택된 카테고리의 상품들만 필터링
+    const { category } = useParams();
+
+    //보여주는부분이 Menu 냐 , Search냐
+    const [showSearch, setShowSearch] = useState(false);
+    
+    //메뉴바의 구성
     const productMenu = [
-        {category: 'allGoods',description: '전체상품',},
-        {category: 'stationeryGoods',description: '문구/사무',},
-        {category: 'fashionGoods',description: '패션/생활',},
-        {category: 'interiorGoods',description: '인테리어 소품',},
-        {category: 'handicraftGoods',description: '공예품',},
-        {category: 'kitchGoods',description: '주방/식기',},
+        { category: 'allGoods', description: '전체상품' },
+        { category: 'stationeryGoods', description: '문구/사무' },
+        { category: 'fashionGoods', description: '패션/생활' },
+        { category: 'interiorGoods', description: '인테리어 소품' },
+        { category: 'handicraftGoods', description: '공예품' },
+        { category: 'kitchGoods', description: '주방/식기' },
     ];
-    // search 창의 값 관리의 state
-    const [filterItem , SetFilterItem] = useState({
-                                            selectValue : 'allGoods',
-                                            inputValue : '',
-    }
-    )
-    // state 변경 함수
-    const onChangeSelectValue = (e)=>{
-        SetFilterItem(it =>({...it, selectValue : e.target.value}));
-    }
-    const onChangeinputValue = (e)=>{
-        SetFilterItem(it =>({...it, inputValue : e.target.value}));
-    }
-
-    // 선택상품 에 대한 관리
-    const [selectItem , setSelectItem] = useState([]);
-    useEffect(()=>{
-
-        //allGoods면 전체 선택상품
-        if (category ==='allGoods'){
-            setSelectItem(GoodsItems);
-        }else{
-            //아니면 각자의 카테고리 분류에 따른 선택상품
-            setSelectItem(GoodsItems.filter((items) => items.category === category));
-        }
-    },[category]);//카테고리가 바뀔때 마다 실행
-
-
-
-    const filterItems = () => {
-        //필터링을 위한 새로운 GoodsItems 의 복사본
-        let filteredItems = GoodsItems;
-
-        //전체선택을 하지 않았을때 첫 필터링 진행
+    //검색 조건에 대한 옵션
+    const sortOptions = [
+        { value: 'count', label: '인기순' },
+        { value: 'pricehigh', label: '높은가격순' },
+        { value: 'pricelower', label: '낮은가격순' },
+        { value: 'reviews', label: '리뷰순' }
+    ];
+    //아이템을 필터할 state (옵션 선택1 , 옵션선택 2 , input 값)
+    const [filterItem, SetFilterItem] = useState({
+        selectValue: 'allGoods',
+        sortOption: 'count',
+        inputValue: '',
+    });
+    
+    //아이템을 필터할 속성 변화.
+    const onChangeSelectValue = (e) => {
+        SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
+    };
+    const onChangeSortOption = (e) => {
+        SetFilterItem(it => ({ ...it, sortOption: e.target.value }));
+    };
+    const onChangeInputValue = (e) => {
+        SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
+    };
+    
+    //타이틀에 대한 state
+    const [displayMessage, setDisplayMessage] = useState('전체 상품');
+    
+    //filterItems 함수. -> fileredItems 를 반환
+    const filterItems = useCallback(() => {
+        let filteredItems = GoodsItems.slice();
+        
         if (filterItem.selectValue !== 'allGoods') {
             filteredItems = filteredItems.filter((items) => items.category === filterItem.selectValue);
         }
-        // input 상자가 채워졌을때 두번째 필터링 진행
         if (filterItem.inputValue !== '') {
             filteredItems = filteredItems.filter((items) => items.name.includes(filterItem.inputValue));
         }
+        
+        switch (filterItem.sortOption) {
+            case 'pricehigh':
+                filteredItems.sort((a, b) => b.price - a.price);
+                break;
+                case 'pricelower':
+                    filteredItems.sort((a, b) => a.price - b.price);
+                    break;
+                    case 'reviews':
+                        filteredItems.sort((a, b) => b.reviews - a.reviews);
+                        break;
+                        case 'count':
+                            default:
+                                filteredItems.sort((a, b) => b.count - a.count);
+                                break;
+                            }
+                            return filteredItems;
+                        },[filterItem]);
+                        //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
+                        //필터하고 난 아이템의 결과 배열.
+                        const [selectItem, setSelectItem] = useState([]);
+                        
+                        //필터하고난 filterItem의 길이
+                        const [resultCount, setResultCount] = useState(selectItem.length);
+    const updateDisplayMessage = (count) => {
+        if (showSearch) {
+            const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
+            const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
+            setDisplayMessage( <>
+                <span className='NamedCategory'>카테고리:</span>
+                <span className='NamedInfo'> {selectedCategory ? selectedCategory.description : '전체 상품'}</span>
+                <br />
+                <span className='NamedCategory'>정렬:</span>
+                <span className='NamedInfo'> {selectedSortOption}</span>
+                {count !== undefined && (
+                    <>
 
-        //필터링을 마친 배열 반환
-        return filteredItems;
+                        {count > 0 ? (
+                            <p>검색결과: {count}개</p>
+                        ) : (
+                            <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
+                        )}
+                    </>
+                )}
+            </>);
+        } else {
+            const selectedCategory = productMenu.find(menu => menu.category === category);
+            setDisplayMessage(<span className='NamedCategory'> {selectedCategory ? selectedCategory.description : '전체 상품'}</span>);
+        }
     };
+    //카테고리가 변할때 필터 , 바가 변경될때의 필터
+    useEffect(() => {
+        SetFilterItem({
+            selectValue: 'allGoods',
+            sortOption: 'count',
+            inputValue: '',
+        });
+        const filteredItems = filterItems();
+        if (category === 'allGoods') {
+            setSelectItem(filteredItems);
+        } else {
+            const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
+            setSelectItem(categoryFilteredItems);
+        }
+        setResultCount(0);
+        updateDisplayMessage();
+    }, [category , showSearch]);
 
-    //검색 버튼을 누르면 state 변경을 통해 필터링
+    //클릭했을때의 함수 실행값을 넣어줌.
     const onclickSearch = () => {
-        setSelectItem(filterItems());
+        const filteredItems = filterItems();
+        setSelectItem(filteredItems);
+        setResultCount(filteredItems.length);
+        updateDisplayMessage(filteredItems.length);
     };
 
-    //검색바와 메뉴바 중 보여줄 부분에 대한 state
-    const [showSearch , setShowSearch] = useState(false);
-    
-    //클릭하면 state 값 변경
-    const onClickShowSearch = ()=>{
+    //서치바나 메뉴바를 클릭했을때 실행할 함수.
+    const onClickShowSearch = () => {
         setShowSearch(!showSearch);
-    }
-    
+        updateDisplayMessage();
+    };
+
     return (
-        <>  
-            <div className="productListInfo" style={{ marginTop: "100px" }}>
-                <span>
-                {category === 'allGoods' ? '전체 상품' : (selectItem[0]?.description || '검색 결과가 없습니다.')}
-                </span>
-            </div>
-            <div  className='SearchBar'  >
+        <>
+            <div className='SearchBar' style={{ marginTop: "150px" }}>
                 <button
-                onClick={onClickShowSearch}
-                disabled={showSearch}>검색하기</button>
+                    onClick={onClickShowSearch}
+                    disabled={showSearch}>검색하기</button>
                 <button
-                onClick={onClickShowSearch}
-                disabled={!showSearch}> 카테고리 보기</button>
-
+                    onClick={onClickShowSearch}
+                    disabled={!showSearch}>카테고리 보기</button>
             </div>
-            
-            {!showSearch ? 
-            <div className='productMenu'>
-                
-                
-                {productMenu.map((items, i) => (
-                    <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
-                ))}
-                {/* <button
-                onClick={onClickShowSearch}>검색하기</button> */}
+
+            {!showSearch ?
+                <div className='productMenu'>
+                    {productMenu.map((items, i) => (
+                        <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
+                    ))}
+                </div>
+                :
+                <div className='productSearch'>
+                    <select name="productSearch" id="productSearch"
+                        value={filterItem.selectValue}
+                        onChange={onChangeSelectValue}>
+                        {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
+                    </select>
+
+                    <select name="productSort" id="productSort"
+                        value={filterItem.sortOption}
+                        onChange={onChangeSortOption}>
+                        {sortOptions.map((items , i)=> <option value={items.value} key={i}>{items.label}</option>)}
+                    </select>
+
+                    <input type="text" name="productInput" id="productInput"
+                        value={filterItem.inputValue}
+                        onChange={onChangeInputValue} />
+                    <button
+                        onClick={onclickSearch}>검색</button>
+                </div>
+            }
+            <div className="productListInfo" >
+                <span>{displayMessage}</span>
             </div>
-            :
-            <div className='productSearch' >
-                <select name="productSearch" id="productSearch" 
-                value={filterItem.selectValue}
-                onChange={onChangeSelectValue}>
-
-                    {productMenu.map((items, i)=><option value={items.category} key={i}>{items.description}</option>)}
-                </select>
-
-                <input type="text" name="productInput" id="productInput" 
-                value={filterItem.inputValue}
-                onChange={onChangeinputValue}/>
-                <button
-                onClick={onclickSearch}>검색</button>
-            </div>  }
-            <ProductListResult selectItem={selectItem} category={category}/>
-
+            {selectItem.length > 0 ? <ProductListResult selectItem={selectItem} category={category} /> : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)}/>}
         </>
     );
 }

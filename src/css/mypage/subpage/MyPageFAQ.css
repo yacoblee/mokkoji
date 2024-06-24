@@ -1,0 +1,12 @@
+.MyPageFAQ {
+    display: flex;
+    flex-direction: row;
+}
+
+.PrivateFAQ {
+    flex: 1;
+}
+
+.BusinessFAQ {
+    flex: 1;
+}

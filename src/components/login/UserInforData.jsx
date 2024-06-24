@@ -4,9 +4,12 @@ const userInfo = [
         name: '김철수',
         birth: '1985-05-15',
         address: '서울시 강남구 테헤란로 123',
+        addressDetail: '213동 128호',   // 임의 추가
         gender: 'M',
-        phoneNumber: '010-1234-5678',
-        email: 'chulsoo85@naver.com',
+        phoneNumber: '01012345678',     // 임의 수정(- 제거)
+        // email: 'chulsoo85@naver.com',
+        email: 'asljfol',
+        emailType: 'gmail.com',
         id: 's1',
         pw: 's1!',
         loginCount: 45,
