@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import GoodsItems from './ProductObject';
 import ProductListResult from './ProductListResult';
+import '../../css/Product/ProductCategory.css'
 
 const ProductList = () => {
     const { category } = useParams();
@@ -87,14 +88,14 @@ const ProductList = () => {
             setDisplayMessage( <>
                 <span className='NamedCategory'>카테고리:</span>
                 <span className='NamedInfo'> {selectedCategory ? selectedCategory.description : '전체 상품'}</span>
-                <br />
+                
                 <span className='NamedCategory'>정렬:</span>
                 <span className='NamedInfo'> {selectedSortOption}</span>
                 {count !== undefined && (
                     <>
 
                         {count > 0 ? (
-                            <p>검색결과: {count}개</p>
+                            <span className='searchResult'>: 검색결과: {count}개</span>
                         ) : (
                             <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
                         )}
@@ -140,7 +141,10 @@ const ProductList = () => {
 
     return (
         <>
-            <div className='SearchBar' style={{ marginTop: "150px" }}>
+            {/* <div className="productListInfo" style={{ marginTop: "150px" }} >
+                <span>{displayMessage}</span>
+            </div> */}
+            <div className='SearchBar'style={{ marginTop: "150px" }}  >
                 <button
                     onClick={onClickShowSearch}
                     disabled={showSearch}>검색하기</button>
@@ -151,6 +155,7 @@ const ProductList = () => {
 
             {!showSearch ?
                 <div className='productMenu'>
+
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
                     ))}
@@ -174,11 +179,12 @@ const ProductList = () => {
                         onChange={onChangeInputValue} />
                     <button
                         onClick={onclickSearch}>검색</button>
+                        <span>{displayMessage}</span>
                 </div>
             }
-            <div className="productListInfo" >
+            {/* <div className="productListInfo" >
                 <span>{displayMessage}</span>
-            </div>
+            </div> */}
             {selectItem.length > 0 ? <ProductListResult selectItem={selectItem} category={category} /> : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)}/>}
         </>
     );

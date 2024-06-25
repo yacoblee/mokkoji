@@ -131,6 +131,8 @@ const GoodsItems = [
             '/images/product/pictureFlower3.jpg',
             '/images/product/pictureFlower4.jpg',
             '/images/product/pictureFlower5.jpg',
+            '/images/product/pictureFlower1.jpg',
+
         ],
         productSrc: [
             '/images/product/pictureFlower2_2.jpg',
@@ -263,11 +265,14 @@ const GoodsItems = [
         count: 120,
         price: 65000,
         size: `상품 크기 : (꽃, 잎) 100~170mm 이내
+        
         (두께) 약1mm
+        
         패키지 크기 : 338x400mm
+        
         상품 소재 : 종이
-        상품 구성 : 1세트에 7개입(꽃,잎,곤충),
-        패키지, opp봉투`,
+        
+        상품 구성 : 1세트에 7개입(꽃,잎,곤충), 패키지, opp봉투`,
         guideLine: '* 해당 제품은 한정 상품으로 현재는 구매 불가합니다. (재입고 예정없음)',
         mainGuide:
             `국립박물관문화재단 상품 브랜드 <뮷즈>와
@@ -366,7 +371,9 @@ const GoodsItems = [
         count: 23,
         price: 224000,
         size: `상품 크기 :(소)140x140x150mm, (중)200X200X220mm, (대)300X300X320mm
+        
         상품 소재 : 도자기
+
         상품 구성 : 달항아리 1개(3종 택1), 패키지`,
         guideLine: '중, 대 크기는 수도권 내 퀵 발송만 가능합니다.(택배 발송 불가, 퀵비 별도부과)',
         mainGuide:
@@ -490,7 +497,7 @@ const GoodsItems = [
         ],
         count: 90,
         price: 20000,
-        size: `상품 크기 :포장크기: 85X170X30mm
+        size: `상품 크기 :포장크기: 85X170X30mm<br />
         상품 구성 : 키링 1개`,
         mainGuide:
             `국립 경주박물관 주요 유물

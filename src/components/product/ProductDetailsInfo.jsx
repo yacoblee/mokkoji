@@ -3,7 +3,7 @@ import { useState } from "react";
 import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 
-const ProductDetailsInfo = ({ selectedProduct }) => {
+const ProductDetailsInfo = ({ selectedProduct ,like}) => {
         //슬라이드 구현을 위한 state
         const [currentSlide ,setCurrentSlide] =useState(0);
 
@@ -34,10 +34,12 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
         const onMouseOverHover = ()=>{
             setHover(false);
         }
+        //추천 상품 보여주기.
         const recommendItemid = selectedProduct.id;
         const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
             .sort((a, b) => b.reviews.length - a.reviews.length)
             .slice(0, 4);
+        //숫자를 금액형태로 
         const formatNumber = (number) => {
             return number.toLocaleString('en-US');
         }
@@ -47,35 +49,36 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     상세보기
                 </h2>
                 <div className='imgInfo'  >
-                    <div className="imgInfoBox">
-                        {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={selectedProduct.name} />)}
-                        {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
 
-                    </div>
-                    <div>
-                        <p>
-                            {selectedProduct.name}
-                        </p><br /><br />
-                        <p>
-                            {selectedProduct.mainGuide}
-                        </p><br /><br />
-                        <p>
-                            {selectedProduct.guideLine}
-                        </p><br /><br />
-                        <p>
-                            {selectedProduct.sideGuide}
-                        </p>
-                    </div>
+                    <img src={selectedProduct.slideSrc[0]} alt={selectedProduct.name} />
+                    <p>
+                        {selectedProduct.name}
+                    </p>
+                    <p>
+                        {selectedProduct.mainGuide}
+                    </p>
+                    <img src={selectedProduct.slideSrc[1]} alt={selectedProduct.name} />
+                    <img src={selectedProduct.slideSrc[2]} alt={selectedProduct.name} />
+
+                    <p>
+                        {selectedProduct.guideLine}
+                    </p>
+                    <p>
+                        {selectedProduct.sideGuide}
+                    </p>
+                    <img src={selectedProduct.slideSrc[3]} alt={selectedProduct.name} />
                 </div>
+                <hr />
                 <h2 id="shipping">
                     배송 / 사이즈
                 </h2>
                 <div className='deliSizeInfo' >
-                    <div>
+                <img src={selectedProduct.slideSrc[0]} alt={selectedProduct.name} />
+
+                    <div className="productSizeInfo">
                         {selectedProduct.size}
                     </div>
-                    <div>
-                    <p><span>배송 정보</span><br />
+                    <p><span>배송 정보</span><br /><br />
 
                         -오전 9시 이전 주문건까지 당일출고되며 이 후 주문건은 익일 출고됩니다 (단, 재고가 있는 상품에 한함)<br />
                         -주문취소는 입금확인 상태에서만 가능하며 배송준비중 상태부터는 취소가 불가합니다. <br />
@@ -89,8 +92,8 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                         -티백, 도자기, 유리, 자석, 유물재현품, 디퓨저, 반가사유상 미니어처, 석고방향제는 해외배송이 불가합니다.<br />
                         -100만원 이상의 대량 구매시 상품 재고 사항 및 제작 가능 일정을 문의해주시기 바랍니다.
                     </p>
-                    <br />
-                    <p><span> 취소 / 교환 / 환불 / AS안내</span><br />
+                    <div>
+                    <p><span> 취소 / 교환 / 환불 / AS안내</span><br /><br />
                         -주문취소는 입금확인 상태에서만 가능하며 배송준비중 상태부터는 취소가 불가합니다. <br />
                         -상품 수령일로부터 7일 이내 반품/교환 가능합니다.<br />
                         -변심 반품의 경우 왕복배송비를 차감한 금액이 환불 되며, 제품 및 포장 상태가 재판매 가능 하여야 합니다.<br />
@@ -101,6 +104,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     </p>
                     </div>
                 </div>
+                <hr />
                 <h2 id="reviews">
                     리뷰정보
                 </h2>
@@ -129,9 +133,9 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                             <div className="reviewContent">
 
                                 <p>
-                                    <p className="reveiwName">{i}.
+                                    <p className="reveiwName">
                                     </p>
-                                        {it.content}
+                                        "{it.content}"
                                 </p>
 
                                 <div>
@@ -144,7 +148,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                                 </div>
 
                             </div>
-                        </div><br />
+                        </div>
                     </>).reverse()}
                     {
                     currentSlide < maxSlide && <button style={{right :5}}
@@ -157,6 +161,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     </button> 
                 }
                 </div>
+                <hr />
                 <h2 id="recommendations">
                     추천리스트
                 </h2>
@@ -164,7 +169,7 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                     {recommendItem.map((it, i) => <>
                         <Link to={`/goods/${it.category}/${it.id}`} key={it.id}>
                             <div>
-                                    <p><span className="recommendItem">{i}.</span>{it.name}</p>
+                                    <p>{it.name}</p>
                                 <div>
                                     <img src={it.slideSrc[0]} alt="i" />
                                 </div>

@@ -5,6 +5,7 @@ import GoodsItems from "./ProductObject";
 import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductForm from "./ProductForm";
 import { useEffect, useState } from "react";
+import '../../css/Product/ProductDetails.css'
 
 
 
@@ -20,7 +21,7 @@ const ProductDetails = ()=>{ //=================================================
         event.preventDefault();
         const element = document.getElementById(id);
         if (element) {
-            const offset = element.getBoundingClientRect().top + window.scrollY -200;
+            const offset = element.getBoundingClientRect().top + window.scrollY -150;
             window.scrollTo({ top: offset, behavior: 'smooth' });
         } else {
             console.error(`Element with id ${id} not found.`);
@@ -92,7 +93,7 @@ const ProductDetails = ()=>{ //=================================================
                         <a href="#recommendations" onClick={(e) => handleScroll(e, 'recommendations')}><span>추천리스트</span></a>
                     </div>
                     <div className='ProductDetailsInfo'>
-                    <ProductDetailsInfo selectedProduct={selectedProduct}/>
+                    <ProductDetailsInfo selectedProduct={selectedProduct} like={like}/>
                     </div>
                 </div>
             </>
