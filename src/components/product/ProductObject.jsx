@@ -26,17 +26,20 @@ const GoodsItems = [
             'S', 'M', 'L', 'XL'
         ],
         reviews: [
-            {   reviewsSrc: '/images/product/characterNote4.jpg',
+            {
+                reviewsSrc: '/images/product/characterNote4.jpg',
                 userName: 'User1',
                 content: "티셔츠 디자인이 정말 독특하고 예뻐요. 훈민정음의 글자 디자인이 마음에 들어요.",
                 day: '20230304'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User2',
                 content: "고급 원단을 사용해서 착용감이 아주 편안합니다. 세탁 시에도 변형이 없어서 좋습니다.",
                 day: '20230305'
             },
-            {   reviewsSrc: '/images/product/characterNote2.jpg',
+            {
+                reviewsSrc: '/images/product/characterNote2.jpg',
                 userName: 'User3',
                 content: "한정판이라 더 특별하게 느껴져요. S 사이즈를 샀는데 딱 맞아서 만족스럽습니다.",
                 day: '20230306'
@@ -70,52 +73,62 @@ const GoodsItems = [
             '청동', '은색', '금색'
         ],
         reviews: [
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User1',
                 content: "정말 고급스러운 펜 세트입니다. 디자인도 멋지고 필기감도 좋아요.",
                 day: '20230102'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User2',
                 content: "전통 문양이 새겨져 있어서 독특하고 예쁩니다. 선물용으로 딱이에요.",
                 day: '20230103'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User3',
                 content: "펜의 무게감이 적당해서 쓰기 편합니다. 잉크 리필도 가능해서 오래 쓸 수 있겠어요.",
                 day: '20230104'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User4',
                 content: "청동색 펜을 구매했는데 색상이 아주 고급스럽고 마음에 들어요.",
                 day: '20230105'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User5',
                 content: "가격은 조금 비싸지만 그만한 가치가 있는 제품입니다. 강력 추천합니다.",
                 day: '20230106'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User6',
                 content: "패키지가 너무 예쁘게 잘 되어 있어서 선물 받는 사람이 정말 좋아했어요.",
                 day: '20230107'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User7',
                 content: "필기감이 부드럽고 잉크 번짐도 없어서 만족스럽습니다.",
                 day: '20230108'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User8',
                 content: "전통 문양이 세련되고 독특해서 사용할 때마다 기분이 좋아요.",
                 day: '20230109'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User9',
                 content: "금색 펜이 너무 예쁘고 고급스러워서 자주 사용하고 있습니다.",
                 day: '20230110'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User10',
                 content: "펜의 디자인과 품질이 매우 뛰어나서 다른 색상도 추가로 구매할 예정입니다.",
                 day: '20230111'
@@ -151,7 +164,8 @@ const GoodsItems = [
             'A5', 'A6', 'B5'
         ],
         reviews: [
-            {   reviewsSrc: '/images/product/pictureFlower4.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower4.jpg',
                 userName: 'User1',
                 content: "노트북의 디자인이 정말 독특하고 아름다워요. 조선 왕조의 의궤를 모티브로 한 것이 마음에 듭니다.",
                 day: '20230112'
@@ -161,17 +175,20 @@ const GoodsItems = [
                 content: "종이가 두껍고 튼튼해서 필기감이 아주 좋아요. 제본도 견고합니다.",
                 day: '20230113'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User3',
                 content: "가격 대비 품질이 훌륭해요. 오래 사용할 수 있을 것 같아 만족합니다.",
                 day: '20230114'
             },
-            {   reviewsSrc: '/images/product/pictureFlower4.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower4.jpg',
                 userName: 'User4',
                 content: "A5 사이즈를 샀는데 크기가 적당해서 들고 다니기 편리해요. 다른 사이즈도 구매하고 싶어요.",
                 day: '20230115'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User5',
                 content: "표지가 물에 젖으면 변형될 수 있다고 해서 걱정했지만, 관리만 잘하면 문제 없을 것 같아요. 전체적으로 매우 만족합니다.",
                 day: '20230116'
@@ -205,37 +222,44 @@ const GoodsItems = [
             '연꽃 향', '백단 향', '매화 향'
         ],
         reviews: [
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User1',
                 content: "정말 향이 좋아요! 은은한 연꽃 향이 방 안을 가득 채워줍니다.",
                 day: '20230117'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User2',
                 content: "디자인이 너무 예뻐서 인테리어 소품으로도 훌륭해요.",
                 day: '20230118'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User3',
                 content: "천연 성분이라 안심하고 사용할 수 있어서 좋아요. 백단 향도 마음에 듭니다.",
                 day: '20230119'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User4',
                 content: "고려청자 디자인이 독특하고 고급스러워요. 매화 향도 아주 좋습니다.",
                 day: '20230120'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User5',
                 content: "향의 강도가 딱 적당해서 기분이 좋아져요. 추천합니다!",
                 day: '20230121'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User6',
                 content: "선물용으로 샀는데 받는 사람이 너무 좋아했어요. 다음에도 또 구매할게요.",
                 day: '20230122'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User7',
                 content: "디테일이 살아있고, 캔들 켜놓으면 정말 힐링이 되는 느낌이에요.",
                 day: '20230123'
@@ -265,13 +289,13 @@ const GoodsItems = [
         count: 120,
         price: 65000,
         size: `상품 크기 : (꽃, 잎) 100~170mm 이내
-        
+
         (두께) 약1mm
-        
+
         패키지 크기 : 338x400mm
-        
+
         상품 소재 : 종이
-        
+
         상품 구성 : 1세트에 7개입(꽃,잎,곤충), 패키지, opp봉투`,
         guideLine: '* 해당 제품은 한정 상품으로 현재는 구매 불가합니다. (재입고 예정없음)',
         mainGuide:
@@ -286,62 +310,74 @@ const GoodsItems = [
         option:
             ['소', '중(+220000) 퀵 발송,별도 부가', '대(+722000) 퀵발송,별도 부가'],
         reviews: [
-            {   reviewsSrc: '/images/product/pictureFlower5.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower5.jpg',
                 userName: 'User1',
                 content: "정말 아름다운 인테리어 소품이에요. 방이 화사해졌어요!",
                 day: '20230124'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User2',
                 content: "디자인이 너무 예쁘고 고급스러워요. 구매하길 잘했어요.",
                 day: '20230125'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User3',
                 content: "선물용으로 샀는데 받는 사람이 너무 좋아했어요. 강력 추천합니다.",
                 day: '20230126'
             },
-            {   reviewsSrc: '/images/product/pictureFlower5.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower5.jpg',
                 userName: 'User4',
                 content: "고객 서비스도 좋고 제품도 훌륭해요. 재구매 의사 100%입니다.",
                 day: '20230127'
             },
-            {   reviewsSrc: '/images/product/pictureFlower5.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower5.jpg',
                 userName: 'User5',
                 content: "생각보다 더 예쁜 색감에 놀랐어요. 사진보다 실물이 훨씬 나아요.",
                 day: '20230128'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User6',
                 content: "퀄리티가 정말 좋아요. 디테일이 살아있어서 감동받았어요.",
                 day: '20230129'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User7',
                 content: "가격이 좀 비싸다고 생각했지만, 받아보고 나니 그만한 가치가 있네요.",
                 day: '20230130'
             },
-            {   reviewsSrc: '/images/product/pictureFlower5.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower5.jpg',
                 userName: 'User8',
                 content: "초충도의 아름다움을 일상에서 느낄 수 있어서 너무 좋아요.",
                 day: '20230131'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User9',
                 content: "패키지도 너무 예쁘게 잘 되어 있어서 선물용으로도 딱입니다.",
                 day: '20230201'
             },
-            {   reviewsSrc: '/images/product/pictureFlower5.jpg',
+            {
+                reviewsSrc: '/images/product/pictureFlower5.jpg',
                 userName: 'User10',
                 content: "작가와의 콜라보라서 더 의미가 있는 것 같아요. 집안 분위기가 확 바뀌었어요.",
                 day: '20230202'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User11',
                 content: "한정 상품이라 구매 못할까 봐 걱정했는데, 다행히 살 수 있었어요. 매우 만족합니다.",
                 day: '20230203'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User12',
                 content: "섬세한 디자인이 정말 마음에 듭니다. 방에 하나 두니까 확실히 분위기가 살아요.",
                 day: '20230204'
@@ -371,7 +407,7 @@ const GoodsItems = [
         count: 23,
         price: 224000,
         size: `상품 크기 :(소)140x140x150mm, (중)200X200X220mm, (대)300X300X320mm
-        
+
         상품 소재 : 도자기
 
         상품 구성 : 달항아리 1개(3종 택1), 패키지`,
@@ -387,26 +423,30 @@ const GoodsItems = [
         option:
             ['소', '중(+220000) 퀵 발송,별도 부가', '대(+722000) 퀵발송,별도 부가'],
         reviews: [
-                {   reviewsSrc: '/images/product/moonJar1.jpg',
-                    userName: 'User1',
-                    content: "이 흑자 달항아리는 정말 아름답습니다. 공간에 무게감을 주어 인테리어에 아주 좋습니다.",
-                    day: '20230228'
-                },
-                {   reviewsSrc: '/images/product/moonJar1.jpg',
-                    userName: 'User2',
-                    content: "작품의 퀄리티가 정말 훌륭합니다. 자연스러운 붓터치감이 특히 마음에 듭니다.",
-                    day: '20230301'
-                },
-                {   reviewsSrc: '/images/product/moonJar1.jpg',
-                    userName: 'User3',
-                    content: "퀵 발송 서비스를 이용했는데 매우 신속하게 배송되었습니다. 상품도 안전하게 잘 도착했습니다.",
-                    day: '20230302'
-                },
-                {   reviewsSrc: null,
-                    userName: 'User4',
-                    content: "달항아리의 디자인과 마감이 매우 만족스럽습니다. 고급스러운 느낌을 주어 아주 좋습니다.",
-                    day: '20230303'
-                }
+            {
+                reviewsSrc: '/images/product/moonJar1.jpg',
+                userName: 'User1',
+                content: "이 흑자 달항아리는 정말 아름답습니다. 공간에 무게감을 주어 인테리어에 아주 좋습니다.",
+                day: '20230228'
+            },
+            {
+                reviewsSrc: '/images/product/moonJar1.jpg',
+                userName: 'User2',
+                content: "작품의 퀄리티가 정말 훌륭합니다. 자연스러운 붓터치감이 특히 마음에 듭니다.",
+                day: '20230301'
+            },
+            {
+                reviewsSrc: '/images/product/moonJar1.jpg',
+                userName: 'User3',
+                content: "퀵 발송 서비스를 이용했는데 매우 신속하게 배송되었습니다. 상품도 안전하게 잘 도착했습니다.",
+                day: '20230302'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User4',
+                content: "달항아리의 디자인과 마감이 매우 만족스럽습니다. 고급스러운 느낌을 주어 아주 좋습니다.",
+                day: '20230303'
+            }
         ],
     },
     {
@@ -445,32 +485,38 @@ const GoodsItems = [
         option:
             ['하트 뿅뿅(블루)', '좋은 생각(퍼플)'],
         reviews: [
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User1',
                 content: "정말 귀엽고 실용적인 수첩이에요! 디자인도 예쁘고 품질도 좋아요.",
                 day: '20230205'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User2',
                 content: "작고 가벼워서 휴대하기 좋아요. 반가사유상 캐릭터가 너무 귀여워요.",
                 day: '20230206'
             },
-            {   reviewsSrc: '/images/product/characterNote4.jpg',
+            {
+                reviewsSrc: '/images/product/characterNote4.jpg',
                 userName: 'User3',
                 content: "가격 대비 훌륭한 품질입니다. 종이 질감도 좋고 디자인도 마음에 들어요.",
                 day: '20230207'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User4',
                 content: "수첩 내부의 캐릭터 프린트가 은은해서 보기 좋아요. 다양한 용도로 사용하기 좋습니다.",
                 day: '20230208'
             },
-            {   reviewsSrc: '/images/product/characterNote4.jpg',
+            {
+                reviewsSrc: '/images/product/characterNote4.jpg',
                 userName: 'User5',
                 content: "선물용으로 구매했는데 받는 사람이 매우 좋아했습니다. 추천합니다!",
                 day: '20230209'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User6',
                 content: "반가사유상 캐릭터가 너무 귀엽고 독특해서 소장 가치가 높습니다.",
                 day: '20230210'
@@ -503,8 +549,8 @@ const GoodsItems = [
             `국립 경주박물관 주요 유물
         <얼굴무늬 수막새>를 주제로 한
         박물관 기념 키링입니다.
-        유물의 형태를 구현하고 
-        섬세한 자수가 어우러진 키링입니다. 
+        유물의 형태를 구현하고
+        섬세한 자수가 어우러진 키링입니다.
         `,
         sideGuide:
             `국립박물관 유물의 아름다움을
@@ -514,37 +560,44 @@ const GoodsItems = [
         option:
             ['박물관 키링(신라의 미소)'],
         reviews: [
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User1',
                 content: "정말 멋진 제품입니다! 디자인도 예쁘고 사용하기도 편리해요.",
                 day: '20230211'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User2',
                 content: "가격 대비 품질이 아주 훌륭합니다. 강력 추천합니다.",
                 day: '20230212'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User3',
                 content: "배송도 빠르고 포장도 꼼꼼히 되어 왔어요. 감사합니다.",
                 day: '20230213'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User4',
                 content: "생각보다 크기가 작아서 살짝 실망했어요. 그래도 쓸만합니다.",
                 day: '20230214'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User5',
                 content: "친구에게 선물했는데 아주 좋아하네요. 다음에도 구매할게요!",
                 day: '20230215'
             },
-            {   reviewsSrc: '/images/product/sillaKeyring1.jpg',
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
                 userName: 'User6',
                 content: "몇 번 사용해봤는데 매우 만족합니다. 또 구매하고 싶어요.",
                 day: '20230216'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User7',
                 content: "처음에는 망설였는데 사길 잘한 것 같아요. 대만족입니다.",
                 day: '20230217'
@@ -582,57 +635,67 @@ const GoodsItems = [
         sideGuide:
             `온도에 반응하는 시온 안료 프린팅으로,
         잔에 차가운 술이 담기면
-        선비들의 얼굴이 붉게 물들며 
+        선비들의 얼굴이 붉게 물들며
         즐거운 술자리 분위기를 연출합니다.`,
         option:
             ['취객선비 3인방 변색 잔세트'],
         reviews: [
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User1',
                 content: "정말 멋진 제품입니다! 디자인도 예쁘고 사용하기도 편리해요.",
                 day: '20230218'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
                 userName: 'User2',
                 content: "가격 대비 품질이 아주 훌륭합니다. 강력 추천합니다.",
                 day: '20230219'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User3',
                 content: "배송도 빠르고 포장도 꼼꼼히 되어 왔어요. 감사합니다.",
                 day: '20230220'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User4',
                 content: "생각보다 크기가 작아서 살짝 실망했어요. 그래도 쓸만합니다.",
                 day: '20230221'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User5',
                 content: "친구에게 선물했는데 아주 좋아하네요. 다음에도 구매할게요!",
                 day: '20230222'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User6',
                 content: "제품 설명대로 온도에 따라 색이 변하는 게 너무 신기해요!",
                 day: '20230223'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User7',
                 content: "몇 번 사용해봤는데 매우 만족합니다. 또 구매하고 싶어요.",
                 day: '20230224'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
                 userName: 'User8',
                 content: "처음에는 망설였는데 사길 잘한 것 같아요. 대만족입니다.",
                 day: '20230225'
             },
-            {   reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
                 userName: 'User9',
                 content: "색상이 아주 예쁘고 고급스러워 보입니다. 인테리어에도 잘 어울려요.",
                 day: '20230226'
             },
-            {   reviewsSrc: null,
+            {
+                reviewsSrc: null,
                 userName: 'User10',
                 content: "유리 재질이 견고하고 고급스럽습니다. 오래 쓸 수 있을 것 같아요.",
                 day: '20230227'
@@ -642,4 +705,3 @@ const GoodsItems = [
 ]
 
 export default GoodsItems;
-

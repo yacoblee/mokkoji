@@ -1,11 +1,11 @@
-.MyLikeList {
+.MyCartList {
     display: flex;
     flex-direction: column;
 }
 
-.MyLikeHeader,
-.MyLikeGrid,
-.MyLikeFooter {
+.MyCartHeader,
+.MyCartGrid,
+.MyCartFooter {
     display: grid;
     grid-template-columns: 100px 200px 1fr 100px 150px;
     gap: 10px;
@@ -14,32 +14,37 @@
     padding: 10px 0;
 }
 
-.MyLikeHeader {
+.MyCartHeader {
     border-bottom: 1px solid #000;
     background-color: aliceblue;
 }
 
-.MyLikeFooter {
+.MyCartFooter {
     border-top: 1px solid #000;
     background-color: aliceblue;
 }
 
-.MyLikePhoto img {
+.MyCartPhoto img {
     width: 170px;
 }
 
-.MyLikeGrid>div * {
+.MyCartGrid>div * {
     padding: 10px;
 }
 
-.MyLikeInfo {
+.MyCartInfo {
     text-align: initial;
     align-items: initial;
 }
 
-.MyLikeButton button {
+.MyCartButton button {
     width: 130px;
     height: 30px;
     padding: 0;
     margin: 1px;
+}
+
+.MyCartCount input {
+    width: 10px;
+    height: 10px;
 }

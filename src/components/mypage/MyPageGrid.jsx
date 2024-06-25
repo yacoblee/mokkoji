@@ -37,7 +37,7 @@ function MyPageGrid() {
         navigate('/mypage/cart', { state: result })
     }
 
-    
+
 
     return (
         <div className='MyGrid'>
