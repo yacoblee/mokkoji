@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Login from './../login/Login';
-import userInfo from './../login/UserInforData';
+// import Login from './../login/Login';
+// import userInfo from './../login/UserInforData';
 
 
 
@@ -89,20 +89,6 @@ const ProductForm = ({selectedProduct})=>{
     // 사용자의 로그인 상태 관리
     const [userLogin, setUserLogin] = useState(false);
 
-    // 현재 로그인된 사용자 정보 관리
-    const [user, setUser] = useState(null);
-
-
-    // 컴포넌트가 마운트될 때 사용자 정보를 로컬 스토리지에서 가져옴
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem("userInfo"));
-        if (userData) {
-            setUserLogin(true); // 사용자가 로그인한 상태로 설정
-            const selectedUser = userInfo.find(him => him.id === userData.id); // 사용자 정보 찾기
-            setUser(selectedUser); // 사용자 정보 설정
-            sessionStorage.setItem('selectedUser', JSON.stringify(selectedUser)); // 세션 스토리지에 사용자 정보 저장
-        }
-    }, []);
     
     const navigate = useNavigate();
     const onClickBuy = ()=>{
