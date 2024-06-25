@@ -1,30 +1,24 @@
+import { useLocation } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
 import React from 'react';
 
-import userInfo from '../../login/UserInforData';
-import GoodsItems from '../../product/ProductObject';
-
 
 function MyPageLike() {
 
-    const user = userInfo[0];   // 임의 지정
-    const item = GoodsItems;
+    const location = useLocation();
 
-    const result = [];
+    let likedGoods = location.state;
 
-    function FindLikeItem() {
-        result = item.filter((goods) => {
-            if (user.mypage.isLike[0] === goods)
-                return goods;
-        })
-    }
-
+    console.log(`likedGoods 길이 ${likedGoods[0].id} `)
+    console.log(`likedGoods 길이 ${likedGoods[1].id} `)
+    console.log(`likedGoods 길이 ${likedGoods[2].id} `) // 출력 확인함
 
     return (
-        <div className='MyLikeList'>
+        <div className='MyLikeList' >
 
             <div className='MyLikeHeader'>
+
                 <div>
                     <input
                         type="checkbox"
@@ -37,15 +31,29 @@ function MyPageLike() {
                 <div></div>
             </div>
 
-            {/* {user.mypage.isLike.forEach((isLikeNo) => {
-                let findGoods = item.find((goods) => isLikeNo === goods.id)
-                console.log(`출력됨${findGoods.id}`)
-            })} */}
 
+            {likedGoods.map((goods) => {
+                return (
+                    <div className="MyLikeGrid" key={goods.id} >
+                        <div>
+                            <input type="checkbox" />
+                        </div>
 
+                        <div className="MyLikePhoto">
+                            {/* <img src={item.photo} alt={item.name} /> */}
+                        </div>
 
+                        <div className="name">{goods.name}</div>
 
-        </div >     // mylikelist
+                        <div className="buy">
+                            <button>장바구니 담기</button>
+                        </div>
+
+                    </div >  // mylikegird
+                )
+            })}
+
+        </div>     // mylikelist
 
     );       // return
 

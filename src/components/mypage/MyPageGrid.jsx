@@ -2,18 +2,46 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
-import userInfo from "../login/UserInforData";
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MyPageGrid() {
 
-    const user = userInfo[0];   // 임의 지정
+    const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
+    const items = JSON.parse(localStorage.getItem("goodsList"));
+
+    console.log(`확인용 1 ${user.id}, ${items.length}`)
+
+    let result = []
+
+    function getGoods(check) {
+        result = items.filter((item) => {
+            for (let i = 0; i < check.length; i++) {
+                if (item.id === check[i])
+                    return item;
+            }
+        })
+    }
+
+    const onLike = () => {
+        getGoods(user.mypage.isLike)
+        console.log(`확인용 2 ${result.length}`)
+        navigate('/mypage/like', { state: result })
+    }
+
+    const onCart = () => {
+        getGoods(user.mypage.basket)
+        console.log(`확인용 3 ${result.length}`)
+        navigate('/mypage/cart', { state: result })
+    }
+
+    
 
     return (
         <div className='MyGrid'>
-            <Link to='/mypage/like' >
+            <span onClick={onLike}>
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
@@ -21,8 +49,8 @@ function MyPageGrid() {
                     </div>
                     <span>찜목록</span>
                 </div>
-            </Link>
-            <Link to='/mypage/cart'>
+            </span>
+            <span onClick={onCart}>
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -30,7 +58,7 @@ function MyPageGrid() {
                     </div>
                     <span>장바구니</span>
                 </div>
-            </Link>
+            </span>
             <Link to='/mypage/post'>
                 <div className='MyPost'>
                     <div className='IconPost'>

@@ -9,7 +9,8 @@
     width: 100%;
 }
 
-.MyGrid a {
+.MyGrid>span,
+.MyGrid>a {
     align-items: center;
     justify-content: center;
     text-align: center;
