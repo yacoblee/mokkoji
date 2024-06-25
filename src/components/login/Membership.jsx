@@ -1,93 +1,74 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../../css/login/Membership.css';
-import Clausearea01 from './Clausearea01'
-import Clausearea02 from './Clausearea02';
+import { Link } from "react-router-dom";
+import '../../css/login/Membership.css'
+const minDate = 110;
+const maxDate = 14;
 
 const Membership = () => {
+
     return (
-        <div className="body">
-            <div className="bodycontainer">
-                <div className="stickyarea">
-                    <Link to={'/'}>
-                        <div className="imgcontainer">
-                            <img src="/images/main/main1.png" alt="로고이미지" />
-                        </div>
-                    </Link>
-                    <h1>MU:DS </h1>
-                    <h1>회원 가입 페이지</h1>
-                    <br />
-                    <p>에러 메세지</p>
-                </div>
-                <div className="container">
-                    <div className="clausearea">
-                        <h4>약관 동의</h4>
-                        
-                        <div className='innerclausearea'>
-                            <h5>필수 약관동의(필수)</h5>
-                            <input type='radio'></input>
-                        </div>
-                        <Clausearea01 />
-
-                        <div className='innerclausearea'>
-                            <h5>개인정보 수집 및 이용 동의(필수)</h5>
-                            <input type='radio'></input>
-                        </div>
-                        <Clausearea02 />
-                        <div className='innerclausearea'>
-                            <h5>회원가입 약관에 모두 동의 합니다.</h5>
-                            <input type='radio'></input>
-
-                        </div>
+        <div className="membership-body">
+            <div className="membership-container">
+                <div className="boxshadowcontainer">
+                    <div className="membership-img">
+                        <img src="/images/login/mudsmembershippageimg.JPG" alt="로그인 페이지 이미지" />
+                        <ul className="route">
+                            <Link to='/'><li>홈&gt;</li></Link>
+                            <Link to='/Login'><li>로그인&gt;</li></Link>
+                            <Link to='/Login/Membership'><li>회원가입</li></Link>
+                        </ul>
                     </div>
-                    <hr />
 
-                    <h4>개인정보를 입력해주세요</h4>
-                    <form className="formcontainer">
-                        <label>이름</label>
-                        <input type="text" />
-                        <p>에러</p>
-                        <label>아이디</label>
-                        <div className="rowarea">
-                            <input type="text" />
-                            <button>아이디중복검사</button>
-                        </div>
-                        <p>에러</p>
-                        <label>비밀번호</label>
-                        <input type="text" />
-                        <p>에러</p>
-                        <label>비밀번호 확인</label>
-                        <input type="text" />
-                        <p>에러</p>
-                        <label>주소</label>
-                        <div className="rowarea address">
-                            <input type="text" />
-                            <button>우편번호 검색</button>
-                        </div>
-                        <input type="text" />
-                        <input type="text" />
-                        <p></p>
-                        <label>전화번호</label>
-                        <input type="text" />
-                        <p>에러</p>
-                        <label>성별</label>
-                        <div className='genderbutton'>
-                       <button>남성</button> 
-                       <button>여성</button>
-                        </div>
-                        <p></p>
-                        <label>이메일</label>
-                        <input type="text" />
-                        <p>에러</p>
-                        <div className='buttonarea'>
-                            <button>가입하기</button>
-                        </div>
-                    </form>
+                    <div className="membership-textArea">
 
+
+                        <h4>회원정보 입력</h4>
+                        <form className="membership-form" action="">
+
+                            <div className="grid-container">
+                                <label> 이름 </label>
+                                <input type="text" onClick={Membership} />
+
+                                <label> 성별 </label>
+                                <div className="gender">
+                                    <input type="radio" name="gender" value="man" checked /> 남
+                                    <input type="radio" name="gender" value="woman" /> 여
+                                </div>
+                                <label> 아이디 </label>
+                                <input type="text" />
+                                <label> 비밀번호 </label>
+                                <input type="password" />
+                                <label> 비밀번호 확인 </label>
+                                <input type="passWord" />
+                                <label> 생년월일 </label>
+                                <input type="date"
+                                    id="inputBirthday"
+                                    min={minDate}
+                                    max={maxDate} />
+                                <label> 주소 </label>
+                                <div className="adress">
+                                    <input type="text" placeholder="우편번호" />
+                                    <button>우편번호</button>
+                                    <div className="adress-rowArea">
+                                        <input type="text" placeholder="주소1" />
+                                        <input type="text" placeholder="주소2" />
+                                    </div>
+                                </div>
+                                <label>핸드폰 번호</label>
+                                <input type="tel" />
+                                <label>이메일</label>
+                                <input type="email" />
+
+                            </div>
+                            <button className="joinus-button">회원가입</button>
+
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
+
+
 }
 
 export default Membership;
