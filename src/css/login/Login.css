@@ -60,15 +60,15 @@
 
 .textarea h4 {
     font-family: 'Chosunilbo_myungjo';
-    font-size: 35px;
-    margin-bottom: 30px;
+    font-size: 2em;
+    margin-bottom: 2%;
     letter-spacing: 2px;
 }
 
 .login-imgBox {
-    width: 450px;
-    height: 150px;
-    margin-bottom: 35px;
+    width: 85%;
+    height: 23%;
+    margin-bottom: 3%;
 }
 
 .login-imgBox img {
@@ -93,7 +93,7 @@
 }
 
 .login-inputArea {
-    margin-top: 45px;
+    margin-top: 10%;
     /* outline: 1px solid; */
     position: relative;
 }
@@ -112,9 +112,8 @@
 
 
 .login-Box p {
-    margin-top: 15px;
+    margin-top: 5%;
     font-size: 15px;
-    /* margin-bottom: 5px; */
     color: red;
     visibility: hidden;
     white-space: pre-wrap;
@@ -128,9 +127,9 @@
     color: black;
     font-family: 'SUITE-Regular';
     background-color: antiquewhite;
-    font-size: 25px;
+    font-size: 1.8em;
     font-family: 'SUITE-Regular';
-    margin-top: 30px;
+    margin-top: 10%;
     margin-bottom: 10px;
     letter-spacing: 5px;
     transition: all 0.5s ease;
@@ -146,7 +145,7 @@
 }
 
 .textarea ul {
-    margin-top: 30px;
+    margin-top: 5%;
 }
 
 .textarea li {
