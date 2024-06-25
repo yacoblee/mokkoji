@@ -12,6 +12,7 @@ import Membership from './components/login/Membership';
 import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
 import Footer from './components/modules/Footer';
+import Reservation from './components/main/Reservation';
 
 const App = () => {
 
@@ -27,7 +28,7 @@ const App = () => {
         <Route path="/goods/*" element={<ProductContainer />} />
         <Route path='/goods/:category' element={<ProductList />}></Route>
         <Route path="/goods/:category/:id/*" element={<ProductDetails />} />
-        <Route path="/reserve/*" element={<div>Reserve Page</div>} />
+        <Route path="/reserve/*" element={<Reservation />} />
         <Route path="/Login/*" element={<Login />} />
         <Route path='/Login/Membership' element={<Membership />} />
         <Route path='/Login/FindId' element={<FindId />} />
