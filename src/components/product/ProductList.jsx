@@ -5,6 +5,7 @@ import ProductListResult from './ProductListResult';
 import '../../css/Product/ProductCategory.css'
 
 const ProductList = () => {
+    
     const { category } = useParams();
 
     //보여주는부분이 Menu 냐 , Search냐
