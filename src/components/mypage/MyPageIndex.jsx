@@ -18,7 +18,7 @@ import GoodsItems from '../product/ProductObject';
 function MyPageIndex() {
     const items = GoodsItems;
 
-    const storedUserInfo = localStorage.getItem('userInfo');
+    const storedUserInfo = sessionStorage.getItem('userInfo'); //local에서 sessionStorage 로 변경 -승현
     const parsedUserInfo = JSON.parse(storedUserInfo);
 
     // id와 pw가 일치하는 사용자를 찾기 위해 find 메서드 사용

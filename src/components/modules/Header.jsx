@@ -29,7 +29,7 @@ const Header = () => {
     }, []);
 
 
-    const navi = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isLoggedIn, userInfo } = useSelector(state => state);
     const locationNows = useLocation();
@@ -38,7 +38,7 @@ const Header = () => {
 
     const handleLogout = () => {
         dispatch(logout());
-        navi('/');
+        navigate('/');
     };
 
     return (

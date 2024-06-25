@@ -60,7 +60,7 @@ const Login = () => {
     const CheckLogin = (e) => {
         const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
         if (isLogin) {
-            const userInfo = { id: inputId, pw: inputPw }
+            const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
             dispatch(login(userInfo));
             sessionStorage.removeItem('LoginSuccess');
             sessionStorage.setItem('LoginSuccess', 'true');

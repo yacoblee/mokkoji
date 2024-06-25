@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
 
 const initialState = {
-    isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
-    userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
+    isLoggedIn: JSON.parse(sessionStorage.getItem('isLoggedIn')) || false,
+    userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || null,
 };
 
 const reducer = (state = initialState, action) => {

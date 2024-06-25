@@ -1,6 +1,6 @@
 export const login = (userInfo) => {
-    localStorage.setItem('isLoggedIn', true);
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    sessionStorage.setItem('isLoggedIn', true);
+    sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
     return {
         type: 'LOGIN',
         payload: userInfo
@@ -8,10 +8,10 @@ export const login = (userInfo) => {
 };
 
 export const logout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('userDetail');
-    localStorage.removeItem('goodsList');
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userInfo');
+    sessionStorage.removeItem('userDetail');
+    sessionStorage.removeItem('goodsList');
     return {
         type: 'LOGOUT'
     };
