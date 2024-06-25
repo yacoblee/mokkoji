@@ -11,6 +11,7 @@ import Login from './components/login/Login';
 import Membership from './components/login/Membership';
 import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
+import Footer from './components/modules/Footer';
 
 const App = () => {
 
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/Login/FindPw' element={<FindPw />} />
         <Route path="/mypage/*" element={<MyPageIndex />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };

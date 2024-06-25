@@ -1,7 +1,7 @@
 import '../../css/main.css';
 import { useEffect } from 'react';
 import SlideSection from './SliderSection';
-
+import About from './About';
 const ProductSection = () => {
 
     useEffect(() => {
@@ -16,17 +16,22 @@ const ProductSection = () => {
                 const rightImage = entry.target.querySelector('.right_door');
                 const startImage = entry.target.querySelector('.start_door');
                 const endImage = entry.target.querySelector('.end_door');
+                const about = entry.target.querySelector('.section2_about');
+
+
 
                 if (entry.isIntersecting) {
                     leftImage?.classList.add('left_motion');
                     rightImage?.classList.add('right_motion');
                     startImage?.classList.add('start_motion');
                     endImage?.classList.add('end_motion');
+                    about.style.zIndex = '1';  // 수정된 부분
                 } else {
                     leftImage?.classList.remove('left_motion');
                     rightImage?.classList.remove('right_motion');
                     startImage?.classList.remove('start_motion');
                     endImage?.classList.remove('end_motion');
+                    about.style.zIndex = '0';
                 }
             });
         }, options);
@@ -52,8 +57,10 @@ const ProductSection = () => {
                 <img src="/images/main/traditional02.png" className='right_door' alt="" />
                 <img src="/images/main/traditional02.png" className='final_door' alt="" />
             </div>
-            <SlideSection title='베스트 상품' sort='count' />
-
+            <div className='section2_about'>
+                <About />
+            </div>
+            {/* <SlideSection title='베스트 상품' sort='count' /> */}
         </div>
     );
 };

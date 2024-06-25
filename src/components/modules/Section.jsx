@@ -3,6 +3,7 @@ import Background from '../main/Backgroud'
 import ProductSection from '../main/Productsection';
 import Introduction from '../main/Introduction';
 import About from '../main/About'
+import SlideSection from '../main/SliderSection';
 const Section = ({ id, text, color }) => {
 
 
@@ -17,7 +18,7 @@ const Section = ({ id, text, color }) => {
             </section>
 
             <section id='section3' className="section">
-                <About />
+                <SlideSection />
             </section>
 
 

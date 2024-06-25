@@ -28,7 +28,7 @@ const SlideSection = ({ title, sort }) => {
 
 
     // 슬라이드 기능 추가
-    const slideContainerRef = useRef();
+    const slideContainerRef = useRef(0);
     const btnPreRef = useRef();
     const btnNextRef = useRef();
     const slideIndexRef = useRef(0);
@@ -58,8 +58,9 @@ const SlideSection = ({ title, sort }) => {
     return (
         <>
             <div className="product_section">
-              <h1>인기 상품</h1>
-
+                <div className='product_head'>
+                    <h1>Best Items</h1>
+                </div>
                 <div className="slide_container" ref={slideContainerRef}>
                     {sortItems.map((product, i) => (
                         <div className='slide_item' key={i}>
