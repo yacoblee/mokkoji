@@ -62,9 +62,10 @@ const Login = () => {
         if (isLogin) {
             const userInfo = { id: inputId, pw: inputPw }
             dispatch(login(userInfo));
-            // sessionStorage.removeItem('LoginSuccess');
-            // sessionStorage.setItem('LoginSuccess', 'true');
-            // sessionStorage.setItem('LoginId', inputId);
+            sessionStorage.removeItem('LoginSuccess');
+            sessionStorage.setItem('LoginSuccess', 'true');
+            sessionStorage.setItem('LoginId', inputId);
+            sessionStorage.setItem('LoginPw', inputPw);
             navi('/');
         }
         else {
