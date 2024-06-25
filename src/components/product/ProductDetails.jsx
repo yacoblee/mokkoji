@@ -16,7 +16,35 @@ const ProductDetails = ()=>{ //=================================================
 
     const onClickLikeMe =()=>{
         setLike(!like);
+            // 세션 스토리지의 사용자 정보 업데이트
+            const userData = JSON.parse(sessionStorage.getItem('selectedUser'));
+            if (userData) {
+                const updatedLikes = like
+                    ? userData.mypage.isLike.filter(id => id !== selectedProduct.id) // 이미 찜한 상태라면 제거
+                    : [...userData.mypage.isLike, selectedProduct.id]; // 찜하지 않은 상태라면 추가
+    
+                const updatedUser = {
+                    ...userData,
+                    mypage: {
+                        ...userData.mypage,
+                        isLike: updatedLikes
+                    }
+                };
+    
+                // 업데이트된 사용자 정보를 세션 스토리지에 저장
+                sessionStorage.setItem('selectedUser', JSON.stringify(updatedUser));
+            }
+        
     } 
+    // 컴포넌트가 마운트될 때 세션 스토리지에서 찜하기 상태 초기화
+    useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem('selectedUser'));
+        if (userData && userData.mypage.isLike.includes(selectedProduct.id)) {
+            setLike(true); // 찜 목록에 있으면 like 상태를 true로 설정
+        }
+    }, [selectedProduct.id]);
+
+    
     const handleScroll = (event, id) => {
         event.preventDefault();
         const element = document.getElementById(id);
