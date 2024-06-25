@@ -23,7 +23,47 @@ const userInfo = [
             ],
             review: null,
             isLike: [1, 2, 3],
-            basket: [1, 4, 5]
+            basket:  [
+                {
+                    "productId": 2,
+                    "productName": "상품명 A",
+                    "options": {
+                        "contentSelect": "옵션 A",
+                        "packagingSelect": "포장 A"
+                    },
+                    "quantity": {
+                        "contentSelect": 1,
+                        "packagingSelect": 1
+                    },
+                    "totalPrice": 220000
+                },
+                {
+                    "productId": 6,
+                    "productName": "상품명 B",
+                    "options": {
+                        "contentSelect": "옵션 B",
+                        "packagingSelect": "포장 B"
+                    },
+                    "quantity": {
+                        "contentSelect": 2,
+                        "packagingSelect": 1
+                    },
+                    "totalPrice": 450000
+                },
+                {
+                    "productId": 7,
+                    "productName": "상품명 C",
+                    "options": {
+                        "contentSelect": "옵션 C",
+                        "packagingSelect": "포장 C"
+                    },
+                    "quantity": {
+                        "contentSelect": 1,
+                        "packagingSelect": 2
+                    },
+                    "totalPrice": 500000
+                }
+            ]
         }
     },
     {

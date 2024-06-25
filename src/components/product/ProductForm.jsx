@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './../login/Login';
+import userInfo from './../login/UserInforData';
 
 
 
@@ -51,25 +52,30 @@ const ProductForm = ({selectedProduct})=>{
         }
     };
 
-    //토탈 금액에 대한 계산을 하는 함수
+    // 총 금액을 계산하는 함수
     const calculateTotalPrice = () => {
-        if (!selectedProduct) return 0;
-        let packageADDprice = 0;
-        let defaultADDprice = 0;
+        if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
+        let packageADDprice = 0; // 포장 추가 금액
+        let defaultADDprice = 0; // 기본 추가 금액
 
+        // 포장 옵션에 따라 추가 금액 설정
         if (options.packagingSelect.includes('(+2000원)')) {
             packageADDprice = 2000;
         } else if (options.packagingSelect.includes('(+4000원)')) {
             packageADDprice = 4000;
         }
+
+        // 내용 옵션에 따라 추가 금액 설정
         if (options.contentSelect.includes('(+220000)')) {
             defaultADDprice = 220000;
         } else if (options.contentSelect.includes('(+722000)')) {
             defaultADDprice = 722000;
         }
+
+        // 총 금액 계산
         return (selectedProduct.price + defaultADDprice) * btnValue.contentSelect + packageADDprice * btnValue.packagingSelect;
-    };    // ( 선택가격 + 선택가격의 옵션 ) x 선택 갯수 + (포장 옵션 * 포장 갯수)
-    
+    };
+
     // 토탈 금액에 대한 계산을 하는 함수는 state 값이 변경될때.
     useEffect(() => {
         setTotalPrice(calculateTotalPrice());
@@ -80,17 +86,22 @@ const ProductForm = ({selectedProduct})=>{
         return number.toLocaleString('en-US');
     }
     
-    //로그인 상태를 확인하는 상태값 
-    const [userLogin, SetUserLogin] = useState(false);
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-    useEffect(() => {
-        console.log(user);
+    // 사용자의 로그인 상태 관리
+    const [userLogin, setUserLogin] = useState(false);
 
-        //로그인이 완료되면 ture 값으로 판별
-        if (user) {
-            SetUserLogin(true);
+    // 현재 로그인된 사용자 정보 관리
+    const [user, setUser] = useState(null);
+
+
+    // 컴포넌트가 마운트될 때 사용자 정보를 로컬 스토리지에서 가져옴
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem("userInfo"));
+        if (userData) {
+            setUserLogin(true); // 사용자가 로그인한 상태로 설정
+            const selectedUser = userInfo.find(him => him.id === userData.id); // 사용자 정보 찾기
+            setUser(selectedUser); // 사용자 정보 설정
+            sessionStorage.setItem('selectedUser', JSON.stringify(selectedUser)); // 세션 스토리지에 사용자 정보 저장
         }
-        console.log('useEffect called');
     }, []);
     
     const navigate = useNavigate();
@@ -128,7 +139,7 @@ const ProductForm = ({selectedProduct})=>{
                 <option value="selectcontent" hidden>선택옵션</option>
                 {selectedProduct.option.map((option)=>{
                     return(
-                        <option value={option} key="">{option}</option>
+                        <option value={option} key={option}>{option}</option>
                     )
                 })}
             </select>

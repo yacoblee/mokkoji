@@ -80,13 +80,14 @@ const ProductBuy = ()=>{
     const { options, btnValue, totalPrice } = location.state || {};
     const selectedProduct = GoodsItems.find(item => item.category === category && item.id === parseInt(id));
     
+    const [buyPrice, setBuyPrice] = useState({
+        productPrice: btnValue ? btnValue.contentSelect : 1,
+        optionPrice: btnValue ? btnValue.packagingSelect : 1,
+    });
+
     useEffect(() => {
         console.log('useEffect called');
-        const user = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(user);
-        const selectedUser = userInfo.find(him => him.id === user.id);
-        console.log(selectedUser);
-        //로그인이 완료되면 ture 값으로 판별
+        
     }, []);
 
     const price = {
@@ -94,10 +95,6 @@ const ProductBuy = ()=>{
         option : +btnValue.packagingSelect,
     }
 
-    const [buyPrice , SetBuyPrice]= useState({
-        productPrice : price.pruduct,
-        optionPrice : price.option,
-    })
     let filterPrice = totalPrice ;
     if(totalPrice<30000){
         filterPrice += 3000;
@@ -105,19 +102,19 @@ const ProductBuy = ()=>{
         const onClickbtn = (type , name) => {
             if (type === '-') {
                 if(buyPrice[name]>1){
-                    SetBuyPrice(it => ({
+                    setBuyPrice(it => ({
                         ...it,
                         [name]: buyPrice[name] - 1
                     }));
                 }else{
-                    SetBuyPrice(it => ({
+                    setBuyPrice(it => ({
                         ...it,
                         [name]: buyPrice[name] 
                     }));
                 }
                 
             } else {
-                SetBuyPrice(it => ({
+                setBuyPrice(it => ({
                     ...it,
                     [name]: buyPrice[name] + 1
                 }));

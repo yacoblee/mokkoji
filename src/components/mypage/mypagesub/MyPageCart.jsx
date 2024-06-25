@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import '../../../css/mypage/subpage/MyPageCart.css';
+// import '../../../css/mypage/subpage/MyPageCart.css';
 
 function MyPageCart() {
     const location = useLocation();
