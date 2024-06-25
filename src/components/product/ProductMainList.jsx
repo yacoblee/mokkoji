@@ -49,6 +49,7 @@ const ProductMainList = ({ title, sort }) => {
                 이 달의 <span className='NamedCategory'>{title}</span>을 만나보세요 !
             </div>
             <div className="productList">
+                <div className='secondContainerLeftBtn'>
                 {
                     currentSlide>0 && <button style={{left :5 ,transform: 'rotateY(180deg)'}}
                     type='button'
@@ -59,9 +60,10 @@ const ProductMainList = ({ title, sort }) => {
                         alt="left" />
                     </button> 
                 }
+                </div>
 
                 <div className="slider" 
-                style={{ transform: `translateX(-${currentSlide * 23.7}vw)` }}>
+                style={{ transform: `translateX(-${currentSlide * 17}vw)` }}>
 
                 {sortItems.map((product, i) => (
                     <Link to={`/goods/${product.category}/${product.id}`} key={i}
@@ -70,7 +72,7 @@ const ProductMainList = ({ title, sort }) => {
                             <img src={product.slideSrc[0]} alt={product.name} />
 
                             <div>
-                                <p>{product.name} </p>
+                                <p >{product.name} </p>
                                 <p className='ProductPrice'>{formatNumber(product.price)}</p>
                                 {/* <p>{product.count}</p> */}
                             </div>
@@ -78,6 +80,7 @@ const ProductMainList = ({ title, sort }) => {
                     </Link>
                 ))}
                 </div>
+                <div className='secondContainerRightBtn'>
                 {
                     currentSlide < maxSlide && <button style={{right :5}}
                     type='button'
@@ -88,6 +91,7 @@ const ProductMainList = ({ title, sort }) => {
                         alt="right" />
                     </button> 
                 }
+                </div>
             </div>
         </>
     );

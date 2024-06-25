@@ -1,5 +1,5 @@
 import { Link} from "react-router-dom";
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 
 const ProductMainGuide = ({ text }) => {
@@ -37,27 +37,67 @@ const ProductListResult = ({selectItem})=>{
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     }
+    //버튼 클릭에 따라 전달될 매개변수 값.
+    const [currentPage, setCurrentPage] = useState(1); 
 
+    //현재 보여질 페이지 아이템 수.
+    const itemsPage = 8; 
 
+    //총 아이템 수
+    const totalItems = selectItem.length;
+
+    //총 페이지는 총아이템수 나누기 현재 보여지 페이지 아이템수 올림계산
+    const totalPages = Math.ceil(totalItems / itemsPage);
+    
+    //selectItem 에서 걸러낼 slice (0~8 /8~16... )
+    const paginatedItems = selectItem.slice((currentPage - 1) * itemsPage, currentPage * itemsPage);
+    
+    //for문이 JSX에서 돌아가지 않아서 함수로 따로 뺌. page라는 배열에 button을 만들어 추가.
+    const pageNation = ()=>{
+        let pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(<button value={i} className='centerButton' onClick={()=>onClickPage(i)}
+            style={{ boxShadow: currentPage === i && 'inset 0px -5px 0px rgba(166, 255, 0, 0.233)' ,
+                color: currentPage === i && 'red' ,
+                fontSize : currentPage ===i && '18px',
+                fontWeight : currentPage===i && '700'}}>{i}</button>)
+        }
+        //결과값을 page라는 배열을 반환.
+        return pages;
+    }
+    
+    //매개변수를 받아 그 값으로 currentPage 값을 바꿈.
+    const onClickPage =(page)=>{
+        setCurrentPage(page)
+    }
     return(
     <>
         <div className="productItemList">
             {/* 선택된 카테고리의 상품들을 보여줌 */}
-            {selectItem.map((product, i) => (
+            {paginatedItems.map((product, i) => (
                 <Link to={`/goods/${product.category}/${product.id}`} key={i}>
                     <div key={i} className="productItemResult">
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <div>
-                            <p>{product.name}</p>
+                            <p style={{fontSize : '18px' , fontWeight : '600'}}>{product.name}</p>
                             <p className="productMainGuideContainer">
                             <ProductMainGuide text={product.mainGuide} /> </p>
-                            <p>{formatNumber(product.price)}</p>
+                            <p style={{color: 'red' , fontWeight : '600'}}>{formatNumber(product.price)}</p>
                         </div>
                     </div>
                 </Link>
             ))}
         </div>
-
+        <div className="productPager">
+            <button className='lastButton' onClick={()=>onClickPage(1)}
+            style={{transform: 'rotateY(180deg)'}}>
+            <img src="/images/buy/next.png" alt="1" />
+            </button>
+            {pageNation()}
+            <button className='lastButton' onClick={()=>onClickPage(totalPages)}>
+                <img src="/images/buy/next.png" alt="last" />
+            </button>
+        </div>
     
     </>
     )
