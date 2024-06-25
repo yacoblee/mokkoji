@@ -62,8 +62,8 @@ const Login = () => {
         if (isLogin) {
             const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
             dispatch(login(userInfo));
-            sessionStorage.removeItem('LoginSuccess');
-            sessionStorage.setItem('LoginSuccess', 'true');
+            // sessionStorage.removeItem('LoginSuccess');
+            // sessionStorage.setItem('LoginSuccess', 'true'); 삭제예정 
             sessionStorage.setItem('LoginId', inputId);
             sessionStorage.setItem('LoginPw', inputPw);
             navi('/');

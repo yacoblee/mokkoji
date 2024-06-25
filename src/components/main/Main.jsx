@@ -7,6 +7,7 @@ const Main = () => {
     return (
         <div className="master_page">
             <Section />
+            {/* <LoginSuccess /> */}
         </div>
     )
 }

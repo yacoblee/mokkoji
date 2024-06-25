@@ -8,13 +8,14 @@ const LoginSuccess = () => {
 
 
     if (loginOk && filteredUserInfoID) {
-        console.log(filteredUserInfoID);
+        sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
     }
-   
+
 
     return (
         <div>
             {loginOk}
+
         </div>
     );
 }
