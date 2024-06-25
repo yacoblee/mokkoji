@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: false,
-                userInfo: null
+                userInfo: null,
             };
         default:
             return state;

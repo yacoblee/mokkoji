@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './action';
-import { Link, useLocation, NavLink } from 'react-router-dom';
+import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import '../../css/header.css'
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
     }, []);
 
 
-
+    const navi = useNavigate();
     const dispatch = useDispatch();
     const { isLoggedIn, userInfo } = useSelector(state => state);
     const locationNows = useLocation();
@@ -38,19 +38,8 @@ const Header = () => {
 
     const handleLogout = () => {
         dispatch(logout());
+        navi('/');
     };
-    // const user = JSON.parse(sessionStorage.getItem('LoginSuccess'));
-    // const userInfo = sessionStorage.getItem('LoginId');
-    // console.log('userInfo' + userInfo);
-
-    // const logOut = () => {
-    //     sessionStorage.removeItem('LoginSuccess');
-    //     sessionStorage.removeItem('LoginId');
-    // }
-
-
-
-
 
     return (
         <header id="header" className="deactive">
@@ -68,8 +57,6 @@ const Header = () => {
                 <div className="header_right">
                     <nav className="header_nav">
                         <ul>
-                            {/* <li><Link to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>mypage</p></Link></li>
-                            <li><Link to="/Login" className={({ isActive }) => (isActive ? 'active' : '')}><p>Login</p></Link></li> */}
                             {
                                 isLoggedIn ?
                                     <>
