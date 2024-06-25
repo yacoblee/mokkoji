@@ -40,10 +40,10 @@ function MyPageLike() {
                         </div>
 
                         <div className="MyLikePhoto">
-                            {/* <img src={item.photo} alt={item.name} /> */}
+                            <img src={goods.slideSrc[0]} alt={goods.name} />
                         </div>
 
-                        <div className="name">{goods.name}</div>
+                        <div className="name">{goods.name}<br />{goods.price}원</div>
 
                         <div className="buy">
                             <button>장바구니 담기</button>

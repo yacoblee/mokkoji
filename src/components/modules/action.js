@@ -10,6 +10,8 @@ export const login = (userInfo) => {
 export const logout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('userDetail');
+    localStorage.removeItem('goodsList');
     return {
         type: 'LOGOUT'
     };

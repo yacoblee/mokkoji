@@ -3,14 +3,14 @@ import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageMain.css';
 
-import userInfo from "../login/UserInforData";
+// import userInfo from "../login/UserInforData";
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 function MyPageFlex() {
 
-    const user = userInfo[0];   // 임의 지정
+    const user = JSON.parse(localStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
 
     return (
         <div className='MyInfoFlex'>
