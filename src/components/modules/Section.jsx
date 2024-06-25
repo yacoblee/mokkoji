@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Background from '../main/Backgroud'
 import ProductSection from '../main/Productsection';
 import Introduction from '../main/Introduction';
+import About from '../main/About'
 const Section = ({ id, text, color }) => {
 
 
@@ -16,15 +17,15 @@ const Section = ({ id, text, color }) => {
             </section>
 
             <section id='section3' className="section">
-                Section 3
+                <About />
             </section>
 
-            <section id='section4' className="section">
-                <Introduction />
-            </section>
 
             <section id='section5' className="section" style={{ backgroundColor: color }}>
                 Section 1
+            </section>
+            <section id='section4' className="section">
+                <Introduction />
             </section>
         </div>
     );

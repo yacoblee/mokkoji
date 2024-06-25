@@ -40,11 +40,13 @@ const ProductMainList = ({ title, sort }) => {
     const onMouseOverHover = ()=>{
         setHover(false);
     }
-    console.log(hover);
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
+    }
     return (
         <>
             <div className="productListInfo">
-                이 달의 <span>{title}</span>을 만나보세요 !
+                이 달의 <span className='NamedCategory'>{title}</span>을 만나보세요 !
             </div>
             <div className="productList">
                 {
@@ -69,7 +71,7 @@ const ProductMainList = ({ title, sort }) => {
 
                             <div>
                                 <p>{product.name} </p>
-                                <p className='ProductPrice'>{product.price}</p>
+                                <p className='ProductPrice'>{formatNumber(product.price)}</p>
                                 {/* <p>{product.count}</p> */}
                             </div>
                         

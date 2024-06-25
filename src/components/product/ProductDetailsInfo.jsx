@@ -1,14 +1,54 @@
 
+import { useState } from "react";
 import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 
-const ProductDetailsInfo = ({ type, selectedProduct }) => {
-    switch (type) {
-        case 'imgInfo':
+const ProductDetailsInfo = ({ selectedProduct }) => {
+        //슬라이드 구현을 위한 state
+        const [currentSlide ,setCurrentSlide] =useState(0);
+
+
+        let visibleSlide = 3;//현재 보여지는 슬라이드 갯수
+        
+        //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
+        const maxSlide = selectedProduct.reviews.length - visibleSlide; 
+        
+        //버튼을 누르면 state값 증가와 감소
+        const onclickreivewsList = (type)=>{
+            if(type ==='+'){
+                if(currentSlide === maxSlide) return;
+                setCurrentSlide(currentSlide+1);
+            }else{
+                setCurrentSlide(currentSlide-1);
+            }
+        }
+    
+        //버튼 호버시 true 아웃시 fasle  의 state
+        const [hover, setHover] = useState(false);
+    
+        //버튼 호버시 true 설정
+        const onMouseEnterHover = ()=>{
+            setHover(true);
+        }
+    
+        const onMouseOverHover = ()=>{
+            setHover(false);
+        }
+        const recommendItemid = selectedProduct.id;
+        const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
+            .sort((a, b) => b.reviews.length - a.reviews.length)
+            .slice(0, 4);
+        const formatNumber = (number) => {
+            return number.toLocaleString('en-US');
+        }
             return (
-                <div className={type}>
+                <>
+                <h2 id="details">
+                    상세보기
+                </h2>
+                <div className='imgInfo'  >
                     <div className="imgInfoBox">
-                        {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={i} />)}
+                        {selectedProduct.productSrc.map((src, i) => <img src={src} key={i} alt={selectedProduct.name} />)}
                         {/* {selectedProduct.slideSrc.map((src)=><img src={src} alt="" />)} */}
 
                     </div>
@@ -27,12 +67,15 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                         </p>
                     </div>
                 </div>
-            );
-
-        case 'deliSizeInfo':
-            return (
-                <div className={type}>
-                    <p><span>배송 정보</span><br /><br />
+                <h2 id="shipping">
+                    배송 / 사이즈
+                </h2>
+                <div className='deliSizeInfo' >
+                    <div>
+                        {selectedProduct.size}
+                    </div>
+                    <div>
+                    <p><span>배송 정보</span><br />
 
                         -오전 9시 이전 주문건까지 당일출고되며 이 후 주문건은 익일 출고됩니다 (단, 재고가 있는 상품에 한함)<br />
                         -주문취소는 입금확인 상태에서만 가능하며 배송준비중 상태부터는 취소가 불가합니다. <br />
@@ -46,8 +89,8 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                         -티백, 도자기, 유리, 자석, 유물재현품, 디퓨저, 반가사유상 미니어처, 석고방향제는 해외배송이 불가합니다.<br />
                         -100만원 이상의 대량 구매시 상품 재고 사항 및 제작 가능 일정을 문의해주시기 바랍니다.
                     </p>
-                    <br /><br />
-                    <p><span> 취소 / 교환 / 환불 / AS안내</span><br /><br />
+                    <br />
+                    <p><span> 취소 / 교환 / 환불 / AS안내</span><br />
                         -주문취소는 입금확인 상태에서만 가능하며 배송준비중 상태부터는 취소가 불가합니다. <br />
                         -상품 수령일로부터 7일 이내 반품/교환 가능합니다.<br />
                         -변심 반품의 경우 왕복배송비를 차감한 금액이 환불 되며, 제품 및 포장 상태가 재판매 가능 하여야 합니다.<br />
@@ -55,75 +98,94 @@ const ProductDetailsInfo = ({ type, selectedProduct }) => {
                         -상품이 불량인 경우, 배송비를 포함한 전액이 환불됩니다.<br />
                         -출고 이후 환불요청시 상품 회수 후 처리됩니다.<br />
                         -밀봉포장, 만들기상품 등은 변심에 따른 반품/환불이 불가합니다.<br />
-
                     </p>
+                    </div>
                 </div>
-            );
+                <h2 id="reviews">
+                    리뷰정보
+                </h2>
+                <div className='reveiwInfo'
+                >
+                                    {
+                    currentSlide>0 && <button style={{left :5 ,transform: 'rotateY(180deg)'}}
+                    type='button'
+                    onClick={()=>{onclickreivewsList('-')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="left" />
+                    </button> 
+                }
 
-        case 'reveiwInfo':
-            return (
-                <div className={type}>
                     {selectedProduct.reviews.map((it, i) => <>
-                        <div key={i}>
-                            <p className="reveiwName">{i}
-                                <p>{selectedProduct.name}</p>
-                            </p>
+                        <div key={it.name} 
+                        
+                        style={{ transform: `translateX(-${currentSlide * 26}vw)` }}
+                        className="reviewInfoInner">
+                            
                             <div>
                                 {it.reviewsSrc ? <img src={it.reviewsSrc} alt="" /> : <img src={selectedProduct.productSrc[0]} alt="" />}
                             </div>
-                            <p>
-                                {it.content}
-                            </p>
-                            <span>
-                                {it.userName}
-                            </span>
-                            <p>
-                                {it.day}
-                            </p>
+                            <div className="reviewContent">
+
+                                <p>
+                                    <p className="reveiwName">{i}.
+                                    </p>
+                                        {it.content}
+                                </p>
+
+                                <div>
+                                    <span>
+                                        {it.userName}
+                                    </span>
+                                    <p>
+                                        {it.day}
+                                    </p>
+                                </div>
+
+                            </div>
                         </div><br />
                     </>).reverse()}
+                    {
+                    currentSlide < maxSlide && <button style={{right :5}}
+                    type='button'
+                    onClick={()=>{onclickreivewsList('+')}}
+                    onMouseEnter={onMouseEnterHover}
+                    onMouseOut={onMouseOverHover}>
+                        <img src={hover ? "/images/buy/arrow-right-2.png" : "/images/buy/arrow-right-3.png" }
+                        alt="right" />
+                    </button> 
+                }
                 </div>
-            );
-
-        case 'recommendInfo':
-            const recommendItemid = selectedProduct.id;
-            const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
-                .sort((a, b) => b.reviews.length - a.reviews.length)
-                .slice(0, 5);
-
-            return (
-                <div className={type}>
+                <h2 id="recommendations">
+                    추천리스트
+                </h2>
+                <div className='recommendInfo' >
                     {recommendItem.map((it, i) => <>
-                        <Link to={`/goods/${it.category}/${it.id}`} key={i}>
+                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id}>
                             <div>
-                                <p className="recommendItem">{i}.
-                                    <p>{it.name}</p></p>
+                                    <p><span className="recommendItem">{i}.</span>{it.name}</p>
                                 <div>
                                     <img src={it.slideSrc[0]} alt="i" />
                                 </div>
                                 <p>
                                     카테고리 : {it.description}
                                 </p>
-                                <span>
-                                    review : {it.reviews.length}
-                                </span>
                                 <p>
-                                    금액 : {it.price}
+                                    review : {it.reviews.length}
+                                </p>
+                                <p>
+                                    금액 : {formatNumber(it.price)}
                                 </p>
                             </div>
                         </Link>
                     </>)}
                 </div>
+                </>
             );
 
-        default:
-            return (
-                <div>
-                    잘못된 타입 타입을 찾을 수 없음.
-                    오타 가능성을 염두
-                </div>
-            );
-    }
+
+    
 }
 
 export default ProductDetailsInfo;
