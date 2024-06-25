@@ -1,7 +1,7 @@
 import '../../css/mypage/MyPageIndex.css';
 
-import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import MyPageGrid from './MyPageGrid';
 import MyPageMain from './MyPageMain';
@@ -12,21 +12,29 @@ import MyPagePost from './mypagesub/MyPagePost';
 import MyPageFAQ from './mypagesub/MyPageFAQ';
 import MyPageList from './mypagesub/MyPageList';
 
-import userInfo from '../login/UserInforData';
+import userInfoArray from '../login/UserInforData';
 import GoodsItems from '../product/ProductObject';
 
 function MyPageIndex() {
-
-    const user = userInfo[0];   // 임의 지정
     const items = GoodsItems;
 
-    const [storageCheck, setStorageCheck] = useState(false);    // 유저 정보 상품 정보가 스토리지에 있느냐?=로그인 됐느냐?
+    const storedUserInfo = localStorage.getItem('userInfo');
+    const parsedUserInfo = JSON.parse(storedUserInfo);
+
+    // id와 pw가 일치하는 사용자를 찾기 위해 find 메서드 사용
+    const userInfoDetail = userInfoArray.find((user) => {
+        return user.id === parsedUserInfo.id;
+    });
+
+    const user = userInfoDetail;
+
+    const [storageCheck, setStorageCheck] = useState(false); // 유저 정보 상품 정보가 스토리지에 있느냐?=로그인 됐느냐?
 
     if (!storageCheck) {
-        const getUserDetail = JSON.parse(localStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
+        const getUserDetail = JSON.parse(localStorage.getItem("userDetail")); // 어떤 이름으로 저장을 할 것인가?
         const getGoodsList = JSON.parse(localStorage.getItem("goodsList"));
 
-        if (getUserDetail === null) {
+        if (getUserDetail === null && user) {
             localStorage.setItem("userDetail", JSON.stringify(user));
         }
 
@@ -37,10 +45,17 @@ function MyPageIndex() {
         setStorageCheck(true);
     }
 
-    return (
+    if (user) {
+        console.log(`${user.id}`);
+    } else {
+        console.log("User not found");
+    }
 
+    return (
         <div className='MyPage'>
-            <h1>내 정보</h1>
+            <h1>
+                <Link to='/mypage'>내 정보</Link>
+            </h1>
             <MyPageGrid />
 
             <Routes>
