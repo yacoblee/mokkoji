@@ -13,6 +13,7 @@ import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
 import Footer from './components/modules/Footer';
 
+import ProductBuy from './components/buy/ProductBuy';
 const App = () => {
 
 
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/goods/*" element={<ProductContainer />} />
         <Route path='/goods/:category' element={<ProductList />}></Route>
         <Route path="/goods/:category/:id/*" element={<ProductDetails />} />
+        <Route path="/goods/:category/:id/buy" element={<ProductBuy />} />
         <Route path="/reserve/*" element={<div>Reserve Page</div>} />
         <Route path="/Login/*" element={<Login />} />
         <Route path='/Login/Membership' element={<Membership />} />
