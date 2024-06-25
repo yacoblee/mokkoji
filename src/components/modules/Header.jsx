@@ -5,6 +5,11 @@ import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import '../../css/header.css'
 
 const Header = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { isLoggedIn, userInfo } = useSelector(state => state);
+    const locationNows = useLocation();
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,17 +33,17 @@ const Header = () => {
         };
     }, []);
 
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { isLoggedIn, userInfo } = useSelector(state => state);
-    const locationNows = useLocation();
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/');
+        }
+    }, [isLoggedIn]);
 
     if (locationNows.pathname.toLowerCase().includes('login')) return null;
 
     const handleLogout = () => {
         dispatch(logout());
-        navigate('/');
+
     };
 
     return (
