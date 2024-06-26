@@ -140,7 +140,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 장바구니에 추가할 항목 생성
         const sendBasket = {
-            productID: selectedProduct.id,
+            productId: selectedProduct.id,
             options,
             quantity: btnValue,
             totalPrice
