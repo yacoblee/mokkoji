@@ -9,6 +9,8 @@ import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom'
 import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
 import userInfo from "./UserInforData";
+import LoginSuccess from "./loginSuccess";
+import userInfoData from "./UserInforData";
 
 sessionStorage.setItem('LoginSuccess', 'false');
 
@@ -66,6 +68,10 @@ const Login = () => {
             sessionStorage.setItem('LoginSuccess', 'true');
             sessionStorage.setItem('LoginId', inputId);
             sessionStorage.setItem('LoginPw', inputPw);
+            const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
+            sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
+
+            console.log(filteredUserInfoID);
             navi('/');
         }
         else {

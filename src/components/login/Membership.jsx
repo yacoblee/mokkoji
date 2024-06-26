@@ -21,19 +21,22 @@ const Membership = () => {
                 </div>
                 <div className="container">
                     <div className="clausearea">
-                        <h4>약관 동의</h4>
-                        
-                        <div className='innerclausearea'>
-                            <h5>필수 약관동의(필수)</h5>
-                            <input type='radio'></input>
-                        </div>
-                        <Clausearea01 />
+                        <h3>약관동의 및 개인정보처리방침</h3>
 
+                        <h4>필수 약관동의(필수)</h4>
+                        <Clausearea01 />
                         <div className='innerclausearea'>
-                            <h5>개인정보 수집 및 이용 동의(필수)</h5>
+                            <h5>이용약관에 동의합니다</h5>
                             <input type='radio'></input>
                         </div>
+
+                        <h4>개인정보 수집 및 이용 동의(필수)</h4>
                         <Clausearea02 />
+                        <div className='innerclausearea'>
+                            <h5>이용약관에 동의합니다.</h5>
+                            <input type='radio'></input>
+                        </div>
+
                         <div className='innerclausearea'>
                             <h5>회원가입 약관에 모두 동의 합니다.</h5>
                             <input type='radio'></input>
@@ -42,7 +45,7 @@ const Membership = () => {
                     </div>
                     <hr />
 
-                    <h4>개인정보를 입력해주세요</h4>
+                    <h3>개인정보를 입력해주세요</h3>
                     <form className="formcontainer">
                         <label>이름</label>
                         <input type="text" />
@@ -72,8 +75,8 @@ const Membership = () => {
                         <p>에러</p>
                         <label>성별</label>
                         <div className='genderbutton'>
-                       <button>남성</button> 
-                       <button>여성</button>
+                            <button>남성</button>
+                            <button>여성</button>
                         </div>
                         <p></p>
                         <label>이메일</label>
@@ -83,10 +86,16 @@ const Membership = () => {
                             <button>가입하기</button>
                         </div>
                     </form>
-
+                </div>
+                <div className='route'>
+                    <ul>
+                        <Link to={'/'}><li>Home</li></Link>
+                        <Link to={'/Login'}><li>Login</li></Link>
+                        <Link to={'/Login/Membership'}><li>Membership</li></Link>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

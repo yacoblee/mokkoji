@@ -1,7 +1,7 @@
 .body {
     width: 100vw;
-    background-color: #edeae4;
-
+    /* background-color: rgb(248, 243, 236); */
+background-color: papayawhip;
 }
 
 .bodycontainer {
@@ -11,7 +11,7 @@
 
 .container {
     width: 65vw;
-    height: 2000px;
+    height: 2100px;
     /* background-color: #f9f8f7; */
     display: flex;
     flex-direction: column;
@@ -19,6 +19,10 @@
     align-items: start;
     font-size: 20px;
     padding: 2rem;
+}
+.clausearea h4{
+margin-bottom: 10px;
+font-size: 19px;
 }
 
 .container input {
@@ -92,7 +96,7 @@
 
 .stickyarea {
     top: 10px;
-    width: 45vw;
+    width: 35vw;
     height: 45vh;
     /* background-color: rgb(239, 239, 247); */
     /* background: url(../../../public/images/login/mudsmembershippageimg.jpg) no-repeat center;
@@ -108,7 +112,7 @@
 
 .imgcontainer {
     width: 45%;
-    height: 25%;
+    height: 20%;
     position: absolute;
     top: 0;
     left: 0;
@@ -130,18 +134,23 @@
     width: 100%;
 }
 
-.clausearea h5 {
-    font-size: 23px;
+.clausearea h3 {
+margin-top: 30px;
+margin-bottom: 50px;
 }
 
 .innerclausearea {
-    margin-top: 30px;
+    width: 80%;
     display: flex;
     flex-direction: row;
     align-items: start;
-    justify-self: start;
-
+    justify-content: end;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+
+
 
 .innerclausearea input {
     width: 20px;
@@ -169,4 +178,22 @@
     background-color: white;
     border: 1px solid #aaaaaa;
     border-radius: 5px;
+}
+
+.route{
+    top: 10px;
+    width: 15%;
+    height: 35vh;
+    float: left;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.route li{
+    font-size: 19px;
+    margin-bottom: .8rem;
+    font-weight: bold;
+    color:  black;
 }

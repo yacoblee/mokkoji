@@ -6,11 +6,12 @@ const LoginSuccess = () => {
     const loginPw = sessionStorage.getItem('LoginPw');
     const filteredUserInfoID = userInfoData.find(it => it.id == loginID && it.pw === loginPw);
 
-
     if (loginOk && filteredUserInfoID) {
         console.log(filteredUserInfoID);
+        sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
+
     }
-   
+
 
     return (
         <div>
