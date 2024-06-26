@@ -7,10 +7,11 @@ function MyPageCart() {
     const location = useLocation();
     let cartGoods = location.state;
 
-    console.log(`wqeadsfghjkl ${cartGoods[0].id}`)
-    console.log(`wqeadsfghjkl ${cartGoods[1].id}`)
-    console.log(`wqeadsfghjkl ${cartGoods[2].id}`)
+    // console.log(`wqeadsfghjkl ${cartGoods[0].id}`)
+    // console.log(`wqeadsfghjkl ${cartGoods[1].id}`)
+    // console.log(`wqeadsfghjkl ${cartGoods[2].id}`)
 
+    // 이 아래로 checkbox 전체선택 로직
     const [checkedGoods, setCheckedGoods] = useState([]);
     const handleCheckAll = (e) => {
         if (e.target.checked) {
@@ -23,9 +24,8 @@ function MyPageCart() {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
 
-    // console.log(`likedGoods 길이 ${likedGoods[0].id} `)
-    // console.log(`likedGoods 길이 ${likedGoods[1].id} `)
-    // console.log(`likedGoods 길이 ${likedGoods[2].id} `) // 출력 확인함
+    // 이 아래로 이미지/버튼 따라서 onClick로 value값 바뀌는 로직
+
 
     return (
         <div className='MyCartList' >
@@ -63,18 +63,18 @@ function MyPageCart() {
                             <h4>{goods.content}</h4>
                             <h4>{goods.package}</h4>
                         </div>
-                        <div className='MyCartCount'>
+                        {/* <div className='MyCartCount'>
                             <div className='MyProductCount'>
-                                <img src="" alt="" />
+                                <img src="/images/buy/minus.png" onClick={buttonMinus} />
                                 <input type="text" value={goods.contentCount} />
-                                <img src="" alt="" />
+                                <img src="/images/buy/plus.png" onClick={buttonPlus} />
                             </div>
                             <div className='MyPackageCount'>
-                                <img src="" alt="" />
+                                <img src="/images/buy/minus.png" onClick={buttonMinus} />
                                 <input type="text" value={goods.packageCount} />
-                                <img src="" alt="" />
+                                <img src="/images/buy/plus.png" onClick={buttonPlus} />
                             </div>
-                        </div>
+                        </div> */}
                         <div className='MyCartButton'>
                             <button>구매</button>
                             <button>삭제</button>

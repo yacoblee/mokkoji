@@ -7,11 +7,10 @@
 .MyLikeGrid,
 .MyLikeFooter {
     display: grid;
-    grid-template-columns: 50px 200px 1fr 100px 150px;
+    grid-template-columns: 50px 200px 1fr 150px 180px;
     gap: 10px;
     align-items: center;
     text-align: center;
-    padding: 10px 0;
 }
 
 .MyLikeHeader {
@@ -29,7 +28,7 @@
     width: 170px;
 }
 
-.MyLikeGrid>div * {
+.MyLikeGrid>div {
     padding: 10px;
 }
 
@@ -38,15 +37,24 @@
     align-items: initial;
 }
 
+.MyLikeInfo * {
+    padding: 10px;
+}
+
+.MyLikeButton {
+    padding: 0;
+}
+
 .MyLikeButton button {
     width: 130px;
     height: 30px;
     padding: 0;
-    margin: 1px;
+    margin: 5px;
 }
 
 .MyLikeGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 300px;
 }
 
 .MyLikeGrid:nth-last-child(2) {
