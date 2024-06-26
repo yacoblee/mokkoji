@@ -16,6 +16,7 @@ sessionStorage.setItem('LoginSuccess', 'false');
 
 
 const Login = () => {
+    localStorage.setItem('userInfo', JSON.stringify(userInfoData));
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
@@ -64,14 +65,19 @@ const Login = () => {
         if (isLogin) {
             const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
             dispatch(login(userInfo));
-            sessionStorage.removeItem('LoginSuccess');
-            sessionStorage.setItem('LoginSuccess', 'true');
-            sessionStorage.setItem('LoginId', inputId);
-            sessionStorage.setItem('LoginPw', inputPw);
+          
             const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
+<<<<<<< HEAD
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
 
             console.log(filteredUserInfoID);
+=======
+            // sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
+            // const getUserInfo =  JSON.parse(localStorage.getItem('userInfo'));
+            // const loginUser =getUserInfo.find(it=> it.id ==  inputId &&  it.pw ==inputPw)
+            // sessionStorage.setItem('loginUser', JSON.stringify(loginUser));
+            // console.log(getUserInfo);
+>>>>>>> hy
             navi('/');
         }
         else {
