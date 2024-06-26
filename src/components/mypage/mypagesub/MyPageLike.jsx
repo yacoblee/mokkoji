@@ -57,11 +57,11 @@ function MyPageLike() {
                             <img src={goods.slideSrc[0]} alt={goods.name} />
                         </div>
                         <div className='MyLikeInfo'>
-                            <div>{goods.name}</div>
-                            <div>{goods.price}원</div>
+                            <h3>{goods.name}</h3>
+                            <h4>{goods.price}원</h4>
                         </div>
                         <div>
-                            
+
                         </div>
                         <div className='MyLikeButton'>
                             <button>장바구니 담기</button>

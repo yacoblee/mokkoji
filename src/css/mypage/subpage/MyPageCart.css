@@ -17,11 +17,12 @@
 .MyCartHeader {
     border-bottom: 1px solid #000;
     background-color: aliceblue;
+    height: 40px;
 }
 
 .MyCartFooter {
     border-top: 1px solid #000;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 }
 
 .MyCartPhoto img {
@@ -47,4 +48,12 @@
 .MyCartCount input {
     width: 10px;
     height: 10px;
+}
+
+.MyCartGrid {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.MyCartGrid:nth-last-child(2) {
+    border: none;
 }

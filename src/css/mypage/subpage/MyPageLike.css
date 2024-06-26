@@ -17,11 +17,12 @@
 .MyLikeHeader {
     border-bottom: 1px solid #000;
     background-color: aliceblue;
+    height: 40px;
 }
 
 .MyLikeFooter {
     border-top: 1px solid #000;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 }
 
 .MyLikePhoto img {
@@ -42,4 +43,12 @@
     height: 30px;
     padding: 0;
     margin: 1px;
+}
+
+.MyLikeGrid {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.MyLikeGrid:nth-last-child(2) {
+    border: none;
 }

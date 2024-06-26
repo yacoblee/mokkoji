@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// import '../../../css/mypage/subpage/MyPageCart.css';
+import '../../../css/mypage/subpage/MyPageCart.css';
 
 function MyPageCart() {
     const location = useLocation();
@@ -55,8 +55,8 @@ function MyPageCart() {
                             <img src={goods.slideSrc[0]} alt={goods.name} />
                         </div>
                         <div className='MyCartInfo'>
-                            <div>{goods.name}</div>
-                            <div>{goods.price}원</div>
+                            <h3>{goods.name}</h3>
+                            <h4>{goods.price}원</h4>
                         </div>
                         <div className='MyCartCount'>
                             <input type="number" />
