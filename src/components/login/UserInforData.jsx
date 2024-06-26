@@ -45,7 +45,7 @@ const userInfo = [
                         contentSelect: 2,
                         packagingSelect: 1
                     },
-                    totalPrice: 75000
+                    totalPrice: 73000
                 },
                 {
                     productId: 7,
