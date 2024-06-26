@@ -7,6 +7,10 @@ function MyPageCart() {
     const location = useLocation();
     let cartGoods = location.state;
 
+    console.log(`wqeadsfghjkl ${cartGoods[0].id}`)
+    console.log(`wqeadsfghjkl ${cartGoods[1].id}`)
+    console.log(`wqeadsfghjkl ${cartGoods[2].id}`)
+
     const [checkedGoods, setCheckedGoods] = useState([]);
     const handleCheckAll = (e) => {
         if (e.target.checked) {
@@ -43,23 +47,25 @@ function MyPageCart() {
 
             {cartGoods.map((goods) => {
                 return (
-                    <div className="MyCartGrid" key={goods.productId} >
+                    <div className="MyCartGrid" key={goods.id} >
                         <div>
                             <input
                                 type="checkbox"
-                                checked={checkedGoods.includes(goods.productId)}
-                                onChange={() => handleCheckGood(goods.productId)}
+                                checked={checkedGoods.includes(goods.id)}
+                                onChange={() => handleCheckGood(goods.id)}
                             />
                         </div>
                         <div className="MyCartPhoto">
-                            <img src={goods.slideSrc[0]} alt={goods.name} />
+                            <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyCartInfo'>
                             <h3>{goods.name}</h3>
-                            <h4>{goods.price}원</h4>
+                            <h4>{goods.content}</h4>
+                            <h4>{goods.package}</h4>
                         </div>
                         <div className='MyCartCount'>
-                            <input type="number" />
+                            <input type="number" value={goods.contentCount} />
+                            <input type="number" value={goods.packageCount} />
                         </div>
                         <div className='MyCartButton'>
                             <button>구매</button>

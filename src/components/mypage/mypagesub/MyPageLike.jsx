@@ -54,7 +54,7 @@ function MyPageLike() {
                             />
                         </div>
                         <div className="MyLikePhoto">
-                            <img src={goods.slideSrc[0]} alt={goods.name} />
+                            <img src={goods.productSrc[0]} alt={goods.name} />
                         </div>
                         <div className='MyLikeInfo'>
                             <h3>{goods.name}</h3>

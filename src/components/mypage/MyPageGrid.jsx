@@ -31,9 +31,39 @@ function MyPageGrid() {
         navigate('/mypage/like', { state: result })
     }
 
+
+    // const onCart = () => {
+    //     result = items.filter((item) => {
+    //         for (let i = 0; i < user.mypage.basket.length; i++) {
+    //             if (item.id === user.mypage.basket[i].productId)
+    //                 return item;
+    //         }
+    //     })
+    //     console.log(`확인용 3 ${result.length}`)
+    //     navigate('/mypage/cart', { state: result })
+    // }
+
     const onCart = () => {
-        getGoods(user.mypage.basket)
-        console.log(`확인용 3 ${result}`)
+        result = user.mypage.basket.map((bb) => {
+            let findItem = items.find((item) =>
+                item.id === bb.productId
+            );     // findItem
+
+
+            let cartItem = {}
+
+            cartItem.photo = findItem.productSrc[0]
+            cartItem.id = findItem.id
+            cartItem.name = findItem.name
+            cartItem.content = bb.options.contentSelect
+            cartItem.package = bb.options.packagingSelect
+            cartItem.contentCount = bb.quantity.contentSelect
+            cartItem.packageCount = bb.quantity.packagingSelect
+            cartItem.price = bb.totalPrice
+
+            return cartItem;
+        });     // map
+        console.log(`확인용 3 ${result.length}`)
         navigate('/mypage/cart', { state: result })
     }
 
