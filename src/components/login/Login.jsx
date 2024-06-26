@@ -69,7 +69,7 @@ const Login = () => {
             sessionStorage.setItem('LoginId', inputId);
             sessionStorage.setItem('LoginPw', inputPw);
             const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
-            sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
+            sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
 
             console.log(filteredUserInfoID);
             navi('/');

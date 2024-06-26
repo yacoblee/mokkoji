@@ -5,7 +5,7 @@ import userInfo from './../login/UserInforData';
 // 선택된 상품 정보를 받는 컴포넌트
 const ProductForm = ({ selectedProduct }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
-    const userData = JSON.parse(sessionStorage.getItem('selectedUser'));
+    const userData = JSON.parse(sessionStorage.getItem('Loginuserinfo'));
 
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
@@ -113,6 +113,31 @@ const ProductForm = ({ selectedProduct }) => {
             return;
         }
 
+        // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
+        navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
+            state: {
+                options: options,
+                btnValue: btnValue,
+                totalPrice: totalPrice
+            }
+        });
+    };
+
+
+    // 장바구니 클릭할 때 세션스토리지에 추가
+    const onClickBasket = ()=>{
+        if (!userLogin) {
+            // 로그인하지 않은 경우 로그인 페이지로 이동
+            navigate('/Login');
+            return;
+        }
+
+        if (!options.contentSelect || !options.packagingSelect) {
+            // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
+            alert("선택 옵션을 모두 선택해주세요.");
+            return;
+        }
+
         // 장바구니에 추가할 항목 생성
         const sendBasket = {
             productID: selectedProduct.id,
@@ -131,17 +156,9 @@ const ProductForm = ({ selectedProduct }) => {
         };
 
         // 세션 스토리지에 업데이트된 사용자 데이터 저장
-        sessionStorage.setItem('selectedUser', JSON.stringify(updatedUserData));
+        sessionStorage.setItem('Loginuserinfo', JSON.stringify(updatedUserData));
         
-        // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
-        navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
-            state: {
-                options: options,
-                btnValue: btnValue,
-                totalPrice: totalPrice
-            }
-        });
-    };
+    }
 
     // 리턴
     return (
@@ -196,7 +213,7 @@ const ProductForm = ({ selectedProduct }) => {
                 </div>
             </div>
             <div className="select_button">
-                <button type='button' className='basket_icon'>
+                <button type='button' className='basket_icon' onClick={onClickBasket}>
                     장바구니
                 </button>
                 <button type='button' className='buy_icon' onClick={onClickBuy}>
