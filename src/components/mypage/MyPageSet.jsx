@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function MyPageSet() {
 
-    const user = JSON.parse(sessionStorage.getItem("userDetail"));
+    const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');

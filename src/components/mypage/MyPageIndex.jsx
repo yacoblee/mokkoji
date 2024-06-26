@@ -18,25 +18,26 @@ import GoodsItems from '../product/ProductObject';
 function MyPageIndex() {
     const items = GoodsItems;
 
-    const storedUserInfo = sessionStorage.getItem('userInfo'); //local에서 sessionStorage 로 변경 -승현
-    const parsedUserInfo = JSON.parse(storedUserInfo);
+    // const storedUserInfo = sessionStorage.getItem('LoginUserInfo'); //local에서 sessionStorage 로 변경 -승현
+    // const parsedUserInfo = JSON.parse(storedUserInfo);
 
-    // id와 pw가 일치하는 사용자를 찾기 위해 find 메서드 사용
-    const userInfoDetail = userInfoArray.find((user) => {
-        return user.id === parsedUserInfo.id;
-    });
+    // // id와 pw가 일치하는 사용자를 찾기 위해 find 메서드 사용
+    // const userInfoDetail = userInfoArray.find((user) => {
+    //     return user.id === parsedUserInfo.id;
+    // });
 
-    const user = userInfoDetail;
+    const userInfoDetail = sessionStorage.getItem('LoginUserInfo')
+    const user = JSON.parse(userInfoDetail);
 
     const [storageCheck, setStorageCheck] = useState(false); // 유저 정보 상품 정보가 스토리지에 있느냐?=로그인 됐느냐?
 
     if (!storageCheck) {
-        const getUserDetail = JSON.parse(sessionStorage.getItem("userDetail")); // 어떤 이름으로 저장을 할 것인가?
+    //     const getUserDetail = JSON.parse(sessionStorage.getItem("LoginUserInfo")); // 어떤 이름으로 저장을 할 것인가?
         const getGoodsList = JSON.parse(sessionStorage.getItem("goodsList"));
 
-        if (getUserDetail === null && user) {
-            sessionStorage.setItem("userDetail", JSON.stringify(user));
-        }
+    //     if (getUserDetail === null && user) {
+    //         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+    //     }
 
         if (getGoodsList === null) {
             sessionStorage.setItem("goodsList", JSON.stringify(items));
