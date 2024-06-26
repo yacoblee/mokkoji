@@ -102,6 +102,7 @@ const ProductForm = ({ selectedProduct }) => {
     // '구매하기' 버튼 클릭 시 실행되는 함수
     const onClickBuy = () => {
         if (!userLogin) {
+            alert("로그인이 필요한 서비스 입니다.");
             // 로그인하지 않은 경우 로그인 페이지로 이동
             navigate('/Login');
             return;
@@ -128,6 +129,7 @@ const ProductForm = ({ selectedProduct }) => {
     const onClickBasket = () => {
         if (!userLogin) {
             // 로그인하지 않은 경우 로그인 페이지로 이동
+            alert("로그인이 필요한 서비스 입니다.");
             navigate('/Login');
             return;
         }
@@ -157,7 +159,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 세션 스토리지에 업데이트된 사용자 데이터 저장
         sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUserData));
-
+        alert("장바구니에 추가되었습니다.");
     }
 
     // 리턴
