@@ -163,6 +163,7 @@ const ProductBuy = ()=>{
     }else{
         return(
             <div className="ProductBuy" style={{marginTop : '150px'}}>
+                <h2></h2>
                 <form action="#">
                     <ul className='ProductBuyList'>
                         <li></li>
@@ -179,20 +180,46 @@ const ProductBuy = ()=>{
                     <p>{formatNumber(selectedProduct.price)}</p>
                     <p>
                         <p>
-                            {options.contentSelect} : {buyPrice.productPrice}개
+                            {options.contentSelect} :<span></span> {buyPrice.productPrice}개
                         </p>
+                        <br/>
                         <p className='buySelect'>
-                            수랑 변경 <button type='button' onClick={()=>{onClickbtn('-','productPrice')}}>-</button>
-                            <button type='button' onClick={()=>{onClickbtn('+','productPrice')}}>+</button>
+                            수랑 변경
+                            <div>
+                            <button type='button' 
+                            className="leftButton" 
+                            onClick={()=>{onClickbtn('-','productPrice')}}>
+                                <img src="/images/buy/minus.png" alt="" />
+                            </button >
+                            <input type="text" value={buyPrice.productPrice} readOnly />
+                            <button type='button' 
+                            className="rightButton"
+                            onClick={()=>{onClickbtn('+','productPrice')}}>
+                            <img src="/images/buy/plus.png" alt="" />
+                            </button>
+                            </div> 
                         </p>
                     </p>
                     <p>
                         <p>
                             {options.packagingSelect} : {buyPrice.optionPrice}개
                         </p>
+                        <br/>
                         <p className='buySelect'>
-                            수랑 변경 <button type='button' onClick={()=>{onClickbtn('-','optionPrice')}}>-</button> 
-                            <button type='button' onClick={()=>{onClickbtn('+','optionPrice')}}>+</button>
+                            수랑 변경 
+                            <div>
+                            <button type='button' 
+                            className="leftButton" 
+                            onClick={()=>{onClickbtn('-','optionPrice')}}>
+                                <img src="/images/buy/minus.png" alt="" />
+                            </button>
+                            <input type="text" value={buyPrice.optionPrice} readOnly />
+                            <button type='button' 
+                            className="rightButton"
+                            onClick={()=>{onClickbtn('+','optionPrice')}}>
+                                <img src="/images/buy/plus.png" alt="" />
+                            </button>
+                            </div>
                         </p>
                     </p>
                 </div>
@@ -204,9 +231,6 @@ const ProductBuy = ()=>{
                 </span>
                 </p>
                 {(filterPrice<30000) && <span>(배송비 추가 발생 되었습니다.)</span>}
-                </div>
-                <div>
-                    장바구니 목록
                 </div>
                 
                     
