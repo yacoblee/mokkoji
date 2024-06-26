@@ -1,30 +1,37 @@
-// import React, { useState } from "react";
-// import Calendar from 'react-calendar';
-// import '../../css/reserve.css'
-// const Reservation = () => {
-//     const [date, setDate] = useState(new Date());
+import React, { useState } from "react";
+import Calendar from 'react-calendar';
+import '../../css/reserve.css'
 
-//     const onDateChange = (newDate) => {
-//         setDate(newDate);
-//     };
+const Reservation = () => {
+    const [date, setDate] = useState(new Date());
 
-//     return (
-//         <div className="reservation-container">
-//             <div className="reserve_head">
-//                 <h1>체험 예약</h1>
-//             </div>
-//             <section className="reservation">
-//                 <div className="reservation_img">
+    const onDateChange = (newDate) => {
+        setDate(newDate);
+    };
 
-//                 </div>
+    return (
+        <div className="reservation-container">
+            <div className="reserve_head">
+                <h1>체험 예약</h1>
+            </div>
+            <section className="reservation">
+                <div className="reservation_img">
 
-//                 <div className="reservation_content">
+                </div>
+                <div className="reservation_calendar">
+                    <Calendar
+                        className="react-calendar"
+                        onChange={onDateChange}
+                        value={date}
+                    />
+                </div>
+                <div className="reservation_content">
 
-//                 </div>
-//             </section>
-//         </div>
-//     );
-// };
+                </div>
+            </section>
+        </div>
+    );
+};
 
 
-// export default Reservation
+export default Reservation
