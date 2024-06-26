@@ -1,4 +1,475 @@
 const GoodsItems = [
+        // 새로운 상품 1
+        {
+            name: '한국 전통 무늬 러그',
+            id: 19,
+            category: 'interiorGoods',
+            description: '인테리어 소품',
+            slideSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+            ],
+            productSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+                '/images/product/pictureFlower4.jpg',
+            ],
+            count: 40,
+            price: 75000,
+            size: '상품 크기 : 2000x3000mm',
+            guideLine: '* 세탁기 사용 불가, 손세탁 권장',
+            mainGuide: `한국 전통 무늬가 들어간 고급 러그입니다.`,
+            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+            option: [
+                '소', '중', '대'
+            ],
+            reviews: [
+                {
+                    reviewsSrc: '/images/product/pictureFlower1.jpg',
+                    userName: 'User1',
+                    content: "디자인이 너무 예뻐서 방 분위기가 확 달라졌어요.",
+                    day: '20230325'
+                },
+                {
+                    reviewsSrc: null,
+                    userName: 'User2',
+                    content: "고급스럽고 튼튼한 러그입니다. 아주 만족해요.",
+                    day: '20230326'
+                },
+                {
+                    reviewsSrc: '/images/product/pictureFlower3.jpg',
+                    userName: 'User3',
+                    content: "한국 전통 무늬가 너무 아름다워요. 거실에 잘 어울립니다.",
+                    day: '20230327'
+                }
+            ],
+        },
+        // 새로운 상품 2
+        {
+            name: '전통 문양 에코백',
+            id: 18,
+            category: 'fashionGoods',
+            description: '패션/생활',
+            slideSrc: [
+                '/images/product/characterNote4.jpg',
+                '/images/product/characterNote5.jpg',
+                '/images/product/characterNote3.jpg',
+            ],
+            productSrc: [
+                '/images/product/characterNote4.jpg',
+                '/images/product/characterNote5.jpg',
+                '/images/product/characterNote3.jpg',
+                '/images/product/characterNote2.jpg',
+            ],
+            count: 50,
+            price: 30000,
+            size: '상품 크기 : 380x420mm',
+            guideLine: '* 세탁기 사용 가능',
+            mainGuide: `한국 전통 문양이 새겨진 고급 에코백입니다.`,
+            sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
+            option: [
+                '흰색', '검정색'
+            ],
+            reviews: [
+                {
+                    reviewsSrc: '/images/product/characterNote3.jpg',
+                    userName: 'User1',
+                    content: "에코백 디자인이 정말 예뻐요. 가볍고 실용적입니다.",
+                    day: '20230401'
+                },
+                {
+                    reviewsSrc: null,
+                    userName: 'User2',
+                    content: "고급스럽고 튼튼한 에코백입니다. 선물용으로도 좋아요.",
+                    day: '20230402'
+                },
+                {
+                    reviewsSrc: '/images/product/characterNote5.jpg',
+                    userName: 'User3',
+                    content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                    day: '20230403'
+                }
+            ],
+        },
+        // 새로운 상품 3
+        {
+            name: '한복 패턴 담요',
+            id: 17,
+            category: 'interiorGoods',
+            description: '인테리어 소품',
+            slideSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+            ],
+            productSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+                '/images/product/pictureFlower4.jpg',
+            ],
+            count: 30,
+            price: 50000,
+            size: '상품 크기 : 1500x2000mm',
+            guideLine: '* 손세탁 권장',
+            mainGuide: `전통 한복 패턴이 들어간 고급 담요입니다.`,
+            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+            option: [
+                '소', '중', '대'
+            ],
+            reviews: [
+                {
+                    reviewsSrc: '/images/product/pictureFlower1.jpg',
+                    userName: 'User1',
+                    content: "담요 디자인이 정말 예뻐요. 따뜻하고 부드럽습니다.",
+                    day: '20230410'
+                },
+                {
+                    reviewsSrc: null,
+                    userName: 'User2',
+                    content: "고급스럽고 튼튼한 담요입니다. 만족해요.",
+                    day: '20230411'
+                },
+                {
+                    reviewsSrc: '/images/product/pictureFlower3.jpg',
+                    userName: 'User3',
+                    content: "전통 패턴이 너무 아름다워요. 거실에 잘 어울립니다.",
+                    day: '20230412'
+                }
+            ],
+        },
+        // 새로운 상품 4
+        {
+            name: '한국 전통 무늬 쿠션 커버',
+            id: 16,
+            category: 'interiorGoods',
+            description: '인테리어 소품',
+            slideSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+            ],
+            productSrc: [
+                '/images/product/pictureFlower1.jpg',
+                '/images/product/pictureFlower2.jpg',
+                '/images/product/pictureFlower3.jpg',
+                '/images/product/pictureFlower4.jpg',
+            ],
+            count: 40,
+            price: 20000,
+            size: '상품 크기 : 450x450mm',
+            guideLine: '* 손세탁 권장',
+            mainGuide: `한국 전통 무늬가 새겨진 고급 쿠션 커버입니다.`,
+            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+            option: [
+                '청색', '적색'
+            ],
+            reviews: [
+                {
+                    reviewsSrc: '/images/product/pictureFlower1.jpg',
+                    userName: 'User1',
+                    content: "디자인이 너무 예뻐서 방 분위기가 달라졌어요.",
+                    day: '20230420'
+                },
+                {
+                    reviewsSrc: null,
+                    userName: 'User2',
+                    content: "고급스럽고 튼튼한 쿠션 커버입니다. 만족해요.",
+                    day: '20230421'
+                },
+                {
+                    reviewsSrc: '/images/product/pictureFlower3.jpg',
+                    userName: 'User3',
+                    content: "전통 무늬가 너무 아름다워요. 매일 사용하고 있습니다.",
+                    day: '20230422'
+                }
+            ],
+        },
+        // 새로운 상품 5
+        {
+            name: '한국 전통 문양 우산',
+            id: 15,
+            category: 'fashionGoods',
+            description: '패션/생활',
+            slideSrc: [
+                '/images/product/sillaKeyring1.jpg',
+                '/images/product/sillaKeyring2.jpg',
+                '/images/product/sillaKeyring3.jpg',
+            ],
+            productSrc: [
+                '/images/product/sillaKeyring1.jpg',
+                '/images/product/sillaKeyring2.jpg',
+                '/images/product/sillaKeyring3.jpg',
+                '/images/product/sillaKeyring4.jpg',
+            ],
+            count: 60,
+            price: 35000,
+            size: '상품 크기 : 1000mm',
+            guideLine: '* 손세탁 권장',
+            mainGuide: `한국 전통 문양이 새겨진 고급 우산입니다.`,
+            sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
+            option: [
+                '흰색', '검정색'
+            ],
+            reviews: [
+                {
+                    reviewsSrc: '/images/product/sillaKeyring1.jpg',
+                    userName: 'User1',
+                    content: "디자인이 정말 예뻐서 우산을 펼치고 다니는 게 즐겁습니다.",
+                    day: '20230501'
+                },
+                {
+                    reviewsSrc: null,
+                    userName: 'User2',
+                    content: "고급스럽고 튼튼한 우산입니다. 비 오는 날이 기다려져요.",
+                    day: '20230502'
+                },
+                {
+                    reviewsSrc: '/images/product/sillaKeyring2.jpg',
+                    userName: 'User3',
+                    content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                    day: '20230503'
+                }
+            ],
+        },
+    {
+        name: '한글 디자인 머그컵',
+        id: 14,
+        category: 'kitchGoods',
+        description: '주방/식기',
+        slideSrc: [
+            '/images/product/sillaKeyring1.jpg',
+            '/images/product/sillaKeyring2.jpg',
+            '/images/product/sillaKeyring3.jpg',
+        ],
+        productSrc: [
+            '/images/product/sillaKeyring1.jpg',
+            '/images/product/sillaKeyring2.jpg',
+            '/images/product/sillaKeyring3.jpg',
+            '/images/product/sillaKeyring2.jpg',
+
+        ],
+        count: 80,
+        price: 20000,
+        size: '상품 크기 : 90x100mm',
+        guideLine: '* 식기세척기 사용 가능',
+        mainGuide: `한글 디자인이 새겨진 머그컵입니다.`,
+        sideGuide: `선물용으로 좋은 패키지에 담겨 있습니다.`,
+        option: [
+            '흰색', '검정색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 매일 사용하고 있어요.",
+                day: '20230320'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 머그컵입니다. 선물용으로도 좋아요.",
+                day: '20230321'
+            },
+            {
+                reviewsSrc: '/images/product/sillaKeyring2.jpg',
+                userName: 'User3',
+                content: "한글 디자인이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230322'
+            }
+        ],
+    },
+    {
+        name: '한국 전통 문양 베개 커버',
+        id: 13,
+        category: 'interiorGoods',
+        description: '인테리어 소품',
+        slideSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+        ],
+        productSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+            '/images/product/pictureFlower2.jpg',
+
+        ],
+        count: 60,
+        price: 25000,
+        size: '상품 크기 : 450x450mm',
+        guideLine: '* 손세탁 권장',
+        mainGuide: `한국 전통 문양이 새겨진 고급 베개 커버입니다.`,
+        sideGuide: `인테리어 소품으로 좋은 패키지에 담겨 있습니다.`,
+        option: [
+            '청색', '적색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/pictureFlower1.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 방 분위기가 달라졌어요.",
+                day: '20230310'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 베개 커버입니다. 선물용으로 좋아요.",
+                day: '20230311'
+            },
+            {
+                reviewsSrc: '/images/product/pictureFlower3.jpg',
+                userName: 'User3',
+                content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230312'
+            }
+        ],
+    },
+    {
+        name: '전통 문양 접시 세트',
+        id: 12,
+        category: 'kitchGoods',
+        description: '주방/식기',
+        slideSrc: [
+            '/images/product/seonbiSojuCup1.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+            '/images/product/seonbiSojuCup3.jpg',
+        ],
+        productSrc: [
+            '/images/product/seonbiSojuCup1.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+            '/images/product/seonbiSojuCup3.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+
+        ],
+        count: 40,
+        price: 55000,
+        size: '상품 크기 : 200x200mm',
+        guideLine: '* 전자레인지 사용 가능',
+        mainGuide: `한국 전통 문양이 새겨진 고급 접시 세트입니다.`,
+        sideGuide: `선물용으로 좋은 패키지에 담겨 있습니다.`,
+        option: [
+            '청자색', '백자색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 집안 분위기를 바꿔줍니다.",
+                day: '20230301'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 접시입니다. 손님 접대용으로 좋아요.",
+                day: '20230302'
+            },
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup3.jpg',
+                userName: 'User3',
+                content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230303'
+            }
+        ],
+    },
+    {
+        name: '한복 인형',
+        id: 11,
+        category: 'fashionGoods',
+        description: '패션/생활',
+        slideSrc: [
+            '/images/product/characterNote4.jpg',
+            '/images/product/characterNote5.jpg',
+            '/images/product/characterNote3.jpg',
+        ],
+        productSrc: [
+            '/images/product/characterNote4.jpg',
+            '/images/product/characterNote5.jpg',
+            '/images/product/characterNote3.jpg',
+            '/images/product/characterNote5.jpg',
+
+        ],
+        count: 30,
+        price: 40000,
+        size: '상품 크기 : 250mm',
+        guideLine: '* 손세탁 권장',
+        mainGuide: `전통 한복을 입은 인형입니다.`,
+        sideGuide: `한국의 아름다운 전통 의상을 재현한 인형입니다.`,
+        option: [
+            '남아', '여아'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/characterNote3.jpg',
+                userName: 'User1',
+                content: "인형이 정말 예뻐요! 전통 한복이 너무 아름답습니다.",
+                day: '20230201'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "딸이 너무 좋아합니다. 예쁜 한복 인형이라 소장 가치가 높아요.",
+                day: '20230202'
+            },
+            {
+                reviewsSrc: '/images/product/characterNote5.jpg',
+                userName: 'User3',
+                content: "고급스러운 디자인과 마감이 인상적입니다.",
+                day: '20230203'
+            }
+        ],
+    },
+    {
+        name: '한국 전통 문양 컵',
+        id: 10,
+        category: 'kitchGoods',
+        description: '주방/식기',
+        slideSrc: [
+            '/images/product/seonbiSojuCup1.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+            '/images/product/seonbiSojuCup3.jpg',
+        ],
+        productSrc: [
+            '/images/product/seonbiSojuCup1.jpg',
+            '/images/product/seonbiSojuCup2.jpg',
+            '/images/product/seonbiSojuCup3.jpg',
+            '/images/product/seonbiSojuCup3.jpg',
+
+        ],
+        count: 50,
+        price: 30000,
+        size: '상품 크기 : 80x100mm',
+        guideLine: '* 식기세척기 사용 가능',
+        mainGuide: `한국 전통 문양이 새겨진 고급 컵입니다.`,
+        sideGuide: `선물용으로 좋은 패키지에 담겨 있습니다.`,
+        option: [
+            '단일 색상'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup1.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 인테리어 소품으로도 훌륭해요.",
+                day: '20230117'
+            },
+            {
+                reviewsSrc: '/images/product/seonbiSojuCup2.jpg',
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 컵입니다. 선물용으로도 좋아요.",
+                day: '20230118'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User3',
+                content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230119'
+            }
+        ],
+    },
+    //기존데이터
     {
         name: '훈민정음 티셔츠',
         id: 9,
