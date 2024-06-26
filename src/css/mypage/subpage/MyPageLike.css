@@ -7,7 +7,7 @@
 .MyLikeGrid,
 .MyLikeFooter {
     display: grid;
-    grid-template-columns: 100px 200px 1fr 100px 150px;
+    grid-template-columns: 50px 200px 1fr 100px 150px;
     gap: 10px;
     align-items: center;
     text-align: center;

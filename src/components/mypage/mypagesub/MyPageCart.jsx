@@ -64,8 +64,16 @@ function MyPageCart() {
                             <h4>{goods.package}</h4>
                         </div>
                         <div className='MyCartCount'>
-                            <input type="number" value={goods.contentCount} />
-                            <input type="number" value={goods.packageCount} />
+                            <div className='MyProductCount'>
+                                <img src="" alt="" />
+                                <input type="text" value={goods.contentCount} />
+                                <img src="" alt="" />
+                            </div>
+                            <div className='MyPackageCount'>
+                                <img src="" alt="" />
+                                <input type="text" value={goods.packageCount} />
+                                <img src="" alt="" />
+                            </div>
                         </div>
                         <div className='MyCartButton'>
                             <button>구매</button>

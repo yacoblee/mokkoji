@@ -125,7 +125,7 @@ const ProductForm = ({ selectedProduct }) => {
 
 
     // 장바구니 클릭할 때 세션스토리지에 추가
-    const onClickBasket = ()=>{
+    const onClickBasket = () => {
         if (!userLogin) {
             // 로그인하지 않은 경우 로그인 페이지로 이동
             navigate('/Login');
@@ -140,7 +140,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 장바구니에 추가할 항목 생성
         const sendBasket = {
-            productID: selectedProduct.id,
+            productId: selectedProduct.id,
             options,
             quantity: btnValue,
             totalPrice
@@ -157,7 +157,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 세션 스토리지에 업데이트된 사용자 데이터 저장
         sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUserData));
-        
+
     }
 
     // 리턴
