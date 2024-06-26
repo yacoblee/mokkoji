@@ -4,12 +4,11 @@ const userInfo = [
         name: '김철수',
         birth: '1985-05-15',
         address: '서울시 강남구 테헤란로 123',
-        addressDetail: '213동 128호',   // 임의 추가
+        addressDetail: '213동 128호',
         gender: 'M',
-        phoneNumber: '01012345678',     // 임의 수정(- 제거)
-        // email: 'chulsoo85@naver.com',
+        phoneNumber: '01012345678',
         email: 'asljfol',
-        emailType: 'gmail.com',     // 메일 도메인 분리
+        emailType: 'gmail.com',
         id: 's1',
         pw: 's1!',
         loginCount: 45,
@@ -23,45 +22,42 @@ const userInfo = [
             ],
             review: null,
             isLike: [1, 2, 3],
-            basket:  [
+            basket: [
                 {
-                    "productId": 2,
-                    "productName": "상품명 A",
-                    "options": {
-                        "contentSelect": "옵션 A",
-                        "packagingSelect": "포장 A"
+                    productId: 2,
+                    options: {
+                        contentSelect: '박물관 키링(신라의 미소)',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    "quantity": {
-                        "contentSelect": 1,
-                        "packagingSelect": 1
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
                     },
-                    "totalPrice": 220000
+                    totalPrice: 20000
                 },
                 {
-                    "productId": 6,
-                    "productName": "상품명 B",
-                    "options": {
-                        "contentSelect": "옵션 B",
-                        "packagingSelect": "포장 B"
+                    productId: 6,
+                    options: {
+                        contentSelect: '연꽃 향',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    "quantity": {
-                        "contentSelect": 2,
-                        "packagingSelect": 1
+                    quantity: {
+                        contentSelect: 2,
+                        packagingSelect: 1
                     },
-                    "totalPrice": 450000
+                    totalPrice: 75000
                 },
                 {
-                    "productId": 7,
-                    "productName": "상품명 C",
-                    "options": {
-                        "contentSelect": "옵션 C",
-                        "packagingSelect": "포장 C"
+                    productId: 7,
+                    options: {
+                        contentSelect: 'A5',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    "quantity": {
-                        "contentSelect": 1,
-                        "packagingSelect": 2
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 2
                     },
-                    "totalPrice": 500000
+                    totalPrice: 26000
                 }
             ]
         }
@@ -89,7 +85,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [2, 4, 6],
-            basket: [2, 6, 7]
+            basket: [
+                {
+                    productId: 2,
+                    options: {
+                        contentSelect: '박물관 키링(신라의 미소)',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 20000
+                },
+                {
+                    productId: 6,
+                    options: {
+                        contentSelect: '연꽃 향',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 37000
+                },
+                {
+                    productId: 7,
+                    options: {
+                        contentSelect: 'A5',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 22000
+                }
+            ]
         }
     },
     {
@@ -115,7 +148,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [5, 7, 9],
-            basket: [3, 8, 9]
+            basket: [
+                {
+                    productId: 3,
+                    options: {
+                        contentSelect: '하트 뿅뿅(블루)',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 5,
+                        packagingSelect: 5
+                    },
+                    totalPrice: 15000
+                },
+                {
+                    productId: 8,
+                    options: {
+                        contentSelect: '금색',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 52000
+                },
+                {
+                    productId: 9,
+                    options: {
+                        contentSelect: 'M',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 49000
+                }
+            ]
         }
     },
     {
@@ -141,7 +211,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [3, 5, 7],
-            basket: [4, 5, 6]
+            basket: [
+                {
+                    productId: 4,
+                    options: {
+                        contentSelect: '소',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 224000
+                },
+                {
+                    productId: 5,
+                    options: {
+                        contentSelect: '소',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 67000
+                },
+                {
+                    productId: 6,
+                    options: {
+                        contentSelect: '백단 향',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 39000
+                }
+            ]
         }
     },
     {
@@ -167,7 +274,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [6, 7, 8],
-            basket: [1, 2, 3]
+            basket: [
+                {
+                    productId: 1,
+                    options: {
+                        contentSelect: '취객선비 3인방 변색 잔세트',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 26000
+                },
+                {
+                    productId: 2,
+                    options: {
+                        contentSelect: '박물관 키링(신라의 미소)',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 22000
+                },
+                {
+                    productId: 3,
+                    options: {
+                        contentSelect: '하트 뿅뿅(블루)',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 7000
+                }
+            ]
         }
     },
     {
@@ -193,7 +337,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [2, 3, 4],
-            basket: [5, 6, 7]
+            basket: [
+                {
+                    productId: 5,
+                    options: {
+                        contentSelect: '소',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 65000
+                },
+                {
+                    productId: 6,
+                    options: {
+                        contentSelect: '연꽃 향',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 37000
+                },
+                {
+                    productId: 7,
+                    options: {
+                        contentSelect: 'A5',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 22000
+                }
+            ]
         }
     },
     {
@@ -219,7 +400,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [1, 4, 5],
-            basket: [7, 8, 9]
+            basket: [
+                {
+                    productId: 7,
+                    options: {
+                        contentSelect: 'A5',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 18000
+                },
+                {
+                    productId: 8,
+                    options: {
+                        contentSelect: '청동',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 52000
+                },
+                {
+                    productId: 9,
+                    options: {
+                        contentSelect: 'L',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 49000
+                }
+            ]
         }
     },
     {
@@ -245,7 +463,32 @@ const userInfo = [
             ],
             review: null,
             isLike: [2, 5, 8],
-            basket: [3, 4, 6]
+            basket: [
+                {
+                    productId: 3,
+                    options: {
+                        contentSelect: '좋은 생각(퍼플)',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 3000
+                },
+                {
+                    productId: 6,
+                    options: {
+                        contentSelect: '백단 향',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 39000
+                }
+            ]
         }
     },
     {
@@ -271,7 +514,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [3, 6, 9],
-            basket: [2, 7, 8]
+            basket: [
+                {
+                    productId: 2,
+                    options: {
+                        contentSelect: '박물관 키링(신라의 미소)',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 20000
+                },
+                {
+                    productId: 7,
+                    options: {
+                        contentSelect: 'A6',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 20000
+                },
+                {
+                    productId: 8,
+                    options: {
+                        contentSelect: '은색',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 54000
+                }
+            ]
         }
     },
     {
@@ -297,7 +577,44 @@ const userInfo = [
             ],
             review: null,
             isLike: [1, 7, 8],
-            basket: [1, 5, 9]
+            basket: [
+                {
+                    productId: 1,
+                    options: {
+                        contentSelect: '취객선비 3인방 변색 잔세트',
+                        packagingSelect: '굿즈 기본 포장(+0원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 26000
+                },
+                {
+                    productId: 5,
+                    options: {
+                        contentSelect: '소',
+                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 67000
+                },
+                {
+                    productId: 9,
+                    options: {
+                        contentSelect: 'S',
+                        packagingSelect: '굿즈 천 가방(+4000원)'
+                    },
+                    quantity: {
+                        contentSelect: 1,
+                        packagingSelect: 1
+                    },
+                    totalPrice: 49000
+                }
+            ]
         }
     }
 ];
