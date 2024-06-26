@@ -5,7 +5,7 @@ import userInfo from './../login/UserInforData';
 // 선택된 상품 정보를 받는 컴포넌트
 const ProductForm = ({ selectedProduct }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
-    const userData = JSON.parse(sessionStorage.getItem('Loginuserinfo'));
+    const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
 
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
@@ -156,7 +156,7 @@ const ProductForm = ({ selectedProduct }) => {
         };
 
         // 세션 스토리지에 업데이트된 사용자 데이터 저장
-        sessionStorage.setItem('Loginuserinfo', JSON.stringify(updatedUserData));
+        sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUserData));
         
     }
 

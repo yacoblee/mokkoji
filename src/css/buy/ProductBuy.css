@@ -1,27 +1,35 @@
 .ProductBuy{
     width: 1200px;
-    margin: auto;
+    margin: 150px auto;
+    background-color: #d0c0a011;
+    font-family: 'SUITE-Regular';
+    border: 1px solid  #d0c0a058;
+}
+.ProductBuyList{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15px 1fr  1fr 0.5fr repeat(2,1fr);
+    gap: 10px;
+    padding: 10px;
+    
+    border-bottom: .5px solid #d0c0a058;
 }
 .buyInfo{
-    height: 30vh;
+    /* height: 30vh; */
+    grid-template-columns: 15px 1fr  1fr 0.5fr repeat(2,1fr);
+
+    grid-template-rows: 20vh;
     display: grid;
-    grid-template-columns: 20px 1fr 1fr;
-    background-color: #d0c0a011;
+    gap: 10px;
+    padding: 10px;
 }
 .buyInfo img{
     width: 100%;
-    height: 30vh;
+    height: 20vh;
 
     object-fit: cover;
 }
-.buyInfo ul{
-    width: 100%;
-    height: 100%;
 
-    display: grid;
-    grid-template-columns: 30% 70%;
-    align-items: end;
-}
 .buyInfo li{
     border-bottom: 1px solid;
     padding: 10px;
@@ -29,9 +37,22 @@
 .buySelect{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-evenly; */
+    gap : 10px
 }
 .buySelect button{
     width: 20px;
     height: 20px;
+}
+.totalPrice{
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.TTPrice{
+    font-weight: 600;
+    font-size: 22px;
+    color: red;
 }
