@@ -9,8 +9,8 @@ function MyPageGrid() {
 
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
-    const items = JSON.parse(localStorage.getItem("goodsList"));
+    const user = JSON.parse(sessionStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
+    const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     console.log(`확인용 1 ${user.id}, ${items.length}`)
 

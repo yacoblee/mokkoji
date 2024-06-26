@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 function MyPageFlex() {
 
-    const user = JSON.parse(localStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
+    const user = JSON.parse(sessionStorage.getItem("userDetail"));  // 어떤 이름으로 저장을 할 것인가?
 
     return (
         <div className='MyInfoFlex'>
