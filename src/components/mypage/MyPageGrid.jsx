@@ -27,13 +27,13 @@ function MyPageGrid() {
 
     const onLike = () => {
         getGoods(user.mypage.isLike)
-        console.log(`확인용 2 ${result.length}`)
+        // console.log(`확인용 2 ${result.length}`)
         navigate('/mypage/like', { state: result })
     }
 
     const onCart = () => {
         getGoods(user.mypage.basket)
-        console.log(`확인용 3 ${result.length}`)
+        console.log(`확인용 3 ${result}`)
         navigate('/mypage/cart', { state: result })
     }
 

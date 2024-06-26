@@ -43,12 +43,12 @@ function MyPageCart() {
 
             {cartGoods.map((goods) => {
                 return (
-                    <div className="MyCartGrid" key={goods.id} >
+                    <div className="MyCartGrid" key={goods.productId} >
                         <div>
                             <input
                                 type="checkbox"
-                                checked={checkedGoods.includes(goods.id)}
-                                onChange={() => handleCheckGood(goods.id)}
+                                checked={checkedGoods.includes(goods.productId)}
+                                onChange={() => handleCheckGood(goods.productId)}
                             />
                         </div>
                         <div className="MyCartPhoto">
@@ -84,9 +84,9 @@ function MyPageCart() {
             </div>
 
 
-        </div>     // mycartlist
+        </div>  // mycartlist
 
-    );       // return
+    );  // return
 }
 
 export default MyPageCart;
