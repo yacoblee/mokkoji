@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../css/login/Membership.css';
 import Clausearea01 from './Clausearea01'
 import Clausearea02 from './Clausearea02';
 import Marketing from './Marketing';
 import FindId from './FindId';
+import Modal from 'react-modal';
+import DaumPostcode from 'react-daum-postcode';
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 const Membership = () => {
+    const navigate = useNavigate();
 
     const [AllCheck, setAllCheck] = useState(false)
     const [check, setCheck] = useState({
@@ -94,13 +99,15 @@ const Membership = () => {
     const inputR2 = useRef(null);
     const idCheckBtn = useRef(null)
 
+
+
     //아이디 입력값 가져오기 
     const getId = (e) => { setUserId(e.target.value) };
 
-    //아이디 유효성 검사 
-    const userIdTest = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,15}$/g;
 
+    // 아이디 유효성 검사 및 검사 결과에 따라 버튼 활성화 여부 결정 
     const userIdCheck = () => {
+        const userIdTest = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,15}$/g;
         if (userIdTest.test(userId)) {
             error2.current.textContent = ''
             inputR2.current.style.borderBottom = '1px solid #aaaaaa';
@@ -110,36 +117,118 @@ const Membership = () => {
             inputR2.current.style.borderBottom = '1px solid red';
             error2.current.textContent = '빈칸 입니다. 아이디를 입력해주세요'
             error2.current.style.visibility = 'visible';
-              idCheckBtn.current.disabled= true
+            error2.current.style.color = 'red';
+            idCheckBtn.current.disabled = true;
         }
         else if (!userIdTest.test(userId)) {
             inputR2.current.style.borderBottom = '1px solid red';
             error2.current.textContent = '조건에 맞게 아이디를 입력해주세요'
             error2.current.style.visibility = 'visible';
-            idCheckBtn.current.disabled= true
+            error2.current.style.color = 'red';
+            idCheckBtn.current.disabled = true;
         }
     }
 
+    // 버튼 클릭 시 아이디 중복검사 진행 
     const userIdDoubleCheck = (e) => {
         e.preventDefault();
         const alluserData = JSON.parse(localStorage.getItem('userInfo'));
         const userExists = alluserData.find(it => it.id === userId);
         if (userExists) {
-            console.log('존재하는 아이디.')
             inputR2.current.style.borderBottom = '1px solid red';
             error2.current.textContent = '이미존재하는 아이디 입니다. 아이디를 다시 입력해주세요.'
             error2.current.style.visibility = 'visible';
-            userId = '';
         }
-        else{
+        else {
             error2.current.style.visibility = 'visible';
-            error2.current.style.color= "black"
+            error2.current.style.color = "black"
             error2.current.textContent = '사용가능한 아이디 입니다.'
             inputR2.current.style.borderBottom = '1px solid #aaaaaa';
+            isUserIfroState.id = true;
+        }
+    }
+
+    const [userPw, setUserPw] = useState('');
+    const error3 = useRef(null);
+    const inputR3 = useRef(null);
+
+    // 비밀번호 입력값 가져오기 
+    const getPw = (e) => { setUserPw(e.target.value) };
+
+    // 비밀번호 유효성 검사     
+    const userPwCheck = () => {
+        const userPwTest = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{8,15}$/g;
+        if (userPwTest.test(userPw)) {
+            error3.current.textContent = '';
+            inputR3.current.style.borderBottom = '1px solid #aaaaaa';
+        }
+        else if (userPw === '') {
+            inputR3.current.style.borderBottom = '1px solid red';
+            error3.current.textContent = '빈칸 입니다. 비밀번호를 입력해주세요'
+            error3.current.style.visibility = 'visible';
+        }
+        else if (!userPwTest.test(userPw)) {
+            inputR3.current.style.borderBottom = '1px solid red';
+            error3.current.textContent = '조건에 맞게 아이디를 입력해주세요'
+            error3.current.style.visibility = 'visible';
+            error3.current.style.color = 'red';
         }
     }
 
 
+
+    const [userPwRecheck, setUserPwRecheck] = useState('');
+    const error4 = useRef(null);
+    const inputR4 = useRef(null);
+
+    //비밀번호 확인 값 가져오기 
+    const getRecheckpw = (e) => { setUserPwRecheck(e.target.value) };
+
+    //비밀번호 확인 값 비밀번호값 동일한지 체크 
+    const userPwDoubleCheck = () => {
+        if (userPwRecheck === userPw) {
+            error4.current.textContent = '';
+            inputR4.current.style.borderBottom = '1px solid #aaaaaa';
+            isUserIfroState.pw = true;
+        }
+        else {
+            inputR4.current.style.borderBottom = '1px solid red';
+            error4.current.textContent = '비밀번호가 동일하지 않습니다.'
+            error4.current.style.visibility = 'visible';
+        }
+    }
+
+
+    // ==== 주소
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [address, setAddress] = useState('');
+    const [zoneCode, setZoneCode] = useState('');
+
+    const handleComplete = (data) => {
+        console.log(data);
+        let fullAddress = data.address;
+        let extraAddress = '';
+
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+            }
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+
+        setZoneCode(data.zonecode);
+        setAddress(fullAddress);
+        setIsModalOpen(false);
+    };
+
+    const openAddress = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    }
 
     return (
         <div className="body">
@@ -215,18 +304,32 @@ const Membership = () => {
 
 
                         <label>비밀번호</label>
-                        <input type="text" />
-                        <p>에러</p>
+                        <input type="text"
+                            placeholder='8글자 이상 15글자 미만 영문, 숫자, 특수문자 조합으로 비밀번호를 입력해주세요요'
+                            value={userPw}
+                            onChange={getPw}
+                            ref={inputR3}
+                            onBlur={userPwCheck} />
+                        <p ref={error3}>에러</p>
+
                         <label>비밀번호 확인</label>
-                        <input type="text" />
-                        <p>에러</p>
+                        <input type="text"
+                            value={userPwRecheck}
+                            onChange={getRecheckpw}
+                            onBlur={userPwDoubleCheck}
+                            ref={inputR4}
+                        />
+                        <p ref={error4}>에러</p>
                         <label>주소</label>
                         <div className="rowarea address">
-                            <input type="text" />
-                            <button>우편번호 검색</button>
+                            <input type="text"
+                                name='zipcode'
+                                value={zoneCode}
+                                maxLength={5} readOnly />
+                            <button id='btn' onClick={openAddress}>우편번호 검색</button>
                         </div>
-                        <input type="text" />
-                        <input type="text" />
+                        <input type="text" name='addr1' value={address} readOnly />
+                        <input type="text" name='addr2' />
                         <p></p>
                         <label>전화번호</label>
                         <input type="text" />
@@ -253,7 +356,26 @@ const Membership = () => {
                     </ul>
                 </div>
             </div>
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
+                style={{
+                    content: {
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <button onClick={() => setIsModalOpen(false)}>닫기</button>
+                <DaumPostcode onComplete={handleComplete} />
+            </Modal>
         </div >
+
     );
 }
 
