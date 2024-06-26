@@ -1,7 +1,172 @@
-.body{
-    margin: 0;
-    padding: 0;
+.body {
     width: 100vw;
-    height: 100vh;
-    background-color: rgb(247, 242, 240);
+    background-color: #edeae4;
+
+}
+
+.bodycontainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    width: 65vw;
+    height: 2000px;
+    /* background-color: #f9f8f7; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    font-size: 20px;
+    padding: 2rem;
+}
+
+.container input {
+    width: 60%;
+    height: 3rem;
+    border: none;
+    border-bottom: 1px solid #aaaaaa;
+    background-color: transparent;
+    font-size: 18px;
+}
+
+.container p {
+    visibility: hidden;
+    font-size: 15px;
+    color: red;
+    margin-bottom: 1.5rem;
+}
+
+.rowarea {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+}
+
+.rowarea button {
+    margin-left: 10px;
+    height: 2.5rem;
+    width: 15%;
+    border: 1px solid #aaaaaa;
+    background-color: white;
+    transition: all 1s;
+    border-radius: 5px;
+}
+
+.address input {
+    width: 20%;
+}
+
+.formcontainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    /* margin-top: 7% */
+}
+
+.buttonarea {
+    display: flex;
+    justify-content: start;
+}
+
+.buttonarea button {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid #aaaaaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s;
+    background-color: white;
+}
+
+.buttonarea button:hover,
+.rowarea button:hover,
+.genderbutton button:hover {
+    background-color: rgb(31, 30, 30);
+    color: white;
+}
+
+.stickyarea {
+    top: 10px;
+    width: 45vw;
+    height: 45vh;
+    /* background-color: rgb(239, 239, 247); */
+    /* background: url(../../../public/images/login/mudsmembershippageimg.jpg) no-repeat center;
+    background-size: cover; */
+    float: left;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.imgcontainer {
+    width: 45%;
+    height: 25%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.imgcontainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.container hr {
+    width: 100%;
+    border: 1px solid #aaaaaa;
+    margin: 60px 0 60px 0;
+}
+
+.clausearea {
+    width: 100%;
+}
+
+.clausearea h5 {
+    font-size: 23px;
+}
+
+.innerclausearea {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-self: start;
+
+}
+
+.innerclausearea input {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    display: flex;
+}
+
+.innerclausearea h5 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.genderbutton {
+    display: flex;
+    flex-direction: row;
+}
+
+.genderbutton button {
+    margin-top: 10px;
+    width: 150px;
+    height: 2.5rem;
+    margin-right: 10px;
+    transition: all 1s;
+    background-color: white;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
 }
