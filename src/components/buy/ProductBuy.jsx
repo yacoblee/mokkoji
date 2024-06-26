@@ -80,6 +80,11 @@ const ProductBuy = ()=>{
     const { options, btnValue, totalPrice } = location.state || {};
     const selectedProduct = GoodsItems.find(item => item.category === category && item.id === parseInt(id));
     
+    useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem("userInfo"));
+
+    }, []);
+
     const [buyPrice, setBuyPrice] = useState({
         productPrice: btnValue ? btnValue.contentSelect : 1,
         optionPrice: btnValue ? btnValue.packagingSelect : 1,
