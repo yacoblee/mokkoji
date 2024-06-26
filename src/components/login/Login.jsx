@@ -67,17 +67,9 @@ const Login = () => {
             dispatch(login(userInfo));
           
             const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
-<<<<<<< HEAD
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
 
             console.log(filteredUserInfoID);
-=======
-            // sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
-            // const getUserInfo =  JSON.parse(localStorage.getItem('userInfo'));
-            // const loginUser =getUserInfo.find(it=> it.id ==  inputId &&  it.pw ==inputPw)
-            // sessionStorage.setItem('loginUser', JSON.stringify(loginUser));
-            // console.log(getUserInfo);
->>>>>>> hy
             navi('/');
         }
         else {
