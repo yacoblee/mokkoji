@@ -161,9 +161,11 @@ const ProductBuy = ()=>{
             </div>
         )
     }else{
-        return(
-            <div className="ProductBuy" style={{marginTop : '150px'}}>
-                <h2></h2>
+        return(<>
+                <h2 className='buyHeader'>
+                    주문 결제
+                </h2>
+            <div className="ProductBuy" >
                 <form action="#">
                     <ul className='ProductBuyList'>
                         <li></li>
@@ -180,34 +182,30 @@ const ProductBuy = ()=>{
                     <p>{formatNumber(selectedProduct.price)}</p>
                     <p>
                         <p>
-                            {options.contentSelect} :<span></span> {buyPrice.productPrice}개
+                            {options.contentSelect} :<span className='highlight'>{buyPrice.productPrice}</span> 개
                         </p>
                         <br/>
                         <p className='buySelect'>
                             수랑 변경
-                            <div>
                             <button type='button' 
-                            className="leftButton" 
                             onClick={()=>{onClickbtn('-','productPrice')}}>
                                 <img src="/images/buy/minus.png" alt="" />
                             </button >
                             <input type="text" value={buyPrice.productPrice} readOnly />
                             <button type='button' 
-                            className="rightButton"
                             onClick={()=>{onClickbtn('+','productPrice')}}>
                             <img src="/images/buy/plus.png" alt="" />
                             </button>
-                            </div> 
+
                         </p>
                     </p>
                     <p>
                         <p>
-                            {options.packagingSelect} : {buyPrice.optionPrice}개
+                            {options.packagingSelect} : <span className='highlight'>{buyPrice.optionPrice}</span>개
                         </p>
                         <br/>
                         <p className='buySelect'>
                             수랑 변경 
-                            <div>
                             <button type='button' 
                             className="leftButton" 
                             onClick={()=>{onClickbtn('-','optionPrice')}}>
@@ -219,7 +217,7 @@ const ProductBuy = ()=>{
                             onClick={()=>{onClickbtn('+','optionPrice')}}>
                                 <img src="/images/buy/plus.png" alt="" />
                             </button>
-                            </div>
+
                         </p>
                     </p>
                 </div>
@@ -232,10 +230,73 @@ const ProductBuy = ()=>{
                 </p>
                 {(filterPrice<30000) && <span>(배송비 추가 발생 되었습니다.)</span>}
                 </div>
-                
-                    
                 </form>
+                
+                    <h3>주문서 작성</h3>
+                <div className='buyBox'>
+                <div className='buyInput'>
+                    <div>
+                    <p>
+                        배송지 정보
+                    </p>
+                    </div>
+                <form action="" 
+                className='buyForm'>
+                    <label htmlFor="buyID">배송지선택</label>
+                    <div className='buyRadioBox'>
+                    <input type="radio" name='delivery' id='basicsAddress' />
+                    <label htmlFor="basicsAddress"> 기본 배송지</label>
+                    <input type="radio" name='delivery'id='newAddress' />
+                    <label htmlFor="newAddress"> 새로운 배송지</label>
+                    </div>
+                    <label htmlFor="buyID">성함</label>
+                    <input type="text" id='buyID' />
+                    <label htmlFor="buypN">연락처</label>
+                    <input type="text" id='buyPN' />
+                    <label htmlFor="buyAddress1">주소</label>
+                    <div>
+                        <div>
+                            <input type="text" id='buyAddress1' />
+                            <button>우편 번호 검색</button>
+                        </div>
+                    <div>
+                        주소따올자리
+                    </div>
+                    <input type="text" id='buyAddress2' />
+
+                    </div>
+                </form>
+                </div>
+                <div className='buyInput'>
+                    <div>
+                    <p>
+                        배송요청 / 결제 수단 
+                    </p>
+                    </div>
+                <form action="" 
+                className='buyForm'>
+                    <label htmlFor="deliveryMessage">배송 메세지</label>
+                    <select name="deliveryMessage" id="deliveryMessage">
+                        <option value="문앞">문 앞에 놔주세요</option>
+                        <option value="직접부재허용">직접배달(부재시 문앞)</option>
+                        <option value="문앞">문 앞에 놔주세요</option>
+                        <option value="문앞">문 앞에 놔주세요</option>
+                        <option value="문앞">문 앞에 놔주세요</option>
+
+                    </select>
+                    {/* <input type="text" id='deliveryMessage' /> */}
+                    <label htmlFor="buyID">성함</label>
+                    <input type="text" id='buyID' />
+                    <label htmlFor="buyID">성함</label>
+                    <input type="text" id='buyID' />
+                    <label htmlFor="buyID">성함</label>
+                    <input type="text" id='buyID' />
+                </form>
+                </div>
+                </div>
+                    
             </div>
+            </>
         )
     }
 }

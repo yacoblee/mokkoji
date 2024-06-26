@@ -1,9 +1,19 @@
+.buyHeader{
+    width: 1200px;
+    margin: 150px auto 100px auto;
+    padding: 0 20px;
+    font-family: 'SUITE-Regular';
+}
+
 .ProductBuy{
     width: 1200px;
-    margin: 150px auto;
-    background-color: #d0c0a011;
+    margin: 100px auto;
+    user-select: none !important;
     font-family: 'SUITE-Regular';
+}
+.ProductBuy form{
     border: 1px solid  #d0c0a058;
+    background-color: #d0c0a011;
 }
 .ProductBuyList{
     width: 100%;
@@ -23,6 +33,10 @@
     align-items: center;
     gap: 10px;
     padding: 10px;
+
+    border-bottom: .5px solid #d0c0a058;
+    /* background-color: #d0c0a011; */
+    
 }
 .buyInfo img{
     width: 100%;
@@ -39,31 +53,30 @@
     width: 100%;
     display: flex;
     /* justify-content: space-evenly; */
-    gap : 10px
+    gap : 10px;
+    align-items: center;
+}
+.highlight{
+    font-weight: 600;
+    padding: 0 5px;
 }
 .buySelect button{
     width: 25px;
     height: 25px;
     padding: 5px;
     /* border-radius: 5px 0 0 5px ; */
-    border : 1px solid #d0c0a0ed;
+    border : 1px solid #d0c0a000;
     background-color: #d0c0a044;
     cursor: pointer;
 }
-.leftButton{
-    border-radius: 5px 0 0 5px ;
-}
-.rightButton{
-    border-radius: 0 5px 5px 0 ;
-}
-.buySelect div{
-    display: flex;
-}
+
+
 .buySelect input{
-    width: 30px;
-    height: 100%;
-    border : 1px solid #d0c0a0ed;
+    width: 40px;
+    height: 25px;
+    /* border : 1px solid #d0c0a0ed; */
     text-align: center;
+    border : 0px;
 
 }
 .buySelect img{
@@ -81,4 +94,29 @@
     font-weight: 600;
     font-size: 22px;
     color: red;
+}
+/* ============================= */
+.buyBox{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10%;
+}
+.ProductBuy h3{
+    margin: 50px 0;
+    padding: 0 20px;
+}
+.buyInput p{
+    padding: 0 20px;
+    margin: 20px 0;
+}
+.buyForm{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding: 20px;
+    gap: 20px 0;
+}
+.buyRadioBox input{
+    margin: 0 10px;
 }
