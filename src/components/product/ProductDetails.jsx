@@ -6,13 +6,24 @@ import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductForm from "./ProductForm";
 import { useEffect, useState } from "react";
 import '../../css/Product/ProductDetails.css'
-
+import userInfo from './../login/UserInforData';
 
 
 const ProductDetails = ()=>{ //=========================================================ProductDetails 컴포넌트
     const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
     const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
     const [like , setLike]=useState(false);
+    // 컴포넌트가 마운트될 때 사용자 정보를 로컬 스토리지에서 가져옴
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem("userInfo"));
+        if (userData) {
+            // setUserLogin(true); // 사용자가 로그인한 상태로 설정
+            const selectedUser = userInfo.find(him => him.id === userData.id); // 사용자 정보 찾기
+            // setUser(selectedUser); // 사용자 정보 설정
+            sessionStorage.setItem('selectedUser', JSON.stringify(selectedUser)); // 세션 스토리지에 사용자 정보 저장
+        }
+    }, []);
+
 
     const onClickLikeMe =()=>{
         setLike(!like);

@@ -1,11 +1,15 @@
 import React, { useState , useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import Login from './../login/Login';
-// import userInfo from './../login/UserInforData';
+import userInfo from './../login/UserInforData';
 
 
 
 const ProductForm = ({selectedProduct})=>{
+
+
+
+
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
         contentSelect: '', //왼쪽 옵션값
