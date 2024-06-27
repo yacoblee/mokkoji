@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import userInfo from './../login/UserInforData';
+import { useNavigate } from 'react-router-dom';
+
 
 // 선택된 상품 정보를 받는 컴포넌트
 const ProductForm = ({ selectedProduct }) => {

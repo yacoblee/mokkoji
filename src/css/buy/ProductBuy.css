@@ -11,18 +11,19 @@
     user-select: none !important;
     font-family: 'SUITE-Regular';
 }
-.ProductBuy form{
-    border: 1px solid  #d0c0a058;
-    background-color: #d0c0a011;
-}
+
 .ProductBuyList{
     width: 100%;
     display: grid;
     grid-template-columns: 15px 1fr  1fr 0.5fr repeat(2,1fr);
     gap: 10px;
     padding: 10px;
-    
-    border-bottom: .5px solid #d0c0a058;
+    align-items: center;
+    border-top: 1px solid  #d0c0a058;
+    border-bottom: 1px solid  #d0c0a058;
+
+    background-color: #d0c0a011;
+    /* border-bottom: .5px solid #d0c0a058; */
 }
 .buyInfo{
     /* height: 30vh; */
@@ -35,7 +36,7 @@
     padding: 10px;
 
     border-bottom: .5px solid #d0c0a058;
-    /* background-color: #d0c0a011; */
+    background-color: #d0c0a008;
     
 }
 .buyInfo img{
@@ -70,7 +71,12 @@
     cursor: pointer;
 }
 
+.buyInput{
+    background-color: #d0c0a008;
+    border-bottom: .5px solid #d0c0a058;
+    border-top: .5px solid #d0c0a058;
 
+}
 .buySelect input{
     width: 40px;
     height: 25px;
@@ -203,4 +209,28 @@
     background-color: #d0c0a044;
     border : 1px solid #d0c0a08d;
     font-size: 20px;
+}
+.bringUserCart{
+    grid-area: 1/ 1/ 2/ 3 ;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 20px;
+    justify-content: end;
+}
+.bringUserCart button{
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    background-color: #d0c0a044;
+    border : 1px solid #d0c0a08d;
+    cursor: pointer;
+}
+.CartArea{
+    margin: 30px 0;
+    padding: 20px;
+    background-color: white;
+
 }
