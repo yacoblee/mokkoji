@@ -13,6 +13,8 @@ import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
 import Footer from './components/modules/Footer';
 import Reservation from './components/main/Reservation';
+import AddressSearch from './components/login/AddressSearch';
+
 
 import ProductBuy from './components/buy/ProductBuy';
 const App = () => {
@@ -69,6 +71,7 @@ const App = () => {
         <Route path="/reserve/*" element={<Reservation />} />
         <Route path="/Login/*" element={<Login />} />
         <Route path='/Login/Membership' element={<Membership />} />
+        {/* <Route path="/address-search" element={<AddressSearch />} /> */}
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
         <Route path="/mypage/*" element={<MyPageIndex />} />
