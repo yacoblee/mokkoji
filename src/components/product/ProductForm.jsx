@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import userInfo from './../login/UserInforData';
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+import ModalNotLogin from './ModalNotLogin';
+import ModalNotOption from './ModalNotOption';
+import ModalOkbasket from './ModalOkbasket';
+
 
 // 선택된 상품 정보를 받는 컴포넌트
 const ProductForm = ({ selectedProduct }) => {
@@ -99,18 +103,25 @@ const ProductForm = ({ selectedProduct }) => {
         }
     }, [userData]);
 
+    //모달창을 관리할 state
+    //로그인 필요합니다
+    const [isModalLoginOpen, setIsLoginModalOpen] = useState(false);
+    //옵션을 선택해주세요
+    const [isModalOptionOpen, setIsModalOptionOpen] = useState(false);
+    //장바구니에 추가되었습니다.
+    const [isModalBasketOpen, setIsModalBasketOpen] = useState(false);
+
+
     // '구매하기' 버튼 클릭 시 실행되는 함수
     const onClickBuy = () => {
         if (!userLogin) {
-            alert("로그인이 필요한 서비스 입니다.");
-            // 로그인하지 않은 경우 로그인 페이지로 이동
-            navigate('/Login');
+            setIsLoginModalOpen(true);
             return;
         }
 
         if (!options.contentSelect || !options.packagingSelect) {
             // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
-            alert("선택 옵션을 모두 선택해주세요.");
+            setIsModalOptionOpen(true);
             return;
         }
 
@@ -128,15 +139,13 @@ const ProductForm = ({ selectedProduct }) => {
     // 장바구니 클릭할 때 세션스토리지에 추가
     const onClickBasket = () => {
         if (!userLogin) {
-            // 로그인하지 않은 경우 로그인 페이지로 이동
-            alert("로그인이 필요한 서비스 입니다.");
-            navigate('/Login');
+            setIsLoginModalOpen(true);
             return;
         }
 
         if (!options.contentSelect || !options.packagingSelect) {
             // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
-            alert("선택 옵션을 모두 선택해주세요.");
+            setIsModalOptionOpen(true);
             return;
         }
 
@@ -159,7 +168,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 세션 스토리지에 업데이트된 사용자 데이터 저장
         sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUserData));
-        alert("장바구니에 추가되었습니다.");
+        setIsModalBasketOpen(true);
     }
 
     // 리턴
@@ -222,7 +231,90 @@ const ProductForm = ({ selectedProduct }) => {
                     구매하기
                 </button>
             </div>
-        </form>
+            <Modal
+                isOpen={isModalLoginOpen}
+                onRequestClose={() => setIsLoginModalOpen(false)}
+                contentLabel="로그인 필요"
+                style={{
+                    content: {
+                        height: '180px',
+                        width: '300px',
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                        zIndex: '1000',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <div className='Modalbutton'>
+                    <button
+                        onClick={() => navigate('/Login')}>로그인</button>
+                    <button onClick={() => setIsLoginModalOpen(false)}>닫기</button>
+                </div>
+                <ModalNotLogin />
+            </Modal>
+            <Modal
+                isOpen={isModalOptionOpen}
+                onRequestClose={() => setIsModalOptionOpen(false)}
+                contentLabel="옵션 선택 필요"
+                style={{
+                    content: {
+                        height: '140px',
+                        width: '300px',
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                        border: '1px solid #d0c0a0e2',
+                        zIndex: '1000',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                    }
+                }}
+            >   <div className='Modalbutton'>
+                    <button onClick={() => setIsModalOptionOpen(false)}>닫기</button>
+                </div>
+                <ModalNotOption />
+            </Modal>
+            <Modal
+                isOpen={isModalBasketOpen}
+                onRequestClose={() => setIsModalBasketOpen(false)}
+                contentLabel="장바구니 확인"
+                style={{
+                    content: {
+                        height: '140px',
+                        width: '300px',
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                        zIndex: '1000',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <div className='Modalbutton'>
+                    <button
+                        onClick={() => navigate('/mypage/cart')}>장바구니 확인</button>
+
+                    <button onClick={() => setIsModalBasketOpen(false)}>닫기</button>
+                </div>
+                <ModalOkbasket />
+            </Modal>
+        </form >
     );
 };
 

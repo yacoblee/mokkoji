@@ -1,4 +1,33 @@
+import { useEffect, useState } from "react";
+// import userInfo from './../login/UserInforData';
+
 const BuyInputBox = ({userData}) => {
+
+    const [addressing, setAddressing]= useState(true);
+    const [userInfo , setUserInfo] = useState({})
+    const onChangeaddressing = ()=>{
+        setAddressing(!addressing)
+    }
+    useEffect(()=>{
+        const copy = {
+            name : userData && userData.name,
+            phoneNumber : userData && userData.phoneNumber ,
+            address :  userData && userData.address ,
+            addressDetail : userData && userData.addressDetail,
+        }
+        if(addressing){
+            setUserInfo(copy);
+        }else{
+            setUserInfo({
+                name : '',
+                phoneNumber : '',
+                address : '',
+                addressDetail : '',
+            });
+        }
+    },[addressing,userData]);
+
+    console.log(addressing);
     return (
         <>
 
@@ -13,23 +42,27 @@ const BuyInputBox = ({userData}) => {
                         className='buyForm'>
                         <label htmlFor="buyID">배송지선택</label>
                         <div className='buyRadioBox'>
-                            <input type="radio" name='delivery' id='basicsAddress' />
+                            <input type="radio" name='delivery' id='basicsAddress'
+                            checked={addressing} 
+                            onChange={onChangeaddressing}/>
                             <label htmlFor="basicsAddress"> 기본 배송지</label>
-                            <input type="radio" name='delivery' id='newAddress' />
+                            <input type="radio" name='delivery' id='newAddress'
+                            checked={!addressing}
+                            onChange={onChangeaddressing}/>
                             <label htmlFor="newAddress"> 새로운 배송지</label>
                         </div>
                         <label htmlFor="buyID" >성함</label>
-                        <input type="text" id='buyID' defaultValue={userData ? userData.name : ''} />
+                        <input type="text" id='buyID' defaultValue={userInfo.name} />
                         <label htmlFor="buypN">연락처</label>
-                        <input type="text" id='buyPN' defaultValue={userData ? userData.phoneNumber : ''} />
+                        <input type="text" id='buyPN' defaultValue={userInfo.phoneNumber} />
                         <label htmlFor="buyAddress1">주소</label>
                         <div className='addressBox'>
                             <div>
                                 <input type="text" id='buyAddress1' />
                                 <button>우편 번호 검색</button>
                             </div>
-                            <input type="text" id='buyAddress2' disabled defaultValue={userData ? userData.address : ''} />
-                            <input type="text" id='buyAddress3' defaultValue={userData ? userData.addressDetail : ''} />
+                            <input type="text" id='buyAddress2' disabled defaultValue={userInfo.address} />
+                            <input type="text" id='buyAddress3' defaultValue={userInfo.addressDetail} />
 
                         </div>
                     </form>

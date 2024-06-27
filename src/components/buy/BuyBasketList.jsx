@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GoodsItems from '../product/ProductObject';
 
 
@@ -11,20 +11,55 @@ import GoodsItems from '../product/ProductObject';
 //user의 basket 까지 접근한 배열을 맵을 돌려,
 //그 id값과 일치하는 product를 찾은 후 , 사진과  이름과 가격을 찾음.
 
-const BuyBasketList = ({ userCart }) => {
+const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
 
     //금액을 수정하는 함수
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
 
+    // 각 장바구니 항목의 체크 상태를 관리하는 배열
+    const [checkedItems, setCheckedItems] = useState(
+        userCart.map(() => false)
+    );
+
+    // 체크박스 상태 변경 함수
+    const onChangeCheckBox = (index, event) => {
+        const isChecked = (event.target.checked);
+        const price = event.target.value;
+        
+        
+        // 해당 인덱스의 체크 상태를 업데이트
+        setCheckedItems((it)=>{
+            const copyIschecked = [...it];
+            copyIschecked[index] = isChecked;
+            return copyIschecked;
+        });
+        
+        // 상위 컴포넌트에 상태 변경 알림
+        onChangeChildCheckbox(price, isChecked);
+    };
     return (
         <>
+            <h3 className='CartArea'>
+                장바구니
+            </h3>
+            <ul className='ProductBuyList'>
+                <li></li>
+                <li></li>
+                <li>상품명</li>
+                <li>상품가격</li>
+                <li>상품정보</li>
+                <li>포장여부</li>
+            </ul>
             {userCart.map((cartItem, index) => {
                 const product = GoodsItems.find(item => item.id === cartItem.productId);
                 return (
                     <div key={index} className='buyInfo'>
-                        <input type="checkBox" />
+                        <input type="checkBox"
+                            checked={checkedItems[index]}
+                            value={cartItem.totalPrice}
+                            onChange={(e) => onChangeCheckBox(index, e)}/>
                         <img src={product.productSrc[0]} alt={product.name} />
                         <p>{product.name}</p>
                         <p>{formatNumber(product.price)}</p>
@@ -34,8 +69,8 @@ const BuyBasketList = ({ userCart }) => {
                         <p>
                             {cartItem.options.packagingSelect} : <span className='highlight'>{cartItem.quantity.packagingSelect}</span> 개
                         </p>
-                        <p>
-                            {cartItem.totalPrice}
+                        <p className='priceBox'>
+                            총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
                         </p>
                     </div>
                 );

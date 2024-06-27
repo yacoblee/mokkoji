@@ -12,9 +12,7 @@ import Membership from './components/login/Membership';
 import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
 import Footer from './components/modules/Footer';
-import Reservation from './components/main/Reservation';
-import AddressSearch from './components/login/AddressSearch';
-
+import Reservation from './components/Reserve/Reservation';
 
 import ProductBuy from './components/buy/ProductBuy';
 const App = () => {
