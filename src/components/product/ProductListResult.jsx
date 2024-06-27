@@ -32,13 +32,11 @@ const ProductMainGuide = ({ text }) => {
 };
 
 
-const ProductListResult = ({selectItem})=>{
+const ProductListResult = ({selectItem , page , setPage})=>{
     
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     }
-    //버튼 클릭에 따라 전달될 매개변수 값.
-    const [currentPage, setCurrentPage] = useState(1); 
 
     //현재 보여질 페이지 아이템 수.
     const itemsPage = 8; 
@@ -50,17 +48,17 @@ const ProductListResult = ({selectItem})=>{
     const totalPages = Math.ceil(totalItems / itemsPage);
     
     //selectItem 에서 걸러낼 slice (0~8 /8~16... )
-    const paginatedItems = selectItem.slice((currentPage - 1) * itemsPage, currentPage * itemsPage);
+    const paginatedItems = selectItem.slice((page - 1) * itemsPage, page * itemsPage);
     
     //for문이 JSX에서 돌아가지 않아서 함수로 따로 뺌. page라는 배열에 button을 만들어 추가.
     const pageNation = ()=>{
         let pages = [];
         for (let i = 1; i <= totalPages; i++) {
             pages.push(<button value={i} className='centerButton' onClick={()=>onClickPage(i)}
-            style={{ boxShadow: currentPage === i && 'inset 0px -5px 0px rgba(166, 255, 0, 0.233)' ,
-                color: currentPage === i && 'red' ,
-                fontSize : currentPage ===i && '18px',
-                fontWeight : currentPage===i && '700'}}>{i}</button>)
+            style={{ boxShadow: page === i && 'inset 0px -5px 0px rgba(166, 255, 0, 0.233)' ,
+                color: page === i && 'red' ,
+                fontSize : page ===i && '18px',
+                fontWeight : page===i && '700'}}>{i}</button>)
         }
         //결과값을 page라는 배열을 반환.
         return pages;
@@ -68,7 +66,7 @@ const ProductListResult = ({selectItem})=>{
     
     //매개변수를 받아 그 값으로 currentPage 값을 바꿈.
     const onClickPage =(page)=>{
-        setCurrentPage(page)
+        setPage(page)
     }
     return(
     <>

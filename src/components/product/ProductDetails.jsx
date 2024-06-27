@@ -6,7 +6,6 @@ import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductForm from "./ProductForm";
 import { useEffect, useState } from "react";
 import '../../css/Product/ProductDetails.css'
-import userInfo from './../login/UserInforData';
 
 
 const ProductDetails = ()=>{ //=========================================================ProductDetails 컴포넌트
