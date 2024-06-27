@@ -322,7 +322,10 @@
     position: sticky;
     top: 100px;
     background-color: white;
-    z-index: 1000;
+    z-index: 10;
+}
+.tabBox a{
+    color: black;
 }
 .ProductDetailsInfo hr{
     margin-top: 30px;

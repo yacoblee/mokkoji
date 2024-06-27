@@ -234,3 +234,28 @@
     background-color: white;
 
 }
+/* ========================= */
+/* 모달 */
+
+
+.ModalNotOption,.ModalNotLogin,.ModalOkbasket{
+    margin: auto;
+    font-family: 'SUITE-Regular';
+    font-size: 18px;
+}
+
+.Modalbutton{
+    display: flex;
+    gap :10px;
+}
+.Modalbutton button{
+    font-family: 'SUITE-Regular';
+    padding: 5px 10px;
+    margin: auto;
+    /* height: 30px; */
+    border : 1px solid #d0c0a0e2;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #d0c0a044;
+}
