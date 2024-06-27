@@ -5,8 +5,8 @@ import Clausearea01 from './Clausearea01'
 import Clausearea02 from './Clausearea02';
 import Marketing from './Marketing';
 import FindId from './FindId';
-import Modal from 'react-modal';
-import DaumPostcode from 'react-daum-postcode';
+// import Modal from 'react-modal';
+// import DaumPostcode from 'react-daum-postcode';
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -356,7 +356,7 @@ const Membership = () => {
                     </ul>
                 </div>
             </div>
-            <Modal
+            {/* <Modal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
                 contentLabel="주소 검색"
@@ -373,7 +373,7 @@ const Membership = () => {
             >
                 <button onClick={() => setIsModalOpen(false)}>닫기</button>
                 <DaumPostcode onComplete={handleComplete} />
-            </Modal>
+            </Modal> */}
         </div >
 
     );
