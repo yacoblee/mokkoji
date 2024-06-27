@@ -6,25 +6,27 @@ const ReservationImg = () => {
 
     const [slideImgBox, setSlideImgBox] = useState(0);
 
-    // 각 ReserveSource 항목의 slideSrc 배열에서 이미지들을 가져와서 렌더링합니다.
     const reservImg = ReserveSource.flatMap((item) =>
         item.slideSrc.map((src, i) => (
-            <img src={src} key={`${item.contNum}-${i}`} alt={`slide-${i}`}
-                style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />
+            <img src={src} key={`${i}`} alt={`slide ${i}`} />
         ))
     );
 
-    // const onClickLabelBox = (index) => {
-
-    //     SetSlideImgBox(1);
-
-    // }
 
     return (
         <div className='reservation_img_inner'>
-            {reservImg}
+            <div className="reservation_main_img">
+                {reservImg}
 
+            </div>
+            <div className="reservation_sub_img">
+                {/* {reservImg} */} {reservImg}
 
+            </div>
+            <div className="reservation_fin_img">
+                {/* {reservImg} */} {reservImg}
+
+            </div>
         </div>
     );
 }
