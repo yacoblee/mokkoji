@@ -121,7 +121,7 @@ const ProductBuy = () => {
                         <li>포장여부</li>
                     </ul>
                     <div className='buyInfo'>
-                        <input type="checkBox" />
+                        <input type="checkBox" value={filterPrice}/>
                         <img src={selectedProduct.productSrc[0]} alt="" />
                         <p>{selectedProduct.name}</p>
                         <p>{formatNumber(selectedProduct.price)}</p>
@@ -141,7 +141,7 @@ const ProductBuy = () => {
                                     onClick={() => { onClickbtn('+', 'productPrice') }}>
                                     <img src="/images/buy/plus.png" alt="" />
                                 </button>
-
+                                
                             </p>
                         </p>
                         <p>
@@ -165,8 +165,11 @@ const ProductBuy = () => {
 
                             </p>
                         </p>
+                        <p className='priceBox'>
+                        총 금액 : <span className='subTTprice'>{formatNumber(filterPrice)}</span>
+                        </p>
                     </div>
-                    {userData && <BuyBasketList userCart={userData.mypage.basket} />}
+                    {/* {userData && <BuyBasketList userCart={userData.mypage.basket} />} */}
                     <div className='totalPrice'>
                         <p>
                             총 금액 :

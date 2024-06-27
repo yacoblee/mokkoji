@@ -20,6 +20,14 @@ const BuyBasketList = ({ userCart }) => {
 
     return (
         <>
+            <ul className='ProductBuyList'>
+                        <li></li>
+                        <li></li>
+                        <li>상품명</li>
+                        <li>상품가격</li>
+                        <li>상품정보</li>
+                        <li>포장여부</li>
+                    </ul>
             {userCart.map((cartItem, index) => {
                 const product = GoodsItems.find(item => item.id === cartItem.productId);
                 return (
@@ -34,8 +42,8 @@ const BuyBasketList = ({ userCart }) => {
                         <p>
                             {cartItem.options.packagingSelect} : <span className='highlight'>{cartItem.quantity.packagingSelect}</span> 개
                         </p>
-                        <p>
-                            {cartItem.totalPrice}
+                        <p className='priceBox'>
+                            총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
                         </p>
                     </div>
                 );
