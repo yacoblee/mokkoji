@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 // import userInfo from './../login/UserInforData';
+import Modal from 'react-modal';
+import DaumPostcode from 'react-daum-postcode';
 
 const BuyInputBox = ({userData}) => {
 
@@ -14,6 +16,7 @@ const BuyInputBox = ({userData}) => {
             phoneNumber : userData && userData.phoneNumber ,
             address :  userData && userData.address ,
             addressDetail : userData && userData.addressDetail,
+            zoneCode :userData && userData.zoneCode,
         }
         if(addressing){
             setUserInfo(copy);
@@ -23,9 +26,41 @@ const BuyInputBox = ({userData}) => {
                 phoneNumber : '',
                 address : '',
                 addressDetail : '',
+                zoneCode :''
             });
         }
-    },[addressing,userData]);
+    },[addressing]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+    const handleComplete = (data) => {
+        console.log(data);
+        let fullAddress = data.address;
+        let extraAddress = '';
+
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+            }
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+
+        setUserInfo((Info) => ({
+            ...Info,
+            zoneCode: data.zonecode,
+            address: fullAddress
+        }));
+        setIsModalOpen(false);
+    };
+
+    const openAddress = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    }
 
     console.log(addressing);
     return (
@@ -58,11 +93,17 @@ const BuyInputBox = ({userData}) => {
                         <label htmlFor="buyAddress1">주소</label>
                         <div className='addressBox'>
                             <div>
-                                <input type="text" id='buyAddress1' />
-                                <button>우편 번호 검색</button>
+                                <input type="text" id='buyAddress1'
+                                placeholder='우편번호'
+                                value={userInfo.zoneCode}
+                                maxLength={5} readOnly />
+                                <button
+                                type="button"
+                                onClick={openAddress}>우편 번호 검색</button>
                             </div>
                             <input type="text" id='buyAddress2' disabled defaultValue={userInfo.address} />
-                            <input type="text" id='buyAddress3' defaultValue={userInfo.addressDetail} />
+                            <input type="text" id='buyAddress3' defaultValue={userInfo.addressDetail}
+                            placeholder='상세 주소 입력' />
 
                         </div>
                     </form>
@@ -106,6 +147,26 @@ const BuyInputBox = ({userData}) => {
                         <button>BUY NOW</button>
                     </div>
                 </div>
+                <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
+                style={{
+
+                    content: {
+                        width: '500px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
+                <DaumPostcode onComplete={handleComplete} />
+            </Modal>
             </div>
         </>
     )
