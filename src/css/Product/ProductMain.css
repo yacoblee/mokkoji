@@ -56,6 +56,59 @@ a {
     /* color: black; */
 }
 
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+    .productList {
+        padding: 2vw;
+    }
+    .ProductMainSlide{
+        height: 80vh;
+    }
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 10vw;
+    }
+    .slider{
+        gap:0 2vw;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:767px) and (max-width:1023px) {
+    .productList {
+        padding:0 3vw;
+    }
+    .ProductMainSlide{
+        height: 70vh;
+    }
+
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 7vw;
+    }
+    .slider{
+        gap:0 3vw;
+    }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+    .productList {
+        padding:0 4vw;
+    }
+    .ProductMainSlide{
+        height: 60vh;
+    }
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 4vw;
+    }
+    .slider{
+        gap: 0 5vw;
+        margin: 5px;
+    }
+}
+
+
 /* ============================================= */
 /* 상품 리스트 : ProductContainer.jsx , ProductList.jsx , ProductMainSlide , */
 .ProductContainer {
@@ -73,7 +126,7 @@ a {
     display: flex;
     white-space: nowrap;
     width: 100%;
-    height: 90vh;
+    
     gap: 5px;
     background-color: rgba(243, 205, 205, 0.116);
 }
@@ -126,7 +179,7 @@ a {
 .productList {
     width: 95vw;
     height: 60vh;
-    padding: 1vw;
+    min-height: 370px;
     white-space: nowrap;
     overflow: hidden;
     border-top: 1px solid silver;
@@ -160,29 +213,31 @@ a {
     height: 100%;
     display: flex; /* Grid 대신 Flex 사용 */
     transition: transform 0.5s ease-in-out;
-    gap: 2vw; /* 요소 간의 간격 */
+     /* 요소 간의 간격 */
 }
 .productItem {
     height: 100%;
-    width: 18vw; /* 각 항목의 너비를 고정 */
+    /* min-height: 300px; */
+    width: 260px;/* 각 항목의 너비를 고정 */
     flex: 0 0 auto;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 3px 3px 3px silver;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 9fr 1fr;
     /* justify-content: space-between; */
     font-family: 'SUITE-Regular';
 }
 .productItem img {
     width: 100%;
-    height: 50vh;
+    height: 100%;
+    /* height: 50vh; */
     object-fit: cover;
 }
 .productItem div{
-    height: 5vh;
+    /* height: 5vh; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -202,7 +257,7 @@ a {
     left: 0;
     position: absolute;
     top: 0;
-    width: 10vw;
+    
     z-index: 5;}
 
 .secondContainerRightBtn {
@@ -211,6 +266,7 @@ a {
     position: absolute;
     right: 0;
     top: 0;
-    width: 10vw;
+    
     z-index: 5;
 }
+

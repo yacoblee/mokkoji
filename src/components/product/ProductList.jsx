@@ -187,9 +187,10 @@ const ProductList = () => {
                         onChange={onChangeInputValue} />
                     <button
                         onClick={onclickSearch}>검색</button>
-                    <span>{displayMessage}</span>
+                    <span className='displayMessage'>{displayMessage}</span>
                 </div>
             }
+            {showSearch && <div className='displayMessage2'>{displayMessage}</div>}
             {selectItem.length > 0 ? <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} /> : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage}/>}
         </>
     );
