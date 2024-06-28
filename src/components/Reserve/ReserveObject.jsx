@@ -30,7 +30,7 @@ const ReserveObject = [
             { year: 2024, month: 6, day: 25, id: [] },
             { year: 2024, month: 6, day: 26, id: [] },
             { year: 2024, month: 6, day: 27, id: ['s1'] },
-            { year: 2024, month: 6, day: 28, id: ['s2', 'obkec'] },
+            { year: 2024, month: 6, day: 28, id: ['s2', 'obkec']  },
             { year: 2024, month: 6, day: 29, id: ['s2', 'obkec'] },
             { year: 2024, month: 6, day: 30, id: ['s2', 'obkec'] },
         ]

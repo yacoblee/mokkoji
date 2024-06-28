@@ -2,7 +2,7 @@
 const Reservesource = [
     {
         name: '한국 전통 굿즈 체험',
-        contNum: 1,
+        reserveItem: 1,
         category: 'interiorGoods',
         description: '인테리어 소품',
         slideSrc: [
