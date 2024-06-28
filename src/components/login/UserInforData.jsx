@@ -3,7 +3,7 @@ const userInfo = [
         index: 1,
         name: '김철수',
         birth: '1985-05-15',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '서울시 강남구 테헤란로 123',
         addressDetail: '213동 128호',
         gender: 'M',
@@ -19,7 +19,10 @@ const userInfo = [
         mypage: {
             history: [
                 { date: '2024-06-01', item: [1] },
-                { date: '2024-06-05', item: [5,2,3] },
+                { date: '2024-06-05', item: [5, 2, 3] },
+            ], reserve: [
+                { reserveItem: 1, date: '2024-06-29', adult: 1, teenager: 2 },
+                { reserveItem: 1, date: '2024-06-30', adult: 1, teenager: 1 },
             ],
             review: null,
             isLike: [1, 2, 3],
@@ -67,7 +70,7 @@ const userInfo = [
         index: 2,
         name: '박영희',
         birth: '1990-07-20',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '부산시 해운대구 해운대로 456',
         addressDetail: '263동 182호',
         gender: 'F',
@@ -82,7 +85,7 @@ const userInfo = [
         lastLoginDate: '2024-06-12',
         mypage: {
             history: [
-                { date: '2024-06-02', item: [2,1,4] },
+                { date: '2024-06-02', item: [2, 1, 4] },
                 { date: '2024-06-06', item: [4] },
             ],
             review: null,
@@ -131,7 +134,7 @@ const userInfo = [
         index: 3,
         name: '이민지',
         birth: '1988-08-30',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '대전시 유성구 엑스포로 789',
         addressDetail: '328동 127호',
         gender: 'F',
@@ -147,7 +150,7 @@ const userInfo = [
         mypage: {
             history: [
                 { date: '2024-06-03', item: [5] },
-                { date: '2024-06-07', item: [7,6,4] },
+                { date: '2024-06-07', item: [7, 6, 4] },
             ],
             review: null,
             isLike: [5, 7, 9],
@@ -195,7 +198,7 @@ const userInfo = [
         index: 4,
         name: '최수정',
         birth: '1992-12-12',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '광주시 서구 내방로 987',
         addressDetail: '236동 182호',
         gender: 'F',
@@ -259,7 +262,7 @@ const userInfo = [
         index: 5,
         name: '홍길동',
         birth: '1980-03-01',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '인천시 남구 주안로 654',
         addressDetail: '276동 1728호',
         gender: 'M',
@@ -323,7 +326,7 @@ const userInfo = [
         index: 6,
         name: '강다혜',
         birth: '1995-09-23',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '경기 광주시 태재로 133-35 스토리빌 301호',
         addressDetail: '278동 627호',
         gender: 'F',
@@ -339,7 +342,7 @@ const userInfo = [
         mypage: {
             history: [
                 { date: '2024-06-11', item: [2] },
-                { date: '2024-06-12', item: [4,6] },
+                { date: '2024-06-12', item: [4, 6] },
             ],
             review: null,
             isLike: [2, 3, 4],
@@ -387,7 +390,7 @@ const userInfo = [
         index: 7,
         name: '서지훈',
         birth: '1993-04-05',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '서울시 마포구 월드컵북로 321',
         addressDetail: '272동 1827호',
         gender: 'M',
@@ -403,7 +406,7 @@ const userInfo = [
         mypage: {
             history: [
                 { date: '2024-06-13', item: [3] },
-                { date: '2024-06-14', item: [1,10] },
+                { date: '2024-06-14', item: [1, 10] },
             ],
             review: null,
             isLike: [1, 4, 5],
@@ -451,7 +454,7 @@ const userInfo = [
         index: 8,
         name: '김민준',
         birth: '1997-01-20',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '경남 창원시 의창구 봉곡로 123',
         addressDetail: '272동 203호',
         gender: 'M',
@@ -503,7 +506,7 @@ const userInfo = [
         index: 9,
         name: '박지수',
         birth: '1998-11-11',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '전남 목포시 영산로 456',
         addressDetail: '232동 292호',
         gender: 'F',
@@ -518,8 +521,8 @@ const userInfo = [
         lastLoginDate: '2024-06-18',
         mypage: {
             history: [
-                { date: '2024-06-17', item: [4,5] },
-                { date: '2024-06-18', item: [5,13] },
+                { date: '2024-06-17', item: [4, 5] },
+                { date: '2024-06-18', item: [5, 13] },
             ],
             review: null,
             isLike: [3, 6, 9],
@@ -567,7 +570,7 @@ const userInfo = [
         index: 10,
         name: '장예은',
         birth: '1994-03-15',
-        zoneCode : '12345',
+        zoneCode: '12345',
         address: '제주도 제주시 탑동로 789',
         addressDetail: '947동 173호',
         gender: 'F',
