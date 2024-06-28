@@ -112,9 +112,9 @@ function MyPageGrid() {
                     <span>구매내역</span>
                 </div>
             </Link>
-            <Link to='/mypage/faq'>
-                <div className='MyFAQ'>
-                    <div className='IconFAQ'>
+            <Link to='/mypage/book'>
+                <div className='MyBook'>
+                    <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </div>
                     <span>나의 예약</span>
