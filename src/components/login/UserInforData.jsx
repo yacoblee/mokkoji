@@ -18,8 +18,8 @@ const userInfo = [
         lastLoginDate: '2024-06-10',
         mypage: {
             history: [
-                { date: '2024-06-01', item: 1 },
-                { date: '2024-06-05', item: 3 },
+                { date: '2024-06-01', item: [1] },
+                { date: '2024-06-05', item: [5,2,3] },
             ],
             review: null,
             isLike: [1, 2, 3],
@@ -82,8 +82,8 @@ const userInfo = [
         lastLoginDate: '2024-06-12',
         mypage: {
             history: [
-                { date: '2024-06-02', item: 2 },
-                { date: '2024-06-06', item: 4 },
+                { date: '2024-06-02', item: [2,1,4] },
+                { date: '2024-06-06', item: [4] },
             ],
             review: null,
             isLike: [2, 4, 6],
@@ -146,8 +146,8 @@ const userInfo = [
         lastLoginDate: '2024-06-14',
         mypage: {
             history: [
-                { date: '2024-06-03', item: 5 },
-                { date: '2024-06-07', item: 7 },
+                { date: '2024-06-03', item: [5] },
+                { date: '2024-06-07', item: [7,6,4] },
             ],
             review: null,
             isLike: [5, 7, 9],
@@ -210,8 +210,8 @@ const userInfo = [
         lastLoginDate: '2024-06-13',
         mypage: {
             history: [
-                { date: '2024-06-04', item: 6 },
-                { date: '2024-06-08', item: 8 },
+                { date: '2024-06-04', item: [6] },
+                { date: '2024-06-08', item: [8] },
             ],
             review: null,
             isLike: [3, 5, 7],
@@ -274,8 +274,8 @@ const userInfo = [
         lastLoginDate: '2024-06-11',
         mypage: {
             history: [
-                { date: '2024-06-09', item: 9 },
-                { date: '2024-06-10', item: 1 },
+                { date: '2024-06-09', item: [9] },
+                { date: '2024-06-10', item: [1] },
             ],
             review: null,
             isLike: [6, 7, 8],
@@ -338,8 +338,8 @@ const userInfo = [
         lastLoginDate: '2024-06-15',
         mypage: {
             history: [
-                { date: '2024-06-11', item: 2 },
-                { date: '2024-06-12', item: 4 },
+                { date: '2024-06-11', item: [2] },
+                { date: '2024-06-12', item: [4,6] },
             ],
             review: null,
             isLike: [2, 3, 4],
@@ -402,8 +402,8 @@ const userInfo = [
         lastLoginDate: '2024-06-16',
         mypage: {
             history: [
-                { date: '2024-06-13', item: 3 },
-                { date: '2024-06-14', item: 6 },
+                { date: '2024-06-13', item: [3] },
+                { date: '2024-06-14', item: [1,10] },
             ],
             review: null,
             isLike: [1, 4, 5],
@@ -466,8 +466,8 @@ const userInfo = [
         lastLoginDate: '2024-06-17',
         mypage: {
             history: [
-                { date: '2024-06-15', item: 7 },
-                { date: '2024-06-16', item: 9 },
+                { date: '2024-06-15', item: [7] },
+                { date: '2024-06-16', item: [9] },
             ],
             review: null,
             isLike: [2, 5, 8],
@@ -518,8 +518,8 @@ const userInfo = [
         lastLoginDate: '2024-06-18',
         mypage: {
             history: [
-                { date: '2024-06-17', item: 4 },
-                { date: '2024-06-18', item: 5 },
+                { date: '2024-06-17', item: [4,5] },
+                { date: '2024-06-18', item: [5,13] },
             ],
             review: null,
             isLike: [3, 6, 9],
@@ -582,8 +582,8 @@ const userInfo = [
         lastLoginDate: '2024-06-19',
         mypage: {
             history: [
-                { date: '2024-06-19', item: 8 },
-                { date: '2024-06-20', item: 9 },
+                { date: '2024-06-19', item: [8] },
+                { date: '2024-06-20', item: [9] },
             ],
             review: null,
             isLike: [1, 7, 8],
