@@ -10,6 +10,8 @@ import ModalOkbasket from './ModalOkbasket';
 const ProductForm = ({ selectedProduct }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
+    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+
 
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
@@ -171,6 +173,31 @@ const ProductForm = ({ selectedProduct }) => {
         setIsModalBasketOpen(true);
     }
 
+    let result = []
+    const onCart = () => {
+        result = userData.mypage.basket.map((bb) => {
+            let findItem = items.find((item) =>
+                item.id === bb.productId
+            );     // findItem
+
+
+            let cartItem = {}
+
+            cartItem.photo = findItem.productSrc[0]
+            cartItem.id = findItem.id
+            cartItem.name = findItem.name
+            cartItem.content = bb.options.contentSelect
+            cartItem.package = bb.options.packagingSelect
+            cartItem.contentCount = bb.quantity.contentSelect
+            cartItem.packageCount = bb.quantity.packagingSelect
+            cartItem.price = bb.totalPrice
+
+            return cartItem;
+        });     // map
+        console.log(`확인용 3 ${result.length}`)
+        navigate('/mypage/cart', { state: result })
+    }
+
     // 리턴
     return (
         <form action="#">
@@ -308,7 +335,7 @@ const ProductForm = ({ selectedProduct }) => {
             >
                 <div className='Modalbutton'>
                     <button
-                        onClick={() => navigate('/mypage/cart')}>장바구니 확인</button>
+                        onClick={onCart}>장바구니 확인</button>
 
                     <button onClick={() => setIsModalBasketOpen(false)}>닫기</button>
                 </div>
