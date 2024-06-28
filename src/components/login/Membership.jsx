@@ -5,13 +5,41 @@ import Clausearea01 from './Clausearea01'
 import Clausearea02 from './Clausearea02';
 import Marketing from './Marketing';
 import FindId from './FindId';
-// import Modal from 'react-modal';
-// import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-modal';
+import DaumPostcode from 'react-daum-postcode';
+import About from './../main/About';
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 const Membership = () => {
-    const navigate = useNavigate();
+    // 사용자 입력값 저장 객체
+    const [formData, setFormData] = useState({
+        name: '',
+        id: '',
+        pw: '',
+        addrees: '',
+        firstNumber: '',
+        secondNumber: '',
+        lastnumber: '',
+        phoneNumber: '',
+        gender: '',
+        email: '',
+    })
+
+    // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
+    const [formErrors, setFormErrors] = useState({
+        name: false,
+        id: false,
+        pw: false,
+        addrees: false,
+        firstNumber: false,
+        secondNumber: false,
+        lastnumber: false,
+        phoneNumber: false,
+        gender: false,
+        email: false,
+        clausearea: false,
+    });
 
     const [AllCheck, setAllCheck] = useState(false)
     const [check, setCheck] = useState({
@@ -19,7 +47,8 @@ const Membership = () => {
         check2: false,
         check3: false,
     })
-
+    // 아이디 중복체크 확인 상태값 
+    const [isOkIdChek, setisOkIdChek] = useState(false);
     // 체크박스 개별적 체크
     const btnCheeck = (num) => {
         if (check[num] === false) {
@@ -29,6 +58,7 @@ const Membership = () => {
             }))
         }
         else {
+            setAllCheck(false)
             setCheck((it) => ({
                 ...it,
                 [num]: false
@@ -56,154 +86,168 @@ const Membership = () => {
             setAllCheck(true)
         }
     }
+    useEffect(() => {
+        if (AllCheck || (check.check1 && check.check2 && check.check3) || (check.check1 && check.check2)) {
+            setFormErrors(prevErrors => ({
+                ...prevErrors,
+                clausearea: true
+            }));
+        } else {
+            setFormErrors(prevErrors => ({
+                ...prevErrors,
+                clausearea: false
+            }));
+        }
+    }, [AllCheck, check]);
+
+    useEffect(() => {
+        console.log(formErrors);
+    }, [formErrors]);
     // =============================================================
-    const isUserIfroState = {
-        name: false,
-        id: false,
-        pw: false,
-        address: false,
-        phoneNumber: false,
-        gender: false,
-        email: false,
+
+
+
+    const getInputInfo = (e) => {
+        const { name, value } = e.target
+        setFormData({
+            ...formData,
+            [name]: value
+        });
     }
 
-    const [userName, setUserName] = useState('');
-    const error = useRef(null);
+    const [terms, setTerms] = useState({
+        userID: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{7,15}$/g,
+        userPSW: /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{7,15}$/g,
+        userName: /^[가-힣]{2,6}$/,
+        firstNum: /[0-9]{2,6}/g,
+        secondNum: /[0-9]{3,5}/g,
+        thirdNum: /^\d{4}$/,
+        email: /^[\w.-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/,
+    });
+
+    const validate = (e) => {
+        if (!isOkIdChek) {
+            e.preventDefault();
+            alert('아이디 중복체크를 진행해 주세요');
+        }
+        const errors = {
+            name: formData.name === '' || !terms.userName.test(formData.name),
+            id: formData.id === '' || !terms.userID.test(formData.id),
+            pw: formData.pw === '' || !terms.userPSW.test(formData.pw),
+            addrees: formData.addrees === '',
+            firstNumber: formData.firstNumber === '' || !terms.firstNum.test(formData.firstNumber),
+            secondNumber: formData.secondNumber === '' || !terms.secondNum.test(formData.secondNumber),
+            lastnumber: formData.lastnumber === '' || !terms.thirdNum.test(formData.lastnumber),
+            gender: formData.gender === '' || formData.gender === undefined,
+            email: formData.email === '' || !terms.email.test(formData.email),
+        };
+        setFormErrors(errors);
+        return !Object.values(errors).includes(true);
+    };
+
+    const [btnAble, setBtnAble] = useState(false)
+    const IdCheck = () => {
+        if (terms.userID.test(formData.id)) {
+            console.log('아이디 유효성 검사 완료');
+            setBtnAble(true);
+        }
+        else {
+            setBtnAble(false);
+        }
+
+    }
+
+
+    const allUserData = JSON.parse(localStorage.getItem('userInfo'));
+
+    //아이디 중복 검사 
     const inputR = useRef(null);
+    const IsSameId = () => {
+        const userExists = allUserData.find(it => it.id === formData.id);
+        setisOkIdChek(true);
 
-    //이름 입력값 가져오기 
-    const getName = (e) => { setUserName(e.target.value) };
-
-    //이름 유효성 검사 
-    const userNameCheck = () => {
-        const userNameTest = /^[가-힣]{2,5}$/;
-        if (userNameTest.test(userName)) {
-            error.current.textContent = ''
-            inputR.current.style.borderBottom = '1px solid #aaaaaa';
-            isUserIfroState.name = true;
-        }
-        else if (userName === '') {
-            inputR.current.style.borderBottom = '1px solid red';
-            error.current.textContent = '빈칸 입니다. 이름을 입력해주세요'
-            error.current.style.visibility = 'visible';
-        }
-        else if (!userNameTest.test(userName)) {
-            inputR.current.style.borderBottom = '1px solid red';
-            error.current.textContent = '조건에 맞게 이름을 입력해주세요'
-            error.current.style.visibility = 'visible';
-        }
-    }
-
-    const [userId, setUserId] = useState('');
-    const error2 = useRef(null);
-    const inputR2 = useRef(null);
-    const idCheckBtn = useRef(null)
-
-
-
-    //아이디 입력값 가져오기 
-    const getId = (e) => { setUserId(e.target.value) };
-
-
-    // 아이디 유효성 검사 및 검사 결과에 따라 버튼 활성화 여부 결정 
-    const userIdCheck = () => {
-        const userIdTest = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,15}$/g;
-        if (userIdTest.test(userId)) {
-            error2.current.textContent = ''
-            inputR2.current.style.borderBottom = '1px solid #aaaaaa';
-            idCheckBtn.current.disabled = false;
-        }
-        else if (userId === '') {
-            inputR2.current.style.borderBottom = '1px solid red';
-            error2.current.textContent = '빈칸 입니다. 아이디를 입력해주세요'
-            error2.current.style.visibility = 'visible';
-            error2.current.style.color = 'red';
-            idCheckBtn.current.disabled = true;
-        }
-        else if (!userIdTest.test(userId)) {
-            inputR2.current.style.borderBottom = '1px solid red';
-            error2.current.textContent = '조건에 맞게 아이디를 입력해주세요'
-            error2.current.style.visibility = 'visible';
-            error2.current.style.color = 'red';
-            idCheckBtn.current.disabled = true;
-        }
-    }
-
-    // 버튼 클릭 시 아이디 중복검사 진행 
-    const userIdDoubleCheck = (e) => {
-        e.preventDefault();
-        const alluserData = JSON.parse(localStorage.getItem('userInfo'));
-        const userExists = alluserData.find(it => it.id === userId);
         if (userExists) {
-            inputR2.current.style.borderBottom = '1px solid red';
-            error2.current.textContent = '이미존재하는 아이디 입니다. 아이디를 다시 입력해주세요.'
-            error2.current.style.visibility = 'visible';
+
+            console.log('동일 아이디 존재')
+            alert('동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
+            setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                inputR.current.value = ''; // 값 비우기
+            }, 0);
+
+            setFormErrors(prevErrors => ({
+                ...prevErrors,
+                id: true
+            }));
         }
-        else {
-            error2.current.style.visibility = 'visible';
-            error2.current.style.color = "black"
-            error2.current.textContent = '사용가능한 아이디 입니다.'
-            inputR2.current.style.borderBottom = '1px solid #aaaaaa';
-            isUserIfroState.id = true;
-        }
-    }
-
-    const [userPw, setUserPw] = useState('');
-    const error3 = useRef(null);
-    const inputR3 = useRef(null);
-
-    // 비밀번호 입력값 가져오기 
-    const getPw = (e) => { setUserPw(e.target.value) };
-
-    // 비밀번호 유효성 검사     
-    const userPwCheck = () => {
-        const userPwTest = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{8,15}$/g;
-        if (userPwTest.test(userPw)) {
-            error3.current.textContent = '';
-            inputR3.current.style.borderBottom = '1px solid #aaaaaa';
-        }
-        else if (userPw === '') {
-            inputR3.current.style.borderBottom = '1px solid red';
-            error3.current.textContent = '빈칸 입니다. 비밀번호를 입력해주세요'
-            error3.current.style.visibility = 'visible';
-        }
-        else if (!userPwTest.test(userPw)) {
-            inputR3.current.style.borderBottom = '1px solid red';
-            error3.current.textContent = '조건에 맞게 아이디를 입력해주세요'
-            error3.current.style.visibility = 'visible';
-            error3.current.style.color = 'red';
-        }
-    }
+        console.log('아이디 중복 함수 들어옴');
+    };
 
 
 
-    const [userPwRecheck, setUserPwRecheck] = useState('');
-    const error4 = useRef(null);
-    const inputR4 = useRef(null);
 
-    //비밀번호 확인 값 가져오기 
-    const getRecheckpw = (e) => { setUserPwRecheck(e.target.value) };
 
-    //비밀번호 확인 값 비밀번호값 동일한지 체크 
-    const userPwDoubleCheck = () => {
-        if (userPwRecheck === userPw) {
-            error4.current.textContent = '';
-            inputR4.current.style.borderBottom = '1px solid #aaaaaa';
-            isUserIfroState.pw = true;
-        }
-        else {
-            inputR4.current.style.borderBottom = '1px solid red';
-            error4.current.textContent = '비밀번호가 동일하지 않습니다.'
-            error4.current.style.visibility = 'visible';
-        }
-    }
 
+
+
+    // const [userPwRecheck, setUserPwRecheck] = useState('');
+    // const error4 = useRef(null);
+    // const inputR4 = useRef(null);
+
+    // //비밀번호 확인 값 가져오기 
+    // const getRecheckpw = (e) => { setUserPwRecheck(e.target.value) };
+
+    // //비밀번호 확인 값 비밀번호값 동일한지 체크 
+    // const userPwDoubleCheck = () => {
+    //     if (userPwRecheck === '') {
+    //         inputR4.current.style.borderBottom = '1px solid red';
+    //         error4.current.textContent = '빈칸입니다. 비밀번호를 입력해주세요'
+    //         error4.current.style.visibility = 'visible';
+    //     }
+    //     else if (userPwRecheck === userPw) {
+    //         error4.current.textContent = '';
+    //         inputR4.current.style.borderBottom = '1px solid #aaaaaa';
+    //         formErrors((it) => ({
+    //             ...it,
+    //             pw: true,
+    //         }))
+    //     }
+
+    //     else {
+    //         inputR4.current.style.borderBottom = '1px solid red';
+    //         error4.current.textContent = '비밀번호가 동일하지 않습니다.'
+    //         error4.current.style.visibility = 'visible';
+    //     }
+    // }
+
+    console.log(formErrors);
+    console.log(formData);
 
     // ==== 주소
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [address, setAddress] = useState('');
     const [zoneCode, setZoneCode] = useState('');
+    const [address2, setAddress2] = useState('');
+    const error5 = useRef(null)
+    const inputR5 = useRef(null)
+
+    const getAddress2 = (e) => { setAddress2(e.target.value) };
+
+    const userAddressCheck = () => {
+        if (address2 === '') {
+            error5.current.textContent = '빈 칸 입니다. 상세주소를 입력해주세요.'
+            error5.current.style.visibility = 'visible';
+            inputR5.current.style.borderBottom = '1px solid red';
+        }
+        else {
+            error5.current.textContent = '';
+            inputR5.current.style.borderBottom = '1px solid #aaaaaa';
+            formErrors((it) => ({
+                ...it,
+                addrees: true,
+            }))
+        }
+    }
 
     const handleComplete = (data) => {
         console.log(data);
@@ -230,6 +274,28 @@ const Membership = () => {
         setIsModalOpen(true);
     }
 
+
+
+    //=== 성별 
+    // const [gender, setGender] = useState(null);
+
+    // const ClickMen = () => {
+    //     setGender('men');
+    //     formErrors((it) => ({
+    //         ...it,
+    //         gender: true,
+    //     }))
+    // }
+
+    // const ClickWomen = () => {
+    //     setGender('women');
+    //     formErrors((it) => ({
+    //         ...it,
+    //         gender: true,
+    //     }))
+    // };
+
+
     return (
         <div className="body">
             <div className="bodycontainer">
@@ -239,10 +305,16 @@ const Membership = () => {
                             <img src="/images/main/main1.png" alt="로고이미지" />
                         </div>
                     </Link>
-                    <h1>MU:DS </h1>
+                    {/* <h1>MU:DS </h1> */}
                     <h1>회원 가입 페이지</h1>
                     <br />
-                    <p>에러 메세지</p>
+                    <div className='route'>
+                        <ul>
+                            <Link to={'/'}><li>Home</li></Link>
+                            <Link to={'/Login'}><li>Login</li></Link>
+                            <Link to={'/Login/Membership'}><li>Membership</li></Link>
+                        </ul>
+                    </div>
                 </div>
                 <div className="container">
                     <div className="clausearea">
@@ -252,116 +324,165 @@ const Membership = () => {
                         <Clausearea01 />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다</h5>
-                            <input type='checkbox' id="check1" onClick={() => btnCheeck('check1')} checked={check.check1}></input>
+                            <input type='checkbox' id="check1" onChange={() => btnCheeck('check1')} checked={check.check1}></input>
                         </div>
 
                         <h4>개인정보 수집 및 이용 동의(필수)</h4>
                         <Clausearea02 />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
-                            <input type='checkbox' id="check2" onClick={() => btnCheeck('check2')} checked={check.check2}></input>
+                            <input type='checkbox' id="check2" onChange={() => btnCheeck('check2')} checked={check.check2}></input>
                         </div>
 
 
-                        <h4>마케잍 정보 수신 동의(선택)</h4>
+                        <h4>마케팅 정보 수신 동의(선택)</h4>
                         <Marketing />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
-                            <input type='checkbox' id="check2" onClick={() => btnCheeck('check3')} checked={check.check3}></input>
+                            <input type='checkbox' id="check2" onChange={() => btnCheeck('check3')} checked={check.check3}></input>
                         </div>
 
                         <div className='innerclausearea'>
                             <h5>회원가입 약관에 모두 동의 합니다.</h5>
-                            <input type='checkbox' id="all-check" onClick={AllBtnCheck} checked={AllCheck}></input>
+                            <input type='checkbox' id="all-check" onChange={AllBtnCheck} checked={AllCheck}></input>
 
                         </div>
                     </div>
                     <hr />
 
                     <h3>개인정보를 입력해주세요</h3>
-                    <form className="formcontainer">
+                    <form className="formcontainer" id='membership'>
                         <label>이름</label>
                         <input type="text"
-                            placeholder='2글자 이하 5글자 미만 이름을 입력해주세요'
-                            value={userName}
-                            onChange={getName}
-                            onBlur={userNameCheck}
-                            ref={inputR} />
-                        <p ref={error}>에러</p>
+                            placeholder='2글자 이하 5글자 이하 이름을 입력해주세요'
+                            name="name"
+                            maxLength={4}
+                            value={formData.name}
+                            onChange={getInputInfo}
+                        />
+                        <p>에러</p>
 
 
                         <label>아이디</label>
                         <div className="rowarea">
                             <input type="text"
-                                placeholder='8글자 이상 15글자 미만 영문 숫자 조합으로 아이디를 입력해주세요'
-                                value={userId}
-                                onChange={getId}
-                                onBlur={userIdCheck}
-                                ref={inputR2} />
-                            <button ref={idCheckBtn} onClick={userIdDoubleCheck}>아이디중복검사</button>
+                                name="id"
+                                value={formData.id}
+                                onChange={getInputInfo}
+                                maxLength={13}
+                                placeholder='7~14글자 이하 영문 숫자 조합으로 아이디를 입력해주세요'
+                                onBlur={IdCheck}
+                                ref={inputR}
+                            />
+                            <button
+                                disabled={!btnAble}
+                                type='button'
+                                onClick={IsSameId}
+                            >아이디중복검사</button>
                         </div>
-                        <p ref={error2}>에러</p>
+                        <p>에러</p>
 
 
                         <label>비밀번호</label>
                         <input type="text"
-                            placeholder='8글자 이상 15글자 미만 영문, 숫자, 특수문자 조합으로 비밀번호를 입력해주세요요'
-                            value={userPw}
-                            onChange={getPw}
-                            ref={inputR3}
-                            onBlur={userPwCheck} />
-                        <p ref={error3}>에러</p>
+                            placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
+                            maxLength={14}
+                            name="pw"
+                            value={formData.pw}
+                            onChange={getInputInfo}
+                        />
+                        <p>에러</p>
 
                         <label>비밀번호 확인</label>
                         <input type="text"
-                            value={userPwRecheck}
-                            onChange={getRecheckpw}
-                            onBlur={userPwDoubleCheck}
-                            ref={inputR4}
+                            placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
+                            maxLength={14}
                         />
-                        <p ref={error4}>에러</p>
+                        <p>에러</p>
+
+
                         <label>주소</label>
                         <div className="rowarea address">
                             <input type="text"
+                                placeholder='우편번호'
                                 name='zipcode'
                                 value={zoneCode}
                                 maxLength={5} readOnly />
                             <button id='btn' onClick={openAddress}>우편번호 검색</button>
                         </div>
-                        <input type="text" name='addr1' value={address} readOnly />
-                        <input type="text" name='addr2' />
+                        <input type="text"
+                            placeholder='도로명주소 또는 지번주소'
+                            name='addr1' value={address} readOnly />
+                        <input type="text"
+                            name='addrees'
+                            placeholder='상세주소'
+                            value={formData.addrees}
+                            onChange={getInputInfo} />
                         <p></p>
+
                         <label>전화번호</label>
-                        <input type="text" />
+                        <div className='phoneNumber'>
+                            <input type="text"
+                                maxLength={5}
+                                placeholder='2~4자리'
+                                name='firstNumber'
+                                value={formData.firstNumber}
+                                onChange={getInputInfo}
+                            />
+                            <span>-</span>
+                            <input type="text"
+                                placeholder='3~4자리'
+                                maxLength={4}
+                                name='secondNumber'
+                                value={formData.secondNumber}
+                                onChange={getInputInfo} />
+                            <span>-</span>
+                            <input type="text"
+                                placeholder='4자리'
+                                maxLength={4}
+                                name='lastnumber'
+                                value={formData.lastnumber}
+                                onChange={getInputInfo}
+                            />
+                        </div>
                         <p>에러</p>
+
+
+
                         <label>성별</label>
                         <div className='genderbutton'>
-                            <button>남성</button>
-                            <button>여성</button>
+                            <button type='button'
+                                name='gender'
+                                value={formData.gender}
+                                onChange={getInputInfo}
+                            >
+                                남성</button>
+                            <button type='button'
+                                name='gender'
+                                value={formData.gender}
+                                onChange={getInputInfo}
+                            >여성</button>
                         </div>
                         <p></p>
                         <label>이메일</label>
-                        <input type="text" />
+                        <input type="text"
+                        />
                         <p>에러</p>
                         <div className='buttonarea'>
-                            <button>가입하기</button>
+                            <button type='button' onClick={validate}>가입하기</button>
                         </div>
                     </form>
                 </div>
-                <div className='route'>
-                    <ul>
-                        <Link to={'/'}><li>Home</li></Link>
-                        <Link to={'/Login'}><li>Login</li></Link>
-                        <Link to={'/Login/Membership'}><li>Membership</li></Link>
-                    </ul>
-                </div>
+
             </div>
-            {/* <Modal
+            <Modal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
                 contentLabel="주소 검색"
                 style={{
+
                     content: {
+                        width: '500px',
                         top: '50%',
                         left: '50%',
                         right: 'auto',
@@ -371,9 +492,9 @@ const Membership = () => {
                     }
                 }}
             >
-                <button onClick={() => setIsModalOpen(false)}>닫기</button>
+                <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
                 <DaumPostcode onComplete={handleComplete} />
-            </Modal> */}
+            </Modal>
         </div >
 
     );

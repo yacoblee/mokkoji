@@ -12,7 +12,7 @@ const Reservation = () => {
 
     const today = new Date(); //오늘 날짜
     const oneMonthLater = moment(today).add(1, 'months').toDate();
-
+    const [showCalendar, setShowCalendar] = useState(false);
 
 
     useEffect(() => {
@@ -48,38 +48,56 @@ const Reservation = () => {
         } else {
             setDate(newDate);
         }
-
+        setShowCalendar(false); // Close calendar on date selection
         console.log(formattedDate);
+    };
+
+    const toggleCalendar = () => {
+        setShowCalendar(!showCalendar);
     };
 
     return (
         <div className="reservation-container">
             <div className="reserve_head">
                 <h1>체험 예약</h1>
+                <p>영롱한 자개소반 미니어처 만들기</p>
             </div>
             <section className="reservation">
                 <div className="reservation_img">
                     <ReservationImg />
                 </div>
                 <div className="reservation_calendar">
-                    <Calendar
-                        className="react-calendar"
-                        onChange={onDateChange}
-                        next2Label={null}
-                        prev2Label={null}
-                        formatDay={(locale, date) => moment(date).format("DD")}
-                        value={date}
-                        minDate={today}
-                        maxDate={oneMonthLater}
-                        tileContent={({ date, view }) => {
-                            if (view === 'month') {
-                                const formattedDate = moment(date).format("YYYYMMDD");
-                                const count = reservationCounts[formattedDate] || 0;
-                                return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
-                            }
-                            return null;
-                        }}
-                    />
+                    <div className="reservation_calendar_inner">
+                        {/* <div className="reservation_calendar_dropdown"> */}
+                        <button onClick={toggleCalendar} className="calendar-toggle-button">
+                            {moment(date).format('YYYY-MM-DD')}
+                        </button>
+                        {showCalendar && (
+                            <div className="reservation_calendar">
+                                <div className="reservation_calendar_inner">
+                                    <Calendar
+                                        className="react-calendar"
+                                        onChange={onDateChange}
+                                        next2Label={null}
+                                        prev2Label={null}
+                                        formatDay={(locale, date) => moment(date).format("DD")}
+                                        value={date}
+                                        minDate={today}
+                                        maxDate={oneMonthLater}
+                                        tileContent={({ date, view }) => {
+                                            if (view === 'month') {
+                                                const formattedDate = moment(date).format("YYYYMMDD");
+                                                const count = reservationCounts[formattedDate] || 0;
+                                                return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
+                                            }
+                                            return null;
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        {/* </div> */}
+                    </div>
                 </div>
                 <div className="reservation_content">
                     <div>

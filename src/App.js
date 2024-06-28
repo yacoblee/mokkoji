@@ -69,6 +69,7 @@ const App = () => {
         <Route path="/reserve/*" element={<Reservation />} />
         <Route path="/Login/*" element={<Login />} />
         <Route path='/Login/Membership' element={<Membership />} />
+        {/* <Route path="/address-search" element={<AddressSearch />} /> */}
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
         <Route path="/mypage/*" element={<MyPageIndex />} />
