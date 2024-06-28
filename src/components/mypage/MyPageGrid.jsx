@@ -111,7 +111,7 @@ function MyPageGrid() {
                     <div className='IconFAQ'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </div>
-                    <span>1대1 문의</span>
+                    <span>나의 예약</span>
                 </div>
             </Link>
         </div>
