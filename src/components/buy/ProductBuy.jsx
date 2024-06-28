@@ -125,10 +125,15 @@ const ProductBuy = () => {
         setBringUserCart(!bringUserCart);
         const totalPrice = calculateTotalPrice();
         updatePrices(totalPrice);
+        SetCheckedCartItems([])
     }
+    
+    //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
+    const [checkedCartItems, SetCheckedCartItems] = useState([]);
+
 
     // 장바구니 항목 체크박스 상태 변경 함수
-    const onChangeChildCheckbox = (cartItemPrice, isChecked) => {
+    const onChangeChildCheckbox = (cartItemPrice, isChecked , items) => {
         setLastPrice(prevPrice => {
             const newPrice = isChecked ? prevPrice + +cartItemPrice : prevPrice - +cartItemPrice;
             if (newPrice < 30000) {
@@ -143,8 +148,22 @@ const ProductBuy = () => {
                 return newPrice;
             }
         });
-    };
 
+        //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
+        SetCheckedCartItems(prevItems => {
+            if (isChecked) {
+                const newItems = [...prevItems, items];
+                console.log("Updated checkedCartItems (add):", newItems); // 상태 업데이트 확인
+                return newItems;
+            } else {
+                const newItems = prevItems.filter(cartItem => cartItem.productId !== items.productId );
+                console.log("Updated checkedCartItems (remove):", newItems); // 상태 업데이트 확인
+                return newItems;
+            }
+            
+        });
+    };
+    
     if (!selectedProduct) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
@@ -236,7 +255,14 @@ const ProductBuy = () => {
                 </form>
 
                 <h2>주문서 작성</h2>
-                <BuyInputBox userData={userData} />
+                <BuyInputBox 
+                userData={userData}
+                buyPrice={buyPrice}
+                checkedCartItems={checkedCartItems}
+                options={options}
+                selectedProduct={buyCheckBox &&selectedProduct}
+                productPrice ={filterPrice}
+                totalPrice ={lastPrice}/>
 
             </div>
         </>
