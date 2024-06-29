@@ -77,8 +77,7 @@ const Reservation = () => {
         } else {
             setDate(newDate);
         }
-        setShowCalendar(false); // Close calendar on date selection
-        console.log(formattedDate);
+        setShowCalendar(false); // 오픈된 달력 닫기
     };
 
     const toggleCalendar = () => {
@@ -127,7 +126,6 @@ const Reservation = () => {
             existingReservations.push(reservationData);
             localStorage.setItem('reservations', JSON.stringify(existingReservations));
 
-
             // 예약 완료 후 reservationCounts 업데이트
             setReservationCounts(prevCounts => {
                 const newCounts = { ...prevCounts };
@@ -135,8 +133,6 @@ const Reservation = () => {
                 newCounts[formattedDate] = (newCounts[formattedDate] || 0) + 1;
                 return newCounts;
             });
-
-
 
             alert('예약이 완료되었습니다!');
         } else {
@@ -206,7 +202,12 @@ const Reservation = () => {
                                         if (view === 'month') {
                                             const formattedDate = moment(date).format("YYYY-MM-DD");
                                             const count = reservationCounts[formattedDate] || 0;
-                                            return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
+                                            if (count === 5) {
+                                                return <span style={{ fontSize: '0.7rem', color: 'red' }}>{count} / 5 팀</span>;
+                                            } else {
+
+                                                return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
+                                            }
                                         }
                                         return null;
                                     }}
