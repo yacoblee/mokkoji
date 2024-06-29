@@ -13,7 +13,7 @@ function MyPageGrid() {
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
 
-    console.log(`확인용 1 ${user.id}, ${items.length}`)
+    // console.log(`확인용 1 ${user.id}, ${items.length}`)
 
     let result = []
 
@@ -50,11 +50,11 @@ function MyPageGrid() {
     // }
 
     const onCart = () => {
+
         result = user.mypage.basket.map((bb) => {
             let findItem = items.find((item) =>
                 item.id === bb.productId
             );     // findItem
-
 
             let cartItem = {}
 
@@ -69,10 +69,14 @@ function MyPageGrid() {
 
             return cartItem;
         });     // map
-        console.log(`확인용 3 ${result.length}`)
-        navigate('/mypage/cart', { state: result })
+        // console.log(`확인용 3 ${result.length}`)
+        navigate('/mypage/cart', {
+            state: {
+                user: user,
+                result: result
+            }
+        })
     }
-
 
 
     return (
