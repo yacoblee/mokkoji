@@ -6,6 +6,7 @@ import ReserveObject from './ReserveObject';
 import '../../css/Reserve/reserve.css';
 import ReservationImg from "./ReservationImg";
 import ReservationIntro from "./ReservationIntro";
+import { faArrowLeftRotate } from "@fortawesome/free-solid-svg-icons";
 
 const Reservation = () => {
     const [reservationCounts, setReservationCounts] = useState({});
@@ -17,14 +18,14 @@ const Reservation = () => {
 
     // 숫자 클릭에 대한 state
     const [btnValue, setBtnValue] = useState({
-        adultSelect: 1, // 성인 옵션의 갯수
-        teenSelect: 1,  // 청소년 옵션의 갯수
+        adultSelect: 0, // 성인 옵션의 갯수
+        teenSelect: 0,  // 청소년 옵션의 갯수
     });
 
     // 클릭이벤트 -> 숫자 클릭에 대한 state 함수
     const onClickbtn = (type, name) => {
         if (type === '-') {
-            if (btnValue[name] > 1) {
+            if (btnValue[name] >= 1) {
                 setBtnValue(it => ({
                     ...it,
                     [name]: btnValue[name] - 1
@@ -88,22 +89,38 @@ const Reservation = () => {
     };
 
     const handleFormSubmit = () => {
+        const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
         const reservationData = {
             date: moment(date).format("YYYY-MM-DD"),
-            adults: btnValue.adultSelect,
-            teens: btnValue.teenSelect
+            adult: btnValue.adultSelect,
+            teenager: btnValue.teenSelect,
         };
 
-        // Retrieve existing reservations from local storage
-        const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
+        if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
+            // 기존 예약 필터링
+            const updatedReserve = userData.mypage.reserve.filter(reserve => reserve.date !== reservationData.date);
+            // 새 예약 추가
+            updatedReserve.push(reservationData);
 
-        // Add the new reservation to the array
-        existingReservations.push(reservationData);
+            const updatedUser = {
+                ...userData,
+                mypage: {
+                    ...userData.mypage,
+                    reserve: updatedReserve
+                }
+            };
 
-        // Save the updated reservations array to local storage
-        localStorage.setItem('reservations', JSON.stringify(existingReservations));
+            // 업데이트정보 세션에 다시 저장하기
+            sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
 
-        alert('예약이 완료되었습니다!');
+            const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
+            existingReservations.push(reservationData);
+            localStorage.setItem('reservations', JSON.stringify(existingReservations));
+
+            alert('예약이 완료되었습니다!');
+        } else {
+            alert('예약 정보를 확인해주세요.');
+        }
     };
 
     return (
