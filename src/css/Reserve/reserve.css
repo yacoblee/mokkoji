@@ -230,7 +230,7 @@
 }
 
 .calendar-toggle {
-    transform: translateX(30%);
+    transform: translateX(8%);
     width: 300px;
     height: 380px;
     border: 1px solid #e6e6e6;
@@ -349,7 +349,8 @@
 }
 
 .intro_inner {
-    transform: translateX(5%);
+    /* transform: translateX(5%); */
+    transform: translateY(5%);
     background-color: #d0c0a01d;
     padding: 20px;
     border-radius: 20px;

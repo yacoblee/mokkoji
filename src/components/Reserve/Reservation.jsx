@@ -3,10 +3,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ReserveObject from './ReserveObject';
+import Reservesource from "./ReserveSource";
 import '../../css/Reserve/reserve.css';
 import ReservationImg from "./ReservationImg";
 import ReservationIntro from "./ReservationIntro";
-import { faArrowLeftRotate } from "@fortawesome/free-solid-svg-icons";
 
 const Reservation = () => {
     const [reservationCounts, setReservationCounts] = useState({});
@@ -55,7 +55,7 @@ const Reservation = () => {
             month.days.forEach((dayData) => {
                 const dayDate = new Date(dayData.year, dayData.month - 1, dayData.day);
                 if (dayDate >= today && dayDate <= oneMonthLater) {
-                    const formattedDate = moment(dayDate).format("YYYYMMDD");
+                    const formattedDate = moment(dayDate).format("YYYY-MM-DD");
                     counts[formattedDate] = dayData.id.length;
                 }
             });
@@ -90,36 +90,58 @@ const Reservation = () => {
 
     const handleFormSubmit = () => {
         const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
+
         const reservationData = {
+            reserveItem: Reservesource[0].reserveItem,
+            name: Reservesource[0].name,
             date: moment(date).format("YYYY-MM-DD"),
             adult: btnValue.adultSelect,
             teenager: btnValue.teenSelect,
         };
 
+        // 기존 예약 필터링
         if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
-            // 기존 예약 필터링
-            const updatedReserve = userData.mypage.reserve.filter(reserve => reserve.date !== reservationData.date);
-            // 새 예약 추가
+
+            // 중복 예약 예외처리
+            const checkDate = userData.mypage.Reservation.find(reserve => reserve.date === reservationData.date);
+            if (checkDate) {
+                alert('중복 예약은 불가능합니다.');
+                return false;
+            }
+
+            let updatedReserve = userData.mypage.Reservation.filter(reserve => reserve.date !== reservationData.date);
             updatedReserve.push(reservationData);
 
             const updatedUser = {
                 ...userData,
                 mypage: {
                     ...userData.mypage,
-                    reserve: updatedReserve
+                    Reservation: updatedReserve
                 }
             };
 
-            // 업데이트정보 세션에 다시 저장하기
+            // 업데이트정보 세션에 다시 저장
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
 
             const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
             existingReservations.push(reservationData);
             localStorage.setItem('reservations', JSON.stringify(existingReservations));
 
+
+            // 예약 완료 후 reservationCounts 업데이트
+            setReservationCounts(prevCounts => {
+                const newCounts = { ...prevCounts };
+                const formattedDate = moment(date).format("YYYY-MM-DD");
+                newCounts[formattedDate] = (newCounts[formattedDate] || 0) + 1;
+                return newCounts;
+            });
+
+
+
             alert('예약이 완료되었습니다!');
         } else {
             alert('예약 정보를 확인해주세요.');
+            return false;
         }
     };
 
@@ -182,7 +204,7 @@ const Reservation = () => {
                                     maxDate={oneMonthLater}
                                     tileContent={({ date, view }) => {
                                         if (view === 'month') {
-                                            const formattedDate = moment(date).format("YYYYMMDD");
+                                            const formattedDate = moment(date).format("YYYY-MM-DD");
                                             const count = reservationCounts[formattedDate] || 0;
                                             return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
                                         }
