@@ -20,10 +20,9 @@ const userInfo = [
             history: [
                 { date: '2024-06-01', item: [1] },
                 { date: '2024-06-05', item: [5, 2, 3] },
-            ], 
-            reserve: [
-                { reserveItem: 1, date: '2024-06-29', adult: 1, teenager: 2 },
-                { reserveItem: 1, date: '2024-06-30', adult: 1, teenager: 1 },
+            ],
+            Reservation: [
+                { reserveItem: 1, name: '영롱한 자개소반 미니어처 만들기', date: '2024-06-30', adult: 1, teenager: 1 },
             ],
             review: null,
             isLike: [1, 2, 3],
@@ -214,7 +213,7 @@ const userInfo = [
         lastLoginDate: '2024-06-13',
         mypage: {
             Reservation: [
-                { date: '', adult: '', teenager: '', reservitem: '' },
+                { name: '', date: '', adult: '', teenager: '', reservitem: '' },
 
             ],
             history: [

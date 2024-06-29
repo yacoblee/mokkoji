@@ -1,8 +1,7 @@
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
 import React, { useState } from 'react';
-
 
 function MyPageLike() {
 
@@ -103,7 +102,9 @@ function MyPageLike() {
 
                         </div>
                         <div className='MyLikeButton'>
-                            <button>장바구니 담기</button>
+                            <Link to={`/goods/${goods.category}/${goods.id}`}>
+                                <button>상품 상세</button>
+                            </Link>
                             <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>
                     </div >  // mylikegird
