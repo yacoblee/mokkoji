@@ -2,6 +2,7 @@ import GoodsItems from "../product/ProductObject"
 
 
 const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, checkedCartItems, selectedProduct }) => {
+//
 
 
     console.log(checkedCartItems)

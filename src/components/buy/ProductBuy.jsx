@@ -46,16 +46,32 @@ const ProductBuy = () => {
     const updatePrices = (totalPrice) => {
         //1차 필터 계산하여 배송비포함되지 않는 가격 계산
         setFilterPrice(totalPrice);
+        //전체 금액 합산을 위한 reduce를 사용한 최종금액 계산
+        // let combinedPrice ;
+        // if(!buyCheckBox){
+        //     combinedPrice =checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        //     if(filterPrice<30000){
+        //         combinedPrice+=3000;
+        //     }
+        // }else{
+        // combinedPrice = totalPrice + checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        // }
+        const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        const combinedPrice = (buyCheckBox ? totalPrice : 0) + cartTotalPrice;
 
         // 만약 계산된 총 금액이 30000원보다 작으면, 
         //배송비 3000원을 추가한 값을 lastPrice로 설정
-        if (totalPrice < 30000) {
-            setLastPrice(totalPrice + 3000);
+        if (combinedPrice === 0) {
+            setLastPrice(0);
+            setShowingMessage(false);
+        } else if (combinedPrice < 30000) {
+            setLastPrice(combinedPrice + 3000);
             setShowingMessage(true);
         } else {
-            setLastPrice(totalPrice);
+            setLastPrice(combinedPrice);
             setShowingMessage(false);
-        }//그렇지 않으면 계산된 총금액을 lastPrice로 설정
+        }
+        //그렇지 않으면 계산된 총금액을 lastPrice로 설정
     };
 
     // buyPrice가 변경될 때마다 총 금액 재계산
@@ -108,13 +124,8 @@ const ProductBuy = () => {
 
     //체크박스 상태 값에 따라 계산을 실행
     useEffect(() => {
-        if (!buyCheckBox) {
-            setLastPrice(0);
-            setShowingMessage(false);
-        } else {
-            const totalPrice = calculateTotalPrice();
-            updatePrices(totalPrice);
-        }
+        const totalPrice = calculateTotalPrice();
+        updatePrices(totalPrice);
     }, [buyCheckBox]);
 
      // 장바구니 불러오기 상태 관리
@@ -136,18 +147,32 @@ const ProductBuy = () => {
     const onChangeChildCheckbox = (cartItemPrice, isChecked , items) => {
         setLastPrice(prevPrice => {
             const newPrice = isChecked ? prevPrice + +cartItemPrice : prevPrice - +cartItemPrice;
+            // if (newPrice < 30000) {
+            //     setShowingMessage(true);
+            //     return newPrice + 3000;
+            // } else {
+            //     setShowingMessage(false);
+            //     if (prevPrice < 30000) {
+            //         return newPrice - 3000;
+            //     }
+
+            //     return newPrice;
+            // }
+
+            
             if (newPrice < 30000) {
                 setShowingMessage(true);
                 return newPrice + 3000;
             } else {
                 setShowingMessage(false);
-                if (prevPrice < 30000) {
+                if (prevPrice < 30000 && newPrice >= 30000) {
                     return newPrice - 3000;
                 }
-
                 return newPrice;
             }
-        });
+        }
+    
+    );
 
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
         SetCheckedCartItems(prevItems => {

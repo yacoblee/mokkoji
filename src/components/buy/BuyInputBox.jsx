@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect,useRef , useState } from "react";
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from "react-router-dom";
 import BuyComplete from "./BuyComplete";
 
 
-//selectProduct가 체크되지 않았다면 null 또는 undefind 반환
+//selectProduct가 체크되지 않았다면 false가 반환됨.
 const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selectedProduct , options, productPrice}) => {
     const navigate=useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState(true);
+    
+    //모달창의 스크롤을 해결하기 위한 Ref
+    const modalContentRef = useRef(null);
 
 
     //유저 관리에 대한 저장 변수.
@@ -108,15 +111,32 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
     //버튼 상태를 관리할 state.
     const [isBuyButtonDisabled, setIsBuyButtonDisabled] = useState(true);
 
-    //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
+
+    
     useEffect(()=>{
+        //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
         const checking = Object.values(userInfo).filter((it)=>it ==='');
-        if(checking.length ===0 && selectBox.buyHow !==''){
-            setIsBuyButtonDisabled(false);
+        
+        //selectedALLproduct는 본품과 장바구니의 체크여부를 구하기 위해서.
+        //즉 1개 이상 선택되어야지만 진행.
+        let selectedALLproduct =[];
+        if(selectedProduct){
+            selectedALLproduct = [...checkedCartItems,selectedProduct];
+            // 본품이 존재한다면 -> 본품과 장바구니 항목을 추가 -> 길이를 구하기 위한 로직
+            
         }else{
-            setIsBuyButtonDisabled(true);
+            selectedALLproduct = [...checkedCartItems]; 
+            //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
         }
-    },[userInfo,selectBox]);
+        console.log(selectedALLproduct);
+        //checking 이 없으면서 , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야
+        if(checking.length ===0 && selectBox.buyHow !==''&& selectedALLproduct.length>0){
+            setIsBuyButtonDisabled(false); //BUY 버튼 활성화
+        }else{
+            setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
+        }
+    },[userInfo,selectBox,selectedProduct]);
+
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
 
@@ -128,13 +148,25 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         const copyUserData = JSON.parse(JSON.stringify(userData)); 
         const currentDate = new Date(); 
         const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`
+        
+        //history 객체 가공 item 배열에 카트 아이템을 추가(push).
         const history = {date : nowDay , item : [selectedProduct.id]};
+
         checkedCartItems.map((item)=>{
             history.item.push(item.productId);
         });
+        //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
         copyUserData.mypage.history.unshift(history);
+        console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
         console.log(copyUserData.mypage.history);
+
+        //세션 스토리지에 복사된 userData 로 변경..
         sessionStorage.setItem('LoginUserInfo',JSON.stringify(copyUserData));
+
+        if (modalContentRef.current) {
+            modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
+        }
+
     }
 
     return (
@@ -143,6 +175,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 <div>
                     <p>배송지 정보</p>
                 </div>
+                
                 <form className='buyForm'>
                     <label htmlFor="buyID">배송지선택</label>
                     <div className='buyRadioBox'>
@@ -218,7 +251,8 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 <div>
                     <p>배송요청 / 결제 수단</p>
                 </div>
-                <form className='buyForm2'>
+                <form className='buyForm2'
+                >
                     <label htmlFor="deliveryMessage">배송 메세지</label>
                     <select name="deliveryMessage" id="deliveryMessage"
                     value={selectBox.deliveryMessage}
@@ -255,7 +289,8 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 </form>
                 <div className='buttonBox'>
                     <button disabled={isBuyButtonDisabled}
-                    onClick={onClickBuyButton}>BUY NOW</button>
+                    onClick={onClickBuyButton}
+                    >BUY NOW</button>
                 </div>
             </div>
             <Modal
@@ -305,11 +340,13 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
 
                     <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
                 </div>
+                <div ref={modalContentRef} style={{height : '100%'  , width : '100%', overflow : 'auto'}}>
                 <BuyComplete username={userData.name}
                 buyPrice={buyPrice} options={options} checkedCartItems={checkedCartItems} 
                 selectedProduct={selectedProduct}
                 productPrice={productPrice}
                 totalPrice={totalPrice}/>
+                </div>
                 
             </Modal>
         </div>
