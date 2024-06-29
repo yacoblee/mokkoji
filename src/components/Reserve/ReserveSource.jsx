@@ -1,7 +1,7 @@
 // 새로운 상품 1
 const Reservesource = [
     {
-        name: '한국 전통 굿즈 체험',
+        name: '영롱한 자개소반 미니어처 만들기',
         reserveItem: 1,
         category: 'reservation',
         description: '전통 자개체험',
@@ -24,8 +24,6 @@ const Reservesource = [
             '/images/reserve/reserve07.jpg',
         ],
     }
-
-
 ]
 
 export default Reservesource;
