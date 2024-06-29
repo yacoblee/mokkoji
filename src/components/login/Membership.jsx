@@ -8,6 +8,8 @@ import FindId from './FindId';
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import About from './../main/About';
+import Background from './../main/Backgroud';
+import userInfo from './UserInforData';
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -22,28 +24,25 @@ const Membership = () => {
         firstNumber: '',
         secondNumber: '',
         lastNumber: '',
-        phoneNumber: '',
         gender: '',
         email: '',
         domain: '',
-
     })
 
     // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
     const [formErrors, setFormErrors] = useState({
-        name: false,
-        id: false,
-        pw: false,
-        pwCheck: false,
-        addrees: false,
-        firstNumber: false,
-        secondNumber: false,
-        lastNumber: false,
-        phoneNumber: false,
-        gender: false,
-        email: false,
-        domain: false,
-        clausearea: false,
+        name: "",
+        id: "",
+        pw: "",
+        pwCheck: "",
+        addrees: "",
+        firstNumber: "",
+        secondNumber: "",
+        lastNumber: "",
+        gender: "",
+        email: "",
+        domain: "",
+        clausearea: "",
     });
 
     const [AllCheck, setAllCheck] = useState(false)
@@ -105,41 +104,72 @@ const Membership = () => {
     // =============================================================
 
 
+    const genderBtnAble = useRef(null);
 
     const getInputInfo = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData((prevformData) => ({
+            ...prevformData,
             [name]: value,
-        });
+        }));
 
         if (name === 'id' && value === '') {
-            setFormErrors({
-                ...formErrors,
+            setFormErrors((prevformErrors) => ({
+                ...prevformErrors,
                 id: false,
-            });
+            }))
+        }
+        else if (name === 'gender') {
+            const btnGender = e.target.value
+            setFormData((it) => ({
+                ...it,
+                [name]: btnGender,
 
-        } else {
-            const validationResult = validate(name, value);
-            setFormErrors({
-                ...formErrors,
-                [name]: validationResult,
-            });
+            }));
+            setFormErrors((prevformErrors) => ({
+                ...prevformErrors,
+                gender: true,
+            }))
+
         }
 
-        console.log(formErrors);
-        console.log(formData);
-
+        else {
+            const validationResult = validate(name, value);
+            setFormErrors((prevformErrors) => ({
+                ...prevformErrors,
+                [name]: validationResult,
+            }));
+        }
     };
 
+
+
+    const domainR = useRef(null);
     const getDomain = (e) => {
         const selectedDomain = e.target.value;
-        setFormErrors((it) => ({
-            ...it,
-            domain: selectedDomain === 'salf' ? '' : selectedDomain,
 
+        setFormData((prevformData) => ({
+            ...prevformData,
+            domain: selectedDomain === 'self' ? '' : selectedDomain,
         }))
+
+        if (selectedDomain !== 'self') {
+            domainR.current.value = selectedDomain;
+            setFormErrors((it) => ({
+                ...it,
+                domain: true,
+            }))
+        } else {
+            domainR.current.value = '';
+            setFormErrors((it) => ({
+                ...it,
+                domain: false,
+            }))
+        }
     }
+    console.log(formErrors);
+    console.log(formData);
+
 
     const [terms, setTerms] = useState({
         userID: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/,
@@ -245,32 +275,17 @@ const Membership = () => {
             })
         }
     };
+
+
     // ==== 주소
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [address, setAddress] = useState('');
     const [zoneCode, setZoneCode] = useState('');
     const [address2, setAddress2] = useState('');
-    const error5 = useRef(null)
-    const inputR5 = useRef(null)
 
-    const getAddress2 = (e) => { setAddress2(e.target.value) };
 
-    const userAddressCheck = () => {
-        if (address2 === '') {
-            error5.current.textContent = '빈 칸 입니다. 상세주소를 입력해주세요.'
-            error5.current.style.visibility = 'visible';
-            inputR5.current.style.borderBottom = '1px solid red';
-        }
-        else {
-            error5.current.textContent = '';
-            inputR5.current.style.borderBottom = '1px solid #aaaaaa';
-            formErrors((it) => ({
-                ...it,
-                addrees: true,
-            }))
-        }
-    }
+
 
     const handleComplete = (data) => {
         console.log(data);
@@ -297,11 +312,20 @@ const Membership = () => {
         setIsModalOpen(true);
     }
 
+    // =============
+    const navi = useNavigate();
+    const goToHone = () => {
+        const isCheck = Object.values(formErrors).every(value => value === true);
+        if (isCheck) {
+            navi('/')
+        }
+        else {
+            alert('조건에 맞게 정보를 다시 입력해주세요.')
+
+        }
+    }
 
 
-    console.log(formErrors);
-
-    // console.log(formErrors);
     return (
         <div className="body">
             <div className="bodycontainer">
@@ -350,7 +374,9 @@ const Membership = () => {
 
                         <div className='innerclausearea'>
                             <h5>회원가입 약관에 모두 동의 합니다.</h5>
-                            <input type='checkbox' id="all-check" onChange={AllBtnCheck} checked={AllCheck}></input>
+                            <input type='checkbox' id="all-check" onChange={AllBtnCheck} checked={AllCheck}
+
+                            ></input>
 
                         </div>
                     </div>
@@ -365,6 +391,7 @@ const Membership = () => {
                             maxLength={4}
                             value={formData.name}
                             onChange={getInputInfo}
+
                         />
                         <p>에러</p>
 
@@ -462,14 +489,25 @@ const Membership = () => {
                         <div className='genderbutton'>
                             <button type='button'
                                 name='gender'
-                                value={formData.gender}
-                                onChange={getInputInfo}
+                                value='M'
+                                onClick={getInputInfo}
+                                ref={genderBtnAble}
+                                style={{
+                                    backgroundColor: formData.gender === 'M' ? 'black' : 'white',
+                                    color: formData.gender === 'M' ? 'white' : 'black',
+                                }}
                             >
                                 남성</button>
+
                             <button type='button'
                                 name='gender'
-                                value={formData.gender}
-                                onChange={getInputInfo}
+                                value='F'
+                                onClick={getInputInfo}
+                                ref={genderBtnAble}
+                                style={{
+                                    backgroundColor: formData.gender === 'F' ? 'black' : 'white',
+                                    color: formData.gender === 'F' ? 'white' : 'black',
+                                }}
                             >여성</button>
                         </div>
                         <p></p>
@@ -477,8 +515,13 @@ const Membership = () => {
                         <div className='emailArea'>
                             <input type="text" name='email' onChange={getInputInfo} />
                             <span>@</span>
-                            <input type="text" name='domain' onChange={getInputInfo} />
-                            <select className="box" id="domain-list" onChange={getDomain}>
+                            <input type="text"
+                                name='domain'
+                                onChange={getInputInfo}
+                                ref={domainR}
+                            />
+                            <select className="box"
+                                id="domain-list" onChange={getDomain}>
                                 <option value="self">직접입력</option>
                                 <option value="naver.com">naver.com</option>
                                 <option value="google.com">google.com</option>
@@ -489,7 +532,7 @@ const Membership = () => {
                         </div>
                         <p>에러</p>
                         <div className='buttonarea'>
-                            <button type='button' onClick={validate}>가입하기</button>
+                            <button type='button' onClick={goToHone}>가입하기</button>
                         </div>
                     </form>
                 </div>

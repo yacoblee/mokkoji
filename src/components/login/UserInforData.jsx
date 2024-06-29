@@ -20,7 +20,8 @@ const userInfo = [
             history: [
                 { date: '2024-06-01', item: [1] },
                 { date: '2024-06-05', item: [5, 2, 3] },
-            ], reserve: [
+            ], 
+            reserve: [
                 { reserveItem: 1, date: '2024-06-29', adult: 1, teenager: 2 },
                 { reserveItem: 1, date: '2024-06-30', adult: 1, teenager: 1 },
             ],
