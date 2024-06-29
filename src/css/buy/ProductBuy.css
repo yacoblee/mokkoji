@@ -275,7 +275,7 @@
 
 }
 .BuyComplete{
-    width: 100%;
+    width: calc(100% - 6px);
     border : 1px solid #d0c0a0e2;
 
 }
