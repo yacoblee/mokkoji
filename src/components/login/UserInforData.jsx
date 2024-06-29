@@ -205,6 +205,10 @@ const userInfo = [
         totalPurchaseAmount: 400000,
         lastLoginDate: '2024-06-13',
         mypage: {
+            Reservation: [
+                { date: '', adult: '', teenager: '', reservitem: '' },
+
+            ],
             history: [
                 { date: '2024-06-04', item: 6 },
                 { date: '2024-06-08', item: 8 },

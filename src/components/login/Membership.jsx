@@ -17,13 +17,16 @@ const Membership = () => {
         name: '',
         id: '',
         pw: '',
+        pwCheck: '',
         addrees: '',
         firstNumber: '',
         secondNumber: '',
-        lastnumber: '',
+        lastNumber: '',
         phoneNumber: '',
         gender: '',
         email: '',
+        domain: '',
+
     })
 
     // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
@@ -31,13 +34,15 @@ const Membership = () => {
         name: false,
         id: false,
         pw: false,
+        pwCheck: false,
         addrees: false,
         firstNumber: false,
         secondNumber: false,
-        lastnumber: false,
+        lastNumber: false,
         phoneNumber: false,
         gender: false,
         email: false,
+        domain: false,
         clausearea: false,
     });
 
@@ -86,63 +91,121 @@ const Membership = () => {
             setAllCheck(true)
         }
     }
-    useEffect(() => {
-        if (AllCheck || (check.check1 && check.check2 && check.check3) || (check.check1 && check.check2)) {
-            setFormErrors(prevErrors => ({
-                ...prevErrors,
-                clausearea: true
-            }));
-        } else {
-            setFormErrors(prevErrors => ({
-                ...prevErrors,
-                clausearea: false
-            }));
-        }
-    }, [AllCheck, check]);
 
     useEffect(() => {
-        console.log(formErrors);
+        const isClauseAreaValid = (check.check1 && check.check2) || (check.check1 && check.check2 && check.check3) || AllCheck;
+        setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            clausearea: isClauseAreaValid,
+        }));
+    }, [check, AllCheck,]);
+
+    useEffect(() => {
     }, [formErrors]);
     // =============================================================
 
 
 
     const getInputInfo = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
+
+        if (name === 'id' && value === '') {
+            setFormErrors({
+                ...formErrors,
+                id: false,
+            });
+
+        } else {
+            const validationResult = validate(name, value);
+            setFormErrors({
+                ...formErrors,
+                [name]: validationResult,
+            });
+        }
+
+        console.log(formErrors);
+        console.log(formData);
+
+    };
+
+    const getDomain = (e) => {
+        const selectedDomain = e.target.value;
+        setFormErrors((it) => ({
+            ...it,
+            domain: selectedDomain === 'salf' ? '' : selectedDomain,
+
+        }))
     }
 
     const [terms, setTerms] = useState({
-        userID: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{7,15}$/g,
-        userPSW: /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{7,15}$/g,
-        userName: /^[가-힣]{2,6}$/,
-        firstNum: /[0-9]{2,6}/g,
-        secondNum: /[0-9]{3,5}/g,
-        thirdNum: /^\d{4}$/,
-        email: /^[\w.-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/,
-    });
+        userID: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/,
+        userPSW: /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]+$/,
+        userName: /^[가-힣]+$/,
+        firstNum: /^\d+$/,
+        secondNum: /^\d+$/,
+        lastNumber: /^\d+$/,
+        email: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/,
+        domain: /^[a-zA-Z]+\.[a-zA-Z]+$/,
 
-    const validate = (e) => {
-        if (!isOkIdChek) {
-            e.preventDefault();
-            alert('아이디 중복체크를 진행해 주세요');
+    }); //terms
+
+    const CheckLength = (name, value) => {
+        const inputLength = value.length;
+        switch (name) {
+            case 'name':
+                return (inputLength < 6 && inputLength >= 2);
+            case 'id':
+                return (inputLength < 15 && inputLength >= 7);
+            case 'pw':
+                return (inputLength < 15 && inputLength >= 7);
+            case 'pwCheck':
+                return (value === formData.pw);
+            case 'addrees':
+                return inputLength > 0;
+            case 'firstNumber':
+                return (inputLength < 6 && inputLength >= 2);
+            case 'secondNumber':
+                return (inputLength < 5 && inputLength >= 3);
+            case 'lastNumber':
+                return (inputLength === 4);
+            case 'email':
+                return inputLength >= 1;
+            case 'domain':
+                return inputLength >= 1;
+            default:
+                return false;
         }
-        const errors = {
-            name: formData.name === '' || !terms.userName.test(formData.name),
-            id: formData.id === '' || !terms.userID.test(formData.id),
-            pw: formData.pw === '' || !terms.userPSW.test(formData.pw),
-            addrees: formData.addrees === '',
-            firstNumber: formData.firstNumber === '' || !terms.firstNum.test(formData.firstNumber),
-            secondNumber: formData.secondNumber === '' || !terms.secondNum.test(formData.secondNumber),
-            lastnumber: formData.lastnumber === '' || !terms.thirdNum.test(formData.lastnumber),
-            gender: formData.gender === '' || formData.gender === undefined,
-            email: formData.email === '' || !terms.email.test(formData.email),
-        };
-        setFormErrors(errors);
-        return !Object.values(errors).includes(true);
+    };
+
+    const validate = (name, value) => {
+        switch (name) {
+            case 'name':
+                return (value !== '' && terms.userName.test(value) && CheckLength(name, value));
+            case 'id':
+                return (value !== '' && terms.userID.test(value) && CheckLength(name, value));
+            case 'pw':
+                return (value !== '' && terms.userPSW.test(value) && CheckLength(name, value));
+            case 'pwCheck':
+                return (value !== '' && CheckLength(name, value));
+            case 'addrees':
+                return (value !== '' && CheckLength(name, value));
+            case 'firstNumber':
+                return (value !== '' && terms.firstNum.test(value) && CheckLength(name, value));
+            case 'secondNumber':
+                return (value !== '' && terms.secondNum.test(value) && CheckLength(name, value));
+            case 'lastNumber':
+                return (value !== '' && terms.lastNumber.test(value) && CheckLength(name, value));
+            case 'email':
+                return (value !== '' && terms.email.test(value) && CheckLength(name, value));
+            case 'domain':
+                return (value !== '' && terms.domain.test(value) && CheckLength(name, value));
+            default:
+                return false;
+        }
     };
 
     const [btnAble, setBtnAble] = useState(false)
@@ -155,7 +218,7 @@ const Membership = () => {
             setBtnAble(false);
         }
 
-    }
+    } //IdCheck
 
 
     const allUserData = JSON.parse(localStorage.getItem('userInfo'));
@@ -168,60 +231,20 @@ const Membership = () => {
 
         if (userExists) {
 
-            console.log('동일 아이디 존재')
             alert('동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
             setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
                 inputR.current.value = ''; // 값 비우기
             }, 0);
 
-            setFormErrors(prevErrors => ({
-                ...prevErrors,
-                id: true
-            }));
+            setisOkIdChek(true)
         }
-        console.log('아이디 중복 함수 들어옴');
+        else {
+            setFormErrors({
+                ...formErrors,
+                id: true,
+            })
+        }
     };
-
-
-
-
-
-
-
-
-    // const [userPwRecheck, setUserPwRecheck] = useState('');
-    // const error4 = useRef(null);
-    // const inputR4 = useRef(null);
-
-    // //비밀번호 확인 값 가져오기 
-    // const getRecheckpw = (e) => { setUserPwRecheck(e.target.value) };
-
-    // //비밀번호 확인 값 비밀번호값 동일한지 체크 
-    // const userPwDoubleCheck = () => {
-    //     if (userPwRecheck === '') {
-    //         inputR4.current.style.borderBottom = '1px solid red';
-    //         error4.current.textContent = '빈칸입니다. 비밀번호를 입력해주세요'
-    //         error4.current.style.visibility = 'visible';
-    //     }
-    //     else if (userPwRecheck === userPw) {
-    //         error4.current.textContent = '';
-    //         inputR4.current.style.borderBottom = '1px solid #aaaaaa';
-    //         formErrors((it) => ({
-    //             ...it,
-    //             pw: true,
-    //         }))
-    //     }
-
-    //     else {
-    //         inputR4.current.style.borderBottom = '1px solid red';
-    //         error4.current.textContent = '비밀번호가 동일하지 않습니다.'
-    //         error4.current.style.visibility = 'visible';
-    //     }
-    // }
-
-    console.log(formErrors);
-    console.log(formData);
-
     // ==== 주소
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -276,26 +299,9 @@ const Membership = () => {
 
 
 
-    //=== 성별 
-    // const [gender, setGender] = useState(null);
+    console.log(formErrors);
 
-    // const ClickMen = () => {
-    //     setGender('men');
-    //     formErrors((it) => ({
-    //         ...it,
-    //         gender: true,
-    //     }))
-    // }
-
-    // const ClickWomen = () => {
-    //     setGender('women');
-    //     formErrors((it) => ({
-    //         ...it,
-    //         gender: true,
-    //     }))
-    // };
-
-
+    // console.log(formErrors);
     return (
         <div className="body">
             <div className="bodycontainer">
@@ -351,10 +357,10 @@ const Membership = () => {
                     <hr />
 
                     <h3>개인정보를 입력해주세요</h3>
-                    <form className="formcontainer" id='membership'>
+                    <form className="formcontainer" id='membership' onSubmit={validate}>
                         <label>이름</label>
                         <input type="text"
-                            placeholder='2글자 이하 5글자 이하 이름을 입력해주세요'
+                            placeholder='2글자 이상 5글자 이하 이름을 입력해주세요'
                             name="name"
                             maxLength={4}
                             value={formData.name}
@@ -396,7 +402,10 @@ const Membership = () => {
                         <label>비밀번호 확인</label>
                         <input type="text"
                             placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
+                            name="pwCheck"
+                            value={formData.pwCheck}
                             maxLength={14}
+                            onChange={getInputInfo}
                         />
                         <p>에러</p>
 
@@ -440,7 +449,7 @@ const Membership = () => {
                             <input type="text"
                                 placeholder='4자리'
                                 maxLength={4}
-                                name='lastnumber'
+                                name='lastNumber'
                                 value={formData.lastnumber}
                                 onChange={getInputInfo}
                             />
@@ -465,8 +474,19 @@ const Membership = () => {
                         </div>
                         <p></p>
                         <label>이메일</label>
-                        <input type="text"
-                        />
+                        <div className='emailArea'>
+                            <input type="text" name='email' onChange={getInputInfo} />
+                            <span>@</span>
+                            <input type="text" name='domain' onChange={getInputInfo} />
+                            <select className="box" id="domain-list" onChange={getDomain}>
+                                <option value="self">직접입력</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="google.com">google.com</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="kakao.com">kakao.com</option>
+                            </select>
+                        </div>
                         <p>에러</p>
                         <div className='buttonarea'>
                             <button type='button' onClick={validate}>가입하기</button>

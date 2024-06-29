@@ -1,6 +1,6 @@
 .body {
     width: 100vw;
-  
+
     background-color: #edeae4;
     user-select: none !important;
 }
@@ -36,6 +36,10 @@
     font-size: 1em;
     color: black;
     padding: 2px;
+}
+
+input::placeholder {
+    font-size: .6em;
 }
 
 .container input:focus {
@@ -121,7 +125,7 @@
 .stickyarea h1 {
     font-size: 2em;
     margin-top: 20%;
-    margin-bottom:3%;
+    margin-bottom: 3%;
 }
 
 .imgcontainer {
@@ -196,7 +200,7 @@
 
 .route {
     width: 15%;
-   
+
     float: left;
     position: sticky;
     display: flex;
@@ -224,7 +228,7 @@
     font-size: 1.5em;
 }
 
-.phoneNumber{
+.phoneNumber {
     display: flex;
     flex-direction: row;
     width: 60%;
@@ -232,6 +236,32 @@
     justify-content: space-between;
 }
 
-.phoneNumber span{
-    margin: 0 5%; 
+.phoneNumber span {
+    margin: 0 5%;
+}
+
+.emailArea {
+    width: 60%;
+    display: flex;
+}
+
+.emailArea input{
+    align-self: end;
+    width: 30%;
+}
+
+.emailArea span {
+    margin: 0 5%;
+    align-self: end;
+}
+
+.emailArea select {
+    margin: 0 2%;
+    display: flex;
+    width: 30%;
+    height: 90%;
+    border: 1px solid #aaaaaa;
+    align-self: end;
+    border-radius: 5px;
+
 }
