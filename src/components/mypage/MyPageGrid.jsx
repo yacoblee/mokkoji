@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function MyPageGrid() {
@@ -11,6 +11,7 @@ function MyPageGrid() {
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
+
 
     console.log(`확인용 1 ${user.id}, ${items.length}`)
 
@@ -28,7 +29,12 @@ function MyPageGrid() {
     const onLike = () => {
         getGoods(user.mypage.isLike)
         // console.log(`확인용 2 ${result.length}`)
-        navigate('/mypage/like', { state: result })
+        navigate('/mypage/like', {
+            state: {
+                user: user,
+                result: result
+            }
+        })
     }
 
 
@@ -106,12 +112,12 @@ function MyPageGrid() {
                     <span>구매내역</span>
                 </div>
             </Link>
-            <Link to='/mypage/faq'>
-                <div className='MyFAQ'>
-                    <div className='IconFAQ'>
+            <Link to='/mypage/book'>
+                <div className='MyBook'>
+                    <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </div>
-                    <span>1대1 문의</span>
+                    <span>나의 예약</span>
                 </div>
             </Link>
         </div>

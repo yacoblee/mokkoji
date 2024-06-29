@@ -1,13 +1,93 @@
+@media all and (min-width:1024px) {
+    .box {
+        width: 1200px;
+        margin: auto;
+        grid-template-columns: 60% 40%;
+        grid-auto-rows: 90vh;
+    }
+    .underbox{
+        width: 1200px;
+    }
+    .tabBox{
+        width: 1200px;
+    }
+    .imgInfo,.deliSizeInfo{
+        width: 1200px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 80vh;
+    }
+    .reveiwInfo{
+        width: 1200px;
+    }
+    .recommendInfo{
+        grid-template-columns: repeat(4, 1fr);
+    }
+  } 
+  
+  /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) {
+    .box {
+        width: 95vw;
+        grid-template-columns: 50% 50%;
 
+        margin: auto;
+    }
+    .underbox{
+        width: 95vw;
+    }
+    .tabBox{
+        width: 95vw;
+
+    }
+    .imgInfo,.deliSizeInfo{
+        width: 95vw;
+        grid-template-columns: 1fr;
+        grid-auto-rows: min-content;
+    }
+    .reveiwInfo{
+        width: 95vw;
+    }
+    .recommendInfo{
+        grid-template-columns: repeat(4, 1fr);
+    }
+  } 
+  
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (max-width:767px) {
+    .box {
+        width: 95vw;
+        grid-template-rows: 50% 50%;
+        margin: auto;
+    }
+    .underbox{
+        width: 95vw;
+
+    }
+    .tabBox{
+        width: 95vw;
+
+    }
+    .imgInfo,.deliSizeInfo{
+        width: 95vw;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        grid-auto-rows: min-content;
+    }
+    .reveiwInfo{
+        width: 95vw;
+    }
+    .recommendInfo{
+        grid-template-columns: repeat(2, 1fr);
+    }
+  }
 /* ====================================detail */
 .box {
-    width: 1200px;
+    
     margin: auto;
     margin-top: 30px;
 
     display: grid;
-    grid-template-columns: 60% 40%;
-    grid-auto-rows: 90vh;
+
 
 }
 
@@ -304,7 +384,6 @@
 
 .underbox {
     font-family: 'SUITE-Regular';
-    width: 1200px;
     margin: auto;
     /* height: 2500px; */
     margin-top: 30px;
@@ -315,7 +394,7 @@
 
 .tabBox {
     height: 80px;
-    width: 1200px;
+
     display: flex;
     align-items: center;
     border-bottom: 1px solid silver;
@@ -353,13 +432,9 @@
     align-items: center;
 }
 .deliSizeInfo{
-    /* height: auto; */
-    /* display: flex; */
-    /* align-items: center; */
+
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 60vh;
     justify-items: center;
 }
 .deliSizeInfo p {
@@ -377,9 +452,8 @@
 }
 
 .imgInfo {
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 80vh;
+    /* width: 100%; */
+
     display: grid;
     align-items: center;
     text-align: center;
@@ -409,7 +483,6 @@ object-fit: cover;
 }
 
 .reveiwInfo {
-    width: 1200px;
     margin-bottom: 2%;
     display: flex;
     height: 30vh;
@@ -484,7 +557,7 @@ object-fit: cover;
 }
 .recommendInfo {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    
     gap: 10px;
     margin-bottom: 2%;
 

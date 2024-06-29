@@ -77,6 +77,10 @@
     border-top: .5px solid #d0c0a058;
 
 }
+.buyRadioBox{
+    display: flex;
+    align-items: center;
+}
 .buySelect input{
     width: 40px;
     height: 25px;
@@ -258,4 +262,46 @@
     font-size: 16px;
     cursor: pointer;
     background-color: #d0c0a044;
+}
+/* ============결제완료 모달========== */
+
+.CompleteBox{
+    font-family: 'SUITE-Regular';
+    width: 100%;
+}
+.CompleteBox p{
+    text-align: center;
+    padding: 5px;
+
+}
+.BuyComplete{
+    width: 100%;
+    border : 1px solid #d0c0a0e2;
+
+}
+.BuyComplete ul{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 15px;
+
+    gap: 10px;
+}
+.BuyComplete p {
+    font-family: 'SUITE-Regular';
+    padding: 5px;
+    text-align: end;
+}
+.BuyCompleteName{
+    font-size: 22px;
+    font-weight:700;
+    text-shadow: 3px 3px 3px #aaaaaa;
+}
+.BuyCompleteItem{
+    font-weight:700;
+    font-size: 17px;
+
+}
+.checkedCartItems{
+    border-top: 1px solid #d0c0a0e2;
 }

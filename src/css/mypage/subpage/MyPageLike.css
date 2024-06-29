@@ -60,3 +60,8 @@
 .MyLikeGrid:nth-last-child(2) {
     border: none;
 }
+
+.MyLikeFooter,
+.MyLikeHeader {
+    padding: 10px 0;
+}

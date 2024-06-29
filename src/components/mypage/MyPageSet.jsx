@@ -1,26 +1,16 @@
 import '../../css/mypage/MyPageMain.css';
 
-import userInfo from "../login/UserInforData";
+// import userInfo from "../login/UserInforData";
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 function MyPageSet() {
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [emailType, setEmailType] = useState('');
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [addressDetail, setAddressDetail] = useState('');
-
-    const [emailDisabled, setEmailDisabled] = useState(false);
-
-    const history = useNavigate();
-
+    const [emailDisabled, setEmailDisabled] = useState(false);      // 이메일 직접입력 칸 활성화
     const handleEmailChange = (e) => {
         const selectedValue = e.target.value;
         if (selectedValue !== "type") {
@@ -32,11 +22,20 @@ function MyPageSet() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [emailType, setEmailType] = useState('');
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [address, setAddress] = useState('')
+    const [addressDetail, setAddressDetail] = useState('');
+
+    const navigate = useNavigate();     // 버튼으로 링크 이동
+
+    const handleSubmit = async (e) => {     // 버튼으로 sessionstorage에 데이터 저장 로직
         e.preventDefault();
 
-        // 비밀번호 확인 로직 추가
-        if (password !== passwordConfirm) {
+        if (password !== passwordConfirm) {     // 비밀번호 확인 절차
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
@@ -44,22 +43,17 @@ function MyPageSet() {
         // 업데이트된 사용자 정보
         const updatedUser = {
             ...user,
-            phoneNumber,
-            email,
-            emailType,
-            password,
-            addressDetail
+            phoneNumber: phoneNumber || user.phoneNumber,       // 빈값이 저장되지 않도록 함
+            email: email || user.email,
+            emailType: emailType || user.emailType,
+            password: password || user.password,
+            addressDetail: addressDetail || user.addressDetail
         };
 
-        try {
-            // 서버에 업데이트된 정보 저장
-            const response = await axios.put('http://your-server-endpoint/api/users', updatedUser);
-            console.log("Updated User Response:", response.data);
-            // 저장 후 페이지 이동 또는 상태 업데이트 로직 추가
-            history.push('/mypage');
-        } catch (error) {
-            console.error("There was an error updating the user!", error);
-        }
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));       // 변경값 sessionsotrage에 저장
+
+        navigate('/mypage');        // 버튼 이동 경로 지정(마이페이지)
+
     };
 
 
@@ -132,7 +126,8 @@ function MyPageSet() {
 
                 <div className='ListTitle'>주소</div>
                 <div>
-                    <input />
+                    <input type='text' value={address} disabled />
+                    <button>우편 번호 검색</button>
                 </div>
                 <div></div>
                 <div>
@@ -145,9 +140,7 @@ function MyPageSet() {
                 </div>
             </div>
 
-            <Link to='/mypage'>
-                <button className='MyInfoSave' type='submit'>수정 완료</button>
-            </Link>
+            <button className='MyInfoSave' type='submit'>수정 완료</button>
         </form>
     )
 }

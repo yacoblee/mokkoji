@@ -1,0 +1,4 @@
+.MyPageBook {
+    display: flex;
+    flex-direction: row;
+}

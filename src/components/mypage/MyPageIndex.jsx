@@ -9,7 +9,7 @@ import MyPageMain from './MyPageMain';
 import MyPageLike from './mypagesub/MyPageLike';
 import MyPageCart from './mypagesub/MyPageCart';
 import MyPagePost from './mypagesub/MyPagePost';
-import MyPageFAQ from './mypagesub/MyPageFAQ';
+import MyPageBook from './mypagesub/MyPageBook';
 import MyPageList from './mypagesub/MyPageList';
 
 import userInfoArray from '../login/UserInforData';
@@ -65,7 +65,7 @@ function MyPageIndex() {
                 <Route path='cart' element={<MyPageCart />} />
                 <Route path='post' element={<MyPagePost />} />
                 <Route path='list' element={<MyPageList />} />
-                <Route path='faq' element={<MyPageFAQ />} />
+                <Route path='book' element={<MyPageBook />} />
             </Routes>
         </div>
     );
