@@ -195,7 +195,12 @@ const ProductForm = ({ selectedProduct }) => {
             return cartItem;
         });     // map
         console.log(`확인용 3 ${result.length}`)
-        navigate('/mypage/cart', { state: result })
+        navigate('/mypage/cart', {
+            state: {
+                user: userData,
+                result: result
+            }
+        })
     }
 
     // 리턴
