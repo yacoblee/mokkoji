@@ -145,6 +145,7 @@ const Membership = () => {
 
 
     const domainR = useRef(null);
+    
     const getDomain = (e) => {
         const selectedDomain = e.target.value;
 
