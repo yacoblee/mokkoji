@@ -174,6 +174,7 @@ const ProductBuy = () => {
         });
     };
     
+    //오류 발생을 대비한 방어 코드.
     if (!selectedProduct) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
