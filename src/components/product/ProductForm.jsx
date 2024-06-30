@@ -92,11 +92,12 @@ const ProductForm = ({ selectedProduct }) => {
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
-
+    //구매하기로 넘겼을때 state로 정보 전송을 위한 navigate.
+    const navigate = useNavigate();
+    
     // 사용자의 로그인 상태 관리
     const [userLogin, setUserLogin] = useState(false);
 
-    const navigate = useNavigate();
 
     // 세션 스토리지에서 사용자의 로그인 상태를 확인하여 업데이트
     useEffect(() => {
