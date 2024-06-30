@@ -58,6 +58,7 @@ const Login = () => {
             inputRef.current.focus();
         }
     }
+    
     const dispatch = useDispatch();
     // 로그인 검사 함수 (로그인 시 홈 화면으로 이동 : 로그인실패 횟수 p태그에 연결하여 텍스트 표현)
     const CheckLogin = (e) => {
