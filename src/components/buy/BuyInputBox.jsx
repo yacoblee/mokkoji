@@ -115,7 +115,8 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
     
     useEffect(()=>{
         //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
-        const checking = Object.values(userInfo).filter((it)=>it ==='');
+        // userInfo의 각 값에 대해 trim()을 적용한 후 빈 문자열인지 확인
+        const checking = Object.values(userInfo).map(it => it.trim()).filter((it)=>it ==='');
         
         //selectedALLproduct는 본품과 장바구니의 체크여부를 구하기 위해서.
         //즉 1개 이상 선택되어야지만 진행.
@@ -135,7 +136,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         }else{
             setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
         }
-    },[userInfo,selectBox,selectedProduct]);
+    },[userInfo,selectBox,selectedProduct,checkedCartItems]);
 
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);

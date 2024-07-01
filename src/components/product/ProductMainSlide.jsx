@@ -43,7 +43,7 @@ function ImgSlideList() {
 
     return productSlide.map((image) => {               
         return (
-            <Link to={`/goods/${image.category}`}  key={image.id} className="ImgSlideList"
+            <Link to={'/goods/${image.category}'}  key={image.id} className="ImgSlideList"
             style={{ background: `url(${image.src}) center /cover `, opacity:'0.6'}}>
 
                 <span style={{opacity:'1'}}>{image.description}</span>
