@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../../../css/mypage/subpage/MyPageCart.css';
+import { useNavigate } from 'react-router-dom';
 
 function MyPageCart() {
 
@@ -30,8 +31,19 @@ function MyPageCart() {
     });     // map
 
 
+
+
+
+
+
+
+
+
+
+
     // 이 아래로 checkbox 전체선택 로직
     const [checkedGoods, setCheckedGoods] = useState([]);
+
     const handleCheckAll = (e) => {
         if (e.target.checked) {
             setCheckedGoods(cartGoods.map(goods => goods.id));
@@ -39,9 +51,47 @@ function MyPageCart() {
             setCheckedGoods([]);
         }
     };
+
     const handleCheckGood = (id) => {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
+
+    console.log(checkedGoods)
+
+    let newCheckedGoods = []
+
+    useEffect(() => {
+        checkedGoods.map((id) => {
+            let findBasket = user.mypage.basket.find((bk) =>
+                bk.productId === id
+            );      // findBasket
+
+            newCheckedGoods.push(findBasket)
+            console.log(newCheckedGoods)
+
+        })
+    }, [checkedGoods]);
+
+    const navigate = useNavigate();
+
+    const onBuy = () => {
+        // navigate('/???', {
+        //     state: {
+        //         newCheckedGoods: newCheckedGoods
+        //     }
+        // })
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     // 삭제 버튼 로직
     const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
@@ -181,6 +231,7 @@ function MyPageCart() {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
             </div>
 
 
@@ -234,6 +285,9 @@ function MyPageCart() {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div>
+                    <button onClick={onBuy}>선택 구매</button>
+                </div>
             </div>
 
 
