@@ -32,8 +32,6 @@ const SlideSection = ({ title, sort }) => {
     const btnPreRef = useRef();
     const btnNextRef = useRef();
     const slideIndexRef = useRef(0);
-    console.log(sortItems.length);
-
 
     const handlePrevClick = (e) => {
         slideIndexRef.current--;
@@ -61,7 +59,7 @@ const SlideSection = ({ title, sort }) => {
                 <div className='product_head'>
                     <h1>Best Items</h1>
                 </div>
-                <div className="slide_container" ref={slideContainerRef}>
+                <div className="slide_container" ref={slideContainerRef} >
                     {sortItems.map((product, i) => (
                         <div className='slide_item' key={i}>
                             <Link to={`/goods/${product.category}/${product.id}`}>

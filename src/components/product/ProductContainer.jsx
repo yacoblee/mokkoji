@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ProductMainSlide from './ProductMainSlide';
 import ProductMainList from './ProductMainList';
 import '../../css/Product/ProductMain.css';
+import TopButton from "../modules/ScrollToTopBtn";
 
 
 
@@ -12,7 +13,7 @@ function ProductContainer() {
                 Choose your GOODS:
             </h1>
             <ProductMainSlide />
-
+            <TopButton/>
             <ProductMainList title='베스트 상품' sort='count' />
 
             <ProductMainList title='신상품' />

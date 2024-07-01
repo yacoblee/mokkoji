@@ -174,9 +174,6 @@ const ProductForm = ({ selectedProduct }) => {
         setIsModalBasketOpen(true);
     }
 
-    const onCart = () => {
-        navigate('/mypage/cart')
-    }
 
     // 리턴
     return (
@@ -315,7 +312,7 @@ const ProductForm = ({ selectedProduct }) => {
             >
                 <div className='Modalbutton'>
                     <button
-                        onClick={onCart}>장바구니 확인</button>
+                        onClick={()=>navigate('/mypage/cart')}>장바구니 확인</button>
 
                     <button onClick={() => setIsModalBasketOpen(false)}>닫기</button>
                 </div>

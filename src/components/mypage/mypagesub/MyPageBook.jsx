@@ -4,7 +4,7 @@ function MyPageBook() {
     return (
 
         <div className='MyPageBook'>
-            1
+            
         </div>
     )
 }

@@ -15,13 +15,10 @@ const Reservesource = [
             '/images/reserve/reserve07.jpg',
         ],
         productSrc: [
-            '/images/reserve/reserve01.jpg',
-            '/images/reserve/reserve02.jpg',
-            '/images/reserve/reserve03.jpg',
-            '/images/reserve/reserve04.jpg',
-            '/images/reserve/reserve05.jpg',
-            '/images/reserve/reserve06.jpg',
-            '/images/reserve/reserve07.jpg',
+            '/images/reserve/예약설명1.jpg',
+            '/images/reserve/예약설명2.jpg',
+            '/images/reserve/예약설명3.jpg',
+
         ],
     }
 ]
