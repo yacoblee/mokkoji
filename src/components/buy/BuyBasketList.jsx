@@ -26,7 +26,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
     // 체크박스 상태 변경 함수
     const onChangeCheckBox = (index, event) => {
         const isChecked = (event.target.checked);
-        const price = event.target.value;
+        
         const item = userCart[index];
         
         
@@ -38,7 +38,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
         });
         
         // 상위 컴포넌트에 상태 변경 알림
-        onChangeChildCheckbox(price, isChecked ,item);
+        onChangeChildCheckbox(isChecked ,item);
     };
     return (
         <>

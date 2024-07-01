@@ -94,7 +94,7 @@ const ProductForm = ({ selectedProduct }) => {
     };
     //구매하기로 넘겼을때 state로 정보 전송을 위한 navigate.
     const navigate = useNavigate();
-    
+
     // 사용자의 로그인 상태 관리
     const [userLogin, setUserLogin] = useState(false);
 
@@ -174,34 +174,8 @@ const ProductForm = ({ selectedProduct }) => {
         setIsModalBasketOpen(true);
     }
 
-    let result = []
     const onCart = () => {
-        result = userData.mypage.basket.map((bb) => {
-            let findItem = items.find((item) =>
-                item.id === bb.productId
-            );     // findItem
-
-
-            let cartItem = {}
-
-            cartItem.photo = findItem.productSrc[0]
-            cartItem.id = findItem.id
-            cartItem.name = findItem.name
-            cartItem.content = bb.options.contentSelect
-            cartItem.package = bb.options.packagingSelect
-            cartItem.contentCount = bb.quantity.contentSelect
-            cartItem.packageCount = bb.quantity.packagingSelect
-            cartItem.price = bb.totalPrice
-
-            return cartItem;
-        });     // map
-        console.log(`확인용 3 ${result.length}`)
-        navigate('/mypage/cart', {
-            state: {
-                user: userData,
-                result: result
-            }
-        })
+        navigate('/mypage/cart')
     }
 
     // 리턴
