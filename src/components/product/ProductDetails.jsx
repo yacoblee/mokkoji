@@ -21,21 +21,22 @@ const ProductDetails = () => { //===============================================
     //모달창을 관리할 state
     //로그인 필요합니다
     const [isModalLoginOpen, setIsLoginModalOpen] = useState(false);
-    
-    //모달창에서 이동을 위함 navigate.
-    const navigate =useNavigate();
 
-    
+    //모달창에서 이동을 위함 navigate.
+    const navigate = useNavigate();
+
+
     //찜 클릭 아이콘을 선택할때의 이벤트
     const onClickLikeMe = () => {
 
         setLike(!like);
+        
         // 세션 스토리지의 사용자 정보 업데이트
-
         if (userData) {
-            const updatedLikes = like
-                ? userData.mypage.isLike.filter(id => id !== selectedProduct.id) // 이미 찜한 상태라면 제거
-                : [...userData.mypage.isLike, selectedProduct.id]; // 찜하지 않은 상태라면 추가
+            const updatedLikes =
+                like
+                    ? userData.mypage.isLike.filter(id => id !== selectedProduct.id) // 이미 찜한 상태라면 제거
+                    : [...userData.mypage.isLike, selectedProduct.id]; // 찜하지 않은 상태라면 추가
 
             const updatedUser = {
                 ...userData,
@@ -63,19 +64,21 @@ const ProductDetails = () => { //===============================================
         }
     }, [selectedProduct.id]);
 
-    //내부링크 위치 조정을 위한 스크롤 이벤트인데 뭔지 모르겠어..
+    //내부링크 위치 조정을 위한 스크롤 이벤트인데 내가 했다고 말못해...
     const handleScroll = (event, id) => {
-        event.preventDefault();
-        const element = document.getElementById(id);
+        event.preventDefault();//a의 기본 특성 해제
+        const element = document.getElementById(id); // 각 id 값을 매개 변수로 받아옴.
         if (element) {
-            const offset = element.getBoundingClientRect().top + window.scrollY - 180;
-            window.scrollTo({ top: offset, behavior: 'smooth' });
+            const offset = element.getBoundingClientRect().top + window.scrollY - 180; 
+            // 스크롤 위치를 id의 위치 에서 윈도우기준 180px 떨어져서 높이를 맞춤.
+            window.scrollTo({ top: offset, behavior: 'smooth' }); 
+            // 변수로 위치값 받아 위치 이동.
         } else {
             console.error(`Element with id ${id} not found.`);
         }
     }
     const [slideImgBox, SetSlideImgBox] = useState(0);
-    
+
 
     const onClickLabelBox = (index) => {
 
@@ -141,33 +144,33 @@ const ProductDetails = () => { //===============================================
                     </div>
                 </div>
                 <Modal
-                isOpen={isModalLoginOpen}
-                onRequestClose={() => setIsLoginModalOpen(false)}
-                contentLabel="로그인 필요"
-                style={{
-                    content: {
-                        height: '180px',
-                        width: '300px',
-                        display: 'flex',
-                        flexDirection: 'column-reverse',
-                        alignItems: 'center',
-                        zIndex: '1000',
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)'
-                    }
-                }}
-            >
-                <div className='Modalbutton'>
-                    <button
-                        onClick={() => navigate('/Login')}>로그인</button>
-                    <button onClick={() => setIsLoginModalOpen(false)}>닫기</button>
-                </div>
-                <ModalNotLogin />
-            </Modal>
+                    isOpen={isModalLoginOpen}
+                    onRequestClose={() => setIsLoginModalOpen(false)}
+                    contentLabel="로그인 필요"
+                    style={{
+                        content: {
+                            height: '180px',
+                            width: '300px',
+                            display: 'flex',
+                            flexDirection: 'column-reverse',
+                            alignItems: 'center',
+                            zIndex: '1000',
+                            top: '50%',
+                            left: '50%',
+                            right: 'auto',
+                            bottom: 'auto',
+                            marginRight: '-50%',
+                            transform: 'translate(-50%, -50%)'
+                        }
+                    }}
+                >
+                    <div className='Modalbutton'>
+                        <button
+                            onClick={() => navigate('/Login')}>로그인</button>
+                        <button onClick={() => setIsLoginModalOpen(false)}>닫기</button>
+                    </div>
+                    <ModalNotLogin />
+                </Modal>
             </>
         );
     }
