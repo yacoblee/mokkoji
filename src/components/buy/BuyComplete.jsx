@@ -3,7 +3,10 @@ import GoodsItems from "../product/ProductObject"
 
 const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, checkedCartItems, selectedProduct }) => {
 //
-
+    // 숫자를 포맷팅하는 함수
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
+    }
 
     console.log(checkedCartItems)
     return (<div className="CompleteBox">
@@ -23,7 +26,7 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
                 <li>포장 갯수</li>
                 <li>{buyPrice.optionPrice}</li>
                 <li>가격</li>
-                <li>{productPrice}</li>
+                <li>{formatNumber(productPrice)}</li>
             </ul>
 
             {checkedCartItems.map(item => {
@@ -45,13 +48,13 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
                     <li>포장 갯수</li>
                     <li>{item.quantity.packagingSelect}</li>
                     <li>상품 가격</li>
-                    <li>{item.totalPrice}</li>
+                    <li>{formatNumber(item.totalPrice)}</li>
 
                 </ul>)
             })}
         </div>
             <p>
-                총 가격 : <span className="TTPrice">{totalPrice}</span>
+                총 가격 : <span className="TTPrice">{formatNumber(totalPrice)}</span>
             </p>
         <p>
             {username}님의 결제가 완료되었습니다.

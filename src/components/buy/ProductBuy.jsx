@@ -41,6 +41,9 @@ const ProductBuy = () => {
         const totalPrice = (price + contentPrice) * buyPrice.productPrice + packagingPrice * buyPrice.optionPrice;
         return totalPrice;
     }
+    
+        //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
+        const [checkedCartItems, SetCheckedCartItems] = useState([]);
 
     // 총 금액 및 배송비 상태 업데이트 함수
     const updatePrices = (totalPrice) => {
@@ -52,7 +55,7 @@ const ProductBuy = () => {
         const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
         
         //2. selectProduct 가 체크 됬을때는 totalPrice를 더하겠다.
-        const combinedPrice = (buyCheckBox ? totalPrice : 0) + cartTotalPrice;
+        const combinedPrice = (buyCheckBox ? filterPrice : 0) + cartTotalPrice;
 
         // 만약 계산된 총 금액이 30000원보다 작으면, 
         //배송비 3000원을 추가한 값을 lastPrice로 설정
@@ -72,13 +75,15 @@ const ProductBuy = () => {
 
     // buyPrice(옵션갯수)가 변경될 때마다 총 금액 재계산
     useEffect(() => {
-        // 총 금액을 계산하는 함수 호출
+        // 옵션에 의해 총 금액을 계산하는 함수 호출
         const totalPrice = calculateTotalPrice();
 
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
 
-    }, [buyPrice]);
+    }, [buyPrice,checkedCartItems ,filterPrice]); 
+    //옵션이 바뀌고 나면 업데이트, 카트아이템이 바뀔때 마다 업데이트,
+    // 옵션이 바뀌어 filerprice가 바뀌면 업데이트
     //총금액을 그냥 사용하지않고 LastPrice로 이용한 이유는
     //배송비 추가발생에 대한 화면 명시를 하고싶었기 때문.
 
@@ -135,43 +140,22 @@ const ProductBuy = () => {
         SetCheckedCartItems([])
     }
     
-    //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
-    const [checkedCartItems, SetCheckedCartItems] = useState([]);
 
 
     // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
-    const onChangeChildCheckbox = (cartItemPrice, isChecked , items) => {
-        setLastPrice(prevPrice => {
-            const newPrice = isChecked ? prevPrice + +cartItemPrice : prevPrice - +cartItemPrice;
+    const onChangeChildCheckbox = ( isChecked , items) => {
 
-            
-            if (newPrice < 30000) {
-                setShowingMessage(true);
-                return newPrice + 3000;
-            } else {
-                setShowingMessage(false);
-                if (prevPrice < 30000 && newPrice >= 30000) {
-                    return newPrice - 3000;
-                }
-                return newPrice;
-            }
-        }//최종금액 계산의 함수.
-    
-    );
 
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
         SetCheckedCartItems(prevItems => {
             if (isChecked) {
-                const newItems = [...prevItems, items];
-                console.log("Updated checkedCartItems (add):", newItems); // 상태 업데이트 확인
-                return newItems;
+                return  [...prevItems, items]
             } else {
-                const newItems = prevItems.filter(cartItem => cartItem.productId !== items.productId );
-                console.log("Updated checkedCartItems (remove):", newItems); // 상태 업데이트 확인
-                return newItems;
+                return prevItems.filter(cartItem => cartItem.productId !== items.productId );
             }
             
         });
+        
     };
     
     //오류 발생을 대비한 방어 코드.

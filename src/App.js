@@ -13,8 +13,10 @@ import FindPw from './components/login/FindPw';
 import FindId from './components/login/FindId';
 import Footer from './components/modules/Footer';
 import Reservation from './components/Reserve/Reservation';
-
 import ProductBuy from './components/buy/ProductBuy';
+import ScrollToTop from './components/modules/ScrollToTop';
+
+
 const App = () => {
   // const new_script = src => { 
   //   return new Promise((resolve, reject) => { 
@@ -58,6 +60,7 @@ const App = () => {
   const noHeaderPaths = ['/login', '/login/membership', '/login/findid', '/login/findpw'];
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
