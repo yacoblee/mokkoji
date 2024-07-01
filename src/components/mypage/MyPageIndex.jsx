@@ -32,12 +32,12 @@ function MyPageIndex() {
     const [storageCheck, setStorageCheck] = useState(false); // 유저 정보 상품 정보가 스토리지에 있느냐?=로그인 됐느냐?
 
     if (!storageCheck) {
-    //     const getUserDetail = JSON.parse(sessionStorage.getItem("LoginUserInfo")); // 어떤 이름으로 저장을 할 것인가?
+        //     const getUserDetail = JSON.parse(sessionStorage.getItem("LoginUserInfo")); // 어떤 이름으로 저장을 할 것인가?
         const getGoodsList = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    //     if (getUserDetail === null && user) {
-    //         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
-    //     }
+        //     if (getUserDetail === null && user) {
+        //         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+        //     }
 
         if (getGoodsList === null) {
             sessionStorage.setItem("goodsList", JSON.stringify(items));
@@ -55,7 +55,9 @@ function MyPageIndex() {
     return (
         <div className='MyPage'>
             <h1>
-                <Link to='/mypage'>내 정보</Link>
+                <div>
+                    <Link to='/mypage'>내 정보</Link>
+                </div>
             </h1>
             <MyPageGrid />
 
