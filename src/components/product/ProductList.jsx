@@ -125,6 +125,7 @@ const ProductList = () => {
         const filteredItems = filterItems();
         const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
         setSelectItem(categoryFilteredItems);
+        setDisplayMessage('');
         // if (category === 'allGoods') {
         //     setSelectItem(filteredItems);
         // } else {
@@ -197,7 +198,9 @@ const ProductList = () => {
             {/* } */}
             {/* {showSearch && <div className='displayMessage2'>{displayMessage}</div>} */}
             <div className='displayMessage2'>{displayMessage}</div>
-            {selectItem.length > 0 ? <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} /> : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
+            {selectItem.length > 0 ? 
+            <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} /> 
+            : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
         </>
     );
 }

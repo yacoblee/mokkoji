@@ -136,7 +136,7 @@
 .priceBox{
     grid-area: 2 / 1 / 3 / -1 ;
     text-align: end;
-
+    
 }
 .buyForm input{
     width: 150px;
