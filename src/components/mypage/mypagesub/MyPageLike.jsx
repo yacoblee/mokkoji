@@ -28,12 +28,6 @@ function MyPageLike() {
             item.id !== delId
         )
 
-        // console.log(`likedGoods 1번 id ${likedGoods[0].id} `)
-        // console.log(`likedGoods 2번 id ${likedGoods[1].id} `)
-        // console.log(`likedGoods 3번 id ${likedGoods[2].id} `)
-        // console.log(`newLiked 확인용 length ${newLiked.length}`)
-        // console.log(`del 확인용 id ${delId}`)
-
         let newLiked = newLikedItem.map((item) =>
             item.id
         )
@@ -58,10 +52,6 @@ function MyPageLike() {
         })
     }
 
-
-    // console.log(`likedGoods  ${likedGoods[0].id} `)
-    // console.log(`likedGoods  ${likedGoods[1].id} `)
-    // console.log(`likedGoods  ${likedGoods[2].id} `) // 출력 확인함
 
     return (
         <div className='MyLikeList' >
