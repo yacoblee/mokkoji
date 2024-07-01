@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import '../../css/login/FindPw.css';
 import { useRef, useState } from "react";
 import userInfo from "./UserInforData";
+import '../../css/login/FindPw.css';
 
 
 const FindPw = () => {
