@@ -17,7 +17,7 @@ const ProductBuy = () => {
     //현재 접속중인 user의 userData 받아오기
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
-    //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리
+    //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리 -> 선택 옵션 갯수에 대한 관리
     const [buyPrice, setBuyPrice] = useState({
         productPrice: btnValue ? btnValue.contentSelect : 1,
         optionPrice: btnValue ? btnValue.packagingSelect : 1,
@@ -31,7 +31,7 @@ const ProductBuy = () => {
     const [showingMessage, setShowingMessage] = useState(false);
     // =================================================================
 
-    //배송비 제외 최종 금액을 계산하는 함수
+    //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
     const calculateTotalPrice = () => {
         let price = selectedProduct.price;
         const contentPrice = options.contentSelect.includes('(+220000)') ? 220000 :
@@ -46,19 +46,31 @@ const ProductBuy = () => {
     const updatePrices = (totalPrice) => {
         //1차 필터 계산하여 배송비포함되지 않는 가격 계산
         setFilterPrice(totalPrice);
+        //전체 금액 합산을 위한 reduce를 사용한 최종금액 계산
+        
+        //1. 장바구니 토탈금액 계산
+        const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        
+        //2. selectProduct 가 체크 됬을때는 totalPrice를 더하겠다.
+        const combinedPrice = (buyCheckBox ? totalPrice : 0) + cartTotalPrice;
 
         // 만약 계산된 총 금액이 30000원보다 작으면, 
         //배송비 3000원을 추가한 값을 lastPrice로 설정
-        if (totalPrice < 30000) {
-            setLastPrice(totalPrice + 3000);
+        //계산된 총합이 0원이면 -> 아무것도 선택되지 않았다면 0원.
+        if (combinedPrice === 0) {
+            setLastPrice(0);
+            setShowingMessage(false);
+        } else if (combinedPrice < 30000) {
+            setLastPrice(combinedPrice + 3000);
             setShowingMessage(true);
         } else {
-            setLastPrice(totalPrice);
+            setLastPrice(combinedPrice);
             setShowingMessage(false);
-        }//그렇지 않으면 계산된 총금액을 lastPrice로 설정
+        }
+        //그렇지 않으면 계산된 총금액을 lastPrice로 설정
     };
 
-    // buyPrice가 변경될 때마다 총 금액 재계산
+    // buyPrice(옵션갯수)가 변경될 때마다 총 금액 재계산
     useEffect(() => {
         // 총 금액을 계산하는 함수 호출
         const totalPrice = calculateTotalPrice();
@@ -98,7 +110,7 @@ const ProductBuy = () => {
         return number.toLocaleString('en-US');
     }
 
-    // 체크박스 상태 관리
+    // selectProduct 에 관한 체크박스 상태 관리
     const [buyCheckBox, setBuyCheckBox] = useState(true);
 
     //클릭할때마다 체크박스 상태값이 바뀜
@@ -108,13 +120,8 @@ const ProductBuy = () => {
 
     //체크박스 상태 값에 따라 계산을 실행
     useEffect(() => {
-        if (!buyCheckBox) {
-            setLastPrice(0);
-            setShowingMessage(false);
-        } else {
-            const totalPrice = calculateTotalPrice();
-            updatePrices(totalPrice);
-        }
+        const totalPrice = calculateTotalPrice();
+        updatePrices(totalPrice);
     }, [buyCheckBox]);
 
      // 장바구니 불러오기 상태 관리
@@ -132,22 +139,25 @@ const ProductBuy = () => {
     const [checkedCartItems, SetCheckedCartItems] = useState([]);
 
 
-    // 장바구니 항목 체크박스 상태 변경 함수
+    // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
     const onChangeChildCheckbox = (cartItemPrice, isChecked , items) => {
         setLastPrice(prevPrice => {
             const newPrice = isChecked ? prevPrice + +cartItemPrice : prevPrice - +cartItemPrice;
+
+            
             if (newPrice < 30000) {
                 setShowingMessage(true);
                 return newPrice + 3000;
             } else {
                 setShowingMessage(false);
-                if (prevPrice < 30000) {
+                if (prevPrice < 30000 && newPrice >= 30000) {
                     return newPrice - 3000;
                 }
-
                 return newPrice;
             }
-        });
+        }//최종금액 계산의 함수.
+    
+    );
 
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
         SetCheckedCartItems(prevItems => {
@@ -164,6 +174,7 @@ const ProductBuy = () => {
         });
     };
     
+    //오류 발생을 대비한 방어 코드.
     if (!selectedProduct) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
