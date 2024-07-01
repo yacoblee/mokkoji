@@ -1,0 +1,13 @@
+.container3 {
+    width: 100vw;
+    height: 100vh;
+    background-color: thistle;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    z-index: 2;
+
+}

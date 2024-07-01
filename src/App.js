@@ -15,6 +15,7 @@ import Footer from './components/modules/Footer';
 import Reservation from './components/Reserve/Reservation';
 import ProductBuy from './components/buy/ProductBuy';
 import ScrollToTop from './components/modules/ScrollToTop';
+import Introduction from './components/Introduction/Introduction';
 
 
 const App = () => {
@@ -76,6 +77,8 @@ const App = () => {
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
         <Route path="/mypage/*" element={<MyPageIndex />} />
+        <Route path="/introduction" element={<Introduction />} />
+      
         {/* <div id="map" className="map"/> */}
 
       </Routes>
