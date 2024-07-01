@@ -4,6 +4,9 @@ import GoodsItems from '../product/ProductObject';
 import { useEffect, useState } from 'react';
 import BuyInputBox from './BuyInputBox';
 import BuyBasketList from './BuyBasketList';
+import TopButton from "../modules/ScrollToTopBtn";
+
+
 const ProductBuy = () => {
 
     //url 파라미터 , 링크로 전송된 데이터 추출.
@@ -41,19 +44,19 @@ const ProductBuy = () => {
         const totalPrice = (price + contentPrice) * buyPrice.productPrice + packagingPrice * buyPrice.optionPrice;
         return totalPrice;
     }
-    
-        //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
-        const [checkedCartItems, SetCheckedCartItems] = useState([]);
+
+    //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
+    const [checkedCartItems, SetCheckedCartItems] = useState([]);
 
     // 총 금액 및 배송비 상태 업데이트 함수
     const updatePrices = (totalPrice) => {
         //1차 필터 계산하여 배송비포함되지 않는 가격 계산
         setFilterPrice(totalPrice);
         //전체 금액 합산을 위한 reduce를 사용한 최종금액 계산
-        
+
         //1. 장바구니 토탈금액 계산
         const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
-        
+
         //2. selectProduct 가 체크 됬을때는 totalPrice를 더하겠다.
         const combinedPrice = (buyCheckBox ? filterPrice : 0) + cartTotalPrice;
 
@@ -81,7 +84,7 @@ const ProductBuy = () => {
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
 
-    }, [buyPrice,checkedCartItems ,filterPrice]); 
+    }, [buyPrice, checkedCartItems, filterPrice]);
     //옵션이 바뀌고 나면 업데이트, 카트아이템이 바뀔때 마다 업데이트,
     // 옵션이 바뀌어 filerprice가 바뀌면 업데이트
     //총금액을 그냥 사용하지않고 LastPrice로 이용한 이유는
@@ -129,7 +132,7 @@ const ProductBuy = () => {
         updatePrices(totalPrice);
     }, [buyCheckBox]);
 
-     // 장바구니 불러오기 상태 관리
+    // 장바구니 불러오기 상태 관리
     const [bringUserCart, setBringUserCart] = useState(false);
 
     // 장바구니 불러오기 버튼 클릭 시 총 금액 및 배송비 재계산
@@ -139,25 +142,25 @@ const ProductBuy = () => {
         updatePrices(totalPrice);
         SetCheckedCartItems([])
     }
-    
+
 
 
     // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
-    const onChangeChildCheckbox = ( isChecked , items) => {
+    const onChangeChildCheckbox = (isChecked, items) => {
 
 
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
         SetCheckedCartItems(prevItems => {
             if (isChecked) {
-                return  [...prevItems, items]
+                return [...prevItems, items]
             } else {
-                return prevItems.filter(cartItem => cartItem.productId !== items.productId );
+                return prevItems.filter(cartItem => cartItem.productId !== items.productId);
             }
-            
+
         });
-        
+        console.log(checkedCartItems)
     };
-    
+
     //오류 발생을 대비한 방어 코드.
     if (!selectedProduct) {
         return (
@@ -171,14 +174,18 @@ const ProductBuy = () => {
                 주문 결제
             </h2>
             <div className="ProductBuy" >
+                <div className='bringUserCart minwidth'>
+                    <span>장바구니를 불러오겠습니까 ? </span>
+                    {!bringUserCart ? <button type='button' onClick={onClickBringCart}>YES</button> : <button type='button' onClick={onClickBringCart}>No</button>}
+                </div>
                 <form action="#">
                     <ul className='ProductBuyList'>
-                        {/* <li></li> */}
-                        <li className='bringUserCart'>
+                        <li className='addName'></li>
+                        <li className='bringUserCart maxwidth'>
                             <span>장바구니를 불러오겠습니까 ? </span>
                             {!bringUserCart ? <button type='button' onClick={onClickBringCart}>YES</button> : <button type='button' onClick={onClickBringCart}>No</button>}
                         </li>
-                        <li>상품명</li>
+                        <li className='deleteName'>상품명</li>
                         <li>상품가격</li>
                         <li>상품정보</li>
                         <li>포장여부</li>
@@ -187,10 +194,11 @@ const ProductBuy = () => {
                         <input type="checkBox" value={filterPrice}
                             checked={buyCheckBox}
                             onChange={onChangeBuyCheckBox} />
-                        <img src={selectedProduct.productSrc[0]} alt="" />
+                        <img src={selectedProduct.productSrc[0]} 
+                        className='deleteName'alt={selectedProduct.name} />
                         <p>{selectedProduct.name}</p>
                         <p>{formatNumber(selectedProduct.price)}</p>
-                        <p>
+                        <p className='alignSelf'>
                             <p>
                                 {options.contentSelect} :<span className='highlight'>{buyPrice.productPrice}</span> 개
                             </p>
@@ -209,7 +217,7 @@ const ProductBuy = () => {
 
                             </p>
                         </p>
-                        <p>
+                        <p className='alignSelf'>
                             <p>
                                 {options.packagingSelect} : <span className='highlight'>{buyPrice.optionPrice}</span>개
                             </p>
@@ -230,7 +238,7 @@ const ProductBuy = () => {
 
                             </p>
                         </p>
-                        <p className='priceBox'>
+                        <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(filterPrice)}</span>
                         </p>
                     </div>
@@ -250,15 +258,15 @@ const ProductBuy = () => {
                 </form>
 
                 <h2>주문서 작성</h2>
-                <BuyInputBox 
-                userData={userData}
-                buyPrice={buyPrice}
-                checkedCartItems={checkedCartItems}
-                options={options}
-                selectedProduct={buyCheckBox &&selectedProduct}
-                productPrice ={filterPrice}
-                totalPrice ={lastPrice}/>
-
+                <BuyInputBox
+                    userData={userData}
+                    buyPrice={buyPrice}
+                    checkedCartItems={checkedCartItems}
+                    options={options}
+                    selectedProduct={buyCheckBox && selectedProduct}
+                    productPrice={filterPrice}
+                    totalPrice={lastPrice} />
+                <TopButton />
             </div>
         </>
         )

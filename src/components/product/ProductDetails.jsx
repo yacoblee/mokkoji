@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import '../../css/Product/ProductDetails.css'
 import ModalNotLogin from "./ModalNotLogin";
 import Modal from 'react-modal';
+import TopButton from "../modules/ScrollToTopBtn";
 
 const ProductDetails = () => { //=========================================================ProductDetails 컴포넌트
     const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
@@ -171,6 +172,7 @@ const ProductDetails = () => { //===============================================
                     </div>
                     <ModalNotLogin />
                 </Modal>
+                <TopButton/>
             </>
         );
     }
