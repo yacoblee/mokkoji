@@ -70,7 +70,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                         <p>
                             {cartItem.options.packagingSelect} : <span className='highlight'>{cartItem.quantity.packagingSelect}</span> 개
                         </p>
-                        <p className='priceBox'>
+                        <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
                         </p>
                     </div>

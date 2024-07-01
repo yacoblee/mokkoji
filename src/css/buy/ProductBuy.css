@@ -1,174 +1,281 @@
-.buyHeader{
-    width: 1200px;
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+    .buyHeader {
+        width: 1200px;
+    }
+    .ProductBuy{
+        width: 1200px;
+    }
+    .buyBox {
+        gap: 10%;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .buyHeader {
+        width: 95%
+    }
+    .ProductBuy{
+        width: 95%;
+    }
+    .buyBox {
+        gap: 5%;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+    .buyHeader {
+        width: 95%
+    }
+    .ProductBuy{
+        width: 95%;
+    }
+    .buyBox {
+        gap: 5%;
+        grid-template-columns: 1fr;
+        height: max-content;
+    }
+}
+@media (min-width: 1100px){
+    .bringUserCart.minwidth{
+        display: none;
+    }
+    .ProductBuyList,.buyInfo{
+        grid-template-columns: 15px 1fr 1fr 0.5fr repeat(2, 1fr);
+    }
+.addName{
+    display: none;
+}
+.buyInfo{
+    grid-template-rows:20vh;
+    align-items: center;
+}
+}
+@media (max-width: 1100px){
+    .bringUserCart.maxwidth{
+        display: none;
+    }
+    .deleteName{
+        display: none;
+    }
+    .ProductBuyList,.buyInfo{
+        grid-template-columns: 15px 2fr 0.5fr repeat(2, 1fr);
+    }
+    .buySelect{
+        flex-direction: column-reverse;
+        justify-items: start;
+        gap:1px;
+    }
+    .buyInfo{
+        grid-template-rows: auto;
+        align-items: center;
+    }
+    .alignSelf{
+        align-self: end;
+    }
+}
+
+.justifySelfEnd{
+    justify-self: end;
+}
+
+.buyHeader {
     margin: 150px auto 100px auto;
     padding: 0 20px;
     font-family: 'SUITE-Regular';
 }
 
-.ProductBuy{
-    width: 1200px;
+.ProductBuy {
     margin: 100px auto;
     user-select: none !important;
     font-family: 'SUITE-Regular';
 }
 
-.ProductBuyList{
+.ProductBuyList {
     width: 100%;
     display: grid;
-    grid-template-columns: 15px 1fr  1fr 0.5fr repeat(2,1fr);
     gap: 10px;
     padding: 10px;
     align-items: center;
-    border-top: 1px solid  #d0c0a058;
-    border-bottom: 1px solid  #d0c0a058;
-
+    border-top: 1px solid #d0c0a058;
+    border-bottom: 1px solid #d0c0a058;
+    justify-items: center;
     background-color: #d0c0a011;
     /* border-bottom: .5px solid #d0c0a058; */
 }
-.buyInfo{
-    /* height: 30vh; */
-    grid-template-columns: 15px 1fr  1fr 0.5fr repeat(2,1fr);
 
-    grid-template-rows: 20vh;
+.buyInfo {
+    /* height: 30vh; */
+    /* grid-template-columns: 15px 1fr 1fr 0.5fr repeat(2, 1fr); */
+
+    /* grid-template-rows: 20vh; */
     display: grid;
-    align-items: center;
+    /* align-items: center; */
     gap: 10px;
     padding: 10px;
 
+    justify-items: center;
     border-bottom: .5px solid #d0c0a058;
     background-color: #d0c0a008;
-    
+
 }
-.buyInfo img{
+
+.buyInfo img {
     width: 100%;
     height: 20vh;
 
     object-fit: cover;
 }
 
-.buyInfo li{
+.buyInfo li {
     border-bottom: 1px solid;
     padding: 10px;
 }
-.buySelect{
+
+.buySelect {
     width: 100%;
     display: flex;
     /* justify-content: space-evenly; */
-    gap : 10px;
+    gap: 10px;
     align-items: center;
 }
-.highlight{
+
+.highlight {
     font-weight: 600;
     padding: 0 5px;
 }
-.buySelect button{
+
+.buySelect button {
     width: 25px;
     height: 25px;
     padding: 5px;
     /* border-radius: 5px 0 0 5px ; */
-    border : 1px solid #d0c0a000;
+    border: 1px solid #d0c0a000;
     background-color: #d0c0a044;
     cursor: pointer;
 }
 
-.buyInput{
+.buyInput {
     background-color: #d0c0a008;
     border-bottom: .5px solid #d0c0a058;
     border-top: .5px solid #d0c0a058;
 
 }
-.buyRadioBox{
+
+.buyRadioBox {
     display: flex;
     align-items: center;
 }
-.buySelect input{
+
+.buySelect input {
     width: 40px;
     height: 25px;
     /* border : 1px solid #d0c0a0ed; */
     text-align: center;
-    border : 0px;
+    border: 0px;
 
 }
-.buySelect img{
+
+.buySelect img {
     width: 90%;
     height: 90%;
 }
-.totalPrice{
+
+.totalPrice {
     padding: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: end;
 }
-.TTPrice{
+
+.TTPrice {
     font-weight: 600;
     font-size: 22px;
     color: red;
 }
-.subTTprice{
+
+.subTTprice {
     font-size: 20px;
     font-weight: 600;
 }
+
 /* ============================= */
-.buyBox{
+.buyBox {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10%;
+    /* grid-template-columns: 1fr 1fr; */
+    
 }
-.ProductBuy h2{
+
+.ProductBuy h2 {
     margin: 50px 0;
     padding: 0 20px;
 }
-.buyInput p{
+
+.buyInput p {
     padding: 0 20px;
     margin: 20px 0;
 }
-.buyForm{
+
+.buyForm {
     width: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
     padding: 20px;
     gap: 20px 0;
     align-items: center;
-    grid-template-rows: 40px 40px 40px 15vh;
+    grid-template-rows: 40px 40px 40px 20vh;
 }
-.priceBox{
-    grid-area: 2 / 1 / 3 / -1 ;
+
+.priceBox {
+    grid-area: 2 / 1 / 3 / -1;
     text-align: end;
-    
+
 }
-.buyForm input{
+
+.buyForm input {
     width: 150px;
     height: 25px;
 }
-.addressBox{
+
+.addressBox {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(3,1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
-.addressBox>input{
+
+.addressBox>input {
     width: 60%;
     height: 30px;
 }
-.addressBox>div{
+
+.addressBox>div {
     display: flex;
     align-items: center;
     gap: 20px;
 }
-.addressBox>div input{
+
+.addressBox>div input {
     width: 100px;
 }
-.addressBox button{
+
+.addressBox button {
     height: 30px;
     padding: 5px;
-    border-radius: 5px ;
-    border : 1px solid #d0c0a000;
+    border-radius: 5px;
+    border: 1px solid #d0c0a000;
     background-color: #d0c0a044;
     cursor: pointer;
 }
-.buyForm2{
+
+.buyForm2 {
     width: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
@@ -177,29 +284,34 @@
     align-items: center;
     grid-template-rows: 40px auto;
 }
-.buyForm2 select{
+
+.buyForm2 select {
     height: 30px;
     width: 200px;
     padding: 5px;
     margin: 0 10px;
 }
-.buyRadioBox input{
+
+.buyRadioBox input {
     width: 15px;
     margin: 0 10px;
 }
-.buyRadioBox2{
+
+.buyRadioBox2 {
     width: 100%;
     height: 20vh;
     display: grid;
-    grid-template-columns:0.5fr 2fr 0.5fr 2fr;
+    grid-template-columns: 0.5fr 2fr 0.5fr 2fr;
     align-items: center;
     justify-content: center;
-    padding:0  10px ;
+    padding: 0 10px;
 }
-.buyRadioBox2 input{
+
+.buyRadioBox2 input {
     width: 15px;
 }
-.buttonBox{
+
+.buttonBox {
     width: 100%;
     height: 80px;
     display: flex;
@@ -207,15 +319,17 @@
     align-items: end;
     /* padding: 20px; */
 }
-.buttonBox button{
+
+.buttonBox button {
     width: 30%;
     height: 40px;
     background-color: #d0c0a044;
-    border : 1px solid #d0c0a08d;
+    border: 1px solid #d0c0a08d;
     font-size: 20px;
 }
-.bringUserCart{
-    grid-area: 1/ 1/ 2/ 3 ;
+
+.bringUserCart {
+    grid-area: 1/ 1/ 2/ 3;
     width: 100%;
     height: 50px;
     display: flex;
@@ -224,62 +338,72 @@
     gap: 20px;
     justify-content: end;
 }
-.bringUserCart button{
+
+.bringUserCart button {
     padding: 5px;
     width: 50px;
     height: 30px;
     background-color: #d0c0a044;
-    border : 1px solid #d0c0a08d;
+    border: 1px solid #d0c0a08d;
     cursor: pointer;
 }
-.CartArea{
+
+.CartArea {
     margin: 30px 0;
     padding: 20px;
     background-color: white;
 
 }
+
 /* ========================= */
 /* 모달 */
 
 
-.ModalNotOption,.ModalNotLogin,.ModalOkbasket{
+.ModalNotOption,
+.ModalNotLogin,
+.ModalOkbasket {
     margin: auto;
     font-family: 'SUITE-Regular';
     font-size: 18px;
 }
 
-.Modalbutton{
+.Modalbutton {
     display: flex;
-    gap :10px;
+    gap: 10px;
 }
-.Modalbutton button{
+
+.Modalbutton button {
     font-family: 'SUITE-Regular';
     padding: 5px 10px;
     margin: auto;
     /* height: 30px; */
-    border : 1px solid #d0c0a0e2;
+    border: 1px solid #d0c0a0e2;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     background-color: #d0c0a044;
 }
+
 /* ============결제완료 모달========== */
 
-.CompleteBox{
+.CompleteBox {
     font-family: 'SUITE-Regular';
     width: 100%;
 }
-.CompleteBox p{
+
+.CompleteBox p {
     text-align: center;
     padding: 5px;
 
 }
-.BuyComplete{
+
+.BuyComplete {
     width: calc(100% - 6px);
-    border : 1px solid #d0c0a0e2;
+    border: 1px solid #d0c0a0e2;
 
 }
-.BuyComplete ul{
+
+.BuyComplete ul {
     width: 100%;
     display: grid;
     grid-template-columns: 30% 70%;
@@ -287,21 +411,25 @@
 
     gap: 10px;
 }
+
 .BuyComplete p {
     font-family: 'SUITE-Regular';
     padding: 5px;
     text-align: end;
 }
-.BuyCompleteName{
+
+.BuyCompleteName {
     font-size: 22px;
-    font-weight:700;
+    font-weight: 700;
     text-shadow: 3px 3px 3px #aaaaaa;
 }
-.BuyCompleteItem{
-    font-weight:700;
+
+.BuyCompleteItem {
+    font-weight: 700;
     font-size: 17px;
 
 }
-.checkedCartItems{
+
+.checkedCartItems {
     border-top: 1px solid #d0c0a0e2;
 }
