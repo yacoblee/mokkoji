@@ -38,47 +38,6 @@ function MyPageGrid() {
     }
 
 
-    // const onCart = () => {
-    //     result = items.filter((item) => {
-    //         for (let i = 0; i < user.mypage.basket.length; i++) {
-    //             if (item.id === user.mypage.basket[i].productId)
-    //                 return item;
-    //         }
-    //     })
-    //     console.log(`확인용 3 ${result.length}`)
-    //     navigate('/mypage/cart', { state: result })
-    // }
-
-    const onCart = () => {
-
-        result = user.mypage.basket.map((bb) => {
-            let findItem = items.find((item) =>
-                item.id === bb.productId
-            );     // findItem
-
-            let cartItem = {}
-
-            cartItem.photo = findItem.productSrc[0]
-            cartItem.id = findItem.id
-            cartItem.name = findItem.name
-            cartItem.content = bb.options.contentSelect
-            cartItem.package = bb.options.packagingSelect
-            cartItem.contentCount = bb.quantity.contentSelect
-            cartItem.packageCount = bb.quantity.packagingSelect
-            cartItem.price = bb.totalPrice
-
-            return cartItem;
-        });     // map
-        // console.log(`확인용 3 ${result.length}`)
-        navigate('/mypage/cart', {
-            state: {
-                user: user,
-                result: result
-            }
-        })
-    }
-
-
     return (
         <div className='MyGrid'>
             <span onClick={onLike}>
@@ -90,7 +49,7 @@ function MyPageGrid() {
                     <span>찜목록</span>
                 </div>
             </span>
-            <span onClick={onCart}>
+            <Link to='/mypage/cart'>
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -98,7 +57,7 @@ function MyPageGrid() {
                     </div>
                     <span>장바구니</span>
                 </div>
-            </span>
+            </Link>
             <Link to='/mypage/post'>
                 <div className='MyPost'>
                     <div className='IconPost'>
