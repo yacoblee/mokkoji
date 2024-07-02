@@ -22,10 +22,12 @@
 .MyCartFooter {
     border-top: 1px solid #000;
     /* background-color: aliceblue; */
+    height: 40px;
 }
 
 .MyCartPhoto img {
     width: 170px;
+    height: 170px;
 }
 
 .MyCartGrid>div {
@@ -66,7 +68,7 @@
 
 .MyCartGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 300px;
+    height: 250px;
 }
 
 .MyCartGrid:nth-last-child(2) {
@@ -93,4 +95,8 @@
 .MyPackageCount {
     border: 1px solid;
     margin: 5px;
+}
+
+.MyCartButton button {
+    border: none;
 }

@@ -10,6 +10,11 @@ function MyPageCart() {
 
     const [user, setUser] = useState(userData)
 
+    // 숫자를 금액처럼 표기하기
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
+    };
+
     // 사진 이름 id 기타 정보(수량, 가격)들 가져오는 새로운 출력용 객체
     const cartGoods = user.mypage.basket.map((bb) => {
         let findItem = items.find((item) =>
@@ -29,13 +34,6 @@ function MyPageCart() {
 
         return cartItem;
     });     // map
-
-
-
-
-
-
-
 
 
 
@@ -86,13 +84,6 @@ function MyPageCart() {
 
 
 
-
-
-
-
-
-
-
     // 삭제 버튼 로직
     const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
         const newCartItem = cartGoods.filter((item) =>
@@ -126,7 +117,6 @@ function MyPageCart() {
 
     // 이 아래로 수량 조정하는 로직
     const changeProductCount = (cartId, variation) => {
-
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
@@ -139,19 +129,12 @@ function MyPageCart() {
                         alert('상품 개수 경고');
                     else
                         item.quantity.contentSelect = item.quantity.contentSelect - 1;
-
                 } else if (variation === 'increase')
                     item.quantity.contentSelect = item.quantity.contentSelect + 1
-
-
             }
             return item;
-
-
         }   // newBasket.map
-
         )   // newBasket
-
 
         const updatedMypage = {
             ...user.mypage,
@@ -167,12 +150,10 @@ function MyPageCart() {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);
-
     }   // changeProductCount
 
 
     const changePackageCount = (cartId, variation) => {
-
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
@@ -185,16 +166,11 @@ function MyPageCart() {
                         alert('포장 개수 경고');
                     else
                         item.quantity.packagingSelect = item.quantity.packagingSelect - 1;
-
                 } else if (variation === 'increase')
                     item.quantity.packagingSelect = item.quantity.packagingSelect + 1
-
             }
             return item;
-
-
         }   // newBasket.map
-
         )   // newBasket
 
         const updatedMypage = {
@@ -211,8 +187,10 @@ function MyPageCart() {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);
-
     }   // changePackageCount
+
+
+
 
 
 
@@ -266,7 +244,7 @@ function MyPageCart() {
                             </div>
                         </div>
                         <div className='MyCartButton'>
-                            <button>구매</button>
+                            <button>{formatNumber(goods.price)}원</button>
                             <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>
                     </div >  // mycartgird

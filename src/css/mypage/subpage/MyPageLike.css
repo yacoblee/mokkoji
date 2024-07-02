@@ -26,6 +26,7 @@
 
 .MyLikePhoto img {
     width: 170px;
+    height: 170px;
 }
 
 .MyLikeGrid>div {
@@ -54,7 +55,7 @@
 
 .MyLikeGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 300px;
+    height: 250px;
 }
 
 .MyLikeGrid:nth-last-child(2) {

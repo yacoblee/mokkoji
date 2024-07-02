@@ -17,6 +17,7 @@ function MyPageBuy() {
         return number.toLocaleString('en-US');
     };
 
+    const cartTotalPrice = newCheckedGoods.reduce((acc, item) => acc + item.totalPrice, 0);
 
     return (
         <div className='Payment'>
@@ -49,7 +50,18 @@ function MyPageBuy() {
                 );
             })}
 
-            <BuyInput />
+            <div className='PaymentFooter'>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div>{cartTotalPrice}</div>
+            </div>
+
+            <BuyInput
+                userData={user}
+                checkedCartItems={newCheckedGoods}
+                totalPrice={cartTotalPrice} />
 
         </div>
     )

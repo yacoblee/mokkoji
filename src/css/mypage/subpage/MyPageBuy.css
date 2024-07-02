@@ -15,7 +15,8 @@
     padding: 0 10%;
 }
 
-.PaymentGrid {
+.PaymentGrid,
+.PaymentFooter {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 10px;
@@ -23,8 +24,29 @@
     text-align: center;
 }
 
+.PaymentGrid {
+    padding: 10px;
+}
+
+.PaymentGrid {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: 200px;
+}
+
+.PaymentGrid:nth-child(2) {
+    border-top: 1px solid #000;
+}
+
+.PaymentFooter {
+    border-top: 1px solid #000;
+    /* background-color: aliceblue; */
+    height: 50px;
+}
+
 .BuyPhoto img {
-    width: 100px;
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
 }
 
 .BuyInfo {}
