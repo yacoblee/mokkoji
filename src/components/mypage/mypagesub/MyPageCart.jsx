@@ -75,11 +75,11 @@ function MyPageCart() {
     const navigate = useNavigate();
 
     const onBuy = () => {
-        // navigate('/???', {
-        //     state: {
-        //         newCheckedGoods: newCheckedGoods
-        //     }
-        // })
+        navigate('/buy', {
+            state: {
+                newCheckedGoods: newCheckedGoods
+            }
+        })
     }
 
 
