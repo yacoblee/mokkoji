@@ -62,7 +62,6 @@ function MyPageGrid() {
                 <div className='MyPost'>
                     <div className='IconPost'>
                         <FontAwesomeIcon icon={faTruckFast} />
-                        {localStorage.length}
                     </div>
                     <span>배송 현황</span>
                 </div>

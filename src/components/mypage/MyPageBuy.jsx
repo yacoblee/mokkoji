@@ -1,5 +1,6 @@
 import '../../css/mypage/MyPageIndex.css';
 import '../../css/mypage/subpage/MyPageBuy.css'
+import BuyInput from '../buy/BuyInputBox'
 
 import { useLocation } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ function MyPageBuy() {
     const location = useLocation();
     let newCheckedGoods = location.state.newCheckedGoods;
 
-    // const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     //금액을 수정하는 함수
@@ -47,6 +48,9 @@ function MyPageBuy() {
                     </div >
                 );
             })}
+
+            <BuyInput />
+
         </div>
     )
 }
