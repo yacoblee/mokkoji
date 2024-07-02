@@ -16,45 +16,46 @@ import Reservation from './components/Reserve/Reservation';
 import ProductBuy from './components/buy/ProductBuy';
 import ScrollToTop from './components/modules/ScrollToTop';
 import Introduction from './components/Introduction/Introduction';
+import Buy from './components/mypage/MyPageBuy'
 
 
 const App = () => {
-  // const new_script = src => { 
-  //   return new Promise((resolve, reject) => { 
-  //     const script = document.createElement('script'); 
-  //     script.src = src; 
-  //     script.addEventListener('load', () => { 
-  //       resolve(); 
-  //     }); 
-  //     script.addEventListener('error', e => { 
-  //       reject(e); 
-  //     }); 
-  //     document.head.appendChild(script); 
-  //   }); 
+  // const new_script = src => {
+  //   return new Promise((resolve, reject) => {
+  //     const script = document.createElement('script');
+  //     script.src = src;
+  //     script.addEventListener('load', () => {
+  //       resolve();
+  //     });
+  //     script.addEventListener('error', e => {
+  //       reject(e);
+  //     });
+  //     document.head.appendChild(script);
+  //   });
   // };
-  // useEffect(() => { 
+  // useEffect(() => {
   //   //카카오맵 스크립트 읽어오기
   //   const my_script = new_script('https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f3c62bc9c090cf7aac46c7809de95793');
 
   //   //스크립트 읽기 완료 후 카카오맵 설정
-  //   my_script.then(() => { 
-  //     console.log('script loaded!!!');  
-  //     const kakao = window['kakao']; 
+  //   my_script.then(() => {
+  //     console.log('script loaded!!!');
+  //     const kakao = window['kakao'];
   //     kakao.maps.load(() => {
   //       const mapContainer = document.getElementById('map');
-  //       const options = { 
+  //       const options = {
   //         center: new kakao.maps.LatLng(37.56000302825312, 126.97540593203321), //좌표설정
-  //         level: 3 
-  //       }; 
+  //         level: 3
+  //       };
   //       const map = new kakao.maps.Map(mapContainer, options); //맵생성
   //       //마커설정
-  //       const markerPosition = new kakao.maps.LatLng(37.56000302825312, 126.97540593203321); 
-  //       const marker = new kakao.maps.Marker({ 
+  //       const markerPosition = new kakao.maps.LatLng(37.56000302825312, 126.97540593203321);
+  //       const marker = new kakao.maps.Marker({
   //         position: markerPosition
-  //       }); 
-  //       marker.setMap(map); 
-  //     });   
-  //   }); 
+  //       });
+  //       marker.setMap(map);
+  //     });
+  //   });
   // }, []);
 
 
@@ -78,7 +79,7 @@ const App = () => {
         <Route path='/Login/FindPw' element={<FindPw />} />
         <Route path="/mypage/*" element={<MyPageIndex />} />
         <Route path="/introduction" element={<Introduction />} />
-      
+        <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}
 
       </Routes>

@@ -12,7 +12,7 @@ import MyPagePost from './mypagesub/MyPagePost';
 import MyPageBook from './mypagesub/MyPageBook';
 import MyPageList from './mypagesub/MyPageList';
 
-import userInfoArray from '../login/UserInforData';
+// import userInfoArray from '../login/UserInforData';
 import GoodsItems from '../product/ProductObject';
 
 function MyPageIndex() {
@@ -47,7 +47,7 @@ function MyPageIndex() {
     }
 
     if (user) {
-        console.log(`${user.id}`);
+        // console.log(`${user.id}`);
     } else {
         console.log("User not found");
     }
