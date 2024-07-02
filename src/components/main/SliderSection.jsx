@@ -1,96 +1,74 @@
-import '../../css/main.css'
-import { useEffect, useRef } from "react";
-import GoodsItems from "../product/ProductObject";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong, faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import '../../css/main.css';
+import { useEffect, useRef } from 'react';
+import About from './About';
 
-const SlideSection = ({ title, sort }) => {
-    const sortItems = [...GoodsItems];
-    if (sort === 'count') {
-        sortItems.sort((a, b) => b.count - a.count);
-    }
+const SliderSection = () => {
+    const aboutRef = useRef(null);
 
-    //버튼 스로틀
-    const throlltle = (func) => {
-        let timer;
+    useEffect(() => {
+        const sections = document.querySelectorAll('#section2');
+        const options = {
+            threshold: 0.8,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const leftImage = entry.target.querySelector('.left_door');
+                const rightImage = entry.target.querySelector('.right_door');
+                const startImage = entry.target.querySelector('.start_door');
+                const endImage = entry.target.querySelector('.end_door');
+                const about = entry.target.querySelector('.section2_about');
+
+                if (entry.isIntersecting) {
+                    leftImage?.classList.add('left_motion');
+                    rightImage?.classList.add('right_motion');
+                    startImage?.classList.add('start_motion');
+                    endImage?.classList.add('end_motion');
+                    setTimeout(() => {
+                        about?.classList.add('about_visible');
+                    }, 600);
+
+                } else {
+                    setTimeout(() => {
+                        leftImage?.classList.remove('left_motion');
+                        rightImage?.classList.remove('right_motion');
+                        startImage?.classList.remove('start_motion');
+                        endImage?.classList.remove('end_motion');
+                        about?.classList.remove('about_visible');
+                    }, 600);
+
+
+                }
+            });
+        }, options);
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
 
         return () => {
-            if (!timer) {
-                timer = setTimeout(() => {
-                    timer = null;
-                    func();
-                }, 300);
-            }
-        }
-    };
+            sections.forEach((section) => {
+                observer.unobserve(section);
+            });
+        };
+    }, []);
 
-
-
-    // 슬라이드 기능 추가
-    const slideContainerRef = useRef(0);
-    const btnPreRef = useRef();
-    const btnNextRef = useRef();
-    const slideIndexRef = useRef(0);
-
-    const handlePrevClick = (e) => {
-        slideIndexRef.current--;
-        slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
-
-        btnNextRef.current.classList.remove('nonVisible');
-        if (slideIndexRef.current <= 0) {
-            btnPreRef.current.classList.add('nonVisible');
-        }
-    };
-
-    const handleNextClick = (e) => {
-
-        slideIndexRef.current++;
-        slideContainerRef.current.style.left = `${-slideIndexRef.current * 25}%`;
-
-        btnPreRef.current.classList.remove('nonVisible');
-        if (slideIndexRef.current >= sortItems.length - 3) {
-            btnNextRef.current.classList.add('nonVisible');
-        }
-    };
     return (
         <>
-            <div className="product_section">
-                <div className='product_head'>
-                    <h1>Newest Items</h1>
-                </div>
-
-                <div className='slide_hidden'></div>
-
-                <div className="slide_container" ref={slideContainerRef} >
-                    {sortItems.map((product, i) => (
-                        <div className='slide_item' key={i}>
-                            <Link to={`/goods/${product.category}/${product.id}`}>
-                                <div className="slide_inner">
-                                    <img src={product.slideSrc[0]} alt={product.name} />
-                                    <div className='slide_content'>
-                                        <p className='slide_name'>{product.name}</p>
-                                        <p className='slide_price'>{product.price.toLocaleString()}원</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
-                <div className='slide_hidden_right'></div>
-
-                <button className="btn_pre nonVisible" ref={btnPreRef} onClick={throlltle(handlePrevClick)}>
-                    <FontAwesomeIcon icon={faArrowLeftLong} />
-                </button>
-                <button className="btn_next" ref={btnNextRef} onClick={throlltle(handleNextClick)}>
-                    <FontAwesomeIcon icon={faArrowRightLong} />
-                </button>
-
+            <div className='section2_inner'>
+                <img src="/images/main/traditional01.png" className='first_door' alt="" />
+                <img src="/images/main/traditional01.png" className='left_door' alt="" />
+                <img src="/images/main/traditional01.png" className='start_door' alt="" />
+                <img src="/images/main/traditional01.png" className='end_door' alt="" />
+                <img src="/images/main/traditional02.png" className='right_door' alt="" />
+                <img src="/images/main/traditional02.png" className='final_door' alt="" />
             </div>
+            <div className='section2_about' ref={aboutRef}>
+                <About />
+            </div>
+            {/* <SlideSection title='베스트 상품' sort='count' /> */}
         </>
     );
+};
 
-}
-
-
-export default SlideSection
+export default SliderSection;
