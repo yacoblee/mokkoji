@@ -1,17 +1,35 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function MyPageLike() {
 
-    const location = useLocation();
-    let likedGoods = location.state.result;
-    let userData = location.state.user;
+    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    const navigate = useNavigate();
+    const [user, setUser] = useState(userData)
 
+    // 사진 이름 id 정보만 담긴 새로운 출력용 객체
+    let likedGoods = user.mypage.isLike.map((like) => {
+        let findItem = items.find((item) =>
+            item.id === like
+        )   // findItem
+
+        let likeItem = {}
+
+        likeItem.photo = findItem.productSrc[0]
+        likeItem.id = findItem.id
+        likeItem.name = findItem.name
+        likeItem.category = findItem.category
+
+        return likeItem;
+    })
+
+
+    // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직
     const [checkedGoods, setCheckedGoods] = useState([]);
+
     const handleCheckAll = (e) => {
         if (e.target.checked) {
             setCheckedGoods(likedGoods.map(goods => goods.id));
@@ -22,6 +40,41 @@ function MyPageLike() {
     const handleCheckGood = (id) => {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
+
+    console.log(checkedGoods)
+
+    let unCheckedGoods = []
+
+    useEffect(() => {
+        checkedGoods.map((id) => {
+            let findItem = userData.mypage.isLike.filter((like) =>
+                like !== id
+            );      // findBasket
+            unCheckedGoods = findItem
+        })
+    }, [checkedGoods]);
+
+    console.log(unCheckedGoods)
+
+    const onDelete = () => {
+        let newMyPage = {
+            ...userData.mypage,
+            isLike: unCheckedGoods
+        };
+
+        let newUser = {
+            ...userData,
+            mypage: newMyPage
+        }
+
+        sessionStorage.setItem('LoginUserInfo', JSON.stringify(newUser));
+
+        setUser(newUser);
+
+    }
+
+
+
 
     const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
         const newLikedItem = likedGoods.filter((item) =>
@@ -44,12 +97,7 @@ function MyPageLike() {
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUserData));
 
-        navigate('/mypage/like', {
-            state: {
-                user: newUserData,
-                result: newLikedItem
-            }
-        })
+        setUser(newUserData);
     }
 
 
@@ -83,11 +131,10 @@ function MyPageLike() {
                             />
                         </div>
                         <div className="MyLikePhoto">
-                            <img src={goods.productSrc[0]} alt={goods.name} />
+                            <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyLikeInfo'>
                             <h3>{goods.name}</h3>
-                            <h4>{goods.price}원</h4>
                         </div>
                         <div>
 
@@ -115,7 +162,7 @@ function MyPageLike() {
                 <div></div>
                 <div></div>
                 <div>
-                    <button className='SelectDeleteButton'>선택 삭제</button>
+                    <button className='SelectDeleteButton' onClick={onDelete}>선택 삭제</button>
                 </div>
             </div>
 

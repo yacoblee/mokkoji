@@ -52,6 +52,9 @@ function MyPageIndex() {
         console.log("User not found");
     }
 
+    const [change, setChange] = useState(false)
+
+
     return (
         <div className='MyPage'>
             <h1>
@@ -63,8 +66,8 @@ function MyPageIndex() {
 
             <Routes>
                 <Route path='/*' element={<MyPageMain />} />
-                <Route path='like' element={<MyPageLike />} />
-                <Route path='cart' element={<MyPageCart />} />
+                <Route path='like' element={<MyPageLike change={change} setChange={setChange} />} />
+                <Route path='cart' element={<MyPageCart change={change} setChange={setChange} />} />
                 <Route path='post' element={<MyPagePost />} />
                 <Route path='list' element={<MyPageList />} />
                 <Route path='book' element={<MyPageBook />} />
