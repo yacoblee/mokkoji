@@ -18,19 +18,22 @@ function MyPageList() {
 
         <div className='MyPageList'>
 
-            {user.mypage.history.map((list) => {
+            {user.mypage.history
+                .slice()    // 원본 배열을 변경하지 않기 위해 복사본 생성
+                .sort((a, b) => new Date(b.date) - new Date(a.date))    // date를 기준으로 내림차순 정렬
+                .map((list) => {
 
-                return (
-                    <div className='MyListDate' key={list.date}>
-                        <h2>{list.date}</h2>
-                        <div className='MyListItem' key={list.item}>
-                            <div className="MyCartPhoto">
-                                {/* <img src={items[list.item].productSrc[0]} /> */}
+                    return (
+                        <div className='MyListDate' key={list.date}>
+                            <h2>{list.date}</h2>
+                            <div className='MyListItem' key={list.item}>
+                                <div className="MyCartPhoto">
+                                    {/* <img src={items[list.item].productSrc[0]} /> */}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )
-            })}
+                    )
+                })}
 
         </div>
     )

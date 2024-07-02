@@ -5,7 +5,7 @@ function MyPagePost() {
     return (
 
         <div>
-            1
+            공사중
         </div>
     )
 }

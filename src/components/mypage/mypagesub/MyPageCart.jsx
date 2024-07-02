@@ -72,6 +72,7 @@ function MyPageCart({ change, setChange }) {
 
     const navigate = useNavigate();
 
+    // 선택 상품 구매 함수
     const onBuy = () => {
         navigate('/buy', {
             state: {
@@ -80,7 +81,7 @@ function MyPageCart({ change, setChange }) {
         })
     }
 
-
+    // 개별 상품 구매 함수
     const onBuyEach = (id) => {
         const findData = userData.mypage.basket.find((item) =>
             item.productId === id
@@ -96,7 +97,7 @@ function MyPageCart({ change, setChange }) {
 
 
 
-    // 삭제 버튼 로직
+    // 삭제 버튼 로직(id값만 비교)
     const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
         const newCartItem = cartGoods.filter((item) =>
             item.id !== delId
@@ -123,11 +124,12 @@ function MyPageCart({ change, setChange }) {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser));
 
         setUser(newUser);
-        setChange(!change)
+        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }   // handleDelete
 
 
-    // 이 아래로 수량 조정하는 로직(하지만 결제창으로 반영되지는 않음: totalprice가 상수이기에)
+    // 이하 개수 변경 로직, 하지만 totalprice는 상수로 주어졌기 때문에 변경되지 않음. 추후 계산식 필요
+    // 상품 개수 변경 로직
     const changeProductCount = (cartId, variation) => {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
@@ -164,7 +166,7 @@ function MyPageCart({ change, setChange }) {
         setUser(updatedUser);
     }   // changeProductCount
 
-
+    // 포장 개수 변경 로직
     const changePackageCount = (cartId, variation) => {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {

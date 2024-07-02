@@ -10,7 +10,8 @@ function MyPageSet() {
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
-    const [emailDisabled, setEmailDisabled] = useState(false);      // 이메일 직접입력 칸 활성화
+    // 이메일 타입 '직접 입력'시에만 작성이 활성화되기 위한 로직
+    const [emailDisabled, setEmailDisabled] = useState(false);
     const handleEmailChange = (e) => {
         const selectedValue = e.target.value;
         if (selectedValue !== "type") {
@@ -35,12 +36,13 @@ function MyPageSet() {
     const handleSubmit = async (e) => {     // 버튼으로 sessionstorage에 데이터 저장 로직
         e.preventDefault();
 
-        if (password !== passwordConfirm) {     // 비밀번호 확인 절차
+        // 비밀번호 확인하는 절차
+        if (password !== passwordConfirm) {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
 
-        // 업데이트된 사용자 정보
+        // 업데이트된 사용자 정보 저장
         const updatedUser = {
             ...user,
             phoneNumber: phoneNumber || user.phoneNumber,       // 빈값이 저장되지 않도록 함

@@ -3,7 +3,7 @@ import '../../../css/mypage/subpage/MyPageLike.css';
 
 import React, { useEffect, useState } from 'react';
 
-function MyPageLike() {
+function MyPageLike({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
@@ -26,8 +26,7 @@ function MyPageLike() {
         return likeItem;
     })
 
-
-    // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직
+    // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직(진행중: 체크된 id값이 매번 갱신되는 문제 있음=최근 체크한 1개만 삭제됨)
     const [checkedGoods, setCheckedGoods] = useState([]);
 
     const handleCheckAll = (e) => {
@@ -75,7 +74,7 @@ function MyPageLike() {
 
 
 
-
+    // 개별 삭제 버튼 로직(id값 비교)
     const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
         const newLikedItem = likedGoods.filter((item) =>
             item.id !== delId
@@ -98,6 +97,7 @@ function MyPageLike() {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUserData));
 
         setUser(newUserData);
+        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
 

@@ -52,6 +52,7 @@ function MyPageIndex() {
         console.log("User not found");
     }
 
+    // 하위 컴포넌트에서 변경시 전체 렌더링을 위한 로직
     const [change, setChange] = useState(false)
 
 
@@ -70,7 +71,7 @@ function MyPageIndex() {
                 <Route path='cart' element={<MyPageCart change={change} setChange={setChange} />} />
                 <Route path='post' element={<MyPagePost />} />
                 <Route path='list' element={<MyPageList />} />
-                <Route path='book' element={<MyPageBook />} />
+                <Route path='book' element={<MyPageBook change={change} setChange={setChange} />} />
             </Routes>
         </div>
     );

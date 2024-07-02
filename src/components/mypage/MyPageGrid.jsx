@@ -10,6 +10,7 @@ function MyPageGrid() {
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
+    
     return (
         <div className='MyGrid'>
             <Link to='/mypage/like'>
@@ -50,6 +51,7 @@ function MyPageGrid() {
                 <div className='MyBook'>
                     <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
+                        {user.mypage.Reservation.length}
                     </div>
                     <span>나의 예약</span>
                 </div>

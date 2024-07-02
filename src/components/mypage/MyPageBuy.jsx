@@ -12,11 +12,12 @@ function MyPageBuy() {
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    //금액을 수정하는 함수
+    // 금액을 수정하는 함수
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
 
+    // totalprice(한개 상품에 대한 최종 금액)를 바탕으로 총 금액 계산하는 함수
     const cartTotalPrice = newCheckedGoods.reduce((acc, item) => acc + item.totalPrice, 0);
 
     return (
