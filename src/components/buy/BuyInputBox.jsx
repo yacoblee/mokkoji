@@ -265,7 +265,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 <form className='buyForm2'
                 >
                     <label htmlFor="deliveryMessage">배송 메세지</label>
-                    <div>
+                    <div className="deliveryBox">
                     <select name="deliveryMessage" id="deliveryMessage"
                     value={selectBox.deliveryMessage}
                     onChange={onChangeSelectBox}>

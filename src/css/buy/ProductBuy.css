@@ -303,7 +303,11 @@
     font-family: 'SUITE-Regular';
     font-size: 16px;
 }
-
+.deliveryBox{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
 .buyRadioBox input {
     width: 15px;
     margin: 0 10px;
