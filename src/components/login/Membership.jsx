@@ -200,6 +200,7 @@ const Membership = () => {
     const emailTypeR = useRef(null);
     // 셀렉트 박스에서 선택한 값 input 창에 띄어 보여주고, 직접 입력의 경우 input 창 빈 문자열로 변환 
     const getDomain = (e) => {
+        forceUpdate(!forceUpdater)
         const selectedDomain = e.target.value;
         formData.current.emailType = selectedDomain === 'self' ? '' : selectedDomain;
 
@@ -221,7 +222,7 @@ const Membership = () => {
         firstNum: /^\d+$/,
         secondNum: /^\d+$/,
         lastNumber: /^\d+$/,
-        email: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/,
+        email: /^[a-zA-Z]*$/,
         emailType: /^[a-zA-Z]+\.[a-zA-Z]+$/,
 
     }); //terms

@@ -4,13 +4,14 @@ import React from "react";
 import IntroductionPage2 from "./IntroductionPage2";
 import IntroductionPage3 from "./IntroductionPage3";
 import IntroductionPage4 from "./IntroductionPage4";
+import { useDispatch } from 'react-redux';
 
 
 
 const Introduction = () => {
 
     return (
-        <div className="main-container">
+        <div className="hy_main-container">
             <IntroductionPage/>
             <IntroductionPage2/>
             <IntroductionPage3/>
