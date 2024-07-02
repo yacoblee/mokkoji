@@ -172,7 +172,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
             history.item.push(item.productId);
         });
         //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
-        copyUserData.mypage.history.unshift(history);
+        copyUserData.mypage.history.push(history);
         console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
         console.log(copyUserData.mypage.history);
 
