@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import '../../../css/mypage/subpage/MyPageCart.css';
 import { useNavigate } from 'react-router-dom';
 
-function MyPageCart() {
+function MyPageCart({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
@@ -16,7 +16,7 @@ function MyPageCart() {
     };
 
     // 사진 이름 id 기타 정보(수량, 가격)들 가져오는 새로운 출력용 객체
-    const cartGoods = user.mypage.basket.map((bb) => {
+    let cartGoods = user.mypage.basket.map((bb) => {
         let findItem = items.find((item) =>
             item.id === bb.productId
         );     // findItem
@@ -39,7 +39,7 @@ function MyPageCart() {
 
 
 
-    // 이 아래로 checkbox 전체선택 로직
+    // 이 아래로 checkbox 전체선택 + 선택 상품 구매 로직
     const [checkedGoods, setCheckedGoods] = useState([]);
 
     const handleCheckAll = (e) => {
@@ -82,7 +82,6 @@ function MyPageCart() {
 
 
     const onBuyEach = (id) => {
-
         const findData = userData.mypage.basket.find((item) =>
             item.productId === id
         )
@@ -124,7 +123,7 @@ function MyPageCart() {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser));
 
         setUser(newUser);
-
+        setChange(!change)
     }   // handleDelete
 
 
@@ -221,6 +220,7 @@ function MyPageCart() {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
             </div>
 
 
@@ -275,6 +275,7 @@ function MyPageCart() {
                         checked={checkedGoods.length === cartGoods.length}
                     />
                 </div>
+                <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
