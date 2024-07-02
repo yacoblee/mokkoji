@@ -81,6 +81,19 @@ function MyPageCart() {
     }
 
 
+    const onBuyEach = (id) => {
+
+        const findData = userData.mypage.basket.find((item) =>
+            item.productId === id
+        )
+        console.log(findData)
+
+        navigate('/buy', {
+            state: {
+                newCheckedGoods: [findData]
+            }
+        })
+    }
 
 
 
@@ -115,7 +128,7 @@ function MyPageCart() {
     }   // handleDelete
 
 
-    // 이 아래로 수량 조정하는 로직
+    // 이 아래로 수량 조정하는 로직(하지만 결제창으로 반영되지는 않음: totalprice가 상수이기에)
     const changeProductCount = (cartId, variation) => {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
@@ -192,8 +205,6 @@ function MyPageCart() {
 
 
 
-
-
     return (
         <div className='MyCartList' >
 
@@ -228,6 +239,8 @@ function MyPageCart() {
                         </div>
                         <div className='MyCartInfo'>
                             <h3>{goods.name}</h3>
+                        </div>
+                        <div className='MyCartDetail'>
                             <h4>{goods.content}</h4>
                             <h4>{goods.package}</h4>
                         </div>
@@ -244,7 +257,9 @@ function MyPageCart() {
                             </div>
                         </div>
                         <div className='MyCartButton'>
-                            <button>{formatNumber(goods.price)}원</button>
+                            <button className='buttonChange' onClick={() => onBuyEach(goods.id)}>
+                                {formatNumber(goods.price)}원
+                            </button>
                             <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>
                     </div >  // mycartgird
@@ -264,12 +279,12 @@ function MyPageCart() {
                 <div></div>
                 <div></div>
                 <div>
-                    <button onClick={onBuy}>선택 구매</button>
+                    <button className='SelectBuyButton' onClick={onBuy}>선택 구매</button>
                 </div>
             </div>
 
 
-        </div>  // mycartlist
+        </div >  // mycartlist
 
     );  // return
 }

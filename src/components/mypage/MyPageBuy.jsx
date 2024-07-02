@@ -29,6 +29,8 @@ function MyPageBuy() {
             {newCheckedGoods.map((goods) => {
                 const product = items.find(item => item.id === goods.productId);
 
+                console.log(items.length)
+
                 return (
                     <div className="PaymentGrid" key={goods.productId} >
                         <div className="BuyPhoto">
@@ -37,14 +39,14 @@ function MyPageBuy() {
                         <div className='BuyInfo'>
                             <h3>{product.name}</h3>
                         </div>
-                        <div>{formatNumber(goods.totalPrice)}</div>
+                        <div>{formatNumber(goods.totalPrice)}원</div>
                         <div>
-                            <div>{goods.options.contentSelect}</div>
-                            <div>{goods.quantity.contentSelect}</div>
+                            <div>{goods.options.contentSelect} :</div>
+                            <div>{goods.quantity.contentSelect}개</div>
                         </div>
                         <div>
-                            <div>{goods.options.packagingSelect}</div>
-                            <div>{goods.quantity.packagingSelect}</div>
+                            <div>{goods.options.packagingSelect} :</div>
+                            <div>{goods.quantity.packagingSelect}개</div>
                         </div>
                     </div >
                 );
@@ -55,7 +57,7 @@ function MyPageBuy() {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div>{cartTotalPrice}</div>
+                <div>{formatNumber(cartTotalPrice)}원</div>
             </div>
 
             <BuyInput

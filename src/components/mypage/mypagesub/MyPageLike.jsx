@@ -68,6 +68,7 @@ function MyPageLike() {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
             </div>
 
 
@@ -93,7 +94,7 @@ function MyPageLike() {
                         </div>
                         <div className='MyLikeButton'>
                             <Link to={`/goods/${goods.category}/${goods.id}`}>
-                                <button>상품 상세</button>
+                                <button className='ButtonDetail'>상품 상세</button>
                             </Link>
                             <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>
@@ -113,6 +114,9 @@ function MyPageLike() {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div>
+                    <button className='SelectDeleteButton'>선택 삭제</button>
+                </div>
             </div>
 
 
