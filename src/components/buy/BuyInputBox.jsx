@@ -100,9 +100,16 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         deliveryMessage: '문 앞에 놔주세요',
         buyHow:'',
     });
-
+    //직접 입력시 인풋창을 활성화 시킬 state
+    const [directInput , setDirectInput] = useState(false);
+    
+    //select를 선택했을때 onchange 이벤트
+    //직접입력이 아닐경우는 false로 지정
     const onChangeSelectBox = (e)=>{
         SetSelectBox((box)=>({...box,deliveryMessage:e.target.value}));
+        if(e.target.value !=='직접입력'){
+            setDirectInput(false);
+        }
     }
 
     const onChangeRadioBox = (e)=>{
@@ -136,12 +143,15 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         }else{
             setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
         }
+        if(selectBox.deliveryMessage==='직접입력'){
+            setDirectInput(true);
+        }
     },[userInfo,selectBox,selectedProduct,checkedCartItems]);
 
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
 
-
+    // console.log(selectBox.deliveryMessage);
     //구매버튼 이벤트
     const onClickBuyButton = ()=>{
         setIsModalBuyOpen(true);
@@ -256,6 +266,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 <form className='buyForm2'
                 >
                     <label htmlFor="deliveryMessage">배송 메세지</label>
+                    <div className="deliveryBox">
                     <select name="deliveryMessage" id="deliveryMessage"
                     value={selectBox.deliveryMessage}
                     onChange={onChangeSelectBox}>
@@ -265,6 +276,12 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                         <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
                         <option value="직접입력">직접 입력</option>
                     </select>
+                    {directInput 
+                    &&<input type="text" 
+                    className="directInput"
+                    onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))}/>}
+                    
+                    </div>
                     <label htmlFor="buyHow">결제 수단 선택</label>
                     <div className='buyRadioBox2'>
                         <input type="radio" name='buyHow' id='CreditCard'
