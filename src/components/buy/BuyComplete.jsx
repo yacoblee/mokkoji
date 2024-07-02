@@ -14,7 +14,7 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
             구매리스트
         </p>
         <div className="BuyComplete">
-        {selectedProduct.name &&
+        {selectedProduct && selectedProduct.name &&(
             <ul>
                 <li>상품명</li>
                 <li className="BuyCompleteItem">{selectedProduct.name}</li>
@@ -29,6 +29,7 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
                 <li>가격</li>
                 <li>{formatNumber(productPrice)}</li>
             </ul>
+        )
         }
 
             {checkedCartItems.map(item => {

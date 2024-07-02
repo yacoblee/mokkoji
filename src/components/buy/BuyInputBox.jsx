@@ -151,7 +151,8 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`
         
         //history 객체 가공 item 배열에 카트 아이템을 추가(push).
-        const history = {date : nowDay , item : [selectedProduct.id]};
+
+        const history = {date : nowDay , item :selectedProduct ? [selectedProduct.id] :[]};
 
         checkedCartItems.map((item)=>{
             history.item.push(item.productId);
