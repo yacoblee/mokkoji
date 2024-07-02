@@ -22,10 +22,12 @@
 .MyLikeFooter {
     border-top: 1px solid #000;
     /* background-color: aliceblue; */
+    height: 40px;
 }
 
 .MyLikePhoto img {
     width: 170px;
+    height: 170px;
 }
 
 .MyLikeGrid>div {
@@ -45,23 +47,27 @@
     padding: 0;
 }
 
-.MyLikeButton button {
+.MyLikeButton button,
+.SelectDeleteButton {
     width: 130px;
     height: 30px;
     padding: 0;
     margin: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .MyLikeGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 300px;
+    height: 250px;
 }
 
 .MyLikeGrid:nth-last-child(2) {
     border: none;
 }
 
-.MyLikeFooter,
-.MyLikeHeader {
-    padding: 10px 0;
+.ButtonDetail {
+    background-color: deepskyblue;
+    color: white;
 }

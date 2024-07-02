@@ -12,7 +12,7 @@ import MyPagePost from './mypagesub/MyPagePost';
 import MyPageBook from './mypagesub/MyPageBook';
 import MyPageList from './mypagesub/MyPageList';
 
-import userInfoArray from '../login/UserInforData';
+// import userInfoArray from '../login/UserInforData';
 import GoodsItems from '../product/ProductObject';
 
 function MyPageIndex() {
@@ -47,10 +47,14 @@ function MyPageIndex() {
     }
 
     if (user) {
-        console.log(`${user.id}`);
+        // console.log(`${user.id}`);
     } else {
         console.log("User not found");
     }
+
+    // 하위 컴포넌트에서 변경시 전체 렌더링을 위한 로직
+    const [change, setChange] = useState(false)
+
 
     return (
         <div className='MyPage'>
@@ -63,11 +67,11 @@ function MyPageIndex() {
 
             <Routes>
                 <Route path='/*' element={<MyPageMain />} />
-                <Route path='like' element={<MyPageLike />} />
-                <Route path='cart' element={<MyPageCart />} />
+                <Route path='like' element={<MyPageLike change={change} setChange={setChange} />} />
+                <Route path='cart' element={<MyPageCart change={change} setChange={setChange} />} />
                 <Route path='post' element={<MyPagePost />} />
                 <Route path='list' element={<MyPageList />} />
-                <Route path='book' element={<MyPageBook />} />
+                <Route path='book' element={<MyPageBook change={change} setChange={setChange} />} />
             </Routes>
         </div>
     );

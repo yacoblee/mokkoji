@@ -2,45 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function MyPageGrid() {
-
-    const navigate = useNavigate();
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-
-    // console.log(`확인용 1 ${user.id}, ${items.length}`)
-
-    let result = []
-
-    function getGoods(check) {
-        result = items.filter((item) => {
-            for (let i = 0; i < check.length; i++) {
-                if (item.id === check[i])
-                    return item;
-            }
-        })
-    }
-
-    const onLike = () => {
-        getGoods(user.mypage.isLike)
-        // console.log(`확인용 2 ${result.length}`)
-        navigate('/mypage/like', {
-            state: {
-                user: user,
-                result: result
-            }
-        })
-    }
-
-
+    
     return (
         <div className='MyGrid'>
-            <span onClick={onLike}>
+            <Link to='/mypage/like'>
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
@@ -48,7 +21,7 @@ function MyPageGrid() {
                     </div>
                     <span>찜목록</span>
                 </div>
-            </span>
+            </Link>
             <Link to='/mypage/cart'>
                 <div className='MyCart'>
                     <div className='IconCart'>
@@ -62,7 +35,6 @@ function MyPageGrid() {
                 <div className='MyPost'>
                     <div className='IconPost'>
                         <FontAwesomeIcon icon={faTruckFast} />
-                        {localStorage.length}
                     </div>
                     <span>배송 현황</span>
                 </div>
@@ -79,6 +51,7 @@ function MyPageGrid() {
                 <div className='MyBook'>
                     <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
+                        {user.mypage.Reservation.length}
                     </div>
                     <span>나의 예약</span>
                 </div>

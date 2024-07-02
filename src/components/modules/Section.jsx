@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Background from '../main/Backgroud'
 import ProductSection from '../main/Productsection';
-import Introduction from '../main/Introduction';
+import PostCard from '../main/PostCard';
 import About from '../main/About'
 import SlideSection from '../main/SliderSection';
 const Section = ({ id, text, color }) => {
@@ -26,7 +26,7 @@ const Section = ({ id, text, color }) => {
                 Section 1
             </section>
             <section id='section4' className="section">
-                <Introduction />
+                <PostCard />
             </section>
         </div>
     );

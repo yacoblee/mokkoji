@@ -7,7 +7,7 @@
 .MyCartGrid,
 .MyCartFooter {
     display: grid;
-    grid-template-columns: 50px 200px 1fr 150px 180px;
+    grid-template-columns: 50px 200px 1fr 1fr 150px 180px;
     gap: 10px;
     align-items: center;
     text-align: center;
@@ -22,10 +22,12 @@
 .MyCartFooter {
     border-top: 1px solid #000;
     /* background-color: aliceblue; */
+    height: 40px;
 }
 
 .MyCartPhoto img {
     width: 170px;
+    height: 170px;
 }
 
 .MyCartGrid>div {
@@ -37,19 +39,25 @@
     align-items: initial;
 }
 
-.MyCartInfo * {
+.MyCartInfo *,
+.MyCartDetail * {
     padding: 10px;
 }
+
 
 .MyCartButton {
     padding: 0;
 }
 
-.MyCartButton button {
+.MyCartButton button,
+.SelectBuyButton {
     width: 130px;
     height: 30px;
     padding: 0;
     margin: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .MyCartCount input {
@@ -66,16 +74,11 @@
 
 .MyCartGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 300px;
+    height: 250px;
 }
 
 .MyCartGrid:nth-last-child(2) {
     border: none;
-}
-
-.MyCartFooter,
-.MyCartHeader {
-    padding: 10px 0;
 }
 
 .MyCartCount,
@@ -93,4 +96,10 @@
 .MyPackageCount {
     border: 1px solid;
     margin: 5px;
+}
+
+.buttonChange,
+.SelectBuyButton {
+    background-color: deepskyblue;
+    color: white;
 }

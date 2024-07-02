@@ -41,7 +41,7 @@ const ProductSection = () => {
 
                     throttle(() => {
                         about.style.zIndex = '1';
-                    }, 900)();
+                    }, 800)();
                 } else {
                     leftImage?.classList.remove('left_motion');
                     rightImage?.classList.remove('right_motion');

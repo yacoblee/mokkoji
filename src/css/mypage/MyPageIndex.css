@@ -12,6 +12,7 @@
     box-sizing: border-box;
     /* overflow: hidden; */
     padding: 0 20%;
+    min-height: 80vh;
 }
 
 .MyPage>h1 {
