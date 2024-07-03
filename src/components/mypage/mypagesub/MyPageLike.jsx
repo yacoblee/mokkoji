@@ -124,7 +124,7 @@ function MyPageLike({ change, setChange }) {
             {likedGoods.map((goods) => {
                 return (
                     <div className="MyLikeGrid" key={goods.id} >
-                        <div>
+                        <div className='MyLikeCheck'>
                             <input
                                 type="checkbox"
                                 checked={checkedGoods.includes(goods.id)}

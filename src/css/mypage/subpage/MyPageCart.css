@@ -166,4 +166,56 @@
 }
 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
-@media all and (max-width:767px) {}
+@media all and (max-width:767px) {
+    .MyCartGrid {
+        display: grid;
+        grid-template-areas:
+            "check photo photo"
+            "check info info"
+            "check detail count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        height: initial;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartHeader,
+    .MyCartFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartCheck {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .MyCartPhoto {
+        grid-area: photo;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartInfo {
+        grid-area: info;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartDetail {
+        grid-area: detail;
+    }
+
+    .MyCartCount {
+        grid-area: count;
+    }
+
+    .MyCartButton {
+        grid-area: button;
+    }
+
+    .SelectBuyButton {
+        grid-area: buy;
+    }
+}

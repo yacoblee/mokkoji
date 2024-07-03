@@ -34,10 +34,7 @@
     padding: 10px;
 }
 
-.MyLikeInfo {
-    text-align: initial;
-    align-items: initial;
-}
+
 
 .MyLikeInfo * {
     padding: 10px;
@@ -73,10 +70,55 @@
 }
 
 /* PC (해상도 1024px)*/
-@media all and (min-width:1024px) {}
+@media all and (min-width:1024px) {
+    .MyLikeInfo {
+        text-align: initial;
+        align-items: initial;
+    }
+}
 
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
 @media all and (min-width:768px) and (max-width:1023px) {}
 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
-@media all and (max-width:767px) {}
+@media all and (max-width:767px) {
+    .MyLikeGrid {
+        display: grid;
+        grid-template-areas:
+            "check photo photo"
+            "check info info"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        height: initial;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyLikeHeader,
+    .MyLikeFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyLikeCheck {
+        grid-area: check;
+        grid-row: 1 / 4;
+    }
+
+    .MyLikePhoto {
+        grid-area: photo;
+        grid-column: 2 / 4;
+    }
+
+    .MyLikeInfo {
+        grid-area: info;
+        grid-column: 2 / 4;
+    }
+
+
+    .MyLikeButton {
+        grid-area: button;
+    }
+}

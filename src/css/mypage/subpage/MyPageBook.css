@@ -161,4 +161,47 @@
 }
 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
-@media all and (max-width:767px) {}
+@media all and (max-width:767px) {
+    .BookGrid {
+        display: grid;
+        grid-template-areas:
+            "check name name"
+            "check date date"
+            "check count count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        text-align: center;
+        align-items: center;
+    }
+
+    .BookHeader,
+    .BookFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .CheckBook {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .BookName {
+        grid-area: name;
+        grid-column: 2 / 4;
+    }
+
+    .BookDate {
+        grid-area: date;
+        grid-column: 2 / 4;
+    }
+
+    .PersonCount {
+        grid-area: count;
+    }
+
+    .BookButton {
+        grid-area: button;
+    }
+}
