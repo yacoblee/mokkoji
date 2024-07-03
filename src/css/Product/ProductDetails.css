@@ -91,8 +91,9 @@
   @media all and (max-width:767px) {
     .box {
         width: 95vw;
-        grid-template-rows: 50% 50%;
+        grid-template-rows: 70vh 50%;
         margin: auto;
+    
     }
     .productName.hi{
         text-align: center;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import GoodsItems from '../product/ProductObject';
+import { Link } from 'react-router-dom';
 
 
 //사용할 때 {userData && <BuyBasketList userCart={userData.mypage.basket} />}
@@ -31,14 +32,14 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
 
 
         // 해당 인덱스의 체크 상태를 업데이트
-        setCheckedItems((it)=>{
+        setCheckedItems((it) => {
             const copyIschecked = [...it];
             copyIschecked[index] = isChecked;
             return copyIschecked;
         });
 
         // 상위 컴포넌트에 상태 변경 알림
-        onChangeChildCheckbox(isChecked ,item);
+        onChangeChildCheckbox(isChecked, item);
     };
     return (
         <>
@@ -61,20 +62,31 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                         <input type="checkBox"
                             checked={checkedItems[index]}
                             value={cartItem.totalPrice}
-                            onChange={(e) => onChangeCheckBox(index, e)}/>
-                        <img src={product.productSrc[0]} alt={product.name} 
-                        className='deleteName'/>
+                            onChange={(e) => onChangeCheckBox(index, e)} />
+                        <Link to={`/goods/${product.category}/${product.id}`}
+                            className='deleteName'>
+                            <img src={product.productSrc[0]} alt={product.name}
+                                className='deleteName' />
+                        </Link>
                         <p className='seletedProudctBuyName'>{product.name}
-                        <img src={product.productSrc[0]} alt={product.name} 
-                        className='addName img'/>
+                            <Link to={`/goods/${product.category}/${product.id}`}>
+                                <img src={product.productSrc[0]} alt={product.name}
+                                    className='addName img' />
+                            </Link>
                         </p>
                         <p>{formatNumber(product.price)}</p>
-                        <p>
-                            {cartItem.options.contentSelect} : <span className='highlight2'>{cartItem.quantity.contentSelect}</span> 개
+                        <div className='displayFlexColumn justifyEvenly'>
+                        <p style={{display:'flex' ,padding:'0 5px'}}>
+                            {cartItem.options.contentSelect} 
                         </p>
+                            <span className='highlight2'>{cartItem.quantity.contentSelect} 개</span>
+                        </div>
+                        <div className='displayFlexColumn justifyEvenly'>
                         <p>
-                            {cartItem.options.packagingSelect} : <span className='highlight2'>{cartItem.quantity.packagingSelect}</span> 개
+                            {cartItem.options.packagingSelect} 
                         </p>
+                            <span className='highlight2'>{cartItem.quantity.packagingSelect} 개</span>
+                        </div>
                         <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
                         </p>

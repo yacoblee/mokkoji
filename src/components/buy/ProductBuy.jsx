@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import '../../css/buy/ProductBuy.css'
 import GoodsItems from '../product/ProductObject';
 import { useEffect, useState } from 'react';
@@ -195,22 +195,29 @@ const ProductBuy = () => {
                         <input type="checkBox" value={filterPrice}
                             checked={buyCheckBox}
                             onChange={onChangeBuyCheckBox} />
-                        <img src={selectedProduct.productSrc[0]}
-                            className='deleteName' alt={selectedProduct.name} />
-                        <p className='seletedProudctBuyName'>{selectedProduct.name}
+                        <Link to={`/goods/${selectedProduct.category}/${selectedProduct.id}`}
+                            className='deleteName' >
                             <img src={selectedProduct.productSrc[0]}
-                                className='addName img' alt={selectedProduct.name} />
+                                className='deleteName' alt={selectedProduct.name} />
+                        </Link>
+                        <p className='seletedProudctBuyName'>{selectedProduct.name}
+                            <Link to={`/goods/${selectedProduct.category}/${selectedProduct.id}`}>
+                                <img src={selectedProduct.productSrc[0]}
+                                    className='addName img' alt={selectedProduct.name} />
+                            </Link>
                         </p>
                         <p>{formatNumber(selectedProduct.price)}</p>
-                        <p className='alignSelf'>
-                            <p>
-                                {options.contentSelect} :<span className='highlight2'>{buyPrice.productPrice}</span> 개
-                            </p>
-                            <br />
+                        <p className='displayFlexColumn justifyBetween'>
+                            <div className='height50FlexColumn justifyBetween'>
+                                <p>
+                                    {options.contentSelect}
+                                </p>
+                                <span className='highlight2'>{buyPrice.productPrice} 개 </span>
+                            </div>
                             <p className='buySelect'>
-                                <span>
+                                {/* <span>
                                     수랑 변경
-                                </span>
+                                </span> */}
                                 <div>
                                     <button type='button'
                                         onClick={() => { onClickbtn('-', 'productPrice') }}>
@@ -225,15 +232,17 @@ const ProductBuy = () => {
 
                             </p>
                         </p>
-                        <p className='alignSelf'>
+                        <p className='displayFlexColumn justifyBetween'>
+                            <div className='height50FlexColumn justifyBetween'> 
                             <p>
-                                {options.packagingSelect} : <span className='highlight2'>{buyPrice.optionPrice}</span>개
+                                {options.packagingSelect}
                             </p>
-                            <br />
+                            <span className='highlight2'>{buyPrice.optionPrice} 개 </span>
+                            </div>
                             <p className='buySelect'>
-                                <span>
+                                {/* <span>
                                     수랑 변경
-                                </span>
+                                </span> */}
                                 <div>
                                     <button type='button'
                                         className="leftButton"

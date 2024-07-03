@@ -1,4 +1,4 @@
-import { useEffect,useRef , useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,8 @@ import BuyComplete from "./BuyComplete";
 
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
-const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selectedProduct , options, productPrice}) => {
-    const navigate=useNavigate()
+const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selectedProduct, options, productPrice }) => {
+    const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState(true);
 
@@ -96,55 +96,55 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
 
 
     //select 값을 저장할 state.
-    const [selectBox ,SetSelectBox]= useState({
+    const [selectBox, SetSelectBox] = useState({
         deliveryMessage: '문 앞에 놔주세요',
-        buyHow:'',
+        buyHow: '',
     });
     //직접 입력시 인풋창을 활성화 시킬 state
-    const [directInput , setDirectInput] = useState(false);
+    const [directInput, setDirectInput] = useState(false);
     // console.log(selectBox.deliveryMessage)
     //select를 선택했을때 onchange 이벤트
     //직접입력이 아닐경우는 false로 지정
-    const onChangeSelectBox = (e)=>{
-        SetSelectBox((box)=>({...box,deliveryMessage:e.target.value}));
-        if(e.target.value !=='직접입력'){
+    const onChangeSelectBox = (e) => {
+        SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }));
+        if (e.target.value !== '직접입력') {
             setDirectInput(false);
         }
     }
 
-    const onChangeRadioBox = (e)=>{
-        SetSelectBox((box)=>({...box,buyHow:e.target.value}));
+    const onChangeRadioBox = (e) => {
+        SetSelectBox((box) => ({ ...box, buyHow: e.target.value }));
     }
     //버튼 상태를 관리할 state.
     const [isBuyButtonDisabled, setIsBuyButtonDisabled] = useState(true);
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
         //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
         // userInfo의 각 값에 대해 trim()을 적용한 후 빈 문자열인지 확인
-        const checking = Object.values(userInfo).map(it => it.trim()).filter((it)=>it ==='');
+        const checking = Object.values(userInfo).map(it => it.trim()).filter((it) => it === '');
         console.log(checking);
         //selectedALLproduct는 본품과 장바구니의 체크여부를 구하기 위해서.
         //즉 1개 이상 선택되어야지만 진행.
-        let selectedALLproduct =[];
-        if(selectedProduct){
-            selectedALLproduct = [...checkedCartItems,selectedProduct];
+        let selectedALLproduct = [];
+        if (selectedProduct) {
+            selectedALLproduct = [...checkedCartItems, selectedProduct];
             // 본품이 존재한다면 -> 본품과 장바구니 항목을 추가 -> 길이를 구하기 위한 로직
 
-        }else{
+        } else {
             selectedALLproduct = [...checkedCartItems];
             //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
         }
         // console.log(selectedALLproduct);
         //checking 이 없으면서 , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야
-        if(checking.length ===0 && selectBox.buyHow !==''&& selectedALLproduct.length>0){
+        if (checking.length === 0 && selectBox.buyHow !== '' && selectedALLproduct.length > 0) {
             setIsBuyButtonDisabled(false); //BUY 버튼 활성화
-        }else{
+        } else {
             setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
         }
-    },[userInfo,selectBox.buyHow,selectedProduct,checkedCartItems]);
-    useEffect(()=>{
+    }, [userInfo, selectBox.buyHow, selectedProduct, checkedCartItems]);
+    useEffect(() => {
         if (selectBox.deliveryMessage === '직접입력' && !directInput) {
             setDirectInput(true);
             SetSelectBox(it => ({ ...it, deliveryMessage: '' }));
@@ -157,18 +157,18 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
 
     // console.log(selectBox.deliveryMessage);
     //구매버튼 이벤트
-    const onClickBuyButton = ()=>{
+    const onClickBuyButton = () => {
         setIsModalBuyOpen(true);
         // 깊은 복사를 통해 userData 복사
         const copyUserData = JSON.parse(JSON.stringify(userData));
         const currentDate = new Date();
-        const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`
+        const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
 
         //history 객체 가공 item 배열에 카트 아이템을 추가(push).
         // const history = { date: nowDay, item: [selectedProduct.id] };
         const history = { date: nowDay, item: selectedProduct ? [selectedProduct.id] : [] };
 
-        checkedCartItems.map((item)=>{
+        checkedCartItems.map((item) => {
             history.item.push(item.productId);
         });
         //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
@@ -177,7 +177,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
         console.log(copyUserData.mypage.history);
 
         //세션 스토리지에 복사된 userData 로 변경..
-        sessionStorage.setItem('LoginUserInfo',JSON.stringify(copyUserData));
+        sessionStorage.setItem('LoginUserInfo', JSON.stringify(copyUserData));
 
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
@@ -271,52 +271,53 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
                 >
                     <label htmlFor="deliveryMessage">배송 메세지</label>
                     <div className="deliveryBox">
-                    <select name="deliveryMessage" id="deliveryMessage"
-                    value={selectBox.deliveryMessage}
-                    onChange={onChangeSelectBox}>
-                        <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
-                        <option value="직접배달(부재시 문앞)">직접배달(부재시 문앞)</option>
-                        <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
-                        <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
-                        <option value="직접입력">직접 입력</option>
-                    </select>
-                    {directInput 
-                    &&<input type="text" 
-                    className="directInput"
-                    onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))}/>}
-                    
+                        <select name="deliveryMessage" id="deliveryMessage"
+                            value={selectBox.deliveryMessage}
+                            onChange={onChangeSelectBox}>
+                            <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
+                            <option value="직접배달(부재시 문앞)">직접배달(부재시 문앞)</option>
+                            <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
+                            <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
+                            <option value="직접입력">직접 입력</option>
+                        </select>
+                        {directInput
+                            && <input type="text"
+                                className="directInput"
+                                onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))} />}
+
                     </div>
                     <label htmlFor="buyHow">결제 수단 선택</label>
                     <div className='buyRadioBox2'>
                         <input type="radio" name='buyHow' id='CreditCard'
-                        value='신용 카드'
-                        onChange={onChangeRadioBox} />
+                            value='신용 카드'
+                            onChange={onChangeRadioBox} />
                         <label htmlFor="CreditCard">신용 카드</label>
                         <input type="radio" name='buyHow' id='KakaoPay'
-                        value='카카오페이'
-                        onChange={onChangeRadioBox}/>
+                            value='카카오페이'
+                            onChange={onChangeRadioBox} />
                         <label htmlFor="KakaoPay">카카오 페이</label>
                         <input type="radio" name='buyHow' id='NaverPay'
-                        value='네이버 페이'
-                        onChange={onChangeRadioBox} />
+                            value='네이버 페이'
+                            onChange={onChangeRadioBox} />
                         <label htmlFor="NaverPay">네이버 페이</label>
                         <input type="radio" name='buyHow' id='phonePayment'
-                        value='휴대폰 결제'
-                        onChange={onChangeRadioBox}/>
+                            value='휴대폰 결제'
+                            onChange={onChangeRadioBox} />
                         <label htmlFor="phonePayment">휴대폰 결제</label>
                         <input type="radio" name='buyHow' id='accountTransfer'
-                        value='계좌이체'
-                        onChange={onChangeRadioBox}/>
+                            value='계좌이체'
+                            onChange={onChangeRadioBox} />
                         <label htmlFor="accountTransfer">계좌 이체</label>
                     </div>
                 </form>
                 <div className='buttonBox'>
                     <button disabled={isBuyButtonDisabled}
-                    onClick={onClickBuyButton}
+                        onClick={onClickBuyButton}
                     >BUY NOW</button>
                 </div>
             </div>
             <Modal
+                ariaHideApp={false}
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
                 contentLabel="주소 검색"
@@ -338,6 +339,7 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
 
             <Modal
                 isOpen={isModalBuyOpen}
+                ariaHideApp={false}
                 onRequestClose={() => setIsModalBuyOpen(false)}
                 contentLabel="구매 확인"
                 style={{
@@ -363,12 +365,12 @@ const BuyInputBox = ({ userData ,totalPrice ,buyPrice ,checkedCartItems ,selecte
 
                     <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
                 </div>
-                <div ref={modalContentRef} style={{height : '100%'  , width : '100%', overflow : 'auto'}}>
-                <BuyComplete username={userData.name}
-                buyPrice={buyPrice} options={options} checkedCartItems={checkedCartItems}
-                selectedProduct={selectedProduct}
-                productPrice={productPrice}
-                totalPrice={totalPrice}/>
+                <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
+                    <BuyComplete username={userData.name}
+                        buyPrice={buyPrice} options={options} checkedCartItems={checkedCartItems}
+                        selectedProduct={selectedProduct}
+                        productPrice={productPrice}
+                        totalPrice={totalPrice} />
                 </div>
 
             </Modal>

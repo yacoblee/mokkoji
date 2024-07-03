@@ -6,6 +6,9 @@
     .productSearch{
         gap:20px;
     }
+    .productMainGuideContainer{
+        width: 20vw;
+    }
 }
 
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
@@ -15,6 +18,9 @@
     }
     .productSearch{
         gap:10px;
+    }
+    .productMainGuideContainer{
+        width: 30vw;
     }
 }
 
@@ -29,8 +35,11 @@
     .productSearch{
         gap:5px;
     }
+    .productMainGuideContainer{
+        width: 40vw;
+    }
 }
-
+/* ========================== */
 @media (max-width: 1100px) {
     .displayMessage2{
         text-align: center;
@@ -46,7 +55,7 @@
         display: none;
     }
 }
-
+/* ====================== */
 
 
 
@@ -244,8 +253,7 @@
 
 .productMainGuideContainer {
 
-    width: 20vw;
-    font-size: 15px;
+    font-size: 14px;
     overflow: hidden;
     position: relative;
 

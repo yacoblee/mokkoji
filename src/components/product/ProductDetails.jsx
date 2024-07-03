@@ -158,6 +158,7 @@ const ProductDetails = () => { //===============================================
                 </div>
                 <Modal
                     isOpen={isModalLoginOpen}
+                    ariaHideApp={false}
                     onRequestClose={() => setIsLoginModalOpen(false)}
                     contentLabel="로그인 필요"
                     style={{

@@ -77,7 +77,7 @@ const ProductListResult = ({selectItem , page , setPage})=>{
                     <div className="productItemResult"key={product.id+i}>
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <div>
-                            <p style={{fontSize : '18px' , fontWeight : '600'}}>{product.name}</p>
+                            <p style={{fontSize : '16px' , fontWeight : '600' , wordBreak :'keep-all'}}>{product.name}</p>
                             <p className="productMainGuideContainer">
                             <ProductMainGuide text={product.mainGuide} /> </p>
                             <p style={{color: 'red' , fontWeight : '600'}}>{formatNumber(product.price)}</p>
