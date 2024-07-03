@@ -1,6 +1,7 @@
 .MyCartList {
     display: flex;
     flex-direction: column;
+    word-break: keep-all;
 }
 
 .MyCartHeader {
@@ -16,8 +17,8 @@
 }
 
 .MyCartPhoto img {
-    width: 170px;
-    height: 170px;
+    width: 100px;
+    height: 100px;
 }
 
 .MyCartGrid>div {
@@ -59,7 +60,7 @@
 
 .MyCartGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 250px;
+    height: 150px;
 }
 
 .MyCartGrid:nth-last-child(2) {
@@ -91,13 +92,13 @@
 
 
 /* PC (해상도 1024px)*/
-@media all and (min-width:1024px) {
+@media all and (min-width:1351px) {
 
     .MyCartHeader,
     .MyCartFooter,
     .MyCartGrid {
         display: grid;
-        grid-template-columns: 50px 200px 1fr 1fr 150px 180px;
+        grid-template-columns: 50px 150px 1fr 1fr 150px 180px;
         gap: 10px;
         align-items: center;
         text-align: center;
@@ -110,7 +111,7 @@
 }
 
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
-@media all and (min-width:768px) and (max-width:1023px) {
+@media all and (min-width:520px) and (max-width:1350px) {
     .MyCartGrid {
         display: grid;
         grid-template-areas:
@@ -166,7 +167,7 @@
 }
 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
-@media all and (max-width:767px) {
+@media all and (max-width:519px) {
     .MyCartGrid {
         display: grid;
         grid-template-areas:
@@ -218,4 +219,5 @@
     .SelectBuyButton {
         grid-area: buy;
     }
+
 }

@@ -254,11 +254,11 @@ function MyPageCart({ change, setChange }) {
                             <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyCartInfo'>
-                            <h3>{goods.name}</h3>
+                            <h5>{goods.name}</h5>
                         </div>
                         <div className='MyCartDetail'>
-                            <h4>{goods.content}</h4>
-                            <h4>{goods.package}</h4>
+                            <h5>{goods.content}</h5>
+                            <h5>{goods.package}</h5>
                         </div>
                         <div className='MyCartCount'>
                             <div className='MyProductCount'>
