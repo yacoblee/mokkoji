@@ -183,7 +183,7 @@ const FindId = () => {
                                     로그인 페이지로 돌아가기</span></Link></p>
                                 </div>
 
-                                <button onClick={UserFindID}>Finding ID</button>
+                                <button onClick={UserFindID}>아이디 찾기</button>
                             </div>
 
                         </div>

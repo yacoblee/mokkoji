@@ -48,51 +48,15 @@ const Membership = () => {
         lastLoginDate: '',
         mypage: {
             history: [
-                { date: '', item: [] },
-                { date: '', item: [] },
+            
             ],
             Reservation: [
-                { reserveItem: '', name: '', date: '', adult: '', teenager: '' },
+                // { reserveItem: '', name: '', date: '', adult: '', teenager: '' },
             ],
             review: '',
             isLike: [],
             basket: [
-                {
-                    productId: '',
-                    options: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    quantity: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    totalPrice: 0
-                },
-                {
-                    productId: '',
-                    options: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    quantity: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    totalPrice: 0
-                },
-                {
-                    productId: '',
-                    options: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    quantity: {
-                        contentSelect: '',
-                        packagingSelect: ''
-                    },
-                    totalPrice: ''
-                }
+               
             ]
         }
     })
@@ -222,7 +186,7 @@ const Membership = () => {
         firstNum: /^\d+$/,
         secondNum: /^\d+$/,
         lastNumber: /^\d+$/,
-        email: /^[a-zA-Z]*$/,
+        email:  /^[a-z0-9\s]+$/,
         emailType: /^[a-zA-Z]+\.[a-zA-Z]+$/,
 
     }); //terms

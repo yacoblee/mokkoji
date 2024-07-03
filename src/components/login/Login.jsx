@@ -133,7 +133,7 @@ const Login = () => {
 
                             <LoginValidityCheck inputId={inputId} inputPw={inputPw} />
                             <p ref={loginP} />
-                            <button onClick={CheckLogin}>Login</button>
+                            <button onClick={CheckLogin}>로그인</button>
                         </form>
                         <ul>
                             <li><Link to='/Login/Membership'>회원가입 | </Link></li>

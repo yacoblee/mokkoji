@@ -1,6 +1,6 @@
 .login-body {
     width: (100vw-8px);
-    height: (100vh-8px);
+    min-height: 100vh;
     background-color: antiquewhite;
     user-select: none !important;
     font-family: 'Chosunilbo_myungjo';
@@ -8,7 +8,7 @@
 
 .login-Area {
     width: 85vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     margin: auto;
     align-items: center;
@@ -16,7 +16,7 @@
 
 .boxshadowcontainer {
     width: 100%;
-    height: 80%;
+    min-height: 80vh;
     display: flex;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11),
         0 2px 3px rgba(0, 0, 0, 0.11),
@@ -29,7 +29,7 @@
 
 .login_video {
     width: 60%;
-    height: 100%;
+    min-height: 80vh;
     display: flex;
 }
 
@@ -37,14 +37,15 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1;
+    z-index: 2;
     box-shadow: 5px 0 10px rgb(140, 139, 139);
+  
 }
 
 
 .textarea {
     width: 40%;
-    height: 100%;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,7 +79,7 @@
 }
 
 .login-Box input {
-    width: 300px;
+    width: 95%;
     height: 40px;
     border: none;
     border-bottom: solid #aaaaaa 1px;
@@ -89,7 +90,6 @@
 
 .login-inputArea {
     margin-top: 10%;
-    /* outline: 1px solid; */
     position: relative;
 }
 
@@ -155,4 +155,64 @@
     font-family: 'SUITE-Regular';
     color: black;
     text-decoration: none;
+}
+
+@media all and (min-width:767px) and (max-width:1023px) {
+
+    .textarea h4 {
+        font-size: 1.5em;
+        margin: 6% 0;
+    }
+
+    .login-Box input {
+        width: 95%;
+        height: 35px;
+        font-size: 20px;
+        margin-bottom: 5%;
+    }
+
+    .login-inputArea .login-label {
+        font-size: 18px;
+    }
+
+    .login-Box button {
+        height: 40px;
+        width: 250px;
+        font-size: 1.5em;
+        margin: 5% 0;
+    }
+}
+
+@media all and (max-width:767px) {
+    .login-body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .login_video {
+        display: none;
+    }
+
+    .textarea {
+        width: 100%;
+    }
+
+    .login-imgBox {
+        width: 75%;
+        height: 23%;
+        margin-bottom: 3%;
+    }
+
+    .login-Box input {
+        width: 90%;
+        height: 35px;
+        font-size: 20px;
+        margin: 7% 0;
+    }
+    .login-Box button {
+        height: 35px;
+        width: 200px;
+        font-size: 1.5em;
+        margin: 5% 0;
+    }
 }
