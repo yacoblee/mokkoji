@@ -2,13 +2,18 @@ import '../../css/mypage/MyPageMain.css';
 
 // import userInfo from "../login/UserInforData";
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Modal from 'react-modal'
+import DaumPostcode from 'react-daum-postcode';
+
 // import axios from 'axios';
 
 function MyPageSet() {
 
-    const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+
+    const [user, setUser] = useState(userData);
 
     // 이메일 타입 '직접 입력'시에만 작성이 활성화되기 위한 로직
     const [emailDisabled, setEmailDisabled] = useState(false);
@@ -30,8 +35,53 @@ function MyPageSet() {
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [address, setAddress] = useState('')
     const [addressDetail, setAddressDetail] = useState('');
+    const [zoneCode, setZoneCode] = useState()
 
     const navigate = useNavigate();     // 버튼으로 링크 이동
+
+    //모달 상태창에 대한 true , false
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    //모달창 오픈
+    const openAddress = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    //모달창에서 클릭하고 나면 , 값을 가지고 userInfo에 저장 -> value 값으로 전송. / 모달창 닫음.
+    const handleComplete = (data) => {
+        let fullAddress = data.address;
+        let extraAddress = '';
+
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+            }
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+
+        setUser((info) => ({
+            ...info,
+            zoneCode: data.zonecode,
+            address: fullAddress
+        }));
+        setIsModalOpen(false);
+    };
+
+    // 업데이트된 사용자 정보 저장
+    const updatedUser = {
+        ...user,
+        phoneNumber: phoneNumber || user.phoneNumber,       // 빈값이 저장되지 않도록 함
+        email: email || user.email,
+        emailType: emailType || user.emailType,
+        password: password || user.password,
+        addressDetail: addressDetail || user.addressDetail,
+        zoneCode: zoneCode || user.zoneCode
+    };
+
 
     const handleSubmit = async (e) => {     // 버튼으로 sessionstorage에 데이터 저장 로직
         e.preventDefault();
@@ -41,16 +91,6 @@ function MyPageSet() {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
-
-        // 업데이트된 사용자 정보 저장
-        const updatedUser = {
-            ...user,
-            phoneNumber: phoneNumber || user.phoneNumber,       // 빈값이 저장되지 않도록 함
-            email: email || user.email,
-            emailType: emailType || user.emailType,
-            password: password || user.password,
-            addressDetail: addressDetail || user.addressDetail
-        };
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));       // 변경값 sessionsotrage에 저장
 
@@ -72,10 +112,10 @@ function MyPageSet() {
                 <div className='ListTitle'>전화번호</div>
                 <div>
                     <input
-                        type="number"
+                        type="text"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder='전화번호 입력'
+                        placeholder={user.phoneNumber}
                     />
                 </div>
 
@@ -85,7 +125,7 @@ function MyPageSet() {
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder='이메일 입력'
+                        placeholder={user.email}
                     />
                     <span> @ </span>
                     <input
@@ -128,8 +168,28 @@ function MyPageSet() {
 
                 <div className='ListTitle'>주소</div>
                 <div>
-                    <input type='text' value={address} disabled />
-                    <button>우편 번호 검색</button>
+                    <input
+                        type='text'
+                        value={setZoneCode}
+                        maxLength={5}
+                        placeholder={user.zoneCode}
+                        readOnly
+                    />
+                    <button
+                        type='button
+                        'onClick={openAddress}
+                    >
+                        우편 번호 검색
+                    </button>
+                </div>
+                <div></div>
+                <div>
+                    <input
+                        type="text"
+                        value={setAddress}
+                        placeholder={user.address}
+                        readOnly
+                    />
                 </div>
                 <div></div>
                 <div>
@@ -137,12 +197,36 @@ function MyPageSet() {
                         type="text"
                         value={addressDetail}
                         onChange={(e) => setAddressDetail(e.target.value)}
-                        placeholder='상세 주소 입력'
-                    />
+                        placeholder={user.addressDetail} />
                 </div>
             </div>
 
             <button className='MyInfoSave' type='submit'>수정 완료</button>
+
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
+                style={{
+                    content: {
+                        width: '500px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <button
+                    className='modalbtn'
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    X
+                </button>
+                <DaumPostcode onComplete={handleComplete} />
+            </Modal>
         </form>
     )
 }
