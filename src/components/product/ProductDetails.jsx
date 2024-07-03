@@ -95,8 +95,11 @@ const ProductDetails = () => { //===============================================
             <>
                 <div style={{ marginTop: '200px' }} className='box'>
                     <div className='imgBox'>
+                        <div className="imgInner">
                         {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
                             style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />)}
+
+                        </div>
                         <div className='labelBox'>
                             {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
                                 onClick={() => { onClickLabelBox(i) }} />)}

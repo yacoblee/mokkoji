@@ -94,7 +94,7 @@
   }
 /* ====================================detail */
 .box {
-    
+    background-color: #d0c0a00d;
     margin: auto;
     margin-top: 30px;
 
@@ -108,41 +108,37 @@
 .imgBox {
     width: 100%;
     height: 100%;
-   
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* justify-items: center; */
-    white-space: nowrap;
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: 80% 20%;
     position: relative;
-    font-size: 0;
-    /* left: -100%; */
     
 }
-
-.imgBox input {
-    display: none;
+.imgInner{
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }
 
-.imgBox>img {
+.imgInner>img {
     width: 100%;
-    height: 80%;
-    /* object-fit: cover; */
-    border-radius: 15px;
+    height: 100%;
     transition: 0.7s;
+    /* object-fit: cover; */
 }
 
 .labelBox {
     width: 100%;
-    height: 20%;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(5,1fr);
     justify-content: space-between;
     align-items: center;
-    background-color: #d0c0a01d;
+    
     gap: 0 10px;
-    padding: 0 10px;
+    /* padding: 0 10px; */
 }
 
 /*
@@ -173,7 +169,7 @@
     justify-content: center;
     grid-auto-rows: 1fr 9fr;
     align-items: center;
-    background-color: #d0c0a01d;
+
     padding: 0 10px;
 
 }
