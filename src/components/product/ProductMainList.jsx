@@ -63,10 +63,11 @@ const ProductMainList = ({ title, sort }) => {
                 </div>
 
                 <div className="slider" 
-                style={{ transform: `translateX(-${currentSlide * 270}px)` }}>
+                >
 
                 {sortItems.map((product, i) => (
                     <Link to={`/goods/${product.category}/${product.id}`} key={i}
+                    style={{ transform: `translateX(-${currentSlide * 102}%)` }}
                     className="productItem">
 
                             <img src={product.slideSrc[0]} alt={product.name} />

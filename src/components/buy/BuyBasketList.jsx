@@ -48,7 +48,8 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
             <ul className='ProductBuyList'>
                 <li></li>
                 <li></li>
-                <li>상품명</li>
+                {/* <li className='addName'></li> */}
+                <li className='deleteName'>상품명</li>
                 <li>상품가격</li>
                 <li>상품정보</li>
                 <li>포장여부</li>
@@ -61,14 +62,18 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                             checked={checkedItems[index]}
                             value={cartItem.totalPrice}
                             onChange={(e) => onChangeCheckBox(index, e)}/>
-                        <img src={product.productSrc[0]} alt={product.name} />
-                        <p>{product.name}</p>
+                        <img src={product.productSrc[0]} alt={product.name} 
+                        className='deleteName'/>
+                        <p>{product.name}
+                        <img src={product.productSrc[0]} alt={product.name} 
+                        className='addName img'/>
+                        </p>
                         <p>{formatNumber(product.price)}</p>
                         <p>
-                            {cartItem.options.contentSelect} : <span className='highlight'>{cartItem.quantity.contentSelect}</span> 개
+                            {cartItem.options.contentSelect} : <span className='highlight2'>{cartItem.quantity.contentSelect}</span> 개
                         </p>
                         <p>
-                            {cartItem.options.packagingSelect} : <span className='highlight'>{cartItem.quantity.packagingSelect}</span> 개
+                            {cartItem.options.packagingSelect} : <span className='highlight2'>{cartItem.quantity.packagingSelect}</span> 개
                         </p>
                         <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>

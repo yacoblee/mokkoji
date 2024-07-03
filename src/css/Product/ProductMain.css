@@ -63,6 +63,9 @@ a {
     .productList {
         padding: 2vw;
     }
+    .productItem{
+        width: 400px;
+    }
     .ProductMainSlide{
         height: 80vh;
     }
@@ -78,6 +81,9 @@ a {
 @media all and (min-width:767px) and (max-width:1023px) {
     .productList {
         padding:0 3vw;
+    }
+    .productItem{
+        width: 350px;
     }
     .ProductMainSlide{
         height: 70vh;
@@ -95,6 +101,9 @@ a {
 @media all and (max-width:767px) {
     .productList {
         padding:0 4vw;
+    }
+    .productItem{
+        width: 260px;
     }
     .ProductMainSlide{
         height: 60vh;
@@ -211,14 +220,15 @@ a {
 
 .slider {
     height: 100%;
-    display: flex; /* Grid 대신 Flex 사용 */
-    transition: transform 0.5s ease-in-out;
-     /* 요소 간의 간격 */
+    display: flex; 
+    /* Grid 대신 Flex 사용 */
+    /* 요소 간의 간격 */
 }
 .productItem {
+    transition: transform 0.5s ease-in-out;
     height: 100%;
     /* min-height: 300px; */
-    width: 260px;/* 각 항목의 너비를 고정 */
+    /* 각 항목의 너비를 고정 */
     flex: 0 0 auto;
     background-color: white;
     border-radius: 10px;
