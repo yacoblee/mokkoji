@@ -633,9 +633,10 @@ html {
 
 
 
-
+/* section4 예약 영역 S */
 #section4 {
     background: white;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -643,5 +644,93 @@ html {
     position: relative;
     z-index: 5;
     width: 100vw;
+    min-height: 80vh;
     height: 100vh;
 }
+
+.reserve_section_head {
+    position: relative;
+    color: black;
+    z-index: 7;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    min-height: 35vh;
+}
+
+
+.reserve_section_left {
+    display: flex;
+    justify-content: center;
+    width: 30vw;
+}
+
+.reserve_section_one {
+    position: absolute;
+    top: 0;
+    min-height: 300px;
+    height: 25vh;
+    min-width: 20vw;
+}
+
+.reserve_section_two {
+    position: absolute;
+    height: 20vh;
+    width: 10vw;
+    bottom: 0;
+    transform: translateX(40%);
+    z-index: 1;
+}
+
+.reserve_section_third {
+    position: absolute;
+    top: 0;
+    transform: translateX(40%);
+    height: 20vh;
+    width: 10vw;
+    z-index: 1;
+
+}
+
+.reserve_section_four {
+    position: absolute;
+    min-height: 300px;
+    height: 25vh;
+    min-width: 20vw;
+    bottom: 0;
+    transform: translateX(40%);
+}
+
+.reserve_section_center {
+    text-decoration-style: none;
+    text-align: center;
+    width: 30vw;
+}
+
+.reserve_section_center span {
+    font-size: 3rem;
+    color: #ddb78a
+}
+
+.reserve_section_center p {
+    padding: 30px;
+    font-size: 1.2rem;
+
+}
+.reserve_section_center a{
+    text-decoration-style: none;
+    color: black;
+}
+.reserve_section_right {
+    width: 30vw;
+
+}
+
+.reserve_section_bottom {
+    display: flex;
+    width: 100vw;
+    height: 50vh;
+}
+
+
+/* section4 예약 영역 E */
