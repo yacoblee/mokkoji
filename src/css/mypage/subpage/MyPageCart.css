@@ -98,7 +98,7 @@
     .MyCartFooter,
     .MyCartGrid {
         display: grid;
-        grid-template-columns: 50px 150px 1fr 1fr 150px 180px;
+        grid-template-columns: 50px 130px 1fr 1fr 150px 180px;
         gap: 10px;
         align-items: center;
         text-align: center;

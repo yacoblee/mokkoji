@@ -27,7 +27,7 @@ function MyPageList() {
                                                 <img src={product.productSrc[0]} alt={product.name} />
                                             </div>
                                             <div>
-                                                <h3>{product.name}</h3>
+                                                <h4>{product.name}</h4>
                                             </div>
                                         </div>
                                     )
