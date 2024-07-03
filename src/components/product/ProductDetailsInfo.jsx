@@ -3,7 +3,7 @@ import { useState } from "react";
 import GoodsItems from "./ProductObject";
 import { Link } from "react-router-dom";
 
-const ProductDetailsInfo = ({ selectedProduct ,like}) => {
+const ProductDetailsInfo = ({ selectedProduct }) => {
         //슬라이드 구현을 위한 state
         const [currentSlide ,setCurrentSlide] =useState(0);
 
@@ -169,7 +169,7 @@ const ProductDetailsInfo = ({ selectedProduct ,like}) => {
                 </h2>
                 <div className='recommendInfo' >
                     {recommendItem.map((it, i) => <>
-                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id}>
+                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id+i}>
                             <div>
                                     <p>{it.name}</p>
                                 <div>
