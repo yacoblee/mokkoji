@@ -15,7 +15,7 @@ function MyPageList() {
                 .map((list) => {
                     return (
                         <div className='MyListDate' key={list.date}>
-                            <h2>{list.date}</h2>
+                            <h3>{list.date}</h3>
 
                             {list.item.slice()
                                 .sort((a, b) => a - b)
