@@ -12,7 +12,7 @@ import ReservationDeatil from "./ReservationDetail";
 const Reservation = () => {
     const [reservationCounts, setReservationCounts] = useState({});
     const [date, setDate] = useState(new Date());
-
+    const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
     const today = new Date(); // 오늘 날짜
     const oneMonthLater = moment(today).add(1, 'months').toDate();
     const [showCalendar, setShowCalendar] = useState(false);
@@ -60,6 +60,11 @@ const Reservation = () => {
                     counts[formattedDate] = dayData.id.length;
                 }
             });
+        });
+        // 로컬 스토리지에 업데이트 될 경우 정보 리로드
+        existingReservations.forEach(reservation => {
+            const formattedDate = moment(reservation.date).format("YYYY-MM-DD");
+            counts[formattedDate] = (counts[formattedDate] || 0) + 1;
         });
         setReservationCounts(counts);
     };
@@ -126,7 +131,7 @@ const Reservation = () => {
             // 업데이트정보 세션에 다시 저장
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
 
-            const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
+
             existingReservations.push(reservationData);
             localStorage.setItem('reservations', JSON.stringify(existingReservations));
 

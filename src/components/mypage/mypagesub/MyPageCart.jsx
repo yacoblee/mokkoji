@@ -204,6 +204,18 @@ function MyPageCart({ change, setChange }) {
     }   // changePackageCount
 
 
+    // 여러 개의 버튼에 대해 hover 상태를 관리할 수 있도록 상태 배열 사용
+    const [hoveredButton, setHoveredButton] = useState(null);
+
+    // 버튼의 hover 상태를 설정하는 함수
+    const handleMouseEnter = (id) => {
+        setHoveredButton(id);
+    };
+
+    // 버튼의 hover 상태를 해제하는 함수
+    const handleMouseLeave = () => {
+        setHoveredButton(null);
+    };
 
 
     return (
@@ -259,8 +271,13 @@ function MyPageCart({ change, setChange }) {
                             </div>
                         </div>
                         <div className='MyCartButton'>
-                            <button className='buttonChange' onClick={() => onBuyEach(goods.id)}>
-                                {formatNumber(goods.price)}원
+                            <button
+                                className='buttonChange'
+                                onClick={() => onBuyEach(goods.id)}
+                                onMouseEnter={() => handleMouseEnter(goods.id)}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                {hoveredButton === goods.id ? '구매하기' : `${formatNumber(goods.price)}원`}
                             </button>
                             <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>

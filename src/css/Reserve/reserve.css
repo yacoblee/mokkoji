@@ -423,6 +423,13 @@
     align-items: center;
 }
 
+.personSelect_check span {
+    background-color: #dfdf5354;
+    font-family: 'NanumBarunpen';
+    font-weight: 600;
+    border-radius: 5px;
+}
+
 /* 예약 성인, 청소년 인원 버튼 css E */
 /* 예약 기능 영역 css E */
 

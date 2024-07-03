@@ -66,14 +66,16 @@ const ProductDetailsInfo = ({ selectedProduct ,like}) => {
                     <p>
                         {selectedProduct.sideGuide}
                     </p>
+                    {selectedProduct.slideSrc[3] ? 
                     <img src={selectedProduct.slideSrc[3]} alt={selectedProduct.name} />
+                    :<img src={selectedProduct.productSrc[1]} alt={selectedProduct.name} />}
                 </div>
                 <hr />
                 <h2 id="shipping">
                     배송 / 사이즈
                 </h2>
                 <div className='deliSizeInfo' >
-                <img src={selectedProduct.slideSrc[0]} alt={selectedProduct.name} />
+                <img src={selectedProduct.productSrc[0]} alt={selectedProduct.name} />
 
                     <div className="productSizeInfo">
                         {selectedProduct.size}
@@ -124,7 +126,7 @@ const ProductDetailsInfo = ({ selectedProduct ,like}) => {
                     {selectedProduct.reviews.map((it, i) => <>
                         <div key={it.name} 
                         
-                        style={{ transform: `translateX(-${currentSlide * 26}vw)` }}
+                        style={{ transform: `translateX(-${currentSlide * 101}%)` }}
                         className="reviewInfoInner">
                             
                             <div>

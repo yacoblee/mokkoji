@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import Background from '../main/Backgroud'
-import ProductSection from '../main/Productsection';
+import SliderSection from '../main/SliderSection';
 import PostCard from '../main/PostCard';
-import About from '../main/About'
-import SlideSection from '../main/SliderSection';
+import Productsection from '../main/Productsection';
 const Section = ({ id, text, color }) => {
 
 
@@ -14,18 +13,18 @@ const Section = ({ id, text, color }) => {
             </section>
 
             <section id='section2' className="section" >
-                <ProductSection />
+                <SliderSection />
             </section>
 
             <section id='section3' className="section">
-                <SlideSection />
+                <Productsection />
             </section>
 
 
-            <section id='section5' className="section" style={{ backgroundColor: color }}>
+            <section id='section4' className="section" style={{ backgroundColor: color }}>
                 Section 1
             </section>
-            <section id='section4' className="section">
+            <section id='section5' className="section">
                 <PostCard />
             </section>
         </div>
