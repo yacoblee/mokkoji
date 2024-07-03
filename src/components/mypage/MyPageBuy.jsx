@@ -39,13 +39,13 @@ function MyPageBuy() {
                             <h3>{product.name}</h3>
                         </div>
                         <div>{formatNumber(goods.totalPrice)}원</div>
-                        <div>
-                            <div>{goods.options.contentSelect} :</div>
-                            <div>{goods.quantity.contentSelect}개</div>
+                        <div className='BuyContent'>
+                            <div>{goods.options.contentSelect}&nbsp;:&nbsp;</div>
+                            <div>{goods.quantity.contentSelect}&nbsp;개</div>
                         </div>
-                        <div>
-                            <div>{goods.options.packagingSelect} :</div>
-                            <div>{goods.quantity.packagingSelect}개</div>
+                        <div className='BuyPackage'>
+                            <div>{goods.options.packagingSelect}&nbsp;:&nbsp;</div>
+                            <div>{goods.quantity.packagingSelect}&nbsp;개</div>
                         </div>
                     </div >
                 );
@@ -56,7 +56,9 @@ function MyPageBuy() {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div>{formatNumber(cartTotalPrice)}원</div>
+                <div>
+                    <strong>{formatNumber(cartTotalPrice)}&nbsp;원</strong>
+                </div>
             </div>
 
             <BuyInput
