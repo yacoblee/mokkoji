@@ -194,13 +194,16 @@ const ProductBuy = () => {
                         <input type="checkBox" value={filterPrice}
                             checked={buyCheckBox}
                             onChange={onChangeBuyCheckBox} />
-                        <img src={selectedProduct.productSrc[0]} 
-                        className='deleteName'alt={selectedProduct.name} />
-                        <p>{selectedProduct.name}</p>
+                        <img src={selectedProduct.productSrc[0]}
+                            className='deleteName' alt={selectedProduct.name} />
+                        <p>{selectedProduct.name}
+                            <img src={selectedProduct.productSrc[0]}
+                                className='addName img' alt={selectedProduct.name} />
+                        </p>
                         <p>{formatNumber(selectedProduct.price)}</p>
                         <p className='alignSelf'>
                             <p>
-                                {options.contentSelect} :<span className='highlight'>{buyPrice.productPrice}</span> 개
+                                {options.contentSelect} :<span className='highlight2'>{buyPrice.productPrice}</span> 개
                             </p>
                             <br />
                             <p className='buySelect'>
@@ -219,7 +222,7 @@ const ProductBuy = () => {
                         </p>
                         <p className='alignSelf'>
                             <p>
-                                {options.packagingSelect} : <span className='highlight'>{buyPrice.optionPrice}</span>개
+                                {options.packagingSelect} : <span className='highlight2'>{buyPrice.optionPrice}</span>개
                             </p>
                             <br />
                             <p className='buySelect'>
