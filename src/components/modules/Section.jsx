@@ -3,8 +3,8 @@ import Background from '../main/Backgroud'
 import SliderSection from '../main/SliderSection';
 import PostCard from '../main/PostCard';
 import Productsection from '../main/Productsection';
+import ReserveSection from './../main/ReserveSection';
 const Section = ({ id, text, color }) => {
-
 
     return (
         <div>
@@ -21,8 +21,8 @@ const Section = ({ id, text, color }) => {
             </section>
 
 
-            <section id='section4' className="section" style={{ backgroundColor: color }}>
-                Section 1
+            <section id='section4' className="section" >
+                <ReserveSection />
             </section>
             <section id='section5' className="section">
                 <PostCard />
