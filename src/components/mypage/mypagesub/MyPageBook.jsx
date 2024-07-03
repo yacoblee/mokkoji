@@ -126,7 +126,7 @@ function MyPageBook({ change, setChange }) {
                     console.log(book.date)
                     return (
                         <div className='BookGrid' key={book.date}>
-                            <div>
+                            <div className='CheckBook'>
                                 <input type="checkbox" />
                             </div>
                             <div className='BookName'>
@@ -136,11 +136,13 @@ function MyPageBook({ change, setChange }) {
                                 <h4>{book.date}</h4>
                             </div>
                             <div className='PersonCount'>
+                                <div>성인</div>
                                 <div className='AdultCount'>
                                     <img src="/images/buy/minus.png" onClick={() => changeAdultCount(book.date, 'decrease')} />
                                     <input type="text" value={book.adult} />
                                     <img src="/images/buy/plus.png" onClick={() => changeAdultCount(book.date, 'increase')} />
                                 </div>
+                                <div>청소년</div>
                                 <div className='TeenCount'>
                                     <img src="/images/buy/minus.png" onClick={() => changeTeenCount(book.date, 'decrease')} />
                                     <input type="text" value={book.teenager} />
@@ -163,7 +165,9 @@ function MyPageBook({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>
+                    <button className='SelectDeleteButton'>선택 삭제</button>
+                </div>
             </div>
         </div>
     )

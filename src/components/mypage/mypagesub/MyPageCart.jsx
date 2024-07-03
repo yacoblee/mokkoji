@@ -225,7 +225,7 @@ function MyPageCart({ change, setChange }) {
 
             <div className='MyCartHeader'>
 
-                <div>
+                <div >
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
@@ -243,7 +243,7 @@ function MyPageCart({ change, setChange }) {
             {cartGoods.map((goods) => {
                 return (
                     <div className="MyCartGrid" key={goods.id} >
-                        <div>
+                        <div className='MyCartCheck'>
                             <input
                                 type="checkbox"
                                 checked={checkedGoods.includes(goods.id)}

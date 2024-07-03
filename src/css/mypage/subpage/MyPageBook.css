@@ -3,15 +3,7 @@
     flex-direction: column;
 }
 
-.BookHeader,
-.BookGrid,
-.BookFooter {
-    display: grid;
-    grid-template-columns: 50px 1fr 1fr 150px 180px;
-    gap: 10px;
-    align-items: center;
-    text-align: center;
-}
+
 
 .BookHeader {
     border-bottom: 1px solid #000;
@@ -27,7 +19,7 @@
 
 .BookGrid {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 100px;
+
 }
 
 .BookGrid:nth-last-child(2) {
@@ -38,10 +30,6 @@
     padding: 10px;
 }
 
-.BookName {
-    text-align: initial;
-    align-items: initial;
-}
 
 .BookName *,
 .BookDate * {
@@ -61,6 +49,11 @@
     border: none;
     font-weight: bold;
     font-size: 14px;
+}
+
+.PersonCount div {
+    display: flex;
+    flex-direction: row;
 }
 
 .PersonCount input {
@@ -96,3 +89,76 @@
     background-color: deepskyblue;
     color: white;
 }
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+
+    .BookHeader,
+    .BookGrid,
+    .BookFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 150px 180px;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .BookGrid {
+        height: 200px;
+    }
+
+    .BookName {
+        text-align: initial;
+        align-items: initial;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .BookGrid {
+        display: grid;
+        grid-template-areas:
+            "check name name"
+            "check date date"
+            "check count count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        text-align: center;
+        align-items: center;
+    }
+
+    .BookHeader,
+    .BookFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .CheckBook {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .BookName {
+        grid-area: name;
+        grid-column: 2 / 4;
+    }
+
+    .BookDate {
+        grid-area: date;
+        grid-column: 2 / 4;
+    }
+
+    .PersonCount {
+        grid-area: count;
+    }
+
+    .BookButton {
+        grid-area: button;
+    }
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {}

@@ -21,7 +21,6 @@ function MyPageBuy() {
 
     return (
         <div className='Payment'>
-
             <h1>
                 <div>결제하기</div>
             </h1>

@@ -3,16 +3,6 @@
     flex-direction: column;
 }
 
-.MyCartHeader,
-.MyCartGrid,
-.MyCartFooter {
-    display: grid;
-    grid-template-columns: 50px 200px 1fr 1fr 150px 180px;
-    gap: 10px;
-    align-items: center;
-    text-align: center;
-}
-
 .MyCartHeader {
     border-bottom: 1px solid #000;
     background-color: #d0c0a058;
@@ -32,11 +22,6 @@
 
 .MyCartGrid>div {
     padding: 10px;
-}
-
-.MyCartInfo {
-    text-align: initial;
-    align-items: initial;
 }
 
 .MyCartInfo *,
@@ -103,3 +88,82 @@
     background-color: deepskyblue;
     color: white;
 }
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+
+    .MyCartHeader,
+    .MyCartFooter,
+    .MyCartGrid {
+        display: grid;
+        grid-template-columns: 50px 200px 1fr 1fr 150px 180px;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .MyCartInfo {
+        text-align: initial;
+        align-items: initial;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .MyCartGrid {
+        display: grid;
+        grid-template-areas:
+            "check photo photo"
+            "check info info"
+            "check detail count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        height: initial;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartHeader,
+    .MyCartFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartCheck {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .MyCartPhoto {
+        grid-area: photo;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartInfo {
+        grid-area: info;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartDetail {
+        grid-area: detail;
+    }
+
+    .MyCartCount {
+        grid-area: count;
+    }
+
+    .MyCartButton {
+        grid-area: button;
+    }
+
+    .SelectBuyButton {
+        grid-area: buy;
+    }
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {}

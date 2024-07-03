@@ -118,7 +118,6 @@ function MyPageLike({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
             </div>
 
 
@@ -137,9 +136,6 @@ function MyPageLike({ change, setChange }) {
                         </div>
                         <div className='MyLikeInfo'>
                             <h3>{goods.name}</h3>
-                        </div>
-                        <div>
-
                         </div>
                         <div className='MyLikeButton'>
                             <Link to={`/goods/${goods.category}/${goods.id}`}>
@@ -160,7 +156,6 @@ function MyPageLike({ change, setChange }) {
                         checked={checkedGoods.length === likedGoods.length}
                     />
                 </div>
-                <div></div>
                 <div></div>
                 <div></div>
                 <div>
