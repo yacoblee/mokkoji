@@ -1,6 +1,7 @@
 .MyPageBook {
     display: flex;
     flex-direction: column;
+    word-break: keep-all;
 }
 
 

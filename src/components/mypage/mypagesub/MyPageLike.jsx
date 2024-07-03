@@ -135,7 +135,7 @@ function MyPageLike({ change, setChange }) {
                             <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyLikeInfo'>
-                            <h3>{goods.name}</h3>
+                            <h4>{goods.name}</h4>
                         </div>
                         <div className='MyLikeButton'>
                             <Link to={`/goods/${goods.category}/${goods.id}`}>

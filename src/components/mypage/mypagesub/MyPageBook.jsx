@@ -130,10 +130,10 @@ function MyPageBook({ change, setChange }) {
                                 <input type="checkbox" />
                             </div>
                             <div className='BookName'>
-                                <h3>{book.name}</h3>
+                                <h4>{book.name}</h4>
                             </div>
                             <div className='BookDate'>
-                                <h4>{book.date}</h4>
+                                <h5>{book.date}</h5>
                             </div>
                             <div className='PersonCount'>
                                 <div>성인</div>
