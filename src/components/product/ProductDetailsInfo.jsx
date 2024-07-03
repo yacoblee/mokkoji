@@ -169,7 +169,7 @@ const ProductDetailsInfo = ({ selectedProduct ,like}) => {
                 </h2>
                 <div className='recommendInfo' >
                     {recommendItem.map((it, i) => <>
-                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id}>
+                        <Link to={`/goods/${it.category}/${it.id}`} key={it.id+i}>
                             <div>
                                     <p>{it.name}</p>
                                 <div>

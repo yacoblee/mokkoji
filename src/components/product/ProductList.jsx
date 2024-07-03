@@ -85,25 +85,25 @@ const ProductList = () => {
     const [resultCount, setResultCount] = useState(selectItem.length);
     const updateDisplayMessage = (count) => {
         // if (showSearch) {
-            const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
-            const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
-            setDisplayMessage(<>
-                <span className='NamedCategory'>카테고리:</span>
-                <span className='NamedInfo'> { selectedCategory.description}</span>
+        const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
+        const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
+        setDisplayMessage(<>
+            <span className='NamedCategory'>카테고리:</span>
+            <span className='NamedInfo'> {selectedCategory.description}</span>
 
-                <span className='NamedCategory'>정렬:</span>
-                <span className='NamedInfo'> {selectedSortOption}</span>
-                {count !== undefined && (
-                    <>
+            <span className='NamedCategory'>정렬:</span>
+            <span className='NamedInfo'> {selectedSortOption}</span>
+            {count !== undefined && (
+                <>
 
-                        {count > 0 ? (
-                            <span className='searchResult'>: 검색결과: {count}개</span>
-                        ) : (
-                            <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
-                        )}
-                    </>
-                )}
-            </>);
+                    {count > 0 ? (
+                        <span className='searchResult'>: 검색결과: {count}개</span>
+                    ) : (
+                        <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
+                    )}
+                </>
+            )}
+        </>);
         // }
         //  else {
         //     const selectedCategory = productMenu.find(menu => menu.category === category);
@@ -155,26 +155,13 @@ const ProductList = () => {
 
     return (
         <>
-            {/* <div className="productListInfo" style={{ marginTop: "150px" }} >
-                <span>{displayMessage}</span>
-            </div> */}
-            {/* <div className='SearchBar' style={{ marginTop: "150px" }}  >
-                <button
-                    onClick={onClickShowSearch}
-                    disabled={showSearch}>검색하기</button>
-                <button
-                    onClick={onClickShowSearch}
-                    disabled={!showSearch}>카테고리 보기</button>
-            </div> */}
-
-            {/* {!showSearch ? */}
-                <div className='productMenu'style={{ marginTop: "150px" }}>
+            <div className='MenuNsearch'style={{ marginTop: "150px" }}>
+                <div className='productMenu' >
 
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`} key={i}  >{items.description}</NavLink>
                     ))}
                 </div>
-                {/* : */}
                 <div className='productSearch'>
                     <select name="productSearch" id="productSearch"
                         value={filterItem.selectValue}
@@ -195,12 +182,11 @@ const ProductList = () => {
                         onClick={onclickSearch}>검색</button>
                     <span className='displayMessage'>{displayMessage}</span>
                 </div>
-            {/* } */}
-            {/* {showSearch && <div className='displayMessage2'>{displayMessage}</div>} */}
+            </div>
             <div className='displayMessage2'>{displayMessage}</div>
-            {selectItem.length > 0 ? 
-            <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} /> 
-            : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
+            {selectItem.length > 0 ?
+                <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} />
+                : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
         </>
     );
 }
