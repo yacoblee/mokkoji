@@ -64,7 +64,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                             onChange={(e) => onChangeCheckBox(index, e)}/>
                         <img src={product.productSrc[0]} alt={product.name} 
                         className='deleteName'/>
-                        <p>{product.name}
+                        <p className='seletedProudctBuyName'>{product.name}
                         <img src={product.productSrc[0]} alt={product.name} 
                         className='addName img'/>
                         </p>

@@ -181,10 +181,11 @@ const ProductBuy = () => {
                 <form action="#">
                     <ul className='ProductBuyList'>
                         <li className='addName'></li>
+                        <li className='addName'></li>
                         <li className='bringUserCart maxwidth'>
                             <span>장바구니를 불러오겠습니까 ? </span>
                             {!bringUserCart ? <button type='button' onClick={onClickBringCart}>YES</button> : <button type='button' onClick={onClickBringCart}>No</button>}
-                        </li>
+                        </li >
                         <li className='deleteName'>상품명</li>
                         <li>상품가격</li>
                         <li>상품정보</li>
@@ -196,7 +197,7 @@ const ProductBuy = () => {
                             onChange={onChangeBuyCheckBox} />
                         <img src={selectedProduct.productSrc[0]}
                             className='deleteName' alt={selectedProduct.name} />
-                        <p>{selectedProduct.name}
+                        <p className='seletedProudctBuyName'>{selectedProduct.name}
                             <img src={selectedProduct.productSrc[0]}
                                 className='addName img' alt={selectedProduct.name} />
                         </p>
@@ -207,16 +208,20 @@ const ProductBuy = () => {
                             </p>
                             <br />
                             <p className='buySelect'>
-                                수랑 변경
-                                <button type='button'
-                                    onClick={() => { onClickbtn('-', 'productPrice') }}>
-                                    <img src="/images/buy/minus.png" alt="" />
-                                </button >
-                                <input type="text" value={buyPrice.productPrice} readOnly />
-                                <button type='button'
-                                    onClick={() => { onClickbtn('+', 'productPrice') }}>
-                                    <img src="/images/buy/plus.png" alt="" />
-                                </button>
+                                <span>
+                                    수랑 변경
+                                </span>
+                                <div>
+                                    <button type='button'
+                                        onClick={() => { onClickbtn('-', 'productPrice') }}>
+                                        <img src="/images/buy/minus.png" alt="" />
+                                    </button >
+                                    <input type="text" value={buyPrice.productPrice} readOnly />
+                                    <button type='button'
+                                        onClick={() => { onClickbtn('+', 'productPrice') }}>
+                                        <img src="/images/buy/plus.png" alt="" />
+                                    </button>
+                                </div>
 
                             </p>
                         </p>
@@ -226,18 +231,22 @@ const ProductBuy = () => {
                             </p>
                             <br />
                             <p className='buySelect'>
-                                수랑 변경
-                                <button type='button'
-                                    className="leftButton"
-                                    onClick={() => { onClickbtn('-', 'optionPrice') }}>
-                                    <img src="/images/buy/minus.png" alt="" />
-                                </button>
-                                <input type="text" value={buyPrice.optionPrice} readOnly />
-                                <button type='button'
-                                    className="rightButton"
-                                    onClick={() => { onClickbtn('+', 'optionPrice') }}>
-                                    <img src="/images/buy/plus.png" alt="" />
-                                </button>
+                                <span>
+                                    수랑 변경
+                                </span>
+                                <div>
+                                    <button type='button'
+                                        className="leftButton"
+                                        onClick={() => { onClickbtn('-', 'optionPrice') }}>
+                                        <img src="/images/buy/minus.png" alt="" />
+                                    </button>
+                                    <input type="text" value={buyPrice.optionPrice} readOnly />
+                                    <button type='button'
+                                        className="rightButton"
+                                        onClick={() => { onClickbtn('+', 'optionPrice') }}>
+                                        <img src="/images/buy/plus.png" alt="" />
+                                    </button>
+                                </div>
 
                             </p>
                         </p>

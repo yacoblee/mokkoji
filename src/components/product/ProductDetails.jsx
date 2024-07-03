@@ -31,7 +31,7 @@ const ProductDetails = () => { //===============================================
     const onClickLikeMe = () => {
 
         setLike(!like);
-        
+
         // 세션 스토리지의 사용자 정보 업데이트
         if (userData) {
             const updatedLikes =
@@ -70,9 +70,9 @@ const ProductDetails = () => { //===============================================
         event.preventDefault();//a의 기본 특성 해제
         const element = document.getElementById(id); // 각 id 값을 매개 변수로 받아옴.
         if (element) {
-            const offset = element.getBoundingClientRect().top + window.scrollY - 180; 
+            const offset = element.getBoundingClientRect().top + window.scrollY - 180;
             // 스크롤 위치를 id의 위치 에서 윈도우기준 180px 떨어져서 높이를 맞춤.
-            window.scrollTo({ top: offset, behavior: 'smooth' }); 
+            window.scrollTo({ top: offset, behavior: 'smooth' });
             // 변수로 위치값 받아 위치 이동.
         } else {
             console.error(`Element with id ${id} not found.`);
@@ -93,11 +93,17 @@ const ProductDetails = () => { //===============================================
 
         return (
             <>
-                <div style={{ marginTop: '200px' }} className='box'>
+                <div className="notingBox">
+
+                </div>
+                <p className="productName hi" >
+                    {selectedProduct.name}
+                </p>
+                <div className='box'>
                     <div className='imgBox'>
                         <div className="imgInner">
-                        {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
-                            style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />)}
+                            {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
+                                style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />)}
 
                         </div>
                         <div className='labelBox'>
@@ -120,15 +126,18 @@ const ProductDetails = () => { //===============================================
                             </div>
                         </div>
                         <div className='forminner'>
-                            <p>
+                            <div className="selectedInfo">
                                 <p className="productName">
                                     {selectedProduct.name}
                                 </p>
                                 {selectedProduct.mainGuide}
                                 <p className='deliveryifo'>
-                                    * 30,000원 미만 3,000원 / 30,000원 이상 무료배송
+                                    * 30,000원 미만 3,000원 
+                                    <p>
+                                    * 30,000원 이상 무료배송
+                                    </p>
                                 </p>
-                            </p>
+                            </div>
                             <ProductForm selectedProduct={selectedProduct} />
                         </div>
 
@@ -137,7 +146,7 @@ const ProductDetails = () => { //===============================================
                 </div>
                 <div className='underbox' >
                     <div className='tabBox'>
-                        <a href="#"><span>위로</span></a>
+                        {/* <a href="#"><span>위로</span></a> */}
                         <a href="#details" onClick={(e) => handleScroll(e, 'details')}><span>상세보기</span></a>
                         <a href="#shipping" onClick={(e) => handleScroll(e, 'shipping')}><span>배송/사이즈</span></a>
                         <a href="#reviews" onClick={(e) => handleScroll(e, 'reviews')}><span>리뷰정보</span></a>
@@ -175,7 +184,7 @@ const ProductDetails = () => { //===============================================
                     </div>
                     <ModalNotLogin />
                 </Modal>
-                <TopButton/>
+                <TopButton />
             </>
         );
     }

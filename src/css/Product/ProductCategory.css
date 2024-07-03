@@ -1,14 +1,20 @@
 /* PC (해상도 1024px)*/
-@media all and (min-width:1024px) {
+@media all and (min-width:1200px) {
     .productItemList {
         grid-template-columns: repeat(4, 1fr);
+    }
+    .productSearch{
+        gap:20px;
     }
 }
 
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
-@media all and (min-width:768px) and (max-width:1023px) {
+@media all and (min-width:768px) and (max-width:1200px) {
     .productItemList {
         grid-template-columns: repeat(3, 1fr);
+    }
+    .productSearch{
+        gap:10px;
     }
 }
 
@@ -19,6 +25,9 @@
     }
     .productItemList {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .productSearch{
+        gap:5px;
     }
 }
 
@@ -43,7 +52,7 @@
 
 .productListInfo {
     font-family: 'SUITE-Regular';
-
+    font-size: 15px;
     white-space: pre-line;
     /* background-color: rgb(250, 253, 255); */
     left: 0;
@@ -148,7 +157,7 @@
     margin-bottom: 100px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    /* gap: 10px; */
     padding: 10px;
     border-top: 0.5px solid #d0c0a092;
 
@@ -156,12 +165,13 @@
 
 .productSearch button,
 .SearchBar button {
+    width: 70px;
     font-family: 'SUITE-Regular';
     background-color: #d0c0a052;
     padding: 0 15px;
     border: 0.5px solid #d0c0a092;
     border-radius: 5px;
-    margin: 0 10px;
+    /* margin: 0 10px; */
     cursor: pointer;
 }
 
@@ -235,7 +245,7 @@
 .productMainGuideContainer {
 
     width: 20vw;
-
+    font-size: 15px;
     overflow: hidden;
     position: relative;
 
