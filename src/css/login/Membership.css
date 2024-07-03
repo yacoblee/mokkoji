@@ -1,6 +1,5 @@
 .body {
-    width: 100vw;
-
+    width:calc(100vw-17px);
     background-color: #edeae4;
     user-select: none !important;
 }
@@ -265,4 +264,13 @@ input::placeholder {
     align-self: end;
     border-radius: 5px;
 
+}
+
+
+@media all and (min-width:767px) and (max-width:1023px) {
+   
+}
+
+@media all and (max-width:767px) {
+    
 }

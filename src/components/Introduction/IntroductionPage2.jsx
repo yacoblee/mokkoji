@@ -1,24 +1,21 @@
 import { useEffect, useRef } from 'react';
 import '../../css/Introduction/IntroductionPage2.css';
-const IntroductionPage2 = () => {
+const IntroductionPage2 = ({ getLocation }) => {
   const targetR = useRef(null);
 
   useEffect(() => {
-    const scrollEvent = () => {
-      if (window.scrollY > window.innerHeight * 3.4) {
+    if (targetR.current) {
+      if (getLocation) {
         targetR.current.style.opacity = 0;
       }
       else {
-        if (targetR.current) {
-          targetR.current.style.opacity = 1;
-        };
-      };
+        targetR.current.style.opacity = 1;
+      }
     }
-    window.addEventListener('scroll', scrollEvent);
-    return () => {
-      window.removeEventListener('scroll', scrollEvent);
-    };
-  },[])
+
+  }, [getLocation])
+
+
 
   return (
     <div className="container2">

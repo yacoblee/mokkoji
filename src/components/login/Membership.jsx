@@ -48,7 +48,7 @@ const Membership = () => {
         lastLoginDate: '',
         mypage: {
             history: [
-            
+
             ],
             Reservation: [
                 // { reserveItem: '', name: '', date: '', adult: '', teenager: '' },
@@ -56,7 +56,7 @@ const Membership = () => {
             review: '',
             isLike: [],
             basket: [
-               
+
             ]
         }
     })
@@ -186,7 +186,7 @@ const Membership = () => {
         firstNum: /^\d+$/,
         secondNum: /^\d+$/,
         lastNumber: /^\d+$/,
-        email:  /^[a-z0-9\s]+$/,
+        email: /^[a-z0-9\s]+$/,
         emailType: /^[a-zA-Z]+\.[a-zA-Z]+$/,
 
     }); //terms
