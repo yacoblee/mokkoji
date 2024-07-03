@@ -25,3 +25,7 @@
     padding: 2%;
     /* overflow: hidden; */
 }
+
+.MyPage * {
+    font-family: 'SUITE-Regular';
+}

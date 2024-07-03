@@ -10,7 +10,7 @@ function MyPageGrid() {
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    
+
     return (
         <div className='MyGrid'>
             <Link to='/mypage/like'>

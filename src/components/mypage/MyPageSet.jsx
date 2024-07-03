@@ -134,6 +134,7 @@ function MyPageSet() {
                         onChange={(e) => setEmailType(e.target.value)}
                         disabled={emailDisabled}
                     />
+                    <span> </span>
                     <select id="EmailList" onChange={handleEmailChange}>
                         <option value="type">직접 입력</option>
                         <option value="naver.com">naver.com</option>
@@ -185,6 +186,7 @@ function MyPageSet() {
                 <div></div>
                 <div>
                     <input
+                        className='InputAddress'
                         type="text"
                         value={setAddress}
                         placeholder={user.address}
@@ -194,6 +196,7 @@ function MyPageSet() {
                 <div></div>
                 <div>
                     <input
+                        className='InputAddressDetail'
                         type="text"
                         value={addressDetail}
                         onChange={(e) => setAddressDetail(e.target.value)}
