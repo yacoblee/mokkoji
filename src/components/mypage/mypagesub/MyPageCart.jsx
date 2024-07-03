@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import '../../../css/mypage/subpage/MyPageCart.css';
 import { useNavigate } from 'react-router-dom';
 
+import items from '../../product/ProductObject'
+
 function MyPageCart({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    // const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     const [user, setUser] = useState(userData)
 

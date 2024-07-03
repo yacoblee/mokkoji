@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
+import items from '../../product/ProductObject'
+
 import React, { useEffect, useState } from 'react';
 
 function MyPageLike({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    // const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     const [user, setUser] = useState(userData)
 

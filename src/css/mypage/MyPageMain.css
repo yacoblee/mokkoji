@@ -6,7 +6,7 @@
     /* justify-content: center; */
     /* text-align: center; */
     padding: 10%;
-    background-color: #e9e9e9;
+    background-color: #d0c0a008;
     /* border: 1px solid #ccc; */
     /* box-sizing: border-box; */
     /* width: 100%; */
@@ -17,11 +17,11 @@
 }
 
 .MyInfo {
-    flex: 5;
+    flex: 1;
 }
 
 .MyInfoBasic {
-    flex: 4;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -91,3 +91,58 @@
     border-bottom: solid #aaaaaa 1px;
     height: 30px;
 }
+
+.InputAddress,
+.InputAddressDetail {
+    width: 300px;
+}
+
+.MyInfoList input::placeholder {
+    font-size: 15px;
+}
+
+.MyPageSet button,
+.MyInfoSetting {
+    width: 130px;
+    height: 30px;
+    padding: 0;
+    margin: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.MyPageSet {
+    font-family: Arial, sans-serif !important;
+}
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .MyPageMain {
+        padding: 5%;
+    }
+
+    /* ==================================================== */
+
+    .MyInfoFlex {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyInfo,
+    .MyInfoBasic {
+        width: 300px;
+    }
+
+    /* ==================================================== */
+
+    
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {}

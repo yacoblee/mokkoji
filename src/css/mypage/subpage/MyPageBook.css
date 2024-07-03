@@ -15,13 +15,13 @@
 
 .BookHeader {
     border-bottom: 1px solid #000;
-    background-color: aliceblue;
+    background-color: #d0c0a058;
     height: 40px;
 }
 
 .BookFooter {
     border-top: 1px solid #000;
-    /* background-color: aliceblue; */
+    background-color: #d0c0a008;
     height: 40px;
 }
 

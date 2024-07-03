@@ -1,4 +1,3 @@
-import '../../../css/mypage/MyPageIndex.css';
 import '../../../css/mypage/subpage/MyPageList.css'
 
 function MyPageList() {
