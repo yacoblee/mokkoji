@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import '../../../css/mypage/subpage/MyPageCart.css';
 import { useNavigate } from 'react-router-dom';
 
+import items from '../../product/ProductObject'
+
 function MyPageCart({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    // const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     const [user, setUser] = useState(userData)
 
@@ -223,7 +225,7 @@ function MyPageCart({ change, setChange }) {
 
             <div className='MyCartHeader'>
 
-                <div>
+                <div >
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
@@ -241,7 +243,7 @@ function MyPageCart({ change, setChange }) {
             {cartGoods.map((goods) => {
                 return (
                     <div className="MyCartGrid" key={goods.id} >
-                        <div>
+                        <div className='MyCartCheck'>
                             <input
                                 type="checkbox"
                                 checked={checkedGoods.includes(goods.id)}
@@ -252,11 +254,11 @@ function MyPageCart({ change, setChange }) {
                             <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyCartInfo'>
-                            <h3>{goods.name}</h3>
+                            <h5>{goods.name}</h5>
                         </div>
                         <div className='MyCartDetail'>
-                            <h4>{goods.content}</h4>
-                            <h4>{goods.package}</h4>
+                            <h5>{goods.content}</h5>
+                            <h5>{goods.package}</h5>
                         </div>
                         <div className='MyCartCount'>
                             <div className='MyProductCount'>

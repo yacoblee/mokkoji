@@ -3,17 +3,17 @@ import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTr
 import '../../css/mypage/MyPageGrid.css';
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function MyPageGrid() {
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    
+
     return (
         <div className='MyGrid'>
-            <Link to='/mypage/like'>
+            <NavLink to='/mypage/like'>
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
@@ -21,8 +21,8 @@ function MyPageGrid() {
                     </div>
                     <span>찜목록</span>
                 </div>
-            </Link>
-            <Link to='/mypage/cart'>
+            </NavLink>
+            <NavLink to='/mypage/cart'>
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -30,24 +30,24 @@ function MyPageGrid() {
                     </div>
                     <span>장바구니</span>
                 </div>
-            </Link>
-            <Link to='/mypage/post'>
+            </NavLink>
+            <NavLink to='/mypage/post'>
                 <div className='MyPost'>
                     <div className='IconPost'>
                         <FontAwesomeIcon icon={faTruckFast} />
                     </div>
                     <span>배송 현황</span>
                 </div>
-            </Link>
-            <Link to='/mypage/list'>
+            </NavLink>
+            <NavLink to='/mypage/list'>
                 <div className='MyList'>
                     <div className='IconList'>
                         <FontAwesomeIcon icon={faListCheck} />
                     </div>
                     <span>구매내역</span>
                 </div>
-            </Link>
-            <Link to='/mypage/book'>
+            </NavLink>
+            <NavLink to='/mypage/book'>
                 <div className='MyBook'>
                     <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
@@ -55,7 +55,7 @@ function MyPageGrid() {
                     </div>
                     <span>나의 예약</span>
                 </div>
-            </Link>
+            </NavLink>
         </div>
     )
 

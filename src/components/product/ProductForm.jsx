@@ -237,6 +237,7 @@ const ProductForm = ({ selectedProduct }) => {
             </div>
             <Modal
                 isOpen={isModalLoginOpen}
+                ariaHideApp={false}
                 onRequestClose={() => setIsLoginModalOpen(false)}
                 contentLabel="로그인 필요"
                 style={{
@@ -265,6 +266,7 @@ const ProductForm = ({ selectedProduct }) => {
             </Modal>
             <Modal
                 isOpen={isModalOptionOpen}
+                ariaHideApp={false}
                 onRequestClose={() => setIsModalOptionOpen(false)}
                 contentLabel="옵션 선택 필요"
                 style={{
@@ -291,6 +293,7 @@ const ProductForm = ({ selectedProduct }) => {
             </Modal>
             <Modal
                 isOpen={isModalBasketOpen}
+                ariaHideApp={false}
                 onRequestClose={() => setIsModalBasketOpen(false)}
                 contentLabel="장바구니 확인"
                 style={{

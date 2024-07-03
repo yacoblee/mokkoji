@@ -19,7 +19,7 @@ function MyPageFlex() {
 
                 <div className="MyInfoSet">
                     <Link to='/mypage/set'>
-                        <button>내 정보 수정</button>
+                        <button className="MyInfoSetting">내 정보 수정</button>
                     </Link>
                 </div>
 

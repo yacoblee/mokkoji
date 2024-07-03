@@ -1,5 +1,5 @@
 import { Link} from "react-router-dom";
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 
 const ProductMainGuide = ({ text }) => {
@@ -72,12 +72,12 @@ const ProductListResult = ({selectItem , page , setPage})=>{
     <>
         <div className="productItemList">
             {/* 선택된 카테고리의 상품들을 보여줌 */}
-            {paginatedItems.map((product, i) => (
-                <Link to={`/goods/${product.category}/${product.id}`} key={i}>
-                    <div key={i} className="productItemResult">
+            {paginatedItems.map((product,i) => (
+                <Link to={`/goods/${product.category}/${product.id}`} key={product.id+i}>
+                    <div className="productItemResult"key={product.id+i}>
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <div>
-                            <p style={{fontSize : '18px' , fontWeight : '600'}}>{product.name}</p>
+                            <p style={{fontSize : '16px' , fontWeight : '600' , wordBreak :'keep-all'}}>{product.name}</p>
                             <p className="productMainGuideContainer">
                             <ProductMainGuide text={product.mainGuide} /> </p>
                             <p style={{color: 'red' , fontWeight : '600'}}>{formatNumber(product.price)}</p>

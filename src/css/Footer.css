@@ -2,12 +2,12 @@
     background-color: #faf4eb;
     color: rgb(92, 86, 86);
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     padding: 30px 20px;
     position: relative;
     bottom: 0;
-    width: 100vw;
+
     height: auto;
     flex-wrap: wrap;
 }
@@ -79,3 +79,5 @@
         margin: 20px 0;
     }
 }
+
+

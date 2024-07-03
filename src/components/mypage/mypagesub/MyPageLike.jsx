@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
+import items from '../../product/ProductObject'
+
 import React, { useEffect, useState } from 'react';
 
 function MyPageLike({ change, setChange }) {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    // const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
     const [user, setUser] = useState(userData)
 
@@ -116,14 +118,13 @@ function MyPageLike({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
             </div>
 
 
             {likedGoods.map((goods) => {
                 return (
                     <div className="MyLikeGrid" key={goods.id} >
-                        <div>
+                        <div className='MyLikeCheck'>
                             <input
                                 type="checkbox"
                                 checked={checkedGoods.includes(goods.id)}
@@ -134,10 +135,7 @@ function MyPageLike({ change, setChange }) {
                             <img src={goods.photo} alt={goods.name} />
                         </div>
                         <div className='MyLikeInfo'>
-                            <h3>{goods.name}</h3>
-                        </div>
-                        <div>
-
+                            <h4>{goods.name}</h4>
                         </div>
                         <div className='MyLikeButton'>
                             <Link to={`/goods/${goods.category}/${goods.id}`}>
@@ -158,7 +156,6 @@ function MyPageLike({ change, setChange }) {
                         checked={checkedGoods.length === likedGoods.length}
                     />
                 </div>
-                <div></div>
                 <div></div>
                 <div></div>
                 <div>

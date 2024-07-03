@@ -1,4 +1,3 @@
-import '../../../css/mypage/MyPageIndex.css';
 import '../../../css/mypage/subpage/MyPageList.css'
 
 function MyPageList() {
@@ -16,7 +15,7 @@ function MyPageList() {
                 .map((list) => {
                     return (
                         <div className='MyListDate' key={list.date}>
-                            <h2>{list.date}</h2>
+                            <h3>{list.date}</h3>
 
                             {list.item.slice()
                                 .sort((a, b) => a - b)
@@ -28,7 +27,7 @@ function MyPageList() {
                                                 <img src={product.productSrc[0]} alt={product.name} />
                                             </div>
                                             <div>
-                                                <h3>{product.name}</h3>
+                                                <h4>{product.name}</h4>
                                             </div>
                                         </div>
                                     )
