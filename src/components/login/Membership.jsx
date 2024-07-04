@@ -350,21 +350,14 @@ const Membership = () => {
             userInfo.push(formData.current);
             sessionStorage.setItem('userInfo', 'formData');
 
-            console.log("모든 유저 정보 : ", userInfo);
-            console.log("회원가입 FormData : ", formData);
-            console.log("회원가입 formErrors : ", formErrors);
-
             navi('/Login');
             alert(`${formData.current.name}님 회원가입을 축하합니다.`);
         }
         else {
             alert('⚠️ 조건에 맞게 정보를 다시 입력해주세요.')
-
         }
     }
 
-    console.log("랜더링 FormData : ", formData);
-    console.log("랜더링 formErrors : ", formErrors);
 
     return (
         <div className="body">

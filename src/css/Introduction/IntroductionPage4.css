@@ -16,6 +16,7 @@
     align-items: center;
     position: relative;
     z-index: 2;
+    user-select: none !important;
 }
 
 .container4::after {

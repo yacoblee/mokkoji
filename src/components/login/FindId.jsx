@@ -93,7 +93,6 @@ const FindId = () => {
         findingName: ''
     });
 
-    console.log(userFindIdIdErrors);
     const pRef2 = useRef(null);
 
     const UserFindID = () => {

@@ -69,8 +69,6 @@ const Login = () => {
           
             const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
-
-            console.log(filteredUserInfoID);
             navi('/');
         }
         else {

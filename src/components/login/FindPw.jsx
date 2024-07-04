@@ -58,7 +58,6 @@ const FindPw = () => {
         if (name === 'userId') {
             const noneId = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
             const isValidId = noneId.test(value);
-            console.log(isValidId);
             if (isValidId === false) {
                 inputIdRef.current.style.borderBottom = '1px solid red'
                 userFindPwIdErrors.current.userId = false;

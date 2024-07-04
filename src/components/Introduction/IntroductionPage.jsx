@@ -31,7 +31,6 @@ const IntroductionPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver((entriese) => {
       entriese.forEach((it) => {
-        console.log(it)
         if (it.isIntersecting) {
           it.target.style.opacity = 1;
           if (it.target === moveArea2.current) {

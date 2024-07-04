@@ -17,6 +17,8 @@
     z-index: 2;
     margin-top: 100vh;
     word-break: keep-all;
+    
+    user-select: none !important;
 }
 
 .container3::after {

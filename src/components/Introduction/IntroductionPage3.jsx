@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import '../../css/Introduction/IntroductionPage3.css';
 
+
 const IntroductionPage3 = ({ setGetLocation }) => {
   const showDiv = useRef(null);
   useEffect(() => {
-    console.log('랜더링됨?')
     const observer = new IntersectionObserver((entriese) => {
       entriese.forEach((e) => {
-        console.log('Observer entry:', e);
         if (e.isIntersecting) {
-          console.log('나타남?')
           setGetLocation(true);
         }
         else {
@@ -18,20 +16,20 @@ const IntroductionPage3 = ({ setGetLocation }) => {
 
       })
     },
-    {
-      threshold: 0.4, // 40% 지점에서 트리거
-    }
-  
-  
-  )
+      {
+        threshold: 0.4, // 40% 지점에서 트리거
+      }
+
+
+    )
 
     if (showDiv.current) {
       observer.observe(showDiv.current);
     }
 
 
-    return()=>{
-      if(showDiv.current){
+    return () => {
+      if (showDiv.current) {
         observer.unobserve(showDiv.current)
       }
       observer.disconnect();

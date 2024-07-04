@@ -7,7 +7,6 @@ const LoginSuccess = () => {
     const filteredUserInfoID = userInfoData.find(it => it.id == loginID && it.pw === loginPw);
 
     if (loginOk && filteredUserInfoID) {
-        console.log(filteredUserInfoID);
         sessionStorage.setItem('Loginuserinfo', JSON.stringify(filteredUserInfoID));
     }
 
