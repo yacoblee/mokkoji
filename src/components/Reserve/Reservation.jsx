@@ -78,6 +78,11 @@ const Reservation = () => {
         const monthData = ReserveObject.find(monthObj => monthObj.year === year && monthObj.month === month);
         const dayData = monthData?.days.find(dayObj => dayObj.day === day);
 
+        if (moment(newDate).isSame(today, 'day')) {
+            alert('당일 예약은 불가능합니다.');
+            return;
+        }
+
         if (dayData && dayData.id.length >= 5) {
             alert('해당 날짜에는 예약이 가득 찼습니다.');
         } else {

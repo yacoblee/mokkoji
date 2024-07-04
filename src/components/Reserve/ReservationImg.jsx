@@ -29,8 +29,8 @@ const ReservationImg = () => {
                 src={src}
                 key={`${i}`}
                 alt={`slide ${i}`}
-                onClick={() => openModal(i)} // Open modal on image click
-                style={{ cursor: 'pointer' }} // Add pointer cursor for better UX
+                onClick={() => openModal(i)}
+                style={{ cursor: 'pointer' }}
             />
         ))
     );
