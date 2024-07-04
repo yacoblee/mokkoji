@@ -155,7 +155,7 @@ const ProductList = () => {
 
     return (
         <>
-            <div className='MenuNsearch'style={{ marginTop: "150px" }}>
+            <div className='MenuNsearch' style={{ marginTop: "150px" }}>
                 <div className='productMenu' >
 
                     {productMenu.map((items, i) => (

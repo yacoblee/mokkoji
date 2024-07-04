@@ -71,6 +71,7 @@ header {
     color: gray;
     display: flex;
     justify-content: end;
+    transform: translateX(20%);
 }
 
 .header_center {
@@ -115,4 +116,104 @@ nav ul {
     text-decoration: underline;
     font-weight: 600;
     color: rgba(48, 47, 42, 0.727) !important;
+}
+
+@media screen and (width < 1460px) {
+
+    .header_center {
+        width: 250px;
+        height: 80px;
+    }
+
+    .header_left,
+    .header_right {
+        font-size: 1.3rem;
+    }
+
+
+}
+
+
+@media screen and (width < 1290px) {
+
+    .header_center {
+        width: 230px;
+        height: 70px;
+    }
+
+    .header_left,
+    .header_right {
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+    }
+
+
+}
+
+@media screen and (width < 900px) {
+
+    .header_center {
+        width: 180px;
+        height: 70px;
+    }
+
+    .header_left,
+    .header_right {
+        font-size: 1.1rem;
+        line-height: 1.1rem;
+    }
+
+
+}
+
+@media screen and (width < 760px) {
+
+    .header_center {
+        width: 150px;
+        height: 70px;
+    }
+
+    .header_left,
+    .header_right {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+
+    .header_nav ul li,
+    .header_nav ul li a {
+        padding: 0px;
+    }
+
+    .header_right {
+        transform: translateX(25%);
+    }
+
+}
+
+@media screen and (width < 620px) {
+    .main_header {
+        width: 100%;
+    }
+
+    .header_center {
+
+        width: 150px;
+        height: 70px;
+    }
+
+    .header_left,
+    .header_right {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+
+    .header_nav ul li,
+    .header_nav ul li a {
+        padding: 0px;
+    }
+
+    .header_right {
+        transform: translateX(5%);
+    }
+
 }

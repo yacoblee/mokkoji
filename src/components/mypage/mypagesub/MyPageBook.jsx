@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import '../../../css/mypage/subpage/MyPageBook.css';
 
@@ -12,10 +13,6 @@ function MyPageBook({ change, setChange }) {
         const newReservation = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
 
-                // console.log(`확인 처음 개수 ${item.quantity.contentSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
-
                 if (variation === 'decrease') {
                     if (item.adult === 1)
                         alert('성인의 동행이 필요한 활동입니다.');
@@ -25,33 +22,26 @@ function MyPageBook({ change, setChange }) {
                     item.adult = item.adult + 1
             }
             return item;
+
         }   // Reservation.map
         )   // newReservation
 
-        const updatedMypage = {
-            ...user.mypage,
-            Reservation: newReservation
-        }
-
         const updatedUser = {
             ...user,
-            mypage: updatedMypage
-        }
-
-        console.log(`${JSON.stringify(updatedUser)}`)
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
+            mypage: {
+                ...user.mypage,
+                Reservation: newReservation
+            }
+        };
 
         setUser(updatedUser);
+
     }   // changeAdultCount
 
     // 청소년 인원수 변경 로직
     const changeTeenCount = (date, variation) => {
         const newReservation = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
-
-                // console.log(`확인 처음 개수 ${item.quantity.packagingSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
 
                 if (variation === 'decrease') {
                     if (item.teenager === 0)
@@ -65,21 +55,23 @@ function MyPageBook({ change, setChange }) {
         }   // Reservation.map
         )   // newReservation
 
-        const updatedMypage = {
-            ...user.mypage,
-            Reservation: newReservation
-        }
-
         const updatedUser = {
             ...user,
-            mypage: updatedMypage
-        }
-
-        console.log(`${JSON.stringify(updatedUser)}`)
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
+            mypage: {
+                ...user.mypage,
+                Reservation: newReservation
+            }
+        };
 
         setUser(updatedUser);
+
     }   // changeTeenCount
+
+
+    // 버튼으로 sessionStorage 덮어쓰기
+    const handleSubmit = () => {
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+    }
 
 
     // 삭제 버튼 로직(날짜만 비교, 추후 조건 추가 해야함)
@@ -106,6 +98,7 @@ function MyPageBook({ change, setChange }) {
     }   // handleDelete
 
 
+
     return (
 
         <div className='MyPageBook'>
@@ -123,7 +116,6 @@ function MyPageBook({ change, setChange }) {
                 .slice()    // 원본 배열을 변경하지 않기 위해 복사본 생성
                 .sort((a, b) => new Date(b.date) - new Date(a.date))    // date를 기준으로 내림차순 정렬
                 .map((book) => {
-                    console.log(book.date)
                     return (
                         <div className='BookGrid' key={book.date}>
                             <div className='CheckBook'>
@@ -150,8 +142,8 @@ function MyPageBook({ change, setChange }) {
                                 </div>
                             </div>
                             <div className='BookButton'>
-                                <button className='buttonChange'>무슨버튼</button>
-                                <button onClick={() => handleDelete(book.date)}>삭제</button>
+                                <button className='buttonChange' onClick={() => handleSubmit()}>예약 수정</button>
+                                <button onClick={() => handleDelete(book.date)}>예약 취소</button>
                             </div>
                         </div>
                     )
@@ -166,7 +158,7 @@ function MyPageBook({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div>
-                    <button className='SelectDeleteButton'>선택 삭제</button>
+                    <button className='SelectDeleteButton'>선택 취소</button>
                 </div>
             </div>
         </div>
