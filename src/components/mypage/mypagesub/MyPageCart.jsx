@@ -23,6 +23,29 @@ function MyPageCart({ change, setChange }) {
             item.id === bb.productId
         );     // findItem
 
+
+
+        let calculateTotalPrice = () => {
+            let packageADDprice = 0; // 포장 추가 금액
+            let defaultADDprice = 0; // 기본 추가 금액
+
+            // 포장 옵션에 따라 추가 금액 설정
+            if (bb.options.packagingSelect.includes(2000)) {
+                packageADDprice = 2000;
+            } else if (bb.options.packagingSelect.includes(4000)) {
+                packageADDprice = 4000;
+            }
+
+            // 내용 옵션에 따라 추가 금액 설정
+            if (bb.options.contentSelect.includes(220000)) {
+                defaultADDprice = 220000;
+            } else if (bb.options.contentSelect.includes(722000)) {
+                defaultADDprice = 722000;
+            }
+
+            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
+        }
+
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
@@ -32,7 +55,8 @@ function MyPageCart({ change, setChange }) {
         cartItem.package = bb.options.packagingSelect
         cartItem.contentCount = bb.quantity.contentSelect
         cartItem.packageCount = bb.quantity.packagingSelect
-        cartItem.price = bb.totalPrice
+        cartItem.price = calculateTotalPrice(findItem)
+
 
         return cartItem;
     });     // map
@@ -56,7 +80,7 @@ function MyPageCart({ change, setChange }) {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
 
-    console.log(checkedGoods)
+    // console.log(checkedGoods)
 
     let newCheckedGoods = []
 
@@ -204,6 +228,8 @@ function MyPageCart({ change, setChange }) {
 
         setUser(updatedUser);
     }   // changePackageCount
+
+
 
 
     // 여러 개의 버튼에 대해 hover 상태를 관리할 수 있도록 상태 배열 사용
