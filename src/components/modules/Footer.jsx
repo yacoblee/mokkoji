@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../../css/Footer.css'
 import React, { useMemo } from 'react';
 
@@ -14,10 +15,10 @@ const Footer = () => {
             <div className="footer_section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/Introduction">Introduction</Link></li>
+                    <li><Link to="/reserve">Reserve</Link></li>
+                    <li><Link to="/Goods">Goods</Link></li>
                 </ul>
             </div>
             <div className="footer_section social_media">

@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import GoodsItems from "../product/ProductObject";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong, faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 // Productsection
 const Productsection = ({ title, sort }) => {
     const sortItems = [...GoodsItems];
@@ -78,10 +78,10 @@ const Productsection = ({ title, sort }) => {
                 <div className='slide_hidden_right'></div>
 
                 <button className="btn_pre nonVisible" ref={btnPreRef} onClick={throlltle(handlePrevClick)}>
-                    <FontAwesomeIcon icon={faArrowLeftLong} />
+                    <FontAwesomeIcon icon={faAngleLeft} />
                 </button>
                 <button className="btn_next" ref={btnNextRef} onClick={throlltle(handleNextClick)}>
-                    <FontAwesomeIcon icon={faArrowRightLong} />
+                    <FontAwesomeIcon icon={faAngleRight} />
                 </button>
 
             </div>
