@@ -211,7 +211,7 @@ const Reservation = () => {
                                         if (view === 'month') {
                                             const formattedDate = moment(date).format("YYYY-MM-DD");
                                             const count = reservationCounts[formattedDate] || 0;
-                                            if (count === 5) {
+                                            if (count >= 5) {
                                                 return <span style={{ fontSize: '0.7rem', color: 'red' }}>{count} / 5 팀</span>;
                                             } else {
 
