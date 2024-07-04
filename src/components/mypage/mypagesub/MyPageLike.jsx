@@ -50,7 +50,7 @@ function MyPageLike({ change, setChange }) {
         checkedGoods.map((id) => {
             let findItem = userData.mypage.isLike.filter((like) =>
                 like !== id
-            );      // findBasket
+            );      // findItem
             unCheckedGoods = findItem
         })
     }, [checkedGoods]);
@@ -159,7 +159,12 @@ function MyPageLike({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div>
-                    <button className='SelectDeleteButton' onClick={onDelete}>선택 삭제</button>
+                    <button
+                        className='SelectDeleteButton'
+                        onClick={onDelete}
+                    >
+                        선택 삭제
+                    </button>
                 </div>
             </div>
 
