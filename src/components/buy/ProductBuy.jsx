@@ -162,7 +162,7 @@ const ProductBuy = () => {
     };
 
     //오류 발생을 대비한 방어 코드.
-    if (!selectedProduct) {
+    if (!selectedProduct||!userData) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
                 아이템을 찾을 수 없어요
