@@ -154,7 +154,7 @@ function MyPageBook({ change, setChange }) {
                                 <Link to='/reserve'>
                                     <button className='buttonChange'>예약 상세</button>
                                 </Link>
-                                <button onClick={() => handleDelete(book.date)}>삭제</button>
+                                <button onClick={() => handleDelete(book.date)}>예약 취소</button>
                             </div>
                         </div>
                     )
@@ -169,7 +169,7 @@ function MyPageBook({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div>
-                    <button className='SelectDeleteButton'>선택 삭제</button>
+                    <button className='SelectDeleteButton'>선택 취소</button>
                 </div>
             </div>
         </div>
