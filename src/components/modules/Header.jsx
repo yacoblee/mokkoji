@@ -32,9 +32,11 @@ const Header = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+    const mypage = locationNows.pathname.toLowerCase().includes('mypage');
+    const buy = locationNows.pathname.toLowerCase().includes('buy');
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if ((!isLoggedIn && mypage) || (!isLoggedIn && buy)) {
             navigate('/');
         }
     }, [isLoggedIn]);
