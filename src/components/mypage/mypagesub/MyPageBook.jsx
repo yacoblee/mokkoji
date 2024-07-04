@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import '../../../css/mypage/subpage/MyPageBook.css';
 
@@ -150,7 +151,9 @@ function MyPageBook({ change, setChange }) {
                                 </div>
                             </div>
                             <div className='BookButton'>
-                                <button className='buttonChange'>무슨버튼</button>
+                                <Link to='/reserve'>
+                                    <button className='buttonChange'>예약 상세</button>
+                                </Link>
                                 <button onClick={() => handleDelete(book.date)}>삭제</button>
                             </div>
                         </div>
