@@ -114,7 +114,7 @@ const ProductList = () => {
     //하위 페이지와 연동되어 페이지를 리셋시킬 state
     const [page, setPage] = useState(1);
 
-    //카테고리가 변할때 필터 , 바가 변경될때의 필터
+    //카테고리가 변할때 필터 
     useEffect(() => {
         setPage(1);
         SetFilterItem({

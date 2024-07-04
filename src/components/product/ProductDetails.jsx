@@ -30,10 +30,10 @@ const ProductDetails = () => { //===============================================
     //찜 클릭 아이콘을 선택할때의 이벤트
     const onClickLikeMe = () => {
 
-        setLike(!like);
-
+        
         // 세션 스토리지의 사용자 정보 업데이트
         if (userData) {
+            setLike(!like);
             const updatedLikes =
                 like
                     ? userData.mypage.isLike.filter(id => id !== selectedProduct.id) // 이미 찜한 상태라면 제거

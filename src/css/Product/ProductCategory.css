@@ -218,7 +218,7 @@
     display: grid;
 
     grid-auto-rows: min-content;
-    padding: 3vw;
+    /* padding: 3vw; */
     margin: 0 auto;
     position: relative;
     gap: 3vw;
