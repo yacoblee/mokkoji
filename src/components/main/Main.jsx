@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import '../../css/main.css'
+import '../../css/mainMedia.css'
 import Section from '../modules/Section';
 const Main = () => {
 
