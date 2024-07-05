@@ -12,6 +12,7 @@ function MyPageLike({ change, setChange }) {
 
     const [user, setUser] = useState(userData)
 
+
     // 사진 이름 id 정보만 담긴 새로운 출력용 객체
     let likedGoods = user.mypage.isLike.map((like) => {
         let findItem = items.find((item) =>
@@ -28,52 +29,8 @@ function MyPageLike({ change, setChange }) {
         return likeItem;
     })
 
+
     // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직(진행중: 체크된 id값이 매번 갱신되는 문제 있음=최근 체크한 1개만 삭제됨)
-    const [checkedGoods, setCheckedGoods] = useState([]);
-
-    const handleCheckAll = (e) => {
-        if (e.target.checked) {
-            setCheckedGoods(likedGoods.map(goods => goods.id));
-        } else {
-            setCheckedGoods([]);
-        }
-    };
-    const handleCheckGood = (id) => {
-        setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
-    }
-
-    console.log(checkedGoods)
-
-    let unCheckedGoods = []
-
-    useEffect(() => {
-        checkedGoods.map((id) => {
-            let findItem = userData.mypage.isLike.filter((like) =>
-                like !== id
-            );      // findItem
-            unCheckedGoods = findItem
-        })
-    }, [checkedGoods]);
-
-    console.log(unCheckedGoods)
-
-    const onDelete = () => {
-        let newMyPage = {
-            ...userData.mypage,
-            isLike: unCheckedGoods
-        };
-
-        let newUser = {
-            ...userData,
-            mypage: newMyPage
-        }
-
-        sessionStorage.setItem('LoginUserInfo', JSON.stringify(newUser));
-
-        setUser(newUser);
-
-    }
-
 
 
     // 개별 삭제 버튼 로직(id값 비교)
@@ -111,8 +68,8 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedGoods.length === likedGoods.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -139,8 +96,8 @@ function MyPageLike({ change, setChange }) {
                                 <div className='MyLikeCheck'>
                                     <input
                                         type="checkbox"
-                                        checked={checkedGoods.includes(goods.id)}
-                                        onChange={() => handleCheckGood(goods.id)}
+                                    // checked={}
+                                    // onChange={}
                                     />
                                 </div>
                                 <div className="MyLikePhoto">
@@ -166,8 +123,8 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedGoods.length === likedGoods.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -175,7 +132,7 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <button
                         className='SelectDeleteButton'
-                        onClick={onDelete}
+                    // onClick={}
                     >
                         선택 삭제
                     </button>

@@ -8,6 +8,9 @@ function MyPageBook({ change, setChange }) {
 
     const [user, setUser] = useState(userData)
 
+    console.log(user.mypage.Reservation);
+
+
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
         const newReservation = user.mypage.Reservation.map((item) => {
@@ -37,6 +40,7 @@ function MyPageBook({ change, setChange }) {
         setUser(updatedUser);
 
     }   // changeAdultCount
+
 
     // 청소년 인원수 변경 로직
     const changeTeenCount = (date, variation) => {
@@ -99,55 +103,7 @@ function MyPageBook({ change, setChange }) {
 
 
 
-
-
     // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직(진행중: 체크된 id값이 매번 갱신되는 문제 있음=최근 체크한 1개만 삭제됨)
-    const [checkedBook, setCheckedBook] = useState([]);
-
-    const handleCheckAll = (e) => {
-        if (e.target.checked) {
-            setCheckedBook(user.mypage.Reservation.map(book => book.date));
-        } else {
-            setCheckedBook([]);
-        }
-    };
-    const handleCheckBook = (date) => {
-        setCheckedBook(prechecked => prechecked.includes(date) ? prechecked.filter(bookDate => bookDate !== date) : [...prechecked, date])
-    }
-
-    console.log(checkedBook)
-
-    let unCheckedBook = []
-
-    useEffect(() => {
-        checkedBook.map((day) => {
-            let findItem = userData.mypage.Reservation.filter((date) =>
-                date !== day
-            );      // findItem
-            unCheckedBook = findItem
-        })
-    }, [checkedBook]);
-
-    console.log(unCheckedBook)
-
-    const onDelete = () => {
-        let newMyPage = {
-            ...userData.mypage,
-            Reservation: unCheckedBook
-        };
-
-        let newUser = {
-            ...userData,
-            mypage: newMyPage
-        }
-
-        sessionStorage.setItem('LoginUserInfo', JSON.stringify(newUser));
-
-        setUser(newUser);
-
-    }
-
-
 
 
 
@@ -160,8 +116,8 @@ function MyPageBook({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedBook.length === user.mypage.Reservation.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -191,8 +147,8 @@ function MyPageBook({ change, setChange }) {
                                     <div className='CheckBook'>
                                         <input
                                             type="checkbox"
-                                            checked={checkedBook.includes(book.date)}
-                                            onChange={() => handleCheckBook(book.date)}
+                                        // checked={ }
+                                        // onChange={ }
                                         />
                                     </div>
                                     <div className='BookName'>
@@ -228,8 +184,8 @@ function MyPageBook({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedBook.length === user.mypage.Reservation.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -238,7 +194,7 @@ function MyPageBook({ change, setChange }) {
                 <div>
                     <button
                         className='SelectDeleteButton'
-                        onClick={onDelete}
+                    // onClick={}
                     >
                         선택 취소
                     </button>

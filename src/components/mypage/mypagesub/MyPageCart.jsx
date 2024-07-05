@@ -12,18 +12,18 @@ function MyPageCart({ change, setChange }) {
 
     const [user, setUser] = useState(userData)
 
+
     // 숫자를 금액처럼 표기하기
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
+
 
     // 사진 이름 id 기타 정보(수량, 가격)들 가져오는 새로운 출력용 객체
     let cartGoods = user.mypage.basket.map((bb) => {
         let findItem = items.find((item) =>
             item.id === bb.productId
         );     // findItem
-
-
 
         let calculateTotalPrice = () => {
             let packageADDprice = 0; // 포장 추가 금액
@@ -46,6 +46,8 @@ function MyPageCart({ change, setChange }) {
             return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
         }
 
+        bb.totalPrice = calculateTotalPrice(findItem);
+
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
@@ -55,14 +57,11 @@ function MyPageCart({ change, setChange }) {
         cartItem.package = bb.options.packagingSelect
         cartItem.contentCount = bb.quantity.contentSelect
         cartItem.packageCount = bb.quantity.packagingSelect
-        cartItem.price = calculateTotalPrice(findItem)
+        cartItem.price = bb.totalPrice
 
 
         return cartItem;
     });     // map
-
-
-
 
 
     // 이 아래로 checkbox 전체선택 + 선택 상품 구매 로직
@@ -98,6 +97,7 @@ function MyPageCart({ change, setChange }) {
 
     const navigate = useNavigate();
 
+
     // 선택 상품 구매 함수
     const onBuy = () => {
         if (!newCheckedGoods || newCheckedGoods.length === 0) {
@@ -112,6 +112,7 @@ function MyPageCart({ change, setChange }) {
         });
     }
 
+
     // 개별 상품 구매 함수
     const onBuyEach = (id) => {
         const findData = userData.mypage.basket.find((item) =>
@@ -125,7 +126,6 @@ function MyPageCart({ change, setChange }) {
             }
         })
     }
-
 
 
     // 삭제 버튼 로직(id값만 비교)
@@ -236,7 +236,6 @@ function MyPageCart({ change, setChange }) {
 
 
 
-
     // 여러 개의 버튼에 대해 hover 상태를 관리할 수 있도록 상태 배열 사용
     const [hoveredButton, setHoveredButton] = useState(null);
 
@@ -260,7 +259,7 @@ function MyPageCart({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={checkedGoods.length === cartGoods.length}
+                        checked={cartGoods.length > 0 && checkedGoods.length === cartGoods.length}
                     />
                 </div>
                 <div></div>
@@ -337,7 +336,7 @@ function MyPageCart({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={checkedGoods.length === cartGoods.length}
+                        checked={cartGoods.length > 0 && checkedGoods.length === cartGoods.length}
                     />
                 </div>
                 <div></div>
