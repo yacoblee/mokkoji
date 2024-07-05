@@ -75,6 +75,8 @@ function MyPageBook({ change, setChange }) {
     // 버튼으로 sessionStorage 덮어쓰기
     const handleSubmit = () => {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+
+        alert('예약 내역이 수정되었습니다.')
     }
 
 
