@@ -121,31 +121,45 @@ function MyPageLike({ change, setChange }) {
             </div>
 
 
-            {likedGoods.map((goods) => {
-                return (
-                    <div className="MyLikeGrid" key={goods.id} >
-                        <div className='MyLikeCheck'>
-                            <input
-                                type="checkbox"
-                                checked={checkedGoods.includes(goods.id)}
-                                onChange={() => handleCheckGood(goods.id)}
-                            />
-                        </div>
-                        <div className="MyLikePhoto">
-                            <img src={goods.photo} alt={goods.name} />
-                        </div>
-                        <div className='MyLikeInfo'>
-                            <h4>{goods.name}</h4>
-                        </div>
-                        <div className='MyLikeButton'>
-                            <Link to={`/goods/${goods.category}/${goods.id}`}>
-                                <button className='ButtonDetail'>상품 상세</button>
+            {likedGoods.length === 0 ?
+                (
+                    <div className='TextNoItems'>
+                        <h2>찜한 상품이 존재하지 않습니다.</h2>
+                        <div>
+                            <Link to='/goods'>
+                                굿즈 둘러보러 가기
                             </Link>
-                            <button onClick={() => handleDelete(goods.id)}>삭제</button>
                         </div>
-                    </div >  // mylikegird
+                    </div>
+                ) :
+                (
+                    likedGoods.map((goods) => {
+                        return (
+                            <div className="MyLikeGrid" key={goods.id} >
+                                <div className='MyLikeCheck'>
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedGoods.includes(goods.id)}
+                                        onChange={() => handleCheckGood(goods.id)}
+                                    />
+                                </div>
+                                <div className="MyLikePhoto">
+                                    <img src={goods.photo} alt={goods.name} />
+                                </div>
+                                <div className='MyLikeInfo'>
+                                    <h4>{goods.name}</h4>
+                                </div>
+                                <div className='MyLikeButton'>
+                                    <Link to={`/goods/${goods.category}/${goods.id}`}>
+                                        <button className='ButtonDetail'>상품 상세</button>
+                                    </Link>
+                                    <button onClick={() => handleDelete(goods.id)}>삭제</button>
+                                </div>
+                            </div >  // mylikegird
+                        )   // return
+                    })  // map
                 )
-            })}
+            }
 
             <div className='MyLikeFooter'>
 

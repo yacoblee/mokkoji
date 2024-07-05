@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../../../css/mypage/subpage/MyPageCart.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import items from '../../product/ProductObject'
 
@@ -100,11 +100,16 @@ function MyPageCart({ change, setChange }) {
 
     // 선택 상품 구매 함수
     const onBuy = () => {
+        if (!newCheckedGoods || newCheckedGoods.length === 0) {
+            alert('선택된 상품이 존재하지 않습니다.');
+            return;
+        }
+
         navigate('/buy', {
             state: {
                 newCheckedGoods: newCheckedGoods
             }
-        })
+        });
     }
 
     // 개별 상품 구매 함수
@@ -266,52 +271,65 @@ function MyPageCart({ change, setChange }) {
             </div>
 
 
-            {cartGoods.map((goods) => {
-                return (
-                    <div className="MyCartGrid" key={goods.id} >
-                        <div className='MyCartCheck'>
-                            <input
-                                type="checkbox"
-                                checked={checkedGoods.includes(goods.id)}
-                                onChange={() => handleCheckGood(goods.id)}
-                            />
+            {cartGoods.length === 0 ?
+                (
+                    <div className='TextNoItems'>
+                        <h2>장바구니에 상품이 존재하지 않습니다.</h2>
+                        <div>
+                            <Link to='/goods'>
+                                굿즈 둘러보러 가기
+                            </Link>
                         </div>
-                        <div className="MyCartPhoto">
-                            <img src={goods.photo} alt={goods.name} />
-                        </div>
-                        <div className='MyCartInfo'>
-                            <h5>{goods.name}</h5>
-                        </div>
-                        <div className='MyCartDetail'>
-                            <h5>{goods.content}</h5>
-                            <h5>{goods.package}</h5>
-                        </div>
-                        <div className='MyCartCount'>
-                            <div className='MyProductCount'>
-                                <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
-                                <input type="text" value={goods.contentCount} />
-                                <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
-                            </div>
-                            <div className='MyPackageCount'>
-                                <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
-                                <input type="text" value={goods.packageCount} />
-                                <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
-                            </div>
-                        </div>
-                        <div className='MyCartButton'>
-                            <button
-                                className='buttonChange'
-                                onClick={() => onBuyEach(goods.id)}
-                                onMouseEnter={() => handleMouseEnter(goods.id)}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                {hoveredButton === goods.id ? '구매하기' : `${formatNumber(goods.price)}원`}
-                            </button>
-                            <button onClick={() => handleDelete(goods.id)}>삭제</button>
-                        </div>
-                    </div >  // mycartgird
-                )
-            })}
+                    </div>
+                ) :
+                (
+                    cartGoods.map((goods) => {
+                        return (
+                            <div className="MyCartGrid" key={goods.id} >
+                                <div className='MyCartCheck'>
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedGoods.includes(goods.id)}
+                                        onChange={() => handleCheckGood(goods.id)}
+                                    />
+                                </div>
+                                <div className="MyCartPhoto">
+                                    <img src={goods.photo} alt={goods.name} />
+                                </div>
+                                <div className='MyCartInfo'>
+                                    <h5>{goods.name}</h5>
+                                </div>
+                                <div className='MyCartDetail'>
+                                    <h5>{goods.content}</h5>
+                                    <h5>{goods.package}</h5>
+                                </div>
+                                <div className='MyCartCount'>
+                                    <div className='MyProductCount'>
+                                        <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
+                                        <input type="text" value={goods.contentCount} />
+                                        <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
+                                    </div>
+                                    <div className='MyPackageCount'>
+                                        <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
+                                        <input type="text" value={goods.packageCount} />
+                                        <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
+                                    </div>
+                                </div>
+                                <div className='MyCartButton'>
+                                    <button
+                                        className='buttonChange'
+                                        onClick={() => onBuyEach(goods.id)}
+                                        onMouseEnter={() => handleMouseEnter(goods.id)}
+                                        onMouseLeave={handleMouseLeave}
+                                    >
+                                        {hoveredButton === goods.id ? '구매하기' : `${formatNumber(goods.price)}원`}
+                                    </button>
+                                    <button onClick={() => handleDelete(goods.id)}>삭제</button>
+                                </div>
+                            </div >  // mycartgird
+                        )   // return
+                    })  // map
+                )}
 
             <div className='MyCartFooter'>
 

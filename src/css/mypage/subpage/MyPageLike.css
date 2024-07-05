@@ -70,6 +70,16 @@
     color: white;
 }
 
+.TextNoItems * {
+    text-align: center;
+    margin: 5%;
+}
+
+.TextNoItems a {
+    text-decoration: underline;
+}
+
+
 /* PC (해상도 1024px)*/
 @media all and (min-width:1024px) {
     .MyLikeInfo {
