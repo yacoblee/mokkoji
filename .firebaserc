@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "mokkoji-10484"
-  }
+    "default": "mu-ds-99ce1",
+    "hosting": "mu-ds-99ce1"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
