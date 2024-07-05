@@ -79,8 +79,6 @@ function MyPageCart({ change, setChange }) {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
 
-    // console.log(checkedGoods)
-
     let newCheckedGoods = []
 
     useEffect(() => {
@@ -165,10 +163,6 @@ function MyPageCart({ change, setChange }) {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
-                // console.log(`확인 처음 개수 ${item.quantity.contentSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
-
                 if (variation === 'decrease') {
                     if (item.quantity.contentSelect === 1)
                         alert('상품 개수 경고');
@@ -178,8 +172,8 @@ function MyPageCart({ change, setChange }) {
                     item.quantity.contentSelect = item.quantity.contentSelect + 1
             }
             return item;
-        }   // newBasket.map
-        )   // newBasket
+        }
+        )   // newBasket.map
 
         const updatedMypage = {
             ...user.mypage,
@@ -202,10 +196,6 @@ function MyPageCart({ change, setChange }) {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
-                // console.log(`확인 처음 개수 ${item.quantity.packagingSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
-
                 if (variation === 'decrease') {
                     if (item.quantity.packagingSelect === 1)
                         alert('포장 개수 경고');
@@ -215,8 +205,8 @@ function MyPageCart({ change, setChange }) {
                     item.quantity.packagingSelect = item.quantity.packagingSelect + 1
             }
             return item;
-        }   // newBasket.map
-        )   // newBasket
+        }
+        )   // newBasket.map
 
         const updatedMypage = {
             ...user.mypage,
