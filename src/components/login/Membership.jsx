@@ -4,7 +4,6 @@ import '../../css/login/Membership.css';
 import Clausearea01 from './Clausearea01'
 import Clausearea02 from './Clausearea02';
 import Marketing from './Marketing';
-import FindId from './FindId';
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import About from './../main/About';
@@ -249,17 +248,31 @@ const Membership = () => {
     };
 
     // id 중복 검사 관련 
-    const [btnAble, setBtnAble] = useState(false)
+    // const [btnAble, setBtnAble] = useState(false)
     // id 유효성 검사 값이 true인 경우 버튼 활성화 아닌 경우 비활성화 
-    const IdCheck = () => {
-        if (terms.userID.test(formData.current.id)) {
-            setBtnAble(true);
-        }
-        else {
-            setBtnAble(false);
+    // const IdCheck = () => {
+    //     if (terms.userID.test(formData.current.id)) {
+    //         setBtnAble(true);
+    //     }
+    //     else {
+    //         setBtnAble(false);
+    //     }
+
+    // }
+
+    // 비밀번호 확인먼저 입력한경우 
+    const doubleCheckPw = useRef(null);
+    const pwR = useRef(null)
+    const NoinputPw = () => {
+        if (!(formErrors.current.pw === true)) {
+            alert('⚠️ 비밀번호를 먼저 입력하세요');
+            doubleCheckPw.current.value = '';
+            pwR.current.focus();
         }
 
-    } //IdCheck
+    }
+
+
 
     // 목 데이터에서 유저정보 가져옴 
     const allUserData = JSON.parse(localStorage.getItem('userInfo'));
@@ -275,10 +288,19 @@ const Membership = () => {
             alert('⚠️ 동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
             setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
                 inputR.current.value = ''; // 값 비우기
-            }, 0);
 
+            }, 0);
+            formErrors.current.id = false;
             setisOkIdChek(true)
         }
+        else if (formErrors.current.id === false) {
+            alert('⚠️ 조건에 맞게 아이디를 다시 입력하세요')
+            setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                inputR.current.value = ''; // 값 비우기
+            }, 0);
+            formErrors.current.id = false;
+        }
+
         else {
             alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
             formErrors.current.id = true;
@@ -355,6 +377,7 @@ const Membership = () => {
         }
         else {
             alert('⚠️ 조건에 맞게 정보를 다시 입력해주세요.')
+            window.scrollTo({ top: '30px', behavior: 'smooth' });
         }
     }
 
@@ -375,7 +398,6 @@ const Membership = () => {
                         <ul>
                             <Link to={'/'}><li>Home</li></Link>
                             <Link to={'/Login'}><li>Login</li></Link>
-                            <Link to={'/Login/Membership'}><li>Membership</li></Link>
                         </ul>
                     </div>
                 </div>
@@ -384,14 +406,14 @@ const Membership = () => {
                         <h3>약관동의 및 개인정보처리방침</h3>
 
                         <h4>필수 약관동의(필수)</h4>
-                        <Clausearea01 />
+                        <Clausearea01 className='clausearea1' />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다</h5>
                             <input type='checkbox' name="check1" onChange={(e) => btnCheck(e)} checked={isChecked.check1}></input>
                         </div>
 
                         <h4>개인정보 수집 및 이용 동의(필수)</h4>
-                        <Clausearea02 />
+                        <Clausearea02 className='clausearea1'/>
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
                             <input type='checkbox' name="check2" onChange={(e) => btnCheck(e)} checked={isChecked.check2}></input>
@@ -399,7 +421,7 @@ const Membership = () => {
 
 
                         <h4>마케팅 정보 수신 동의(선택)</h4>
-                        <Marketing />
+                        <Marketing className='clausearea1'/>
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
                             <input type='checkbox' name="check3" onChange={(e) => btnCheck(e)} checked={isChecked.check3}></input>
@@ -435,19 +457,19 @@ const Membership = () => {
                                 name="id"
                                 onChange={getInputInfo}
                                 maxLength={13}
-                                placeholder='7~14글자 이하 영문 숫자 조합으로 아이디를 입력해주세요'
-                                onBlur={IdCheck}
+                                placeholder='7~13글자 이하 영문 숫자 조합으로 아이디를 입력해주세요'
+                                // onBlur={IdCheck}
                                 ref={inputR}
                                 style={{
                                     borderBottom: formErrors.current.id === false ? '1px solid red' : '1px solid #aaaaaa'
                                 }}
                             />
                             <button
-                                disabled={!btnAble}
+                                // disabled={!btnAble}
 
                                 type='button'
                                 onClick={IsSameId}
-                            >아이디중복검사</button>
+                            >아이디중복 검사</button>
                         </div>
                         <p>에러</p>
 
@@ -457,6 +479,7 @@ const Membership = () => {
                             placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
                             maxLength={14}
                             name="pw"
+                            ref={pwR}
                             onChange={getInputInfo}
                             style={{
                                 borderBottom: formErrors.current.pw === false ? '1px solid red' : '1px solid #aaaaaa'
@@ -469,6 +492,8 @@ const Membership = () => {
                             placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
                             name="pwCheck"
                             maxLength={14}
+                            ref={doubleCheckPw}
+                            onClick={NoinputPw}
                             onChange={getInputInfo}
                             style={{
                                 borderBottom: formErrors.current.pwCheck === false ? '1px solid red' : '1px solid #aaaaaa'
@@ -503,7 +528,7 @@ const Membership = () => {
                         <div className='phoneNumber'>
                             <input type="text"
                                 maxLength={5}
-                                placeholder='2~4자리'
+                                placeholder='2~5자리'
                                 name='firstNumber'
                                 onChange={getInputInfo}
                                 style={{

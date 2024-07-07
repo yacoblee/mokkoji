@@ -1,5 +1,6 @@
 .body {
-    width:calc(100vw-17px);
+    width: calc(100vw-17px);
+    min-height: 100vh;
     background-color: #edeae4;
     user-select: none !important;
 }
@@ -22,7 +23,7 @@
 
 .clausearea h4 {
     margin-bottom: 10px;
-    font-size: 19px;
+    font-size: 1em;
 }
 
 .container input {
@@ -97,6 +98,7 @@ input::placeholder {
     background-color: white;
     font-size: .9em;
     letter-spacing: 2px;
+    word-break: keep-all;
 }
 
 .buttonarea button:hover,
@@ -110,9 +112,6 @@ input::placeholder {
     top: 10px;
     width: 35vw;
     height: 40vh;
-    /* background-color: rgb(239, 239, 247); */
-    /* background: url(../../../public/images/login/mudsmembershippageimg.jpg) no-repeat center;
-    background-size: cover; */
     float: left;
     position: sticky;
     display: flex;
@@ -189,7 +188,7 @@ input::placeholder {
 
 .genderbutton button {
     margin-top: 10px;
-    width: 150px;
+    width: 20%;
     height: 2.5rem;
     margin-right: 10px;
     transition: all 1s;
@@ -200,7 +199,6 @@ input::placeholder {
 
 .route {
     width: 15%;
-
     float: left;
     position: sticky;
     display: flex;
@@ -245,7 +243,7 @@ input::placeholder {
     display: flex;
 }
 
-.emailArea input{
+.emailArea input {
     align-self: end;
     width: 30%;
 }
@@ -263,14 +261,139 @@ input::placeholder {
     border: 1px solid #aaaaaa;
     align-self: end;
     border-radius: 5px;
-
 }
 
 
 @media all and (min-width:767px) and (max-width:1023px) {
-   
+
+    .innerclausearea,
+    .formcontainer {
+        font-size: .8em;
+    }
+
+    .rowarea button {
+        width: 25%;
+        font-size: .6em;
+        word-break: keep-all;
+    }
+
+    .clausearea h4 {
+        margin-bottom: 10px;
+        font-size: .8em;
+    }
+
+    input::placeholder {
+        visibility: hidden;
+    }
+
+    .buttonarea button {
+        font-size: .8em;
+        width: 180px;
+        height: 40px;
+    }
+
+    .stickyarea {
+        font-size: .9em;
+        width: 30vh;
+    }
+
+    .stickyarea h1 {
+        font-size: 1.5em;
+        margin-top: 20%;
+        margin-bottom: 3%;
+    }
+
+    .imgcontainer {
+        width: 90%;
+        height: 30%;
+        left: 10%;
+    }
+
+    .container h3,
+    .clausearea h3 {
+        font-size: .9em;
+    }
+
+    .clausearea,
+    .innerclausearea h5 l {
+        font-size: 1em;
+    }
+
+    .emailArea {
+        width: 70%;
+    }
+
+    .clause-area {
+        font-size: .6em;
+    }
 }
 
 @media all and (max-width:767px) {
-    
+
+    .genderbutton button,
+    .phoneNumber {
+        width: 70%;
+    }
+
+    .clause-area {
+        font-size: .6em;
+    }
+
+    .rowarea button {
+        font-size: .6em;
+        width: 30%;
+        word-break: keep-all;
+    }
+
+    .clausearea h4 {
+        margin-bottom: 10px;
+        font-size: .8em;
+    }
+
+    input::placeholder {
+        visibility: hidden;
+    }
+
+    .buttonarea button {
+        font-size: .9em;
+        width: 150px;
+        height: 40px;
+    }
+
+    .stickyarea {
+        font-size: .6em;
+        width: 20vh;
+    }
+
+    .stickyarea h1 {
+        font-size: 1.6em;
+        margin-top: 20%;
+        margin-bottom: 3%;
+    }
+
+    .imgcontainer {
+        width: 90%;
+        height: 30%;
+        left: 10%;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .container h3,
+    .clausearea h3 {
+        font-size: .9em;
+    }
+
+    .clausearea,
+    .innerclausearea h5,
+    .formcontainer {
+        font-size: .8em;
+    }
+
+    .emailArea {
+        width: 100%;
+    }
+
 }

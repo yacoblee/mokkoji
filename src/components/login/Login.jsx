@@ -20,7 +20,7 @@ const Login = () => {
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
-    const [errorCount, setErrorCount] = useState(1);
+    // const [errorCount, setErrorCount] = useState(1);
 
     const labelIdRed = useRef(null);
     const inputIdRef = useRef(null);
@@ -58,7 +58,7 @@ const Login = () => {
             inputRef.current.focus();
         }
     }
-    
+
     const dispatch = useDispatch();
     // 로그인 검사 함수 (로그인 시 홈 화면으로 이동 : 로그인실패 횟수 p태그에 연결하여 텍스트 표현)
     const CheckLogin = (e) => {
@@ -66,15 +66,16 @@ const Login = () => {
         if (isLogin) {
             const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
             dispatch(login(userInfo));
-          
+
             const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
             sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
             navi('/');
         }
         else {
             e.preventDefault();
-            setErrorCount(prventCount => prventCount + 1);
-            loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요. \n 로그인 실패 횟수: ${errorCount}`;
+            // setErrorCount(prventCount => prventCount + 1);
+            loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요.`
+            // \n 로그인 실패 횟수: ${errorCount};
             loginP.current.style.visibility = 'visible';
         }
         // 버튼 클릭 후 input 빈문자열로 초기화 

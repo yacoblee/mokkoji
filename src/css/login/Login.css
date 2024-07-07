@@ -181,6 +181,7 @@
         font-size: 1.5em;
         margin: 5% 0;
     }
+
 }
 
 @media all and (max-width:767px) {
@@ -202,7 +203,11 @@
         height: 23%;
         margin-bottom: 3%;
     }
-
+.login-imgBox h4{
+    font-size: 1em;
+    word-break: keep-all;
+    text-align: center;
+}
     .login-Box input {
         width: 90%;
         height: 35px;
@@ -210,9 +215,12 @@
         margin: 7% 0;
     }
     .login-Box button {
-        height: 35px;
-        width: 200px;
-        font-size: 1.5em;
-        margin: 5% 0;
+        height: 20%;
+        width: 90%;
+        font-size: 1.2em;
+        font-family: 'SUITE-Regular';
+        margin-top: 4%;
+        transition: all 0.5s ease;
+        margin-bottom: 10%;
     }
 }

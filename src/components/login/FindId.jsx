@@ -147,7 +147,7 @@ const FindId = () => {
                                 <Link to={'/Login/FindId'}><li>아이디 찾기</li></Link>
                             </ul>
                             <div className="findId-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
-                            <h4>아이디를 찾기 위해 아래 개인 정보를 입력해주세요</h4>
+                            <h4>아래 개인 정보를 입력해주세요</h4>
 
                             <div className="findId-Box">
                                 <div className="findId-inputArea">
