@@ -192,7 +192,6 @@
 
 @media all and (min-width:767px) and (max-width:1023px) {
     .findId-body {
-        background-color: #a5e2f8;
         font-size: 15px;
     }
 
@@ -242,7 +241,6 @@
     .findId-body {
         width: 100vw;
         height: 100vh;
-        background-color: thistle;
     }
 
     .findID-imgBox,
