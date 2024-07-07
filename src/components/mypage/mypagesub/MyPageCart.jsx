@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../../../css/mypage/subpage/MyPageCart.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import items from '../../product/ProductObject'
 
@@ -12,18 +12,18 @@ function MyPageCart({ change, setChange }) {
 
     const [user, setUser] = useState(userData)
 
+
     // 숫자를 금액처럼 표기하기
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
+
 
     // 사진 이름 id 기타 정보(수량, 가격)들 가져오는 새로운 출력용 객체
     let cartGoods = user.mypage.basket.map((bb) => {
         let findItem = items.find((item) =>
             item.id === bb.productId
         );     // findItem
-
-
 
         let calculateTotalPrice = () => {
             let packageADDprice = 0; // 포장 추가 금액
@@ -46,6 +46,8 @@ function MyPageCart({ change, setChange }) {
             return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
         }
 
+        bb.totalPrice = calculateTotalPrice(findItem);
+
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
@@ -55,14 +57,11 @@ function MyPageCart({ change, setChange }) {
         cartItem.package = bb.options.packagingSelect
         cartItem.contentCount = bb.quantity.contentSelect
         cartItem.packageCount = bb.quantity.packagingSelect
-        cartItem.price = calculateTotalPrice(findItem)
+        cartItem.price = bb.totalPrice
 
 
         return cartItem;
     });     // map
-
-
-
 
 
     // 이 아래로 checkbox 전체선택 + 선택 상품 구매 로직
@@ -80,8 +79,6 @@ function MyPageCart({ change, setChange }) {
         setCheckedGoods(prechecked => prechecked.includes(id) ? prechecked.filter(goodsId => goodsId !== id) : [...prechecked, id])
     }
 
-    // console.log(checkedGoods)
-
     let newCheckedGoods = []
 
     useEffect(() => {
@@ -98,14 +95,21 @@ function MyPageCart({ change, setChange }) {
 
     const navigate = useNavigate();
 
+
     // 선택 상품 구매 함수
     const onBuy = () => {
+        if (!newCheckedGoods || newCheckedGoods.length === 0) {
+            alert('선택된 상품이 존재하지 않습니다.');
+            return;
+        }
+
         navigate('/buy', {
             state: {
                 newCheckedGoods: newCheckedGoods
             }
-        })
+        });
     }
+
 
     // 개별 상품 구매 함수
     const onBuyEach = (id) => {
@@ -120,7 +124,6 @@ function MyPageCart({ change, setChange }) {
             }
         })
     }
-
 
 
     // 삭제 버튼 로직(id값만 비교)
@@ -160,10 +163,6 @@ function MyPageCart({ change, setChange }) {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
-                // console.log(`확인 처음 개수 ${item.quantity.contentSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
-
                 if (variation === 'decrease') {
                     if (item.quantity.contentSelect === 1)
                         alert('상품 개수 경고');
@@ -173,8 +172,8 @@ function MyPageCart({ change, setChange }) {
                     item.quantity.contentSelect = item.quantity.contentSelect + 1
             }
             return item;
-        }   // newBasket.map
-        )   // newBasket
+        }
+        )   // newBasket.map
 
         const updatedMypage = {
             ...user.mypage,
@@ -197,10 +196,6 @@ function MyPageCart({ change, setChange }) {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
 
-                // console.log(`확인 처음 개수 ${item.quantity.packagingSelect}`)
-                // console.log(`확인 아이템 ${item.productId}`)
-                // console.log(`확인 명령 ${variation}`)
-
                 if (variation === 'decrease') {
                     if (item.quantity.packagingSelect === 1)
                         alert('포장 개수 경고');
@@ -210,8 +205,8 @@ function MyPageCart({ change, setChange }) {
                     item.quantity.packagingSelect = item.quantity.packagingSelect + 1
             }
             return item;
-        }   // newBasket.map
-        )   // newBasket
+        }
+        )   // newBasket.map
 
         const updatedMypage = {
             ...user.mypage,
@@ -228,7 +223,6 @@ function MyPageCart({ change, setChange }) {
 
         setUser(updatedUser);
     }   // changePackageCount
-
 
 
 
@@ -255,7 +249,7 @@ function MyPageCart({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={checkedGoods.length === cartGoods.length}
+                        checked={cartGoods.length > 0 && checkedGoods.length === cartGoods.length}
                     />
                 </div>
                 <div></div>
@@ -266,52 +260,65 @@ function MyPageCart({ change, setChange }) {
             </div>
 
 
-            {cartGoods.map((goods) => {
-                return (
-                    <div className="MyCartGrid" key={goods.id} >
-                        <div className='MyCartCheck'>
-                            <input
-                                type="checkbox"
-                                checked={checkedGoods.includes(goods.id)}
-                                onChange={() => handleCheckGood(goods.id)}
-                            />
+            {cartGoods.length === 0 ?
+                (
+                    <div className='TextNoItems'>
+                        <h2>장바구니에 상품이 존재하지 않습니다.</h2>
+                        <div>
+                            <Link to='/goods'>
+                                굿즈 둘러보러 가기
+                            </Link>
                         </div>
-                        <div className="MyCartPhoto">
-                            <img src={goods.photo} alt={goods.name} />
-                        </div>
-                        <div className='MyCartInfo'>
-                            <h5>{goods.name}</h5>
-                        </div>
-                        <div className='MyCartDetail'>
-                            <h5>{goods.content}</h5>
-                            <h5>{goods.package}</h5>
-                        </div>
-                        <div className='MyCartCount'>
-                            <div className='MyProductCount'>
-                                <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
-                                <input type="text" value={goods.contentCount} />
-                                <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
-                            </div>
-                            <div className='MyPackageCount'>
-                                <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
-                                <input type="text" value={goods.packageCount} />
-                                <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
-                            </div>
-                        </div>
-                        <div className='MyCartButton'>
-                            <button
-                                className='buttonChange'
-                                onClick={() => onBuyEach(goods.id)}
-                                onMouseEnter={() => handleMouseEnter(goods.id)}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                {hoveredButton === goods.id ? '구매하기' : `${formatNumber(goods.price)}원`}
-                            </button>
-                            <button onClick={() => handleDelete(goods.id)}>삭제</button>
-                        </div>
-                    </div >  // mycartgird
-                )
-            })}
+                    </div>
+                ) :
+                (
+                    cartGoods.map((goods) => {
+                        return (
+                            <div className="MyCartGrid" key={goods.id} >
+                                <div className='MyCartCheck'>
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedGoods.includes(goods.id)}
+                                        onChange={() => handleCheckGood(goods.id)}
+                                    />
+                                </div>
+                                <div className="MyCartPhoto">
+                                    <img src={goods.photo} alt={goods.name} />
+                                </div>
+                                <div className='MyCartInfo'>
+                                    <h5>{goods.name}</h5>
+                                </div>
+                                <div className='MyCartDetail'>
+                                    <h5>{goods.content}</h5>
+                                    <h5>{goods.package}</h5>
+                                </div>
+                                <div className='MyCartCount'>
+                                    <div className='MyProductCount'>
+                                        <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
+                                        <input type="text" value={goods.contentCount} />
+                                        <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
+                                    </div>
+                                    <div className='MyPackageCount'>
+                                        <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
+                                        <input type="text" value={goods.packageCount} />
+                                        <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
+                                    </div>
+                                </div>
+                                <div className='MyCartButton'>
+                                    <button
+                                        className='buttonChange'
+                                        onClick={() => onBuyEach(goods.id)}
+                                        onMouseEnter={() => handleMouseEnter(goods.id)}
+                                        onMouseLeave={handleMouseLeave}
+                                    >
+                                        {hoveredButton === goods.id ? '구매하기' : `${formatNumber(goods.price)}원`}
+                                    </button>
+                                    <button onClick={() => handleDelete(goods.id)}>삭제</button>
+                                </div>
+                            </div >  // mycartgird
+                        )   // return
+                    })  // map
+                )}
 
             <div className='MyCartFooter'>
 
@@ -319,7 +326,7 @@ function MyPageCart({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={checkedGoods.length === cartGoods.length}
+                        checked={cartGoods.length > 0 && checkedGoods.length === cartGoods.length}
                     />
                 </div>
                 <div></div>

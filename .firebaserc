@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "mu-ds-99ce1",
+    "hosting": "mu-ds-99ce1"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

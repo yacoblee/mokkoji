@@ -8,6 +8,9 @@ function MyPageBook({ change, setChange }) {
 
     const [user, setUser] = useState(userData)
 
+    console.log(user.mypage.Reservation);
+
+
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
         const newReservation = user.mypage.Reservation.map((item) => {
@@ -37,6 +40,7 @@ function MyPageBook({ change, setChange }) {
         setUser(updatedUser);
 
     }   // changeAdultCount
+
 
     // 청소년 인원수 변경 로직
     const changeTeenCount = (date, variation) => {
@@ -70,7 +74,9 @@ function MyPageBook({ change, setChange }) {
 
     // 버튼으로 sessionStorage 덮어쓰기
     const handleSubmit = () => {
+        alert('예약 내역이 수정되었습니다.')
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
 
@@ -99,55 +105,7 @@ function MyPageBook({ change, setChange }) {
 
 
 
-
-
     // 이 아래로 checkbox 전체선택 + 선택 상품 삭제 로직(진행중: 체크된 id값이 매번 갱신되는 문제 있음=최근 체크한 1개만 삭제됨)
-    const [checkedBook, setCheckedBook] = useState([]);
-
-    const handleCheckAll = (e) => {
-        if (e.target.checked) {
-            setCheckedBook(user.mypage.Reservation.map(book => book.date));
-        } else {
-            setCheckedBook([]);
-        }
-    };
-    const handleCheckBook = (date) => {
-        setCheckedBook(prechecked => prechecked.includes(date) ? prechecked.filter(bookDate => bookDate !== date) : [...prechecked, date])
-    }
-
-    console.log(checkedBook)
-
-    let unCheckedBook = []
-
-    useEffect(() => {
-        checkedBook.map((day) => {
-            let findItem = userData.mypage.Reservation.filter((date) =>
-                date !== day
-            );      // findItem
-            unCheckedBook = findItem
-        })
-    }, [checkedBook]);
-
-    console.log(unCheckedBook)
-
-    const onDelete = () => {
-        let newMyPage = {
-            ...userData.mypage,
-            Reservation: unCheckedBook
-        };
-
-        let newUser = {
-            ...userData,
-            mypage: newMyPage
-        }
-
-        sessionStorage.setItem('LoginUserInfo', JSON.stringify(newUser));
-
-        setUser(newUser);
-
-    }
-
-
 
 
 
@@ -160,8 +118,8 @@ function MyPageBook({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedBook.length === user.mypage.Reservation.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -170,54 +128,66 @@ function MyPageBook({ change, setChange }) {
                 <div></div>
             </div>
 
-            {user.mypage.Reservation
-                .slice()    // 원본 배열을 변경하지 않기 위해 복사본 생성
-                .sort((a, b) => new Date(b.date) - new Date(a.date))    // date를 기준으로 내림차순 정렬
-                .map((book) => {
-                    return (
-                        <div className='BookGrid' key={book.date}>
-                            <div className='CheckBook'>
-                                <input
-                                    type="checkbox"
-                                    checked={checkedBook.includes(book.date)}
-                                    onChange={() => handleCheckBook(book.date)}
-                                />
-                            </div>
-                            <div className='BookName'>
-                                <h4>{book.name}</h4>
-                            </div>
-                            <div className='BookDate'>
-                                <h5>{book.date}</h5>
-                            </div>
-                            <div className='PersonCount'>
-                                <div>성인</div>
-                                <div className='AdultCount'>
-                                    <img src="/images/buy/minus.png" onClick={() => changeAdultCount(book.date, 'decrease')} />
-                                    <input type="text" value={book.adult} />
-                                    <img src="/images/buy/plus.png" onClick={() => changeAdultCount(book.date, 'increase')} />
-                                </div>
-                                <div>청소년</div>
-                                <div className='TeenCount'>
-                                    <img src="/images/buy/minus.png" onClick={() => changeTeenCount(book.date, 'decrease')} />
-                                    <input type="text" value={book.teenager} />
-                                    <img src="/images/buy/plus.png" onClick={() => changeTeenCount(book.date, 'increase')} />
-                                </div>
-                            </div>
-                            <div className='BookButton'>
-                                <button className='buttonChange' onClick={() => handleSubmit()}>예약 수정</button>
-                                <button onClick={() => handleDelete(book.date)}>예약 취소</button>
-                            </div>
+            {user.mypage.Reservation.length === 0 ?
+                (
+                    <div className='TextNoItems'>
+                        <h2>예약된 활동이 존재하지 않습니다.</h2>
+                        <div>
+                            <Link to='/reserve'>
+                                체험활동 둘러보러 가기
+                            </Link>
                         </div>
-                    )
-                })}
+                    </div>
+                ) :
+                (
+                    user.mypage.Reservation
+                        .slice()    // 원본 배열을 변경하지 않기 위해 복사본 생성
+                        .sort((a, b) => new Date(b.date) - new Date(a.date))    // date를 기준으로 내림차순 정렬
+                        .map((book) => {
+                            return (
+                                <div className='BookGrid' key={book.date}>
+                                    <div className='CheckBook'>
+                                        <input
+                                            type="checkbox"
+                                        // checked={ }
+                                        // onChange={ }
+                                        />
+                                    </div>
+                                    <div className='BookName'>
+                                        <h4>{book.name}</h4>
+                                    </div>
+                                    <div className='BookDate'>
+                                        <h5>{book.date}</h5>
+                                    </div>
+                                    <div className='PersonCount'>
+                                        <div>성인</div>
+                                        <div className='AdultCount'>
+                                            <img src="/images/buy/minus.png" onClick={() => changeAdultCount(book.date, 'decrease')} />
+                                            <input type="text" value={book.adult} />
+                                            <img src="/images/buy/plus.png" onClick={() => changeAdultCount(book.date, 'increase')} />
+                                        </div>
+                                        <div>청소년</div>
+                                        <div className='TeenCount'>
+                                            <img src="/images/buy/minus.png" onClick={() => changeTeenCount(book.date, 'decrease')} />
+                                            <input type="text" value={book.teenager} />
+                                            <img src="/images/buy/plus.png" onClick={() => changeTeenCount(book.date, 'increase')} />
+                                        </div>
+                                    </div>
+                                    <div className='BookButton'>
+                                        <button className='buttonChange' onClick={() => handleSubmit()}>예약 수정</button>
+                                        <button onClick={() => handleDelete(book.date)}>예약 취소</button>
+                                    </div>
+                                </div>
+                            )
+                        }))}
 
 
             <div className='BookFooter'>
                 <div>
                     <input
                         type="checkbox"
-                        onChange={handleCheckAll}
-                        checked={checkedBook.length === user.mypage.Reservation.length}
+                    // onChange={}
+                    // checked={}
                     />
                 </div>
                 <div></div>
@@ -226,7 +196,7 @@ function MyPageBook({ change, setChange }) {
                 <div>
                     <button
                         className='SelectDeleteButton'
-                        onClick={onDelete}
+                    // onClick={}
                     >
                         선택 취소
                     </button>
