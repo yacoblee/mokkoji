@@ -35,6 +35,7 @@ const PostCard = () => {
         };
     }, []);
 
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData(prevState => ({
@@ -73,6 +74,7 @@ const PostCard = () => {
                 content_mail: '',
                 content_main: '',
             });
+            setErrors({});
         } else {
             // 유효성 검사 실패
             console.log('Form data: error', formData);

@@ -34,7 +34,7 @@ const Header = () => {
     }, []);
 
 
-    
+
     const mypage = locationNows.pathname.toLowerCase().includes('mypage');
     const buy = locationNows.pathname.toLowerCase().includes('buy');
 
@@ -60,7 +60,7 @@ const Header = () => {
                         <ul>
                             <li><NavLink to="/introduction"><p>Introduction</p></NavLink></li>
                             <li><NavLink to="/goods" className={({ isActive }) => (isActive ? 'active' : '')}><p>Goods</p></NavLink></li>
-                            <li><NavLink to="/reserve" className={({ isActive }) => (isActive ? 'active' : '')}><p>Reserve</p></NavLink></li>
+                            <li><NavLink to="/reserve" className={({ isActive }) => (isActive ? 'active' : '')}><p>Reservation</p></NavLink></li>
                         </ul>
                     </nav>
                 </div>

@@ -28,7 +28,7 @@ export default function Background() {
         event.preventDefault();
         const section2 = document.querySelector('#section2');
         if (section2) {
-            const scrollPosition = section2.getBoundingClientRect().top + -(window.innerHeight - section2.clientHeight);
+            const scrollPosition = section2.getBoundingClientRect().top + -(window.innerHeight - 1000);
             window.scrollTo({
                 top: scrollPosition,
                 behavior: 'smooth'

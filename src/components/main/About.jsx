@@ -27,7 +27,7 @@ const About = () => {
             <div className="about_head">
                 <h1>About</h1>
             </div>
-            <Link to={'/'}>
+            <Link to={'/introduction'}>
                 <div className={isHovering ? 'about_img hide' : 'about_img'}>
 
                     <div className={isHovering ? 'about_content show' : 'about_content'}
