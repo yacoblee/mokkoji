@@ -305,7 +305,7 @@
     display: grid;
     grid-area: 6 / 7 /span 4 / span 2;
     position: relative;
-    /* justify-content: center; */
+    justify-content: flex-start;
     align-items: center;
 
 }
@@ -317,10 +317,10 @@
 
 /* 예약 기능 영역 css S */
 .calendar-toggle {
-    /* transform: translateX(8%); */
     position: relative;
-    right: -25%;
-    width: 300px;
+    left: 34%;
+    min-width: 250px;
+    width: 15vw;
     height: 380px;
     border: 1px solid #e6e6e6;
     border-radius: 16px;
@@ -351,9 +351,11 @@
     font-family: 'Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif;';
 }
 
-.personSelect ul li .calendar-toggle-submit {
-    transform: translateX(50%);
-    width: 100%;
+.calendar-toggle-submit {
+    position: absolute;
+    bottom: 5%;
+    right: 22%;
+    width: 10vw;
     height: 40px;
     max-width: 150px;
     background-color: #417dbeee;
@@ -365,7 +367,7 @@
 }
 
 .calendar-toggle-button:hover,
-.personSelect ul li .calendar-toggle-submit:hover {
+.calendar-toggle-submit:hover {
     opacity: 0.8;
 }
 
@@ -599,3 +601,242 @@
 }
 
 /* 상세 정보 css E */
+
+.reservation_intro {}
+
+@media screen and (width < 1650px) {
+    .reservation {
+        display: grid;
+        width: 100vw;
+        min-height: 80vh;
+        grid-template-rows: repeat(9, 1fr);
+        grid-template-columns: repeat(10, .5fr);
+    }
+
+    .reservation_intro {
+        display: grid;
+        grid-area: 6 / 3 / span 2 / span 7;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .intro_inner {
+        width: 60vw;
+    }
+
+    .intro_inner>h3 {
+        background-color: #dfdf5354;
+        width: fit-content;
+        border-radius: 5px;
+        font-size: 1.2rem;
+    }
+
+    .reservation_intro .intro_inner>ul li {
+        font-size: 1.2vw;
+        line-height: 1.4rem;
+        list-style: none;
+        position: relative;
+        padding-left: 16px;
+    }
+
+
+
+    .reservation_calendar {
+        display: grid;
+        grid-area: 8 / 3 / span 2 / span 6;
+        position: relative;
+        justify-content: flex-start;
+    }
+
+    .calendar-toggle {
+        display: grid;
+        grid-template: 1fr 1fr / repeat(6, 1fr);
+        position: relative;
+        left: 0;
+        width: 60vw;
+        height: 150px;
+        border: 1px solid #e6e6e6;
+        border-radius: 16px;
+        padding: 20px;
+        letter-spacing: 1px;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .calendar-toggle-button {
+        grid-area: 1 / 6 / 2 / 7;
+        justify-content: center;
+        align-self: center;
+        width: 10vw;
+        max-width: 120px;
+        height: 30px;
+        padding: 0;
+        width: 10vw;
+
+
+    }
+
+    .reservation_calendar_inner {
+        transform: translateX(180%) translateY(-20%);
+        z-index: 2;
+        position: absolute;
+    }
+
+    .calendar-toggle::after {
+        content: "";
+        grid-area: 1 / 1 / 2 / 7;
+        border-bottom: 1px solid #e6e6e6;
+
+        width: 100%;
+    }
+
+    hr {
+        display: none;
+    }
+
+    .calendar-toggle>p {
+
+        grid-area: 2 / 3 / 2 / span 1;
+        transform: translateY(40%) translateX(20%);
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .personSelect {
+        grid-area: 1 / 1 / 2 / 6;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .personSelect ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .personSelect ul li {
+        display: flex;
+        align-items: center;
+    }
+
+    .personSelect ul li p {
+        margin-right: 10px;
+    }
+
+    .calendar-toggle-submit {
+        display: grid;
+        grid-area: 2 / 4 / 3 / 5;
+        justify-self: center;
+        align-self: center;
+        padding: 5px;
+        position: relative;
+        bottom: 0;
+        right: 0;
+        width: 8vw;
+        height: 40px;
+        max-width: 150px
+    }
+}
+
+@media screen and (width < 1250px) {
+
+    .reservation_img {
+        display: grid;
+        grid-area: 2 / 2 / span 4 / span 8;
+    }
+
+    .reservation_intro {
+        display: grid;
+        grid-area: 6 / 2 / span 2 / span 8;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .intro_inner {
+        width: 80vw;
+    }
+
+    .reservation_intro .intro_inner>ul li {
+        font-size: 1rem;
+        line-height: 1.4rem;
+        list-style: none;
+        position: relative;
+        padding-left: 16px;
+    }
+
+    .hilights {
+        position: absolute;
+        bottom: 10px;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .reservation_calendar {
+        display: grid;
+        grid-area: 8 / 2 / span 2 / span 8;
+        position: relative;
+        justify-content: flex-start;
+    }
+
+    .calendar-toggle {
+        width: 80vw;
+    }
+}
+
+@media screen and (width < 1070px) {
+
+    .intro_inner>h3 {
+        width: fit-content;
+        border-radius: 5px;
+        font-size: 1.1rem;
+    }
+
+    .reservation_intro .intro_inner>ul li {
+        font-size: 0.9rem;
+        line-height: 1.4rem;
+        list-style: none;
+        position: relative;
+        padding-left: 16px;
+    }
+
+    .hilights {
+        bottom: 10px;
+        right: 5%;
+        width: 40px;
+        height: 40px;
+        z-index: -1;
+    }
+}
+
+@media screen and (width < 840px) {
+    .reservation_main_img img {
+        width: 100%;
+        height: 526px;
+        object-fit: fill;
+        border-radius: 10px 0 0 10px;
+        padding-right: 5px;
+    }
+
+    .reservation_sub_img img {
+        width: 100%;
+        height: 260px;
+        border-radius: 0% 10px 0 0;
+        padding-bottom: 2.5px;
+    }
+
+    .reservation_fin_img img {
+        border-radius: 0 0 10px 0;
+        padding-top: 2.5px;
+        width: 100%;
+        height: 260px;
+    }
+
+}
