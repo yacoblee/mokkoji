@@ -76,8 +76,8 @@ const IntroductionPage = () => {
         <div className='moveArea2' ref={moveArea2}>
           <div className='text-bodyArea'>
             <p className='text-title'>국립박물관의 문화유산 컨텐츠 발굴</p>
-            <p className='text-body'>전통 문화에 거리감을 느끼는 Z세대를 위해 실생활에서 쉽게 접할 수 있는 컨텐츠를 바탕으로 전통문화를 받아들이며,
-              특히 역사적 요소를 현대적인 감각으로 재해석하여 새로운 소비문화와 박물관의 미래가치를 확산합니다.</p>
+            <p className='text-body'>전통 문화에 거리감을 느끼는 Z세대를 위해 실생활에서 쉽게 접할 수 있는 컨텐츠를 바탕으로 전통문화를 보다 친숙하게 받아들이도록 하기 위해,
+              역사적 요소를 현대적인 감각으로 재해석하여 새로운 소비문화와 박물관의 미래가치를 확산합니다.</p>
           </div>
           <div className='move-img2'>
             <img src="/images/login/muds6.png" alt="소개 이미지2" />

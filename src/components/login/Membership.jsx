@@ -293,7 +293,7 @@ const Membership = () => {
             formErrors.current.id = false;
             setisOkIdChek(true)
         }
-        else if (formErrors.current.id === false) {
+        else if (formErrors.current.id === false || formData.current.id === '') {
             alert('⚠️ 조건에 맞게 아이디를 다시 입력하세요')
             setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
                 inputR.current.value = ''; // 값 비우기
@@ -413,7 +413,7 @@ const Membership = () => {
                         </div>
 
                         <h4>개인정보 수집 및 이용 동의(필수)</h4>
-                        <Clausearea02 className='clausearea1'/>
+                        <Clausearea02 className='clausearea1' />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
                             <input type='checkbox' name="check2" onChange={(e) => btnCheck(e)} checked={isChecked.check2}></input>
@@ -421,7 +421,7 @@ const Membership = () => {
 
 
                         <h4>마케팅 정보 수신 동의(선택)</h4>
-                        <Marketing className='clausearea1'/>
+                        <Marketing className='clausearea1' />
                         <div className='innerclausearea'>
                             <h5>이용약관에 동의합니다.</h5>
                             <input type='checkbox' name="check3" onChange={(e) => btnCheck(e)} checked={isChecked.check3}></input>

@@ -33,7 +33,6 @@ const IntroductionPage4 = () => {
               <h2>관람료</h2>
               <p><span className='highlight'> 무료</span> 상설전시관, 어린이박물관, <span className='textrow'>무료 특별전시 해당</span></p>
               <p><span className='highlight'>유료</span> 유료 특별전시 해당</p>
-              <p><span className='highlight'>2024년 휴실일</span> 4.1.(월), 11.4.(월)</p>
             </div>
           </div>
 
