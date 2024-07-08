@@ -296,6 +296,9 @@
     width: 150px;
     height: 30px;
     font-family: 'SUITE-Regular';
+    border-top : 1px solid #aaaaaa;
+    border-left: 1px solid #aaaaaa ;
+    border-right: 1px solid #aaaaaa;
 }
 
 .buyInput {
@@ -383,12 +386,25 @@
     height: 25px;
     font-family: 'SUITE-Regular';
     font-size: 16px;
+    border-top : 1px solid #aaaaaa;
+    border-left: 1px solid #aaaaaa ;
+    border-right: 1px solid #aaaaaa;
 }
+.errors{
+    border-bottom: 1px solid red;
+}
+.errors:focus{
+    outline : 1px solid red !important;
 
+}
+/* .buyForm input:focus{
+    outline: aqua;
+} */
 #addressDetail::placeholder,
-#buyAddress1::placeholder {
+#buyAddress1::placeholder ,
+#phoneNumber::placeholder{
     font-family: 'SUITE-Regular';
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .addressBox {

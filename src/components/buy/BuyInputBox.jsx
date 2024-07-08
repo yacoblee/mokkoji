@@ -17,6 +17,8 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
 
     //유저 관리에 대한 저장 변수.
     const [userInfo, setUserInfo] = useState({});
+    //유저 관리 에러에 대한 저장 변수.
+    const [userInfoError, setUserInfoError] = useState({});
     // console.log(userInfo);
     // 처음 렌더링 시 userInfo를 설정.
     useEffect(() => {
@@ -28,6 +30,13 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 addressDetail: userData.addressDetail || '',
                 zoneCode: userData.zoneCode || ''
             });
+            setUserInfoError({
+                name: false,
+                phoneNumber: false,
+                addressDetail: false,
+                zoneCode: false,
+                deliveryMessage: false,
+            })
         }
     }, [userData]);
 
@@ -41,6 +50,13 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 addressDetail: '',
                 zoneCode: ''
             });
+            setUserInfoError({
+                name: true,
+                phoneNumber: true,
+                addressDetail: true,
+                zoneCode: true,
+                deliveryMessage: false,
+            })
         } else {
             setUserInfo({
                 name: userData.name || '',
@@ -49,9 +65,16 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 addressDetail: userData.addressDetail || '',
                 zoneCode: userData.zoneCode || ''
             });
+            setUserInfoError({
+                name: false,
+                phoneNumber: false,
+                addressDetail: false,
+                zoneCode: false,
+            })
         }
         setAddressing(!addressing);
     };
+
 
     //수기로 작성했을때 onChange 이벤트를 통해 value값을 지정.
     const onChangeUserInfo = (e) => {
@@ -60,6 +83,34 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
             ...info,
             [name]: value,
         }));
+        // console.log(`Name: ${name}, Value: ${value}, Length: ${value.length}`);
+
+        if (name === 'name') {
+            if (value.length < 2 || value.length > 5) {
+                setUserInfoError((error) => ({ ...error, name: true }))
+            } else {
+                setUserInfoError((error) => ({ ...error, name: false }))
+            }
+        }
+
+        if (name === 'phoneNumber') {
+            const noneNumber = /[^0-9]/g;
+            const isValidPhoneNumber = !noneNumber.test(value);
+            if (isValidPhoneNumber && value.length > 8 && !(value.includes('-'))) {
+                setUserInfoError((error) => ({ ...error, phoneNumber: false })); // 숫자면 들어와요
+            } else {
+                setUserInfoError((error) => ({ ...error, phoneNumber: true }));
+            }
+        }
+        if (name === 'addressDetail') {
+            if (value.trim().length < 1) {
+                setUserInfoError((error) => ({ ...error, [name]: true }));
+            } else {
+                setUserInfoError((error) => ({ ...error, [name]: false }));
+
+            }
+        }
+        console.log(userInfoError.zoneCode);
     };
 
     //모달 상태창에 대한 true , false
@@ -85,6 +136,8 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
             zoneCode: data.zonecode,
             address: fullAddress
         }));
+        setUserInfoError((error) => ({ ...error, zoneCode: false }));
+
         setIsModalOpen(false);
     };
 
@@ -105,17 +158,30 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
     // },[]);
     //직접 입력시 인풋창을 활성화 시킬 state
     const [directInput, setDirectInput] = useState(false);
-    console.log(selectBox.deliveryMessage)
+    // console.log(selectBox.deliveryMessage)
     //select를 선택했을때 onchange 이벤트
     //직접입력이 아닐경우는 false로 지정
     const onChangeSelectBox = (e) => {
         SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }));
         if (e.target.value !== '직접입력') {
             setDirectInput(false);
-        }else{
+            // deliveryMessage : false,
+            // setUserInfoError(error => ({ ...error, deliveryMessage: false }))
+        } else {
             setDirectInput(true);
+            // setUserInfoError(error => ({ ...error, deliveryMessage: true }))
+
         }
+        // console.log(e.target.value , userInfoError.deliveryMessage);
     }
+    useEffect(() => {
+        if(selectBox.deliveryMessage === '직접입력' || selectBox.deliveryMessage.trim() ===''){
+            setUserInfoError(error => ({ ...error, deliveryMessage: true }))
+        }else{
+            setUserInfoError(error => ({ ...error, deliveryMessage: false }))
+        }
+        // console.log(selectBox.deliveryMessage, userInfoError.deliveryMessage);
+    }, [selectBox.deliveryMessage]);
 
     const onChangeRadioBox = (e) => {
         SetSelectBox((box) => ({ ...box, buyHow: e.target.value }));
@@ -124,11 +190,13 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
     const [isBuyButtonDisabled, setIsBuyButtonDisabled] = useState(true);
 
 
-
     useEffect(() => {
         //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
         // userInfo의 각 값에 대해 trim()을 적용한 후 빈 문자열인지 확인
-        const checking = Object.values(userInfo).map(it => it.trim()).filter((it) => it === '');
+        // const checking = Object.values(userInfo).map(it => it.trim()).filter((it) => it === '');
+        //전부 false 여야지만 true를 반환
+        const checking = Object.values(userInfoError).every((it) => it === false);
+        // console.log(userInfoError);
         // console.log(checking);
         //selectedALLproduct는 본품과 장바구니의 체크여부를 구하기 위해서.
         //즉 1개 이상 선택되어야지만 진행.
@@ -142,34 +210,24 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
             //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
         }
         // console.log(selectedALLproduct);
-        //checking 이 없으면서 , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야
-        if (checking.length === 0 && selectBox.buyHow !== '' && selectedALLproduct.length > 0 &&selectBox.deliveryMessage !=='직접입력') {
+        //checking 이 true , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야 , 직접입력후 기입하여야.
+        if (checking && selectBox.buyHow !== '' && selectedALLproduct.length > 0) {
             setIsBuyButtonDisabled(false); //BUY 버튼 활성화
         } else {
             setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
         }
-    }, [selectBox, selectedProduct, checkedCartItems]);
-    // useEffect(() => {
-    //     if (selectBox.deliveryMessage === '직접입력' && !directInput) {
-    //         setDirectInput(true);
-    //         SetSelectBox(it => ({ ...it, deliveryMessage: '' }));
-    //     }
-    //     if(selectBox.deliveryMessage ===''){
-    //         setIsBuyButtonDisabled(true); 
-    //     }else{
-    //         setIsBuyButtonDisabled(false);
-    //     }
+    }, [selectBox, selectedProduct, checkedCartItems, userInfoError]);
 
-    // }, [selectBox]);
 
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
 
-    console.log(selectBox.deliveryMessage);
+    // console.log(selectBox.deliveryMessage);
     //구매버튼 이벤트
-    const onClickBuyButton = () => {
-        if(!selectBox.deliveryMessage){
-            SetSelectBox((it)=>({...it,deliveryMessage:'문 앞에 놔주세요'}))
+    const onClickBuyButton = (e) => {
+        e.preventDefault();
+        if (!selectBox.deliveryMessage) {
+            SetSelectBox((it) => ({ ...it, deliveryMessage: '문 앞에 놔주세요' }))
         }
         setIsModalBuyOpen(true);
         // 깊은 복사를 통해 userData 복사
@@ -199,13 +257,13 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
     }
 
     return (
-        <div className='buyBox'>
+        <form className='buyBox' onSubmit={onClickBuyButton}>
             <div className='buyInput'>
                 <div>
                     <p>배송지 정보</p>
                 </div>
 
-                <form className='buyForm'>
+                <div className='buyForm'>
                     <label htmlFor="buyID">배송지선택</label>
                     <div className='buyRadioBox'>
                         <input
@@ -230,8 +288,14 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                         type="text"
                         id='name'
                         name="name"
+                        minLength={2}
+                        maxLength={5}
                         value={userInfo.name}
                         onChange={onChangeUserInfo}
+                        className={userInfoError.name ? 'errors' : ''}
+                        required
+                    // style={{ borderBottom : userInfoError.name ? '1px solid red' : '1px solid #aaaaaa'
+                    // }}
                     />
                     <label htmlFor="phoneNumber">연락처</label>
                     <input
@@ -240,6 +304,9 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                         name="phoneNumber"
                         value={userInfo.phoneNumber}
                         onChange={onChangeUserInfo}
+                        className={userInfoError.phoneNumber ? 'errors' : ''}
+                        required
+                        placeholder="(-)없이 입력"
                     />
                     <label htmlFor="addressDetail">주소</label>
                     <div className='addressBox'>
@@ -247,10 +314,15 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                             <input
                                 type="text"
                                 id='buyAddress1'
+                                name="zoneCode"
                                 placeholder='우편번호'
                                 value={userInfo.zoneCode}
                                 maxLength={5}
                                 readOnly
+                                required
+                                onChange={onChangeUserInfo}
+                                className={userInfoError.zoneCode ? 'errors' : ''}
+
                             />
                             <button
                                 type="button"
@@ -263,7 +335,10 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                             type="text"
                             id='buyAddress2'
                             value={userInfo.address}
+                            className={userInfoError.zoneCode ? 'errors' : ''}
                             readOnly
+                            required
+
                         />
                         <input
                             type="text"
@@ -271,16 +346,19 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                             name="addressDetail"
                             value={userInfo.addressDetail}
                             onChange={onChangeUserInfo}
+                            required
                             placeholder='상세 주소 입력'
+                            className={userInfoError.addressDetail ? 'errors' : ''}
+
                         />
                     </div>
-                </form>
+                </div>
             </div>
             <div className='buyInput'>
                 <div>
                     <p>배송요청 / 결제 수단</p>
                 </div>
-                <form className='buyForm2'
+                <div className='buyForm2'
                 >
                     <label htmlFor="deliveryMessage">배송 메세지</label>
                     <div className="deliveryBox">
@@ -295,7 +373,8 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                         </select>
                         {directInput
                             && <input type="text"
-                                className="directInput"
+                                className={userInfoError.deliveryMessage ? 'directInput errors' : 'directInput'}
+
                                 onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))} />}
 
                     </div>
@@ -322,10 +401,11 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                             onChange={onChangeRadioBox} />
                         <label htmlFor="accountTransfer">계좌 이체</label>
                     </div>
-                </form>
+                </div>
                 <div className='buttonBox'>
                     <button disabled={isBuyButtonDisabled}
-                        onClick={onClickBuyButton}
+                        type="submit"
+                    // onClick={onClickBuyButton}
                     >BUY NOW</button>
                 </div>
             </div>
@@ -387,7 +467,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 </div>
 
             </Modal>
-        </div>
+        </form>
     );
 };
 
