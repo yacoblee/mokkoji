@@ -118,10 +118,14 @@ function MyPageBook({ change, setChange }) {
         }
     };
 
-    // console.log(`체크 날짜 빼오기 ${checkedBook}`)
 
     // 선택 삭제 로직
     const onCheckedDelete = () => {
+        if (checkedBook.length === 0) {
+            alert('선택된 상품이 존재하지 않습니다.');
+            return; // 함수 종료
+        }
+
         let newReserve = user.mypage.Reservation.filter((reserve) => {
             return !checkedBook.includes(reserve.date)
         })  // newReserve
@@ -232,7 +236,7 @@ function MyPageBook({ change, setChange }) {
                         className='SelectDeleteButton'
                         onClick={onCheckedDelete}
                     >
-                        선택 예약 취소=삭제
+                        예약 취소
                     </button>
                 </div>
             </div>

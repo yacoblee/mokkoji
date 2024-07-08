@@ -76,6 +76,11 @@ function MyPageLike({ change, setChange }) {
 
     // 선택 삭제 기능
     const onCheckedDelete = () => {
+        if (checkedGood.length === 0) {
+            alert('선택된 상품이 존재하지 않습니다.');
+            return; // 함수 종료
+        }
+
         let newIsLike = user.mypage.isLike.filter((id) => {
             if (!checkedGood.includes(id))
                 return id
