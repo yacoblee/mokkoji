@@ -192,13 +192,16 @@ const Reservation = () => {
                                         <span>예약 날짜: {moment(date).format("YYYYMMDD")}</span>
                                     </li>
                                     <hr />
-                                    <li>
+                                    {/* <li>
                                         <button type="button" onClick={handleFormSubmit} className="calendar-toggle-submit">
                                             예약 하기
                                         </button>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
+                            <button type="button" onClick={handleFormSubmit} className="calendar-toggle-submit">
+                                예약 하기
+                            </button>
                         </div>
 
                         {showCalendar && (
