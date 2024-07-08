@@ -26,24 +26,23 @@ function MyPageCart({ change, setChange }) {
         );     // findItem
 
         let calculateTotalPrice = () => {
-            let packagingPrice = 0; // 포장 추가 금액
-            let contentPrice = 0; // 기본 추가 금액
-
-            const packagingStartIndex = bb.options.packagingSelect.indexOf('(+');
-            const packagingEndIndex = bb.options.packagingSelect.indexOf(')');
-            const contentSelectStartIndex = bb.options.contentSelect.indexOf('(+');
-            const contentSelectEndIndex = bb.options.contentSelect.indexOf(')');
+            let packageADDprice = 0; // 포장 추가 금액
+            let defaultADDprice = 0; // 기본 추가 금액
 
             // 포장 옵션에 따라 추가 금액 설정
-            if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
-                packagingPrice = +(bb.options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
+            if (bb.options.packagingSelect.includes(2000)) {
+                packageADDprice = 2000;
+            } else if (bb.options.packagingSelect.includes(4000)) {
+                packageADDprice = 4000;
             }
             // 내용 옵션에 따라 추가 금액 설정
-            if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
-                contentPrice = +(bb.options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
+            if (bb.options.contentSelect.includes(220000)) {
+                defaultADDprice = 220000;
+            } else if (bb.options.contentSelect.includes(722000)) {
+                defaultADDprice = 722000;
             }
 
-            return (findItem.price + contentPrice) * bb.quantity.contentSelect + packagingPrice * bb.quantity.packagingSelect;
+            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
         }
 
         bb.totalPrice = calculateTotalPrice(findItem);
