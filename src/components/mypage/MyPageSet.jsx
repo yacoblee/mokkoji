@@ -13,20 +13,9 @@ function MyPageSet() {
 
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
-    const [user, setUser] = useState(userData);
+    const navigate = useNavigate();     // 버튼으로 링크 이동
 
-    // 이메일 타입 '직접 입력'시에만 작성이 활성화되기 위한 로직
-    const [emailDisabled, setEmailDisabled] = useState(false);
-    const handleEmailChange = (e) => {
-        const selectedValue = e.target.value;
-        if (selectedValue !== "type") {
-            setEmailType(selectedValue);
-            setEmailDisabled(true);
-        } else {
-            setEmailType('');
-            setEmailDisabled(false);
-        }
-    };
+    const [user, setUser] = useState(userData);
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
@@ -37,16 +26,17 @@ function MyPageSet() {
     const [addressDetail, setAddressDetail] = useState('');
     const [zoneCode, setZoneCode] = useState()
 
-    const navigate = useNavigate();     // 버튼으로 링크 이동
 
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     //모달창 오픈
     const openAddress = (e) => {
         e.preventDefault();
         setIsModalOpen(true);
     };
+
 
     //모달창에서 클릭하고 나면 , 값을 가지고 userInfo에 저장 -> value 값으로 전송. / 모달창 닫음.
     const handleComplete = (data) => {
@@ -70,6 +60,22 @@ function MyPageSet() {
         }));
         setIsModalOpen(false);
     };
+
+
+    // 이메일 타입 '직접 입력'시에만 작성이 활성화되기 위한 로직
+    const [emailDisabled, setEmailDisabled] = useState(false);
+    const handleEmailChange = (e) => {
+        const selectedValue = e.target.value;
+        if (selectedValue !== "type") {
+            setEmailType(selectedValue);
+            setEmailDisabled(true);
+        } else {
+            setEmailType('');
+            setEmailDisabled(false);
+        }
+    };
+
+
 
     // 업데이트된 사용자 정보 저장
     const updatedUser = {
@@ -98,7 +104,9 @@ function MyPageSet() {
 
     };
 
-
+    const [errorMessagePhone, setErrorMessagePhone] = useState('');
+    const [errorMessagePW, setErrorMessagePW] = useState('');
+    const [errorMessagePWC, setErrorMessagePWC] = useState('');
 
     return (
         <form className='MyPageSet' onSubmit={handleSubmit}>
@@ -114,9 +122,18 @@ function MyPageSet() {
                     <input
                         type="text"
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(num) => {
+                            // 입력된 값이 숫자만 포함하는지 정규식으로 검사
+                            if (/^\d$/.test(num.target.value)) {
+                                // 숫자만 포함하면 phoneNumber state 업데이트
+                                setPhoneNumber(num.target.value);
+                                setErrorMessagePhone(''); // 오류 메시지 초기화
+                            } else
+                                setErrorMessagePhone('전화번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
+                        }}
                         placeholder={user.phoneNumber}
                     />
+                    {errorMessagePhone && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePhone}</span>}
                 </div>
 
                 <div className='ListTitle'>이메일</div>
@@ -153,18 +170,33 @@ function MyPageSet() {
                     <input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder='비밀번호 변경'
+                        onChange={(pw) => {
+                            if (/[a-z.0-9.!-*.@]$/.test(pw.target.value)) {
+                                setPassword(pw.target.value);
+                                setErrorMessagePW(''); // 오류 메시지 초기화
+                            } else
+                                setErrorMessagePW('비밀번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
+                        }}
+                        placeholder={'비밀번호 변경'}
                     />
+                    {errorMessagePW && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePW}</span>}
                 </div>
+
                 <div></div>
                 <div>
                     <input
                         type="password"
                         value={passwordConfirm}
-                        onChange={(e) => setPasswordConfirm(e.target.value)}
-                        placeholder='비밀번호 확인'
+                        onChange={(pwc) => {
+                            if (/[a-z.0-9.!-*.@]$/.test(pwc.target.value)) {
+                                setPasswordConfirm(pwc.target.value);
+                                setErrorMessagePWC(''); // 오류 메시지 초기화
+                            } else
+                                setErrorMessagePWC('비밀번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
+                        }}
+                        placeholder={'비밀번호 확인'}
                     />
+                    {errorMessagePWC && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePWC}</span>}
                 </div>
 
                 <div className='ListTitle'>주소</div>
