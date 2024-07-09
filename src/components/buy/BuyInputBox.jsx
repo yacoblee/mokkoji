@@ -55,7 +55,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 phoneNumber: true,
                 addressDetail: true,
                 zoneCode: true,
-                deliveryMessage: false,
+                // deliveryMessage: false,
             })
         } else {
             setUserInfo({
@@ -74,7 +74,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         }
         setAddressing(!addressing);
     };
-
+    console.log(userInfoError);
 
     //수기로 작성했을때 onChange 이벤트를 통해 value값을 지정.
     const onChangeUserInfo = (e) => {
@@ -150,7 +150,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
 
     //select 값을 저장할 state.
     const [selectBox, SetSelectBox] = useState({
-        deliveryMessage: '',
+        deliveryMessage: '문 앞에 놔주세요',
         buyHow: '',
     });
     // useEffect(()=>{
