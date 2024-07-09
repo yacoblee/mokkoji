@@ -181,7 +181,7 @@ const FindPw = () => {
                                 </div>
 
                                 <div>
-                                    <p className="ptag" ref={pRef}><span className="showname1">{findinguserinfo.findingName}</span>님의 비밀번호는 : <span className="showname1">{findinguserinfo.findingPw}</span>입니다.</p>
+                                    <p className="ptag" ref={pRef}><span className="showname">{findinguserinfo.findingName}</span>님의 비밀번호는 : <span className="showname">{findinguserinfo.findingPw}</span>입니다.</p>
                                 </div>
 
                                 <button onClick={UserFindID}>비밀번호 찾기

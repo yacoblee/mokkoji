@@ -47,6 +47,7 @@
 .findId-textarea {
     width: 40%;
     height: 100%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -165,6 +166,7 @@
 .ptag {
     visibility: hidden;
     letter-spacing: 2px;
+    line-height: 150%;
 }
 
 .showname {
@@ -184,6 +186,7 @@
 .findIdLink {
     color: black;
     transition: all .5s;
+    line-height: 160%;
 }
 
 .findIdLink:hover {
