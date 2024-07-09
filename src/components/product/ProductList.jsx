@@ -144,7 +144,11 @@ const ProductList = () => {
         setResultCount(filteredItems.length);
         updateDisplayMessage(filteredItems.length);
     };
-
+    const onEnterSearch = (e)=>{
+        if(e.key === "Enter") {
+            onclickSearch();
+        }
+    }
     //서치바나 메뉴바를 클릭했을때 실행할 함수.
     // const onClickShowSearch = () => {
     //     setShowSearch(!showSearch);
@@ -176,7 +180,8 @@ const ProductList = () => {
 
                     <input type="text" name="productInput" id="productInput"
                         value={filterItem.inputValue}
-                        onChange={onChangeInputValue} />
+                        onChange={onChangeInputValue} 
+                        onKeyDown={(e)=>onEnterSearch(e)}/>
                     <button
                         onClick={onclickSearch}>검색</button>
                     <span className='displayMessage'>{displayMessage}</span>

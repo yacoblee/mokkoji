@@ -34,11 +34,15 @@ const ProductMainList = ({ title, sort }) => {
 
     //버튼 호버시 true 설정
     const onMouseEnterHover = ()=>{
-        setHover(true);
+        setTimeout(() => {
+            setHover(true);
+        }, 0);
     }
 
     const onMouseOverHover = ()=>{
-        setHover(false);
+        setTimeout(() => {
+            setHover(false);
+        }, 0);
     }
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
