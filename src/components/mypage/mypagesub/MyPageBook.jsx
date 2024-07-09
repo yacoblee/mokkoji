@@ -4,9 +4,10 @@ import '../../../css/mypage/subpage/MyPageBook.css';
 
 function MyPageBook({ change, setChange }) {
 
-    let userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
     const [user, setUser] = useState(userData)
+
 
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
@@ -20,7 +21,6 @@ function MyPageBook({ change, setChange }) {
                         item.adult = item.adult - 1;
                 }
 
-
                 else if (variation === 'increase') {
                     if (item.adult + item.teenager === 25)
                         alert('25명까지 참여 가능합니다')
@@ -28,8 +28,9 @@ function MyPageBook({ change, setChange }) {
                         item.adult = item.adult + 1
                 }
 
-                return item;
             }
+            return item;
+
         }   // Reservation.map
         )   // newReservation
 
@@ -64,8 +65,8 @@ function MyPageBook({ change, setChange }) {
                     else
                         item.teenager = item.teenager + 1
                 }
-                return item;
             }
+            return item;
         }   // Reservation.map
         )   // newReservation
 
@@ -84,17 +85,9 @@ function MyPageBook({ change, setChange }) {
 
     // 버튼으로 sessionStorage 덮어쓰기
     const handleSubmit = () => {
-        if (user.mypage.Reservation === userData.mypage.Reservation) {
-            alert('수정 내역이 없습니다.')
-        } else {
-            alert('예약 내역이 수정되었습니다.')
-            sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
-            setChange(!change);     // MyPageIndex에 대한 전체 렌더링
-
-            userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-
-            console.log(userData)
-        }
+        alert('예약 내역이 수정되었습니다.')
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
 
@@ -136,7 +129,11 @@ function MyPageBook({ change, setChange }) {
         } else {
             setCheckedBook([]);
         }
+
     };
+
+
+    console.log(checkedBook)
 
 
     // 선택 삭제 로직
@@ -163,6 +160,7 @@ function MyPageBook({ change, setChange }) {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser))
 
         setUser(newUser);
+        setCheckedBook([])
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
@@ -177,7 +175,7 @@ function MyPageBook({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length}
+                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length && user.mypage.Reservation.length !== 0}
                     />
                 </div>
                 <div></div>
@@ -245,7 +243,7 @@ function MyPageBook({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length}
+                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length && user.mypage.Reservation.length !== 0}
                     />
                 </div>
                 <div></div>
@@ -256,7 +254,7 @@ function MyPageBook({ change, setChange }) {
                         className='SelectDeleteButton'
                         onClick={onCheckedDelete}
                     >
-                        예약 취소
+                        예약 선택 취소
                     </button>
                 </div>
             </div>
