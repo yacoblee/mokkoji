@@ -138,7 +138,7 @@ const ProductList = () => {
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
-                <TopButton/>
+                <TopButton />
                 <div className='productMenu' >
 
                     {productMenu.map((items, i) => (
@@ -168,7 +168,7 @@ const ProductList = () => {
             </div>
             <div className='displayMessage2'>{displayMessage}</div>
             {selectItem.length > 0 ?
-                <ProductListResult selectItem={selectItem}page={page} setPage={setPage} />
+                <ProductListResult selectItem={selectItem} page={page} setPage={setPage} />
                 : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
         </>
     );
