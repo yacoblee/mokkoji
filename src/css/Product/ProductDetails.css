@@ -39,13 +39,6 @@
         width: 33%;
         grid-template-columns:  65% 35% ;
     }
-    .reviewContent>div{
-        /* height: 10vh; */
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        align-items: end;
-    }
   } 
   
   /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023)*/ 
@@ -92,9 +85,6 @@
         width: 33%;
         grid-template-columns:  65% 35% ;
     }
-    .reviewDateRemove{
-        display: none;
-    }
   } 
   
   /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/ 
@@ -136,9 +126,6 @@
     .reviewInfoInner{
         width: 33%;
         grid-template-rows: 40% 60% ; 
-    }
-    .reviewDateRemove{
-        display: none;
     }
   }
 /* ====================================detail */
@@ -232,9 +219,6 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
-.routeBox a {
-    color: black;
 }
 
 .isLike_icon {
@@ -477,7 +461,7 @@
     position: sticky;
     top: 100px;
     background-color: white;
-    z-index: 0;
+    z-index: 10;
 }
 .tabBox a{
     height: 50px;
@@ -563,7 +547,7 @@ object-fit: cover;
     margin-bottom: 2%;
     display: flex;
     height: 30vh;
-    z-index: -1;
+    
     gap: 5px;
     justify-content: flex-start;
     /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
@@ -576,7 +560,7 @@ object-fit: cover;
 .reveiwInfo button {
     position: absolute;
     top: 30%;
-    z-index: 0;
+    z-index: 1;
     border : 0px solid;
     background-color: #d0888000;
 }
@@ -613,19 +597,25 @@ object-fit: cover;
 .reviewContent{
     width: 100%;
     /* height: 30vh; */
-    padding: 10px 5px;
+    padding: 5px;
     display: grid;
     grid-template-rows: 2fr 1fr;
     /* justify-content: space-between; */
 }
 .reviewContent>p{
     /* height: 20vh; */
-    /* flex-basis: 40%; */
-    /* display: grid; */
-    /* grid-template-rows: 1fr 4fr; */
+    flex-basis: 40%;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
     /* justify-content: space-between; */
 }
-
+.reviewContent>div{
+    /* height: 10vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+}
 .recommendInfo {
     display: grid;
     

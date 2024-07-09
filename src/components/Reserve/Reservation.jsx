@@ -38,10 +38,6 @@ const Reservation = () => {
                 }));
             }
         } else {
-            if (btnValue.teenSelect + btnValue.adultSelect > 24) {
-                alert('최대 예약 가능인원은 25명 입니다.');
-                return false;
-            }
             setBtnValue(it => ({
                 ...it,
                 [name]: btnValue[name] + 1
@@ -118,10 +114,7 @@ const Reservation = () => {
         }
         // 기존 예약 필터링
         if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
-            if (moment(date).isSame(today, 'day')) {
-                alert('당일 예약은 불가능합니다.');
-                return false;
-            }
+
             // 중복 예약 예외처리
             const checkDate = userData.mypage.Reservation.find(reserve => reserve.date === reservationData.date);
             if (checkDate) {

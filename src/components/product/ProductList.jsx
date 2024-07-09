@@ -3,7 +3,6 @@ import { useParams, NavLink } from 'react-router-dom';
 import GoodsItems from './ProductObject';
 import ProductListResult from './ProductListResult';
 import '../../css/Product/ProductCategory.css'
-import TopButton from '../modules/ScrollToTopBtn';
 // import Modal from 'react-modal';
 
 const ProductList = () => {
@@ -81,10 +80,11 @@ const ProductList = () => {
     //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
     //필터하고 난 아이템의 결과 배열.
     const [selectItem, setSelectItem] = useState([]);
-    // console.log(selectItem.length);
+    console.log(selectItem.length);
     //필터하고난 filterItem의 길이
     const [resultCount, setResultCount] = useState(selectItem.length);
     const updateDisplayMessage = (count) => {
+        // if (showSearch) {
         const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
         const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
         setDisplayMessage(<>
@@ -104,7 +104,11 @@ const ProductList = () => {
                 </>
             )}
         </>);
-
+        // }
+        //  else {
+        //     const selectedCategory = productMenu.find(menu => menu.category === category);
+        //     setDisplayMessage(<span className='NamedCategory'> {selectedCategory ? selectedCategory.description : '전체 상품'}</span>);
+        // }
     };
 
     //하위 페이지와 연동되어 페이지를 리셋시킬 state
@@ -112,35 +116,46 @@ const ProductList = () => {
 
     //카테고리가 변할때 필터 
     useEffect(() => {
+        setPage(1);
         SetFilterItem({
             selectValue: 'allGoods',
             sortOption: 'count',
             inputValue: '',
         });
-        // const filteredItems = filterItems();
-        // const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
-        setSelectItem(filterItems().filter((items) => items.category === category));
+        const filteredItems = filterItems();
+        const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
+        setSelectItem(categoryFilteredItems);
         setDisplayMessage('');
-        setPage(1);
-
+        // if (category === 'allGoods') {
+        //     setSelectItem(filteredItems);
+        // } else {
+        //     const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
+        //     setSelectItem(categoryFilteredItems);
+        // }
+        // if(!showSearch){
+        // }
+        // updateDisplayMessage();
     }, [category]);
+
 
     //클릭했을때의 함수 실행값을 넣어줌.
     const onclickSearch = () => {
-        setPage(1);
         const filteredItems = filterItems();
         setSelectItem(filteredItems);
         setResultCount(filteredItems.length);
         updateDisplayMessage(filteredItems.length);
-        // console.log(page , selectItem.length);
     };
 
+    //서치바나 메뉴바를 클릭했을때 실행할 함수.
+    // const onClickShowSearch = () => {
+    //     setShowSearch(!showSearch);
+    //     updateDisplayMessage();
+    // };
 
 
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
-                <TopButton/>
                 <div className='productMenu' >
 
                     {productMenu.map((items, i) => (
@@ -170,7 +185,7 @@ const ProductList = () => {
             </div>
             <div className='displayMessage2'>{displayMessage}</div>
             {selectItem.length > 0 ?
-                <ProductListResult selectItem={selectItem}page={page} setPage={setPage} />
+                <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} />
                 : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
         </>
     );

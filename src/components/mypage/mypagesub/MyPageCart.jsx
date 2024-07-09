@@ -13,38 +13,6 @@ function MyPageCart({ change, setChange }) {
     const [user, setUser] = useState(userData)
 
 
-    // 상품 최종 금액 계산식
-    const calculateTotalPrice = (selectedProduct, options, count) => {
-        if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
-        let packagingPrice = 0; // 포장 추가 금액
-        let contentPrice = 0; // 기본 추가 금액
-
-        const packagingStartIndex = options.packagingSelect.indexOf('(+');
-        const packagingEndIndex = options.packagingSelect.indexOf(')');
-        const contentSelectStartIndex = options.contentSelect.indexOf('(+');
-        const contentSelectEndIndex = options.contentSelect.indexOf(')');
-
-        // 포장 옵션에 따라 추가 금액 설정
-        if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
-            packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
-        }
-        // 내용 옵션에 따라 추가 금액 설정
-        if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
-            contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
-        }
-
-        // console.log(selectedProduct.price)
-        // console.log(contentPrice)
-        // console.log(count.contentSelect)
-        // console.log(packagingPrice)
-        // console.log(count.packagingSelect)
-
-        // 총 금액 계산
-        return (selectedProduct.price + contentPrice) * count.contentSelect + packagingPrice * count.packagingSelect;
-
-    };
-
-
     // 숫자를 금액처럼 표기하기
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
@@ -57,6 +25,29 @@ function MyPageCart({ change, setChange }) {
             item.id === bb.productId
         );     // findItem
 
+        let calculateTotalPrice = () => {
+            let packageADDprice = 0; // 포장 추가 금액
+            let defaultADDprice = 0; // 기본 추가 금액
+
+            // 포장 옵션에 따라 추가 금액 설정
+            if (bb.options.packagingSelect.includes(2000)) {
+                packageADDprice = 2000;
+            } else if (bb.options.packagingSelect.includes(4000)) {
+                packageADDprice = 4000;
+            }
+
+            // 내용 옵션에 따라 추가 금액 설정
+            if (bb.options.contentSelect.includes(220000)) {
+                defaultADDprice = 220000;
+            } else if (bb.options.contentSelect.includes(722000)) {
+                defaultADDprice = 722000;
+            }
+
+            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
+        }
+
+        bb.totalPrice = calculateTotalPrice(findItem);
+
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
@@ -67,7 +58,7 @@ function MyPageCart({ change, setChange }) {
         cartItem.contentCount = bb.quantity.contentSelect
         cartItem.packageCount = bb.quantity.packagingSelect
         cartItem.price = bb.totalPrice
-        // cartItem.defaultPrice = findItem.price
+
 
         return cartItem;
     });     // map
@@ -125,7 +116,7 @@ function MyPageCart({ change, setChange }) {
         const findData = userData.mypage.basket.find((item) =>
             item.productId === id
         )
-        // console.log(findData)
+        console.log(findData)
 
         navigate('/buy', {
             state: {
@@ -179,11 +170,6 @@ function MyPageCart({ change, setChange }) {
                         item.quantity.contentSelect = item.quantity.contentSelect - 1;
                 } else if (variation === 'increase')
                     item.quantity.contentSelect = item.quantity.contentSelect + 1
-
-                // items 배열에서 해당 cartId의 가격을 찾습니다.
-                const product = items.find(prod => prod.id === cartId);
-                item.totalPrice = calculateTotalPrice(product, item.options, item.quantity);
-
             }
             return item;
         }
@@ -199,7 +185,7 @@ function MyPageCart({ change, setChange }) {
             mypage: updatedMypage
         }
 
-        // console.log(`${JSON.stringify(updatedUser)}`)
+        console.log(`${JSON.stringify(updatedUser)}`)
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);
@@ -217,10 +203,6 @@ function MyPageCart({ change, setChange }) {
                         item.quantity.packagingSelect = item.quantity.packagingSelect - 1;
                 } else if (variation === 'increase')
                     item.quantity.packagingSelect = item.quantity.packagingSelect + 1
-
-                // items 배열에서 해당 cartId의 가격을 찾습니다.
-                const product = items.find(prod => prod.id === cartId);
-                item.totalPrice = calculateTotalPrice(product, item.options, item.quantity);
             }
             return item;
         }
@@ -236,7 +218,7 @@ function MyPageCart({ change, setChange }) {
             mypage: updatedMypage
         }
 
-        // console.log(`${JSON.stringify(updatedUser)}`)
+        console.log(`${JSON.stringify(updatedUser)}`)
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);

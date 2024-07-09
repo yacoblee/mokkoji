@@ -59,29 +59,28 @@ const ProductForm = ({ selectedProduct }) => {
         }
     };
 
-        //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
-
     // 총 금액을 계산하는 함수
     const calculateTotalPrice = () => {
         if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
-        let packagingPrice = 0; // 포장 추가 금액
-        let contentPrice = 0; // 기본 추가 금액
-
-        const packagingStartIndex = options.packagingSelect.indexOf('(+');
-        const packagingEndIndex = options.packagingSelect.indexOf(')');
-        const contentSelectStartIndex = options.contentSelect.indexOf('(+');
-        const contentSelectEndIndex = options.contentSelect.indexOf(')');
+        let packageADDprice = 0; // 포장 추가 금액
+        let defaultADDprice = 0; // 기본 추가 금액
 
         // 포장 옵션에 따라 추가 금액 설정
-        if(packagingStartIndex !== -1 && packagingEndIndex !== -1){
-            packagingPrice = +(options.packagingSelect.slice(packagingStartIndex+2,packagingEndIndex))
+        if (options.packagingSelect.includes('(+2000원)')) {
+            packageADDprice = 2000;
+        } else if (options.packagingSelect.includes('(+4000원)')) {
+            packageADDprice = 4000;
         }
+
         // 내용 옵션에 따라 추가 금액 설정
-        if(contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1){
-            contentPrice = +(options.contentSelect.slice(contentSelectStartIndex+2,contentSelectEndIndex))
+        if (options.contentSelect.includes('(+220000)')) {
+            defaultADDprice = 220000;
+        } else if (options.contentSelect.includes('(+722000)')) {
+            defaultADDprice = 722000;
         }
+
         // 총 금액 계산
-        return (selectedProduct.price + contentPrice) * btnValue.contentSelect + packagingPrice * btnValue.packagingSelect;
+        return (selectedProduct.price + defaultADDprice) * btnValue.contentSelect + packageADDprice * btnValue.packagingSelect;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트
@@ -117,8 +116,7 @@ const ProductForm = ({ selectedProduct }) => {
 
 
     // '구매하기' 버튼 클릭 시 실행되는 함수
-    const onClickBuy = (e) => {
-        e.preventDefault();
+    const onClickBuy = () => {
         if (!userLogin) {
             setIsLoginModalOpen(true);
             return;
@@ -179,7 +177,7 @@ const ProductForm = ({ selectedProduct }) => {
 
     // 리턴
     return (
-        <form onSubmit={onClickBuy}>
+        <form action="#">
             <div className='productFormSelect'>
                 <select
                     name="contentSelect"
@@ -201,9 +199,9 @@ const ProductForm = ({ selectedProduct }) => {
                     required
                 >
                     <option value="selectPackage" hidden>포장여부</option>
-                    <option key={'소'} value="굿즈 기본 포장(+0)">굿즈 기본 포장(+0원)</option>
-                    <option key={'중'} value="굿즈 부직포 가방(+2000)">굿즈 부직포 가방(+2000원)</option>
-                    <option key={'대'} value="굿즈 천 가방(+4000)">굿즈 천 가방(+4000원)</option>
+                    <option key={'소'} value="굿즈 기본 포장(+0원)">굿즈 기본 포장(+0원)</option>
+                    <option key={'중'} value="굿즈 부직포 가방(+2000원)">굿즈 부직포 가방(+2000원)</option>
+                    <option key={'대'} value="굿즈 천 가방(+4000원)">굿즈 천 가방(+4000원)</option>
                 </select>
             </div>
             <div className='price_box'>
@@ -233,10 +231,7 @@ const ProductForm = ({ selectedProduct }) => {
                 <button type='button' className='basket_icon' onClick={onClickBasket}>
                     장바구니
                 </button>
-                <button className='buy_icon' 
-                type="submit" 
-                // onClick={onClickBuy}
-                >
+                <button type='button' className='buy_icon' onClick={onClickBuy}>
                     구매하기
                 </button>
             </div>

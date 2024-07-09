@@ -29,7 +29,11 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="footer_section">
-                <div className='footer_img' />
+                {/* <h3>Subscribe</h3>
+                <form className="subscribe_form">
+                    <input type="email" placeholder="Your email address" />
+                    <button type="submit">Subscribe</button>
+                </form> */}
             </div>
         </div>
     );

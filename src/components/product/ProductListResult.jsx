@@ -10,8 +10,8 @@ const ProductMainGuide = ({ text }) => {
         const containerWidth = guideElement.offsetWidth; 
         const animationDuration = containerWidth / 30; // 텍스트 길이에 따른 애니메이션 속도 조정
         const animationDelay = -containerWidth / 50; // 애니메이션 딜레이 설정
-        // console.log(animationDuration);
-        // console.log(containerWidth);
+        console.log(animationDuration);
+        console.log(containerWidth);
         // 애니메이션을 초기화하고 다시 적용하여 강제로 재생
         guideElement.style.animation = 'none';
         // guideElement.offsetHeight; // 트리거 리플로우
@@ -49,10 +49,7 @@ const ProductListResult = ({selectItem , page , setPage})=>{
     
     //selectItem 에서 걸러낼 slice (0~8 /8~16... )
     const paginatedItems = selectItem.slice((page - 1) * itemsPage, page * itemsPage);
-    // console.log(paginatedItems);
-    // console.log(selectItem);
-    // console.log(page , paginatedItems);
-
+    
     //for문이 JSX에서 돌아가지 않아서 함수로 따로 뺌. page라는 배열에 button을 만들어 추가.
     const pageNation = ()=>{
         let pages = [];
@@ -75,9 +72,9 @@ const ProductListResult = ({selectItem , page , setPage})=>{
     <>
         <div className="productItemList">
             {/* 선택된 카테고리의 상품들을 보여줌 */}
-            {paginatedItems.map((product) => (
-                <Link to={`/goods/${product.category}/${product.id}`} key={product.id}>
-                    <div className="productItemResult"key={product.id}>
+            {paginatedItems.map((product,i) => (
+                <Link to={`/goods/${product.category}/${product.id}`} key={product.id+i}>
+                    <div className="productItemResult"key={product.id+i}>
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <div>
                             <p style={{fontSize : '16px' , fontWeight : '600' , wordBreak :'keep-all'}}>{product.name}</p>

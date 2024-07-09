@@ -46,15 +46,6 @@
     line-height: 1.6;
 }
 
-/* .footer_img {
-    background-image: url('/build/images/main/태극기.jpg');
-    background-size: cover;
-    z-index: 4;
-    transform: rotate(5deg);
-    width: 180px;
-    height: 130px;
-} */
-
 .subscribe_form input[type="email"] {
     padding: 10px;
     border: none;
@@ -88,3 +79,5 @@
         margin: 20px 0;
     }
 }
+
+
