@@ -100,6 +100,7 @@ function MyPageLike({ change, setChange }) {
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser))
 
         setUser(newUser);
+        setCheckedGood([])
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
@@ -112,7 +113,7 @@ function MyPageLike({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={likedGoods.length > 0 && checkedGood.length === likedGoods.length}
+                        checked={likedGoods.length > 0 && checkedGood.length === likedGoods.length && likedGoods.length !== 0}
                     />
                 </div>
                 <div></div>
@@ -165,7 +166,7 @@ function MyPageLike({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={likedGoods.length > 0 && checkedGood.length === likedGoods.length}
+                        checked={likedGoods.length > 0 && checkedGood.length === likedGoods.length && likedGoods.length !== 0}
                     />
                 </div>
                 <div></div>
