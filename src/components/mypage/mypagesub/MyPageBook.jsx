@@ -4,10 +4,9 @@ import '../../../css/mypage/subpage/MyPageBook.css';
 
 function MyPageBook({ change, setChange }) {
 
-    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    let userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
     const [user, setUser] = useState(userData)
-
 
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
@@ -19,11 +18,18 @@ function MyPageBook({ change, setChange }) {
                         alert('성인의 동행이 필요한 활동입니다.');
                     else
                         item.adult = item.adult - 1;
-                } else if (variation === 'increase')
-                    item.adult = item.adult + 1
-            }
-            return item;
+                }
 
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.adult = item.adult + 1
+                }
+
+                return item;
+            }
         }   // Reservation.map
         )   // newReservation
 
@@ -50,10 +56,16 @@ function MyPageBook({ change, setChange }) {
                         alert('인원 수가 음수가 되어서는 안됩니다.');
                     else
                         item.teenager = item.teenager - 1;
-                } else if (variation === 'increase')
-                    item.teenager = item.teenager + 1
+                }
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.teenager = item.teenager + 1
+                }
+                return item;
             }
-            return item;
         }   // Reservation.map
         )   // newReservation
 
@@ -74,10 +86,15 @@ function MyPageBook({ change, setChange }) {
     const handleSubmit = () => {
         if (user.mypage.Reservation === userData.mypage.Reservation) {
             alert('수정 내역이 없습니다.')
-        } else
+        } else {
             alert('예약 내역이 수정되었습니다.')
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
-        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
+            sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
+            setChange(!change);     // MyPageIndex에 대한 전체 렌더링
+
+            userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+
+            console.log(userData)
+        }
     }
 
 
