@@ -86,27 +86,21 @@ function MyPageBook({ change, setChange }) {
     // 버튼으로 sessionStorage 덮어쓰기
     const handleSubmit = (day) => {
 
-        // console.log(userData)
-        // console.log(user)
-
         // 업데이트된 예약 배열을 저장할 변수
         let updatebook = [];
 
         user.mypage.Reservation.forEach((latest) => {
-            // date가 '2024-07-30'인 경우 초기값으로 바꿉니다.
             if (latest.date !== day) {
-                const initial = userData.mypage.Reservation.find(res => res.date === latest.date);
-                updatebook.push(initial);
+                const first = userData.mypage.Reservation.find(res => res.date === latest.date);
+                updatebook.push(first);
             } else {
                 updatebook.push(latest);
             }
         })
-
         const updateMyPage = {
             ...user.mypage,
             Reservation: updatebook
         }
-
         const updateUser = {
             ...user,
             mypage: updateMyPage
@@ -114,7 +108,6 @@ function MyPageBook({ change, setChange }) {
 
         alert('예약 내역이 수정되었습니다.')
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updateUser));
-
         setUser(updateUser);
     }
 
@@ -125,19 +118,16 @@ function MyPageBook({ change, setChange }) {
             // item.reserveItem !== id && item.date !== date
             day !== item.date
         )
-
         let newMyPage = {
             ...user.mypage,
             Reservation: newBooks
         }
-
         let newUser = {
             ...user,
             mypage: newMyPage
         };
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser));
-
         setUser(newUser);
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }   // handleDelete
@@ -166,23 +156,19 @@ function MyPageBook({ change, setChange }) {
             alert('선택된 상품이 존재하지 않습니다.');
             return; // 함수 종료
         }
-
         let newReserve = user.mypage.Reservation.filter((reserve) => {
             return !checkedBook.includes(reserve.date)
         })  // newReserve
-
         let newMyPage = {
             ...user.mypage,
             Reservation: newReserve
         }
-
         let newUser = {
             ...user,
             mypage: newMyPage
         }
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser))
-
         setUser(newUser);
         setCheckedBook([])
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
