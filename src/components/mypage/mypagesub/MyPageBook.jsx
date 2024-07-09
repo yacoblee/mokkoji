@@ -15,8 +15,9 @@ function MyPageBook({ change, setChange }) {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
-                    if (item.adult === 1)
-                        alert('성인의 동행이 필요한 활동입니다.');
+                    if (item.adult + item.teenager === 1)
+                        alert('최소 1명의 참가자가 있어야합니다.');
+                    else if (item.adult === 0) { }
                     else
                         item.adult = item.adult - 1;
                 }
@@ -53,8 +54,9 @@ function MyPageBook({ change, setChange }) {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
-                    if (item.teenager === 0)
-                        alert('인원 수가 음수가 되어서는 안됩니다.');
+                    if (item.adult + item.teenager === 1)
+                        alert('최소 1명의 참가자가 있어야합니다.');
+                    else if (item.teenager === 0) { }
                     else
                         item.teenager = item.teenager - 1;
                 }
