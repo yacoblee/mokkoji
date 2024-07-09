@@ -125,7 +125,7 @@ function MyPageCart({ change, setChange }) {
         const findData = userData.mypage.basket.find((item) =>
             item.productId === id
         )
-        console.log(findData)
+        // console.log(findData)
 
         navigate('/buy', {
             state: {
@@ -199,7 +199,7 @@ function MyPageCart({ change, setChange }) {
             mypage: updatedMypage
         }
 
-        console.log(`${JSON.stringify(updatedUser)}`)
+        // console.log(`${JSON.stringify(updatedUser)}`)
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);
