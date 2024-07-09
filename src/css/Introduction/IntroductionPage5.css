@@ -59,37 +59,33 @@
 
 }
 
-.imgBox {
+/* .imgBox {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
     outline: 1px solid red;
     flex-wrap: nowrap wrap;
-    /* 수정: 이미지들이 넘치지 않도록 
-    줄바꿈 */
     overflow: hidden;
-}
+} */
 
-.imgBox img {
+/* .imgBox img {
     width: 100%;
-    /* 추가: 이미지 비율 유지 */
     height: 100%;
-    /* 수정: 이미지 높이를 컨테이너 높이에 맞춤 */
     object-fit: cover;
-    /* 추가: 이미지 비율 유지하면서 컨테이너에 맞춤 */
-}
+} */
 /* .inforow{
     display: flex;
 
 } */
+
+
+
 .renderinfo {
     width: 100%;
     height: 50%;
     display: flex;
     flex-direction: row;
- 
-
 }
 
 .inforow {

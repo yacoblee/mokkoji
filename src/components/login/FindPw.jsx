@@ -120,7 +120,7 @@ const FindPw = () => {
                 pRef.current.style.visibility = 'visible'
             } else {
                 pRef.current.style.visibility = 'hidden'
-                alert('⚠️ 입력하신 정보와 동일한 비밀번호가 존재하지 않습니다.')
+                alert('⚠️ 입력한 정보와 일치하는 회원정보가 존재하지 않습니다.')
             }
         } else {
             alert('⚠️ 조건에 맞게 정보를 다시입력해주세요')

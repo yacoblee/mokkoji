@@ -125,13 +125,13 @@
         font-size: 1.2em;
     }
 
-    .textrow {
+    /* .textrow {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         overflow: hidden;
-    }
+    } */
 
 }
 
@@ -152,12 +152,11 @@
         font-size: 1.3em;
     }
 
-    .textrow {
+    /* .textrow {
         display: flex;
         flex-direction: column;
         overflow: hidden;
-
-    }
+    } */
 }
 
 @media all and (max-width:767px) {
@@ -199,8 +198,8 @@
         font-size: 1em;
     }
 
-    .textrow {
+    /* .textrow {
         display: flex;
         flex-direction: column;
-    }
+    } */
 }

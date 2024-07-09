@@ -135,8 +135,6 @@ const Membership = () => {
         }
     };
 
-    // 아이디 중복체크 확인 상태값 
-    const [isOkIdChek, setisOkIdChek] = useState(false);
 
     // 유저입력 정보 가져오기 
     const getInputInfo = (e) => {
@@ -261,21 +259,30 @@ const Membership = () => {
     // }
 
     // 비밀번호 확인먼저 입력한경우 
+
     const doubleCheckPw = useRef(null);
     const pwR = useRef(null)
     const NoinputPw = () => {
-        if (!(formErrors.current.pw === true)) {
+        if (formErrors.current.pw === '') {
             alert('⚠️ 비밀번호를 먼저 입력하세요');
             doubleCheckPw.current.value = '';
             pwR.current.focus();
         }
-
+        else if (formErrors.current.pw === false) {
+            alert('⚠️ 조건에 맞게 비밀번호를 입력하세요');
+            doubleCheckPw.current.value = '';
+            pwR.current.focus();
+        }
     }
 
 
 
     // 목 데이터에서 유저정보 가져옴 
     const allUserData = JSON.parse(localStorage.getItem('userInfo'));
+
+
+    // 아이디 중복체크 확인 상태값 
+    const [isOkIdChek, setisOkIdChek] = useState(false);
 
     //아이디 중복 검사 
     const inputR = useRef(null);
@@ -291,7 +298,7 @@ const Membership = () => {
 
             }, 0);
             formErrors.current.id = false;
-            setisOkIdChek(true)
+            setisOkIdChek(false)
         }
         else if (formErrors.current.id === false || formData.current.id === '') {
             alert('⚠️ 조건에 맞게 아이디를 다시 입력하세요')
@@ -299,11 +306,14 @@ const Membership = () => {
                 inputR.current.value = ''; // 값 비우기
             }, 0);
             formErrors.current.id = false;
+            setisOkIdChek(false);
         }
 
         else {
             alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
             formErrors.current.id = true;
+            setisOkIdChek(true);
+
         }
     };
 
@@ -357,7 +367,7 @@ const Membership = () => {
         const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
         formData.current.lastLoginDate = date;
 
-        if (isCheck) {
+        if (isCheck && isOkIdChek === true) {
             // 분리되어 있던 핸드폰 번호 합치기 
             const phone = `${formData.current.firstNumber}-${formData.current.secondNumber}-${formData.current.lastNumber}`;
 
@@ -374,272 +384,283 @@ const Membership = () => {
 
             navi('/Login');
             alert(`${formData.current.name}님 회원가입을 축하합니다.`);
+            setisOkIdChek(false);
+
         }
+        else if (isOkIdChek === false) {
+            alert('⚠️ 아이디 중복검사를 진행해 주세요.');
+            window.scrollTo({ top: inputR.current.offsetTop-50, behavior: 'smooth'
+        });
+    }
         else {
-            alert('⚠️ 조건에 맞게 정보를 다시 입력해주세요.')
-            window.scrollTo({ top: '30px', behavior: 'smooth' });
-        }
+    alert('⚠️ 조건에 맞게 정보를 다시 입력해주세요.');
+    window.scrollTo({ top: '30px', behavior: 'smooth' });
+}
     }
 
+console.log(formData.current);
+console.log(formErrors.current);
+console.log(isOkIdChek);
 
-    return (
-        <div className="body">
-            <div className="bodycontainer">
-                <div className="stickyarea">
-                    <Link to={'/'}>
-                        <div className="imgcontainer">
-                            <img src="/images/main/main1.png" alt="로고이미지" />
-                        </div>
-                    </Link>
-                    {/* <h1>MU:DS </h1> */}
-                    <h1>회원 가입 페이지</h1>
-                    <br />
-                    <div className='route'>
-                        <ul>
-                            <Link to={'/'}><li>Home</li></Link>
-                            <Link to={'/Login'}><li>Login</li></Link>
-                        </ul>
+
+return (
+    <div className="body">
+        <div className="bodycontainer">
+            <div className="stickyarea">
+                <Link to={'/'}>
+                    <div className="imgcontainer">
+                        <img src="/images/main/main1.png" alt="로고이미지" />
                     </div>
+                </Link>
+                {/* <h1>MU:DS </h1> */}
+                <h1>회원 가입 페이지</h1>
+                <br />
+                <div className='route'>
+                    <ul>
+                        <Link to={'/'}><li>Home</li></Link>
+                        <Link to={'/Login'}><li>Login</li></Link>
+                    </ul>
                 </div>
-                <div className="container">
-                    <div className="clausearea">
-                        <h3>약관동의 및 개인정보처리방침</h3>
-
-                        <h4>필수 약관동의(필수)</h4>
-                        <Clausearea01 className='clausearea1' />
-                        <div className='innerclausearea'>
-                            <h5>이용약관에 동의합니다</h5>
-                            <input type='checkbox' name="check1" onChange={(e) => btnCheck(e)} checked={isChecked.check1}></input>
-                        </div>
-
-                        <h4>개인정보 수집 및 이용 동의(필수)</h4>
-                        <Clausearea02 className='clausearea1' />
-                        <div className='innerclausearea'>
-                            <h5>이용약관에 동의합니다.</h5>
-                            <input type='checkbox' name="check2" onChange={(e) => btnCheck(e)} checked={isChecked.check2}></input>
-                        </div>
-
-
-                        <h4>마케팅 정보 수신 동의(선택)</h4>
-                        <Marketing className='clausearea1' />
-                        <div className='innerclausearea'>
-                            <h5>이용약관에 동의합니다.</h5>
-                            <input type='checkbox' name="check3" onChange={(e) => btnCheck(e)} checked={isChecked.check3}></input>
-                        </div>
-
-                        <div className='innerclausearea'>
-                            <h5>회원가입 약관에 모두 동의 합니다.</h5>
-                            <input type='checkbox' name="allCheck" checked={isAllChecked} onChange={(e) => AllCheck(e)} />
-
-                        </div>
-                    </div>
-                    <hr />
-
-                    <h3>개인정보를 입력해주세요</h3>
-                    <form className="formcontainer" id='membership' onSubmit={validate}>
-                        <label>이름</label>
-                        <input type="text"
-                            placeholder='2글자 이상 5글자 이하 이름을 입력해주세요'
-                            name="name"
-                            maxLength={4}
-                            onChange={getInputInfo}
-                            onClick={MoveToTop}
-                            style={{
-                                borderBottom: formErrors.current.name === false ? '1px solid red' : '1px solid #aaaaaa'
-                            }}
-                        />
-                        <p>에러</p>
-
-
-                        <label>아이디</label>
-                        <div className="rowarea">
-                            <input type="text"
-                                name="id"
-                                onChange={getInputInfo}
-                                maxLength={13}
-                                placeholder='7~13글자 이하 영문 숫자 조합으로 아이디를 입력해주세요'
-                                // onBlur={IdCheck}
-                                ref={inputR}
-                                style={{
-                                    borderBottom: formErrors.current.id === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }}
-                            />
-                            <button
-                                // disabled={!btnAble}
-
-                                type='button'
-                                onClick={IsSameId}
-                            >아이디중복 검사</button>
-                        </div>
-                        <p>에러</p>
-
-
-                        <label>비밀번호</label>
-                        <input type="text"
-                            placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
-                            maxLength={14}
-                            name="pw"
-                            ref={pwR}
-                            onChange={getInputInfo}
-                            style={{
-                                borderBottom: formErrors.current.pw === false ? '1px solid red' : '1px solid #aaaaaa'
-                            }}
-                        />
-                        <p>에러</p>
-
-                        <label>비밀번호 확인</label>
-                        <input type="text"
-                            placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
-                            name="pwCheck"
-                            maxLength={14}
-                            ref={doubleCheckPw}
-                            onClick={NoinputPw}
-                            onChange={getInputInfo}
-                            style={{
-                                borderBottom: formErrors.current.pwCheck === false ? '1px solid red' : '1px solid #aaaaaa'
-                            }}
-                        />
-                        <p>에러</p>
-
-
-                        <label>주소</label>
-                        <div className="rowarea address">
-                            <input type="text"
-                                placeholder='우편번호'
-                                name='zoneCode'
-                                value={zoneCode}
-                                maxLength={5} readOnly />
-                            <button id='btn' onClick={openAddress}>우편번호 검색</button>
-                        </div>
-                        <input type="text"
-                            placeholder='도로명주소 또는 지번주소'
-                            name='address' value={address} readOnly />
-                        <input type="text"
-                            name='addressDetail'
-                            placeholder='상세주소'
-                            onChange={getInputInfo}
-                            style={{
-                                borderBottom: formErrors.current.addressDetail === false ? '1px solid red' : '1px solid #aaaaaa'
-                            }}
-                        />
-                        <p></p>
-
-                        <label>전화번호</label>
-                        <div className='phoneNumber'>
-                            <input type="text"
-                                maxLength={5}
-                                placeholder='2~5자리'
-                                name='firstNumber'
-                                onChange={getInputInfo}
-                                style={{
-                                    borderBottom: formErrors.current.firstNumber === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }}
-                            />
-                            <span>-</span>
-                            <input type="text"
-                                placeholder='3~4자리'
-                                maxLength={4}
-                                name='secondNumber'
-                                onChange={getInputInfo}
-                                style={{
-                                    borderBottom: formErrors.current.secondNumber === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }}
-                            />
-                            <span>-</span>
-                            <input type="text"
-                                placeholder='4자리'
-                                maxLength={4}
-                                name='lastNumber'
-                                onChange={getInputInfo}
-                                style={{
-                                    borderBottom: formErrors.current.lastNumber === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }}
-                            />
-                        </div>
-                        <p>에러</p>
-
-
-
-                        <label>성별</label>
-                        <div className='genderbutton'>
-                            <button type='button'
-                                name='gender'
-                                value='M'
-                                onClick={getInputInfo}
-                                style={{
-                                    backgroundColor: formData.current.gender === 'M' ? 'black' : 'white',
-                                    color: formData.current.gender === 'M' ? 'white' : 'black',
-                                }}
-                            >
-                                남성</button>
-
-                            <button type='button'
-                                name='gender'
-                                value='F'
-                                onClick={getInputInfo}
-                                style={{
-                                    backgroundColor: formData.current.gender === 'F' ? 'black' : 'white',
-                                    color: formData.current.gender === 'F' ? 'white' : 'black',
-                                }}
-                            >여성</button>
-                        </div>
-                        <p></p>
-                        <label>이메일</label>
-                        <div className='emailArea'>
-                            <input type="text" name='email' onChange={getInputInfo}
-                                style={{
-                                    borderBottom: formErrors.current.email === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }} />
-                            <span>@</span>
-                            <input type="text"
-                                name='emailType'
-                                onChange={getInputInfo}
-                                ref={emailTypeR}
-                                style={{
-                                    borderBottom: formErrors.current.emailType === false ? '1px solid red' : '1px solid #aaaaaa'
-                                }}
-                            />
-                            <select className="box"
-                                id="domain-list" onChange={getDomain}>
-                                <option value="self">직접입력</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value="google.com">google.com</option>
-                                <option value="hanmail.net">hanmail.net</option>
-                                <option value="nate.com">nate.com</option>
-                                <option value="kakao.com">kakao.com</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div className='buttonarea'>
-                            <button type='button' onClick={goLoginPage}>가입하기</button>
-                        </div>
-                    </form>
-                </div>
-
             </div>
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={() => setIsModalOpen(false)}
-                contentLabel="주소 검색"
-                style={{
+            <div className="container">
+                <div className="clausearea">
+                    <h3>약관동의 및 개인정보처리방침</h3>
 
-                    content: {
-                        width: '500px',
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)'
-                    }
-                }}
-            >
-                <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
-                <DaumPostcode onComplete={handleComplete} />
-            </Modal>
-        </div >
+                    <h4>필수 약관동의(필수)</h4>
+                    <Clausearea01 className='clausearea1' />
+                    <div className='innerclausearea'>
+                        <h5>이용약관에 동의합니다</h5>
+                        <input type='checkbox' name="check1" onChange={(e) => btnCheck(e)} checked={isChecked.check1}></input>
+                    </div>
 
-    );
+                    <h4>개인정보 수집 및 이용 동의(필수)</h4>
+                    <Clausearea02 className='clausearea1' />
+                    <div className='innerclausearea'>
+                        <h5>이용약관에 동의합니다.</h5>
+                        <input type='checkbox' name="check2" onChange={(e) => btnCheck(e)} checked={isChecked.check2}></input>
+                    </div>
+
+
+                    <h4>마케팅 정보 수신 동의(선택)</h4>
+                    <Marketing className='clausearea1' />
+                    <div className='innerclausearea'>
+                        <h5>이용약관에 동의합니다.</h5>
+                        <input type='checkbox' name="check3" onChange={(e) => btnCheck(e)} checked={isChecked.check3}></input>
+                    </div>
+
+                    <div className='innerclausearea'>
+                        <h5>회원가입 약관에 모두 동의 합니다.</h5>
+                        <input type='checkbox' name="allCheck" checked={isAllChecked} onChange={(e) => AllCheck(e)} />
+
+                    </div>
+                </div>
+                <hr />
+
+                <h3>개인정보를 입력해주세요</h3>
+                <form className="formcontainer" id='membership' onSubmit={validate}>
+                    <label>이름</label>
+                    <input type="text"
+                        placeholder='2글자 이상 5글자 이하 이름을 입력해주세요'
+                        name="name"
+                        maxLength={4}
+                        onChange={getInputInfo}
+                        onClick={MoveToTop}
+                        style={{
+                            borderBottom: formErrors.current.name === false ? '1px solid red' : '1px solid #aaaaaa'
+                        }}
+                    />
+                    <p>에러</p>
+
+
+                    <label>아이디</label>
+                    <div className="rowarea">
+                        <input type="text"
+                            name="id"
+                            onChange={getInputInfo}
+                            maxLength={13}
+                            placeholder='7~13글자 이하 영문 숫자 조합으로 아이디를 입력해주세요'
+                            // onBlur={IdCheck}
+                            ref={inputR}
+                            style={{
+                                borderBottom: formErrors.current.id === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                        <button
+                            // disabled={!btnAble}
+
+                            type='button'
+                            onClick={IsSameId}
+                        >아이디중복 검사</button>
+                    </div>
+                    <p>에러</p>
+
+
+                    <label>비밀번호</label>
+                    <input type="text"
+                        placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
+                        maxLength={14}
+                        name="pw"
+                        ref={pwR}
+                        onChange={getInputInfo}
+                        style={{
+                            borderBottom: formErrors.current.pw === false ? '1px solid red' : '1px solid #aaaaaa'
+                        }}
+                    />
+                    <p>에러</p>
+
+                    <label>비밀번호 확인</label>
+                    <input type="text"
+                        placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
+                        name="pwCheck"
+                        maxLength={14}
+                        ref={doubleCheckPw}
+                        onClick={NoinputPw}
+                        onChange={getInputInfo}
+                        style={{
+                            borderBottom: formErrors.current.pwCheck === false ? '1px solid red' : '1px solid #aaaaaa'
+                        }}
+                    />
+                    <p>에러</p>
+
+
+                    <label>주소</label>
+                    <div className="rowarea address">
+                        <input type="text"
+                            placeholder='우편번호'
+                            name='zoneCode'
+                            value={zoneCode}
+                            maxLength={5} readOnly />
+                        <button id='btn' onClick={openAddress}>우편번호 검색</button>
+                    </div>
+                    <input type="text"
+                        placeholder='도로명주소 또는 지번주소'
+                        name='address' value={address} readOnly />
+                    <input type="text"
+                        name='addressDetail'
+                        placeholder='상세주소'
+                        onChange={getInputInfo}
+                        style={{
+                            borderBottom: formErrors.current.addressDetail === false ? '1px solid red' : '1px solid #aaaaaa'
+                        }}
+                    />
+                    <p></p>
+
+                    <label>전화번호</label>
+                    <div className='phoneNumber'>
+                        <input type="text"
+                            maxLength={5}
+                            placeholder='2~5자리'
+                            name='firstNumber'
+                            onChange={getInputInfo}
+                            style={{
+                                borderBottom: formErrors.current.firstNumber === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                        <span>-</span>
+                        <input type="text"
+                            placeholder='3~4자리'
+                            maxLength={4}
+                            name='secondNumber'
+                            onChange={getInputInfo}
+                            style={{
+                                borderBottom: formErrors.current.secondNumber === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                        <span>-</span>
+                        <input type="text"
+                            placeholder='4자리'
+                            maxLength={4}
+                            name='lastNumber'
+                            onChange={getInputInfo}
+                            style={{
+                                borderBottom: formErrors.current.lastNumber === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                    </div>
+                    <p>에러</p>
+
+
+
+                    <label>성별</label>
+                    <div className='genderbutton'>
+                        <button type='button'
+                            name='gender'
+                            value='M'
+                            onClick={getInputInfo}
+                            style={{
+                                backgroundColor: formData.current.gender === 'M' ? 'black' : 'white',
+                                color: formData.current.gender === 'M' ? 'white' : 'black',
+                            }}
+                        >
+                            남성</button>
+
+                        <button type='button'
+                            name='gender'
+                            value='F'
+                            onClick={getInputInfo}
+                            style={{
+                                backgroundColor: formData.current.gender === 'F' ? 'black' : 'white',
+                                color: formData.current.gender === 'F' ? 'white' : 'black',
+                            }}
+                        >여성</button>
+                    </div>
+                    <p></p>
+                    <label>이메일</label>
+                    <div className='emailArea'>
+                        <input type="text" name='email' onChange={getInputInfo}
+                            style={{
+                                borderBottom: formErrors.current.email === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }} />
+                        <span>@</span>
+                        <input type="text"
+                            name='emailType'
+                            onChange={getInputInfo}
+                            ref={emailTypeR}
+                            style={{
+                                borderBottom: formErrors.current.emailType === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                        <select className="box"
+                            id="domain-list" onChange={getDomain}>
+                            <option value="self">직접입력</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="google.com">google.com</option>
+                            <option value="hanmail.net">hanmail.net</option>
+                            <option value="nate.com">nate.com</option>
+                            <option value="kakao.com">kakao.com</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div className='buttonarea'>
+                        <button type='button' onClick={goLoginPage}>가입하기</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            contentLabel="주소 검색"
+            style={{
+
+                content: {
+                    width: '500px',
+                    top: '50%',
+                    left: '50%',
+                    right: 'auto',
+                    bottom: 'auto',
+                    marginRight: '-50%',
+                    transform: 'translate(-50%, -50%)'
+                }
+            }}
+        >
+            <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
+            <DaumPostcode onComplete={handleComplete} />
+        </Modal>
+    </div >
+
+);
 };
 
 export default Membership;
