@@ -135,12 +135,12 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                             <div className="reviewContent">
 
                                 <p>
-                                    <p className="reveiwName deleteName">
-                                    </p>
+                                    {/* <p className="reveiwName deleteName">
+                                    </p> */}
                                         "{it.content}"
                                 </p>
 
-                                <div>
+                                <div className="reviewDateRemove">
                                     <span>
                                         {it.userName}
                                     </span>

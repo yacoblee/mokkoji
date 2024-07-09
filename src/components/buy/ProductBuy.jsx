@@ -37,10 +37,24 @@ const ProductBuy = () => {
     //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
     const calculateTotalPrice = () => {
         let price = selectedProduct.price;
-        const contentPrice = options.contentSelect.includes('(+220000)') ? 220000 :
-            options.contentSelect.includes('(+722000)') ? 722000 : 0;
-        const packagingPrice = options.packagingSelect.includes('(+2000원)') ? 2000 :
-            options.packagingSelect.includes('(+4000원)') ? 4000 : 0;
+        let packagingPrice = 0;
+        let contentPrice = 0;
+        const packagingStartIndex = options.packagingSelect.indexOf('(+');
+        const packagingEndIndex = options.packagingSelect.indexOf(')');
+        const contentSelectStartIndex = options.contentSelect.indexOf('(+');
+        const contentSelectEndIndex = options.contentSelect.indexOf(')');
+        // 포장 옵션에 따라 추가 금액 설정
+        if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
+            packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
+        }
+        // 내용 옵션에 따라 추가 금액 설정
+        if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
+            contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
+        }
+        // const contentPrice = options.contentSelect.includes('(+220000)') ? 220000 :
+        //     options.contentSelect.includes('(+722000)') ? 722000 : 0;
+        // const packagingPrice = options.packagingSelect.includes('(+2000원)') ? 2000 :
+        //     options.packagingSelect.includes('(+4000원)') ? 4000 : 0;
         const totalPrice = (price + contentPrice) * buyPrice.productPrice + packagingPrice * buyPrice.optionPrice;
         return totalPrice;
     }

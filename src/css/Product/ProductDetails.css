@@ -45,7 +45,13 @@
     .reveiwInfo img{
         height: 30vh;
     }
-
+    .reviewContent>div{
+        /* height: 10vh; */
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: end;
+    }
     .recommendInfo {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -91,7 +97,9 @@
         width: 95vw;
 
     }
-
+    .reviewDateRemove{
+        display: none;
+    }
     .imgInfo,
     .deliSizeInfo {
         width: 95vw;
@@ -134,7 +142,9 @@
         /* display: inline-block; */
         /* margin: auto; */
     }
-
+    .reviewDateRemove{
+        display: none;
+    }
     .forminner p {
         display: none;
     }
@@ -688,27 +698,27 @@
 .reviewContent {
     width: 100%;
     /* height: 30vh; */
-    padding: 5px;
+    padding: 10px 5px;
     display: grid;
     grid-template-rows: 2fr 1fr;
     /* justify-content: space-between; */
 }
 
-.reviewContent>p {
+/* .reviewContent>p { */
     /* height: 20vh; */
-    flex-basis: 40%;
+    /* flex-basis: 40%;
     display: grid;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 4fr; */
     /* justify-content: space-between; */
-}
+/* } */
 
-.reviewContent>div {
-    /* height: 10vh; */
+/* height: 10vh; */
+/* .reviewContent>div {
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: end;
-}
+} */
 
 .recommendInfo {
     display: grid;
