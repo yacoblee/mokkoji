@@ -233,6 +233,9 @@
     display: flex;
     justify-content: space-between;
 }
+.routeBox a {
+    color: black;
+}
 
 .isLike_icon {
     font-family: 'SUITE-Regular';
@@ -474,7 +477,7 @@
     position: sticky;
     top: 100px;
     background-color: white;
-    z-index: 10;
+    z-index: 0;
 }
 .tabBox a{
     height: 50px;
@@ -560,7 +563,7 @@ object-fit: cover;
     margin-bottom: 2%;
     display: flex;
     height: 30vh;
-    
+    z-index: -1;
     gap: 5px;
     justify-content: flex-start;
     /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
@@ -573,7 +576,7 @@ object-fit: cover;
 .reveiwInfo button {
     position: absolute;
     top: 30%;
-    z-index: 1;
+    z-index: 0;
     border : 0px solid;
     background-color: #d0888000;
 }
