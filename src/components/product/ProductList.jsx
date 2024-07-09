@@ -117,8 +117,6 @@ const ProductList = () => {
             sortOption: 'count',
             inputValue: '',
         });
-        // const filteredItems = filterItems();
-        // const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
         setSelectItem(filterItems().filter((items) => items.category === category));
         setDisplayMessage('');
         setPage(1);
