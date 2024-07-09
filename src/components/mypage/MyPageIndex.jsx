@@ -8,7 +8,7 @@ import MyPageMain from './MyPageMain';
 
 import MyPageLike from './mypagesub/MyPageLike';
 import MyPageCart from './mypagesub/MyPageCart';
-import MyPagePost from './mypagesub/MyPagePost';
+import MyPageReview from './mypagesub/MyPageReview';
 import MyPageBook from './mypagesub/MyPageBook';
 import MyPageList from './mypagesub/MyPageList';
 
@@ -69,7 +69,7 @@ function MyPageIndex() {
                 <Route path='/*' element={<MyPageMain />} />
                 <Route path='like' element={<MyPageLike change={change} setChange={setChange} />} />
                 <Route path='cart' element={<MyPageCart change={change} setChange={setChange} />} />
-                <Route path='post' element={<MyPagePost />} />
+                <Route path='Review' element={<MyPageReview />} />
                 <Route path='list' element={<MyPageList />} />
                 <Route path='book' element={<MyPageBook change={change} setChange={setChange} />} />
             </Routes>

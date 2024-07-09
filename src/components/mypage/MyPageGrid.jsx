@@ -31,20 +31,20 @@ function MyPageGrid() {
                     <span>장바구니</span>
                 </div>
             </NavLink>
-            <NavLink to='/mypage/post'>
-                <div className='MyPost'>
-                    <div className='IconPost'>
-                        <FontAwesomeIcon icon={faTruckFast} />
-                    </div>
-                    <span>배송 현황</span>
-                </div>
-            </NavLink>
             <NavLink to='/mypage/list'>
                 <div className='MyList'>
                     <div className='IconList'>
                         <FontAwesomeIcon icon={faListCheck} />
                     </div>
                     <span>구매내역</span>
+                </div>
+            </NavLink>
+            <NavLink to='/mypage/review'>
+                <div className='MyReview'>
+                    <div className='IconReview'>
+                        <FontAwesomeIcon icon={faTruckFast} />
+                    </div>
+                    <span>리뷰 관리</span>
                 </div>
             </NavLink>
             <NavLink to='/mypage/book'>

@@ -1,6 +1,6 @@
 import '../../../css/mypage/MyPageIndex.css';
 
-function MyPagePost() {
+function MyPageReview() {
 
     return (
 
@@ -10,4 +10,4 @@ function MyPagePost() {
     )
 }
 
-export default MyPagePost;
+export default MyPageReview;
