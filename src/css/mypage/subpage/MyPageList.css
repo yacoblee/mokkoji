@@ -9,6 +9,7 @@
 .MyListDate>h3 {
     border-bottom: 1px solid #000;
     background-color: #d0c0a058;
+    height: 40px;
 }
 
 .ListItem {

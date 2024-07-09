@@ -11,92 +11,125 @@ function MyPageBook({ change, setChange }) {
 
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
-        const newReservation = user.mypage.Reservation.map((item) => {
+        const newReservation1 = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
-                    if (item.adult === 1)
-                        alert('성인의 동행이 필요한 활동입니다.');
+                    if (item.adult + item.teenager === 1)
+                        alert('최소 1명의 참가자가 있어야합니다.');
+                    else if (item.adult === 0) { }
                     else
                         item.adult = item.adult - 1;
-                } else if (variation === 'increase')
-                    item.adult = item.adult + 1
+                }
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.adult = item.adult + 1
+                }
+
             }
             return item;
 
         }   // Reservation.map
-        )   // newReservation
+        )   // newReservation1
 
-        const updatedUser = {
+        const updatedUser1 = {
             ...user,
             mypage: {
                 ...user.mypage,
-                Reservation: newReservation
+                Reservation: newReservation1
             }
         };
 
-        setUser(updatedUser);
+        setUser(updatedUser1);
 
     }   // changeAdultCount
 
 
     // 청소년 인원수 변경 로직
     const changeTeenCount = (date, variation) => {
-        const newReservation = user.mypage.Reservation.map((item) => {
+        const newReservation2 = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
-                    if (item.teenager === 0)
-                        alert('인원 수가 음수가 되어서는 안됩니다.');
+                    if (item.adult + item.teenager === 1)
+                        alert('최소 1명의 참가자가 있어야합니다.');
+                    else if (item.teenager === 0) { }
                     else
                         item.teenager = item.teenager - 1;
-                } else if (variation === 'increase')
-                    item.teenager = item.teenager + 1
+                }
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.teenager = item.teenager + 1
+                }
             }
             return item;
         }   // Reservation.map
-        )   // newReservation
+        )   // newReservation2
 
-        const updatedUser = {
+        const updatedUser2 = {
             ...user,
             mypage: {
                 ...user.mypage,
-                Reservation: newReservation
+                Reservation: newReservation2
             }
         };
 
-        setUser(updatedUser);
+        setUser(updatedUser2);
 
     }   // changeTeenCount
 
 
     // 버튼으로 sessionStorage 덮어쓰기
-    const handleSubmit = () => {
+    const handleSubmit = (day) => {
+
+        // 업데이트된 예약 배열을 저장할 변수
+        let updatebook = [];
+
+        user.mypage.Reservation.forEach((latest) => {
+            if (latest.date !== day) {
+                const first = userData.mypage.Reservation.find(res => res.date === latest.date);
+                updatebook.push(first);
+            } else {
+                updatebook.push(latest);
+            }
+        })
+        const updateMyPage = {
+            ...user.mypage,
+            Reservation: updatebook
+        }
+        const updateUser = {
+            ...user,
+            mypage: updateMyPage
+        }
+
         alert('예약 내역이 수정되었습니다.')
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
-        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updateUser));
+        setUser(updateUser);
     }
 
 
     // 삭제 버튼 로직(날짜만 비교, 추후 조건 추가 해야함)
-    const handleDelete = (date) => {        // 해당 날짜가 없어진 새로운 예약 배열을 생성
+    const handleDelete = (day) => {        // 해당 날짜가 없어진 새로운 예약 배열을 생성
         const newBooks = user.mypage.Reservation.filter((item) =>
             // item.reserveItem !== id && item.date !== date
-            date !== item.date
+            day !== item.date
         )
-
         let newMyPage = {
             ...user.mypage,
             Reservation: newBooks
         }
-
         let newUser = {
             ...user,
             mypage: newMyPage
         };
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser));
-
         setUser(newUser);
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }   // handleDelete
@@ -116,8 +149,8 @@ function MyPageBook({ change, setChange }) {
         } else {
             setCheckedBook([]);
         }
-    };
 
+    };
 
     // 선택 삭제 로직
     const onCheckedDelete = () => {
@@ -125,24 +158,21 @@ function MyPageBook({ change, setChange }) {
             alert('선택된 상품이 존재하지 않습니다.');
             return; // 함수 종료
         }
-
         let newReserve = user.mypage.Reservation.filter((reserve) => {
             return !checkedBook.includes(reserve.date)
         })  // newReserve
-
         let newMyPage = {
             ...user.mypage,
             Reservation: newReserve
         }
-
         let newUser = {
             ...user,
             mypage: newMyPage
         }
 
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser))
-
         setUser(newUser);
+        setCheckedBook([])
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 
@@ -157,7 +187,7 @@ function MyPageBook({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length}
+                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length && user.mypage.Reservation.length !== 0}
                     />
                 </div>
                 <div></div>
@@ -212,7 +242,7 @@ function MyPageBook({ change, setChange }) {
                                         </div>
                                     </div>
                                     <div className='BookButton'>
-                                        <button className='buttonChange' onClick={() => handleSubmit()}>예약 수정</button>
+                                        <button className='buttonChange' onClick={() => handleSubmit(book.date)}>예약 수정</button>
                                         <button onClick={() => handleDelete(book.date)}>예약 취소</button>
                                     </div>
                                 </div>
@@ -225,7 +255,7 @@ function MyPageBook({ change, setChange }) {
                     <input
                         type="checkbox"
                         onChange={handleCheckAll}
-                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length}
+                        checked={user.mypage.Reservation.length > 0 && checkedBook.length === user.mypage.Reservation.length && user.mypage.Reservation.length !== 0}
                     />
                 </div>
                 <div></div>
@@ -236,7 +266,7 @@ function MyPageBook({ change, setChange }) {
                         className='SelectDeleteButton'
                         onClick={onCheckedDelete}
                     >
-                        예약 취소
+                        예약 선택 취소
                     </button>
                 </div>
             </div>

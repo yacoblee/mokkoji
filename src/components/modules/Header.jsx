@@ -70,12 +70,12 @@ const Header = () => {
                             {
                                 isLoggedIn ?
                                     <>
-                                        <li><Link onClick={handleLogout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</Link></li>
-                                        <li><Link to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>mypage</p></Link></li>
+                                        <li><NavLink onClick={handleLogout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
+                                        <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>mypage</p></NavLink ></li>
                                     </>
                                     :
                                     <>
-                                        <li><Link to="/Login" className={({ isActive }) => (isActive ? 'active' : '')}><p>Login</p></Link></li>
+                                        <li><NavLink to="/Login" className={({ isActive }) => (isActive ? 'active' : '')}><p>Login</p></NavLink ></li>
                                     </>
                             }
                         </ul>
@@ -86,4 +86,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default React.memo(Header);

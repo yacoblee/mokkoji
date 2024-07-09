@@ -22,7 +22,7 @@
 * {
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
 }
 
 body,
@@ -309,7 +309,7 @@ html {
     opacity: 1;
     color: rgb(0, 0, 0);
     font-weight: 600;
-    transition: opacity 1.4s linear;
+    transition: opacity 1.2s linear;
 
 }
 
@@ -568,8 +568,9 @@ html {
 
 }
 
-.reserve_section_center a {
-    color: rgba(0, 0, 0, 0.698);
+.reserve_section_center a p {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.795);
 
 }
 
@@ -678,6 +679,8 @@ html {
     background-color: #10100c6a;
     width: 47vw;
     height: 540px;
+
+
 }
 
 .intro_content div {
@@ -733,7 +736,8 @@ html {
 }
 
 .intro_content_btn button {
-    background-color: rgba(202, 202, 181, 0.851);
+    background-color: #d0c0a044;
+    border: 1px solid #d0c0a08d;
     cursor: pointer;
     margin-top: 20px;
     width: 120px;
