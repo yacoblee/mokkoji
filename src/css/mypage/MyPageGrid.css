@@ -1,7 +1,7 @@
 .MyGrid {
     display: grid;
     grid-template-areas:
-        "MyLike MyCart  MyPost MyList MyBook";
+        "MyLike MyCart MyList MyReview MyBook";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
     /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
@@ -21,7 +21,7 @@
 
 .MyLike,
 .MyCart,
-.MyPost,
+.MyReview,
 .MyBook,
 .MyList {
     display: flex;
@@ -42,8 +42,8 @@
     grid-area: MyBook;
 }
 
-.MyPost {
-    grid-area: MyPost;
+.MyReview {
+    grid-area: MyReview;
 }
 
 .MyList {
@@ -53,7 +53,7 @@
 
 .IconLike,
 .IconCart,
-.IconPost,
+.IconReview,
 .IconBook,
 .IconList {
     flex: 1;
@@ -64,7 +64,7 @@
 
 .MyLike span,
 .MyCart span,
-.MyPost span,
+.MyReview span,
 .MyBook span,
 .MyList span {
     flex: 1;
@@ -84,7 +84,7 @@
 
     .IconLike,
     .IconCart,
-    .IconPost,
+    .IconReview,
     .IconBook,
     .IconList {
         font-size: 23px;
@@ -98,7 +98,7 @@
 
     .IconLike,
     .IconCart,
-    .IconPost,
+    .IconReview,
     .IconBook,
     .IconList {
         padding: 10px;
@@ -107,7 +107,7 @@
 
     .MyLike span,
     .MyCart span,
-    .MyPost span,
+    .MyReview span,
     .MyBook span,
     .MyList span {
         font-size: 1em;

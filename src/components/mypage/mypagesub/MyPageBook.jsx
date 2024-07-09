@@ -72,7 +72,10 @@ function MyPageBook({ change, setChange }) {
 
     // 버튼으로 sessionStorage 덮어쓰기
     const handleSubmit = () => {
-        alert('예약 내역이 수정되었습니다.')
+        if (user.mypage.Reservation === userData.mypage.Reservation) {
+            alert('수정 내역이 없습니다.')
+        } else
+            alert('예약 내역이 수정되었습니다.')
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }

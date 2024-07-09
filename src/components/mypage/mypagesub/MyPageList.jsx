@@ -5,9 +5,6 @@ function MyPageList() {
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"))
     const items = JSON.parse(sessionStorage.getItem("goodsList"))
 
-
-    
-
     return (
 
         <div className='MyPageList'>
