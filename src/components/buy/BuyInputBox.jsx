@@ -210,6 +210,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
             //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
         }
         // console.log(selectedALLproduct);
+        // console.log(checkedCartItems);
         //checking 이 true , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야 , 직접입력후 기입하여야.
         if (checking && selectBox.buyHow !== '' && selectedALLproduct.length > 0) {
             setIsBuyButtonDisabled(false); //BUY 버튼 활성화
@@ -244,17 +245,34 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         });
         //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
         copyUserData.mypage.history.push(history);
-        console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
-        console.log(copyUserData.mypage.history);
-
+        // console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
+        // console.log(copyUserData.mypage.history);
         //세션 스토리지에 복사된 userData 로 변경..
+        
+        
+        //장바구니와 선택상품이 일치할경우 장바구니의 목록 삭제
+        const userBasket = userData.mypage.basket;
+        let cartItemsfilter = []
+        cartItemsfilter = userBasket.filter((item) => {
+            // checkedCartItems 배열에 item.productId와 일치하는 항목이 있는지 확인
+            return !checkedCartItems.some(checkedItem => checkedItem.productId === item.productId);
+        });
+        // console.log('장바구니 아이템');
+        // console.log(userBasket);
+        // console.log('선택된 아이템');
+        // console.log(checkedCartItems);
+        // console.log('필터된 아이템')
+        // console.log(cartItemsfilter);
+        copyUserData.mypage.basket = cartItemsfilter;
         sessionStorage.setItem('LoginUserInfo', JSON.stringify(copyUserData));
 
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
         }
-
+        
     }
+    // console.log(userData.mypage.basket);
+    // console.log(checkedCartItems);
 
     return (
         <form className='buyBox' onSubmit={onClickBuyButton}>

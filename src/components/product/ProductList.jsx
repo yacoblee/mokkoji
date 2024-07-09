@@ -122,9 +122,8 @@ const ProductList = () => {
             sortOption: 'count',
             inputValue: '',
         });
-        const filteredItems = filterItems();
-        const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
-        setSelectItem(categoryFilteredItems);
+
+        setSelectItem(filterItems().filter((items) => items.category === category));
         setDisplayMessage('');
         // if (category === 'allGoods') {
         //     setSelectItem(filteredItems);
