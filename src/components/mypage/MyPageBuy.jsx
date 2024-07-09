@@ -57,7 +57,7 @@ function MyPageBuy() {
                 <div></div>
                 <div></div>
                 <div>
-                    <strong>{formatNumber(cartTotalPrice)}&nbsp;원</strong>
+                    <h2>{formatNumber(cartTotalPrice)}&nbsp;원</h2>
                 </div>
             </div>
 
