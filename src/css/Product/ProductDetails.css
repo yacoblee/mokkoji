@@ -5,7 +5,9 @@
         grid-template-columns: 60% 40%;
         grid-auto-rows: 90vh;
     }
-
+    .imgBox{
+        grid-template-rows: 80% 20%;
+    }
     .productName.hi {
         display: none;
     }
@@ -57,12 +59,14 @@
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023)*/
 @media all and (min-width:768px) and (max-width:1200px) {
     .box {
-        width: 95vw;
+        width: 90vw;
         grid-template-columns: 50% 50%;
 
         margin: auto;
     }
-
+    .imgBox{
+        grid-template-rows: 80% 20%;
+    }
     .productName.hi {
         display: none;
     }
@@ -115,11 +119,14 @@
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
 @media all and (max-width:767px) {
     .box {
-        width: 95vw;
-        grid-template-rows: 70vh 70vh;
+        width: 90vw;
+        grid-template-rows: 70vh auto;
         gap: 5px;
         margin: auto;
 
+    }
+    .imgBox{
+        grid-template-rows: 70% 30%;
     }
 
     .productName.hi {
@@ -189,7 +196,7 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 80% 20%;
+
     position: relative;
 
 }
