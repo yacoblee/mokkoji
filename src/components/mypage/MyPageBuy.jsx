@@ -17,7 +17,11 @@ function MyPageBuy() {
     };
 
     // totalprice(한개 상품에 대한 최종 금액)를 바탕으로 총 금액 계산하는 함수
-    const cartTotalPrice = newCheckedGoods.reduce((acc, item) => acc + item.totalPrice, 0);
+    // const cartTotalPrice = newCheckedGoods.reduce((acc, item) => acc + item.totalPrice, 0);
+    const cartTotalPrice = newCheckedGoods.reduce((acc, item) => {
+        const newTotal = acc + item.totalPrice;
+        return newTotal < 30000 ? newTotal + 3000 : newTotal;
+    }, 0);
 
     return (
         <div className='Payment'>
@@ -55,7 +59,10 @@ function MyPageBuy() {
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>
+                    <h5>* 30,000원 미만 3,000원</h5>
+                    <h5>* 30,000원 이상 무료배송</h5>
+                </div>
                 <div>
                     <h2>{formatNumber(cartTotalPrice)}&nbsp;원</h2>
                 </div>
