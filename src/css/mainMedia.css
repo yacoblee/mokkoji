@@ -497,6 +497,7 @@
         background-color: #10100c6a;
         width: 100vw;
         height: 540px;
+       
     }
 
     .intro_content input,
@@ -508,7 +509,7 @@
         width: 50vw;
         padding: 5px;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 600; transition: all .2s ease-out;
 
     }
 

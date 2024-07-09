@@ -419,6 +419,8 @@
     height: 30px;
     font-size: 16px;
     cursor: pointer;
+    border: 1px solid #d0c0a000;
+    background-color: #d0c0a044;
 }
 
 .personSelect ul li div {
@@ -444,6 +446,7 @@
     display: grid;
     grid-area: 6 / 3 /span 4 / span 4;
     margin-top: 20px;
+    transition: all .6s linear;
 }
 
 .intro_inner {
@@ -617,6 +620,7 @@
         grid-area: 6 / 3 / span 2 / span 7;
         margin-top: 0;
         margin-left: 0;
+        transition: all .6s linear;
         /* transform: translateX(0%); */
     }
 
@@ -637,6 +641,7 @@
         list-style: none;
         position: relative;
         padding-left: 16px;
+
     }
 
 
@@ -646,6 +651,7 @@
         grid-area: 8 / 3 / span 2 / span 6;
         position: relative;
         justify-content: flex-start;
+
     }
 
     .calendar-toggle {
@@ -661,6 +667,7 @@
         letter-spacing: 1px;
         text-align: center;
         gap: 10px;
+        transition: all 0.3s linear;
     }
 
     .calendar-toggle-button {
@@ -909,6 +916,7 @@
         grid-area: 2 / 1 / 2 / 7;
         border-bottom: 1px solid #e6e6e6;
         width: 100%;
+        line-height: 30px;
     }
 
 
@@ -977,13 +985,13 @@
         grid-area: 3 / 4 / 3 / 5;
         justify-self: center;
         align-self: center;
-        padding: 5px;
         position: relative;
         bottom: 0;
         right: 0;
         width: 8vw;
         height: 40px;
         max-width: 150px;
+        line-height: 30px;
     }
 
     .calendar-toggle-button {
@@ -991,10 +999,9 @@
         justify-self: center;
         align-self: center;
         width: 10vw;
-        max-width: 120px;
+        max-width: 80px;
         height: 40px;
         padding: 0;
-        width: 10vw;
     }
 
     .reservation_calendar_inner {
@@ -1082,5 +1089,14 @@
         transform: translateX(60%) translateY(-33%);
         z-index: 2;
         position: absolute;
+    }
+}
+
+@media screen and (width < 570px) {
+    .calendar-toggle>p {
+        /* grid-area: 3 / 3 / 3 / span 1; */
+        transform: translateY(40%) translateX(20%);
+        text-align: center;
+        font-size: 0.9rem;
     }
 }

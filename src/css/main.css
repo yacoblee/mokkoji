@@ -22,7 +22,7 @@
 * {
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
 }
 
 body,
@@ -678,6 +678,8 @@ html {
     background-color: #10100c6a;
     width: 47vw;
     height: 540px;
+
+
 }
 
 .intro_content div {
@@ -733,7 +735,8 @@ html {
 }
 
 .intro_content_btn button {
-    background-color: rgba(202, 202, 181, 0.851);
+    background-color: #d0c0a044;
+    border: 1px solid #d0c0a08d;
     cursor: pointer;
     margin-top: 20px;
     width: 120px;
