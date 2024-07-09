@@ -249,7 +249,7 @@ function MyPageBook({ change, setChange }) {
                         className='SelectDeleteButton'
                         onClick={onCheckedDelete}
                     >
-                        예약 취소
+                        예약 선택 취소
                     </button>
                 </div>
             </div>

@@ -33,11 +33,15 @@ function MyPageCart({ change, setChange }) {
             contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
         }
 
-        console.log(packagingPrice)
-        console.log(contentPrice)
+        // console.log(selectedProduct.price)
+        // console.log(contentPrice)
+        // console.log(count.contentSelect)
+        // console.log(packagingPrice)
+        // console.log(count.packagingSelect)
 
         // 총 금액 계산
         return (selectedProduct.price + contentPrice) * count.contentSelect + packagingPrice * count.packagingSelect;
+
     };
 
 
@@ -53,8 +57,6 @@ function MyPageCart({ change, setChange }) {
             item.id === bb.productId
         );     // findItem
 
-        bb.totalPrice = calculateTotalPrice(findItem, bb.options, bb.quantity);
-
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
@@ -65,7 +67,7 @@ function MyPageCart({ change, setChange }) {
         cartItem.contentCount = bb.quantity.contentSelect
         cartItem.packageCount = bb.quantity.packagingSelect
         cartItem.price = bb.totalPrice
-
+        // cartItem.defaultPrice = findItem.price
 
         return cartItem;
     });     // map
@@ -177,6 +179,11 @@ function MyPageCart({ change, setChange }) {
                         item.quantity.contentSelect = item.quantity.contentSelect - 1;
                 } else if (variation === 'increase')
                     item.quantity.contentSelect = item.quantity.contentSelect + 1
+
+                // items 배열에서 해당 cartId의 가격을 찾습니다.
+                const product = items.find(prod => prod.id === cartId);
+                item.totalPrice = calculateTotalPrice(product, item.options, item.quantity);
+
             }
             return item;
         }
@@ -210,6 +217,10 @@ function MyPageCart({ change, setChange }) {
                         item.quantity.packagingSelect = item.quantity.packagingSelect - 1;
                 } else if (variation === 'increase')
                     item.quantity.packagingSelect = item.quantity.packagingSelect + 1
+
+                // items 배열에서 해당 cartId의 가격을 찾습니다.
+                const product = items.find(prod => prod.id === cartId);
+                item.totalPrice = calculateTotalPrice(product, item.options, item.quantity);
             }
             return item;
         }
@@ -225,7 +236,7 @@ function MyPageCart({ change, setChange }) {
             mypage: updatedMypage
         }
 
-        console.log(`${JSON.stringify(updatedUser)}`)
+        // console.log(`${JSON.stringify(updatedUser)}`)
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
 
         setUser(updatedUser);
