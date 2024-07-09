@@ -158,7 +158,7 @@ const ProductBuy = () => {
             }
 
         });
-        console.log(checkedCartItems)
+        // console.log(checkedCartItems)
     };
 
     //오류 발생을 대비한 방어 코드.

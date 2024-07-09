@@ -74,7 +74,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         }
         setAddressing(!addressing);
     };
-    console.log(userInfoError);
+    // console.log(userInfoError);
 
     //수기로 작성했을때 onChange 이벤트를 통해 value값을 지정.
     const onChangeUserInfo = (e) => {

@@ -8,7 +8,7 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
         return number.toLocaleString('en-US');
     }
 
-    console.log(selectedProduct)
+    // console.log(selectedProduct)
     return (<div className="CompleteBox">
         <p className="BuyCompleteName">
             구매리스트

@@ -10,8 +10,8 @@ const ProductMainGuide = ({ text }) => {
         const containerWidth = guideElement.offsetWidth; 
         const animationDuration = containerWidth / 30; // 텍스트 길이에 따른 애니메이션 속도 조정
         const animationDelay = -containerWidth / 50; // 애니메이션 딜레이 설정
-        console.log(animationDuration);
-        console.log(containerWidth);
+        // console.log(animationDuration);
+        // console.log(containerWidth);
         // 애니메이션을 초기화하고 다시 적용하여 강제로 재생
         guideElement.style.animation = 'none';
         // guideElement.offsetHeight; // 트리거 리플로우
