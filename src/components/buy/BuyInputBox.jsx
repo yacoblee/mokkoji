@@ -110,7 +110,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
 
             }
         }
-        console.log(userInfoError.zoneCode);
+        // console.log(userInfoError.zoneCode);
     };
 
     //모달 상태창에 대한 true , false
