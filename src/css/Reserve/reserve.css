@@ -56,7 +56,7 @@
 /* 예약페이지 최상단 이미지 S */
 .reservation_img_inner {
     cursor: pointer;
-    background-color: beige;
+    /* background-color: beige; */
     display: grid;
     grid-template: repeat(4, 1fr) / repeat(8, 1fr);
     overflow: hidden;
@@ -84,7 +84,7 @@
 
 .reservation_sub_img img {
     width: 100%;
-    height: 200px;
+    height: 197.5px;
     border-radius: 0% 20px 0 0;
     padding-bottom: 2.5px;
 }
@@ -98,7 +98,7 @@
     border-radius: 0 0 20px 0;
     padding-top: 2.5px;
     width: 100%;
-    height: 200px;
+    height: 197.5px;
 }
 
 /* reserve.css */

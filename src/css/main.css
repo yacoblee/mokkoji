@@ -309,7 +309,7 @@ html {
     opacity: 1;
     color: rgb(0, 0, 0);
     font-weight: 600;
-    transition: opacity 1.4s linear;
+    transition: opacity 1.2s linear;
 
 }
 
@@ -568,8 +568,9 @@ html {
 
 }
 
-.reserve_section_center a {
-    color: rgba(0, 0, 0, 0.698);
+.reserve_section_center a p {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.795);
 
 }
 
