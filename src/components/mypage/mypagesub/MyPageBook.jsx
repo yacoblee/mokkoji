@@ -19,8 +19,15 @@ function MyPageBook({ change, setChange }) {
                         alert('성인의 동행이 필요한 활동입니다.');
                     else
                         item.adult = item.adult - 1;
-                } else if (variation === 'increase')
-                    item.adult = item.adult + 1
+                }
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.adult = item.adult + 1
+                }
+
             }
             return item;
 
@@ -50,8 +57,14 @@ function MyPageBook({ change, setChange }) {
                         alert('인원 수가 음수가 되어서는 안됩니다.');
                     else
                         item.teenager = item.teenager - 1;
-                } else if (variation === 'increase')
-                    item.teenager = item.teenager + 1
+                }
+
+                else if (variation === 'increase') {
+                    if (item.adult + item.teenager === 25)
+                        alert('25명까지 참여 가능합니다')
+                    else
+                        item.teenager = item.teenager + 1
+                }
             }
             return item;
         }   // Reservation.map
@@ -236,7 +249,7 @@ function MyPageBook({ change, setChange }) {
                         className='SelectDeleteButton'
                         onClick={onCheckedDelete}
                     >
-                        예약 취소
+                        예약 선택 취소
                     </button>
                 </div>
             </div>

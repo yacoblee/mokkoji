@@ -70,6 +70,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 phoneNumber: false,
                 addressDetail: false,
                 zoneCode: false,
+                deliveryMessage: false,
             })
         }
         setAddressing(!addressing);
@@ -86,7 +87,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         // console.log(`Name: ${name}, Value: ${value}, Length: ${value.length}`);
 
         if (name === 'name') {
-            if (value.length < 2 || value.length > 5) {
+            if (value.length < 2 || value.length > 16) {
                 setUserInfoError((error) => ({ ...error, name: true }))
             } else {
                 setUserInfoError((error) => ({ ...error, name: false }))
@@ -222,6 +223,11 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
 
+    const onClickModalBuyClose = ()=>{
+        setIsModalBuyOpen(false)
+        navigate('/goods')
+    }
+
     // console.log(selectBox.deliveryMessage);
     //구매버튼 이벤트
     const onClickBuyButton = (e) => {
@@ -289,7 +295,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                         id='name'
                         name="name"
                         minLength={2}
-                        maxLength={5}
+                        maxLength={15}
                         value={userInfo.name}
                         onChange={onChangeUserInfo}
                         className={userInfoError.name ? 'errors' : ''}
@@ -456,7 +462,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                     <button
                         onClick={() => navigate('/mypage/list')}>구매 내역 확인</button>
 
-                    <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
+                    <button onClick={onClickModalBuyClose}>확인</button>
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete username={userData.name}
