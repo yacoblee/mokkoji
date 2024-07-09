@@ -11,7 +11,7 @@ function MyPageBook({ change, setChange }) {
 
     // 어른 인원수 변경 로직
     const changeAdultCount = (date, variation) => {
-        const newReservation = user.mypage.Reservation.map((item) => {
+        const newReservation1 = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
@@ -32,24 +32,24 @@ function MyPageBook({ change, setChange }) {
             return item;
 
         }   // Reservation.map
-        )   // newReservation
+        )   // newReservation1
 
-        const updatedUser = {
+        const updatedUser1 = {
             ...user,
             mypage: {
                 ...user.mypage,
-                Reservation: newReservation
+                Reservation: newReservation1
             }
         };
 
-        setUser(updatedUser);
+        setUser(updatedUser1);
 
     }   // changeAdultCount
 
 
     // 청소년 인원수 변경 로직
     const changeTeenCount = (date, variation) => {
-        const newReservation = user.mypage.Reservation.map((item) => {
+        const newReservation2 = user.mypage.Reservation.map((item) => {
             if (item.date === date) {
 
                 if (variation === 'decrease') {
@@ -68,34 +68,62 @@ function MyPageBook({ change, setChange }) {
             }
             return item;
         }   // Reservation.map
-        )   // newReservation
+        )   // newReservation2
 
-        const updatedUser = {
+        const updatedUser2 = {
             ...user,
             mypage: {
                 ...user.mypage,
-                Reservation: newReservation
+                Reservation: newReservation2
             }
         };
 
-        setUser(updatedUser);
+        setUser(updatedUser2);
 
     }   // changeTeenCount
 
 
     // 버튼으로 sessionStorage 덮어쓰기
-    const handleSubmit = () => {
+    const handleSubmit = (day) => {
+
+        // console.log(userData)
+        // console.log(user)
+
+        // 업데이트된 예약 배열을 저장할 변수
+        let updatebook = [];
+
+        user.mypage.Reservation.forEach((latest) => {
+            // date가 '2024-07-30'인 경우 초기값으로 바꿉니다.
+            if (latest.date !== day) {
+                const initial = userData.mypage.Reservation.find(res => res.date === latest.date);
+                updatebook.push(initial);
+            } else {
+                updatebook.push(latest);
+            }
+        })
+
+        const updateMyPage = {
+            ...user.mypage,
+            Reservation: updatebook
+        }
+
+        const updateUser = {
+            ...user,
+            mypage: updateMyPage
+        }
+
         alert('예약 내역이 수정되었습니다.')
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(user));
-        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updateUser));
+
+        setUser(updateUser);
     }
 
 
     // 삭제 버튼 로직(날짜만 비교, 추후 조건 추가 해야함)
-    const handleDelete = (date) => {        // 해당 날짜가 없어진 새로운 예약 배열을 생성
+    const handleDelete = (day) => {        // 해당 날짜가 없어진 새로운 예약 배열을 생성
         const newBooks = user.mypage.Reservation.filter((item) =>
             // item.reserveItem !== id && item.date !== date
-            date !== item.date
+            day !== item.date
         )
 
         let newMyPage = {
@@ -131,10 +159,6 @@ function MyPageBook({ change, setChange }) {
         }
 
     };
-
-
-    console.log(checkedBook)
-
 
     // 선택 삭제 로직
     const onCheckedDelete = () => {
@@ -230,7 +254,7 @@ function MyPageBook({ change, setChange }) {
                                         </div>
                                     </div>
                                     <div className='BookButton'>
-                                        <button className='buttonChange' onClick={() => handleSubmit()}>예약 수정</button>
+                                        <button className='buttonChange' onClick={() => handleSubmit(book.date)}>예약 수정</button>
                                         <button onClick={() => handleDelete(book.date)}>예약 취소</button>
                                     </div>
                                 </div>
