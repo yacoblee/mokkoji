@@ -13,6 +13,34 @@ function MyPageCart({ change, setChange }) {
     const [user, setUser] = useState(userData)
 
 
+    // 상품 최종 금액 계산식
+    const calculateTotalPrice = (selectedProduct, options, count) => {
+        if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
+        let packagingPrice = 0; // 포장 추가 금액
+        let contentPrice = 0; // 기본 추가 금액
+
+        const packagingStartIndex = options.packagingSelect.indexOf('(+');
+        const packagingEndIndex = options.packagingSelect.indexOf(')');
+        const contentSelectStartIndex = options.contentSelect.indexOf('(+');
+        const contentSelectEndIndex = options.contentSelect.indexOf(')');
+
+        // 포장 옵션에 따라 추가 금액 설정
+        if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
+            packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
+        }
+        // 내용 옵션에 따라 추가 금액 설정
+        if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
+            contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
+        }
+
+        console.log(packagingPrice)
+        console.log(contentPrice)
+
+        // 총 금액 계산
+        return (selectedProduct.price + contentPrice) * count.contentSelect + packagingPrice * count.packagingSelect;
+    };
+
+
     // 숫자를 금액처럼 표기하기
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
@@ -25,27 +53,7 @@ function MyPageCart({ change, setChange }) {
             item.id === bb.productId
         );     // findItem
 
-        let calculateTotalPrice = () => {
-            let packageADDprice = 0; // 포장 추가 금액
-            let defaultADDprice = 0; // 기본 추가 금액
-
-            // 포장 옵션에 따라 추가 금액 설정
-            if (bb.options.packagingSelect.includes(2000)) {
-                packageADDprice = 2000;
-            } else if (bb.options.packagingSelect.includes(4000)) {
-                packageADDprice = 4000;
-            }
-            // 내용 옵션에 따라 추가 금액 설정
-            if (bb.options.contentSelect.includes(220000)) {
-                defaultADDprice = 220000;
-            } else if (bb.options.contentSelect.includes(722000)) {
-                defaultADDprice = 722000;
-            }
-
-            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
-        }
-
-        bb.totalPrice = calculateTotalPrice(findItem);
+        bb.totalPrice = calculateTotalPrice(findItem, bb.options, bb.quantity);
 
         let cartItem = {}
 

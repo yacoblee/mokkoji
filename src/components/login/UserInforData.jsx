@@ -31,7 +31,7 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -43,7 +43,7 @@ const userInfo = [
                     productId: 6,
                     options: {
                         contentSelect: '연꽃 향',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 2,
@@ -55,7 +55,7 @@ const userInfo = [
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -95,7 +95,7 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -107,7 +107,7 @@ const userInfo = [
                     productId: 6,
                     options: {
                         contentSelect: '연꽃 향',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -119,7 +119,7 @@ const userInfo = [
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -159,7 +159,7 @@ const userInfo = [
                     productId: 3,
                     options: {
                         contentSelect: '하트 뿅뿅(블루)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 5,
@@ -171,7 +171,7 @@ const userInfo = [
                     productId: 8,
                     options: {
                         contentSelect: '금색',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -183,7 +183,7 @@ const userInfo = [
                     productId: 9,
                     options: {
                         contentSelect: 'M',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -227,7 +227,7 @@ const userInfo = [
                     productId: 4,
                     options: {
                         contentSelect: '소',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -239,7 +239,7 @@ const userInfo = [
                     productId: 5,
                     options: {
                         contentSelect: '소',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -251,7 +251,7 @@ const userInfo = [
                     productId: 6,
                     options: {
                         contentSelect: '백단 향',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -291,7 +291,7 @@ const userInfo = [
                     productId: 1,
                     options: {
                         contentSelect: '취객선비 3인방 변색 잔세트',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -303,7 +303,7 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -315,7 +315,7 @@ const userInfo = [
                     productId: 3,
                     options: {
                         contentSelect: '하트 뿅뿅(블루)',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -355,7 +355,7 @@ const userInfo = [
                     productId: 5,
                     options: {
                         contentSelect: '소',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -367,7 +367,7 @@ const userInfo = [
                     productId: 6,
                     options: {
                         contentSelect: '연꽃 향',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -379,7 +379,7 @@ const userInfo = [
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -419,7 +419,7 @@ const userInfo = [
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -431,7 +431,7 @@ const userInfo = [
                     productId: 8,
                     options: {
                         contentSelect: '청동',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -443,7 +443,7 @@ const userInfo = [
                     productId: 9,
                     options: {
                         contentSelect: 'L',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -483,7 +483,7 @@ const userInfo = [
                     productId: 3,
                     options: {
                         contentSelect: '좋은 생각(퍼플)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -495,7 +495,7 @@ const userInfo = [
                     productId: 6,
                     options: {
                         contentSelect: '백단 향',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -535,7 +535,7 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -547,7 +547,7 @@ const userInfo = [
                     productId: 7,
                     options: {
                         contentSelect: 'A6',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -559,7 +559,7 @@ const userInfo = [
                     productId: 8,
                     options: {
                         contentSelect: '은색',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -599,7 +599,7 @@ const userInfo = [
                     productId: 1,
                     options: {
                         contentSelect: '취객선비 3인방 변색 잔세트',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -611,7 +611,7 @@ const userInfo = [
                     productId: 5,
                     options: {
                         contentSelect: '소',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000)'
                     },
                     quantity: {
                         contentSelect: 1,
@@ -623,7 +623,7 @@ const userInfo = [
                     productId: 9,
                     options: {
                         contentSelect: 'S',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000)'
                     },
                     quantity: {
                         contentSelect: 1,
