@@ -5,12 +5,15 @@
         grid-template-columns: 60% 40%;
         grid-auto-rows: 90vh;
     }
-    .productName.hi{
+
+    .productName.hi {
         display: none;
     }
-    .selectedInfo{
+
+    .selectedInfo {
         height: 40%;
     }
+
     .forminner p {
         /* flex-basis: 40%; */
         white-space: pre-line;
@@ -18,43 +21,56 @@
         gap: 5px;
         /* margin-bottom: 50px; */
     }
-    .underbox{
+
+    .underbox {
         width: 1200px;
     }
-    .tabBox{
+
+    .tabBox {
         width: 1200px;
     }
-    .imgInfo,.deliSizeInfo{
+
+    .imgInfo,
+    .deliSizeInfo {
         width: 1200px;
         grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: 80vh;
     }
-    .reveiwInfo{
+
+    .reveiwInfo {
         width: 1200px;
     }
-    .recommendInfo{
+    .reveiwInfo img{
+        height: 30vh;
+    }
+
+    .recommendInfo {
         grid-template-columns: repeat(4, 1fr);
     }
-    .reviewInfoInner{
+
+    .reviewInfoInner {
         width: 33%;
-        grid-template-columns:  65% 35% ;
+        grid-template-columns: 65% 35%;
     }
-  } 
-  
-  /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023)*/ 
-  @media all and (min-width:768px) and (max-width:1200px) {
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023)*/
+@media all and (min-width:768px) and (max-width:1200px) {
     .box {
         width: 95vw;
         grid-template-columns: 50% 50%;
 
         margin: auto;
     }
-    .productName.hi{
+
+    .productName.hi {
         display: none;
     }
-    .selectedInfo{
+
+    .selectedInfo {
         height: 30%;
     }
+
     .forminner p {
         /* flex-basis: 40%; */
         white-space: pre-line;
@@ -62,76 +78,101 @@
         gap: 5px;
         /* margin-bottom: 50px; */
     }
-    .underbox{
+
+    .underbox {
         width: 95vw;
     }
-    .tabBox{
+
+    .tabBox {
         width: 95vw;
 
     }
-    .imgInfo,.deliSizeInfo{
+
+    .imgInfo,
+    .deliSizeInfo {
         width: 95vw;
         /* grid-template-columns: 1fr; */
         grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: min-content;
     }
-    .reveiwInfo{
+
+    .reveiwInfo {
         width: 95vw;
     }
-    .recommendInfo{
+    .reveiwInfo img{
+        height: 30vh;
+    }
+    .recommendInfo {
         grid-template-columns: repeat(4, 1fr);
     }
-    .reviewInfoInner{
+
+    .reviewInfoInner {
         width: 33%;
-        grid-template-columns:  65% 35% ;
+        grid-template-columns: 65% 35%;
     }
-  } 
-  
-  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (max-width:767px) {
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
     .box {
         width: 95vw;
-        grid-template-rows: 70vh 50%;
+        grid-template-rows: 70vh 70vh;
+        gap: 5px;
         margin: auto;
-    
+
     }
-    .productName.hi{
+
+    .productName.hi {
         text-align: center;
         /* display: inline-block; */
         /* margin: auto; */
     }
-    .forminner p{
+
+    .forminner p {
         display: none;
     }
-    .underbox{
+
+    .underbox {
         width: 95vw;
 
     }
-    .tabBox{
+
+    .tabBox {
         width: 95vw;
 
     }
-    .imgInfo,.deliSizeInfo{
+
+    .imgInfo,
+    .deliSizeInfo {
         width: 95vw;
         grid-template-columns: 1fr;
         gap: 20px;
         grid-auto-rows: min-content;
     }
-    .reveiwInfo{
+
+    .reveiwInfo {
         width: 95vw;
     }
-    .recommendInfo{
+    .reveiwInfo img{
+        height: 100%;
+    }
+
+
+    .recommendInfo {
         grid-template-columns: repeat(2, 1fr);
     }
-    .reviewInfoInner{
+
+    .reviewInfoInner {
         width: 33%;
-        grid-template-rows: 40% 60% ; 
+        grid-template-rows: 40% 60%;
     }
-  }
+}
+
 /* ====================================detail */
-.notingBox{
+.notingBox {
     height: 200px;
 }
+
 .box {
     background-color: #d0c0a00d;
     margin: auto;
@@ -150,9 +191,10 @@
     display: grid;
     grid-template-rows: 80% 20%;
     position: relative;
-    
+
 }
-.imgInner{
+
+.imgInner {
     overflow: hidden;
     white-space: nowrap;
     font-size: 0;
@@ -172,13 +214,24 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-content: space-between;
     align-items: center;
-    
+
     gap: 0 10px;
-    /* padding: 0 10px; */
 }
+
+/* padding: 0 10px; */
+/* .labelBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+    width: auto;
+  }
+   */
 
 /*
 .labelBox>img:nth-last-child(1){
@@ -200,6 +253,14 @@
     cursor: pointer;
 
 }
+
+/* .labelBox img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+  } */
 
 
 .formBox {
@@ -263,7 +324,8 @@
     row-gap: 30px;
     font-family: 'SUITE-Regular';
 }
-.selectedInfo{
+
+.selectedInfo {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -286,11 +348,13 @@
     row-gap: 20px;
     /* justify-content: center; */
 }
-.productFormSelect{
+
+.productFormSelect {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
 }
+
 .forminner select {
     width: 40%;
     height: 30px;
@@ -417,7 +481,7 @@
     font-family: 'omyu_pretty';
     letter-spacing: 3px;
     word-break: keep-all;
-    
+
     /* border: 1px solid black; */
 }
 
@@ -463,14 +527,17 @@
     background-color: white;
     z-index: 10;
 }
-.tabBox a{
+
+.tabBox a {
     height: 50px;
     color: black;
 }
-.ProductDetailsInfo hr{
+
+.ProductDetailsInfo hr {
     margin-top: 30px;
     /* border:0.2px solid #aaaaaa; */
 }
+
 .ProductDetailsInfo h2 {
     height: 50px;
     /* margin-top: 50px;
@@ -481,6 +548,7 @@
     display: flex;
     align-items: center;
 }
+
 .tabBox span {
     display: inline-flex;
     height: 100%;
@@ -492,21 +560,25 @@
     justify-content: center;
     align-items: center;
 }
-.deliSizeInfo{
+
+.deliSizeInfo {
 
     display: grid;
     gap: 20px;
     justify-items: center;
 }
+
 .deliSizeInfo p {
     white-space: pre-line;
     font-size: 16px;
     padding: 10px;
 }
-.productSizeInfo{
+
+.productSizeInfo {
     align-self: center;
     white-space: pre-line;
 }
+
 .deliSizeInfo span {
     color: blue;
     font-size: 20px;
@@ -520,11 +592,14 @@
     text-align: center;
 
 }
-.imgInfo img ,.deliSizeInfo img{
-width: 100%;
-height: 100%;
-object-fit: cover;
+
+.imgInfo img,
+.deliSizeInfo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
+
 .imgInfoBox+div {
     white-space: pre-line;
 }
@@ -539,7 +614,7 @@ object-fit: cover;
 .imgInfoBox img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     overflow: hidden;
 }
 
@@ -547,29 +622,32 @@ object-fit: cover;
     margin-bottom: 2%;
     display: flex;
     height: 30vh;
-    
+
     gap: 5px;
     justify-content: flex-start;
     /* Center 대신 flex-start를 사용하여 요소들이 왼쪽 정렬되게 합니다. */
-    overflow :hidden;
+    overflow: hidden;
     position: relative;
     /* overflow-x: scroll 대신 overflow-x: auto를 사용합니다. */
     /* white-space: nowrap;  */
     /* 줄바꿈을 방지하여 모든 자식 요소가 한 줄에 있게 합니다. */
 }
+
 .reveiwInfo button {
     position: absolute;
     top: 30%;
     z-index: 1;
-    border : 0px solid;
+    border: 0px solid;
     background-color: #d0888000;
 }
-.reveiwInfo button img{
+
+.reveiwInfo button img {
     height: 50px;
     transition: 0.3s;
     cursor: pointer;
 }
-.reveiwInfo button img:hover{
+
+.reveiwInfo button img:hover {
     transform: scale(1.2);
     transition: 0.3s;
 }
@@ -589,12 +667,18 @@ object-fit: cover;
     flex: 0 0 auto;
 
     display: grid;
-    
+
     /* box-shadow:3px 3px 3px #d0c0a0; */
     transition: 0.5s;
     /*Flexbox 자식 요소가 줄바꿈 없이 가로 스크롤에 나타나도록 합니다.*/
 }
-.reviewContent{
+
+.reviewImgBox {
+    width: 100%;
+    height: 100%;
+}
+
+.reviewContent {
     width: 100%;
     /* height: 30vh; */
     padding: 5px;
@@ -602,23 +686,26 @@ object-fit: cover;
     grid-template-rows: 2fr 1fr;
     /* justify-content: space-between; */
 }
-.reviewContent>p{
+
+.reviewContent>p {
     /* height: 20vh; */
     flex-basis: 40%;
     display: grid;
     grid-template-rows: 1fr 4fr;
     /* justify-content: space-between; */
 }
-.reviewContent>div{
+
+.reviewContent>div {
     /* height: 10vh; */
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: end;
 }
+
 .recommendInfo {
     display: grid;
-    
+
     gap: 10px;
     margin-bottom: 2%;
 
@@ -648,8 +735,11 @@ object-fit: cover;
     grid-template-rows: 10% 72% 5% 5% 5%;
     color: black;
 }
-
-.reveiwInfo img,
+.reveiwInfo img{
+    /* height: 30vh; */
+    width: 100%;
+    object-fit: cover;
+}
 .recommendInfo img {
 
     width: 100%;
@@ -658,9 +748,10 @@ object-fit: cover;
     object-fit: cover;
 
 }
+
 /* .reveiwInfo img{
 height: 30vh;
 } */
-.recommendInfo p{
+.recommendInfo p {
     padding: 5px;
 }
