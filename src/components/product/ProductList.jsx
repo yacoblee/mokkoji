@@ -50,7 +50,7 @@ const ProductList = () => {
     const [displayMessage, setDisplayMessage] = useState('');
 
     //filterItems 함수. -> fileredItems 를 반환
-    const filterItems = useCallback(() => {
+    const filterItems = () => {
         let filteredItems = GoodsItems.slice();
 
         if (filterItem.selectValue !== 'allGoods') {
@@ -76,7 +76,7 @@ const ProductList = () => {
                 break;
         }
         return filteredItems;
-    }, [filterItem]);
+    };
     //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
     //필터하고 난 아이템의 결과 배열.
     const [selectItem, setSelectItem] = useState([]);
@@ -124,16 +124,10 @@ const ProductList = () => {
         });
 
         setSelectItem(filterItems().filter((items) => items.category === category));
+        // setSelectItem(GoodsItems.filter((items) => items.category === category));
+        
         setDisplayMessage('');
-        // if (category === 'allGoods') {
-        //     setSelectItem(filteredItems);
-        // } else {
-        //     const categoryFilteredItems = filteredItems.filter((items) => items.category === category);
-        //     setSelectItem(categoryFilteredItems);
-        // }
-        // if(!showSearch){
-        // }
-        // updateDisplayMessage();
+
     }, [category]);
 
 
