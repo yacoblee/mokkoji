@@ -129,18 +129,18 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
                         style={{ transform: `translateX(-${currentSlide * 101}%)` }}
                         className="reviewInfoInner">
                             
-                            <div>
+                            <div className="reviewImgBox">
                                 {it.reviewsSrc ? <img src={it.reviewsSrc} alt="" /> : <img src={selectedProduct.productSrc[0]} alt="" />}
                             </div>
                             <div className="reviewContent">
 
                                 <p>
-                                    <p className="reveiwName">
-                                    </p>
+                                    {/* <p className="reveiwName deleteName">
+                                    </p> */}
                                         "{it.content}"
                                 </p>
 
-                                <div>
+                                <div className="reviewDateRemove">
                                     <span>
                                         {it.userName}
                                     </span>

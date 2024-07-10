@@ -80,7 +80,7 @@ const ProductList = () => {
     //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
     //필터하고 난 아이템의 결과 배열.
     const [selectItem, setSelectItem] = useState([]);
-    console.log(selectItem.length);
+    // console.log(selectItem.length);
     //필터하고난 filterItem의 길이
     const [resultCount, setResultCount] = useState(selectItem.length);
     const updateDisplayMessage = (count) => {
