@@ -107,6 +107,23 @@ function MyPageBook({ change, setChange }) {
             ...user,
             mypage: updateMyPage
         }
+        // const userDataadult = userData.mypage.Reservation[0].adult;
+        // const userDatateenager = userData.mypage.Reservation[0].teenager;
+        // const updateUseradult = user.mypage.Reservation[0].adult;
+        // const updateUserteenager = user.mypage.Reservation[0].teenager;
+
+        // console.log('세션 어른' +userDataadult)
+        // console.log('세션 아이 '+userDatateenager)
+        // console.log('state 어른 '+updateUseradult)
+        // console.log('state 아이 '+updateUserteenager)
+
+        // if((userDataadult===updateUseradult)&& (userDatateenager===updateUserteenager)){
+        //     alert('변동 사항이 없습니다.')
+        //     return false;
+        // }
+        // console.log(userData.mypage.Reservation[0]);
+        // console.log(updateUser.mypage.Reservation[0]);
+
 
         alert('예약 내역이 수정되었습니다.')
         sessionStorage.setItem("LoginUserInfo", JSON.stringify(updateUser));

@@ -22,7 +22,7 @@ const userInfo = [
                 { date: '2024-06-05', item: [5, 2, 3] },
             ],
             Reservation: [
-                { reserveItem: 1, name: '영롱한 자개소반 미니어처 만들기', date: '2024-06-30', adult: 1, teenager: 1 },
+                { reserveItem: 1, name: '영롱한 자개소반 미니어처 만들기', date: '2024-07-12', adult: 1, teenager: 1 },
             ],
             review: null,
             isLike: [1, 2, 3],
