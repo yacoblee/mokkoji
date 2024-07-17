@@ -62,8 +62,6 @@ const ProductForm = ({ selectedProduct }) => {
     // 총 금액을 계산하는 함수
     const calculateTotalPrice = () => {
         if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
-        // let packageADDprice = 0; // 포장 추가 금액
-        // let defaultADDprice = 0; // 기본 추가 금액
         let packagingPrice = 0; // 포장 추가 금액
         let contentPrice = 0; // 기본 추가 금액
 
@@ -73,25 +71,16 @@ const ProductForm = ({ selectedProduct }) => {
         const contentSelectEndIndex = options.contentSelect.indexOf(')');
 
         // 포장 옵션에 따라 추가 금액 설정
-        // if (options.packagingSelect.includes('(+2000원)')) {
-        //     packageADDprice = 2000;
-        // } else if (options.packagingSelect.includes('(+4000원)')) {
-        //     packageADDprice = 4000;
-        // }
+
         if(packagingStartIndex !== -1 && packagingEndIndex !== -1){
             packagingPrice = +(options.packagingSelect.slice(packagingStartIndex+2,packagingEndIndex))
         }
         // 내용 옵션에 따라 추가 금액 설정
-        // if (options.contentSelect.includes('(+220000)')) {
-        //     defaultADDprice = 220000;
-        // } else if (options.contentSelect.includes('(+722000)')) {
-        //     defaultADDprice = 722000;
-        // }
+
         if(contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1){
             contentPrice = +(options.contentSelect.slice(contentSelectStartIndex+2,contentSelectEndIndex))
         }
         // 총 금액 계산
-        // return (selectedProduct.price + defaultADDprice) * btnValue.contentSelect + packageADDprice * btnValue.packagingSelect;
         return (selectedProduct.price + contentPrice) * btnValue.contentSelect + packagingPrice * btnValue.packagingSelect;
     };
 
