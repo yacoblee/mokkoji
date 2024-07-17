@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "mokkoji-1a3ff"
-  }
+    "default": "mokkoji-408f5",
+    " ": "mokkoji-408f5"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

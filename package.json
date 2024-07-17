@@ -52,5 +52,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "+ npm i 'create-react-app'\r + npm i 'react-router-dom'\r + npm i moment react-moment\r + npm i redux react-redux\r + npm i react-calendar\r + npm install react-daum-postcode\r + npm install react-modal",
+  "main": "index.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
