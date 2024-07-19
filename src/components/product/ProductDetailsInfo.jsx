@@ -1,12 +1,16 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GoodsItems from "./ProductObject";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const ProductDetailsInfo = ({ selectedProduct }) => {
+    const { category, id } = useParams();
+    
         //슬라이드 구현을 위한 state
         const [currentSlide ,setCurrentSlide] =useState(0);
-
+    useEffect(()=>{
+        setCurrentSlide(0);
+    },[id]);
 
         let visibleSlide = 3;//현재 보여지는 슬라이드 갯수
         
@@ -28,11 +32,15 @@ const ProductDetailsInfo = ({ selectedProduct }) => {
     
         //버튼 호버시 true 설정
         const onMouseEnterHover = ()=>{
-            setHover(true);
+            setTimeout(() => {
+                setHover(true);
+            }, 0);
         }
     
         const onMouseOverHover = ()=>{
-            setHover(false);
+            setTimeout(() => {
+                setHover(false);
+            }, 0);
         }
         //추천 상품 보여주기.
         const recommendItemid = selectedProduct.id;

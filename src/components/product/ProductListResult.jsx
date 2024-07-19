@@ -73,8 +73,8 @@ const ProductListResult = ({selectItem , page , setPage})=>{
         <div className="productItemList">
             {/* 선택된 카테고리의 상품들을 보여줌 */}
             {paginatedItems.map((product,i) => (
-                <Link to={`/goods/${product.category}/${product.id}`} key={product.id+i}>
-                    <div className="productItemResult"key={product.id+i}>
+                <Link to={`/goods/${product.category}/${product.id}`} key={product.id}>
+                    <div className="productItemResult"key={product.id}>
                         <img src={product.slideSrc[0]} alt={product.name} />
                         <div>
                             <p style={{fontSize : '16px' , fontWeight : '600' , wordBreak :'keep-all'}}>{product.name}</p>
