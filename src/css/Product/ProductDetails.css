@@ -428,14 +428,14 @@
 .priceifo input {
     width: 30px;
     text-align: center;
-    height: 90%;
+    height: 20px;
     border-radius: 5px;
     border: 1px solid #d0c0a0bf;
 }
 
 .priceifo button {
     width: 20px;
-    height: 90%;
+    height: 20px;
     background-color: #d0c0a0bf;
     padding: 0 5px;
     border: 0px;
@@ -509,7 +509,7 @@
 }
 
 .priceSelect {
-    display: flex;
+    /* display: flex; */
     /* column-gap: 20px; */
     row-gap: 10px;
     /* margin-bottom: 20px; */

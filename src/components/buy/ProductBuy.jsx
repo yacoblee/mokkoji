@@ -12,7 +12,7 @@ const ProductBuy = () => {
     //url 파라미터 , 링크로 전송된 데이터 추출.
     const location = useLocation();
     const { category, id } = useParams();
-    const { options, btnValue, totalPrice } = location.state || {};
+    const { options, count, totalPrice } = location.state || {};
 
     //선택된 상품 해당 값 가져오기.
     const selectedProduct = GoodsItems.find(item => item.category === category && item.id === parseInt(id));
@@ -21,10 +21,8 @@ const ProductBuy = () => {
     const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
     //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리 -> 선택 옵션 갯수에 대한 관리
-    const [buyPrice, setBuyPrice] = useState({
-        productPrice: btnValue ? btnValue.contentSelect : 1,
-        optionPrice: btnValue ? btnValue.packagingSelect : 1,
-    });
+    //9.11코드변경
+    const [amount, setAmount] = useState(count ? count : 1);
     //==================================================================금액 관련 state 
     //최종 금액을 바꿀 state (배송비 제외)
     const [filterPrice, setFilterPrice] = useState(+totalPrice);
@@ -40,9 +38,9 @@ const ProductBuy = () => {
         let packagingPrice = 0;
         let contentPrice = 0;
         const packagingStartIndex = options.packagingSelect.indexOf('(+');
-        const packagingEndIndex = options.packagingSelect.indexOf(')');
+        const packagingEndIndex = options.packagingSelect.indexOf('원)');
         const contentSelectStartIndex = options.contentSelect.indexOf('(+');
-        const contentSelectEndIndex = options.contentSelect.indexOf(')');
+        const contentSelectEndIndex = options.contentSelect.indexOf('원)');
         // 포장 옵션에 따라 추가 금액 설정
         if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
             packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
@@ -51,11 +49,7 @@ const ProductBuy = () => {
         if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
             contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
         }
-        // const contentPrice = options.contentSelect.includes('(+220000)') ? 220000 :
-        //     options.contentSelect.includes('(+722000)') ? 722000 : 0;
-        // const packagingPrice = options.packagingSelect.includes('(+2000원)') ? 2000 :
-        //     options.packagingSelect.includes('(+4000원)') ? 4000 : 0;
-        const totalPrice = (price + contentPrice) * buyPrice.productPrice + packagingPrice * buyPrice.optionPrice;
+        const totalPrice = (price + contentPrice) * amount + packagingPrice * amount;
         return totalPrice;
     }
 
@@ -98,7 +92,7 @@ const ProductBuy = () => {
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
 
-    }, [buyPrice, checkedCartItems, filterPrice]);
+    }, [amount, checkedCartItems, filterPrice]);
     //옵션이 바뀌고 나면 업데이트, 카트아이템이 바뀔때 마다 업데이트,
     // 옵션이 바뀌어 filerprice가 바뀌면 업데이트
     //총금액을 그냥 사용하지않고 LastPrice로 이용한 이유는
@@ -108,23 +102,14 @@ const ProductBuy = () => {
     //클릭했을때 상품 수량 변경 함수.
     const onClickbtn = (type, name) => {
         if (type === '-') {
-            if (buyPrice[name] > 1) {
-                setBuyPrice(it => ({
-                    ...it,
-                    [name]: buyPrice[name] - 1
-                }));
+            if (amount > 1) {
+                setAmount(amount - 1);
             } else {
-                setBuyPrice(it => ({
-                    ...it,
-                    [name]: buyPrice[name]
-                }));
+                setAmount(amount);
             }
 
         } else {
-            setBuyPrice(it => ({
-                ...it,
-                [name]: buyPrice[name] + 1
-            }));
+            setAmount(amount + 1);
         }
     };
     // 숫자를 포맷팅하는 함수
@@ -176,7 +161,7 @@ const ProductBuy = () => {
     };
 
     //오류 발생을 대비한 방어 코드.
-    if (!selectedProduct||!userData) {
+    if (!selectedProduct || !userData) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
                 아이템을 찾을 수 없어요
@@ -226,7 +211,7 @@ const ProductBuy = () => {
                                 <p>
                                     {options.contentSelect}
                                 </p>
-                                <span className='highlight2'>{buyPrice.productPrice} 개 </span>
+                                <span className='highlight2'>{amount} 개 </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -237,7 +222,7 @@ const ProductBuy = () => {
                                         onClick={() => { onClickbtn('-', 'productPrice') }}>
                                         <img src="/images/buy/minus.png" alt="" />
                                     </button >
-                                    <input type="text" value={buyPrice.productPrice} readOnly />
+                                    <input type="text" value={amount} readOnly />
                                     <button type='button'
                                         onClick={() => { onClickbtn('+', 'productPrice') }}>
                                         <img src="/images/buy/plus.png" alt="" />
@@ -247,17 +232,17 @@ const ProductBuy = () => {
                             </p>
                         </p>
                         <p className='displayFlexColumn justifyBetween'>
-                            <div className='height50FlexColumn justifyBetween'> 
-                            <p>
-                                {options.packagingSelect}
-                            </p>
-                            <span className='highlight2'>{buyPrice.optionPrice} 개 </span>
+                            <div className='height50FlexColumn justifyBetween'>
+                                <p>
+                                    {options.packagingSelect}
+                                </p>
+                                <span className='highlight2'>{amount} 개 </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
                                     수랑 변경
                                 </span> */}
-                                <div>
+                                {/* <div>
                                     <button type='button'
                                         className="leftButton"
                                         onClick={() => { onClickbtn('-', 'optionPrice') }}>
@@ -269,7 +254,7 @@ const ProductBuy = () => {
                                         onClick={() => { onClickbtn('+', 'optionPrice') }}>
                                         <img src="/images/buy/plus.png" alt="" />
                                     </button>
-                                </div>
+                                </div> */}
 
                             </p>
                         </p>
@@ -295,7 +280,7 @@ const ProductBuy = () => {
                 <h2>주문서 작성</h2>
                 <BuyInputBox
                     userData={userData}
-                    buyPrice={buyPrice}
+                    amount={amount}
                     checkedCartItems={checkedCartItems}
                     options={options}
                     selectedProduct={buyCheckBox && selectedProduct}

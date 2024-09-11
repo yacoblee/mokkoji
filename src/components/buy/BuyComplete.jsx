@@ -1,7 +1,7 @@
 import GoodsItems from "../product/ProductObject"
 
 
-const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, checkedCartItems, selectedProduct }) => {
+const BuyComplete = ({ productPrice, totalPrice, username, options, amount, checkedCartItems, selectedProduct }) => {
     //
     // 숫자를 포맷팅하는 함수
     const formatNumber = (number) => {
@@ -20,12 +20,10 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
                     <li className="BuyCompleteItem">{selectedProduct.name}</li>
                     <li>상품 옵션</li>
                     <li>{options.contentSelect}</li>
-                    <li>상품 갯수 </li>
-                    <li>{buyPrice.productPrice}</li>
                     <li>포장 옵션</li>
                     <li>{options.packagingSelect}</li>
-                    <li>포장 갯수</li>
-                    <li>{buyPrice.optionPrice}</li>
+                    <li>상품 갯수 </li>
+                    <li>{amount}</li>
                     <li>가격</li>
                     <li>{formatNumber(productPrice)}</li>
                 </ul>
@@ -44,12 +42,10 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, buyPrice, ch
                     </li>
                     <li>상품 옵션</li>
                     <li>{item.options.contentSelect}</li>
-                    <li>상품 갯수</li>
-                    <li>{item.quantity.contentSelect}</li>
                     <li>포장 옵션</li>
                     <li>{item.options.packagingSelect}</li>
-                    <li>포장 갯수</li>
-                    <li>{item.quantity.packagingSelect}</li>
+                    <li>상품 갯수</li>
+                    <li>{item.count}</li>
                     <li>상품 가격</li>
                     <li>{formatNumber(item.totalPrice)}</li>
 

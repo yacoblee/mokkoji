@@ -42,8 +42,8 @@ function MyPageCart({ change, setChange }) {
             } else if (bb.options.contentSelect.includes(722000)) {
                 defaultADDprice = 722000;
             }
-
-            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
+            //9.11 혜미수정 (quantity.contentSelect -> count 로 통일)
+            return (findItem.price + defaultADDprice) * bb.count + packageADDprice * bb.count;
         }
 
         bb.totalPrice = calculateTotalPrice(findItem);
@@ -55,8 +55,11 @@ function MyPageCart({ change, setChange }) {
         cartItem.name = findItem.name
         cartItem.content = bb.options.contentSelect
         cartItem.package = bb.options.packagingSelect
-        cartItem.contentCount = bb.quantity.contentSelect
-        cartItem.packageCount = bb.quantity.packagingSelect
+        //9.11 혜미 수정 
+        // cartItem.contentCount = bb.quantity.contentSelect
+        // cartItem.packageCount = bb.quantity.packagingSelect
+        cartItem.count = bb.count
+
         cartItem.price = bb.totalPrice
 
 
@@ -164,12 +167,16 @@ function MyPageCart({ change, setChange }) {
             if (item.productId === cartId) {
 
                 if (variation === 'decrease') {
-                    if (item.quantity.contentSelect === 1)
+                    //9.11혜미 수정
+                    //if (item.quantity.contentSelect === 1)
+                    if (item.count === 1)
                         alert('상품 개수 경고');
                     else
-                        item.quantity.contentSelect = item.quantity.contentSelect - 1;
+                        //item.quantity.contentSelect = item.quantity.contentSelect - 1;
+                        item.count = item.count - 1;
                 } else if (variation === 'increase')
-                    item.quantity.contentSelect = item.quantity.contentSelect + 1
+                    //item.quantity.contentSelect = item.quantity.contentSelect + 1
+                    item.count = item.count + 1
             }
             return item;
         }
@@ -191,7 +198,7 @@ function MyPageCart({ change, setChange }) {
         setUser(updatedUser);
     }   // changeProductCount
 
-    // 포장 개수 변경 로직
+    // 포장 개수 변경 로직 -> 9.11이후 필요 없는 로직.
     const changePackageCount = (cartId, variation) => {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
@@ -295,14 +302,15 @@ function MyPageCart({ change, setChange }) {
                                 <div className='MyCartCount'>
                                     <div className='MyProductCount'>
                                         <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
-                                        <input type="text" value={goods.contentCount} />
+                                        <input type="text" value={goods.count} />
                                         <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
                                     </div>
-                                    <div className='MyPackageCount'>
+                                    {/* 9.11이후 버튼 삭제 */}
+                                    {/* <div className='MyPackageCount'>
                                         <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
                                         <input type="text" value={goods.packageCount} />
                                         <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className='MyCartButton'>
                                     <button

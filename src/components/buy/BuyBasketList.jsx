@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 //그 id값과 일치하는 product를 찾은 후 , 사진과  이름과 가격을 찾음.
 
 const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
-
+    
     //금액을 수정하는 함수
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
@@ -76,16 +76,16 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                         </p>
                         <p>{formatNumber(product.price)}</p>
                         <div className='displayFlexColumn justifyEvenly'>
-                        <p style={{display:'flex' ,padding:'0 5px'}}>
-                            {cartItem.options.contentSelect} 
-                        </p>
-                            <span className='highlight2'>{cartItem.quantity.contentSelect} 개</span>
+                            <p style={{ display: 'flex', padding: '0 5px' }}>
+                                {cartItem.options.contentSelect}
+                            </p>
+                            <span className='highlight2'>{cartItem.count} 개</span>
                         </div>
                         <div className='displayFlexColumn justifyEvenly'>
-                        <p>
-                            {cartItem.options.packagingSelect} 
-                        </p>
-                            <span className='highlight2'>{cartItem.quantity.packagingSelect} 개</span>
+                            <p>
+                                {cartItem.options.packagingSelect}
+                            </p>
+                            <span className='highlight2'>{cartItem.count} 개</span>
                         </div>
                         <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>

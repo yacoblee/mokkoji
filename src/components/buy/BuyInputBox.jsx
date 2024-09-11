@@ -6,7 +6,7 @@ import BuyComplete from "./BuyComplete";
 
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
-const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selectedProduct, options, productPrice }) => {
+const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedProduct, options, productPrice }) => {
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState(true);
@@ -478,7 +478,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete username={userData.name}
-                        buyPrice={buyPrice} options={options} checkedCartItems={checkedCartItems}
+                        amount={amount} options={options} checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
                         totalPrice={totalPrice} />

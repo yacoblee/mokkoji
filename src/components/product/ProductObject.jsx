@@ -1,239 +1,239 @@
 const GoodsItems = [
-        // 새로운 상품 1
-        {
-            name: '한국 전통 무늬 러그',
-            id: 19,
-            category: 'interiorGoods',
-            description: '인테리어 소품',
-            slideSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-            ],
-            productSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-                '/images/product/pictureFlower4.jpg',
-            ],
-            count: 40,
-            price: 75000,
-            size: '상품 크기 : 2000x3000mm',
-            guideLine: '* 세탁기 사용 불가, 손세탁 권장',
-            mainGuide: `한국 전통 무늬가 들어간 고급 러그입니다.`,
-            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
-            option: [
-                '소', '중', '대'
-            ],
-            reviews: [
-                {
-                    reviewsSrc: '/images/product/pictureFlower1.jpg',
-                    userName: 'User1',
-                    content: "디자인이 너무 예뻐서 방 분위기가 확 달라졌어요.",
-                    day: '20230325'
-                },
-                {
-                    reviewsSrc: null,
-                    userName: 'User2',
-                    content: "고급스럽고 튼튼한 러그입니다. 아주 만족해요.",
-                    day: '20230326'
-                },
-                {
-                    reviewsSrc: '/images/product/pictureFlower3.jpg',
-                    userName: 'User3',
-                    content: "한국 전통 무늬가 너무 아름다워요. 거실에 잘 어울립니다.",
-                    day: '20230327'
-                }
-            ],
-        },
-        // 새로운 상품 2
-        {
-            name: '전통 문양 에코백',
-            id: 18,
-            category: 'fashionGoods',
-            description: '패션/생활',
-            slideSrc: [
-                '/images/product/characterNote4.jpg',
-                '/images/product/characterNote5.jpg',
-                '/images/product/characterNote3.jpg',
-            ],
-            productSrc: [
-                '/images/product/characterNote4.jpg',
-                '/images/product/characterNote5.jpg',
-                '/images/product/characterNote3.jpg',
-                '/images/product/characterNote2.jpg',
-            ],
-            count: 50,
-            price: 30000,
-            size: '상품 크기 : 380x420mm',
-            guideLine: '* 세탁기 사용 가능',
-            mainGuide: `한국 전통 문양이 새겨진 고급 에코백입니다.`,
-            sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
-            option: [
-                '흰색', '검정색'
-            ],
-            reviews: [
-                {
-                    reviewsSrc: '/images/product/characterNote3.jpg',
-                    userName: 'User1',
-                    content: "에코백 디자인이 정말 예뻐요. 가볍고 실용적입니다.",
-                    day: '20230401'
-                },
-                {
-                    reviewsSrc: null,
-                    userName: 'User2',
-                    content: "고급스럽고 튼튼한 에코백입니다. 선물용으로도 좋아요.",
-                    day: '20230402'
-                },
-                {
-                    reviewsSrc: '/images/product/characterNote5.jpg',
-                    userName: 'User3',
-                    content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
-                    day: '20230403'
-                }
-            ],
-        },
-        // 새로운 상품 3
-        {
-            name: '한복 패턴 담요',
-            id: 17,
-            category: 'interiorGoods',
-            description: '인테리어 소품',
-            slideSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-            ],
-            productSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-                '/images/product/pictureFlower4.jpg',
-            ],
-            count: 30,
-            price: 50000,
-            size: '상품 크기 : 1500x2000mm',
-            guideLine: '* 손세탁 권장',
-            mainGuide: `전통 한복 패턴이 들어간 고급 담요입니다.`,
-            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
-            option: [
-                '소', '중', '대'
-            ],
-            reviews: [
-                {
-                    reviewsSrc: '/images/product/pictureFlower1.jpg',
-                    userName: 'User1',
-                    content: "담요 디자인이 정말 예뻐요. 따뜻하고 부드럽습니다.",
-                    day: '20230410'
-                },
-                {
-                    reviewsSrc: null,
-                    userName: 'User2',
-                    content: "고급스럽고 튼튼한 담요입니다. 만족해요.",
-                    day: '20230411'
-                },
-                {
-                    reviewsSrc: '/images/product/pictureFlower3.jpg',
-                    userName: 'User3',
-                    content: "전통 패턴이 너무 아름다워요. 거실에 잘 어울립니다.",
-                    day: '20230412'
-                }
-            ],
-        },
-        // 새로운 상품 4
-        {
-            name: '한국 전통 무늬 쿠션 커버',
-            id: 16,
-            category: 'interiorGoods',
-            description: '인테리어 소품',
-            slideSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-            ],
-            productSrc: [
-                '/images/product/pictureFlower1.jpg',
-                '/images/product/pictureFlower2.jpg',
-                '/images/product/pictureFlower3.jpg',
-                '/images/product/pictureFlower4.jpg',
-            ],
-            count: 40,
-            price: 20000,
-            size: '상품 크기 : 450x450mm',
-            guideLine: '* 손세탁 권장',
-            mainGuide: `한국 전통 무늬가 새겨진 고급 쿠션 커버입니다.`,
-            sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
-            option: [
-                '청색', '적색'
-            ],
-            reviews: [
-                {
-                    reviewsSrc: '/images/product/pictureFlower1.jpg',
-                    userName: 'User1',
-                    content: "디자인이 너무 예뻐서 방 분위기가 달라졌어요.",
-                    day: '20230420'
-                },
-                {
-                    reviewsSrc: null,
-                    userName: 'User2',
-                    content: "고급스럽고 튼튼한 쿠션 커버입니다. 만족해요.",
-                    day: '20230421'
-                },
-                {
-                    reviewsSrc: '/images/product/pictureFlower3.jpg',
-                    userName: 'User3',
-                    content: "전통 무늬가 너무 아름다워요. 매일 사용하고 있습니다.",
-                    day: '20230422'
-                }
-            ],
-        },
-        // 새로운 상품 5
-        {
-            name: '한국 전통 문양 우산',
-            id: 15,
-            category: 'fashionGoods',
-            description: '패션/생활',
-            slideSrc: [
-                '/images/product/sillaKeyring1.jpg',
-                '/images/product/sillaKeyring2.jpg',
-                '/images/product/sillaKeyring3.jpg',
-            ],
-            productSrc: [
-                '/images/product/sillaKeyring1.jpg',
-                '/images/product/sillaKeyring2.jpg',
-                '/images/product/sillaKeyring3.jpg',
-                '/images/product/sillaKeyring4.jpg',
-            ],
-            count: 60,
-            price: 35000,
-            size: '상품 크기 : 1000mm',
-            guideLine: '* 손세탁 권장',
-            mainGuide: `한국 전통 문양이 새겨진 고급 우산입니다.`,
-            sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
-            option: [
-                '흰색', '검정색'
-            ],
-            reviews: [
-                {
-                    reviewsSrc: '/images/product/sillaKeyring1.jpg',
-                    userName: 'User1',
-                    content: "디자인이 정말 예뻐서 우산을 펼치고 다니는 게 즐겁습니다.",
-                    day: '20230501'
-                },
-                {
-                    reviewsSrc: null,
-                    userName: 'User2',
-                    content: "고급스럽고 튼튼한 우산입니다. 비 오는 날이 기다려져요.",
-                    day: '20230502'
-                },
-                {
-                    reviewsSrc: '/images/product/sillaKeyring2.jpg',
-                    userName: 'User3',
-                    content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
-                    day: '20230503'
-                }
-            ],
-        },
+    // 새로운 상품 1
+    {
+        name: '한국 전통 무늬 러그',
+        id: 19,
+        category: 'interiorGoods',
+        description: '인테리어 소품',
+        slideSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+        ],
+        productSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+            '/images/product/pictureFlower4.jpg',
+        ],
+        count: 40,
+        price: 75000,
+        size: '상품 크기 : 2000x3000mm',
+        guideLine: '* 세탁기 사용 불가, 손세탁 권장',
+        mainGuide: `한국 전통 무늬가 들어간 고급 러그입니다.`,
+        sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+        option: [
+            '소', '중', '대'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/pictureFlower1.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 방 분위기가 확 달라졌어요.",
+                day: '20230325'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 러그입니다. 아주 만족해요.",
+                day: '20230326'
+            },
+            {
+                reviewsSrc: '/images/product/pictureFlower3.jpg',
+                userName: 'User3',
+                content: "한국 전통 무늬가 너무 아름다워요. 거실에 잘 어울립니다.",
+                day: '20230327'
+            }
+        ],
+    },
+    // 새로운 상품 2
+    {
+        name: '전통 문양 에코백',
+        id: 18,
+        category: 'fashionGoods',
+        description: '패션/생활',
+        slideSrc: [
+            '/images/product/characterNote4.jpg',
+            '/images/product/characterNote5.jpg',
+            '/images/product/characterNote3.jpg',
+        ],
+        productSrc: [
+            '/images/product/characterNote4.jpg',
+            '/images/product/characterNote5.jpg',
+            '/images/product/characterNote3.jpg',
+            '/images/product/characterNote2.jpg',
+        ],
+        count: 50,
+        price: 30000,
+        size: '상품 크기 : 380x420mm',
+        guideLine: '* 세탁기 사용 가능',
+        mainGuide: `한국 전통 문양이 새겨진 고급 에코백입니다.`,
+        sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
+        option: [
+            '흰색', '검정색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/characterNote3.jpg',
+                userName: 'User1',
+                content: "에코백 디자인이 정말 예뻐요. 가볍고 실용적입니다.",
+                day: '20230401'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 에코백입니다. 선물용으로도 좋아요.",
+                day: '20230402'
+            },
+            {
+                reviewsSrc: '/images/product/characterNote5.jpg',
+                userName: 'User3',
+                content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230403'
+            }
+        ],
+    },
+    // 새로운 상품 3
+    {
+        name: '한복 패턴 담요',
+        id: 17,
+        category: 'interiorGoods',
+        description: '인테리어 소품',
+        slideSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+        ],
+        productSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+            '/images/product/pictureFlower4.jpg',
+        ],
+        count: 30,
+        price: 50000,
+        size: '상품 크기 : 1500x2000mm',
+        guideLine: '* 손세탁 권장',
+        mainGuide: `전통 한복 패턴이 들어간 고급 담요입니다.`,
+        sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+        option: [
+            '소', '중', '대'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/pictureFlower1.jpg',
+                userName: 'User1',
+                content: "담요 디자인이 정말 예뻐요. 따뜻하고 부드럽습니다.",
+                day: '20230410'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 담요입니다. 만족해요.",
+                day: '20230411'
+            },
+            {
+                reviewsSrc: '/images/product/pictureFlower3.jpg',
+                userName: 'User3',
+                content: "전통 패턴이 너무 아름다워요. 거실에 잘 어울립니다.",
+                day: '20230412'
+            }
+        ],
+    },
+    // 새로운 상품 4
+    {
+        name: '한국 전통 무늬 쿠션 커버',
+        id: 16,
+        category: 'interiorGoods',
+        description: '인테리어 소품',
+        slideSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+        ],
+        productSrc: [
+            '/images/product/pictureFlower1.jpg',
+            '/images/product/pictureFlower2.jpg',
+            '/images/product/pictureFlower3.jpg',
+            '/images/product/pictureFlower4.jpg',
+        ],
+        count: 40,
+        price: 20000,
+        size: '상품 크기 : 450x450mm',
+        guideLine: '* 손세탁 권장',
+        mainGuide: `한국 전통 무늬가 새겨진 고급 쿠션 커버입니다.`,
+        sideGuide: `인테리어 소품으로 훌륭한 제품입니다.`,
+        option: [
+            '청색', '적색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/pictureFlower1.jpg',
+                userName: 'User1',
+                content: "디자인이 너무 예뻐서 방 분위기가 달라졌어요.",
+                day: '20230420'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 쿠션 커버입니다. 만족해요.",
+                day: '20230421'
+            },
+            {
+                reviewsSrc: '/images/product/pictureFlower3.jpg',
+                userName: 'User3',
+                content: "전통 무늬가 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230422'
+            }
+        ],
+    },
+    // 새로운 상품 5
+    {
+        name: '한국 전통 문양 우산',
+        id: 15,
+        category: 'fashionGoods',
+        description: '패션/생활',
+        slideSrc: [
+            '/images/product/sillaKeyring1.jpg',
+            '/images/product/sillaKeyring2.jpg',
+            '/images/product/sillaKeyring3.jpg',
+        ],
+        productSrc: [
+            '/images/product/sillaKeyring1.jpg',
+            '/images/product/sillaKeyring2.jpg',
+            '/images/product/sillaKeyring3.jpg',
+            '/images/product/sillaKeyring4.jpg',
+        ],
+        count: 60,
+        price: 35000,
+        size: '상품 크기 : 1000mm',
+        guideLine: '* 손세탁 권장',
+        mainGuide: `한국 전통 문양이 새겨진 고급 우산입니다.`,
+        sideGuide: `패션 아이템으로도 훌륭한 제품입니다.`,
+        option: [
+            '흰색', '검정색'
+        ],
+        reviews: [
+            {
+                reviewsSrc: '/images/product/sillaKeyring1.jpg',
+                userName: 'User1',
+                content: "디자인이 정말 예뻐서 우산을 펼치고 다니는 게 즐겁습니다.",
+                day: '20230501'
+            },
+            {
+                reviewsSrc: null,
+                userName: 'User2',
+                content: "고급스럽고 튼튼한 우산입니다. 비 오는 날이 기다려져요.",
+                day: '20230502'
+            },
+            {
+                reviewsSrc: '/images/product/sillaKeyring2.jpg',
+                userName: 'User3',
+                content: "한국 전통 문양이 너무 아름다워요. 매일 사용하고 있습니다.",
+                day: '20230503'
+            }
+        ],
+    },
     {
         name: '한글 디자인 머그컵',
         id: 14,
@@ -892,7 +892,7 @@ const GoodsItems = [
         표면에 자연스러운 붓터치감이 특징이 작품이며
         공간의 무게감을 줌으로써 오브제나 화기로 사용이 가능합니다.`,
         option:
-            ['소', '중(+220000) 퀵 발송,별도 부가', '대(+722000) 퀵발송,별도 부가'],
+            ['소', '중(+220000원) 퀵 발송,별도 부가', '대(+722000원) 퀵발송,별도 부가'],
         reviews: [
             {
                 reviewsSrc: '/images/product/moonJar1.jpg',
