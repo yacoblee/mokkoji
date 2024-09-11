@@ -76,16 +76,16 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                         </p>
                         <p>{formatNumber(product.price)}</p>
                         <div className='displayFlexColumn justifyEvenly'>
-                        <p style={{display:'flex' ,padding:'0 5px'}}>
-                            {cartItem.options.contentSelect} 
-                        </p>
-                            <span className='highlight2'>{cartItem.quantity.contentSelect} 개</span>
+                            <p style={{ display: 'flex', padding: '0 5px' }}>
+                                {cartItem.options.contentSelect}
+                            </p>
+                            <span className='highlight2'>{cartItem.count} 개</span>
                         </div>
                         <div className='displayFlexColumn justifyEvenly'>
-                        <p>
-                            {cartItem.options.packagingSelect} 
-                        </p>
-                            <span className='highlight2'>{cartItem.quantity.packagingSelect} 개</span>
+                            <p>
+                                {cartItem.options.packagingSelect}
+                            </p>
+                            <span className='highlight2'>{cartItem.count} 개</span>
                         </div>
                         <p className='priceBox justifySelfEnd'>
                             총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
