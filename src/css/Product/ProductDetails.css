@@ -5,9 +5,11 @@
         grid-template-columns: 60% 40%;
         grid-auto-rows: 90vh;
     }
-    .imgBox{
+
+    .imgBox {
         grid-template-rows: 80% 20%;
     }
+
     .productName.hi {
         display: none;
     }
@@ -42,16 +44,19 @@
     .reveiwInfo {
         width: 1200px;
     }
-    .reveiwInfo img{
+
+    .reveiwInfo img {
         height: 30vh;
     }
-    .reviewContent>div{
+
+    .reviewContent>div {
         /* height: 10vh; */
         display: flex;
         flex-direction: column;
         justify-content: end;
         align-items: end;
     }
+
     .recommendInfo {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -70,9 +75,11 @@
 
         margin: auto;
     }
-    .imgBox{
+
+    .imgBox {
         grid-template-rows: 80% 20%;
     }
+
     .productName.hi {
         display: none;
     }
@@ -97,9 +104,11 @@
         width: 95vw;
 
     }
-    .reviewDateRemove{
+
+    .reviewDateRemove {
         display: none;
     }
+
     .imgInfo,
     .deliSizeInfo {
         width: 95vw;
@@ -111,9 +120,11 @@
     .reveiwInfo {
         width: 95vw;
     }
-    .reveiwInfo img{
+
+    .reveiwInfo img {
         height: 30vh;
     }
+
     .recommendInfo {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -133,7 +144,8 @@
         margin: auto;
 
     }
-    .imgBox{
+
+    .imgBox {
         grid-template-rows: 70% 30%;
     }
 
@@ -142,9 +154,11 @@
         /* display: inline-block; */
         /* margin: auto; */
     }
-    .reviewDateRemove{
+
+    .reviewDateRemove {
         display: none;
     }
+
     .forminner p {
         display: none;
     }
@@ -170,7 +184,8 @@
     .reveiwInfo {
         width: 95vw;
     }
-    .reveiwInfo img{
+
+    .reveiwInfo img {
         height: 100%;
     }
 
@@ -428,14 +443,14 @@
 .priceifo input {
     width: 30px;
     text-align: center;
-    height: 90%;
+    height: 20px;
     border-radius: 5px;
     border: 1px solid #d0c0a0bf;
 }
 
 .priceifo button {
     width: 20px;
-    height: 90%;
+    height: 20px;
     background-color: #d0c0a0bf;
     padding: 0 5px;
     border: 0px;
@@ -509,7 +524,7 @@
 }
 
 .priceSelect {
-    display: flex;
+    /* display: flex; */
     /* column-gap: 20px; */
     row-gap: 10px;
     /* margin-bottom: 20px; */
@@ -705,11 +720,11 @@
 }
 
 /* .reviewContent>p { */
-    /* height: 20vh; */
-    /* flex-basis: 40%;
+/* height: 20vh; */
+/* flex-basis: 40%;
     display: grid;
     grid-template-rows: 1fr 4fr; */
-    /* justify-content: space-between; */
+/* justify-content: space-between; */
 /* } */
 
 /* height: 10vh; */
@@ -752,11 +767,13 @@
     grid-template-rows: 10% 72% 5% 5% 5%;
     color: black;
 }
-.reveiwInfo img{
+
+.reveiwInfo img {
     /* height: 30vh; */
     width: 100%;
     object-fit: cover;
 }
+
 .recommendInfo img {
 
     width: 100%;
