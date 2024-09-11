@@ -6,7 +6,7 @@ import BuyComplete from "./BuyComplete";
 
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
-const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selectedProduct, options, productPrice }) => {
+const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedProduct, options, productPrice }) => {
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState(true);
@@ -175,9 +175,9 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         // console.log(e.target.value , userInfoError.deliveryMessage);
     }
     useEffect(() => {
-        if(selectBox.deliveryMessage === '직접입력' || selectBox.deliveryMessage.trim() ===''){
+        if (selectBox.deliveryMessage === '직접입력' || selectBox.deliveryMessage.trim() === '') {
             setUserInfoError(error => ({ ...error, deliveryMessage: true }))
-        }else{
+        } else {
             setUserInfoError(error => ({ ...error, deliveryMessage: false }))
         }
         // console.log(selectBox.deliveryMessage, userInfoError.deliveryMessage);
@@ -248,8 +248,8 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         // console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
         // console.log(copyUserData.mypage.history);
         //세션 스토리지에 복사된 userData 로 변경..
-        
-        
+
+
         //장바구니와 선택상품이 일치할경우 장바구니의 목록 삭제
         const userBasket = userData.mypage.basket;
         let cartItemsfilter = []
@@ -269,7 +269,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
         }
-        
+
     }
     // console.log(userData.mypage.basket);
     // console.log(checkedCartItems);
@@ -478,7 +478,7 @@ const BuyInputBox = ({ userData, totalPrice, buyPrice, checkedCartItems, selecte
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete username={userData.name}
-                        buyPrice={buyPrice} options={options} checkedCartItems={checkedCartItems}
+                        amount={amount} options={options} checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
                         totalPrice={totalPrice} />
