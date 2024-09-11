@@ -31,37 +31,28 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0원)',
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 20000
                 },
                 {
                     productId: 6,
                     options: {
                         contentSelect: '연꽃 향',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000원)',
                     },
-                    quantity: {
-                        contentSelect: 2,
-                        packagingSelect: 1
-                    },
-                    totalPrice: 72000
+                    count: 1,
+                    totalPrice: 70000
                 },
                 {
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000원)',
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 2
-                    },
-                    totalPrice: 26000
+                    count: 1,
+                    totalPrice: 18000
                 }
             ]
         }
@@ -95,36 +86,27 @@ const userInfo = [
                     productId: 2,
                     options: {
                         contentSelect: '박물관 키링(신라의 미소)',
-                        packagingSelect: '굿즈 기본 포장(+0원)'
+                        packagingSelect: '굿즈 기본 포장(+0원)',
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 20000
                 },
                 {
                     productId: 6,
                     options: {
                         contentSelect: '연꽃 향',
-                        packagingSelect: '굿즈 부직포 가방(+2000원)'
+                        packagingSelect: '굿즈 부직포 가방(+2000원)',
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 37000
                 },
                 {
                     productId: 7,
                     options: {
                         contentSelect: 'A5',
-                        packagingSelect: '굿즈 천 가방(+4000원)'
+                        packagingSelect: '굿즈 천 가방(+4000원)',
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 22000
                 }
             ]
@@ -161,10 +143,7 @@ const userInfo = [
                         contentSelect: '하트 뿅뿅(블루)',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 5,
-                        packagingSelect: 5
-                    },
+                    count: 1,
                     totalPrice: 15000
                 },
                 {
@@ -173,10 +152,7 @@ const userInfo = [
                         contentSelect: '금색',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 52000
                 },
                 {
@@ -185,10 +161,7 @@ const userInfo = [
                         contentSelect: 'M',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 49000
                 }
             ]
@@ -229,10 +202,7 @@ const userInfo = [
                         contentSelect: '소',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 224000
                 },
                 {
@@ -241,10 +211,7 @@ const userInfo = [
                         contentSelect: '소',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 67000
                 },
                 {
@@ -253,10 +220,7 @@ const userInfo = [
                         contentSelect: '백단 향',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 39000
                 }
             ]
@@ -293,10 +257,7 @@ const userInfo = [
                         contentSelect: '취객선비 3인방 변색 잔세트',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 26000
                 },
                 {
@@ -305,10 +266,7 @@ const userInfo = [
                         contentSelect: '박물관 키링(신라의 미소)',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 22000
                 },
                 {
@@ -317,10 +275,7 @@ const userInfo = [
                         contentSelect: '하트 뿅뿅(블루)',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 7000
                 }
             ]
@@ -357,10 +312,7 @@ const userInfo = [
                         contentSelect: '소',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 65000
                 },
                 {
@@ -369,10 +321,7 @@ const userInfo = [
                         contentSelect: '연꽃 향',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 37000
                 },
                 {
@@ -381,10 +330,7 @@ const userInfo = [
                         contentSelect: 'A5',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 22000
                 }
             ]
@@ -421,10 +367,7 @@ const userInfo = [
                         contentSelect: 'A5',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 18000
                 },
                 {
@@ -433,10 +376,7 @@ const userInfo = [
                         contentSelect: '청동',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 52000
                 },
                 {
@@ -445,10 +385,7 @@ const userInfo = [
                         contentSelect: 'L',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 49000
                 }
             ]
@@ -485,10 +422,7 @@ const userInfo = [
                         contentSelect: '좋은 생각(퍼플)',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 3000
                 },
                 {
@@ -497,10 +431,7 @@ const userInfo = [
                         contentSelect: '백단 향',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 39000
                 }
             ]
@@ -537,10 +468,7 @@ const userInfo = [
                         contentSelect: '박물관 키링(신라의 미소)',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 20000
                 },
                 {
@@ -549,10 +477,7 @@ const userInfo = [
                         contentSelect: 'A6',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 20000
                 },
                 {
@@ -561,10 +486,7 @@ const userInfo = [
                         contentSelect: '은색',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 54000
                 }
             ]
@@ -601,10 +523,7 @@ const userInfo = [
                         contentSelect: '취객선비 3인방 변색 잔세트',
                         packagingSelect: '굿즈 기본 포장(+0원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 26000
                 },
                 {
@@ -613,10 +532,7 @@ const userInfo = [
                         contentSelect: '소',
                         packagingSelect: '굿즈 부직포 가방(+2000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 67000
                 },
                 {
@@ -625,10 +541,7 @@ const userInfo = [
                         contentSelect: 'S',
                         packagingSelect: '굿즈 천 가방(+4000원)'
                     },
-                    quantity: {
-                        contentSelect: 1,
-                        packagingSelect: 1
-                    },
+                    count: 1,
                     totalPrice: 49000
                 }
             ]
