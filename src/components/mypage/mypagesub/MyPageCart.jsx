@@ -101,6 +101,8 @@ function MyPageCart({ change, setChange }) {
     // 선택 상품 구매 함수
     const onBuy = () => {
         if (!newCheckedGoods || newCheckedGoods.length === 0) {
+            console.log(newCheckedGoods)
+
             alert('선택된 상품이 존재하지 않습니다.');
             return;
         }
@@ -114,7 +116,7 @@ function MyPageCart({ change, setChange }) {
 
 
     // 개별 상품 구매 함수
-    let onBuyEach = (id) => {
+    const onBuyEach = (id) => {
         // 구매 페이지로 넘어가는 상품의 최종 정보를 담는 단일 객체 findData
         let findData = cartGoods.find((item) =>
             item.id == id
@@ -124,8 +126,6 @@ function MyPageCart({ change, setChange }) {
         let product = items.find((item) =>
             item.id == findData.id
         )
-
-        console.log(findData)
 
         navigate(`/goods/${product.category}/${product.id}/buy`, {
             state: {

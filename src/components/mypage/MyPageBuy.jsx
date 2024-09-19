@@ -45,11 +45,11 @@ function MyPageBuy() {
                         <div>{formatNumber(goods.totalPrice)}원</div>
                         <div className='BuyContent'>
                             <div>{goods.options.contentSelect}&nbsp;:&nbsp;</div>
-                            <div>{goods.quantity.contentSelect}&nbsp;개</div>
+                            <div>{goods.count}&nbsp;개</div>
                         </div>
                         <div className='BuyPackage'>
                             <div>{goods.options.packagingSelect}&nbsp;:&nbsp;</div>
-                            <div>{goods.quantity.packagingSelect}&nbsp;개</div>
+                            <div></div>
                         </div>
                     </div >
                 );
