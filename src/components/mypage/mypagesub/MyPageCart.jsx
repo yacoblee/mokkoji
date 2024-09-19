@@ -26,24 +26,27 @@ function MyPageCart({ change, setChange }) {
         );     // findItem
 
         let calculateTotalPrice = () => {
-            let packageADDprice = 0; // 포장 추가 금액
-            let defaultADDprice = 0; // 기본 추가 금액
+            let price = findItem.price;
+            let packagingPrice = 0; // 포장 추가 금액
+            let contentPrice = 0; // 기본 추가 금액
+
+            const packagingStartIndex = bb.options.packagingSelect.indexOf('(+');
+            const packagingEndIndex = bb.options.packagingSelect.indexOf('원)');
+            const contentSelectStartIndex = bb.options.contentSelect.indexOf('(+');
+            const contentSelectEndIndex = bb.options.contentSelect.indexOf('원)');
 
             // 포장 옵션에 따라 추가 금액 설정
-            if (bb.options.packagingSelect.includes(2000)) {
-                packageADDprice = 2000;
-            } else if (bb.options.packagingSelect.includes(4000)) {
-                packageADDprice = 4000;
+            if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
+                packagingPrice = +(bb.options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
             }
 
             // 내용 옵션에 따라 추가 금액 설정
-            if (bb.options.contentSelect.includes(220000)) {
-                defaultADDprice = 220000;
-            } else if (bb.options.contentSelect.includes(722000)) {
-                defaultADDprice = 722000;
+            if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
+                contentPrice = +(bb.options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
             }
 
-            return (findItem.price + defaultADDprice) * bb.quantity.contentSelect + packageADDprice * bb.quantity.packagingSelect;
+            const totalPrice = (price + contentPrice) * bb.count + packagingPrice * bb.count;
+            return totalPrice;
         }
 
         bb.totalPrice = calculateTotalPrice(findItem);
@@ -51,12 +54,11 @@ function MyPageCart({ change, setChange }) {
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
-        cartItem.id = findItem.id
+        cartItem.id = bb.id
         cartItem.name = findItem.name
         cartItem.content = bb.options.contentSelect
         cartItem.package = bb.options.packagingSelect
-        cartItem.contentCount = bb.quantity.contentSelect
-        cartItem.packageCount = bb.quantity.packagingSelect
+        cartItem.count = bb.count
         cartItem.price = bb.totalPrice
 
 
@@ -112,17 +114,30 @@ function MyPageCart({ change, setChange }) {
 
 
     // 개별 상품 구매 함수
-    const onBuyEach = (id) => {
-        const findData = userData.mypage.basket.find((item) =>
+    let onBuyEach = (id) => {
+        let findData = userData.mypage.basket.find((item) =>
+            item.productId === id
+        );
+
+        let product = {};
+
+        product = items.find((item) =>
             item.productId === id
         )
+
         console.log(findData)
 
-        navigate('/buy', {
+        navigate(`/goods/${product.category}/${product.id}/buy`, {
             state: {
-                newCheckedGoods: [findData]
+
+                options: {
+                    contentSelect: findData.options.contentSelect,
+                    packagingSelect: findData.options.packagingSelect
+                },
+                count: cartGoods.count,
+                totalPrice: cartGoods.price
             }
-        })
+        });
     }
 
 
@@ -164,12 +179,12 @@ function MyPageCart({ change, setChange }) {
             if (item.productId === cartId) {
 
                 if (variation === 'decrease') {
-                    if (item.quantity.contentSelect === 1)
+                    if (item.count === 1)
                         alert('상품 개수 경고');
                     else
-                        item.quantity.contentSelect = item.quantity.contentSelect - 1;
+                        item.count = item.count - 1;
                 } else if (variation === 'increase')
-                    item.quantity.contentSelect = item.quantity.contentSelect + 1
+                    item.count = item.count + 1
             }
             return item;
         }
@@ -192,6 +207,7 @@ function MyPageCart({ change, setChange }) {
     }   // changeProductCount
 
     // 포장 개수 변경 로직
+    /*
     const changePackageCount = (cartId, variation) => {
         const newBasket = user.mypage.basket.map((item) => {
             if (item.productId === cartId) {
@@ -223,7 +239,7 @@ function MyPageCart({ change, setChange }) {
 
         setUser(updatedUser);
     }   // changePackageCount
-
+    */
 
 
     // 여러 개의 버튼에 대해 hover 상태를 관리할 수 있도록 상태 배열 사용
@@ -295,13 +311,8 @@ function MyPageCart({ change, setChange }) {
                                 <div className='MyCartCount'>
                                     <div className='MyProductCount'>
                                         <img src="/images/buy/minus.png" onClick={() => changeProductCount(goods.id, 'decrease')} />
-                                        <input type="text" value={goods.contentCount} />
+                                        <input type="text" value={goods.count} />
                                         <img src="/images/buy/plus.png" onClick={() => changeProductCount(goods.id, 'increase')} />
-                                    </div>
-                                    <div className='MyPackageCount'>
-                                        <img src="/images/buy/minus.png" onClick={() => changePackageCount(goods.id, 'decrease')} />
-                                        <input type="text" value={goods.packageCount} />
-                                        <img src="/images/buy/plus.png" onClick={() => changePackageCount(goods.id, 'increase')} />
                                     </div>
                                 </div>
                                 <div className='MyCartButton'>

@@ -68,8 +68,7 @@
 }
 
 .MyCartCount,
-.MyProductCount,
-.MyPackageCount {
+.MyProductCount {
     display: flex;
     align-items: center;
 }
@@ -78,8 +77,7 @@
     flex-direction: column;
 }
 
-.MyProductCount,
-.MyPackageCount {
+.MyProductCount {
     border: 1px solid;
     margin: 5px;
 }
