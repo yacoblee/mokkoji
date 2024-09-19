@@ -54,7 +54,7 @@ function MyPageCart({ change, setChange }) {
         let cartItem = {}
 
         cartItem.photo = findItem.productSrc[0]
-        cartItem.id = bb.id
+        cartItem.id = bb.productId
         cartItem.name = findItem.name
         cartItem.content = bb.options.contentSelect
         cartItem.package = bb.options.packagingSelect
@@ -115,14 +115,14 @@ function MyPageCart({ change, setChange }) {
 
     // 개별 상품 구매 함수
     let onBuyEach = (id) => {
-        let findData = userData.mypage.basket.find((item) =>
-            item.productId === id
+        // 구매 페이지로 넘어가는 상품의 최종 정보를 담는 단일 객체 findData
+        let findData = cartGoods.find((item) =>
+            item.id == id
         );
 
-        let product = {};
-
-        product = items.find((item) =>
-            item.productId === id
+        // url로 넘어가는 category, id 찾기 위해서 만든 단일 객체 product
+        let product = items.find((item) =>
+            item.id == findData.id
         )
 
         console.log(findData)
@@ -131,11 +131,11 @@ function MyPageCart({ change, setChange }) {
             state: {
 
                 options: {
-                    contentSelect: findData.options.contentSelect,
-                    packagingSelect: findData.options.packagingSelect
+                    contentSelect: findData.content,
+                    packagingSelect: findData.package
                 },
-                count: cartGoods.count,
-                totalPrice: cartGoods.price
+                count: findData.count,
+                totalPrice: findData.price
             }
         });
     }
