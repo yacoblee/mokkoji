@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+/* Link Button 만들기 */
+.button {
+	width:140px; height:50px; background-color: aqua;
+	border: 10px solid lightgray; /* 단축속성: 두께 style color */
+	border-radius:20px; text-align: center;
+	}	
+/* button 에 속해있는 모든 aTag */
+.button a { line-height:50px; }
+	
+/* 모든 a Tag	 */
+a { color: Gray; text-decoration: none; font-weight:bold; } 
+a:hover { color:DimGray; font-size:1.2em; cursor:pointer; }
+a:active { color:Blue; }
+
+/* Error Message */
+.eMessage {
+	color: red;
+	font-size: x-small; 
+	font-style: italic;
+}
+ /* Span MenuLink */
+.textlink { color:Blue; font-weight:bold; }
+.textlink:hover { 
+	color:DeepSkyBlue; 
+	font-size:1.2em; 
+	font-weight:bold;
+	cursor:pointer;
+}
+
+/* Ajax_jsonView BoardList Test3. 
+=> .content : span , #content : div
+=> div 초기값 : 화면표시X, 좌표기준, 글내용은 무조건 표시 
+*/
+.content { color: Teal; background: AliceBlue; }
+#content {
+	display:none;
+	position:absolute;
+	z-index:100;
+	width:400px;
+	height:140px; 
+	color: SaddleBrown;
+	background: Beige;
+}
+/*  Check  List searchBar */
+#searchBar {
+	color:DimGray ; font-family:돋움; font-size:14px;
+	float: left;
+}
+
+

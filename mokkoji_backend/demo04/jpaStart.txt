@@ -1,0 +1,132 @@
+** Boot 서버 kill
+=> cmd 창에서 
+	netstat -a -n -o -p tcp -> 8080 port 의 pid번호(7220) 확인
+	taskkill /f /pid  7220  
+	(PID 값은 console 창에서도 확인가능 ~~INFO 7220 ---...) 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+** ORM (Object Relational Mapping)
+=> 객체지향 패러다임(Java객체)을 관계형 패러다임(DB의 Table) 과 매핑하여 
+ 	 SQL 구문 생성
+
+** JPA (Java Persistence API)
+=> ORM을 Java에 맞게 사용하는 스펙 
+=> 대표적 오픈소스: Hibernate (SpringBoot 사용)
+
+** Spring Data JPA 라이브러리
+=> SpringBoot에서 Hibernate를 쉽게 사용할수있는 API들을 제공  
+=> 관계도 
+	JavaCode -> Spring Data JPA -> Hibernate -> JDBC -> DB:MySql
+
+** 프로젝트 실행
+=> dataSource 설정 전 : ~ Failed To Start ~ 
+	 프로젝트 생성시 Spring Data JPA 를 추가했지만 이를 연동할 dataSource 설정이 없어 서버_Start_오류  
+=> dataSource 설정 후 : Tomcat started on port(s): 8080 (http) ~~
+
+** SpringBoot JPA (Java Persistence API) **********************
+1. 프로젝트 생성
+=> 기본사항
+	- Type: Maven, Packaging: jar
+	- Java Version: 17, Language: Java 
+=> Dependency 선택 
+	- SpringBoot DevTools, Lombok
+	- JDBC API, Spring Data JPA, MySql Driver
+	- Spring Security, Spring Web
+
+2. 설정
+=> pom.xml: JSP dependency 추가 
+=> application.properties: server.port, dataSource, Jsp_view 설정
+ - application.properties 의 설정항목은 "Spring Boot Reference documents" 검색 참고.
+	  - SpringBoot 의 DB Connection
+		스프링 부트는 라이브러만 있으면 해당 라이브러리의 설정을 자동으로 찾아서 실행하며,
+		DB Connection의 경우에도 위 dataSource 설정만 해주면 스프링부트가 자동으로 사용하는
+		HikariCP(Connection Pool)을 실행하여 제공한다.
+	  - JPA Hibernate 설정
+
+// -------------------------------------------------------
+
+3. Entity 클래스 만들기
+=> 일반규칙: 패키지명 entity, 클래스명 Table명과 동일
+
+@Entity
+=> 해당클래스가 엔티티(테이블)를 위한 클래스이며, 
+	해당클래스의 인스턴스들은 JPA의 엔티티매니저가 관리하는 엔티티 객체임을 의미함. 
+	DTO 와는 용도를 분리해서 사용할것을 권장함.
+	이경우에는 이들을 옮겨주는 메서드가 필요하며, 라이브러리(ModelMapper, MapStruct 등)를 이용할수도 있고,
+	DTO 또는 Service interface에 직접 작성하기도함.
+	본예제는 Service interface에 default 메서드로 dtoToEntity() 와 entityToDto() 를 작성.
+	그러나 List 처리시에 적용 구문이 어려워서 register 에서만 적용해봄
+	
+@Table(name="member")
+=> Entity에 해당하는 테이블을 name 속성을 사용하여 매핑함.
+	name 생략시에는 클래스의 이름이 매핑됨
+	
+@Id
+=> 테이블의 기본(Primary) key와 매핑함	
+
+@GeneratedValue(strategy = GenerationType.IDENTITY) 
+=> id로 설정된 기본키의 값을 자동으로 생성할때 추가적으로 사용
+=> strategy 속성: 키 생성전략
+	- GenerationType.AUTO: default, JPA구현체 (Hibernate 등)가 생성방식 결정  
+	- GenerationType.IDENTITY: DB가 생성방식 결정 (MySql, Maria 는 auto_increment)  
+	- GenerationType.SEQUENCE: DB의 sequence를 이용해 생성, @SequenceGenerator 와 같이 사용  
+	- GenerationType.TABLE: 키생성 전용 테이블을 생성해서 키생성, @TableGenerator 와 같이 사용
+
+@Column(name="password", nullable=false, length=10)
+=> 컬럼에 다양한 속성 지정 가능 (nullable, name, length, insertable, updatable 등) 
+=> nullable
+	- JPA는 INSERT, UPDATE, DELETE의 동작이 보통과 다르기 때문에 예상치못한 실수를 방지하기 위해
+	  insertable 과 updateble 속성을 false로 하여 읽기전용 매핑설정을 할수있다.
+	  이렇게 하면 JPA가 자동으로 생성하는 쿼리에서 제외된다. 
+	- updatable=false  : password 처럼 별도로 수정하기 위함  
+=> name
+	- 프로퍼티의 이름과 테이블의 칼럼명 같다면 생략 가능하지만, 다른 경우에는 @Column 으로 지정
+	- 컬럼명을 카멜표기하면 JPA 는 _ 로 연결하여 Table 의 컬럼명을 생성함.
+	  ( regData -> reg_date )
+
+=> @Column(columnDefinition="varchar(10) default 'apple'") 
+	- columnDefinition 으로 default 값 지정 가능
+    
+@Transient
+=> SQL 구문 처리시 제외시켜줌
+	- member 의 경우
+	private	MultipartFile uploadfilef;
+	
+@Temporal(TemporalType.TIMESTAMP)
+=> 날짜 타입의 변수에 선언하여 날짜타입을 매핑
+	- TemporalType.DATE : 날짜 정보만 출력
+	- TemporalType.TIME : 시간정보만 출력
+	- TemporalType.TIMESTEMP : 날짜 시간 모두
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date myDate = new Date();
+	
+@Enumerated(EnumType.STRING) 
+=> 열거타입에 대한 매핑은 @Enumerated 를 사용한다.  
+=> EnumType.~~ : 열거형을 DB로 저장할 때 어떤 값으로 저장할지 결정하는속성
+	- EnumType.STRING : 문자열로 저장 "val1, val2, val3" 
+	- EnumType.ORDINAL: 인덱스가 저장 0 ~ 4
+
+// -------------------------------------------------------
+
+4. Repository interface 만들기
+=> 일반규칙: 패키지명 repository, interface명 ~Repository, 
+			 JpaRepository<T,E> interface 상속받음 
+=> 이 interface 작성하는것만으로 모든 연결이 되고 JPA 메서드 사용이 가능함.
+=> JpaRepository<T,E> interface
+	  - JPA 를 통해 구현가능한 기본적인 기능을 미리 정의해 놓음 (소스확인하기)
+	  - 용도에 맞게 개발자가 직접 작성해도 됨	
+
+5. Service & Controller 구현 Test
+
+** 실습
+1. 방명록
+=> BaseEntity -> Guestbook: 프로젝트실행, Table_guestbook 생성확인 (console창과 MySql에서) 
+	-> GuestbookRepository, GuestbookDTO -> GuestbookService -> Controller, home 메뉴추가 -> Test
+	
+=> 복합키 실습 
+	-> entity/Testkey.java, TestkeyId.java	
+	
+2. Member, Jo : 기본 CRUD 
+
+3. JPA의 다양한 쿼리 방법 : MemberRepsitory.java 참고
