@@ -1,0 +1,213 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.hy_container1 {
+    width: calc(100vw - 17px);
+    min-height: 280vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'TheJamsil5Bold';
+    text-shadow: 2px 2px 2px #000000, 3px 3px 3px rgba(206, 89, 55, 0);
+    color: white;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    word-break: keep-all;
+    user-select: none !important;
+}
+
+.hy_container1::after {
+    width: 100%;
+    min-height: 100%;
+    content: "";
+    background: url(/public/images/login/muds1.jpg) no-repeat center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: .3;
+}
+
+.intro-textBox {
+    width: 100%;
+    margin-bottom:20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+.hy_container1 .intro-textBox {
+    opacity: 0;
+    transition: all .3s;
+}
+
+.intro-textBox.show {
+    opacity: 1;
+}
+
+.intro-textBox-innertext {
+    opacity: 0;
+    transition: all 1s;
+}
+
+.intro-textBox-innertext {
+    margin-top: 5%;
+    font-size: 1.6em;
+    line-height: 200%;
+}
+
+.intro-textBox-innertext.show {
+    opacity: 1;
+}
+
+.intro-moveArea {
+    width: 100%;
+    min-height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    position: relative;
+}
+
+.moveArea1,
+.moveArea2,
+.moveArea3 {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    opacity: 0;
+    transition: all 1s;
+}
+
+@keyframes moveArea1-1 {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+.frame-in {
+    animation-name: moveArea1-1;
+    animation-duration: 3s;
+    animation-duration: leaner;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveArea1-2 {
+    0% {
+        transform: translateX(50%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+.frame-in-reverse {
+    animation-name: moveArea1-2;
+    animation-duration: 3s;
+    animation-duration: leaner;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+
+
+.move-img1,
+.move-img2,
+.move-img3 {
+    width: 450px;
+    height: 400px;
+    overflow: hidden;
+}
+
+.move-img1 img,
+.move-img2 img,
+.move-img3 img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.text-bodyArea {
+    width: 35%;
+    height: 50%;
+    padding: 2%;
+}
+
+.text-title {
+    margin-bottom: 10%;
+    font-size: 1.5em;
+}
+
+.text-body {
+    line-height: 200%;
+    white-space: pre-wrap;
+}
+
+@media all and (min-width:767px) and (max-width:1023px) {
+    .hy_container1 {
+        min-width: calc(100vw - 2px);
+        min-height: 220vh;
+    }
+
+    .intro-textBox,
+    .intro-textBox-innertext {
+        font-size: 1.4em;
+    }
+
+    .intro-moveArea {
+        font-size: 1em;
+    }
+
+    .move-img1,
+    .move-img2,
+    .move-img3 {
+        width: 350px;
+        height: 300px;
+        overflow: hidden;
+    }
+}
+
+@media all and (max-width:767px) {
+    .hy_container1 {
+        min-height: 150vh;
+    }
+
+    .intro-textBox,  
+     .intro-textBox-innertext{
+        font-size: 1em;
+    }
+
+    .intro-moveArea {
+        font-size: .5em;
+    }
+    .move-img1,
+    .move-img2,
+    .move-img3 {
+        width: 200px;
+        height: 150px;
+        overflow: hidden;
+    }
+}

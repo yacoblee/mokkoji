@@ -1,0 +1,155 @@
+.Payment>h1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* height: 100vh; */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 2%;
+    /* overflow: hidden; */
+}
+
+.Payment {
+    align-items: center;
+    margin: 100px auto;
+    padding: 0 10%;
+    word-break: keep-all;
+}
+
+.BuyContent,
+.BuyPackage {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.BuyContent div,
+.BuyPackage div {
+    display: flex;
+    height: 20px;
+    align-items: center;
+}
+
+.BuyPhoto img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+}
+
+.PaymentGrid:nth-child(2) {
+    border-top: 1px solid #000;
+}
+
+.PaymentFooter {
+    border-top: 1px solid #000;
+    /* background-color: aliceblue; */
+    height: 50px;
+}
+
+.PaymentGrid {
+    padding: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: initial
+}
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+
+    .PaymentGrid,
+    .PaymentFooter {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .BuyContent,
+    .BuyPackage {
+        display: flex;
+        /* justify-content: center; */
+    }
+
+    .BuyContent div,
+    .BuyPackage div {
+        display: flex;
+        height: 20px;
+        align-items: center;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .Payment>h1 {
+        text-align: center;
+    }
+
+
+    .Payment {
+        padding: 0%;
+        margin: 100px 20px;
+    }
+
+    .PaymentGrid,
+    .PaymentFooter {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .BuyContent,
+    .BuyPackage {
+        display: flex;
+        /* justify-content: center; */
+    }
+
+    .BuyContent div,
+    .BuyPackage div {
+        display: flex;
+        height: 20px;
+        align-items: center;
+    }
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+    .Payment>h1 {
+        text-align: center;
+    }
+
+    .Payment {
+        padding: 0%;
+        margin: 100px 20px;
+    }
+
+    .PaymentGrid,
+    .PaymentFooter {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .BuyContent,
+    .BuyPackage {
+        display: flex;
+        justify-content: center;
+    }
+
+    .BuyContent div,
+    .BuyPackage div {
+        display: flex;
+        height: 20px;
+        align-items: center;
+    }
+
+    .PaymentFooter {
+        margin-bottom: 100px;
+    }
+
+}

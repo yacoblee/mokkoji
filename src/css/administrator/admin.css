@@ -1,0 +1,108 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumBarunpen';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    /* scroll-behavior: smooth; */
+}
+
+.adminMenu {
+  width: 100%;
+  font-family: 'SUITE-Regular';
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #d0c0a092;
+  background-color: #d0c0a02f;
+  display: flex;
+  padding: 20px 0px 20px 0px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.adminMenu a {
+  color: black;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.adminMenu a.active {
+  font-weight: 600;
+  color: red;
+  font-size: 1.425rem;
+  box-shadow: inset 0 -10px 0 rgba(166, 255, 0, 0.233);
+}
+
+
+.admin-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    width: 100vw;
+    min-height: 1000px;
+    height: 100vh;
+  }
+  aside,
+  .admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-color: #d0c0a02f;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #d0c0a092;
+    width: 20vw;
+    height: 500px;
+    max-width: 200px;
+    margin: 100px auto;
+    padding: 20px;
+  }
+ 
+  .admin-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin-sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .admin-sidebar ul li a {
+    color: #0b0b0b;
+    text-decoration: none;
+  }
+  
+  .stat-box {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-content{
+    width: 80vw;
+    max-width:1400px;
+    min-width: 600px;
+
+  }

@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.container2 {
+    width: calc(100vw - 17px);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    font-family: 'TheJamsil5Bold';
+    background: url(../../../public/images/login/muds4.jpg) no-repeat center;
+    background-size: cover;
+    top: 100px;
+    position: fixed;
+    transition: all 1s;
+    user-select: none !important;
+
+}
+
+
+.container-text {
+    width: 80%;
+    min-height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 2px 2px 2px #000000, 3px 3px 3px rgba(206, 89, 55, 0);
+    line-height: 3.4em;
+}
+
+@media all and (min-width:767px) and (max-width:1023px) {
+    .container2 {
+        min-width: calc(100vw - 19px);
+    }
+
+    .container-text {
+        font-size: 1.2em;
+    }
+
+
+
+}
+
+@media all and (max-width:767px) {
+    .container-text {
+        font-size: .8em;
+
+    }
+}

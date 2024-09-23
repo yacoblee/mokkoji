@@ -1,0 +1,173 @@
+.MyPageMain {
+    /* display: flex; */
+    /* align-items: center; */
+    /* 세로 중앙 정렬 */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    /* text-align: center; */
+    padding: 10%;
+    background-color: #d0c0a008;
+    /* border: 1px solid #ccc; */
+    /* box-sizing: border-box; */
+    /* width: 100%; */
+}
+
+.MyInfoFlex {
+    display: flex;
+}
+
+.MyInfo {
+    flex: 5;
+}
+
+.MyInfoBasic {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+}
+
+.MyInfo>h1,
+.MyInfoSet {
+    margin: 6px;
+}
+
+.MyInfo>h1,
+.MyInfoSet {
+    padding: 5px;
+}
+
+.MyInfoBasic>div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.MyInfoBasic>div div {
+    font-size: 25px;
+}
+
+.MyInfoBasic>div>div {
+    flex: 1;
+    text-align: center;
+}
+
+.MyInfoBasic>div>div>svg {
+    align-items: center;
+    justify-content: center;
+}
+
+.MyInfoBasic>div>span {
+    flex: 4;
+    text-align: start;
+}
+
+.MyInfoList {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 5fr;
+    gap: 1vw;
+    padding: 1vw;
+    font-size: 20px;
+    align-items: center;
+}
+
+.MyInfoList div {
+    padding: .3vw;
+    /* border: 1px solid #ccc; */
+}
+
+.MyInfoSave {
+    margin: 1vw;
+    float: right;
+}
+
+.ListTitle {
+    font-weight: bold;
+}
+
+.MyInfoList input,
+.MyInfoList select {
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    height: 30px;
+}
+
+.InputAddress,
+.InputAddressDetail {
+    width: 300px;
+}
+
+.MyInfoList input::placeholder {
+    font-size: 15px;
+}
+
+.MyPageSet button,
+.MyInfoSetting {
+    width: 130px;
+    height: 30px;
+    padding: 0;
+    margin: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.MyPageSet {
+    font-family: Arial, sans-serif !important;
+}
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    .MyPageMain {
+        padding: 5%;
+    }
+
+    /* ==================================================== */
+
+    .MyInfoFlex {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyInfo,
+    .MyInfoBasic {
+        width: 300px;
+    }
+
+    /* ==================================================== */
+
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+    .MyPageMain {
+        padding: 5%;
+    }
+
+    /* ==================================================== */
+
+    .MyInfoFlex {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyInfo,
+    .MyInfoBasic {
+        width: 300px;
+    }
+
+    .MyInfoList {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    /* ==================================================== */
+}
