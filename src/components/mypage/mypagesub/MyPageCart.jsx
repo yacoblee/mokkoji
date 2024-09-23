@@ -115,7 +115,7 @@ function MyPageCart({ change, setChange }) {
 
     // 개별 상품 구매 함수
     let onBuyEach = (id) => {
-        let findData = userData.mypage.basket.find((item) =>
+        let findData = cartGoods.find((item) =>
             item.productId === id
         );
 
