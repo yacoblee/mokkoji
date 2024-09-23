@@ -1,0 +1,12 @@
+.clause-area {
+    width: 80%;
+    height: 200px;
+    padding: 1.5em;
+    overflow-y: scroll;
+    border: 1px solid #aaaaaa;
+    border-radius: 2px;
+    line-height: 25px;
+    white-space: pre-wrap;
+    word-break: normal;
+    background-color: white;
+}

@@ -1,0 +1,787 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumBarunpen';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    /* scroll-behavior: smooth; */
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+}
+
+.master_page {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    overflow-x: hidden;
+    transition: all 1s ease-out;
+}
+
+.section {
+    min-width: 80vw;
+    width: 100vw;
+    height: 83vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+    position: relative;
+    transition: transform 1s ease-out;
+}
+
+/* section1 Video S*/
+#section1 {
+    min-width: 80vw;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+    position: relative;
+    transition: transform 1s ease-out;
+}
+
+.video_intro {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10vh;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 4px 3px 4px #000;
+}
+
+.video_intro>div:nth-child(2) {
+    font-family: 'Chosunilbo_myungjo';
+    font-size: 3rem;
+    margin-bottom: 3vh;
+}
+
+.video_intro>div:nth-child(1) {
+    font-family: 'NanumBarunpen';
+    font-size: 2.2rem;
+    margin-bottom: 5vh;
+}
+
+.video_intro>div:nth-child(3) {
+    font-family: 'NanumBarunpen';
+    font-size: 1.8rem;
+    margin-bottom: 5vh;
+    scroll-behavior: smooth;
+    transition: all 5s ease-in;
+}
+
+.video_intro div>a {
+    color: white;
+    text-decoration: none;
+
+}
+
+.video_intro div>a:hover {
+    color: rgba(18, 18, 138, 0.564);
+    font-size: 2.1rem;
+    text-shadow: 0 0 0 #000;
+    transition: all 1s ease;
+}
+
+/* section1 Video E */
+
+/* Section2 SlideSection S */
+/* section2 도어 이벤트 S */
+#section2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    width: 100vw;
+    min-height: 800px;
+    height: 100vh;
+}
+
+.section2_inner {
+    display: grid;
+    width: 100vw;
+    height: 750px;
+    margin-top: 100px;
+    grid-template: .5fr / repeat(6, 1fr);
+    justify-content: center;
+    align-self: baseline;
+    z-index: 1;
+}
+
+.final_door {
+    z-index: -1;
+}
+
+.first_door,
+.final_door,
+.left_door,
+.right_door,
+.start_door,
+.end_door {
+    height: 720px;
+    border-radius: 1px;
+    transition: all 0.6s ease-out, opacity 1s ease-out;
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    flex: 1;
+    min-width: 17vw;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.left_motion,
+.right_motion,
+.start_motion,
+.end_motion {
+    border: 1px solid #802121;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.first_door,
+.final_door {
+    z-index: 1;
+}
+
+.right_door,
+.left_door {
+    z-index: 2;
+}
+
+.start_door,
+.end_door {
+    z-index: 3;
+}
+
+.left_door.left_motion {
+    box-shadow: -5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(-100%);
+    z-index: 1;
+}
+
+.right_door.right_motion {
+    box-shadow: 5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(100%);
+    z-index: 2;
+}
+
+.start_door.start_motion {
+    box-shadow: -5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(-130%);
+    z-index: 1;
+}
+
+.end_door.end_motion {
+    box-shadow: 5px 5px 10px 5px rgb(67, 62, 62);
+    transform: translateX(130%);
+    z-index: 3;
+}
+
+
+/* section2 도어 이벤트 E */
+
+.main_section {
+    position: absolute;
+    display: grid;
+    height: auto;
+    width: 100%;
+    min-height: 525px;
+    grid-template-rows: repeat(2, min-content) 1fr;
+    grid-template-columns: 100%;
+
+}
+
+.main_section:nth-child(3) {
+    position: relative;
+    margin: 0px 0px 10px calc((100% - 980px)* 0.5);
+    left: 415px;
+    grid-area: 3 / 1 / 4 / 2;
+    justify-self: start;
+    align-self: start;
+}
+
+
+/* About 소개 영역 */
+.section2_about {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    z-index: 0;
+    width: 100vw;
+    height: 750px;
+    margin-top: -100px;
+}
+
+.about_visible {
+    z-index: 1;
+}
+
+.about_head {
+    display: inline-block;
+    text-align: center;
+    width: 44vw;
+    height: 50px;
+    position: relative;
+    letter-spacing: 4px;
+}
+
+.about_head h1 {
+    color: #000000e8;
+    font-family: 'Chosunilbo_myungjo';
+    font-size: 2.3rem;
+}
+
+.about_img {
+    cursor: pointer;
+    background: url('/public/images/main/about.png') no-repeat;
+    display: flex;
+    border-radius: 5px;
+    background-size: 44vw 500px;
+    width: 44vw;
+    height: 100%;
+    position: relative;
+    top: 0px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about_img>div {
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'NanumBarunpen';
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    letter-spacing: 1px;
+
+    flex-direction: column;
+}
+
+.about_img.hide {
+    opacity: 0.6;
+}
+
+.about_content {
+    opacity: 0;
+    width: 80vw;
+    height: 550px;
+}
+
+.about_content.show {
+    opacity: 1;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    transition: opacity 1.2s linear;
+
+}
+
+.learn-more {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Section2 introduction section E */
+/* About section E */
+
+
+/* SECTION3 production section S */
+#section3 {
+    display: flex;
+    width: 100vw;
+    height: 800px;
+    justify-content: center;
+    flex-direction: column;
+    color: #000;
+    background-color: rgba(172, 162, 162, 0.8);
+}
+
+.product_section {
+    overflow-x: hidden;
+    width: 1340px;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+    text-align: center;
+
+}
+
+.product_head {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100px;
+    line-height: 100px;
+    letter-spacing: 5px;
+
+    font-family: 'Chosunilbo_myungjo';
+    position: absolute;
+    top: 0;
+    z-index: 1;
+
+    font-size: 2.3rem;
+    color: rgb(36, 35, 33);
+    /* text-shadow: 3px 2px 6px #666666d7; */
+    padding: 10px 20px;
+}
+
+.slide_item {
+    margin-right: 20px;
+    width: 300px;
+    height: 300px;
+}
+
+/* .slide_item:hover, */
+.slide_inner img:hover {
+    transform: scale(1.08);
+    transition: transform 0.3s ease-in-out;
+}
+
+.slide_container {
+    display: flex;
+    transition: left 0.5s ease-in-out;
+    position: relative;
+    transform: translateX(40%);
+    left: 0;
+}
+
+.slide_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    width: 300px;
+    height: 300px;
+
+}
+
+.slide_inner img {
+    box-shadow: 5px 10px 15px -5px rgb(67, 62, 62);
+    border-radius: 10%;
+    width: 300px;
+    height: 300px;
+}
+
+.slide_content {
+    margin-top: 20px;
+    display: grid;
+    grid-template: .5fr .5fr /.5fr.5fr;
+    font-size: 0.9em;
+}
+
+.slide_name {
+    font-family: 'SUITE-Regular';
+    color: rgb(3, 3, 3);
+    font-weight: 500;
+    text-shadow: 4px 3px 4px #666666d7;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1.2em;
+    text-align: center;
+    font-size: 1.5rem;
+    grid-area: 1/1/ 1/ span 2
+}
+
+.slide_price {
+    font-family: 'SUITE-Regular';
+    color: #b92f2f;
+    font-weight: 500;
+    text-shadow: 4px 3px 4px #666666d7;
+    justify-content: center;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    margin-bottom: 5px;
+    grid-area: 2/1/2/span 2;
+}
+
+.product_section .slide_hidden {
+    position: absolute;
+    width: 40px;
+    height: 400px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(rgba(255, 255, 255, 0.049), rgba(0, 0, 0, 0.084), rgba(255, 255, 255, 0.062));
+}
+
+.slide_hidden_right {
+    position: absolute;
+    width: 40px;
+    height: 400px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(rgba(255, 255, 255, 0.049), rgba(0, 0, 0, 0.084), rgba(255, 255, 255, 0.062));
+}
+
+.btn_pre,
+.btn_next {
+    background-color: rgba(255, 255, 255, 0.04);
+    position: absolute;
+    /* transform: translateY(-50%); */
+    font-size: 50px;
+    border: none;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.btn_pre {
+    left: 0%;
+}
+
+.btn_next {
+
+    right: 0%;
+}
+
+.nonVisible {
+    visibility: hidden;
+}
+
+/*Section3 Prodction E */
+
+
+
+/* section4 예약 영역 S */
+#section4 {
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    min-height: 800px;
+    height: 100vh;
+}
+
+.reserve_section_head {
+    position: relative;
+    color: black;
+    z-index: 7;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    min-height: 35vh;
+}
+
+
+.reserve_section_left {
+    display: flex;
+    justify-content: center;
+    width: 30vw;
+}
+
+.reserve_section_one {
+    position: absolute;
+    top: 0;
+    min-height: 300px;
+    height: 25vh;
+    min-width: 20vw;
+}
+
+.reserve_section_two {
+    position: absolute;
+    height: 20vh;
+    width: 10vw;
+    bottom: 0;
+    transform: translateX(40%);
+    z-index: 1;
+}
+
+.reserve_section_third {
+    position: absolute;
+    top: 0;
+    transform: translateX(40%);
+    height: 20vh;
+    width: 10vw;
+    z-index: 1;
+
+}
+
+.reserve_section_four {
+    position: absolute;
+    min-height: 300px;
+    height: 25vh;
+    min-width: 20vw;
+    bottom: 0;
+    transform: translateX(40%);
+}
+
+.reserve_section_center {
+    text-decoration-style: none;
+    text-align: center;
+    width: 30vw;
+}
+
+.reserve_section_center span {
+    font-size: 3rem;
+    color: #ddb78a
+}
+
+.reserve_section_center p {
+    padding: 30px;
+    font-size: 1.2rem;
+
+}
+
+.reserve_section_center a p {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.795);
+
+}
+
+.reserve_section_center a p:hover {
+    transform: scale(1.1);
+    color: rgba(181, 119, 33, 0.869);
+
+}
+
+.reserve_section_right {
+    width: 30vw;
+
+}
+
+.reserve_section_bottom {
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 58vw;
+    width: 60vw;
+    min-height: 50vh;
+    margin-top: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+.reserve_section_bottom::before {
+    content: '';
+    background-image: url(/public/images/reserve/reserveBottom.jpg);
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    z-index: -1;
+}
+
+.reserve_section_bottom:hover::before {
+    transform: scale(1.1);
+}
+
+.reserve_section_bottom p {
+    width: 50vw;
+    text-align: center;
+    font-size: 1.4rem;
+    transition: background-size .3s ease;
+    position: relative;
+}
+
+
+.reserve_section_bottom span {
+    font-size: 2rem;
+    padding: 50px;
+    position: relative;
+}
+
+/* section4 예약 영역 E */
+
+
+
+/* SECTION5 Contact_us section S */
+#section5 {
+    display: flex;
+    position: relative;
+    height: 540px;
+    z-index: 1;
+    background: white;
+
+}
+
+.intro_container {
+    position: relative;
+    width: 100vw;
+    height: 540px;
+    overflow: hidden;
+}
+
+.intro_img {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100vw;
+    height: 940px;
+    z-index: -1;
+    transition: transform 0.1s ease-out;
+}
+
+.intro_img img {
+    width: 100vw;
+    height: 940px;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+.intro_content {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #10100c6a;
+    width: 47vw;
+    height: 540px;
+
+
+}
+
+.intro_content div {
+    width: 500px;
+    padding: 5px;
+}
+
+.intro_content_head {
+    display: grid;
+    grid-area: 1 / 1 / 1 /1;
+    justify-content: center;
+}
+
+.intro_content_head span {
+    padding: 20px;
+}
+
+.intro_content label {
+    width: fit-content;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    padding: 5px;
+}
+
+
+.intro_content_mail {
+    transform: translateX(20%);
+    display: grid;
+    grid-area: 3 / 1 / 4 /1;
+}
+
+.intro_content_name {
+    transform: translateX(20%);
+    display: grid;
+    grid-area: 2 / 1 / 3 /1;
+}
+
+.intro_content_main {
+    transform: translateX(20%);
+    display: grid;
+    grid-area: 4 / 1 / span 2 /1;
+}
+
+.intro_content_main textarea {
+    height: 120px;
+    resize: none;
+}
+
+.intro_content_btn {
+    display: grid;
+    grid-area: 6 / 1 / 7 /1;
+    justify-content: center;
+}
+
+.intro_content_btn button {
+    background-color: #d0c0a044;
+    border: 1px solid #d0c0a08d;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 120px;
+    height: 50px;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.intro_content_btn button:hover {
+    background-color: #b5afa6;
+}
+
+.error {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'NanumBarunpen';
+    color: rgba(215, 20, 20, 0.8);
+    padding: 0 5px 0 5px;
+    background-color: rgba(168, 164, 164, 0.584);
+    border-radius: 3px;
+}
+
+.intro_content input,
+.intro_content textarea {
+    border: none;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 2px solid #000;
+    color: white;
+    background-color: rgba(245, 222, 179, 0.118);
+    width: 30vw;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: border-color 0.3s ease;
+}
+
+.intro_content input:focus,
+.intro_content textarea:focus {
+    outline: none;
+    border-bottom-color: #007BFF;
+}

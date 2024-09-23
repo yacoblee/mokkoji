@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.container3 {
+    width: calc(100vw - 17px);
+    min-height: 100vh;
+    position: relative;
+    font-family: 'TheJamsil5Bold';
+    display: flex;
+    justify-self: start;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+    margin-top: 100vh;
+    word-break: keep-all;
+    
+    user-select: none !important;
+}
+
+.container3::after {
+    content: "";
+    width: calc(100vw - 17px);
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: rgb(101, 97, 97);
+    opacity: .5;
+}
+
+.container3-text {
+    width: 60%;
+    min-height: 100vh;
+    padding: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre-wrap;
+    font-size: 1.8em;
+    color: white;
+    text-shadow: 2px 2px 2px #000000, 3px 3px 3px rgba(206, 89, 55, 0);
+    line-height: 200%;
+}
+
+@media all and (min-width:767px) and (max-width:1023px) {
+
+    .container3-text  {
+        font-size: 1.4em;
+    }
+
+
+
+}
+
+@media all and (max-width:767px) {
+    .container3-text {
+        font-size: 1em;
+    }
+}

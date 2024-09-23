@@ -1,0 +1,83 @@
+.main_footer {
+    background-color: #faf4eb;
+    color: rgb(92, 86, 86);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 20px;
+    position: relative;
+    bottom: 0;
+
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.footer_section {
+    flex: 1;
+    margin: 20px;
+}
+
+.footer_section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #0b60a6;
+}
+
+.footer_section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer_section ul li {
+    margin-bottom: 10px;
+}
+
+.footer_section ul li a {
+    color: rgb(92, 86, 86);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer_section ul li a:hover {
+    color: #f1c40f;
+}
+
+.footer_section p {
+    line-height: 1.6;
+}
+
+.subscribe_form input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 200px;
+}
+
+.subscribe_form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #f1c40f;
+    color: #222;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.subscribe_form button:hover {
+    background-color: #d4ac0d;
+}
+
+@media (max-width: 768px) {
+    .main_footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer_section {
+        margin: 20px 0;
+    }
+}
+
+

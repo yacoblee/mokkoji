@@ -1,0 +1,285 @@
+@font-face {
+    font-family: '국립박물관문화재단클래식B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CookieRun-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 구매용 buy 글씨체 */
+
+@font-face {
+    font-family: 'Freesentation-9Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KCC-Hanbit';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /* scroll-behavior: smooth; */
+    /* font-family: 'SUITE-Regular'; */
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    /* color: black; */
+}
+
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+    .productList {
+        padding: 2vw;
+    }
+    .productItem{
+        width: 400px;
+    }
+    .ProductMainSlide{
+        height: 80vh;
+    }
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 10vw;
+    }
+    .slider{
+        gap:0 2vw;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:767px) and (max-width:1023px) {
+    .productList {
+        padding:0 3vw;
+    }
+    .productItem{
+        width: 350px;
+    }
+    .ProductMainSlide{
+        height: 70vh;
+    }
+
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 7vw;
+    }
+    .slider{
+        gap:0 3vw;
+    }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+    .productList {
+        padding:5vw 0;
+    }
+    .productItem{
+        width: 260px;
+    }
+    .ProductMainSlide{
+        height: 60vh;
+    }
+    .secondContainerLeftBtn,.secondContainerRightBtn{
+        width: 4vw;
+    }
+    .slider{
+        gap: 0 5vw;
+        /* margin: 5px; */
+    }
+}
+
+
+/* ============================================= */
+/* 상품 리스트 : ProductContainer.jsx , ProductList.jsx , ProductMainSlide , */
+.ProductContainer {
+    font-size: 15px;
+    width: 95vw;
+    display: grid;
+    margin: auto;
+    grid-template-columns: 1fr;
+    /* grid-auto-rows: 80vh; */
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.ProductMainSlide {
+    display: flex;
+    white-space: nowrap;
+    width: 100%;
+    
+    gap: 5px;
+    background-color: rgba(243, 205, 205, 0.116);
+}
+
+.ImgSlideList {
+    display: inline-block;
+    flex-basis: 20%;
+    height: 100%;
+    border-right: 1px solid silver;
+    cursor: pointer;
+    position: relative;
+    transition: 1s;
+    border-radius: 15px;
+    overflow: hidden;
+
+
+
+}
+
+.ImgSlideList span {
+    position: absolute;
+    text-align: center;
+    bottom: 10%;
+    right: 100%;
+    font-size: 2em;
+    text-shadow: 3px 3px 3px silver;
+    transition: right 1s;
+    opacity: 1;
+    font-family: 'SUITE-Regular';
+    color: black;
+}
+
+
+.ImgSlideList span:hover {
+    right: 40%;
+    opacity: 1;
+}
+
+
+.ImgSlideList:hover {
+    flex-basis: 80%;
+}
+
+.ImgSlideList:hover span {
+    right: 40%;
+    opacity: 1;
+}
+
+
+.productList {
+    width: 95vw;
+    height: 60vh;
+    min-height: 370px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+
+    margin: auto;
+    position: relative;
+    min-height: 300px;
+    margin-bottom: 30px;
+
+}
+
+.productList button {
+    position: absolute;
+    top: 30%;
+    z-index: 1;
+    border : 0px solid;
+    background-color: #d0888000;
+}
+.productList button img{
+    height: 50px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.productList button img:hover{
+    transform: scale(1.2);
+    transition: 0.3s;
+}
+
+.slider {
+    height: 100%;
+    display: flex; 
+    /* Grid 대신 Flex 사용 */
+    /* 요소 간의 간격 */
+}
+.productItem {
+    transition: transform 0.5s ease-in-out;
+    /* height: calc(100% - 2vw); */
+    height: 100%;
+    /* min-height: 300px; */
+    /* 각 항목의 너비를 고정 */
+    flex: 0 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 3px 3px 3px silver;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 90% 10%;
+    /* justify-content: space-between; */
+    font-family: 'SUITE-Regular';
+}
+.productItem img {
+    width: 100%;
+    height: 100%;
+    /* height: 50vh; */
+    object-fit: cover;
+}
+.productItem div{
+    /* height: 5vh; */
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 10px;
+    color: black;
+}
+.ProductPrice{
+    color: red;
+    text-align: end;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.secondContainerLeftBtn {
+    background: linear-gradient(90deg, #fff 0, #fff 20%, #fff0);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    
+    z-index: 5;}
+
+.secondContainerRightBtn {
+    background: linear-gradient(270deg, #fff 0, #fff 20%, #fff0);
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    
+    z-index: 5;
+}
+
