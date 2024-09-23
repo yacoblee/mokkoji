@@ -1,0 +1,205 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.container4 {
+    background-color: rgb(255, 255, 255);
+    width: calc(100vw - 17px);
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    user-select: none !important;
+    overflow: hidden;
+}
+
+.container4::after {
+    width: calc(100vw - 17px);
+    height: 100vh;
+    content: "";
+    position: absolute;
+    background: url(/public/images/login/muds8.png) no-repeat center;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    opacity: .6;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.container4 h1 {
+    font-family: 'TheJamsil5Bold';
+    color: white;
+    text-shadow: 2px 2px 2px #000000, 3px 3px 3px rgba(206, 89, 55, 0);
+    font-size: 2.5em;
+    margin-bottom: 10%;
+}
+
+.mapAndhour {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+}
+
+.goolemap {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.gooleMap {
+    width: 100%;
+    height: 90%;
+    border: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+}
+
+
+.hour {
+    width: 45%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+}
+
+.operatinghours {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff7e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 230%;
+    font-size: 1.2em;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    overflow: hidden;
+}
+
+.operatinghours h2 {
+    font-size: 1.5em;
+    margin: 1% 0;
+}
+
+.operatinghours hr {
+    margin: 1% 0;
+}
+
+.highlight {
+    box-shadow: inset 0 -10px 0 #ffda95a8;
+}
+
+
+@media all and (min-width:767px) and (max-width:1023px) {
+
+    .container4 h1 {
+        font-size: 1.7em;
+        margin-bottom: 40%;
+    }
+
+    .operatinghours {
+        min-height: 100%;
+        font-size: 1.1em;
+        line-height: 170%;
+        overflow: hidden;
+    }
+
+    .operatinghours h2 {
+        font-size: 1.2em;
+    }
+
+    /* .textrow {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    } */
+
+}
+
+@media all and (max-width:767px) {
+
+    .container4 h1 {
+        font-size: 1.3em;
+    }
+
+    .operatinghours {
+        font-size: 1em;
+        line-height: 160%;
+        overflow: hidden;
+
+    }
+
+    .operatinghours h2 {
+        font-size: 1.3em;
+    }
+
+    /* .textrow {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    } */
+}
+
+@media all and (max-width:767px) {
+    .container4 {
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .mapAndhour {
+        width: 100%;
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+
+    .container4 h1 {
+        margin-top: 10px;
+        font-size: 1.8em;
+    }
+
+    .goolemap {
+        width: 80%;
+        height: 45%;
+    }
+
+    .hour {
+        width: 80%;
+        height: 45%;
+    }
+
+    .operatinghours {
+        font-size: 1em;
+        line-height: 160%;
+    }
+
+    .operatinghours h2 {
+        font-size: 1em;
+    }
+
+    /* .textrow {
+        display: flex;
+        flex-direction: column;
+    } */
+}

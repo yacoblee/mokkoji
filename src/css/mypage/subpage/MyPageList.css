@@ -1,0 +1,28 @@
+.MyPageList {
+    word-break: keep-all;
+}
+
+.MyListDate * {
+    padding: 10px;
+}
+
+.MyListDate>h3 {
+    border-bottom: 1px solid #000;
+    background-color: #d0c0a058;
+    height: 40px;
+}
+
+.ListItem {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.ListItem:nth-last-child(1) {
+    border: none;
+}
+
+
+.ListPhoto img {
+    width: 100px;
+    height: 100px;
+}

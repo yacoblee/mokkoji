@@ -1,0 +1,115 @@
+.MyGrid {
+    display: grid;
+    grid-template-areas:
+        "MyLike MyCart MyList MyReview MyBook";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    gap: 1vw;
+    width: 100%;
+}
+
+.MyGrid>span,
+.MyGrid>a {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.MyLike,
+.MyCart,
+.MyReview,
+.MyBook,
+.MyList {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    /* color: black; */
+}
+
+.MyCart {
+    grid-area: MyCart;
+}
+
+.MyLike {
+    grid-area: MyLike;
+}
+
+.MyBook {
+    grid-area: MyBook;
+}
+
+.MyReview {
+    grid-area: MyReview;
+}
+
+.MyList {
+    grid-area: MyList;
+
+}
+
+.IconLike,
+.IconCart,
+.IconReview,
+.IconBook,
+.IconList {
+    flex: 1;
+    font-size: 30px;
+    padding-top: 1.5vw;
+    padding-bottom: 0.5vw;
+}
+
+.MyLike span,
+.MyCart span,
+.MyReview span,
+.MyBook span,
+.MyList span {
+    flex: 1;
+    padding: 1vw;
+}
+
+.MyGrid>a.active {
+    background-color: beige;
+    border: 1px solid rgba(245, 245, 220, 0.3);
+}
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+
+    .IconLike,
+    .IconCart,
+    .IconReview,
+    .IconBook,
+    .IconList {
+        font-size: 23px;
+    }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:767px) {
+
+
+
+    .IconLike,
+    .IconCart,
+    .IconReview,
+    .IconBook,
+    .IconList {
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .MyLike span,
+    .MyCart span,
+    .MyReview span,
+    .MyBook span,
+    .MyList span {
+        font-size: 1em;
+    }
+}

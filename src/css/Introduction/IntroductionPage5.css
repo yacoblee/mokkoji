@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.cotainer5 {
+    width: calc(100vw - 17px);
+    min-height: 100vh;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    font-family: 'TheJamsil5Bold';
+    background-color: rgb(239, 233, 216);
+    z-index: 2;
+    user-select: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outContainer {
+    width: 90vw;
+    height: 90vh;
+    background-color: white;
+    /* text-shadow: 2px 2px 2px #000000, 3px 3px 3px rgba(206, 89, 55, 0); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    flex-direction: column;
+    line-height: 280%;
+    font-size: 1.5em;
+    position: relative;
+    flex-direction: row;
+    /* overflow: hidden; */
+}
+
+
+.sText {
+    display: flex;
+    width: 40%;
+    height: 80vh;
+    /* background-color: aquamarine; */
+    justify-content: end;
+    align-items: end;
+    flex-direction: row;
+}
+
+.sImg {
+    width: 60%;
+    height: 80vh;
+    background-color: violet;
+    display: flex;
+    object-fit: cover;
+    flex-direction: row;
+
+}
+
+/* .imgBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    outline: 1px solid red;
+    flex-wrap: nowrap wrap;
+    overflow: hidden;
+} */
+
+/* .imgBox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+/* .inforow{
+    display: flex;
+
+} */
+
+
+
+.renderinfo {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+}
+
+.inforow {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: .6em;
+    line-height: 45px;
+    margin-left: 40%;
+}
