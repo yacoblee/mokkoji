@@ -17,6 +17,11 @@ import ProductBuy from './components/buy/ProductBuy';
 import ScrollToTop from './components/modules/ScrollToTop';
 import Introduction from './components/Introduction/Introduction';
 import Buy from './components/mypage/MyPageBuy'
+import Admin from './components/administrator/Admin';
+import Dashboard from './components/administrator/Dashboard';
+import UserManagement from './components/administrator/UserManager';
+import ProductManagement from './components/administrator/ProductManagement';
+import OrderManagement from './components/administrator/OrderManagement';
 
 
 const App = () => {
@@ -82,6 +87,14 @@ const App = () => {
         <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}
 
+        {/* 관리자 페이지 라우팅 S */}
+        <Route path="/administrator/*" element={<Admin />} >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="products" element={<ProductManagement />} />
+          <Route path="orders" element={<OrderManagement />} />
+        </Route>
+        {/** 관리자 페이지 라우팅 E */}
       </Routes>
       <Footer />
     </BrowserRouter>
