@@ -71,7 +71,8 @@ const Header = () => {
                                 isLoggedIn ?
                                     <>
                                         <li><NavLink onClick={handleLogout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
-                                        <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>mypage</p></NavLink ></li>
+                                        <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>Mypage</p></NavLink ></li>
+                                        <li><NavLink to="/administrator" className={({ isActive }) => (isActive ? 'active' : '')}><p>Admin</p></NavLink ></li>
                                     </>
                                     :
                                     <>
