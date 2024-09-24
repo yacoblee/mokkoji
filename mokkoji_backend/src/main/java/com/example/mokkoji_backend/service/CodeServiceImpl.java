@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.entity.Code;
-import com.example.mokkoji_backend.entity.id.CodeId;
+import com.example.mokkoji_backend.entity.CodeId;
 import com.example.mokkoji_backend.repository.CodeRepository;
 
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
-package com.example.mokkoji_backend.entity;
+package com.example.mokkoji_backend.entity.myPage;
 
-import com.example.mokkoji_backend.entity.id.FavoriteId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

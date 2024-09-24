@@ -1,12 +1,13 @@
-package com.example.mokkoji_backend.entity;
+package com.example.mokkoji_backend.entity.goods;
 
 import java.io.Serializable;
 
-import com.example.mokkoji_backend.entity.id.ProductOptionsId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +32,8 @@ public class ProductOptions implements Serializable {
 	private String content;
 	@Column(name="optionPrice")
 	private int price;
+	
+	@ManyToOne
+    @JoinColumn(name = "productId")
+	private Products product;
 }

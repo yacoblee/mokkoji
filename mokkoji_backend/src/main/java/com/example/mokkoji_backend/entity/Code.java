@@ -2,7 +2,6 @@ package com.example.mokkoji_backend.entity;
 
 import java.io.Serializable;
 
-import com.example.mokkoji_backend.entity.id.CodeId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

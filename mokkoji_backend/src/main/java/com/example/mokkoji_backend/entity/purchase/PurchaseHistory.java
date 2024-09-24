@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity;
+package com.example.mokkoji_backend.entity.purchase;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
