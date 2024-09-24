@@ -2,7 +2,7 @@ package com.example.mokkoji_backend.domain;
 
 import java.sql.Timestamp;
 
-import com.example.mokkoji_backend.entity.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.ProductOptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

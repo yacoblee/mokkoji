@@ -1,6 +1,5 @@
-package com.example.mokkoji_backend.entity;
+package com.example.mokkoji_backend.entity.myPage;
 
-import com.example.mokkoji_backend.entity.id.PurchaseHistoryListId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,17 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "purchasehistorylist")
+@Table(name = "cart")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(PurchaseHistoryListId.class)
-public class PurchaseHistoryList {
+@IdClass(CartId.class)
+public class Cart {
 
 	@Id
-	@Column(name = "purchase_number")
-	private int purchaseNumber;
+	@Column(name = "user_id")
+	private String userId;
 	@Id
 	@Column(name = "product_id")
 	private int productId;

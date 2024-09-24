@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.mokkoji_backend.entity.Code;
-import com.example.mokkoji_backend.entity.id.CodeId;
+import com.example.mokkoji_backend.entity.CodeId;
 
 public interface CodeRepository extends JpaRepository<Code, CodeId> {
 
