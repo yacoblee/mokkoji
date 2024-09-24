@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.mokkoji_backend.entity.Productoptions;
-import com.example.mokkoji_backend.entity.ProductoptionsId;
+import com.example.mokkoji_backend.entity.ProductOptions;
+import com.example.mokkoji_backend.entity.ProductOptionsId;
 import com.example.mokkoji_backend.repository.ProductOptionsRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,30 +16,30 @@ public class ProductOptionsServiceImpl implements ProductoptionsService {
 	private final ProductOptionsRepository repository;
 	
 	@Override
-	public List<Productoptions> findAll() {
+	public List<ProductOptions> findAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public List<Productoptions> findByProductId(Long id) {
+	public List<ProductOptions> findByProductId(Long id) {
 		
 		return repository.findByProductId(id);
 	}
 
 	@Override
-	public Productoptions findById(ProductoptionsId id) {
+	public ProductOptions findById(ProductOptionsId id) {
 		
 		return repository.findById(id).get();
 	}
 
 	@Override
-	public void save(Productoptions options) {
+	public void save(ProductOptions options) {
 		repository.save(options);
 
 	}
 
 	@Override
-	public void deleteById(ProductoptionsId id) {
+	public void deleteById(ProductOptionsId id) {
 		repository.deleteById(id);
 
 	}

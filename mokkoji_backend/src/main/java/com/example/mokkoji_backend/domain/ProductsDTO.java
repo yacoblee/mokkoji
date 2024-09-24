@@ -2,7 +2,7 @@ package com.example.mokkoji_backend.domain;
 
 import java.sql.Timestamp;
 
-import com.example.mokkoji_backend.entity.Productoptions;
+import com.example.mokkoji_backend.entity.ProductOptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductsDTO extends Productoptions{
+public class ProductsDTO extends ProductOptions{
 	private Long id;
 	private String name;
 	private int price;

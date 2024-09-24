@@ -1,8 +1,8 @@
 package com.example.mokkoji_backend.repository;
 
-import static com.example.mokkoji_backend.entity.QProductoptions.productoptions;
-import static com.example.mokkoji_backend.entity.QProducts.products;
 
+import static com.example.mokkoji_backend.entity.QProducts.products;
+import static com.example.mokkoji_backend.entity.QProductOptions.productOptions;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -28,15 +28,15 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 			             products.categoryId,
 			             products.name,
 			             products.price, 
-			             products.size_info, 
+			             products.sizeInfo, 
 			             products.guide,
-			             products.main_description, 
+			             products.mainDescription, 
 			             products.sub_description, 
 			             products.like_conut, 
 			             products.status, 
 			             products.stock_count, 
 			             products.uploadDate
-			         )).from(products).join(productoptions).on(products.id.eq(productoptions.productId)).fetchJoin().fetch();
+			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId)).fetchJoin().fetch();
 	}
 
 	
@@ -48,15 +48,15 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 			             products.categoryId,
 			             products.name,
 			             products.price, 
-			             products.size_info, 
+			             products.sizeInfo, 
 			             products.guide,
-			             products.main_description, 
+			             products.mainDescription, 
 			             products.sub_description, 
 			             products.like_conut, 
 			             products.status, 
 			             products.stock_count, 
 			             products.uploadDate
-			         )).from(products).join(productoptions).on(products.id.eq(productoptions.productId))
+			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId))
 				.where(products.id.eq(id)).fetchJoin().fetchOne();
 	}
 }

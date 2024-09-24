@@ -26,15 +26,15 @@ public class Products {
 	@Column(name = "productPrice", nullable = false)
 	private int price;
 	@Column(name = "productSizeinfo",columnDefinition = "text CHARACTER SET utf8mb4 ")
-	private String size_info;
+	private String sizeInfo;
 	@Column(name = "productGuide",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String guide;
 	@Column(name = "productMainDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
-	private String main_description;
+	private String mainDescription;
 	@Column(name = "productAdditionalDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String sub_description;
 	@Column(name = "mainImageName")
-	private String main_image_name;
+	private String mainImageName;
 	@Column(name = "likeCount", columnDefinition = "int default 0")
 	private int like_conut;
 	@Column(name = "status", columnDefinition = "int default 0")
