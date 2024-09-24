@@ -206,6 +206,41 @@ function MyPageCart({ change, setChange }) {
         setUser(updatedUser);
     }   // changeProductCount
 
+    // 포장 개수 변경 로직
+    /*
+    const changePackageCount = (cartId, variation) => {
+        const newBasket = user.mypage.basket.map((item) => {
+            if (item.productId === cartId) {
+
+                if (variation === 'decrease') {
+                    if (item.quantity.packagingSelect === 1)
+                        alert('포장 개수 경고');
+                    else
+                        item.quantity.packagingSelect = item.quantity.packagingSelect - 1;
+                } else if (variation === 'increase')
+                    item.quantity.packagingSelect = item.quantity.packagingSelect + 1
+            }
+            return item;
+        }
+        )   // newBasket.map
+
+        const updatedMypage = {
+            ...user.mypage,
+            basket: newBasket
+        }
+
+        const updatedUser = {
+            ...user,
+            mypage: updatedMypage
+        }
+
+        console.log(`${JSON.stringify(updatedUser)}`)
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));
+
+        setUser(updatedUser);
+    }   // changePackageCount
+    */
+
 
     // 여러 개의 버튼에 대해 hover 상태를 관리할 수 있도록 상태 배열 사용
     const [hoveredButton, setHoveredButton] = useState(null);

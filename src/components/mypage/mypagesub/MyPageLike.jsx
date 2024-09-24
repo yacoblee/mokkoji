@@ -7,10 +7,10 @@ import React, { useEffect, useState } from 'react';
 
 function MyPageLike({ change, setChange }) {
 
-    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const currentUser = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
     // const items = JSON.parse(sessionStorage.getItem("goodsList"));
 
-    const [user, setUser] = useState(userData)
+    const [user, setUser] = useState(currentUser)
 
 
     // 사진 이름 id 정보만 담긴 새로운 출력용 객체
@@ -42,18 +42,18 @@ function MyPageLike({ change, setChange }) {
         )
 
         let newMyPage = {
-            ...userData.mypage,
+            ...currentUser.mypage,
             isLike: newLiked
         }
 
-        let newUserData = {
-            ...userData,
+        let newCurrentUser = {
+            ...currentUser,
             mypage: newMyPage
         }
 
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUserData));
+        sessionStorage.setItem("LoginUserInfo", JSON.stringify(newCurrentUser));
 
-        setUser(newUserData);
+        setUser(newCurrentUser);
         setChange(!change);     // MyPageIndex에 대한 전체 렌더링
     }
 

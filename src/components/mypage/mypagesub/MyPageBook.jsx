@@ -4,9 +4,9 @@ import '../../../css/mypage/subpage/MyPageBook.css';
 
 function MyPageBook({ change, setChange }) {
 
-    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
+    const currentUser = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
-    const [user, setUser] = useState(userData)
+    const [user, setUser] = useState(currentUser)
 
 
     // 어른 인원수 변경 로직
@@ -93,7 +93,7 @@ function MyPageBook({ change, setChange }) {
 
         user.mypage.Reservation.forEach((latest) => {
             if (latest.date !== day) {
-                const first = userData.mypage.Reservation.find(res => res.date === latest.date);
+                const first = currentUser.mypage.Reservation.find(res => res.date === latest.date);
                 updatebook.push(first);
             } else {
                 updatebook.push(latest);
@@ -107,8 +107,8 @@ function MyPageBook({ change, setChange }) {
             ...user,
             mypage: updateMyPage
         }
-        // const userDataadult = userData.mypage.Reservation[0].adult;
-        // const userDatateenager = userData.mypage.Reservation[0].teenager;
+        // const userDataadult = currentUser.mypage.Reservation[0].adult;
+        // const userDatateenager = currentUser.mypage.Reservation[0].teenager;
         // const updateUseradult = user.mypage.Reservation[0].adult;
         // const updateUserteenager = user.mypage.Reservation[0].teenager;
 
@@ -121,7 +121,7 @@ function MyPageBook({ change, setChange }) {
         //     alert('변동 사항이 없습니다.')
         //     return false;
         // }
-        // console.log(userData.mypage.Reservation[0]);
+        // console.log(currentUser.mypage.Reservation[0]);
         // console.log(updateUser.mypage.Reservation[0]);
 
 
