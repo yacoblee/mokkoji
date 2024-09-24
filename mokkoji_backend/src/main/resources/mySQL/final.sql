@@ -25,7 +25,7 @@ CREATE TABLE `products` (
   `product_id` int NOT NULL AUTO_INCREMENT COMMENT '상품 pk',
   `product_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '상품 이름',
   `product_price` int NOT NULL COMMENT '상품 가격',
-  `product_sizeinfo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '사이즈정보',
+  `product_size_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '사이즈정보',
   `product_guide` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT '상태 가이드',
   `product_main_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT '메인 설명',
   `product_additional_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT '서브 설명',
