@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.entity.ProductOptions;
-import com.example.mokkoji_backend.entity.ProductOptionsId;
+import com.example.mokkoji_backend.entity.id.ProductOptionsId;
 import com.example.mokkoji_backend.repository.ProductOptionsRepository;
 
 import lombok.RequiredArgsConstructor;

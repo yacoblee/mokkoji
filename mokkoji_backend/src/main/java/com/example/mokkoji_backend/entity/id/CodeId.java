@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity;
+package com.example.mokkoji_backend.entity.id;
 
 import java.io.Serializable;
 

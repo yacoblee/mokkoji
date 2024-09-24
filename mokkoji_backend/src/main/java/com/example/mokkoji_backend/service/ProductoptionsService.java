@@ -3,7 +3,7 @@ package com.example.mokkoji_backend.service;
 import java.util.List;
 
 import com.example.mokkoji_backend.entity.ProductOptions;
-import com.example.mokkoji_backend.entity.ProductOptionsId;
+import com.example.mokkoji_backend.entity.id.ProductOptionsId;
 
 
 public interface ProductoptionsService {
