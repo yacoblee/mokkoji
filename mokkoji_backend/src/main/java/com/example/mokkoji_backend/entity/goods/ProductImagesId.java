@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity.myPage;
+package com.example.mokkoji_backend.entity.goods;
 
 import java.io.Serializable;
 
@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class FavoriteId implements Serializable {
+@AllArgsConstructor
+public class ProductImagesId implements Serializable{
 	private static final long serialVersionUID = 1L;
-
-	private String userId;
+	
 	private int productId;
-
+	private int order;
+	private String type;
 }

@@ -1,9 +1,10 @@
 package com.example.mokkoji_backend.repository.myPage;
 
-import com.example.mokkoji_backend.entity.myPage.Reviews;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.example.mokkoji_backend.entity.myPage.Reviews;
 
 public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 

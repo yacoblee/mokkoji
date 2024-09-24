@@ -11,11 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Products {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -28,7 +34,7 @@ public class Products {
 	private String name;
 	@Column(name = "productPrice", nullable = false)
 	private int price;
-	@Column(name = "productSizeinfo",columnDefinition = "text CHARACTER SET utf8mb4 ")
+	@Column(name = "productSizeInfo",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String sizeInfo;
 	@Column(name = "productGuide",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String guide;
@@ -51,4 +57,6 @@ public class Products {
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<ProductOptions> options;
+	
+
 }

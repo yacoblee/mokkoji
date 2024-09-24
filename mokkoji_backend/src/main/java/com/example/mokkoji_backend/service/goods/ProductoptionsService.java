@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.service;
+package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
 
 public interface ProductoptionsService {
 	List<ProductOptions> findAll();
+	
+	
 	
 	List<ProductOptions> findByProductId(Long id);
 	
