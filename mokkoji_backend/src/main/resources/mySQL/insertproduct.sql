@@ -32,7 +32,7 @@ INSERT INTO packaging values('굿즈 천 포장',4000);
 -- 1) 취객 선비 3인방 셋팅. ==============================================================
 -- 1. products
 INSERT INTO products(product_name,product_price,stock_count,category_id,
-product_sizeInfo, product_guide,product_main_description,product_additional_description) 
+product_size_Info, product_guide,product_main_description,product_additional_description)
 	values('취객선비 3인방 변색 잔세트',26000,100,
 	 'C5',  -- 'C5'은 '주방/식기' 카테고리에 해당
 '상품 크기 :윗면 지름 46mm, 바닥면 지름 44mm, 높이 58mm
@@ -58,7 +58,7 @@ INSERT INTO products (
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_main_description,
     product_additional_description
 ) 
@@ -82,7 +82,7 @@ INSERT INTO products (
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_main_description,
     product_additional_description
 ) 
@@ -108,7 +108,7 @@ INSERT INTO products (
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -138,7 +138,7 @@ INSERT INTO products (
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -169,7 +169,7 @@ INSERT INTO productoptions(product_id,option_content,option_price)
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -199,7 +199,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -228,7 +228,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -258,7 +258,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -290,7 +290,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -316,7 +316,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -344,7 +344,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -371,7 +371,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -398,7 +398,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -426,7 +426,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -454,7 +454,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -482,7 +482,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -512,7 +512,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
@@ -540,7 +540,7 @@ INSERT INTO products(
     product_price,
     stock_count,
     category_id,
-    product_sizeInfo,
+    product_size_Info,
     product_guide,
     product_main_description,
     product_additional_description
