@@ -563,4 +563,3 @@ VALUES (19, '중',40000);
 INSERT INTO productoptions(product_id, option_content,option_price)
 VALUES (19, '대',90000);
 
-
