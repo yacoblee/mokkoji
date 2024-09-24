@@ -7,7 +7,7 @@
 + npm i react-calendar
 + npm install react-daum-postcode
 + npm install react-modal
-
++ npm install axios
 
 + npm i --save @fortawesome/fontawesome-svg-core
 + npm i --save @fortawesome/react-fontawesome@latest
