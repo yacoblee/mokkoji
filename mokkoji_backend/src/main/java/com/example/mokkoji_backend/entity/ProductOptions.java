@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(ProductoptionsId.class)
-public class Productoptions implements Serializable {
+@IdClass(ProductOptionsId.class)
+public class ProductOptions implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id

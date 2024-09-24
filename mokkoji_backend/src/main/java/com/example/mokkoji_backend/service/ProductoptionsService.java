@@ -2,22 +2,22 @@ package com.example.mokkoji_backend.service;
 
 import java.util.List;
 
-import com.example.mokkoji_backend.entity.Productoptions;
-import com.example.mokkoji_backend.entity.ProductoptionsId;
+import com.example.mokkoji_backend.entity.ProductOptions;
+import com.example.mokkoji_backend.entity.ProductOptionsId;
 
 
 public interface ProductoptionsService {
-	List<Productoptions> findAll();
+	List<ProductOptions> findAll();
 	
-	List<Productoptions> findByProductId(Long id);
-	
-	
-	
-	Productoptions findById(ProductoptionsId id);
+	List<ProductOptions> findByProductId(Long id);
 	
 	
-	void save(Productoptions options);
 	
-	void deleteById(ProductoptionsId id);
+	ProductOptions findById(ProductOptionsId id);
+	
+	
+	void save(ProductOptions options);
+	
+	void deleteById(ProductOptionsId id);
 	
 }

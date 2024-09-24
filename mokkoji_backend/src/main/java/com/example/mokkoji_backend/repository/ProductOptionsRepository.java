@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.mokkoji_backend.entity.Productoptions;
-import com.example.mokkoji_backend.entity.ProductoptionsId;
+import com.example.mokkoji_backend.entity.ProductOptions;
+import com.example.mokkoji_backend.entity.ProductOptionsId;
 
-public interface ProductOptionsRepository extends JpaRepository<Productoptions, ProductoptionsId>{
+public interface ProductOptionsRepository extends JpaRepository<ProductOptions, ProductOptionsId>{
 
-	List<Productoptions> findByProductId(Long product_id);
+	List<ProductOptions> findByProductId(Long product_id);
 }
