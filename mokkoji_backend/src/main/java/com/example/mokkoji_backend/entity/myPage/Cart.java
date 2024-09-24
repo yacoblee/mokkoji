@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "cart")
 @Data
@@ -32,5 +34,7 @@ public class Cart {
 	private int productCnt;
 	@Column(name = "product_total_price")
 	private int productTotalPrice;
+	@Column(name = "cart_date")
+	private LocalDate cartDate;
 
 }
