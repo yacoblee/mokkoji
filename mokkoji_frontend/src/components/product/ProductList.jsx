@@ -1,25 +1,40 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import GoodsItems from './ProductObject';
+//import GoodsItems from './ProductObject';
 import ProductListResult from './ProductListResult';
 import '../../css/Product/ProductCategory.css'
 // import Modal from 'react-modal';
-
+import { API_BASE_URL } from "../../service/app-config";
+import axios from "axios";
 const ProductList = () => {
 
     const { category } = useParams();
+    const [list, setList] = useState([]);
+    useEffect(() => {
+        //if (getStorageData() !== null) setList(getStorageData());
+        //else alert(' 출력할 내용이 없습니다 ~~ ');
+        let uri = API_BASE_URL + "/goods/" + category;
+        axios.get(uri)
+            .then(response => {
+                setList(response.data)
+                console.log(response.data);
+            })
+            .catch(err => {
+                //alert(err.message);
+                console.log(err);
+                setList([]);
+            })
+    }, []);
 
-    //보여주는부분이 Menu 냐 , Search냐
-    // const [showSearch, setShowSearch] = useState(false);
 
     //메뉴바의 구성
     const productMenu = [
         { category: 'allGoods', description: '전체상품' },
-        { category: 'stationeryGoods', description: '문구/사무' },
-        { category: 'fashionGoods', description: '패션/생활' },
-        { category: 'interiorGoods', description: '인테리어 소품' },
-        { category: 'handicraftGoods', description: '공예품' },
-        { category: 'kitchGoods', description: '주방/식기' },
+        { category: 'C1', description: '문구/사무' },
+        { category: 'C2', description: '패션/생활' },
+        { category: 'C3', description: '인테리어 소품' },
+        { category: 'C4', description: '공예품' },
+        { category: 'C5', description: '주방/식기' },
     ];
     //검색 조건에 대한 옵션
     const sortOptions = [
@@ -50,39 +65,39 @@ const ProductList = () => {
     const [displayMessage, setDisplayMessage] = useState('');
 
     //filterItems 함수. -> fileredItems 를 반환
-    const filterItems = () => {
-        let filteredItems = GoodsItems.slice();
+    // const filterItems = () => {
+    //     let filteredItems = list.slice();
 
-        if (filterItem.selectValue !== 'allGoods') {
-            filteredItems = filteredItems.filter((items) => items.category === filterItem.selectValue);
-        }
-        if (filterItem.inputValue !== '') {
-            filteredItems = filteredItems.filter((items) => items.name.includes(filterItem.inputValue));
-        }
+    //     if (filterItem.selectValue !== 'allGoods') {
+    //         filteredItems = filteredItems.filter((items) => items.category === filterItem.selectValue);
+    //     }
+    //     if (filterItem.inputValue !== '') {
+    //         filteredItems = filteredItems.filter((items) => items.name.includes(filterItem.inputValue));
+    //     }
 
-        switch (filterItem.sortOption) {
-            case 'pricehigh':
-                filteredItems.sort((a, b) => b.price - a.price);
-                break;
-            case 'pricelower':
-                filteredItems.sort((a, b) => a.price - b.price);
-                break;
-            case 'reviews':
-                filteredItems.sort((a, b) => b.reviews - a.reviews);
-                break;
-            case 'count':
-            default:
-                filteredItems.sort((a, b) => b.count - a.count);
-                break;
-        }
-        return filteredItems;
-    };
+    //     switch (filterItem.sortOption) {
+    //         case 'pricehigh':
+    //             filteredItems.sort((a, b) => b.price - a.price);
+    //             break;
+    //         case 'pricelower':
+    //             filteredItems.sort((a, b) => a.price - b.price);
+    //             break;
+    //         case 'reviews':
+    //             filteredItems.sort((a, b) => b.reviews - a.reviews);
+    //             break;
+    //         case 'count':
+    //         default:
+    //             filteredItems.sort((a, b) => b.count - a.count);
+    //             break;
+    //     }
+    //     return filteredItems;
+    // };
     //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
     //필터하고 난 아이템의 결과 배열.
-    const [selectItem, setSelectItem] = useState([]);
+    //const [selectItem, setSelectItem] = useState([]);
     // console.log(selectItem.length);
     //필터하고난 filterItem의 길이
-    const [resultCount, setResultCount] = useState(selectItem.length);
+    const [resultCount, setResultCount] = useState(list.length);
     const updateDisplayMessage = (count) => {
         // if (showSearch) {
         const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
@@ -123,9 +138,9 @@ const ProductList = () => {
             inputValue: '',
         });
 
-        setSelectItem(filterItems().filter((items) => items.category === category));
+        //setSelectItem(filterItems().filter((items) => items.category === category));
         // setSelectItem(GoodsItems.filter((items) => items.category === category));
-        
+
         setDisplayMessage('');
 
     }, [category]);
@@ -133,13 +148,13 @@ const ProductList = () => {
 
     //클릭했을때의 함수 실행값을 넣어줌.
     const onclickSearch = () => {
-        const filteredItems = filterItems();
-        setSelectItem(filteredItems);
-        setResultCount(filteredItems.length);
-        updateDisplayMessage(filteredItems.length);
+        //const filteredItems = filterItems();
+        //setSelectItem(list);
+        setResultCount(list.length);
+        updateDisplayMessage(list.length);
     };
-    const onEnterSearch = (e)=>{
-        if(e.key === "Enter") {
+    const onEnterSearch = (e) => {
+        if (e.key === "Enter") {
             onclickSearch();
         }
     }
@@ -174,17 +189,17 @@ const ProductList = () => {
 
                     <input type="text" name="productInput" id="productInput"
                         value={filterItem.inputValue}
-                        onChange={onChangeInputValue} 
-                        onKeyDown={(e)=>onEnterSearch(e)}/>
+                        onChange={onChangeInputValue}
+                        onKeyDown={(e) => onEnterSearch(e)} />
                     <button
                         onClick={onclickSearch}>검색</button>
                     <span className='displayMessage'>{displayMessage}</span>
                 </div>
             </div>
             <div className='displayMessage2'>{displayMessage}</div>
-            {selectItem.length > 0 ?
-                <ProductListResult selectItem={selectItem} category={category} page={page} setPage={setPage} />
-                : <ProductListResult selectItem={GoodsItems.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
+            {list.length > 0 ?
+                <ProductListResult selectItem={list} category={category} page={page} setPage={setPage} />
+                : <ProductListResult selectItem={list.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
         </>
     );
 }

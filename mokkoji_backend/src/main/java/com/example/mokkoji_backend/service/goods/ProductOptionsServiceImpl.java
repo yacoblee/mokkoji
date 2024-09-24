@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.service;
+package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
 
