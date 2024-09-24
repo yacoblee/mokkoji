@@ -170,7 +170,7 @@
 							<goal>process</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<outputDirectory>target/generated-sources/annotations</outputDirectory>
 							<!-- 경로에서 문제 발생 시 /java 대신 /annotations로 통일할 것. -->
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
