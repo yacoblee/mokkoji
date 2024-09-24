@@ -103,7 +103,7 @@ CREATE TABLE `favorite` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- producthistory definition
+-- purchasehistory definition
 
 CREATE TABLE `purchasehistory` (
   `purchase_number` INT NOT NULl AUTO_INCREMENT COMMENT '주문번호',
@@ -114,10 +114,10 @@ CREATE TABLE `purchasehistory` (
   `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '구매 날짜',
   `purchase_status` varchar(100)  COMMENT '구매 상태',
   PRIMARY KEY (`purchase_number`),
-  KEY `producthistory_customer_FK` (`user_id`),
-  KEY `producthistory_addresses_FK` (`address_id`),
-  CONSTRAINT `producthistory_addresses_FK` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`),
-  CONSTRAINT `producthistory_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+  KEY `purchasehistory_customer_FK` (`user_id`),
+  KEY `purchasehistory_addresses_FK` (`address_id`),
+  CONSTRAINT `purchasehistory_addresses_FK` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`),
+  CONSTRAINT `purchasehistory_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -156,10 +156,10 @@ CREATE TABLE `purchasehistorylist` (
   PRIMARY KEY (`purchase_number`,`product_id`,`packaging_option_content`,`option_content`),
   KEY `purchaselist_product_FK` (`product_id`),
   KEY `purchaselist_packaging_FK` (`packaging_option_content`),
-  KEY `purchaselist_producthistory_FK` (`purchase_number`),
+  KEY `purchaselist_purchasehistory_FK` (`purchase_number`),
   CONSTRAINT `purchaselist_packaging_FK` FOREIGN KEY (`packaging_option_content`) REFERENCES `packaging` (`packaging_option_content`),
   CONSTRAINT `purchaselist_productoptions_FK` FOREIGN KEY (`product_id`, `option_content`) REFERENCES `productoptions` (`product_id`, `option_content`),
-  CONSTRAINT `purchaselist_producthistory_FK` FOREIGN KEY (`purchase_number`) REFERENCES `producthistory` (`purchase_number`)
+  CONSTRAINT `purchaselist_purchasehistory_FK` FOREIGN KEY (`purchase_number`) REFERENCES `purchasehistory` (`purchase_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
