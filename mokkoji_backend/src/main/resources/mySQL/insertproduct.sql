@@ -564,6 +564,3 @@ INSERT INTO productoptions(product_id, option_content,option_price)
 VALUES (19, '대',90000);
 
 
-ALTER TABLE `users`
-MODIFY COLUMN `user_sequence` INT NOT NULL AUTO_INCREMENT COMMENT '인덱스',
-ADD UNIQUE (`user_sequence`);

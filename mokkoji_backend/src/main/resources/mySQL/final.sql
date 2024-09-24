@@ -61,7 +61,7 @@ CREATE TABLE `users` (
   `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '성별',
   `phone_number` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '핸드폰번호',
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '이메일',
-  `user_sequence` int NOT NULL COMMENT '인덱스',
+  `user_sequence` int NOT NULL UNIQUE AUTO_INCREMENT COMMENT '인덱스',
   `is_withdrawn` tinyint(1) DEFAULT '0' COMMENT '탈퇴여부',
   `withdrawal_date` timestamp NULL DEFAULT NULL COMMENT '탈퇴날짜',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '가입날짜',
@@ -70,6 +70,11 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   CONSTRAINT `users_chk_1` CHECK ((`gender` in (_utf8mb4'M',_utf8mb4'F')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 효윤 변경사항 9.24
+-- ALTER TABLE `users`
+-- MODIFY COLUMN `user_sequence` INT NOT NULL AUTO_INCREMENT COMMENT '인덱스',
+-- ADD UNIQUE (`user_sequence`);
 
 
 -- address definition
