@@ -20,5 +20,5 @@ public class Packaging {
 	@Column(name = "packagingOptionContent", nullable = false)
 	private String packagingContent;
 	@Column(name = "packagingOptionPrice", nullable = false)
-	private int packaging_option_price;
+	private int packagingPrice;
 }
