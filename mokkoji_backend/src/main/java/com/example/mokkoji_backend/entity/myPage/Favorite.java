@@ -20,10 +20,10 @@ public class Favorite {
 
 	@Id
 	@Column(name = "user_id")
-	private int userId;
+	private String userId;
 	@Id
 	@Column(name = "product_id")
-	private String productId;
+	private int productId;
 
 	@CreatedDate
 	@Column(name = "favorite_date")

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class FavoriteId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int userId;
-	private String productId;
+	private String userId;
+	private int productId;
 
 }
