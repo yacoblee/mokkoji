@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity.registration;
+package com.example.mokkoji_backend.entity.myPage;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
