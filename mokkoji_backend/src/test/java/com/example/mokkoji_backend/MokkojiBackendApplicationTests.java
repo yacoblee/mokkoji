@@ -1,26 +1,28 @@
 package com.example.mokkoji_backend;
 
-import com.example.mokkoji_backend.entity.myPage.Reviews;
-import com.example.mokkoji_backend.repository.myPage.ReviewsRepository;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
+import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.repository.UsersRepository;
+
 
 @SpringBootTest
 class MokkojiBackendApplicationTests {
-
-	//@Test
-	void contextLoads() {
-	}
-	ReviewsRepository reviewsRepository;
-
+	
+	@Autowired
+	UsersRepository repository;
 	@Test
-	void test() {
-		List<Reviews> list = reviewsRepository.findByUserIdOrderByReviewDateDesc("user1");
-		for (Reviews reviews : list) {
-			System.out.println(reviews);
-		}
+	void contextLoads() {
+		
 	}
-
+	
+	/*
+	 * @Test public void selectOne() { Optional <Users> user =
+	 * repository.findById("user3"); log.info("*** User found: " + user); }
+	 */
+	
 }

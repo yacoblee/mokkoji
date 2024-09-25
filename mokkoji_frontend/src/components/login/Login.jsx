@@ -61,28 +61,55 @@ const Login = () => {
 
     const dispatch = useDispatch();
     // 로그인 검사 함수 (로그인 시 홈 화면으로 이동 : 로그인실패 횟수 p태그에 연결하여 텍스트 표현)
-    const CheckLogin = (e) => {
-        const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
-        if (isLogin) {
-            const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
-            dispatch(login(userInfo));
+    // const CheckLogin = (e) => {
+    //     const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
+    //     if (isLogin) {
+    //         const userInfo = { id: inputId, pw: inputPw, LoginSuccess: true }
+    //         dispatch(login(userInfo));
 
-            const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
-            sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
-            navi('/');
+    //         const filteredUserInfoID = userInfoData.find(it => it.id == inputId && it.pw === inputPw);
+    //         sessionStorage.setItem('LoginUserInfo', JSON.stringify(filteredUserInfoID));
+    //         navi('/');
+    //     }
+    //     else {
+    //         e.preventDefault();
+    //         // setErrorCount(prventCount => prventCount + 1);
+    //         loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요.`
+    //         // \n 로그인 실패 횟수: ${errorCount};
+    //         loginP.current.style.visibility = 'visible';
+    //     }
+    //     // 버튼 클릭 후 input 빈문자열로 초기화 
+    //     setInputId("");
+    //     setInputePw("");
+    // }
+
+  const CheckLogin= (e)=>{
+    let url = "http://localhost:8080/users/Login";
+    const data = {loginID: e.inputId, loginPW: inputPw};
+
+    apiCall(url, 'POST', data, null)
+     .then((response)=>{
+        sessionStorage.setItem("loginID", JSON.stringify(response));
+        alert('로그인 성공');
+        setIsLoggedIn(true);
+        setLoginInfo(response);
+        navi("/");
+
+
+     }).catch((err) => {
+        setIsLoggedIn(false);
+        setLoginInfo('');
+        
+        // 상태 코드로 에러 메시지 처리
+        if (err.response && err.response.status === 502) {
+          alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+        } else {
+          alert(`** onLoginSubmit 시스템 오류, err=${err}`);
         }
-        else {
-            e.preventDefault();
-            // setErrorCount(prventCount => prventCount + 1);
-            loginP.current.textContent = `아이디 비밀번호를 다시 입력해주세요.`
-            // \n 로그인 실패 횟수: ${errorCount};
-            loginP.current.style.visibility = 'visible';
-        }
-        // 버튼 클릭 후 input 빈문자열로 초기화 
-        setInputId("");
-        setInputePw("");
+        navi("/Login");
+      });
+
     }
-
 
 
     return (
