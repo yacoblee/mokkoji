@@ -1,18 +1,14 @@
 package com.example.mokkoji_backend.entity.myPage;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "favorite")
@@ -21,7 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(FavoriteId.class)
-public class Favorite {
+public class Favorite implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "user_id")

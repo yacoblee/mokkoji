@@ -1,10 +1,6 @@
 package com.example.mokkoji_backend.entity.myPage;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,9 +16,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(CartId.class)
-public class Cart implements Serializable{
-	
+public class Cart implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "user_id")
 	private String userId;

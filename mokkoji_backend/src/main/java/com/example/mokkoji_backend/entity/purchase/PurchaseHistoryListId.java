@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class PurchaseHistoryListId implements Serializable {
 
-	static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	private int purchaseNumber;
 	private int productId;
