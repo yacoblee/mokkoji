@@ -58,5 +58,14 @@ public class Products {
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<ProductOptions> options;
 	
+	public Products(Long id,String name ,int price ,String mainImageName, String categoryId ,String guide, List<ProductOptions> options) {
+		this.id=id;
+		this.name = name;
+		this.price = price;
+		this.mainImageName = mainImageName;
+		this.categoryId = categoryId;
+		this.guide = guide;
+		this.options = options;
+	}
 
 }
