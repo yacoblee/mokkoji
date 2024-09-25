@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity.myPage;
+package com.example.mokkoji_backend.entity.purchase;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
