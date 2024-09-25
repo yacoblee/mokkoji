@@ -34,9 +34,9 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 	
 	@Override
-	public List<ProductDetailDTO> findDetailinfo() {
+	public ProductDetailDTO findDetailinfo( Long id) {
 		
-		return repository.findDetailinfo();
+		return repository.findDetailinfo(id);
 	}
 
 	@Override

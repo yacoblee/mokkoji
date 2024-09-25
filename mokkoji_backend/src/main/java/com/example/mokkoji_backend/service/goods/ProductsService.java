@@ -14,7 +14,7 @@ public interface ProductsService {
 	
 	List<ProductsDTO> findByCategoryId(String id);
 	
-	List<ProductDetailDTO> findDetailinfo();
+	ProductDetailDTO findDetailinfo(Long id);
 	
 	//List<ProductsDTO> findListDSL();
 	

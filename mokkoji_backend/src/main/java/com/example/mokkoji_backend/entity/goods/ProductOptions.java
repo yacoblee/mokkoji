@@ -2,6 +2,8 @@ package com.example.mokkoji_backend.entity.goods;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,6 +36,7 @@ public class ProductOptions implements Serializable {
 	private int price;
 	
 	@ManyToOne
+	@JsonBackReference
     @JoinColumn(name = "productId")
 	private Products product;
 }

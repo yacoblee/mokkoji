@@ -8,18 +8,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
+import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -66,46 +70,32 @@ public class ProductsController {
 	
 	@GetMapping("/goods/{categoryId}/{productId}")
 	public ResponseEntity<?> detail(@PathVariable("categoryId") String categoryId,
-	                                @PathVariable("productId") Long productId,
-	                                @RequestParam(value = "data", required = false) String[] data) {
+            @PathVariable("productId") Long productId,
+            @RequestParam(value = "type", required = false) String type) {
 
 	    Map<String, Object> response = new HashMap<>();
 	    System.out.println("실행되고 있니 ?");
 	    // 요청된 데이터에 따라 필요한 정보만 반환
-	    // 요청된 데이터에 따라 필요한 정보만 반환
-	    if (data != null && data.length > 0) {
-	        for (String key : data) {
-	            switch (key) {
-	                case "product":
-	                	// Products 데이터
-	                	ProductsDTO product = service.findDto(productId);
-	                    response.put("product", product);
-	                    break;
-	                case "slide":
-	                	// 슬라이드 이미지 데이터
-	            	    List<ProductImages> slideSrc = imservice.findByProductIdAndType(productId, "slide");
-	                    response.put("slideSrc", slideSrc);
-	                    break;
-	                case "main":
-	                	// 메인 이미지 데이터
-	            	    List<ProductImages> mainSrc = imservice.findByProductIdAndType(productId, "main");
-	                    response.put("mainSrc", mainSrc);
-	                    break;
-	                case "packaging":
-	                	 // 포장 옵션 데이터
-	            	    List<Packaging> packaging = paservice.findAll();
-	                    response.put("packaging", packaging);
-	                    break;
-	                default:
-	                    response.put("message", "Invalid data request: " + key);
-	            }
-	        }
-	    } else {
-	        // 기본으로 모든 데이터를 반환
-	        response.put("product", null);
-	        response.put("slideSrc", null);
-	        response.put("mainSrc", null);
-	        response.put("packaging", null);
+	    
+	    // 제품 및 상세 정보
+
+	    // 이미지 타입에 따른 데이터 추가
+	    if (type != null &&  !type.equals("form")) {
+	    	ProductsDTO product = service.findDto(productId);
+	    	response.put("product", product);
+	    	response.put("detail", service.findDetailinfo(productId));
+	    	log.info("Finding images with type: " + type);
+	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
+	        log.info(image);
+	        response.put("image", image);
+	    } 
+	    else {
+	    	log.info("Finding all packaging");
+	    	List<ProductOptions> options= opservice.findByProductId(productId);
+	    	response.put("option",options );
+	    	log.info("options"+options);
+	        List<Packaging> packaging = paservice.findAll();
+	        response.put("packaging", packaging);
 	    }
 
 	    return ResponseEntity.ok(response);

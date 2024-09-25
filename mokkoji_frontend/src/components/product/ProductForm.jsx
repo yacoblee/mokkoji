@@ -12,21 +12,22 @@ const ProductForm = ({ product }) => {
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
     //const [slideimages, setSlideImages] = useState([]);
-    //const [mainimages, setMainImages] = useState([]);
+    const [option, setOption] = useState([]);
     const [packaging, setPackaging] = useState([]);
     useEffect(() => {
-        let uri = API_BASE_URL + `/goods/${category}/${id}`;
+        let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
         axios.get(uri, {
-            params: { data: 'packaging' }  // "packaging"만 요청
+            params: {
+                type: 'form'  // 여러 값을 개별적으로 보냄
+            }
         })
             .then(response => {
-                const { packaging } = response.data;
-
+                const { option, packaging } = response.data;
+                setOption(option);
                 setPackaging(packaging);
 
                 // 콘솔 로그로 데이터 확인
-                console.log('Product:', product);
-                console.log('packaging:', packaging);
+                console.log(option);
             })
             .catch(err => {
                 //alert(err.message);
@@ -35,7 +36,7 @@ const ProductForm = ({ product }) => {
                 setPackaging([]);
 
             })
-    }, []);
+    }, [product.id]);
 
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
@@ -52,7 +53,7 @@ const ProductForm = ({ product }) => {
     const [count, setConut] = useState(1);
 
     // 토탈 금액에 대한 state
-    const [totalPrice, setTotalPrice] = useState(+packaging.price);
+    const [totalPrice, setTotalPrice] = useState(+product.price);
 
     // select 옵션에 대한 state 함수
     const onChangeSelectItems = (e) => {
@@ -76,31 +77,30 @@ const ProductForm = ({ product }) => {
         }
     };
 
-    // 총 금액을 계산하는 함수
     const calculateTotalPrice = () => {
         if (!product) return 0; // 선택된 상품이 없으면 0 반환
         let packagingPrice = 0; // 포장 추가 금액
         let contentPrice = 0; // 기본 추가 금액
 
-        const packagingStartIndex = options.packagingSelect.indexOf('(+');
-        const packagingEndIndex = options.packagingSelect.indexOf('원)');
-        const contentSelectStartIndex = options.contentSelect.indexOf('(+');
-        const contentSelectEndIndex = options.contentSelect.indexOf('원)');
-
         // 포장 옵션에 따라 추가 금액 설정
+        // if (options.packagingSelect) {
+        //     const packagingStartIndex = options.packagingSelect.indexOf('(+');
+        //     const packagingEndIndex = options.packagingSelect.indexOf('원)');
+        //     if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
+        //         packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
+        //     }
+        // }
 
-        if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
-            packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex))
-        }
         // 내용 옵션에 따라 추가 금액 설정
+        // if (options.contentSelect) {
+        //     const contentSelectStartIndex = options.contentSelect.indexOf('(+');
+        //     const contentSelectEndIndex = options.contentSelect.indexOf('원)');
+        //     if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
+        //         contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
+        //     }
+        // }
 
-        if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
-            contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
-        }
-        //console.log("contentPrice=> " + options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
-        //console.log("packagingPrice=> " + packagingPrice);
-        // 총 금액 계산
-        return (product.price + contentPrice) * count + packagingPrice * count;
+        return (product.price + options.contentSelect) * count + packagingPrice * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트
@@ -208,11 +208,11 @@ const ProductForm = ({ product }) => {
                     required
                 >
                     <option value="selectcontent" hidden>선택옵션</option>
-                    {/* {product.options.map((option) => (
+                    {option.map((option) => (
                         <option value={option.price} key={option.content}>
                             {option.content}
-                            {option.price > 0 ? `(${option.price})원` : ''} </option>
-                    ))} */}
+                            {option.price > 0 ? `(+${option.price}원)` : ""} </option>
+                    ))}
                 </select>
                 <select
                     name="packagingSelect"
@@ -222,11 +222,11 @@ const ProductForm = ({ product }) => {
                     required
                 >
                     <option value="selectPackage" hidden>포장여부</option>
-                    {/* {packaging.map((packaging) => (
-                        <option value={option.packagingPrice} key={packaging.packagingContent}>
+                    {packaging.map((packaging) => (
+                        <option value={packaging.packagingPrice} key={packaging.packagingContent}>
                             {packaging.packagingContent}
-                            {packaging.packagingPrice > 0 ? `(${packaging.packagingPrice})원` : ''} </option>
-                    ))} */}
+                            {packaging.packagingPrice > 0 ? `(+${packaging.packagingPrice}원)` : ''} </option>
+                    ))}
                 </select>
             </div>
             <div className='price_box'>

@@ -27,8 +27,8 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId) FROM Products p")
 	List<ProductsDTO> findList();
 	
-	@Query("SELECT new com.example.mokkoji_backend.domain.ProductDetailDTO(p) FROM Products p")
-	List<ProductDetailDTO> findDetailinfo();
+	@Query("SELECT new com.example.mokkoji_backend.domain.ProductDetailDTO(p) FROM Products p where p.id = :id")
+	ProductDetailDTO findDetailinfo(@Param("id") Long id);
 	
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"

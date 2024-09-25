@@ -7,22 +7,23 @@ import axios from "axios";
 const ProductDetailsInfo = ({ product }) => {
     const { category, id } = useParams();
 
-    //const [slideimages, setSlideImages] = useState([]);
     const [mainimages, setMainImages] = useState([]);
-    //const [packaging, setPackaging] = useState([]);
+    const [text, setText] = useState([]);
+    //const [slideimages, setSlideImages] = useState([]);
     useEffect(() => {
         let uri = API_BASE_URL + `/goods/${category}/${id}`;
         axios.get(uri, {
-            params: { data: 'main' }   // "main"만 요청
+            params: {
+                type: 'main'  // 여러 값을 개별적으로 보냄
+            }
         })
             .then(response => {
-                const { mainSrc } = response.data;
+                const { image, detail } = response.data;
 
-                setMainImages(mainSrc);
-
+                setMainImages(image);
+                setText(detail);
                 // 콘솔 로그로 데이터 확인
-                console.log('Product:', product);
-                console.log('mainSrc:', mainSrc);
+
             })
             .catch(err => {
                 //alert(err.message);
@@ -31,7 +32,7 @@ const ProductDetailsInfo = ({ product }) => {
                 setMainImages([]);
 
             })
-    }, []);
+    }, [id]);
 
     //슬라이드 구현을 위한 state
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -78,6 +79,9 @@ const ProductDetailsInfo = ({ product }) => {
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     }
+    if (product === null || Object.keys(product).length === 0 || mainimages.length === 0) {
+        return <div style={{ marginTop: '100px' }}>Loading...</div>;  // 로딩 중인 경우 처리
+    }else{
     return (
         <>
             <h2 id="details">
@@ -85,32 +89,32 @@ const ProductDetailsInfo = ({ product }) => {
             </h2>
             <div className='imgInfo'  >
 
-                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0]}`} alt={product.name} />
+                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
                 <p>
-                    {product.name}
+                    {text.name}
                 </p>
                 <p>
-                    {product.mainDescription}
+                    {text.mainDescription}
                 </p>
-                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1]}`} alt={product.name} />
-                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2]}`} alt={product.name} />
+                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1].name}`} alt={product.name} />
+                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name} />
 
                 <p>
-                    {product.guideLine}
+                    {text.guideLine}
                 </p>
                 <p>
-                    {product.productAdditionalDescription}
+                    {text.productAdditionalDescription}
                 </p>
                 {mainimages[3] ?
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3]}`} alt={product.name} />
-                    : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0]}`} alt={product.name} />}
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name} />
+                    : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />}
             </div>
             <hr />
             <h2 id="shipping">
                 배송 / 사이즈
             </h2>
             <div className='deliSizeInfo' >
-                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0]}`} alt={product.name} />
+                <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
 
                 <div className="productSizeInfo">
                     {product.sizeInfo}
@@ -198,7 +202,7 @@ const ProductDetailsInfo = ({ product }) => {
         </>
     );
 
-
+}
 
 }
 

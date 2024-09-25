@@ -16,35 +16,34 @@ const ProductDetails = () => { //===============================================
     const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
     const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
     const [like, setLike] = useState(false);
-    const [product, setProduct] = useState(() => {
-        // 세션 스토리지에서 product 데이터를 불러오기 (존재하면)
-        const savedProduct = sessionStorage.getItem('product');
-        return savedProduct ? JSON.parse(savedProduct) : null;
-    });
+    const [product, setProduct] = useState({});
 
     const [slideimages, setSlideImages] = useState([]);
 
     useEffect(() => {
-        if (!product) {  // product가 세션 스토리지에 없으면 서버에서 데이터 요청
-            let uri = `${API_BASE_URL}/goods/${category}/${id}`;
-            axios.get(uri, {
-                params: { data: 'product', data: 'slide' }  // 필요한 데이터만 요청
+
+        let uri = `${API_BASE_URL}/goods/${category}/${id}`;
+        axios.get(uri, {
+            params: {
+                type: 'slide'  // 여러 값을 개별적으로 보냄
+            }
+        })
+            .then(response => {
+                const { product, image } = response.data;
+                setSlideImages(image);
+                console.log(product);
+                console.log(image);
+                if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
+                    setProduct(product);
+                    sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
+                }
             })
-                .then(response => {
-                    const { product, slideSrc } = response.data;
-                    setSlideImages(slideSrc);
-                    console.log(product);
-                    if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
-                        setProduct(product);
-                        sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    setProduct(null);
-                    setSlideImages([]);
-                });
-        }
+            .catch(err => {
+                console.log(err);
+                setProduct(null);
+                setSlideImages([]);
+            });
+
     }, [id]);
 
     //세션 스토리지의 유저 데이터를 담는 변수.
@@ -119,8 +118,8 @@ const ProductDetails = () => { //===============================================
     }
     // ======================================================================================return
     // product 또는 slideimages가 null인 경우 로딩 상태를 처리
-    if (!product || slideimages.length === 0) {
-        return <div style={{ marginTop: '100px' }}>Loading...</div>; // 로딩 중인 경우 처리
+    if (product === null || Object.keys(product).length === 0 || slideimages.length === 0) {
+        return <div style={{ marginTop: '100px' }}>Loading...</div>;  // 로딩 중인 경우 처리
     } else {
 
         return (
@@ -134,12 +133,12 @@ const ProductDetails = () => { //===============================================
                 <div className='box'>
                     <div className='imgBox'>
                         <div className="imgInner">
-                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src}`} key={i} alt={i}
+                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src.name}`} key={i} alt={i}
                                 style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />)}
 
                         </div>
                         <div className='labelBox'>
-                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src}`} key={i} alt={i}
+                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src.name}`} key={i} alt={i}
                                 onClick={() => { onClickLabelBox(i) }} />)}
                         </div>
                     </div>
