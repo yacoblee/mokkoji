@@ -227,19 +227,6 @@ CREATE TABLE `cart` (
 
 -- registdatecnt definition
 
-CREATE TABLE `registdatecnt` (
-  `regist_id` varchar(100) DEFAULT NULL,
-  `user_id` varchar(100) DEFAULT NULL,
-  `reg_date` timestamp NULL DEFAULT NULL,
-  KEY `registdatecnt_registedhistory_FK` (`regist_id`),
-  KEY `registdatecnt_customer_FK` (`user_id`),
-  KEY `registdatecnt_registedhistory_FK_1` (`reg_date`),
-  CONSTRAINT `registdatecnt_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `registdatecnt_registedhistory_FK` FOREIGN KEY (`regist_id`) REFERENCES `registedhistory` (`regist_id`),
-  CONSTRAINT `registdatecnt_registedhistory_FK_1` FOREIGN KEY (`reg_date`) REFERENCES `registedhistory` (`reg_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
 CREATE TABLE registimages (
   regist_code varchar(100) NOT NULL COMMENT '예약상품분류코드',
   image_order int NOT NULL COMMENT '이미지 순서',
