@@ -563,3 +563,7 @@ VALUES (19, '중',40000);
 INSERT INTO productoptions(product_id, option_content,option_price)
 VALUES (19, '대',90000);
 
+-- 추가 구문 9.25 누락
+UPDATE project.products
+SET product_name='한국 전통 문양 베개 커버', product_price=25000, product_size_info='상품 크기 : 450x450mm', product_guide='* 손세탁 권장', product_main_description='한국 전통 문양이 새겨진 고급 베개 커버입니다.', product_additional_description='인테리어 소품으로 좋은 패키지에 담겨 있습니다.', main_image_name='pictureFlower5.jpg', like_count=0, status=0, stock_count=100, upload_date='2024-09-24 12:29:38', category_id='C3'
+WHERE product_id=13;
