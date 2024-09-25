@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -15,7 +16,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(CartId.class)
-public class Cart {
+public class Cart implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "user_id")

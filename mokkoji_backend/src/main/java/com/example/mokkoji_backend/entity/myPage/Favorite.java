@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(FavoriteId.class)
-public class Favorite {
+public class Favorite implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "user_id")

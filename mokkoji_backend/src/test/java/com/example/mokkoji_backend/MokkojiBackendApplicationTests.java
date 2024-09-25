@@ -17,7 +17,7 @@ class MokkojiBackendApplicationTests {
 
 	@Test
 	void test() {
-	 	 List<Reviews> list = reviewsRepository.findByUserIdOrderByReviewDateDesc("user1");
+		List<Reviews> list = reviewsRepository.findByUserIdOrderByReviewDateDesc("user1");
 		for (Reviews reviews : list) {
 			System.out.println(reviews);
 		}
