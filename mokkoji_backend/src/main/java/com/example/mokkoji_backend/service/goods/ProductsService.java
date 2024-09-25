@@ -14,7 +14,7 @@ public interface ProductsService {
 	
 	List<ProductsDTO> findByCategoryId(String id);
 	
-	List<ProductsDTO> findrecommendList(Long id);
+	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	
 	ProductDetailDTO findDetailinfo(Long id);
 	
@@ -28,4 +28,6 @@ public interface ProductsService {
 	void save(Products item);
 	
 	void deleteById(Long id);
+	
+
 }

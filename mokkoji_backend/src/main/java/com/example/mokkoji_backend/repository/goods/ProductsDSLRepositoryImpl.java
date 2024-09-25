@@ -1,16 +1,18 @@
 package com.example.mokkoji_backend.repository.goods;
 
 
-import com.example.mokkoji_backend.domain.ProductsDTO;
-import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;
+import static com.example.mokkoji_backend.entity.goods.QProducts.products;
 
 import java.util.List;
 
-import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;
-import static com.example.mokkoji_backend.entity.goods.QProducts.products;
+import org.springframework.stereotype.Repository;
+
+import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -57,5 +59,20 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 			             products.uploadDate
 			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId))
 				.where(products.id.eq(id)).fetchJoin().fetchOne();
+	}
+	
+	
+	@Override
+	public List<ProductsDTO> recommendList(Long id) {
+		
+		return jpaQueryFactory.select(Projections.bean(ProductsDTO.class, 
+				products.id,
+	             products.categoryId,
+	             products.name,
+	             products.price, 
+	             products.guide,
+	             products.mainImageName
+
+				)).from(products).where(products.id.ne(id)).orderBy(products.status.desc()).limit(4).fetch();
 	}
 }

@@ -83,8 +83,8 @@ public class ProductsController {
 	        response.put("image", image);
 	        
 	        if(type.equals("main")) {
-	        	response.put("detail", service.findDetailinfo(productId));
-	        	response.put("recommend", service.findrecommendList(productId));
+	        	response.put("detail", service.findDetailinfo(productId));	
+	        	response.put("recommend", service.findTop4ByOrderByCountDescNative(productId));
 	        	//recommend, image, detail 
 	        }else {
 	        	//product, image

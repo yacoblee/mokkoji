@@ -9,4 +9,6 @@ public interface ProductsDSLRepository {
 	List<ProductsDTO> findByJoinList();
 	
 	ProductsDTO findByJoinOne(Long id);
+	
+	List<ProductsDTO> recommendList(Long id);
 }

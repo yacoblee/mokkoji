@@ -28,7 +28,7 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	List<ProductsDTO> findList();
 	
     // 네이티브 쿼리를 이용하여 상위 4개의 count가 높은 엔터티 조회
-    @Query(value = "SELECT * FROM products p WHERE p.product_id <> :product_id ORDER BY p.stock_count DESC LIMIT 4", nativeQuery = true)
+    @Query(value = "SELECT * FROM products p WHERE p.product_id not in (:product_id) ORDER BY p.stock_count DESC LIMIT 4", nativeQuery = true)
     List<Products> findTop4ByOrderByCountDescNative(@Param("product_id") Long product_id);
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductDetailDTO(p) FROM Products p where p.id = :id")
