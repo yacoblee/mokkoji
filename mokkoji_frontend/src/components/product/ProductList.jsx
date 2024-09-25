@@ -172,7 +172,7 @@ const ProductList = () => {
 
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`} key={i}  >{items.description}</NavLink>
-                    ))}
+                    ))}    
                 </div>
                 <div className='productSearch'>
                     <select name="productSearch" id="productSearch"
