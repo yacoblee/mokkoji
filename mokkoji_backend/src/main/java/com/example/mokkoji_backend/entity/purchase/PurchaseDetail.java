@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(PurchaseHistoryListId.class)
-public class PurchaseHistoryList implements Serializable {
+@IdClass(PurchaseDetailId.class)
+public class PurchaseDetail implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

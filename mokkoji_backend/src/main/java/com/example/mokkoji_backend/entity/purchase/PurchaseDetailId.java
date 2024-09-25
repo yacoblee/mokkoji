@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseHistoryListId implements Serializable {
+public class PurchaseDetailId implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

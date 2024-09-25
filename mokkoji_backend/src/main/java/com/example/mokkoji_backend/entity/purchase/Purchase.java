@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(PurchaseHistoryId.class)
-public class PurchaseHistory implements Serializable {
+@IdClass(PurchaseId.class)
+public class Purchase implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
