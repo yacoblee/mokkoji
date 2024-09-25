@@ -12,19 +12,30 @@ public class FavoriteServiceImpl {
 
 	FavoriteRepository favoriteRepository;
 
-	// 마이페이지에서 찜목록 표시할떄 사용
-	List<Favorite> userFavorite(String userId) {
-		return favoriteRepository.findByUserIdOrderByFavoriteDateDesc(userId);
+	// ** 상품페이지, 마이페이지 모두에서 사용 ==================================
+
+	// 1) 찜목록에서 row가 삭제될때 사용
+	void deleteFavorite(FavoriteId favoriteId) {
+		favoriteRepository.deleteById(favoriteId);
 	}
 
-	// 찜목록이 추가될때 사용
-	void addFavorite(Favorite favorite) {
+	// ** 상품 페이지에서만 사용 ==============================================
+
+	// 1) 찜목록이 추가될때 사용
+	void insertFavorite(Favorite favorite) {
 		favoriteRepository.save(favorite);
 	}
 
-	// 마이페이지에서 찜목록을 삭제후 다시 List를 불러올때 사용
-	void deleteFavorite(FavoriteId favoriteId) {
-		favoriteRepository.deleteById(favoriteId);
+	// 2) 찜 개수를 count할 때 사용
+	int countFavorite(int productId){
+		return favoriteRepository.countByProductId(productId);
+	}
+	
+	// ** 마이페이지에서만 사용 ===============================================
+
+	// 1) 찜목록 표시할떄 사용
+	List<Favorite> userFavorite(String userId) {
+		return favoriteRepository.findByUserIdOrderByFavoriteDateDesc(userId);
 	}
 
 }
