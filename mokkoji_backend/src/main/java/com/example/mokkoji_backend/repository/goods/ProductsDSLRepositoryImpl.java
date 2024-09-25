@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.repository;
+package com.example.mokkoji_backend.repository.goods;
 
 
 import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;

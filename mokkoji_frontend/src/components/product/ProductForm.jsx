@@ -4,14 +4,38 @@ import Modal from 'react-modal';
 import ModalNotLogin from './ModalNotLogin';
 import ModalNotOption from './ModalNotOption';
 import ModalOkbasket from './ModalOkbasket';
-
-
+import { API_BASE_URL } from "../../service/app-config";
+import axios from "axios";
 // 선택된 상품 정보를 받는 컴포넌트
-const ProductForm = ({ selectedProduct }) => {
+const ProductForm = ({ product }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
     const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    //const [slideimages, setSlideImages] = useState([]);
+    //const [mainimages, setMainImages] = useState([]);
+    const [packaging, setPackaging] = useState([]);
+    useEffect(() => {
+        let uri = API_BASE_URL + `/goods/${category}/${id}`;
+        axios.get(uri, {
+            params: { data: 'packaging' }  // "packaging"만 요청
+        })
+            .then(response => {
+                const { packaging } = response.data;
 
+                setPackaging(packaging);
+
+                // 콘솔 로그로 데이터 확인
+                console.log('Product:', product);
+                console.log('packaging:', packaging);
+            })
+            .catch(err => {
+                //alert(err.message);
+                console.log(err);
+
+                setPackaging([]);
+
+            })
+    }, []);
 
     // select 옵션에 대한 state
     const [options, setOptions] = useState({
@@ -28,7 +52,7 @@ const ProductForm = ({ selectedProduct }) => {
     const [count, setConut] = useState(1);
 
     // 토탈 금액에 대한 state
-    const [totalPrice, setTotalPrice] = useState(+selectedProduct.price);
+    const [totalPrice, setTotalPrice] = useState(+packaging.price);
 
     // select 옵션에 대한 state 함수
     const onChangeSelectItems = (e) => {
@@ -54,7 +78,7 @@ const ProductForm = ({ selectedProduct }) => {
 
     // 총 금액을 계산하는 함수
     const calculateTotalPrice = () => {
-        if (!selectedProduct) return 0; // 선택된 상품이 없으면 0 반환
+        if (!product) return 0; // 선택된 상품이 없으면 0 반환
         let packagingPrice = 0; // 포장 추가 금액
         let contentPrice = 0; // 기본 추가 금액
 
@@ -73,10 +97,10 @@ const ProductForm = ({ selectedProduct }) => {
         if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
             contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex))
         }
-        console.log("contentPrice=> " + options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
-        console.log("packagingPrice=> " + packagingPrice);
+        //console.log("contentPrice=> " + options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
+        //console.log("packagingPrice=> " + packagingPrice);
         // 총 금액 계산
-        return (selectedProduct.price + contentPrice) * count + packagingPrice * count;
+        return (product.price + contentPrice) * count + packagingPrice * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트
@@ -151,7 +175,7 @@ const ProductForm = ({ selectedProduct }) => {
 
         // 장바구니에 추가할 항목 생성
         const sendBasket = {
-            productId: selectedProduct.id,
+            productId: product.id,
             options,
             count,
             totalPrice
@@ -184,9 +208,11 @@ const ProductForm = ({ selectedProduct }) => {
                     required
                 >
                     <option value="selectcontent" hidden>선택옵션</option>
-                    {selectedProduct.option.map((option) => (
-                        <option value={option} key={option}>{option}</option>
-                    ))}
+                    {/* {product.options.map((option) => (
+                        <option value={option.price} key={option.content}>
+                            {option.content}
+                            {option.price > 0 ? `(${option.price})원` : ''} </option>
+                    ))} */}
                 </select>
                 <select
                     name="packagingSelect"
@@ -196,9 +222,11 @@ const ProductForm = ({ selectedProduct }) => {
                     required
                 >
                     <option value="selectPackage" hidden>포장여부</option>
-                    <option key={'소'} value="굿즈 기본 포장(+0원)">굿즈 기본 포장(+0원)</option>
-                    <option key={'중'} value="굿즈 부직포 가방(+2000원)">굿즈 부직포 가방(+2000원)</option>
-                    <option key={'대'} value="굿즈 천 가방(+4000원)">굿즈 천 가방(+4000원)</option>
+                    {/* {packaging.map((packaging) => (
+                        <option value={option.packagingPrice} key={packaging.packagingContent}>
+                            {packaging.packagingContent}
+                            {packaging.packagingPrice > 0 ? `(${packaging.packagingPrice})원` : ''} </option>
+                    ))} */}
                 </select>
             </div>
             <div className='price_box'>
