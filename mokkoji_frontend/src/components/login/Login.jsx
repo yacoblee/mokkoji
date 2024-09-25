@@ -85,7 +85,7 @@ const Login = () => {
 
   const CheckLogin= (e)=>{
     let url = "http://localhost:8080/users/Login";
-    const data = {loginID: e.inputId, loginPW: inputPw};
+    const data = {userId: inputId, password: inputPw};
 
     apiCall(url, 'POST', data, null)
      .then((response)=>{
