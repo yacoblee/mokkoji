@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.entity.login;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Users {
 
 	@Id
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	private String userId;
 	
 	@Column(name = "password")
@@ -30,7 +31,7 @@ public class Users {
 	private String name;
 	
 	@Column(name = "birth_date")
-	private LocalDateTime birthDate;
+	private LocalDate birthDate;
 	
 	@Column(name = "gender")
 	private String gender;
@@ -45,13 +46,16 @@ public class Users {
 	private int userSequence;
 	
 	@Column(name = "is_withdrawn")
-	private LocalDateTime isWithdrawn;
+	private int isWithdrawn;
 	
 	@Column(name = "withdrawal_date")
 	private LocalDateTime withdrawalDate;
 	
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+	
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 	
 	@Column(name = "block_status")
 	private int blockStatus;
