@@ -1,21 +1,21 @@
-
-package com.example.mokkoji_backend.entity.myPage;
-
-
-import java.io.Serializable;
+package com.example.mokkoji_backend.entity.purchase;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class PurchaseHistoryListId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private int productId;
+	static final long serialVersionUID = 1L;
+
 	private int purchaseNumber;
+	private int productId;
 	private String optionContent;
 	private String packagingOptionContent;
+
 }
