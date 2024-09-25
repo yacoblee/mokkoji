@@ -24,7 +24,7 @@ const ProductList = () => {
                 console.log(err);
                 setList([]);
             })
-    }, []);
+    }, [category]);
 
 
     //메뉴바의 구성

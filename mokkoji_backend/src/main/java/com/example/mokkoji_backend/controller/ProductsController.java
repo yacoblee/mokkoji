@@ -44,11 +44,21 @@ public class ProductsController {
 	@GetMapping("/goods/{sub_type_name}")
 	public ResponseEntity<?> categotyList(@PathVariable("sub_type_name") String subTypeName) {
 		List<ProductsDTO> productList = service.findByCategoryId(subTypeName);
-		if(productList != null && !productList.isEmpty()) {
+		if(productList != null && !productList.isEmpty()) {// null 이 아닐 때
 			return ResponseEntity.ok(productList);
+		
 		}else {
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
+			productList = service.findList();
+			log.info("성공했니 ?");
+			return ResponseEntity.ok(productList);
+			
 		}
+//		if(subTypeName=="allGoods") { // productList = null;
+//		}
+		
+			//log.info("없어 ?");
+			//return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
+		
 		
 	}
 }
