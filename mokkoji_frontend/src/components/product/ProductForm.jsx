@@ -38,17 +38,17 @@ const ProductForm = ({ product }) => {
             })
     }, [product.id]);
 
-    // select 옵션에 대한 state
+    // select 옵션가격에 대한 state
     const [options, setOptions] = useState({
         contentSelect: '', //왼쪽 옵션값
         packagingSelect: '', // 포장 옵션값
     });
 
-    // 숫자 클릭에 대한 state
-    // const [btnValue, setBtnValue] = useState({
-    //     contentSelect: 1,   //왼쪽 옵션의 갯수
-    //     packagingSelect: 1, //포장 옵션의 갯수
-    // });
+    // select 옵션 내용에 대한 state
+    const [description, setDescription] = useState({
+        contentSelect: '선택 옵션',   //왼쪽 옵션의 갯수
+        packagingSelect: '포장 여부', //포장 옵션의 갯수
+    });
     //9.11 코드 변경
     const [count, setConut] = useState(1);
 
@@ -57,10 +57,15 @@ const ProductForm = ({ product }) => {
 
     // select 옵션에 대한 state 함수
     const onChangeSelectItems = (e) => {
-        const { name, value } = e.target;
+        const { name, value, selectedOptions } = e.target;
+        const description = selectedOptions[0].getAttribute('data-description');
         setOptions(it => ({
             ...it,
-            [name]: value
+            [name]: +value
+        }));
+        setDescription(it => ({
+            ...it,
+            [name]: `${description}${value > 0 ? ` (+${value}원)` : ''}`
         }));
     };
 
@@ -79,8 +84,8 @@ const ProductForm = ({ product }) => {
 
     const calculateTotalPrice = () => {
         if (!product) return 0; // 선택된 상품이 없으면 0 반환
-        let packagingPrice = 0; // 포장 추가 금액
-        let contentPrice = 0; // 기본 추가 금액
+        //let packagingPrice = options.packagingSelect; // 포장 추가 금액
+        //let contentPrice = options.contentSelect; // 기본 추가 금액
 
         // 포장 옵션에 따라 추가 금액 설정
         // if (options.packagingSelect) {
@@ -100,7 +105,7 @@ const ProductForm = ({ product }) => {
         //     }
         // }
 
-        return (product.price + options.contentSelect) * count + packagingPrice * count;
+        return (product.price + options.contentSelect + options.packagingSelect )  * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트
@@ -209,7 +214,8 @@ const ProductForm = ({ product }) => {
                 >
                     <option value="selectcontent" hidden>선택옵션</option>
                     {option.map((option) => (
-                        <option value={option.price} key={option.content}>
+                        <option value={option.price} key={option.content}
+                            data-description={option.content}>
                             {option.content}
                             {option.price > 0 ? `(+${option.price}원)` : ""} </option>
                     ))}
@@ -223,7 +229,8 @@ const ProductForm = ({ product }) => {
                 >
                     <option value="selectPackage" hidden>포장여부</option>
                     {packaging.map((packaging) => (
-                        <option value={packaging.packagingPrice} key={packaging.packagingContent}>
+                        <option value={packaging.packagingPrice} key={packaging.packagingContent}
+                            data-description={packaging.packagingContent}>
                             {packaging.packagingContent}
                             {packaging.packagingPrice > 0 ? `(+${packaging.packagingPrice}원)` : ''} </option>
                     ))}
@@ -234,8 +241,8 @@ const ProductForm = ({ product }) => {
             </div>
             <div className='priceifo'>
                 <ul>
-                    <li>{options.contentSelect ? options.contentSelect : '선택 옵션'}</li>
-                    <li>{options.packagingSelect ? options.packagingSelect : '포장 여부'}</li>
+                    <li>{description.contentSelect}</li>
+                    <li>{description.packagingSelect}</li>
                     <li className='priceSelect'>
                         <button type='button' onClick={() => { onClickbtn('-', 'contentSelect') }}>-</button>
                         <input type="text" value={count} readOnly />

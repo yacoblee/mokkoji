@@ -76,18 +76,21 @@ public class ProductsController {
 	    Map<String, Object> response = new HashMap<>();
 	    System.out.println("실행되고 있니 ?");
 	    // 요청된 데이터에 따라 필요한 정보만 반환
-	    
-	    // 제품 및 상세 정보
-
-	    // 이미지 타입에 따른 데이터 추가
 	    if (type != null &&  !type.equals("form")) {
-	    	ProductsDTO product = service.findDto(productId);
-	    	response.put("product", product);
-	    	response.put("detail", service.findDetailinfo(productId));
 	    	log.info("Finding images with type: " + type);
 	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
 	        log.info(image);
 	        response.put("image", image);
+	        
+	        if(type.equals("main")) {
+	        	response.put("detail", service.findDetailinfo(productId));
+	        	response.put("recommend", service.findrecommendList(productId));
+	        	//recommend, image, detail 
+	        }else {
+	        	//product, image
+	        	ProductsDTO product = service.findDto(productId);
+	        	response.put("product", product);
+	        }
 	    } 
 	    else {
 	    	log.info("Finding all packaging");

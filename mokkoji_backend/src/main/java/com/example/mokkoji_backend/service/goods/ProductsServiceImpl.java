@@ -1,13 +1,13 @@
 package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
-import com.example.mokkoji_backend.repository.goods.ProductsDSLRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,26 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public List<ProductsDTO> findByCategoryId(String categoryId){
 		return repository.findByCategoryId(categoryId);
+	}
+	
+	@Override
+	public List<ProductsDTO> findrecommendList(Long id) {
+		List<Products> entities = repository.findTop4ByOrderByCountDescNative(id);
+		return entities.stream()
+			    .map(entity -> entityToDto(entity))
+			    .collect(Collectors.toList());
+	}
+	
+	ProductsDTO entityToDto(Products entity) {
+		return ProductsDTO.builder()
+				.categoryId(entity.getCategoryId())
+				.guide(entity.getGuide())
+				.id(entity.getId())
+				.mainImageName(entity.getMainImageName())
+				.name(entity.getName())
+				.price(entity.getPrice())
+				.options(entity.getOptions())
+				.build();
 	}
 	
 	@Override
