@@ -28,7 +28,7 @@ public class CartServiceImpl {
 	
 	// 2) cart의 각 상품의 개수를 조정할 때 사용
 	void updateCart(String userId, int productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount) {
-		cartRepository.updateByUserIdAndProductIdAndOptionContentAndPackagingOptionContent(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalCount);
+		cartRepository.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalCount);
 	}
 
 	// 3) cart의 상품을 삭제할 때 사용

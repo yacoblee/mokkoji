@@ -32,7 +32,7 @@ public class ReviewsServiceImpl {
 
 	// 3) review 내용 수정할 때 사용
 	void updateReviews(int reviewId, String reviewContent) {
-		reviewsRepository.updateByReviewId(reviewId, reviewContent);
+		reviewsRepository.updateReview(reviewId, reviewContent);
 	}
 
 	// 4) review 삭제할 떄 사용

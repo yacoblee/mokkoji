@@ -23,6 +23,6 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 	// review 내용을 수정
 	@Modifying
 	@Query("UPDATE Reviews AS r SET r.reviewContent = :reviewContent WHERE r.reviewId = :reviewId")
-	void updateByReviewId(@Param("reviewId") int reviewId, @Param("reviewContent") String reviewContent);
+	void updateReview(@Param("reviewId") int reviewId, @Param("reviewContent") String reviewContent);
 
 }
