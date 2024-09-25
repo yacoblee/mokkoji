@@ -4,8 +4,7 @@ function MyPageReview() {
 
     return (
 
-        <div>
-
+        <div className='MyPageReview'>
         </div>
     )
 }
