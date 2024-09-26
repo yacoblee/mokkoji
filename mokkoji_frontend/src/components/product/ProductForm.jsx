@@ -14,31 +14,31 @@ const ProductForm = ({ product }) => {
     const [option, setOption] = useState([]);
     const [packaging, setPackaging] = useState([]);
     useEffect(() => {
-        if (packaging.length <= 0) {
 
-            let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
-            axios.get(uri, {
-                params: {
-                    type: 'form'  // 여러 값을 개별적으로 보냄
-                }
+
+        let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
+        axios.get(uri, {
+            params: {
+                type: 'form'  // 여러 값을 개별적으로 보냄
+            }
+        })
+            .then(response => {
+                const { option, packaging } = response.data;
+                setOption(option);
+                setPackaging(packaging);
+
+                // 콘솔 로그로 데이터 확인
+                console.log(option);
             })
-                .then(response => {
-                    const { option, packaging } = response.data;
-                    setOption(option);
-                    setPackaging(packaging);
+            .catch(err => {
+                //alert(err.message);
+                console.log(err);
+                setOption([]);
+                setPackaging([]);
 
-                    // 콘솔 로그로 데이터 확인
-                    console.log(option);
-                })
-                .catch(err => {
-                    //alert(err.message);
-                    console.log(err);
-                    setOption([]);
-                    setPackaging([]);
+            })
 
-                })
-        }
-    }, [product.id, product.categoryId]);
+    }, [product.id]);
 
     // select 옵션가격에 대한 state
     const [options, setOptions] = useState({

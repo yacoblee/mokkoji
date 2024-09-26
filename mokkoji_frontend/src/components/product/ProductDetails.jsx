@@ -22,7 +22,7 @@ const ProductDetails = () => { //===============================================
 
     useEffect(() => {
 
-        if (slideimages.length <= 0) {
+ 
 
             let uri = `${API_BASE_URL}/goods/${category}/${id}`;
             axios.get(uri, {
@@ -45,10 +45,8 @@ const ProductDetails = () => { //===============================================
                     setProduct(null);
                     setSlideImages([]);
                 });
-        }
-        setProduct(null);
-        setSlideImages([]);
-    }, [id, category]);
+
+    }, [id]);
 
     //세션 스토리지의 유저 데이터를 담는 변수.
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));

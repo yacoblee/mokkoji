@@ -12,7 +12,7 @@ const ProductDetailsInfo = ({ product }) => {
     const [recommendItems, setRecommendItems] = useState([]);
 
     useEffect(() => {
-        if (mainimages.length <= 0) {
+
 
             let uri = API_BASE_URL + `/goods/${category}/${id}`;
             axios.get(uri, {
@@ -37,11 +37,8 @@ const ProductDetailsInfo = ({ product }) => {
                     setText([]);
                     setRecommendItems([])
                 })
-        }
-        setMainImages([]);
-        setText([]);
-        setRecommendItems([])
-    }, [id,category]);
+        
+    }, [id]);
 
     //슬라이드 구현을 위한 state
     const [currentSlide, setCurrentSlide] = useState(0);
