@@ -46,7 +46,8 @@ export async function apiCall(url, method, requestData, token) {
   // 1.3) Axios 요청
   return axios(options)
     .then(response => {
-      return response.data;
+      //return response.data; => status에 접근이 안되서 respons 객체로 수정 
+      return response;
     }).catch(err => {
       console.error(`** apiCall Error status=${err.response.status}, message=${err.message}`);
 

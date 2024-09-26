@@ -1,5 +1,7 @@
 package com.example.mokkoji_backend.service.login;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.entity.login.Users;
@@ -15,10 +17,17 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Override
 	public Users selectOne(String id) {
-		Users entity = repository.findById(id).get();
-		if(entity !=null) {
-			return entity;
-		}else return null;
+		/*
+		 * Users entity = repository.findById(id).get(); if(entity !=null) { return
+		 * entity; }else return null;
+		 */
+		Optional<Users> result = repository.findById(id);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
+		
+		
 	}
 	
 	
