@@ -87,6 +87,7 @@ public class ProductsController {
 	    System.out.println("실행되고 있니 ?");
 	    // 요청된 데이터에 따라 필요한 정보만 반환
 	    if (type != null &&  !type.equals("form")) {
+	    	//recommend, image, detail 
 	    	log.info("Finding images with type: " + type);
 	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
 	        log.info(image);
@@ -95,7 +96,6 @@ public class ProductsController {
 	        if(type.equals("main")) {
 	        	response.put("detail", service.findDetailinfo(productId));	
 	        	response.put("recommend", service.findTop4ByOrderByCountDescNative(productId));
-	        	//recommend, image, detail 
 	        }else {
 	        	//product, image
 	        	ProductsDTO product = service.findDto(productId);
@@ -103,6 +103,8 @@ public class ProductsController {
 	        }
 	    } 
 	    else {
+	    	
+	    	//option , packaging
 	    	log.info("Finding all packaging");
 	    	List<ProductOptions> options= opservice.findByProductId(productId);
 	    	response.put("option",options );
