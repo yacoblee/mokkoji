@@ -14,7 +14,7 @@ function MyPageList() {
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .map((list) => {
                     return (
-                        <div className='MyListDate' key={list.date}>
+                        <div className='MyOrdersDate' key={list.date}>
                             <h3>{list.date}</h3>
 
                             {list.item.slice()
@@ -22,8 +22,8 @@ function MyPageList() {
                                 .map((itemId) => {
                                     const product = items.find((good) => good.id === itemId)
                                     return (
-                                        <div className='ListItem' key={product.id}>
-                                            <div className='ListPhoto'>
+                                        <div className='OrdersItem' key={product.id}>
+                                            <div className='OrdersPhoto'>
                                                 <img src={product.productSrc[0]} alt={product.name} />
                                             </div>
                                             <div>
