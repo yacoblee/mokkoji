@@ -1,7 +1,7 @@
 .MyGrid {
     display: grid;
     grid-template-areas:
-        "MyLike MyCart MyList MyReview MyBook";
+        "MyLike MyCart MyOrders MyReview MyBook";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
     /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
@@ -23,7 +23,7 @@
 .MyCart,
 .MyReview,
 .MyBook,
-.MyList {
+.MyOrders {
     display: flex;
     flex-direction: column;
     border: 0;
@@ -46,8 +46,8 @@
     grid-area: MyReview;
 }
 
-.MyList {
-    grid-area: MyList;
+.MyOrders {
+    grid-area: MyOrders;
 
 }
 
@@ -55,7 +55,7 @@
 .IconCart,
 .IconReview,
 .IconBook,
-.IconList {
+.IconOrders {
     flex: 1;
     font-size: 30px;
     padding-top: 1.5vw;
@@ -66,7 +66,7 @@
 .MyCart span,
 .MyReview span,
 .MyBook span,
-.MyList span {
+.MyOrders span {
     flex: 1;
     padding: 1vw;
 }
@@ -86,7 +86,7 @@
     .IconCart,
     .IconReview,
     .IconBook,
-    .IconList {
+    .IconOrders {
         font-size: 23px;
     }
 }
@@ -100,7 +100,7 @@
     .IconCart,
     .IconReview,
     .IconBook,
-    .IconList {
+    .IconOrders {
         padding: 10px;
         font-size: 20px;
     }
@@ -109,7 +109,7 @@
     .MyCart span,
     .MyReview span,
     .MyBook span,
-    .MyList span {
+    .MyOrders span {
         font-size: 1em;
     }
 }
