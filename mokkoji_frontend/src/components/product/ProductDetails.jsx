@@ -22,27 +22,29 @@ const ProductDetails = () => { //===============================================
 
     useEffect(() => {
 
-        let uri = `${API_BASE_URL}/goods/${category}/${id}`;
-        axios.get(uri, {
-            params: {
-                type: 'slide'  // 여러 값을 개별적으로 보냄
-            }
-        })
-            .then(response => {
-                const { product, image } = response.data;
-                setSlideImages(image);
-                console.log(product);
-                console.log(image);
-                if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
-                    setProduct(product);
-                    sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
+ 
+
+            let uri = `${API_BASE_URL}/goods/${category}/${id}`;
+            axios.get(uri, {
+                params: {
+                    type: 'slide'  // 여러 값을 개별적으로 보냄
                 }
             })
-            .catch(err => {
-                console.log(err);
-                setProduct(null);
-                setSlideImages([]);
-            });
+                .then(response => {
+                    const { product, image } = response.data;
+                    setSlideImages(image);
+                    console.log(product);
+                    console.log(image);
+                    if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
+                        setProduct(product);
+                        sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    setProduct(null);
+                    setSlideImages([]);
+                });
 
     }, [id]);
 

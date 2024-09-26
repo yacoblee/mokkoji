@@ -31,7 +31,7 @@ function MyPageGrid() {
                     <span>장바구니</span>
                 </div>
             </NavLink>
-            <NavLink to='/mypage/list'>
+            <NavLink to='/mypage/orders'>
                 <div className='MyList'>
                     <div className='IconList'>
                         <FontAwesomeIcon icon={faListCheck} />

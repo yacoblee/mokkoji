@@ -93,6 +93,7 @@ public class ProductsController {
 	        }
 	    } 
 	    else {
+	    	//option, packaging 
 	    	log.info("Finding all packaging");
 	    	List<ProductOptions> options= opservice.findByProductId(productId);
 	    	response.put("option",options );
