@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavoritesId implements Serializable {
+public class FavoriteId implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

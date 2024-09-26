@@ -10,12 +10,11 @@ import axios from "axios";
 const ProductForm = ({ product }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
-
+    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    //const [slideimages, setSlideImages] = useState([]);
     const [option, setOption] = useState([]);
     const [packaging, setPackaging] = useState([]);
     useEffect(() => {
-
-
         let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
         axios.get(uri, {
             params: {
@@ -33,11 +32,10 @@ const ProductForm = ({ product }) => {
             .catch(err => {
                 //alert(err.message);
                 console.log(err);
-                setOption([]);
+
                 setPackaging([]);
 
             })
-
     }, [product.id]);
 
     // select 옵션가격에 대한 state
@@ -51,7 +49,7 @@ const ProductForm = ({ product }) => {
         contentSelect: '선택 옵션',   //왼쪽 옵션의 갯수
         packagingSelect: '포장 여부', //포장 옵션의 갯수
     });
-    //9.11 코드 변경 갯수 
+    //9.11 코드 변경
     const [count, setConut] = useState(1);
 
     // 토탈 금액에 대한 state
@@ -86,7 +84,28 @@ const ProductForm = ({ product }) => {
 
     const calculateTotalPrice = () => {
         if (!product) return 0; // 선택된 상품이 없으면 0 반환
-        return (product.price + options.contentSelect + options.packagingSelect) * count;
+        //let packagingPrice = options.packagingSelect; // 포장 추가 금액
+        //let contentPrice = options.contentSelect; // 기본 추가 금액
+
+        // 포장 옵션에 따라 추가 금액 설정
+        // if (options.packagingSelect) {
+        //     const packagingStartIndex = options.packagingSelect.indexOf('(+');
+        //     const packagingEndIndex = options.packagingSelect.indexOf('원)');
+        //     if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
+        //         packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
+        //     }
+        // }
+
+        // 내용 옵션에 따라 추가 금액 설정
+        // if (options.contentSelect) {
+        //     const contentSelectStartIndex = options.contentSelect.indexOf('(+');
+        //     const contentSelectEndIndex = options.contentSelect.indexOf('원)');
+        //     if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
+        //         contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
+        //     }
+        // }
+
+        return (product.price + options.contentSelect + options.packagingSelect )  * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트

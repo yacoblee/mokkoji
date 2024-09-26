@@ -10,34 +10,30 @@ const ProductDetailsInfo = ({ product }) => {
     const [mainimages, setMainImages] = useState([]);
     const [text, setText] = useState([]);
     const [recommendItems, setRecommendItems] = useState([]);
-
+    //const [slideimages, setSlideImages] = useState([]);
     useEffect(() => {
+        let uri = API_BASE_URL + `/goods/${category}/${id}`;
+        axios.get(uri, {
+            params: {
+                type: 'main'  // 여러 값을 개별적으로 보냄
+            }
+        })
+            .then(response => {
+                const { image, detail, recommend } = response.data;
 
-
-            let uri = API_BASE_URL + `/goods/${category}/${id}`;
-            axios.get(uri, {
-                params: {
-                    type: 'main'  // 여러 값을 개별적으로 보냄
-                }
+                setMainImages(image);
+                setText(detail);
+                setRecommendItems(recommend);
+                // 콘솔 로그로 데이터 확인
+                console.log(recommend);
             })
-                .then(response => {
-                    const { image, detail, recommend } = response.data;
+            .catch(err => {
+                //alert(err.message);
+                console.log(err);
 
-                    setMainImages(image);
-                    setText(detail);
-                    setRecommendItems(recommend);
-                    // 콘솔 로그로 데이터 확인
-                    console.log(recommend);
-                })
-                .catch(err => {
-                    //alert(err.message);
-                    console.log(err);
+                setMainImages([]);
 
-                    setMainImages([]);
-                    setText([]);
-                    setRecommendItems([])
-                })
-        
+            })
     }, [id]);
 
     //슬라이드 구현을 위한 state

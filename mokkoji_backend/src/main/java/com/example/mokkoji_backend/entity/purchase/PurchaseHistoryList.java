@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.entity.orders;
+package com.example.mokkoji_backend.entity.purchase;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,13 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ordersdetail")
+@Table(name = "purchasehistorylist")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(OrdersDetailId.class)
-public class OrdersDetail implements Serializable {
+@IdClass(PurchaseHistoryListId.class)
+public class PurchaseHistoryList implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

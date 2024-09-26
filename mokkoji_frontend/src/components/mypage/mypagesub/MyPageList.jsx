@@ -1,13 +1,13 @@
-import '../../../css/mypage/subpage/MyPageOrders.css'
+import '../../../css/mypage/subpage/MyPageList.css'
 
-function MyPageOrders() {
+function MyPageList() {
 
     const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"))
     const items = JSON.parse(sessionStorage.getItem("goodsList"))
 
     return (
 
-        <div className='MyPageOrders'>
+        <div className='MyPageList'>
 
             {user.mypage.history
                 .slice()
@@ -44,4 +44,4 @@ function MyPageOrders() {
     )
 }
 
-export default MyPageOrders;
+export default MyPageList;

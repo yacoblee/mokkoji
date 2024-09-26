@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "favorites")
+@Table(name = "favorite")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(FavoritesId.class)
-public class Favorites implements Serializable {
+@IdClass(FavoriteId.class)
+public class Favorite implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
