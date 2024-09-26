@@ -15,7 +15,7 @@ import lombok.Data;
 @Table(name = "regist")
 @Data
 public class Regist {
-	 @Id
+		@Id
 	    @Column(name = "regist_code", nullable = false, length = 100)
 	    private String registCode;
 
