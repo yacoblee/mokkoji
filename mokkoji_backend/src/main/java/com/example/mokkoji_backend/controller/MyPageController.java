@@ -1,7 +1,10 @@
 package com.example.mokkoji_backend.controller;
 
+import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
+import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
@@ -9,9 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +25,27 @@ public class MyPageController {
 	private FavoritesService favoritesService;
 	private CartService cartService;
 	private ReviewsService reviewsService;
+	private UsersService usersService;
+
+	@GetMapping("/detail/{id}")
+	public ResponseEntity<?> myDetail(@PathVariable("id") String id){
+		try {
+			// 2. 찜 목록 조회
+			Users users = usersService.selectOne(id);
+
+			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
+			if (users == null ) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("id에 맞는 user 없음");
+			}
+
+			// 4. 정상적인 경우
+			return ResponseEntity.ok(users);
+
+		} catch (Exception e) {
+			// 5. 서버에서 발생한 예외 처리
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
+		}
+	}
 
 	// ** 찜목록 관련 ===============================================
 

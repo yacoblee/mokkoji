@@ -1,4 +1,4 @@
-import '../../css/mypage/MyPageMain.css';
+import '../../css/mypage/MyPageUser.css';
 
 // import userInfo from "../login/UserInforData";
 

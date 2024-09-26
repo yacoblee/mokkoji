@@ -6,7 +6,6 @@ import ProductContainer from './components/product/ProductContainer';
 import Header from './components/modules/Header';
 import ProductList from './components/product/ProductList';
 import ProductDetails from './components/product/ProductDetails';
-import MyPageIndex from './components/mypage/MyPageIndex';
 import Login from './components/login/Login';
 import Membership from './components/login/Membership';
 import FindPw from './components/login/FindPw';
@@ -22,6 +21,7 @@ import Dashboard from './components/administrator/Dashboard';
 import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
 import OrderManagement from './components/administrator/OrderManagement';
+import MyPageMain from './components/mypage/MyPageUser';
 
 
 const App = () => {
@@ -82,7 +82,7 @@ const App = () => {
         {/* <Route path="/address-search" element={<AddressSearch />} /> */}
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
-        <Route path="/mypage/*" element={<MyPageIndex />} />
+        <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/introduction" element={<Introduction />} />
         <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}
