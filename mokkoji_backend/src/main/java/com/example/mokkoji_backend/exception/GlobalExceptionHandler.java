@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 //@RestControllerAdvice
 public class GlobalExceptionHandler {
 
+ 
 	//@ExceptionHandler(MokkojiException.class)
 	public ResponseEntity<ErrorResponse> mokkojiExceptionHandle(MokkojiException e) {
 		return ResponseEntity
@@ -33,6 +34,26 @@ public class GlobalExceptionHandler {
 			);
 	}
 
+ 
+//	@ExceptionHandler(MokkojiException.class)
+//	public ResponseEntity<ErrorResponse> mokkojiExceptionHandle(MokkojiException e) {
+//		return ResponseEntity
+//			.status(e.getHttpStatus())
+//			.body(new ErrorResponse(e.getHttpStatus().value(), e.getMessage()));
+//	}
+//
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<ErrorResponse> exceptionHandler(final RuntimeException exception) {
+//		log.error("[Exception] : 예외 발생 {}", exception.getMessage());
+//		return ResponseEntity
+//			.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//			.body(
+//				new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+//					"예상하지 못한 에러입니다.")
+//			);
+//	}
+//
+ 
 //	@ResponseBody
 //	@ResponseStatus(HttpStatus.NOT_FOUND)
 //	@ExceptionHandler(NotFoundException.class)
@@ -42,7 +63,7 @@ public class GlobalExceptionHandler {
 //			.message(e.getMessage())
 //			.build();
 //	}
-
+ 
 //	@ResponseBody
 //	@ResponseStatus(HttpStatus.BAD_REQUEST)
 //	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,7 +79,7 @@ public class GlobalExceptionHandler {
 //
 //		return response;
 //	}
-
+ 
 //	@ResponseBody
 //	@ResponseStatus(HttpStatus.BAD_REQUEST)
 //	@ExceptionHandler({IllegalArgumentException.class, NotImageException.class})

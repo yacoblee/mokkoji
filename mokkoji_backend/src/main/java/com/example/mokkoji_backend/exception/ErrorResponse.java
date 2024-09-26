@@ -15,7 +15,10 @@ public class ErrorResponse {
 
     private final Map<String, String> validationMap = new HashMap<>();
 
+
     //@Builder
+
+
     public ErrorResponse(int code, String message) {
         this.code = code;
         this.message = message;

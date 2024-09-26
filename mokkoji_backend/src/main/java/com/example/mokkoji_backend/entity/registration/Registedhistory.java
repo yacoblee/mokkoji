@@ -1,40 +1,39 @@
 package com.example.mokkoji_backend.entity.registration;
 
+import java.sql.Timestamp;
+
+import com.example.mokkoji_backend.entity.login.Users;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "registedhistory")
 @Data
 @NoArgsConstructor
+@IdClass(RegistedhistoryId.class)  // 복합 키 클래스 사용
 public class Registedhistory {
-	 @Id
+	 	@Id
 	    @Column(name = "regist_id", nullable = false, length = 100)
 	    private String registId;
-
+	 	
+	 	@Id
 	    @ManyToOne
-	    @JoinColumn(name = "regist_code", nullable = true)
+	    @JoinColumn(name = "regist_code", nullable = false)
 	    private Regist regist;
-
-//	    @ManyToOne
-//	    @JoinColumn(name = "user_id", nullable = true)
-//	    private Users user;
-
+	 	
+	    @Id
+	    @ManyToOne
+	    @JoinColumn(name = "user_id", nullable = false)
+	    private Users user;  // 복합 키로 사용
+	    
 	    @Column(name = "teenager_cnt")
 	    private int teenagerCnt;
 
@@ -53,7 +52,5 @@ public class Registedhistory {
 	    @Column(name = "active_date")
 	    private Timestamp activeDate;
 
-	    @OneToMany(mappedBy = "registedHistory")
-	    private List<RegistDateCnt> registDateCntList;
 
 }
