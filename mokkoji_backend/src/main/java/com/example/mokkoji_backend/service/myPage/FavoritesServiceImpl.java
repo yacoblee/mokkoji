@@ -17,7 +17,9 @@ public class FavoritesServiceImpl implements FavoritesService {
 	// 1) 찜목록에서 row가 삭제될때 사용
 	@Override
 	public void deleteFavorite(FavoritesId favoriteId) {
-		favoriteRepository.deleteById(favoriteId);
+		if (favoriteRepository.existsById(favoriteId)) {
+			favoriteRepository.deleteById(favoriteId);
+		}
 	}
 
 	// ** 상품 페이지에서만 사용 ==============================================

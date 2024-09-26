@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.service.purchase;
+package com.example.mokkoji_backend.service.orders;
 
 import com.example.mokkoji_backend.entity.orders.Orders;
 
