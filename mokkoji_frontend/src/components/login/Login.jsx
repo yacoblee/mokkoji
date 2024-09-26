@@ -3,14 +3,14 @@ import '../../css/login/Login.css';
 import Membership from "./Membership";
 import FindId from "./FindId";
 import FindPw from "./FindPw";
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { login } from '../modules/action';
-import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
-import userInfo from "./UserInforData";
+//import userInfo from "./UserInforData";
 import LoginSuccess from "./loginSuccess";
-import userInfoData from "./UserInforData";
+//import userInfoData from "./UserInforData";
 import { apiCall } from "../../service/apiService";
 
 
@@ -32,7 +32,7 @@ const Login = () => {
     useEffect(() => {
         if (isLoggedIn) {
             console.log("네비 이동 직전임");
-            //navi('/');  // 로그인 성공 후 홈으로 이동
+            navi('/');  // 로그인 성공 후 홈으로 이동
         }
     }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
 
@@ -183,7 +183,7 @@ const Login = () => {
         //         }
         //         navi("/Login");
         //     });
-
+        e.preventDefault();
         console.log("API 호출 직전");  // 이 로그가 출력되는지 확인
         apiCall(url, 'POST', data, null)
             .then((response) => {
@@ -192,12 +192,12 @@ const Login = () => {
 
                 // 서버에서 200 OK 응답을 받았는지 확인
                 if (response.status === 200) {
+                    sessionStorage.setItem("isLoggedIn", "true");
                     alert('로그인 성공');
                     sessionStorage.setItem("inputId", JSON.stringify(response.data));  // response.data 사용
                     setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠 
-                    sessionStorage.setItem("isLoggedIn", "true");
                     console.log("네비 이동 직전임");
-                    navi('/');  // 홈으로 이동
+                    //navi('/');  // 홈으로 이동
                     console.log("네비 이동 후");
                 } else {
                     throw new Error("로그인 실패: 잘못된 응답 코드");
