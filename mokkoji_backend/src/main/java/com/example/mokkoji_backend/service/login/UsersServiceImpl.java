@@ -26,8 +26,6 @@ public class UsersServiceImpl implements UsersService{
 			return result.get();
 		}
 		return null;
-		
-		
 	}
 	
 	
@@ -42,4 +40,6 @@ public class UsersServiceImpl implements UsersService{
 		// TODO Auto-generated method stub
 		
 	}
+
 }
+

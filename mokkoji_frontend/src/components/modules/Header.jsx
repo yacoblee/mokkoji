@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import '../../css/header.css'
+import { apiCall } from '../../service/apiService';
 
 const Header = () => {
     const navigate = useNavigate();
-
+    const [loginInfo, setLoginInfo] = useState(""); 
     const locationNows = useLocation();
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         return JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
@@ -54,10 +55,24 @@ const Header = () => {
 
     if (locationNows.pathname.toLowerCase().includes('login')) return null;
 
-    function logout() {
-        sessionStorage.setItem("isLoggedIn", "false");
-        setIsLoggedIn(false);
+    const logout=(e)=>{
+        let url ='/logout';
+        apiCall(url, 'POST', null, null)
+        .then((response) => {
+            sessionStorage.setItem("isLoggedIn", "false");
+            sessionStorage.removeItem("inputId");
+            console.log(response);
+          alert('로그아웃 성공');
+          setIsLoggedIn(false);
+          setLoginInfo('');
+        }).catch((err) => {
+          if (err === '502') {
+            alert("로그 아웃 실패, 다시하세요 ~~");
+          } else { alert(`** onLogout 시스템 오류, err=${err}`); }
+        }); //apiCall
     }
+
+
 
     return (
         <header id="header" className="deactive">
@@ -77,8 +92,8 @@ const Header = () => {
                         <ul>
                             {
                                 isLoggedIn ?
-                                    <>
-                                        <li><NavLink onClick={logout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
+                                <>
+                                <li><NavLink onClick={logout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
                                         <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>Mypage</p></NavLink ></li>
                                         <li><NavLink to="/administrator" className={({ isActive }) => (isActive ? 'active' : '')}><p>Admin</p></NavLink ></li>
                                     </>
