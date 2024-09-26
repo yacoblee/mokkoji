@@ -9,12 +9,42 @@ import '../../css/Product/ProductDetails.css'
 import ModalNotLogin from "./ModalNotLogin";
 import Modal from 'react-modal';
 import TopButton from "../modules/ScrollToTopBtn";
+import { API_BASE_URL } from "../../service/app-config";
+import axios from "axios";
 
 const ProductDetails = () => { //=========================================================ProductDetails 컴포넌트
     const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
     const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
     const [like, setLike] = useState(false);
+    const [product, setProduct] = useState({});
 
+    const [slideimages, setSlideImages] = useState([]);
+
+    useEffect(() => {
+
+        let uri = `${API_BASE_URL}/goods/${category}/${id}`;
+        axios.get(uri, {
+            params: {
+                type: 'slide'  // 여러 값을 개별적으로 보냄
+            }
+        })
+            .then(response => {
+                const { product, image } = response.data;
+                setSlideImages(image);
+                console.log(product);
+                console.log(image);
+                if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
+                    setProduct(product);
+                    sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setProduct(null);
+                setSlideImages([]);
+            });
+
+    }, [id]);
 
     //세션 스토리지의 유저 데이터를 담는 변수.
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
@@ -30,7 +60,7 @@ const ProductDetails = () => { //===============================================
     //찜 클릭 아이콘을 선택할때의 이벤트
     const onClickLikeMe = () => {
 
-        
+
         // 세션 스토리지의 사용자 정보 업데이트
         if (userData) {
             setLike(!like);
@@ -58,12 +88,12 @@ const ProductDetails = () => { //===============================================
 
     }
     // 컴포넌트가 마운트될 때 세션 스토리지에서 찜하기 상태 초기화
-    useEffect(() => {
-        const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
-        if (userData && userData.mypage.isLike.includes(selectedProduct.id)) {
-            setLike(true); // 찜 목록에 있으면 like 상태를 true로 설정
-        }
-    }, [selectedProduct.id]);
+    // useEffect(() => {
+    //     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
+    //     if (userData && userData.mypage.isLike.includes(selectedProduct.id)) {
+    //         setLike(true); // 찜 목록에 있으면 like 상태를 true로 설정
+    //     }
+    // }, [selectedProduct.id]);
 
     //내부링크 위치 조정을 위한 스크롤 이벤트인데 내가 했다고 말못해...
     const handleScroll = (event, id) => {
@@ -87,8 +117,9 @@ const ProductDetails = () => { //===============================================
 
     }
     // ======================================================================================return
-    if (!selectedProduct) {
-        return <div style={{ marginTop: '100px' }}>Product not found</div>;
+    // product 또는 slideimages가 null인 경우 로딩 상태를 처리
+    if (product === null || Object.keys(product).length === 0 || slideimages.length === 0) {
+        return <div style={{ marginTop: '100px' }}>Loading...</div>;  // 로딩 중인 경우 처리
     } else {
 
         return (
@@ -97,17 +128,17 @@ const ProductDetails = () => { //===============================================
 
                 </div>
                 <p className="productName hi" >
-                    {selectedProduct.name}
+                    {product.name}
                 </p>
                 <div className='box'>
                     <div className='imgBox'>
                         <div className="imgInner">
-                            {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
+                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src.name}`} key={i} alt={i}
                                 style={{ transform: `translateX(-${slideImgBox * 100}%)` }} />)}
 
                         </div>
                         <div className='labelBox'>
-                            {selectedProduct.slideSrc.map((src, i) => <img src={src} key={i} alt={i}
+                            {slideimages.map((src, i) => <img src={`${API_BASE_URL}/resources/productImages/${src.name}`} key={i} alt={i}
                                 onClick={() => { onClickLabelBox(i) }} />)}
                         </div>
                     </div>
@@ -122,23 +153,23 @@ const ProductDetails = () => { //===============================================
                             <div>
                                 <Link to="/" >home</Link>
                                 <Link to="/goods" >goods</Link>
-                                <Link to={`/goods/${selectedProduct.category}`} >goodsList</Link>
+                                <Link to={`/goods/${product.categoryId}`} >goodsList</Link>
                             </div>
                         </div>
                         <div className='forminner'>
                             <div className="selectedInfo">
                                 <p className="productName">
-                                    {selectedProduct.name}
+                                    {product.name}
                                 </p>
-                                {selectedProduct.mainGuide}
+                                {product.guide}
                                 <p className='deliveryifo'>
-                                    * 30,000원 미만 3,000원 
-                                    <p>
-                                    * 30,000원 이상 무료배송
-                                    </p>
+                                    * 30,000원 미만 3,000원
+                                    <div>
+                                        * 30,000원 이상 무료배송
+                                    </div>
                                 </p>
                             </div>
-                            <ProductForm selectedProduct={selectedProduct} />
+                            <ProductForm product={product} />
                         </div>
 
                     </div>
@@ -153,7 +184,7 @@ const ProductDetails = () => { //===============================================
                         <a href="#recommendations" onClick={(e) => handleScroll(e, 'recommendations')}><span>추천리스트</span></a>
                     </div>
                     <div className='ProductDetailsInfo'>
-                        <ProductDetailsInfo selectedProduct={selectedProduct} like={like} />
+                        <ProductDetailsInfo product={product} like={like} />
                     </div>
                 </div>
                 <Modal

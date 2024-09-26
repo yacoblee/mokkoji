@@ -3,6 +3,8 @@ package com.example.mokkoji_backend.entity.goods;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "products")
@@ -55,8 +58,24 @@ public class Products {
 	@Column(name = "categoryId")
 	private String categoryId;
 	
+	@ToString.Exclude
+	@JsonManagedReference
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<ProductOptions> options;
 	
+	public Products(Long id,String name ,int price ,String mainImageName, String categoryId ,String guide, List<ProductOptions> options) {
+		this.id=id;
+		this.name = name;
+		this.price = price;
+		this.mainImageName = mainImageName;
+		this.categoryId = categoryId;
+		this.guide = guide;
+		this.options = options;
+	}
+	
+	@Override
+	public String toString() {
+	    return "Products{id=" + id + ", name='" + name + "', price=" + price + "}";
+	}
 
 }

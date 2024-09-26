@@ -31,9 +31,9 @@ function MyPageGrid() {
                     <span>장바구니</span>
                 </div>
             </NavLink>
-            <NavLink to='/mypage/list'>
-                <div className='MyList'>
-                    <div className='IconList'>
+            <NavLink to='/mypage/orders'>
+                <div className='MyOrders'>
+                    <div className='IconOrders'>
                         <FontAwesomeIcon icon={faListCheck} />
                     </div>
                     <span>구매내역</span>

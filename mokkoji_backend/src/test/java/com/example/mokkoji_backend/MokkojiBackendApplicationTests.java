@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.UsersRepository;
+import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepository;
 
 
 @SpringBootTest
@@ -15,6 +16,9 @@ class MokkojiBackendApplicationTests {
 	
 	@Autowired
 	UsersRepository repository;
+	
+	@Autowired
+	RegistedHistoryRepository registrepository;
 	@Test
 	void contextLoads() {
 		
@@ -24,5 +28,8 @@ class MokkojiBackendApplicationTests {
 	 * @Test public void selectOne() { Optional <Users> user =
 	 * repository.findById("user3"); log.info("*** User found: " + user); }
 	 */
+	
+	
+	
 	
 }

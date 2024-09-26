@@ -1,27 +1,27 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import '../../css/login/Login.css';
 import Membership from "./Membership";
 import FindId from "./FindId";
 import FindPw from "./FindPw";
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { login } from '../modules/action';
-import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from "react";
 import LoginValidityCheck from "./LoginValidityCheck";
-import userInfo from "./UserInforData";
+//import userInfo from "./UserInforData";
 import LoginSuccess from "./loginSuccess";
-import userInfoData from "./UserInforData";
+//import userInfoData from "./UserInforData";
+import { apiCall } from "../../service/apiService";
 
-sessionStorage.setItem('LoginSuccess', 'false');
 
 
 const Login = () => {
-    localStorage.setItem('userInfo', JSON.stringify(userInfoData));
+    // localStorage.setItem('userInfo', JSON.stringify(userInfoData));
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
     // const [errorCount, setErrorCount] = useState(1);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 관리
     const labelIdRed = useRef(null);
     const inputIdRef = useRef(null);
 
@@ -29,6 +29,13 @@ const Login = () => {
     const inputPwRef = useRef(null);
 
     const loginP = useRef(null);
+    useEffect(() => {
+        if (isLoggedIn) {
+            console.log("네비 이동 직전임");
+            //navi('/');  // 로그인 성공 후 홈으로 이동
+            window.location.href = '/';
+        }
+    }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
 
     // input창에 onChange이벤트 발생 시 입력값 저장 
     const onChangeId = (e) => { setInputId(e.target.value) }
@@ -59,7 +66,7 @@ const Login = () => {
         }
     }
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // 로그인 검사 함수 (로그인 시 홈 화면으로 이동 : 로그인실패 횟수 p태그에 연결하여 텍스트 표현)
     // const CheckLogin = (e) => {
     //     const isLogin = userInfo.find(item => (item.id === inputId && item.pw === inputPw));
@@ -83,33 +90,139 @@ const Login = () => {
     //     setInputePw("");
     // }
 
-  const CheckLogin= (e)=>{
-    let url = "http://localhost:8080/users/Login";
-    const data = {userId: inputId, password: inputPw};
+    const CheckLogin = (e) => {
+        //const navi = useNavigate();
+        let url = "/Login";
+        const data = { userId: inputId, password: inputPw };
 
-    apiCall(url, 'POST', data, null)
-     .then((response)=>{
-        sessionStorage.setItem("loginID", JSON.stringify(response));
-        alert('로그인 성공');
-        setIsLoggedIn(true);
-        setLoginInfo(response);
-        navi("/");
+        //apiCall(url, 'POST', data, null)
+        // .then((response) => {
+        //     console.log("API 호출 성공:", response);
+        //console.log("응답 상태 코드:", response.status);
+
+        //     sessionStorage.setItem("inputId", JSON.stringify(response));
+        //     alert('로그인 성공');
+        //     setIsLoggedIn(true);
+        //     setLoginInfo(response);
+        //     console.log("네비 이동 직전임");
+        //     navi('/');
+        // }).catch((err) => {
+        //     alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+        //     setIsLoggedIn(false);
+        //     setLoginInfo('');
+        //     // 상태 코드로 에러 메시지 처리
+        //     if (err.response && err.response.status === 502) {
+        //         alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+        //     } else {
+        //         alert(`** onLoginSubmit 시스템 오류, err=${err}`);
+        //     }
+        //     navi("/Login");
+        // });
 
 
-     }).catch((err) => {
-        setIsLoggedIn(false);
-        setLoginInfo('');
-        
-        // 상태 코드로 에러 메시지 처리
-        if (err.response && err.response.status === 502) {
-          alert("id 또는 password가 다릅니다, 다시 시도하세요.");
-        } else {
-          alert(`** onLoginSubmit 시스템 오류, err=${err}`);
-        }
-        navi("/Login");
-      });
+
+        // apiCall(url, 'POST', data, null)
+        // .then((response) => {
+        //         console.log("API 호출 성공:", response);
+        //         console.log("응답 상태 코드:", response.status);
+        //         // 서버에서 200 OK 응답을 받았는지 확인
+        //         if (response.status == 200) {
+        //             alert('로그인 성공');
+        //             navi('/');
+        //             sessionStorage.setItem("inputId", JSON.stringify(response));
+        //             setIsLoggedIn(true);
+        //             setLoginInfo(response);
+        //             console.log("네비 이동 직전임");
+        //         } else {
+        //             // 성공하지 않은 응답은 catch로 넘김
+        //             throw new Error("로그인 실패: 잘못된 응답 코드");
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log("로그인 중 오류 발생:", err);
+        //         alert("***id 또는 password가 다릅니다, 다시 시도하세요.");
+        //         setIsLoggedIn(false);
+        //         setLoginInfo('');
+
+        //         // 상태 코드로 에러 메시지 처리
+        //         if (err.response && err.response.status === 502) {
+        //             alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+        //         } else {
+        //             alert(`** onLoginSubmit 시스템 오류, err=${err}`);
+        //         }
+        //         navi("/Login");
+        //     });
+
+        // apiCall(url, 'POST', data, null) -> 로그인은 되나 콘솔창이동 안되고, 홈으로 페이지 아동 또한 되지 않음 
+        //     .then((response) => {
+        //         console.log("API 호출 성공:", response);
+        //         console.log("응답 상태 코드:", response.data);
+        //         // console.log("응답 상태 코드:", response.status);
+        //         // 서버에서 200 OK 응답을 받았는지 확인
+
+        //         alert('로그인 성공');
+        //         sessionStorage.setItem("inputId", JSON.stringify(response));
+        //         //setIsLoggedIn(true);
+        //         //setLoginInfo(response);
+        //         console.log("네비 이동 직전임");
+        //         navi('/');
+
+        //     })
+        //     .catch((err) => {
+        //         console.log("로그인 중 오류 발생:", err);
+        //         console.log("**API 호출 성공:", response);
+        //         console.log("**응답 상태 코드:", response.status);
+        //         alert("***id 또는 password가 다릅니다, 다시 시도하세요.");
+        //         setIsLoggedIn(false);
+        //         setLoginInfo('');
+
+        //         // 상태 코드로 에러 메시지 처리
+        //         if (err.response && err.response.status === 502) {
+        //             alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+        //         } else {
+        //             alert(`** onLoginSubmit 시스템 오류, err=${err}`);
+        //         }
+        //         navi("/Login");
+        //     });
+        e.preventDefault();
+        console.log("API 호출 직전");  // 이 로그가 출력되는지 확인
+        apiCall(url, 'POST', data, null)
+            .then((response) => {
+                console.log("API 호출 성공:", response);  // 응답 전체 출력
+                console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
+
+                // 서버에서 200 OK 응답을 받았는지 확인
+                if (response.status === 200) {
+                    sessionStorage.setItem("isLoggedIn", "true");
+                    alert('로그인 성공');
+                    sessionStorage.setItem("inputId", JSON.stringify(response.data));  // response.data 사용
+                    setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠 
+                    console.log("네비 이동 직전임");
+                    //navi('/');  // 홈으로 이동
+                    console.log("네비 이동 후");
+                } else {
+                    throw new Error("로그인 실패: 잘못된 응답 코드");
+                }
+            })
+            .catch((err) => {
+                console.log("로그인 중 오류 발생:", err);
+
+                // 상태 코드로 에러 메시지 처리
+                if (err.response && err.response.status === 502) {
+                    alert("id 또는 password가 다릅니다, 다시 시도하세요.");
+                } else {
+                    alert(`** onLoginSubmit 시스템 오류, err=${err}`); //=> nullException이 발생함으로 여기로 에러가 떨어짐 
+
+                }
+                setIsLoggedIn(false);
+                setLoginInfo('');
+                //navi("/Login");
+            });
+
+        console.log("함수 탈출");
 
     }
+
 
 
     return (
@@ -171,6 +284,7 @@ const Login = () => {
             </div>
         </div>
     );
+
 }
 
 export default Login;

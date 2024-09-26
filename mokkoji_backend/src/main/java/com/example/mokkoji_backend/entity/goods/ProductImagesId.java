@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ProductImagesId implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private int productId;
+	private Long productId;
 	private int order;
 	private String type;
 }

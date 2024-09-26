@@ -2,7 +2,6 @@ package com.example.mokkoji_backend.repository.myPage;
 
 import java.util.List;
 
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.mokkoji_backend.entity.myPage.Reviews;
@@ -23,7 +22,6 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 
 	// review 내용을 수정
 	@Modifying
-	@Transactional
 	@Query("UPDATE Reviews AS r SET r.reviewContent = :reviewContent WHERE r.reviewId = :reviewId")
 	void updateReview(@Param("reviewId") int reviewId, @Param("reviewContent") String reviewContent);
 

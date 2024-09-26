@@ -1,28 +1,28 @@
-.MyPageOrders {
+.MyPageList {
     word-break: keep-all;
 }
 
-.MyListDate * {
+.MyOrdersDate * {
     padding: 10px;
 }
 
-.MyListDate>h3 {
+.MyOrdersDate>h3 {
     border-bottom: 1px solid #000;
     background-color: #d0c0a058;
     height: 40px;
 }
 
-.ListItem {
+.OrdersItem {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
 }
 
-.ListItem:nth-last-child(1) {
+.OrdersItem:nth-last-child(1) {
     border: none;
 }
 
 
-.ListPhoto img {
+.OrdersPhoto img {
     width: 100px;
     height: 100px;
 }

@@ -2,7 +2,6 @@ package com.example.mokkoji_backend.repository.myPage;
 
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +18,6 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 
 	// cart 수정
 	@Modifying
-	@Transactional
 	@Query("UPDATE Cart AS c SET c.productCnt = :productCnt, c.productTotalPrice = :productTotalPrice WHERE c.userId = :userId AND c.productId = :productId AND c.optionContent = :optionContent AND c.packagingOptionContent = :packagingOptionContent")
 	void updateCart(@Param("userId") String userId, @Param("productId") int productId, @Param("optionContent") String optionContent, @Param("packagingOptionContent") String packagingOptionContent, @Param("productCnt") int productCnt, @Param("productTotalPrice") int productTotalPrice);
 

@@ -6,7 +6,7 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
+//@Getter
 public class ErrorResponse {
 
     private int code;
@@ -15,7 +15,10 @@ public class ErrorResponse {
 
     private final Map<String, String> validationMap = new HashMap<>();
 
-    @Builder
+
+    //@Builder
+
+
     public ErrorResponse(int code, String message) {
         this.code = code;
         this.message = message;

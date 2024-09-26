@@ -23,7 +23,7 @@ public class ProductImages implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "productId", nullable = false)
-	private int productId;
+	private Long productId;
 	@Id
 	@Column(name = "imageOrder", nullable = false)
 	private int order;

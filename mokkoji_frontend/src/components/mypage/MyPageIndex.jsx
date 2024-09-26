@@ -10,7 +10,7 @@ import MyPageLike from './mypagesub/MyPageLike';
 import MyPageCart from './mypagesub/MyPageCart';
 import MyPageReview from './mypagesub/MyPageReview';
 import MyPageBook from './mypagesub/MyPageBook';
-import MyPageOrders from './mypagesub/MyPageOrders';
+import MyPageList from './mypagesub/MyPageList';
 
 // import userInfoArray from '../login/UserInforData';
 import GoodsItems from '../product/ProductObject';
@@ -67,10 +67,10 @@ function MyPageIndex() {
 
             <Routes>
                 <Route path='/*' element={<MyPageMain />} />
-                <Route path='favorites' element={<MyPageLike change={change} setChange={setChange} />} />
+                <Route path='like' element={<MyPageLike change={change} setChange={setChange} />} />
                 <Route path='cart' element={<MyPageCart change={change} setChange={setChange} />} />
-                <Route path='review' element={<MyPageReview />} />
-                <Route path='orders' element={<MyPageOrders />} />
+                <Route path='Review' element={<MyPageReview />} />
+                <Route path='list' element={<MyPageList />} />
                 <Route path='book' element={<MyPageBook change={change} setChange={setChange} />} />
             </Routes>
         </div>

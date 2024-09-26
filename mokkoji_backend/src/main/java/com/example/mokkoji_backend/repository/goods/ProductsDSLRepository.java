@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.repository;
+package com.example.mokkoji_backend.repository.goods;
 
 import java.util.List;
 
@@ -9,4 +9,6 @@ public interface ProductsDSLRepository {
 	List<ProductsDTO> findByJoinList();
 	
 	ProductsDTO findByJoinOne(Long id);
+	
+	List<ProductsDTO> recommendList(Long id);
 }
