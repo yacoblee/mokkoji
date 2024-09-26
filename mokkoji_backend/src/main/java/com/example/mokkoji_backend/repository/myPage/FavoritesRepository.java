@@ -1,17 +1,17 @@
 package com.example.mokkoji_backend.repository.myPage;
 
-import com.example.mokkoji_backend.entity.myPage.Favorite;
-import com.example.mokkoji_backend.entity.myPage.FavoriteId;
+import com.example.mokkoji_backend.entity.myPage.Favorites;
+import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface FavoriteRepository extends JpaRepository<Favorite, FavoriteId> {
+public interface FavoritesRepository extends JpaRepository<Favorites, FavoritesId> {
 
 	// favorite를 userId로 조회, 날짜순으로 내림차순
-	List<Favorite> findByUserIdOrderByFavoriteDateDesc(String userId);
+	List<Favorites> findByUserIdOrderByFavoriteDateDesc(String userId);
 
 	// 한 상품에 대한 favorite의 총 개수
 	int countByProductId(int productId);

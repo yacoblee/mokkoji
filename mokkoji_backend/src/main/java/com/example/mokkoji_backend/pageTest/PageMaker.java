@@ -79,11 +79,11 @@ public class PageMaker {
 
 		endPageNumber = (int) Math.ceil(cri.getCurrentPage() / (double) displayPageCount)
 				* displayPageCount;
-		//끝페이지번호 = (int) Math.ceil(기준.get현재페이지() / (double) 표시할페이지수) * 표시할페이지수;
-		
+		// 끝페이지번호 = (int) Math.ceil(기준.get현재페이지() / (double) 표시할페이지수) * 표시할페이지수;
+
 		startPageNumber = (endPageNumber - displayPageCount) + 1;
-		//시작페이지번호 = (끝페이지번호 - 표시할페이지수) + 1;
-		
+		// 시작페이지번호 = (끝페이지번호 - 표시할페이지수) + 1;
+
 		// 3.2) lastPageNumber 계산, endPageNumber 적합성 확인
 		lastPageNumber = (int) Math.ceil(totalRowCount / (double) cri.getRowsPerPageCount());
 		if (endPageNumber > lastPageNumber)
@@ -92,76 +92,76 @@ public class PageMaker {
 		// 3.3 ) pre, hasNextPageBlock
 		hasPreviousPageBlock = startPageNumber == 1 ? false : true;
 		hasNextPageBlock = endPageNumber == lastPageNumber ? false : true;
-		
-//	     ** 패키지 org.springframework.web.util
-//	     => 웹개발에 필요한 많은 유틸리티 클래스 제공
-//	     => UriComponents , UriComponentsBuilder
-//	          Uri를 동적으로 생성해주는 클래스,
-//	          파라미터가 조합된 uri를 손쉽게 만들어줌
-//	     => ?currPage=7&rowsPerPage=10 이것을 만들어줌
-//	          ? 부터 만들어지므로 jsp Code에서 ? 포함하지 않도록 주의  
-		
-		//url QueryString 자동생성
-		//bPageList?currentPage=7&rowsPerPageCount=5
-		//setMappingName을 사용할것.
+
+		// ** 패키지 org.springframework.web.util
+		// => 웹개발에 필요한 많은 유틸리티 클래스 제공
+		// => UriComponents , UriComponentsBuilder
+		// Uri를 동적으로 생성해주는 클래스,
+		// 파라미터가 조합된 uri를 손쉽게 만들어줌
+		// => ?currPage=7&rowsPerPage=10 이것을 만들어줌
+		// ? 부터 만들어지므로 jsp Code에서 ? 포함하지 않도록 주의
+
+		// url QueryString 자동생성
+		// bPageList?currentPage=7&rowsPerPageCount=5
+		// setMappingName을 사용할것.
 	}
-	
-    // ** 패키지 org.springframework.web.util
-    // => 웹개발에 필요한 많은 유틸리티 클래스 제공
-    // => UriComponents , UriComponentsBuilder
-    //      Uri를 동적으로 생성해주는 클래스,
-    //      파라미터가 조합된 uri를 손쉽게 만들어줌
-    // => ?currPage=7&rowsPerPage=10 이것을 만들어줌
-    //      ? 부터 만들어지므로 jsp Code에서 ? 포함하지 않도록 주의
+
+	// ** 패키지 org.springframework.web.util
+	// => 웹개발에 필요한 많은 유틸리티 클래스 제공
+	// => UriComponents , UriComponentsBuilder
+	// Uri를 동적으로 생성해주는 클래스,
+	// 파라미터가 조합된 uri를 손쉽게 만들어줌
+	// => ?currPage=7&rowsPerPage=10 이것을 만들어줌
+	// ? 부터 만들어지므로 jsp Code에서 ? 포함하지 않도록 주의
 	public String makeQuery(int currentPage) {
-		
-		//버전 1
-//		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-//				.queryParam("currentPage",currentPage)
-//				.queryParam("rowsPerPageCount", cri.getRowsPerPageCount())
-//				.build();
-		
-		//버전 2
-//		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-//		.queryParam("currentPage",currentPage)
-//		.queryParam("rowsPerPageCount", cri.getRowsPerPageCount())
-//		.queryParam("searchType", cri.getSearchType())
-//		.queryParam("keyword", cri.getKeyword())
-//		.build();	
-		
-		//버전 3 checkBox Search
-		MultiValueMap<String,String> checkMap = new LinkedMultiValueMap<String, String>();
-		if(cri.getCheck()!=null && cri.getCheck().length>0) {
-			for(String c : cri.getCheck()) {
+
+		// 버전 1
+		// UriComponents uriComponents = UriComponentsBuilder.newInstance()
+		// .queryParam("currentPage",currentPage)
+		// .queryParam("rowsPerPageCount", cri.getRowsPerPageCount())
+		// .build();
+
+		// 버전 2
+		// UriComponents uriComponents = UriComponentsBuilder.newInstance()
+		// .queryParam("currentPage",currentPage)
+		// .queryParam("rowsPerPageCount", cri.getRowsPerPageCount())
+		// .queryParam("searchType", cri.getSearchType())
+		// .queryParam("keyword", cri.getKeyword())
+		// .build();
+
+		// 버전 3 checkBox Search
+		MultiValueMap<String, String> checkMap = new LinkedMultiValueMap<String, String>();
+		if (cri.getCheck() != null && cri.getCheck().length > 0) {
+			for (String c : cri.getCheck()) {
 				checkMap.add("check", c);
 			}
-		}else {
-			//null을 명시
+		} else {
+			// null을 명시
 			checkMap = null;
 		}
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-				.queryParam("currentPage",currentPage)
+				.queryParam("currentPage", currentPage)
 				.queryParam("rowsPerPageCount", cri.getRowsPerPageCount())
 				.queryParam("searchType", cri.getSearchType())
 				.queryParam("keyword", cri.getKeyword())
 				.queryParams(checkMap)
-				.build();	
-		return this.mappingName+uriComponents.toString();
+				.build();
+		return this.mappingName + uriComponents.toString();
 	}
-    // ** 배열Type check 처리 : Map 으로처리
-    // => ?curPage=1&rowsPerPage=5&searchType=t&keyword=Java&check=admin&check=banana
-    //    위의 쿼리스트링에서 check 부분은 몇개일지 모름
-    // => UriComponents 에서 Multi Value 처리 :  queryParams(MultiValueMap<String, String> params) 
-    
-    // ** MultiValueMap
-    // => 키의 중복이 허용됨 즉, 하나의 키에 여러 값을 받을 수 있음
-    // => new LinkedMultiValueMap() 으로 생성, add("key","value")
-    
-    // ** Map (키중복 허용안됨) 과 비교 
-    // => HashMap : 순서보장 안됨 
-    // => TreeMap : key값 순서로 자동정렬
-    // => LinkedHashMap : 입력순서보장
-	
-	
+	// ** 배열Type check 처리 : Map 으로처리
+	// =>
+	// ?curPage=1&rowsPerPage=5&searchType=t&keyword=Java&check=admin&check=banana
+	// 위의 쿼리스트링에서 check 부분은 몇개일지 모름
+	// => UriComponents 에서 Multi Value 처리 : queryParams(MultiValueMap<String,
+	// String> params)
+
+	// ** MultiValueMap
+	// => 키의 중복이 허용됨 즉, 하나의 키에 여러 값을 받을 수 있음
+	// => new LinkedMultiValueMap() 으로 생성, add("key","value")
+
+	// ** Map (키중복 허용안됨) 과 비교
+	// => HashMap : 순서보장 안됨
+	// => TreeMap : key값 순서로 자동정렬
+	// => LinkedHashMap : 입력순서보장
 
 }
