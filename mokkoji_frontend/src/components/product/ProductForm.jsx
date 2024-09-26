@@ -84,27 +84,7 @@ const ProductForm = ({ product }) => {
 
     const calculateTotalPrice = () => {
         if (!product) return 0; // 선택된 상품이 없으면 0 반환
-        //let packagingPrice = options.packagingSelect; // 포장 추가 금액
-        //let contentPrice = options.contentSelect; // 기본 추가 금액
-
-        // 포장 옵션에 따라 추가 금액 설정
-        // if (options.packagingSelect) {
-        //     const packagingStartIndex = options.packagingSelect.indexOf('(+');
-        //     const packagingEndIndex = options.packagingSelect.indexOf('원)');
-        //     if (packagingStartIndex !== -1 && packagingEndIndex !== -1) {
-        //         packagingPrice = +(options.packagingSelect.slice(packagingStartIndex + 2, packagingEndIndex));
-        //     }
-        // }
-
-        // 내용 옵션에 따라 추가 금액 설정
-        // if (options.contentSelect) {
-        //     const contentSelectStartIndex = options.contentSelect.indexOf('(+');
-        //     const contentSelectEndIndex = options.contentSelect.indexOf('원)');
-        //     if (contentSelectStartIndex !== -1 && contentSelectEndIndex !== -1) {
-        //         contentPrice = +(options.contentSelect.slice(contentSelectStartIndex + 2, contentSelectEndIndex));
-        //     }
-        // }
-
+ 
         return (product.price + options.contentSelect + options.packagingSelect )  * count;
     };
 
