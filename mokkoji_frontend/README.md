@@ -16,6 +16,8 @@
 + npm i --save @fortawesome/free-regular-svg-icons
 + npm i --save @fortawesome/free-brands-svg-icons
 
++++ react-scripts 없다면 npm install react-scripts 설치 +++
+
 ### CORS 위한 Proxy 설정
 
 + "scripts": {
