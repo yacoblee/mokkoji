@@ -20,7 +20,7 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	List<Products> findAll();
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
-			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId,p.guide) FROM Products p where p.categoryId=:categoryId")
+			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId,p.mainDescription) FROM Products p where p.categoryId=:categoryId")
 	List<ProductsDTO> findByCategoryId(@Param("categoryId") String subTypeName);
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
@@ -36,13 +36,17 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
-			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId, p.guide) FROM Products p WHERE p.id = :id")
+			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId, p.mainDescription) FROM Products p WHERE p.id = :id")
 	ProductsDTO findDto(@Param("id") Long id);
 	
 	
 	Page<ProductsDTO> findByCategoryIdAndNameContaining(String categoryId , String name , Pageable pageable);
 	
+	int countByCategoryId(String subTypeName);
 	
+	int countBy();
+	
+	Page<Products> findAll(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"options"})
 	Optional<Products> findById(@Param("id") Long id);

@@ -70,7 +70,7 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	             products.categoryId,
 	             products.name,
 	             products.price, 
-	             products.guide,
+	             products.mainDescription,
 	             products.mainImageName
 
 				)).from(products).where(products.id.ne(id)).orderBy(products.status.desc()).limit(4).fetch();

@@ -20,7 +20,7 @@ public class ProductsDTO {
 	private String name;
 	private int price;
 
-	private String guide;
+	private String mainDescription;
 
 	private String mainImageName;
 
@@ -35,24 +35,24 @@ public class ProductsDTO {
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
 	}
-	public ProductsDTO(Long id,String name ,int price ,String mainImageName, String categoryId ,String guide) {
+	public ProductsDTO(Long id,String name ,int price ,String mainImageName, String categoryId ,String mainDescription) {
 		this.id=id;
 		this.name = name;
 		this.price = price;
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
-		this.guide = guide;
+		this.mainDescription = mainDescription;
 	}
 	
 
 	// 새로운 생성자
-    public ProductsDTO(Long id, String name, int price, String mainImageName, String categoryId, String guide, List<ProductOptions> options) {
+    public ProductsDTO(Long id, String name, int price, String mainImageName, String categoryId, String mainDescription, List<ProductOptions> options) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.mainImageName = mainImageName;
         this.categoryId = categoryId;
-        this.guide = guide;
+        this.mainDescription = mainDescription;
         this.options = options;  // 필드를 받는 생성자
     }
 
@@ -63,7 +63,7 @@ public class ProductsDTO {
 		this.price = product.getPrice();
 		this.mainImageName = product.getMainImageName();
 		this.categoryId = product.getCategoryId();
-		this.guide = product.getGuide();
+		this.mainDescription = product.getMainDescription();
 		this.options = product.getOptions();  // 연관된 options 필드도 처리
 	}
 	

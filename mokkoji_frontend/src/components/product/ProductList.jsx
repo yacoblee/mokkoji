@@ -1,33 +1,150 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
-//import GoodsItems from './ProductObject';
-import ProductListResult from './ProductListResult';
-import '../../css/Product/ProductCategory.css'
-// import Modal from 'react-modal';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, NavLink, Link } from 'react-router-dom';
+import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-const ProductList = () => {
 
+const ProductMainGuide = ({ text }) => {
+    const guideRef = useRef(null);
+
+    useEffect(() => {
+        const guideElement = guideRef.current;
+        const containerWidth = guideElement.offsetWidth;
+        const animationDuration = containerWidth / 30;
+        const animationDelay = -containerWidth / 50;
+
+        guideElement.style.animation = 'none';
+        guideElement.style.animation = `scrollText ${animationDuration}s linear infinite`;
+        guideElement.style.animationDelay = `${animationDelay}s`;
+    }, [text]);
+
+    return (
+        <p className="productMainGuide" ref={guideRef} style={{ animation: "scrollText linear infinite" }}>
+            {text}
+        </p>
+    );
+};
+
+const ProductList = () => {
     const { category } = useParams();
     const [list, setList] = useState([]);
+    const [filterItem, SetFilterItem] = useState({
+        selectValue: 'allGoods',
+        sortOption: 'uploadDateAsc',
+        inputValue: '',
+    });
+    const [page, setPage] = useState(1);
+    const [resultCount, setResultCount] = useState(0);
+    const [displayMessage, setDisplayMessage] = useState('');
+    const [pageMaker, setPageMaker] = useState({});
+
     useEffect(() => {
-        //if (getStorageData() !== null) setList(getStorageData());
-        //else alert(' 출력할 내용이 없습니다 ~~ ');
         let uri = API_BASE_URL + "/goods/" + category;
         axios.get(uri)
             .then(response => {
-                setList(response.data)
-                console.log(response.data);
+                const { productList } = response.data;
+                setList(productList);
+                setResultCount(productList.length);
+                console.log(productList);
             })
             .catch(err => {
-                //alert(err.message);
                 console.log(err);
                 setList([]);
-            })
+            });
     }, [category]);
 
+    useEffect(() => {
+        onclickSearch();
+    }, [page]);
 
-    //메뉴바의 구성
+    const onChangeSelectValue = (e) => {
+        SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
+    };
+
+    const onChangeSortOption = (e) => {
+        SetFilterItem(it => ({ ...it, sortOption: e.target.value }));
+    };
+
+    const onChangeInputValue = (e) => {
+        SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
+    };
+
+    const onclickSearch = () => {
+        let uri = API_BASE_URL + `/goods/${filterItem.selectValue}`;
+
+        axios.get(uri, {
+            params: {
+                currentPage: page,
+                rowsPerPageCount: 5,
+                sortOption: filterItem.sortOption,
+                keyword: filterItem.inputValue
+            }
+        })
+            .then(response => {
+                const { productList, pageMaker } = response.data;
+                setList(productList);
+                setResultCount(productList.length);
+                updateDisplayMessage(productList.length);
+                setPageMaker(pageMaker);
+                console.log(pageMaker);
+            })
+            .catch(err => {
+                console.log(err);
+                setList([]);
+                setResultCount(0);
+                updateDisplayMessage(0);
+            });
+    };
+
+    const onEnterSearch = (e) => {
+        if (e.key === "Enter") {
+            onclickSearch();
+        }
+    };
+
+    const updateDisplayMessage = (count) => {
+        const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
+        const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
+
+        setDisplayMessage(
+            <>
+                <span className='NamedCategory'>카테고리:</span>
+                <span className='NamedInfo'> {selectedCategory.description}</span>
+                <span className='NamedCategory'>정렬:</span>
+                <span className='NamedInfo'> {selectedSortOption}</span>
+                {count > 0 ? (
+                    <span className='searchResult'>: 검색결과: {count}개</span>
+                ) : (
+                    <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
+                )}
+            </>
+        );
+    };
+
+    const renderPagination = () => {
+        if (!pageMaker) return null;
+
+        const pages = [];
+        for (let i = pageMaker.startPageNumber; i <= pageMaker.endPageNumber; i++) {
+            pages.push(
+                <button key={i} onClick={() => setPageAndFetch(i)}>{i}</button>
+            );
+        }
+
+        return (
+            <div className='pagination'>
+                {pageMaker.hasPreviousPageBlock && <button onClick={() => setPageAndFetch(pageMaker.startPageNumber - 1)}>Prev</button>}
+                {pages}
+                {pageMaker.hasNextPageBlock && <button onClick={() => setPageAndFetch(pageMaker.endPageNumber + 1)}>Next</button>}
+            </div>
+        );
+    };
+
+    const setPageAndFetch = (pageNum) => {
+        setPage(pageNum);
+    };
+
+    // 메뉴바의 구성
     const productMenu = [
         { category: 'allGoods', description: '전체상품' },
         { category: 'C1', description: '문구/사무' },
@@ -36,137 +153,67 @@ const ProductList = () => {
         { category: 'C4', description: '공예품' },
         { category: 'C5', description: '주방/식기' },
     ];
-    //검색 조건에 대한 옵션
+
+    // 검색 조건에 대한 옵션
     const sortOptions = [
-        { value: 'count', label: '인기순' },
-        { value: 'pricehigh', label: '높은가격순' },
-        { value: 'pricelower', label: '낮은가격순' },
-        { value: 'reviews', label: '리뷰순' }
+        { value: 'like_conutDesc', label: '인기순' },
+        { value: 'priceDesc', label: '높은가격순' },
+        { value: 'priceAsc', label: '낮은가격순' },
+        { value: 'uploadDateAsc', label: '최신순' }
     ];
-    //아이템을 필터할 state (옵션 선택1 , 옵션선택 2 , input 값)
-    const [filterItem, SetFilterItem] = useState({
-        selectValue: 'allGoods',
-        sortOption: 'count',
-        inputValue: '',
-    });
 
-    //아이템을 필터할 속성 변화.
-    const onChangeSelectValue = (e) => {
-        SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
     };
-    const onChangeSortOption = (e) => {
-        SetFilterItem(it => ({ ...it, sortOption: e.target.value }));
-    };
-    const onChangeInputValue = (e) => {
-        SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
-    };
-
-    //타이틀에 대한 state
-    const [displayMessage, setDisplayMessage] = useState('');
-
-
-    //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
-    //필터하고 난 아이템의 결과 배열.
-    //const [selectItem, setSelectItem] = useState([]);
-    // console.log(selectItem.length);
-    //필터하고난 filterItem의 길이
-    const [resultCount, setResultCount] = useState(list.length);
-    const updateDisplayMessage = (count) => {
-        // if (showSearch) {
-        const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
-        const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
-        setDisplayMessage(<>
-            <span className='NamedCategory'>카테고리:</span>
-            <span className='NamedInfo'> {selectedCategory.description}</span>
-
-            <span className='NamedCategory'>정렬:</span>
-            <span className='NamedInfo'> {selectedSortOption}</span>
-            {count !== undefined && (
-                <>
-
-                    {count > 0 ? (
-                        <span className='searchResult'>: 검색결과: {count}개</span>
-                    ) : (
-                        <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
-                    )}
-                </>
-            )}
-        </>);
-
-
-    };
-
-    //하위 페이지와 연동되어 페이지를 리셋시킬 state
-    const [page, setPage] = useState(1);
-
-    //카테고리가 변할때 필터 
-    useEffect(() => {
-        setPage(1);
-        SetFilterItem({
-            selectValue: 'allGoods',
-            sortOption: 'count',
-            inputValue: '',
-        });
-
-        setDisplayMessage('');
-
-    }, [category]);
-
-
-    //클릭했을때의 함수 실행값을 넣어줌.
-    const onclickSearch = () => {
-        //const filteredItems = filterItems();
-        //setSelectItem(list);
-        setResultCount(list.length);
-        updateDisplayMessage(list.length);
-    };
-    const onEnterSearch = (e) => {
-        if (e.key === "Enter") {
-            onclickSearch();
-        }
-    }
-    //서치바나 메뉴바를 클릭했을때 실행할 함수.
-    // const onClickShowSearch = () => {
-    //     setShowSearch(!showSearch);
-    //     updateDisplayMessage();
-    // };
-
 
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
-                <div className='productMenu' >
-
+                <div className='productMenu'>
                     {productMenu.map((items, i) => (
-                        <NavLink to={`/goods/${items.category}`} key={i}  >{items.description}</NavLink>
-                    ))}    
+                        <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
+                    ))}
                 </div>
                 <div className='productSearch'>
-                    <select name="productSearch" id="productSearch"
-                        value={filterItem.selectValue}
-                        onChange={onChangeSelectValue}>
+                    <select name="productSearch" id="productSearch" value={filterItem.selectValue} onChange={onChangeSelectValue}>
                         {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
                     </select>
 
-                    <select name="productSort" id="productSort"
-                        value={filterItem.sortOption}
-                        onChange={onChangeSortOption}>
+                    <select name="productSort" id="productSort" value={filterItem.sortOption} onChange={onChangeSortOption}>
                         {sortOptions.map((items, i) => <option value={items.value} key={i}>{items.label}</option>)}
                     </select>
 
-                    <input type="text" name="productInput" id="productInput"
-                        value={filterItem.inputValue}
-                        onChange={onChangeInputValue}
-                        onKeyDown={(e) => onEnterSearch(e)} />
-                    <button
-                        onClick={onclickSearch}>검색</button>
+                    <input type="text" name="productInput" id="productInput" value={filterItem.inputValue} onChange={onChangeInputValue} onKeyDown={onEnterSearch} />
+                    <button onClick={onclickSearch}>검색</button>
                     <span className='displayMessage'>{displayMessage}</span>
                 </div>
             </div>
             <div className='displayMessage2'>{displayMessage}</div>
-            {list.length > 0 ?
-                <ProductListResult selectItem={list} category={category} page={page} setPage={setPage} />
-                : <ProductListResult selectItem={list.sort((a, b) => b.count - a.count)} page={page} setPage={setPage} />}
+            <div className="productItemList">
+                {list.map((product, i) => (
+                    <Link to={`/goods/${product.categoryId}/${product.id}`} key={product.id}>
+                        <div className="productItemResult">
+                            <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`} alt={product.name} />
+                            <div>
+                                <p style={{ fontSize: '16px', fontWeight: '600', wordBreak: 'keep-all' }}>{product.name}</p>
+                                <p className="productMainGuideContainer">
+                                    <ProductMainGuide text={product.mainDescription} />
+                                </p>
+                                <p style={{ color: 'red', fontWeight: '600' }}>{formatNumber(product.price)}</p>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+            <div className="productPager">
+                <button className='lastButton' onClick={() => setPageAndFetch(1)} style={{ transform: 'rotateY(180deg)' }}>
+                    <img src="/images/buy/next.png" alt="1" />
+                </button>
+                {renderPagination()}
+                <button className='lastButton' onClick={() => setPageAndFetch(pageMaker.lastPageNumber)}>
+                    <img src="/images/buy/next.png" alt="last" />
+                </button>
+            </div>
         </>
     );
 }
