@@ -7,8 +7,9 @@ const Header = () => {
     const navigate = useNavigate();
 
     const locationNows = useLocation();
-    const [isLoggedIn, setIsLoggedIn] = useState('');
-
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
+    });
     useEffect(() => {
         const islogin = JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
         if (islogin) {

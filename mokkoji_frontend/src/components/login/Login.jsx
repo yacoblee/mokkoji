@@ -32,7 +32,8 @@ const Login = () => {
     useEffect(() => {
         if (isLoggedIn) {
             console.log("네비 이동 직전임");
-            navi('/');  // 로그인 성공 후 홈으로 이동
+            //navi('/');  // 로그인 성공 후 홈으로 이동
+            window.location.href = '/';
         }
     }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
 

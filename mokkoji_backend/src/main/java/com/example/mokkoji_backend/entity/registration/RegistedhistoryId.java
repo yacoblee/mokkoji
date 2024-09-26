@@ -14,9 +14,9 @@ public class RegistedhistoryId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String registId;
     private String registCode;
-    
+    private String registId;
+    private String userId;  // Users 엔티티의 userId와 매핑
     
 		
 }
