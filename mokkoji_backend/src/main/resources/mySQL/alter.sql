@@ -7,3 +7,5 @@ ALTER TABLE cart ADD cart_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP  NULL;
 RENAME TABLE purchasehistorylist TO purchasedetail;
 RENAME TABLE purchasehistory TO purchase;
 RENAME TABLE favorite TO favorites;
+RENAME TABLE purchase TO orders;
+RENAME TABLE purchasedetail TO ordersdetail;
