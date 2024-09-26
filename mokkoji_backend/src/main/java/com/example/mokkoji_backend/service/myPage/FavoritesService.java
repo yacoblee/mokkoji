@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FavoritesService {
 
-	void deleteFavorite(FavoritesId favoriteId);
+	void deleteFavorite(FavoritesId favoriteId) throws Exception;
 
 	void insertFavorite(Favorites favorite);
 

@@ -5,7 +5,7 @@ import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/mypage")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class MyPageController {
 
-	private final CartService cartService;
-	private final FavoritesService favoritesService;
-	private final ReviewsService reviewsService;
+	private FavoritesService favoritesService;
+	private CartService cartService;
+	private ReviewsService reviewsService;
 
 	// ** 찜목록 관련 ===============================================
 
@@ -62,19 +62,20 @@ public class MyPageController {
 		}
 
 		try {
-			// 2. 삭제할 항목이 존재하는지 확인
-
-
-			// 3. 삭제 처리
+			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
 			favoritesService.deleteFavorite(favoritesId);
 
-			// 4. 삭제 성공 메시지 응답
+			// 3. 삭제 성공 메시지 응답
 			return ResponseEntity.ok("favorites 삭제 성공");
 
 		} catch (Exception e) {
-			// 5. 서버에서 발생한 예외 처리
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
+			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
 		}
-	}
+//		catch (Exception e) {
+//			// 5. 서버에서 발생한 예외 처리
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
+//		}
+	} //favoritesDelete
 
 }
