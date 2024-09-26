@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.pageTest.Criteria;
 
 public interface ProductsService {
 
@@ -16,9 +17,13 @@ public interface ProductsService {
 	
 	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	
+	List<Products> findAllProducts(Criteria cri);
+	
 	ProductDetailDTO findDetailinfo(Long id);
 	
-	//List<ProductsDTO> findListDSL();
+	int countByCategoryId(String CategoryId);
+	
+	int countByAll();
 	
 	Products findById(Long id);
 	

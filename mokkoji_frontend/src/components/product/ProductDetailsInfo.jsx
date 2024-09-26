@@ -4,7 +4,7 @@ import GoodsItems from "./ProductObject";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-const ProductDetailsInfo = ({ product }) => {
+const ProductDetailsInfo = ({ product  }) => {
     const { category, id } = useParams();
 
     const [mainimages, setMainImages] = useState([]);

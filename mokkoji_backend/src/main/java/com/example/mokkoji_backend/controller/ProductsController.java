@@ -8,22 +8,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
-import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.pageTest.Criteria;
+import com.example.mokkoji_backend.pageTest.PageMaker;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -54,17 +52,29 @@ public class ProductsController {
 	
 	
 	@GetMapping("/goods/{sub_type_name}")
-	public ResponseEntity<?> categotyList(@PathVariable("sub_type_name") String subTypeName) {
+	public ResponseEntity<?> categotyList(@PathVariable("sub_type_name") String subTypeName, Criteria cri) {
 		List<ProductsDTO> productList = service.findByCategoryId(subTypeName);
-		if(productList != null && !productList.isEmpty()) {// null 이 아닐 때
-			log.info("/goods/{sub_type_name}_ 카테고리 있니 ? "+subTypeName);
-			return ResponseEntity.ok(productList);
 		
-		}else {
-			productList = service.findList();
-			return ResponseEntity.ok(productList);
-			
-		}
+	    // 전체 상품 수를 가져와서 페이지네이션을 위한 totalCount 설정
+	    int totalCount = service.countByAll();
+
+
+	    // 응답에 상품 목록과 페이지네이션 정보를 포함시켜 반환
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    // "allGoods"일 때 전체 상품을 가져오기
+	    if ("allGoods".equals(subTypeName)) {
+	        productList = service.findList();
+	    } else {
+	        productList = service.findByCategoryId(subTypeName);
+	    }
+	    PageMaker pageMaker = new PageMaker();
+	    pageMaker.setCri(cri);
+	    pageMaker.setTotalRowCount(totalCount);
+	    
+	    response.put("productList", productList);
+	    response.put("pageMaker", pageMaker);
+	    return ResponseEntity.ok(response);
 		
 	}
 	
