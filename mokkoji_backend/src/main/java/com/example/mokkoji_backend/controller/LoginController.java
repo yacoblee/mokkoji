@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,10 @@ import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.service.login.UsersService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
-
+@Log4j2
 public class LoginController {
 	@Autowired
 	private UsersService service;
@@ -40,28 +41,20 @@ public class LoginController {
 	   return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
 	                .header("Content-Type", "application/json")
 	                .body("id 또는 password가 오류. entity =>");
-		} // checkLogin
+		} 
+	}// checkLogin
 
-//		  System.out.println("****서버 연결됨 ?");
-//		  PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		  String password = entity.getPassword();
-//		  String passwordEncoding = passwordEncoder.encode(password);
-//		  Users dbUser = service.selectOne(entity.getUserId());
-//		  
-//		  if(dbUser != null && passwordEncoder.matches(passwordEncoding, password)) {
-//			  session.setAttribute("loginID", entity.getUserId());
-//			  session.setAttribute("loginName", entity.getName());
-//		  final UsersDTO user = UsersDTO.builder()
-//				  					.userId(entity.getUserId())
-//				  					.name(entity.getName())
-//				  					.build();
-//		  
-//		  return ResponseEntity.ok(user);
-//		  
-//		  }else {
-//			  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("id 또는 password가 오류. entity =>");
-//		  }
-
-	}
-
+	
+	   @GetMapping(value="/logout")
+	      public ResponseEntity<String> logout(HttpSession session){
+	         session.invalidate();
+	         log.info("로그아웃 성공");
+	         return ResponseEntity.ok("로그아웃 성공");
+	         
+	      }//logout
+	
+	
+	
+	
+	
 }
