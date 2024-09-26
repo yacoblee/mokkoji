@@ -20,10 +20,8 @@ const Login = () => {
     const navi = useNavigate();
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputePw] = useState('');
-    const [inputLoginSuccess, setLoginSuccess] = useState(false);
     // const [errorCount, setErrorCount] = useState(1);
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 관리
-    const [loginInfo, setLoginInfo] = useState("");
     const labelIdRed = useRef(null);
     const inputIdRef = useRef(null);
 
@@ -31,12 +29,12 @@ const Login = () => {
     const inputPwRef = useRef(null);
 
     const loginP = useRef(null);
-    // useEffect(() => {
-    //     if (isLoggedIn) {
-    //         console.log("네비 이동 직전임");
-    //         //navi('/');  // 로그인 성공 후 홈으로 이동
-    //     }
-    // }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
+    useEffect(() => {
+        if (isLoggedIn) {
+            console.log("네비 이동 직전임");
+            //navi('/');  // 로그인 성공 후 홈으로 이동
+        }
+    }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
 
     // input창에 onChange이벤트 발생 시 입력값 저장 
     const onChangeId = (e) => { setInputId(e.target.value) }
@@ -195,10 +193,8 @@ const Login = () => {
                 // 서버에서 200 OK 응답을 받았는지 확인
                 if (response.status === 200) {
                     alert('로그인 성공');
-                    sessionStorage.setItem("LoginUserInfo", JSON.stringify(response.data));  // response.data 사용
-                    setLoginSuccess(true);
-                    sessionStorage.setItem("isLoggedIn", "true");
-                   setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠 
+                    sessionStorage.setItem("inputId", JSON.stringify(response.data));  // response.data 사용
+                    setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠 
                     console.log("네비 이동 직전임");
                     navi('/');  // 홈으로 이동
                     console.log("네비 이동 후");
