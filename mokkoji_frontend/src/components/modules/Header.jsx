@@ -9,7 +9,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const { isLoggedIn, userInfo } = useSelector(state => state);
     const locationNows = useLocation();
- 
+
 
     useEffect(() => {
         const handleScroll = () => {
