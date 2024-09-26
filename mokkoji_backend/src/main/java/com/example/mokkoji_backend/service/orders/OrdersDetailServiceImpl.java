@@ -1,7 +1,7 @@
-package com.example.mokkoji_backend.service.purchase;
+package com.example.mokkoji_backend.service.orders;
 
 import com.example.mokkoji_backend.entity.orders.OrdersDetail;
-import com.example.mokkoji_backend.repository.purchase.OrdersDetailRepository;
+import com.example.mokkoji_backend.repository.orders.OrdersDetailRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
