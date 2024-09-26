@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.domain.DateCountDTO;
-import com.example.mokkoji_backend.entity.login.Users;
+ 
 import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,22 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RegistServiceImpl implements RegistService{
 	private final RegistedHistoryRepository repository;
-	
-	@Override
-	public Users selectOne(String id) {
-	  return null;
-	}
-	
-	
-	@Override
-	public void register(Users entity) {
- 
-		
-	}
-	
-	@Override
-	public void deleteById(String id) {
-	}
 	
 	
 	@Override

@@ -13,11 +13,11 @@ import com.example.mokkoji_backend.entity.registration.Registedhistory;
 import com.example.mokkoji_backend.entity.registration.RegistedhistoryId;
 
 @Repository
-public interface RegistedHistoryRepository extends JpaRepository<Registedhistory, RegistedhistoryId>{
+public interface RegistedHistoryRepository extends JpaRepository<Registedhistory, String>{
 
 	
 	// 특정 유저의 예약 내역 조회
-    List<Registedhistory> findByUser_UserId(String userId);
+//    List<Registedhistory> findByUser_UserId(String userId);
 
     
  
