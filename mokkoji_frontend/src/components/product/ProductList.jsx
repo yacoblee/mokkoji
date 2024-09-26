@@ -64,34 +64,7 @@ const ProductList = () => {
     //타이틀에 대한 state
     const [displayMessage, setDisplayMessage] = useState('');
 
-    //filterItems 함수. -> fileredItems 를 반환
-    // const filterItems = () => {
-    //     let filteredItems = list.slice();
 
-    //     if (filterItem.selectValue !== 'allGoods') {
-    //         filteredItems = filteredItems.filter((items) => items.category === filterItem.selectValue);
-    //     }
-    //     if (filterItem.inputValue !== '') {
-    //         filteredItems = filteredItems.filter((items) => items.name.includes(filterItem.inputValue));
-    //     }
-
-    //     switch (filterItem.sortOption) {
-    //         case 'pricehigh':
-    //             filteredItems.sort((a, b) => b.price - a.price);
-    //             break;
-    //         case 'pricelower':
-    //             filteredItems.sort((a, b) => a.price - b.price);
-    //             break;
-    //         case 'reviews':
-    //             filteredItems.sort((a, b) => b.reviews - a.reviews);
-    //             break;
-    //         case 'count':
-    //         default:
-    //             filteredItems.sort((a, b) => b.count - a.count);
-    //             break;
-    //     }
-    //     return filteredItems;
-    // };
     //타이틀을 바꾸는 state 함수, Search 가 보일 때 와 Menu가 보일 때
     //필터하고 난 아이템의 결과 배열.
     //const [selectItem, setSelectItem] = useState([]);
@@ -119,11 +92,8 @@ const ProductList = () => {
                 </>
             )}
         </>);
-        // }
-        //  else {
-        //     const selectedCategory = productMenu.find(menu => menu.category === category);
-        //     setDisplayMessage(<span className='NamedCategory'> {selectedCategory ? selectedCategory.description : '전체 상품'}</span>);
-        // }
+
+
     };
 
     //하위 페이지와 연동되어 페이지를 리셋시킬 state
@@ -137,9 +107,6 @@ const ProductList = () => {
             sortOption: 'count',
             inputValue: '',
         });
-
-        //setSelectItem(filterItems().filter((items) => items.category === category));
-        // setSelectItem(GoodsItems.filter((items) => items.category === category));
 
         setDisplayMessage('');
 
