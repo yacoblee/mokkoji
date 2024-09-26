@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
-import '../../css/mypage/MyPageMain.css';
+import '../../css/mypage/MyPageUser.css';
 
 // import userInfo from "../login/UserInforData";
 
@@ -9,8 +9,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function MyPageFlex() {
-
-    const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
 
     return (
         <div className='MyInfoFlex'>
