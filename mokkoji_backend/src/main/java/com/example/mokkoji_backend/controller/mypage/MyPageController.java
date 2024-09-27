@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
@@ -30,8 +31,8 @@ public class MyPageController {
 	// ** 기본 세팅 관련 ============================================================
 
 	// 1) 사용자 상세 정보 조회
-	@PostMapping("/user")
-	public ResponseEntity<?> userDetail(@RequestBody String userId) {
+	@GetMapping("/user")
+	public ResponseEntity<?> userDetail(@AuthenticationPrincipal String userId) {
 		log.info(userId);
 		// 1. id에 맞는 사용자 정보 추출
 		Users users = usersService.selectOne(userId);
