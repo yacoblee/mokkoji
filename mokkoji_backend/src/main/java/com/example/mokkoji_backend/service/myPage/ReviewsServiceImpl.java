@@ -2,14 +2,16 @@ package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.entity.myPage.Reviews;
 import com.example.mokkoji_backend.repository.myPage.ReviewsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("ReviewsService")
+@RequiredArgsConstructor
 public class ReviewsServiceImpl implements ReviewsService {
 
-	ReviewsRepository reviewsRepository;
+	final ReviewsRepository reviewsRepository;
 
 	// ** 상품페이지에서만 사용 ===============================================
 

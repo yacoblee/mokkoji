@@ -21,7 +21,7 @@ import Dashboard from './components/administrator/Dashboard';
 import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
 import OrderManagement from './components/administrator/OrderManagement';
-import MyPageMain from './components/mypage/MyPageUser';
+import MyPageMain from './components/mypage/MyPageMain';
 
 
 const App = () => {
@@ -82,7 +82,7 @@ const App = () => {
         {/* <Route path="/address-search" element={<AddressSearch />} /> */}
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
-        <Route path="/mypage/*" element={<MyPageMain />} />
+        <Route path="/mypage" element={<MyPageMain />} />
         <Route path="/introduction" element={<Introduction />} />
         <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}

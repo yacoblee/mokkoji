@@ -1,4 +1,4 @@
-import '../../../css/mypage/MyPageIndex.css';
+import '../../../css/mypage/MyPageMain.css';
 
 function MyPageReview() {
 

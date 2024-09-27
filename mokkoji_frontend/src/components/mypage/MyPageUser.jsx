@@ -7,9 +7,9 @@ import MyPageSet from './MyPageSet'
 import { Route, Routes, Link } from 'react-router-dom';
 
 
-function MyPageMain() {
+function MyPageUser() {
     return (
-        <div className='MyPageMain'>
+        <div className='MyPageUser'>
             <Routes>
                 <Route path='/' element={<MyPageFlex />} />
                 <Route path='set' element={<MyPageSet />} />
@@ -18,4 +18,4 @@ function MyPageMain() {
     )
 }
 
-export default MyPageMain;
+export default MyPageUser;

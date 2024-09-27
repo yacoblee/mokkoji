@@ -3,14 +3,16 @@ package com.example.mokkoji_backend.service.myPage;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("CartService")
+@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
-	CartRepository cartRepository;
+	final CartRepository cartRepository;
 	
 	// ** 상품페이지에서만 사용 ===============================================
 	
@@ -28,13 +30,19 @@ public class CartServiceImpl implements CartService {
 		return cartRepository.findByUserIdOrderByCartDateDesc(userId);
 	}
 
-	// 2) cart의 각 상품의 개수를 조정할 때 사용
+	// 2) cart의 총 개수 조회
+	@Override
+	public int countCart(String userId){
+		return cartRepository.countByUserId(userId);
+	}
+
+	// 3) cart의 각 상품의 개수를 조정할 때 사용
 	@Override
 	public void updateCart(String userId, int productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount) {
 		cartRepository.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalCount);
 	}
 
-	// 3) cart의 상품을 삭제할 때 사용
+	// 4) cart의 상품을 삭제할 때 사용
 	@Override
 	public void deleteCart(CartId cartId) {
 		cartRepository.deleteById(cartId);
