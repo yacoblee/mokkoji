@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 
@@ -24,15 +26,12 @@ public class Registedhistory{
 
 		@Id
 	    @Column(name = "regist_id", nullable = false)
+		@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	    private int registId;
 	
 	    @Column(name = "regist_code", nullable = false)
 	    private String registCode;  // 복합키로 등록된 registCode 필드
 
-//	    @Id
-//	    @ManyToOne
-//	    @JoinColumn(name = "user_id", nullable = false)
-//	    private Users user;  // 복합키로 사용될 user
 
 	    // 복합 키에 포함된 userId 필드
 	    @Column(name = "user_id")
