@@ -82,7 +82,7 @@ const App = () => {
         {/* <Route path="/address-search" element={<AddressSearch />} /> */}
         <Route path='/Login/FindId' element={<FindId />} />
         <Route path='/Login/FindPw' element={<FindPw />} />
-        <Route path="/mypage" element={<MyPageMain />} />
+        <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/introduction" element={<Introduction />} />
         <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}
