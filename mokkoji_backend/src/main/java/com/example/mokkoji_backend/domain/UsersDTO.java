@@ -28,5 +28,5 @@ public class UsersDTO {
 	private LocalDateTime createdAt;
 	private int blockStatus;
 
-	
+	private String token;
 }
