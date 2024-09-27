@@ -1,11 +1,19 @@
 import React, { useState, useRef } from "react";
+import { API_BASE_URL } from "../../service/app-config";
 import '../../css/Reserve/reserve.css';
 import ReserveSource from './ReserveSource';
 import Modal from "react-modal";
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
-const ReservationImg = () => {
+const ReservationImg = ({reserveImage}) => {
+    let uri = API_BASE_URL + "/reserve";
+    
+    const mainImages = reserveImage
+        .filter(image => image.imageType === 'main') 
+        .sort((a, b) => a.imageOrder - b.imageOrder);
+
+  
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [currentImgIndex, setCurrentImgIndex] = useState(0);
     const aboutRef = useRef(null);
@@ -62,15 +70,37 @@ const ReservationImg = () => {
     return (
         <div className='reservation_img_inner'>
             <div className="reservation_main_img">
-                {reservImg[0]}
+                {mainImages[0] && (
+                    <img
+                        src={`${API_BASE_URL}/resources/reserveImages/${mainImages[0].imageName}`}
+                        alt="Main Image"
+                        onClick={() => openModal(0)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                )}
             </div>
+            {/* 서브 이미지 */}
             <div className="reservation_sub_img">
-                {reservImg[1]}
+                {mainImages[1] && (
+                    <img
+                        src={`${API_BASE_URL}/resources/reserveImages/${mainImages[1].imageName}`}
+                        alt="Sub Image"
+                        onClick={() => openModal(1)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                )}
             </div>
+            {/* 마지막 이미지 */}
             <div className="reservation_fin_img">
-                {reservImg[2]}
+                {mainImages[2] && (
+                    <img
+                        src={`${API_BASE_URL}/resources/reserveImages/${mainImages[2].imageName}`}
+                        alt="Final Image"
+                        onClick={() => openModal(2)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                )}
             </div>
-
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
