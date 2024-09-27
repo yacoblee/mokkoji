@@ -7,6 +7,8 @@ import { NavLink } from 'react-router-dom';
 
 function MyPageGrid() {
 
+
+
     return (
         <div className='MyGrid'>
             <NavLink to='/mypage/like'>

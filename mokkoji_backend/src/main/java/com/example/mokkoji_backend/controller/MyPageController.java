@@ -32,8 +32,9 @@ public class MyPageController {
 	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	// ** 기본 세팅 관련 =============================================
+	// ** 기본 세팅 관련 ============================================================
 
+	// 1) 사용자 상세 정보 조회
 	@PostMapping("/user")
 	public ResponseEntity<?> userDetail(@RequestBody UsersDTO usersDTO) {
 		log.info(usersDTO.toString());
@@ -57,7 +58,9 @@ public class MyPageController {
 		}
 	}
 
-	// ** 찜목록 관련 ===============================================
+
+
+	// ** 찜목록 관련 ==============================================================
 
 	// 1) 찜목록 전체 최신순 조회
 	@GetMapping("/favorites")

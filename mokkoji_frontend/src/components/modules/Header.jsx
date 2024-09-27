@@ -77,10 +77,10 @@ const Header = () => {
     const myPageMain = (url) => {
         let userBasicData = JSON.parse(sessionStorage.getItem("inputId"));
         //let userId = userBasicData.userId;
-        console.log(userBasicData)
+        //console.log(userBasicData)
         apiCall(url, 'POST', userBasicData, null)
             .then((response) => {
-                alert(`** myPageMain 성공 url=${url}`);
+                //alert(`** myPageMain 성공 url=${url}`);
                 sessionStorage.setItem("userDetailData", JSON.stringify(response.data));
                 navigate("/mypage");
             }).catch((err) => {

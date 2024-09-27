@@ -12,6 +12,8 @@ import MyPageCart from './mypagesub/MyPageCart';
 import MyPageReview from './mypagesub/MyPageReview';
 import MyPageBook from './mypagesub/MyPageBook';
 import MyPageOrders from './mypagesub/MyPageOrders';
+import MyPageUser from './MyPageUser';
+
 
 function MyPageMain() {
 
@@ -23,10 +25,10 @@ function MyPageMain() {
                 </div>
             </h1>
 
-            <MyPageGrid />
+            {/* <MyPageGrid /> */}
 
             <Routes>
-                <Route path='/' element={<MyPageUser />} />
+                <Route path='/*' element={<MyPageUser />} />
 
                 <Route path='like' element={<MyPageLike />} />
                 <Route path='cart' element={<MyPageCart />} />
