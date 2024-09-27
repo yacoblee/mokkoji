@@ -37,11 +37,13 @@ public class MyPageController {
 	// 1) 사용자 상세 정보 조회
 	@PostMapping("/user")
 	public ResponseEntity<?> userDetail(@RequestBody UsersDTO usersDTO) {
-		log.info(usersDTO.toString());
+			log.info(usersDTO.toString());
+
+		// 1. id에 맞는 사용자 정보 추출
+		Users users = usersService.selectOne(usersDTO.getUserId());
+
+		log.info(users);
 		try {
-			// 1. id에 맞는 사용자 정보 추출
-			Users users = usersService.selectOne(usersDTO.getUserId());
-			log.info(users);
 			// 2. null 경우: 사용자 정보 조회 불가
 			if (users == null) {
 				log.error("id에 맞는 user 없음");
@@ -57,8 +59,6 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
 		}
 	}
-
-
 
 	// ** 찜목록 관련 ==============================================================
 

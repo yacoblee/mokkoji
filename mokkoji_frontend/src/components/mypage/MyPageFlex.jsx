@@ -12,7 +12,6 @@ function MyPageFlex() {
 
     let userDetailData = JSON.parse(sessionStorage.getItem("userDetailData"));
 
-
     return (
         <div className='MyInfoFlex'>
             <div className="MyInfo">
