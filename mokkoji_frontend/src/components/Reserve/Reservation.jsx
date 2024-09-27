@@ -1,22 +1,59 @@
 import React, { useState, useEffect } from "react";
+import { useParams, NavLink } from 'react-router-dom';
+
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ReserveObject from './ReserveObject';
 import Reservesource from "./ReserveSource";
-import '../../css/Reserve/reserve.css';
 import ReservationImg from "./ReservationImg";
 import ReservationIntro from "./ReservationIntro";
 import ReservationDeatil from "./ReservationDetail";
 
+import { API_BASE_URL } from "../../service/app-config";
+import axios from "axios";
+
+import '../../css/Reserve/reserve.css';
+
 const Reservation = () => {
     const [reservationCounts, setReservationCounts] = useState({});
     const [date, setDate] = useState(new Date());
-    const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
+    const [registsData, setRegistsData] = useState([]); // Store regists data
+    // const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
     const today = new Date(); // 오늘 날짜
     const oneMonthLater = moment(today).add(1, 'months').toDate();
     const [showCalendar, setShowCalendar] = useState(false);
+    
+    useEffect(() => {
+        //if (getStorageData() !== null) setList(getStorageData());
+        //else alert(' 출력할 내용이 없습니다 ~~ ');
+        let uri = API_BASE_URL + "/reserve";
+        axios.get(uri)
+            .then(response => {
+                const { regists, dateCounts } = response.data;
+                console.log(response.data);
 
+                if (dateCounts && Array.isArray(dateCounts)) {
+                    const counts = {};  // 예약 카운트를 저장할 객체
+                    
+                    // dateCounts 배열을 안전하게 반복
+                    dateCounts.forEach((data) => {
+                        const formattedDate = moment(data.date).format("YYYY-MM-DD");
+                        counts[formattedDate] = data.count;
+                         
+                    });
+                    
+                    // 예약 카운트 상태 업데이트
+                    setReservationCounts(counts);
+                }
+
+                setRegistsData(regists);
+            })
+            .catch(err => {
+                console.log(err);
+               
+            })
+    },[]);
     // 숫자 클릭에 대한 state
     const [btnValue, setBtnValue] = useState({
         adultSelect: 0, // 성인 옵션의 갯수
@@ -51,21 +88,27 @@ const Reservation = () => {
 
     const calculateReservationCounts = () => {
         const counts = {};
+       
 
-        ReserveObject.forEach((month) => {
-            month.days.forEach((dayData) => {
-                const dayDate = new Date(dayData.year, dayData.month - 1, dayData.day);
-                if (dayDate >= today && dayDate <= oneMonthLater) {
-                    const formattedDate = moment(dayDate).format("YYYY-MM-DD");
-                    counts[formattedDate] = dayData.id.length;
-                }
-            });
-        });
+
+     
+//{date: '2024-10-07T00:00:00.000+00:00', count: 1}
+
+       
+        // ReserveObject.forEach((month) => {
+        //     month.days.forEach((dayData) => {
+        //         const dayDate = new Date(dayData.year, dayData.month - 1, dayData.day);
+        //         if (dayDate >= today && dayDate <= oneMonthLater) {
+        //             const formattedDate = moment(dayDate).format("YYYY-MM-DD");
+        //             counts[formattedDate] = dayData.id.length;
+        //         }
+        //     });
+        // });
         // 로컬 스토리지에 업데이트 될 경우 정보 리로드
-        existingReservations.forEach(reservation => {
-            const formattedDate = moment(reservation.date).format("YYYY-MM-DD");
-            counts[formattedDate] = (counts[formattedDate] || 0) + 1;
-        });
+        // ReserveObject.forEach(reservation => {
+        //     const formattedDate = moment(reservation.date).format("YYYY-MM-DD");
+        //     counts[formattedDate] = (counts[formattedDate] || 0) + 1;
+        // });
         setReservationCounts(counts);
     };
 
@@ -240,7 +283,7 @@ const Reservation = () => {
             </section>
             <section className="reservation_detail">
 
-                <ReservationDeatil />
+                <ReservationDeatil regists={registsData}/>
             </section>
         </div>
     );

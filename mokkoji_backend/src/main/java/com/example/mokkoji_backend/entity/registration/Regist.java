@@ -1,13 +1,10 @@
 package com.example.mokkoji_backend.entity.registration;
 
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -16,7 +13,7 @@ import lombok.Data;
 @Data
 public class Regist {
 		@Id
-	    @Column(name = "regist_code", nullable = false, length = 100)
+	    @Column(name = "regist_code")
 	    private String registCode;
 
 	    @Column(name = "name", length = 100)
@@ -31,7 +28,31 @@ public class Regist {
 	    @Column(name = "adult")
 	    private int adult;
 	    
-	    @OneToMany(mappedBy = "regist")
-	    private List<RegistImages> registImages;
+	    @Column(name = "hightlight_1")
+	    private String hightlight1;
+	    
+	    @Column(name = "hightlight_2")
+	    private String hightlight2;
+	    
+	    @Column(name = "hightlight_3")
+	    private String hightlight3;
+	    
+	    @Column(name = "hightlight_4")
+	    private String hightlight4;
+	    
+	    @Column(name = "package_detail")
+	    private String packageDetail;
+	    
+	    @Column(name = "restrict_detail")
+	    private String restrictDetail;
+	    
+	    @Column(name = "reserve_restrict")
+	    private String reserveRestrict;
+	    
+	    @Column(name = "etc_detail")
+	    private String etcDetail;
+	    
+//	    @OneToMany(mappedBy = "regist")
+//	    private List<RegistImages> registImages;
 	
 }

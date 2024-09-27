@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.UsersRepository;
-import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepository;
+import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepositoryDSL;
 
 
 @SpringBootTest
@@ -18,7 +18,7 @@ class MokkojiBackendApplicationTests {
 	UsersRepository repository;
 	
 	@Autowired
-	RegistedHistoryRepository registrepository;
+	RegistedHistoryRepositoryDSL registrepository;
 	@Test
 	void contextLoads() {
 		
