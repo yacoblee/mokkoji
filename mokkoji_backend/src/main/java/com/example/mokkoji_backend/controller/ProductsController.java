@@ -18,12 +18,11 @@ import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
-import com.example.mokkoji_backend.pageTest.Criteria;
-import com.example.mokkoji_backend.pageTest.PageMaker;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
+import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,87 +32,89 @@ import lombok.extern.log4j.Log4j2;
 //@RequestMapping("/goods")
 @RequiredArgsConstructor
 public class ProductsController {
-
+	
 	private final ProductsService service;
 	private final ProductoptionsService opservice;
 	private final ProductsImagesRepository imservice;
 	private final PackagingService paservice;
+	private final ReviewsService reservice;
 	
+	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
 	public ResponseEntity<?> indexPage(){
+		//데이터 포멧 넘침으로 인해 , dto로 변환된 list를 가져옴
 		List<ProductsDTO> productList = service.findList();
-		log.info("/goods _ 들어왔니 ?");
+		
 		if(productList != null && !productList.isEmpty()) {
 			log.info("/goods _ 성공했니 ?");
 			return ResponseEntity.ok(productList);
 		}
 		log.info("/goods _ 실패했니 ?");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
-	}
+	}//indexPage
 	
+	//goods index 페이지에서 링크 이동을 통해 들어오면 데이터 걸러서 들어오게됨.
+	//nav바를 통해 이동하더라도 이 메서드로 작동하게끔 분기 시킴.
+	//페이지 네이션이 기본적으로 이루어 져야함.
 	@GetMapping("/goods/{sub_type_name}")
 	public ResponseEntity<?> getCategoryList(@PathVariable("sub_type_name") String categoryId,
 			PageRequestDTO requestDTO) {
-	    List<ProductsDTO> productList;
 	    PageResultDTO<ProductsDTO, Products> resultDTO ;
+	    //1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
+	    //2. 결과를 담을 listDTO가 필요 : productList
+	    //3. pageMaker를 위해 dto 변환값을 저장하여 response 해준다.
+	    
+	    
+	    //** nav의 allGoods 처리
 	    if ("allGoods".equals(categoryId)) {
-	    		//requestDTO.setType("allGoods");
+	    		
 	    	 resultDTO =service.findPageAll(requestDTO);
 	        log.info("전체 상품 링크 ?현재 링크 위치 :"+categoryId);
 	    } else {
-	    	//requestDTO.setType(categoryId);
+	    	// v1 : 페이징 처리 없음 
+	    	//productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
+	    	
 	    	resultDTO =service.findByCategoryId(requestDTO); 
-	        //productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
-	        log.info("카테고리별 링크 ? 현재 링크 위치 :"+categoryId);
+	        log.info("카테고리 별 링크 ? 현재 링크 위치 :"+categoryId);
 	    }
-	    productList = resultDTO.getDtoList(); // 전체 상품을 가져옴
+	    // 상황에 맞는 상품을 리스트로 변환
+	    List<ProductsDTO> productList = resultDTO.getDtoList();
 
-	    // 응답에 상품 목록 포함
+	    // 응답에 여러가지를 담기 위해 hashMap을 이용
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
-	    //System.out.println("resultDTO currentPage : "+resultDTO.getCurrentPage());
-	    //System.out.println("resultDTO getStartPage : "+resultDTO.getStartPage());
-	    //System.out.println("resultDTO getEndPage : "+resultDTO.getEndPage());
-	    //System.out.println("resultDTO getPageList : "+resultDTO.getPageList());
+	    
 	    return ResponseEntity.ok(response);
-	}
+	}//getCategoryList
 	
 	
+	//검색을 하면 들어오는 메서드.
 	@GetMapping("/goods/search")
 	public ResponseEntity<?> searchGoods( PageRequestDTO requestDTO) {
-	    // 서비스 계층을 통해 페이징 처리된 결과 가져오기
+	    // 1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
 	    PageResultDTO<ProductsDTO, Products> resultDTO ;
-    	//System.out.println("*****requestDTO getPage"+requestDTO.getPage());
-    	//System.out.println("******requestDTO getSize"+requestDTO.getSize());
-    	//System.out.println("*****requestDTO getType"+requestDTO.getType());
-    	//System.out.println("*****requestDTO getPageList"+requestDTO.getKeyword());
+    	
+	  //** select 타입의 allGoods 처리
+	    //1. 모든 상품에 대해서는  name like %??%
+	    //2. 카테고리 선정 상품에 대해서는 where name like %?% and categoryId = 블라블라
 	    if(requestDTO.getType().equals("allGoods")) {
 	    	resultDTO = service.findByNameContaining(requestDTO);
-	    	System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
-	    	System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
-	    	System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
-	    	System.out.println("resultDTO getPageList"+resultDTO.getPageList());
+	    	
 	    	log.info("allgoods 검색중 ?검색 키워드 :"+requestDTO.getKeyword());
 	    }else {
 	    	resultDTO = service.findByCategoryIdAndNameContaining(requestDTO);
-	    	System.out.println("");
-	        System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
-		    System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
-		    System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
-		    System.out.println("resultDTO getPageList"+resultDTO.getPageList());
+	    	
 	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword()+", 카테고리 : "+requestDTO.getType() );
 	    }
+	 // 상황에 맞는 상품을 리스트로 변환
 	    List<ProductsDTO> productList = resultDTO.getDtoList();
 	    
 	   
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
-//	    System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
-//	    System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
-//	    System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
-//	    System.out.println("resultDTO getPageList"+resultDTO.getPageList());
+
 	    return ResponseEntity.ok(response);
 	}
 	
@@ -159,12 +160,12 @@ public class ProductsController {
 	    System.out.println("실행되고 있니 ?");
 	    // 요청된 데이터에 따라 필요한 정보만 반환
 	    if (type != null &&  !type.equals("form")) {
-	    	//recommend, image, detail 
+	    	//recommend, image, detail  , review
 	    	log.info("Finding images with type: " + type);
 	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
 	        log.info(image);
 	        response.put("image", image);
-	        
+	        //List<Reviews> review = reservice.productReviews((int)productId);
 	        if(type.equals("main")) {
 	        	response.put("detail", service.findDetailinfo(productId));	
 	        	response.put("recommend", service.findTop4ByOrderByCountDescNative(productId));

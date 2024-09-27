@@ -14,7 +14,7 @@ public class ReviewsServiceImpl implements ReviewsService {
 	final ReviewsRepository reviewsRepository;
 
 	// ** 상품페이지에서만 사용 ===============================================
-
+	//기훈ㅇ ㅏ 너무 고마워... 근데 형이 안맞아서 못가져온데... fk들은 엔터티 타입 확인 부탁해요 ....
 	// 1) 각 상품별 review 목록 확인시 사용
 	@Override
 	public List<Reviews> productReviews(int productId) {
