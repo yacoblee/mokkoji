@@ -26,11 +26,11 @@ const Login = () => {
         }
     }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
 
-    // input창에 onChange이벤트 발생 시 입력값 저장 
+    // input창에 onChange이벤트 발생 시 입력값 저장
     const onChangeId = (e) => { setInputId(e.target.value) }
     const onChangePw = (e) => { setInputePw(e.target.value) }
 
-    // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
+    // input에 포커스 이벤트 발생시 라벨 밖으로 이동
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
             labelRef.current.style.fontSize = '15px';
@@ -48,7 +48,7 @@ const Login = () => {
         }
     }
 
-    // label과 input 포커스 기능 연결 
+    // label과 input 포커스 기능 연결
     const LabelClick = (inputRef) => {
         if (inputRef.current) {
             inputRef.current.focus();
@@ -72,7 +72,7 @@ const Login = () => {
                     sessionStorage.setItem("isLoggedIn", "true");
                     alert('로그인 성공');
                     sessionStorage.setItem("inputId", JSON.stringify(response.data));  // response.data 사용
-                    setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠 
+                    setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠
                     console.log("네비 이동 직전임");
                     console.log("네비 이동 후");
                 } else {
@@ -83,12 +83,12 @@ const Login = () => {
                 console.log("로그인 중 오류 발생:", err);
                 setInputId("");
                 setInputePw("");
-                
+
                 // 상태 코드로 에러 메시지 처리
-                if (err== 502) {
+                if (err == 502) {
                     alert("id 또는 password가 다릅니다, 다시 시도하세요.");
                 } else {
-                    alert(`** onLoginSubmit 시스템 오류, err=${err}`); //=> nullException이 발생함으로 여기로 에러가 떨어짐 
+                    alert(`** onLoginSubmit 시스템 오류, err=${err}`); //=> nullException이 발생함으로 여기로 에러가 떨어짐
 
                 }
                 setIsLoggedIn(false);

@@ -32,14 +32,17 @@ public class MyPageController {
 	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	@GetMapping("/user")
-	public ResponseEntity<?> saveUserData(UsersDTO usersDTO) {
+	// ** 기본 세팅 관련 =============================================
+
+	@PostMapping("/user")
+	public ResponseEntity<?> userDetail(@RequestBody UsersDTO usersDTO) {
+		log.info(usersDTO.toString());
 		try {
 			// 1. id에 맞는 사용자 정보 추출
 			Users users = usersService.selectOne(usersDTO.getUserId());
-
+			log.info(users);
 			// 2. null 경우: 사용자 정보 조회 불가
-			if (users == null ) {
+			if (users == null) {
 				log.error("id에 맞는 user 없음");
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("id에 맞는 user 없음");
 			}
@@ -101,10 +104,10 @@ public class MyPageController {
 			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
 		}
-//		catch (Exception e) {
-//			// 5. 서버에서 발생한 예외 처리
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
-//		}
+		//		catch (Exception e) {
+		//			// 5. 서버에서 발생한 예외 처리
+		//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
+		//		}
 	} //favoritesDelete
 
 }

@@ -472,7 +472,7 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
             >
                 <div className='Modalbutton'>
                     <button
-                        onClick={() => navigate('/mypage/list')}>구매 내역 확인</button>
+                        onClick={() => navigate('/mypage/orders')}>구매 내역 확인</button>
 
                     <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
                 </div>
