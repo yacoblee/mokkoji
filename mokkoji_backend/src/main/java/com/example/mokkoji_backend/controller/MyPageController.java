@@ -29,25 +29,27 @@ public class MyPageController {
 	private CartService cartService;
 	@Resource(name = "ReviewsService")
 	private ReviewsService reviewsService;
-	@Resource(name = "UsersService")
+//	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> saveUserData(@PathVariable("id") String id){
+	@GetMapping("/user")
+	public ResponseEntity<?> saveUserData(UsersDTO usersDTO) {
 		try {
-			// 2. 찜 목록 조회
-			Users users = usersService.selectOne(id);
+			// 1. id에 맞는 사용자 정보 추출
+			Users users = usersService.selectOne(usersDTO.getUserId());
 
-			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
+			// 2. null 경우: 사용자 정보 조회 불가
 			if (users == null ) {
+				log.error("id에 맞는 user 없음");
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("id에 맞는 user 없음");
 			}
 
-			// 4. 정상적인 경우
+			// 3. 정상적인 경우
 			return ResponseEntity.ok(users);
 
 		} catch (Exception e) {
-			// 5. 서버에서 발생한 예외 처리
+			// 4. 서버에서 발생한 예외 처리
+			log.error("내부 서버 오류");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
 		}
 	}
