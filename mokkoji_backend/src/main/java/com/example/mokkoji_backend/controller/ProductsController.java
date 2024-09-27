@@ -57,9 +57,11 @@ public class ProductsController {
 	    List<ProductsDTO> productList;
 	    PageResultDTO<ProductsDTO, Products> resultDTO ;
 	    if ("allGoods".equals(categoryId)) {
+	    		//requestDTO.setType("allGoods");
 	    	 resultDTO =service.findPageAll(requestDTO);
 	        log.info("전체 상품 링크 ?현재 링크 위치 :"+categoryId);
 	    } else {
+	    	//requestDTO.setType(categoryId);
 	    	resultDTO =service.findByCategoryId(requestDTO); 
 	        //productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
 	        log.info("카테고리별 링크 ? 현재 링크 위치 :"+categoryId);

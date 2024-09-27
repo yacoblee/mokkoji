@@ -18,17 +18,21 @@ const ProductList = () => {
     const [displayMessage, setDisplayMessage] = useState('');
     const [pageMaker, setPageMaker] = useState({});
 
-    useEffect(() => {
-        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
-        SetFilterItem(it => ({ ...it, inputValue: '' }));
-        SetFilterItem(it => ({ ...it, selectValue: 'allGoods' }));
 
-        setPage(1);
-        let uri = API_BASE_URL + "/goods/" + category;
+    function axiosCall() {
+        let uri;
+        if (filterItem.inputValue.trim() === '') {
+            // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
+            uri = `${API_BASE_URL}/goods/${category}`;
+        } else {
+            // 검색어가 있을 때 검색 API 호출
+            uri = `${API_BASE_URL}/goods/search`;
+        }
         axios.get(uri, {
             params: {
                 page: page, // 첫 페이지로 설정
                 type: category,
+                ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
             }
         })
             .then(response => {
@@ -42,12 +46,17 @@ const ProductList = () => {
                 console.log(err);
                 setList([]);
             });
-        console.log(`카테고리 변했을때 pageMaker `)
-        console.log(pageMaker);
+    }
+    useEffect(() => {
+        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
+        SetFilterItem(it => ({ ...it, selectValue: 'allGoodds', inputValue: '' }));
+        setPage(1);
+        axiosCall();
     }, [category]);
 
-
-
+    useEffect(() => {
+        axiosCall();
+    }, [page]);
     const onChangeSelectValue = (e) => {
         SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
     };
@@ -60,47 +69,46 @@ const ProductList = () => {
         SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
     };
 
+    // const onclickSearch = () => {
+    //     let uri;
+    //     if (filterItem.inputValue.trim() === '') {
+    //         // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
+    //         uri = `${API_BASE_URL}/goods/${filterItem.selectValue}`;
+    //     } else {
+    //         // 검색어가 있을 때 검색 API 호출
+    //         uri = `${API_BASE_URL}/goods/search`;
+    //     }
+    //     axios.get(uri, {
+    //         params: {
+    //             page: page,
+    //             type: filterItem.selectValue,
+    //             keyword: filterItem.inputValue
+    //         }
+    //     })
+    //         .then(response => {
+    //             const { productList, pageMaker } = response.data;
+    //             setList(productList);
+    //             setResultCount(productList.length);
+    //             updateDisplayMessage(productList.length);
+    //             setPageMaker(pageMaker);
+    //             console.log(pageMaker);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             setList([]);
+    //             setResultCount(0);
+    //             updateDisplayMessage(0);
+    //         });
+    // };
     const onclickSearch = () => {
         let uri;
-        if (filterItem.inputValue.trim() === '') {
-            // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
-            uri = `${API_BASE_URL}/goods/${filterItem.selectValue}`;
-        } else {
-            // 검색어가 있을 때 검색 API 호출
-            uri = `${API_BASE_URL}/goods/search`;
-        }
-        axios.get(uri, {
-            params: {
-                page: page,
-                type: filterItem.selectValue,
-                keyword: filterItem.inputValue
-            }
-        })
-            .then(response => {
-                const { productList, pageMaker } = response.data;
-                setList(productList);
-                setResultCount(productList.length);
-                updateDisplayMessage(productList.length);
-                setPageMaker(pageMaker);
-                console.log(pageMaker);
-            })
-            .catch(err => {
-                console.log(err);
-                setList([]);
-                setResultCount(0);
-                updateDisplayMessage(0);
-            });
+        axiosCall();
     };
-    useEffect(() => {
-        
-            onclickSearch();
-      
 
-    }, [page]);
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {
-            onclickSearch();
+            axiosCall();
         }
     };
 

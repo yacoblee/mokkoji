@@ -77,13 +77,6 @@ public class ProductsServiceImpl implements ProductsService {
 	 
 	 public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO){
 		 Page<Products> result = repository.findAll(requestDTO.getPageable());
-		 
-		 System.out.println("requestDTO service");
-		 System.out.println(requestDTO.getPage());
-		 System.out.println(requestDTO.getSize());
-		 System.out.println(result.getTotalElements());
-		 System.out.println(result.getContent());
-		 //List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	 }
 	
