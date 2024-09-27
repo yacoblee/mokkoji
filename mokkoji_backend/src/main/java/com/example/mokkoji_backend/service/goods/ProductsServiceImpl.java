@@ -37,40 +37,47 @@ public class ProductsServiceImpl implements ProductsService {
 	
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO){
-		Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
-		Page<Products> result = repository.findByCategoryId(requestDTO.getType(),pageable);
+		//Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		Page<Products> result = repository.findByCategoryId(requestDTO.getType(),requestDTO.getPageable());
 		 List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	}
 	
-	public ProductsDTO entityToDto(Products product) {
-	    return ProductsDTO.builder()
-	            .id(product.getId())
-	            .name(product.getName())
-	            .price(product.getPrice())
-	            .mainImageName(product.getMainImageName())
-	            .categoryId(product.getCategoryId())
-	            .mainDescription(product.getMainDescription())
-	    
-	            .build();
-	}
-	
+//	public ProductsDTO entityToDto(Products product) {
+//	    return ProductsDTO.builder()
+//	            .id(product.getId())
+//	            .name(product.getName())
+//	            .price(product.getPrice())
+//	            .mainImageName(product.getMainImageName())
+//	            .categoryId(product.getCategoryId())
+//	            .mainDescription(product.getMainDescription())
+//	    
+//	            .build();
+//	}
 	
 	public ProductsDTO dslentityToDto(Products product) {
 		return dsrepository.entityToDto(product);
 	}
 	 
 	 @Override
-	 public PageResultDTO<ProductsDTO, Products> pageList(PageRequestDTO requestDTO) {
-		 Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
-		 Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),requestDTO.getKeyword(),pageable);
+	 public PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO) {
+		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),requestDTO.getKeyword(),requestDTO.getPageable());
 		 List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	 }
 	 
+	 @Override
+	public PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO) {
+		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 Page<Products> result = repository.findByNameContaining(requestDTO.getKeyword(), requestDTO.getPageable());
+		 List<Products> dtoList = result.getContent();
+		return new PageResultDTO<>(result , e->dslentityToDto(e));
+	}
+	 
 	 public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO){
-		 Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
-		 Page<Products> result = repository.findAll(pageable);
+		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 Page<Products> result = repository.findAll(requestDTO.getPageable());
 		 List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	 }
@@ -93,16 +100,16 @@ public class ProductsServiceImpl implements ProductsService {
 	    return productPage.getContent();
 	}
 	
-	@Override
-	public int countByAll() {
-		return repository.countBy();
-	}
+	//@Override
+	//public int countByAll() {
+	//	return repository.countBy();
+	//}
 	
-	@Override
-	public int countByCategoryId(String CategoryId) {
-		
-		return repository.countByCategoryId(CategoryId);
-	}
+	//@Override
+	//public int countByCategoryId(String CategoryId) {
+	//	
+	//	return repository.countByCategoryId(CategoryId);
+	//}
 	
 	@Override
 	public ProductDetailDTO findDetailinfo( Long id) {
@@ -116,7 +123,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	public ProductsDTO findDto(Long id) {
+ public ProductsDTO findDto(Long id) {
 		
 		return repository.findDto(id);
 	}

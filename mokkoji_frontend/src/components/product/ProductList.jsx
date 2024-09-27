@@ -3,27 +3,7 @@ import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-
-const ProductMainGuide = ({ text }) => {
-    const guideRef = useRef(null);
-
-    useEffect(() => {
-        const guideElement = guideRef.current;
-        const containerWidth = guideElement.offsetWidth;
-        const animationDuration = containerWidth / 30;
-        const animationDelay = -containerWidth / 50;
-
-        guideElement.style.animation = 'none';
-        guideElement.style.animation = `scrollText ${animationDuration}s linear infinite`;
-        guideElement.style.animationDelay = `${animationDelay}s`;
-    }, [text]);
-
-    return (
-        <p className="productMainGuide" ref={guideRef} style={{ animation: "scrollText linear infinite" }}>
-            {text}
-        </p>
-    );
-};
+import ProductMainGuide from './ProductMainGuide';
 
 const ProductList = () => {
     const { category } = useParams();
@@ -37,40 +17,7 @@ const ProductList = () => {
     const [resultCount, setResultCount] = useState(0);
     const [displayMessage, setDisplayMessage] = useState('');
     const [pageMaker, setPageMaker] = useState({});
-    // useEffect(() => {
-    //     // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
-    //     SetFilterItem(it => ({ ...it, inputValue: '' }));
-    //     setPage(1); // 페이지 상태만 업데이트 (비동기적임)
 
-    //     // 페이지를 1로 설정한 후, 데이터를 가져오는 것은 두 번째 useEffect에서 처리
-    // }, [category]);
-
-    // useEffect(() => {
-    //     // 페이지 변경 시 데이터 가져오기
-    //     let uri = `${API_BASE_URL}/goods/${category}`;
-
-    //     axios.get(uri, {
-    //         params: {
-    //             currentPage: page, // 현재 페이지를 가져옴
-    //             rowsPerPageCount: 4, // 페이지당 항목 수
-    //             type: category,
-    //             keyword: filterItem.inputValue, // 검색어 추가
-    //         }
-    //     })
-    //         .then(response => {
-    //             const { productList, pageMaker } = response.data;
-    //             setList(productList);
-    //             setResultCount(productList.length);
-    //             setPageMaker(pageMaker);
-    //             console.log(productList);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             setList([]);
-    //         });
-    //     console.log(`카테고리 변했을때 pageMaker `)
-    //     console.log(pageMaker);
-    // }, [page, category, filterItem.inputValue]);
     useEffect(() => {
         // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
         SetFilterItem(it => ({ ...it, inputValue: '' }));
@@ -80,8 +27,7 @@ const ProductList = () => {
         let uri = API_BASE_URL + "/goods/" + category;
         axios.get(uri, {
             params: {
-                currentPage: page, // 첫 페이지로 설정
-                //rowsPerPageCount: 5, // 페이지당 항목 수
+                page: page, // 첫 페이지로 설정
                 type: category,
             }
         })
@@ -100,11 +46,7 @@ const ProductList = () => {
         console.log(pageMaker);
     }, [category]);
 
-    useEffect(() => {
 
-        onclickSearch();
-
-    }, [page]);
 
     const onChangeSelectValue = (e) => {
         SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
@@ -129,10 +71,8 @@ const ProductList = () => {
         }
         axios.get(uri, {
             params: {
-                currentPage: page,
-                //rowsPerPageCount: 4,
+                page: page,
                 type: filterItem.selectValue,
-                //sortOption: filterItem.sortOption,
                 keyword: filterItem.inputValue
             }
         })
@@ -151,6 +91,11 @@ const ProductList = () => {
                 updateDisplayMessage(0);
             });
     };
+    useEffect(() => {
+
+        onclickSearch();
+
+    }, [page]);
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {

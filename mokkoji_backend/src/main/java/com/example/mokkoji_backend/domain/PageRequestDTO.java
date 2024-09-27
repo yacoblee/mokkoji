@@ -68,8 +68,8 @@ import lombok.Data;
 @Builder
 @Data
 public class PageRequestDTO {//->페이징 조건들
-    private static int page; //출력할 Page 번호
-    private static int size; // 출력할 row 갯수
+    private int page; //출력할 Page 번호
+    private int size; // 출력할 row 갯수
     private String type;// 카테고리 비교
     private String keyword;//검색어 비교
     
@@ -78,9 +78,21 @@ public class PageRequestDTO {//->페이징 조건들
     	this.size=4;
     }// 기본 생성자를 활용하여 page 와 size를 초기화.
     
-    public Pageable getPageable(Sort sort){
+    public PageRequestDTO(int page,String type) {
+    	this.page=page;
+    	this.type=type;
+    }
+    
+    public PageRequestDTO(int page,String type,String keyword) {
+    	this.page=page;
+    	this.type=type;
+    	this.keyword=keyword;
+    }
+    
+    public Pageable getPageable(){
     	//return PageRequest.of(page-1, size, sort);
-    	return PageRequest.of(page-1, size, sort);
+    	//return PageRequest.of(page-1, size, sort);
+    	return PageRequest.of(page-1, size);
         // => of: 페이징을 위한 데이터의 조건을 적어주는 메서드
         // => JPA 에서는 pageNo 가 0 부터 시작하기 때문에 page-1
         //       단, application.properties에서 변경가능  

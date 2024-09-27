@@ -58,9 +58,10 @@ public class ProductsController {
 	    PageResultDTO<ProductsDTO, Products> resultDTO =service.findPageAll(requestDTO);
 	    if ("allGoods".equals(categoryId)) {
 	        productList = resultDTO.getDtoList(); // 전체 상품을 가져옴
+	        log.info("전체 상품 링크 ?현재 링크 위치 :"+categoryId);
 	    } else {
-	    	
 	        productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
+	        log.info("카테고리별 링크 ? 현재 링크 위치 :"+categoryId);
 	    }
 
 	    // 응답에 상품 목록 포함
@@ -75,11 +76,17 @@ public class ProductsController {
 	@GetMapping("/goods/search")
 	public ResponseEntity<?> searchGoods( PageRequestDTO requestDTO) {
 	    // 서비스 계층을 통해 페이징 처리된 결과 가져오기
-	    PageResultDTO<ProductsDTO, Products> resultDTO = service.pageList(requestDTO);
+	    PageResultDTO<ProductsDTO, Products> resultDTO ;
+	    if(requestDTO.getType().equals("allGoods")) {
+	    	resultDTO = service.findByNameContaining(requestDTO);
+	    	log.info("allgoods 검색중 ?검색 키워드 :"+requestDTO.getKeyword());
+	    }else {
+	    	resultDTO = service.findByCategoryIdAndNameContaining(requestDTO);
+	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword());
+	    }
 	    List<ProductsDTO> productList = resultDTO.getDtoList();
-	    log.info("검색중 ?");
-	    //log.info("dto ?"+requestDTO);
-	    System.out.println("들어옴 ?검색함");
+	    
+	   
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
