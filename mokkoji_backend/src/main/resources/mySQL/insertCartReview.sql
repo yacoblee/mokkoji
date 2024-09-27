@@ -21,13 +21,13 @@ INSERT INTO project.reviews (user_id,product_id,review_content,like_dislike)
 VALUES ('user2',2,'뭔지 몰라도 좋아요',1);
 
 --  Favorites 가데이터
-INSERT INTO project.favorite (user_id,product_id)
+INSERT INTO project.favorites (user_id,product_id)
 VALUES ('user1',1);
-INSERT INTO project.favorite (user_id,product_id)
+INSERT INTO project.favorites (user_id,product_id)
 VALUES ('user2',2);
-INSERT INTO project.favorite (user_id,product_id)
+INSERT INTO project.favorites (user_id,product_id)
 VALUES ('user3',3);
-INSERT INTO project.favorite (user_id,product_id)
+INSERT INTO project.favorites (user_id,product_id)
 VALUES ('user1',2);
 
 
