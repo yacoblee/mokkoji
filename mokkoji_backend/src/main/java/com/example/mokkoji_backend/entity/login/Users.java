@@ -3,6 +3,8 @@ package com.example.mokkoji_backend.entity.login;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Component
 @Table(name = "users")
 @Data
 @Builder
@@ -61,6 +64,6 @@ public class Users {
 	private int blockStatus;
 	
 	@Column(name= "is_admin")
-	private int isAdmin;
+	private String isAdmin;
 		
 }

@@ -15,8 +15,6 @@ INSERT INTO code values('03PS','상품 상태',1,'판매중');
 INSERT INTO code values('03PS','상품 상태',2,'매진 입고 예정');
 INSERT INTO code values('03PS','상품 상태',3,'매진 입고 미정');
 
-
-
 -- ------------------------------------------------------------
 
 -- packaging table insert  (pk - packaging_option_content)
@@ -570,7 +568,9 @@ UPDATE project.products
 SET product_name='한국 전통 문양 베개 커버', product_price=25000, product_size_info='상품 크기 : 450x450mm', product_guide='* 손세탁 권장', product_main_description='한국 전통 문양이 새겨진 고급 베개 커버입니다.', product_additional_description='인테리어 소품으로 좋은 패키지에 담겨 있습니다.', main_image_name='pictureFlower5.jpg', like_count=0, status=0, stock_count=100, upload_date='2024-09-24 12:29:38', category_id='C3'
 WHERE product_id=13;
 
+ALTER TABLE `users` 
+ADD COLUMN `is_admin` tinyint(1) DEFAULT 0 COMMENT '관리자 여부 (1: 관리자, 0: 일반 사용자)';
 
-
-RENAME TABLE purchasehistorylist TO purchasedetail;
-RENAME TABLE purchasehistory TO purchase;
+UPDATE `users`
+SET `is_admin` = 1
+WHERE user_id = '11';
