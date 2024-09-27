@@ -1,7 +1,17 @@
 import Reservesource from "./ReserveSource";
-
+import { API_BASE_URL } from "../../service/app-config";
 
 const ReservationDeatil = ({ regists }) => {
+    let uri = API_BASE_URL + "/reserve";
+    const { registsData, reserveImage } = regists;
+    const regist = registsData.length > 0 ? registsData[0] : {};
+
+
+    const detailImages = reserveImage
+        .filter(image => image.imageType === 'detail') 
+        .sort((a, b) => a.imageOrder - b.imageOrder);
+
+
 
 
 
@@ -15,25 +25,25 @@ const ReservationDeatil = ({ regists }) => {
                 <div>
                     <h4>패키지 상세정보</h4>
                     <ul>
-                        <li>자개로 굿즈 만들기 체험</li>
+                        <li>{regist.packageDetail || '패키지 정보가 없습니다.'}</li>
                     </ul>
                 </div>
                 <div>
                     <h4>규정 및 제한사항</h4>
                     <ul>
-                        <li>음주 상태의 참여자는 서비스 이용이 거부될 수 있습니다. 이 경우 입장이 불가합니다.</li>
+                        <li>{regist.restrictDetail || '규정 정보가 없습니다.'}</li>
                     </ul>
                 </div>
                 <div>
                     <h4>예약 제한사항</h4>
                     <ul>
-                        <li>그룹 규모: 참여자 수 1-25인.</li>
+                        <li>{regist.reserveRestrict || '예약 제한 정보가 없습니다.'}</li>
                     </ul>
                 </div>
                 <div>
                     <h4>편의성/접근성</h4>
                     <ul>
-                        <li>유모차 및 휠체어 이용이 불가합니다.</li>
+                        <li>{regist.etcDetail || '편의성 정보가 없습니다.'}</li>
                     </ul>
                 </div>
             </div>
@@ -42,15 +52,22 @@ const ReservationDeatil = ({ regists }) => {
                 <div className="detail_inner_img_head">
                     <h2>상세 이미지</h2>
                 </div>
-                <div  >
-                    {Reservesource.flatMap(item => item.productSrc).map((src, i) => (
-                        <img key={i} className="" src={src} alt={`slide ${i}`} />
+                <div>
+
+                    {detailImages.map((reserveimage, i ) => (
+                        <img src={`${API_BASE_URL}/resources/reserveImages/${reserveimage.imageName}`} 
+                        alt={reserveimage.imageOrder}
+                        key={i} />
                     ))}
+
+
+                    {/* {Reservesource.flatMap(item => item.productSrc).map((src, i) => (
+                        <img key={i} className="" src={src} alt={`slide ${i}`} />
+                    ))} */}
                 </div>
             </div>
 
         </div>
-
     );
 }
 

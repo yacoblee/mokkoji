@@ -16,37 +16,37 @@ import axios from "axios";
 import '../../css/Reserve/reserve.css';
 
 const Reservation = () => {
+    // const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
     const [reservationCounts, setReservationCounts] = useState({});
     const [date, setDate] = useState(new Date());
-    const [registsData, setRegistsData] = useState([]); // Store regists data
-    // const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
+    const [registsData, setRegistsData] = useState([]);  
     const today = new Date(); // 오늘 날짜
     const oneMonthLater = moment(today).add(1, 'months').toDate();
     const [showCalendar, setShowCalendar] = useState(false);
-    
+    const [reserveImage, setReserveImage] = useState([]);
+
+
     useEffect(() => {
         //if (getStorageData() !== null) setList(getStorageData());
         //else alert(' 출력할 내용이 없습니다 ~~ ');
         let uri = API_BASE_URL + "/reserve";
         axios.get(uri)
             .then(response => {
-                const { regists, dateCounts } = response.data;
-                console.log(response.data);
-
+                const { regists, dateCounts, reserveImage } = response.data;
+               
                 if (dateCounts && Array.isArray(dateCounts)) {
                     const counts = {};  // 예약 카운트를 저장할 객체
-                    
                     // dateCounts 배열을 안전하게 반복
                     dateCounts.forEach((data) => {
                         const formattedDate = moment(data.date).format("YYYY-MM-DD");
                         counts[formattedDate] = data.count;
-                         
+                        
                     });
-                    
                     // 예약 카운트 상태 업데이트
                     setReservationCounts(counts);
                 }
-
+              console.log(reserveImage);
+                setReserveImage(reserveImage);
                 setRegistsData(regists);
             })
             .catch(err => {
@@ -202,11 +202,11 @@ const Reservation = () => {
         <div className="reservation-container">
             <div className="reserve_head">
                 <h1>체험 예약</h1>
-                <p>영롱한 자개소반 미니어처 만들기</p>
+                <p>{registsData.length > 0 ? registsData[0].name : '로딩 중...'}</p>
             </div>
             <section className="reservation">
                 <div className="reservation_img">
-                    <ReservationImg />
+                    <ReservationImg reserveImage = {reserveImage} />
                 </div>
                 <div className="reservation_calendar">
                     <form onSubmit={(event) => event.preventDefault()}>
@@ -235,11 +235,6 @@ const Reservation = () => {
                                         <span>예약 날짜: {moment(date).format("YYYYMMDD")}</span>
                                     </li>
                                     <hr />
-                                    {/* <li>
-                                        <button type="button" onClick={handleFormSubmit} className="calendar-toggle-submit">
-                                            예약 하기
-                                        </button>
-                                    </li> */}
                                 </ul>
                             </div>
                             <button type="button" onClick={handleFormSubmit} className="calendar-toggle-submit">
@@ -278,12 +273,12 @@ const Reservation = () => {
                 </div>
 
                 <div className="reservation_intro">
-                    <ReservationIntro />
+                    <ReservationIntro regists={registsData}/>
                 </div>
             </section>
             <section className="reservation_detail">
 
-                <ReservationDeatil regists={registsData}/>
+                <ReservationDeatil regists={{registsData, reserveImage}}/>
             </section>
         </div>
     );

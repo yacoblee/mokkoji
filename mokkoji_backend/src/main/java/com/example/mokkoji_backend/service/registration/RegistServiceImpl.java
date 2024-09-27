@@ -53,7 +53,7 @@ public class RegistServiceImpl implements RegistService{
         Map<String, Object> result = new HashMap();
         result.put("regists", regists);
         result.put("dateCounts", dateCounts);
-
+        
         return result;
     }
 	

@@ -1,6 +1,10 @@
 package com.example.mokkoji_backend.entity.registration;
 
 
+import java.io.Serializable;
+
+import com.example.mokkoji_backend.entity.goods.ProductImagesId;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +17,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistImages {
+@IdClass(RegistImagesId.class)
+public class RegistImages implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	
 	@Id
 	@Column(name = "regist_code")
@@ -31,9 +38,7 @@ public class RegistImages {
 	@Column(name = "image_name")
 	private String imageName;
 
-	@ManyToOne
-	@JoinColumn(name = "regist_id")
-	private Regist regist;
+
 
 
 }

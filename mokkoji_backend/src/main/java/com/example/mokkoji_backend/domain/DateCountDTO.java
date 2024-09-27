@@ -21,7 +21,7 @@ public class DateCountDTO {
 		
 	  public DateCountDTO(Timestamp date, Long count) {
 	        this.date = date;
-	        this.count = count != null ? count : 0L; // null 방어를 위해 기본값 설정
+	        this.count = count != null ? count : 0L; 
 	    }
 		
 }
