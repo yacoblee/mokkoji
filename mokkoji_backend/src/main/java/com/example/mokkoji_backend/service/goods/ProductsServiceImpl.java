@@ -61,24 +61,29 @@ public class ProductsServiceImpl implements ProductsService {
 	 
 	 @Override
 	 public PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO) {
-		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
 		 Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),requestDTO.getKeyword(),requestDTO.getPageable());
-		 List<Products> dtoList = result.getContent();
+		 //List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	 }
 	 
 	 @Override
 	public PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO) {
-		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 
 		 Page<Products> result = repository.findByNameContaining(requestDTO.getKeyword(), requestDTO.getPageable());
-		 List<Products> dtoList = result.getContent();
+
+		 //List<Products> dtoList = result.getContent();
 		return new PageResultDTO<>(result , e->dslentityToDto(e));
 	}
 	 
 	 public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO){
-		 //Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
 		 Page<Products> result = repository.findAll(requestDTO.getPageable());
-		 List<Products> dtoList = result.getContent();
+		 
+		 System.out.println("requestDTO service");
+		 System.out.println(requestDTO.getPage());
+		 System.out.println(requestDTO.getSize());
+		 System.out.println(result.getTotalElements());
+		 System.out.println(result.getContent());
+		 //List<Products> dtoList = result.getContent();
 		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	 }
 	

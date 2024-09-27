@@ -77,7 +77,7 @@ public class PageResultDTO<DTO, EN> {// ->최종결과
 	public PageResultDTO(Page<EN> result, Function<EN, DTO> fn) {
 		dtoList = result.stream().map(fn).collect(Collectors.toList());// 엔티티 리스트를 DTO 리스트로 변환
 		totalPage = result.getTotalPages();// 전체 페이지 수 설정 (repository.findAll(pageable))
-		System.out.println(result.getTotalElements());
+		System.out.println("0 . 검색결과 갯수 : "+result.getTotalElements());
 		makePageList(result.getPageable());// 페이지 목록 생성
         //=> stream()
         //    - 배열, 컬렉션등을 대상으로하여 스트림을 생성해줌
@@ -95,22 +95,22 @@ public class PageResultDTO<DTO, EN> {// ->최종결과
 		// 1. 현재 페이지 번호 (0-based index이므로 +1)
 		this.currentPage = pageable.getPageNumber() + 1;
 		// JPA에서 페이지는 0부터 시작하므로, +1을 해서 1부터 시작하도록 처리
-
+		System.out.println("1. 현재 페이지 번호 currentPage : "+currentPage);
 		// 2. 한 페이지에 표시할 항목 수
 		this.size = pageable.getPageSize();
 		// 페이지당 항목 수 (size)
-
+		System.out.println("한 페이지에 표시할 항목 수 size : "+size);
 		// 3. 보여줄 페이지 목록의 끝 페이지 계산
 		int tempEnd = (int) (Math.ceil(currentPage / (double) size)) * size;
 		// tempEnd 는 현재 페이지를 기준으로 표시할 마지막 페이지 번호 <1 , 2 , 3 > : 3
-
+		System.out.println("3. 보여줄 페이지 목록의 끝 페이지 계산  tempEnd: "+tempEnd);
 		// 4. 페이지 시작 번호 설정
 		startPage = tempEnd - size + 1;
 		// 페이징의 시작 페이지를 결정
 		// 페이지 목록을 한 번에 몇 개씩 보여줄지를 결정하는 size 값과 현재 페이지를 기반으로 시작 페이지를 설정
 
 		// 5. 페이지 끝번호 설정
-		endPage = totalPage > tempEnd ? tempEnd : totalPage;
+		endPage = Math.min(totalPage, tempEnd);
 		// 전체 페이지 수(totalPage)와 계산된 끝 페이지(tempEnd) 중 작은 값을 선택하여, 실제로 표시할 끝 페이지를 결정
 
 		// 6.전페이지 후페이지 활성화를 위한 boolean
@@ -124,5 +124,10 @@ public class PageResultDTO<DTO, EN> {// ->최종결과
 		// => IntStream : 기본자료형 int 형식의 연산에 최적화되어 있는 스트림 인터페이스
 		// => rangeClosed() : start ~ end 까지 즉, 종료값 포함 return
 		// => boxed() : 숫자(int) 스트림을 일반스트림(객체형) 으로 변환
+		
+		
+		System.out.println("4. 페이지 시작 번호 설정:startPage : "+startPage);
+		System.out.println("5. 페이지 끝번호 설정:endPage : "+endPage);
+		System.out.println("pageList"+pageList);
 	} // makePageList
 }

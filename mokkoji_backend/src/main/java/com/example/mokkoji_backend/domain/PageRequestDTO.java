@@ -90,6 +90,8 @@ public class PageRequestDTO {//->페이징 조건들
     }
     
     public Pageable getPageable(){
+    	
+    	
     	//return PageRequest.of(page-1, size, sort);
     	//return PageRequest.of(page-1, size, sort);
     	return PageRequest.of(page-1, size);

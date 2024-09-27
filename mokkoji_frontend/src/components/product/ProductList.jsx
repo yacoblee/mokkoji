@@ -92,8 +92,9 @@ const ProductList = () => {
             });
     };
     useEffect(() => {
-
-        onclickSearch();
+        
+            onclickSearch();
+      
 
     }, [page]);
 
