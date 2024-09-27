@@ -8,6 +8,7 @@ import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,27 +23,33 @@ import java.util.List;
 @AllArgsConstructor
 public class MyPageController {
 
+	@Resource(name = "FavoritesService")
 	private FavoritesService favoritesService;
+	@Resource(name = "CartService")
 	private CartService cartService;
+	@Resource(name = "ReviewsService")
 	private ReviewsService reviewsService;
+//	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	@GetMapping("/detail/{id}")
-	public ResponseEntity<?> myDetail(@PathVariable("id") String id){
+	@GetMapping("/user")
+	public ResponseEntity<?> saveUserData(UsersDTO usersDTO) {
 		try {
-			// 2. 찜 목록 조회
-			Users users = usersService.selectOne(id);
+			// 1. id에 맞는 사용자 정보 추출
+			Users users = usersService.selectOne(usersDTO.getUserId());
 
-			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
+			// 2. null 경우: 사용자 정보 조회 불가
 			if (users == null ) {
+				log.error("id에 맞는 user 없음");
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("id에 맞는 user 없음");
 			}
 
-			// 4. 정상적인 경우
+			// 3. 정상적인 경우
 			return ResponseEntity.ok(users);
 
 		} catch (Exception e) {
-			// 5. 서버에서 발생한 예외 처리
+			// 4. 서버에서 발생한 예외 처리
+			log.error("내부 서버 오류");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
 		}
 	}

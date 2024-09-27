@@ -7,8 +7,6 @@ import { NavLink } from 'react-router-dom';
 
 function MyPageGrid() {
 
-    const user = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-
     return (
         <div className='MyGrid'>
             <NavLink to='/mypage/like'>

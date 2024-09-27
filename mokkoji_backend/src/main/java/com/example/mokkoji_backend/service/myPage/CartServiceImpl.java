@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("CartService")
 public class CartServiceImpl implements CartService {
 
 	CartRepository cartRepository;

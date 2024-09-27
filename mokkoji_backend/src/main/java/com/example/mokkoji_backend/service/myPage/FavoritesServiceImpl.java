@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("FavoritesService")
 public class FavoritesServiceImpl implements FavoritesService {
 
 	FavoritesRepository favoriteRepository;
