@@ -15,8 +15,6 @@ INSERT INTO code values('03PS','상품 상태',1,'판매중');
 INSERT INTO code values('03PS','상품 상태',2,'매진 입고 예정');
 INSERT INTO code values('03PS','상품 상태',3,'매진 입고 미정');
 
-
-
 -- ------------------------------------------------------------
 
 -- packaging table insert  (pk - packaging_option_content)
