@@ -1,13 +1,15 @@
 package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
@@ -34,24 +36,44 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 	
 	@Override
-	public List<ProductsDTO> findByCategoryId(String categoryId){
-		return repository.findByCategoryId(categoryId);
+	public PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO){
+		Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		Page<Products> result = repository.findByCategoryId(requestDTO.getType(),pageable);
+		 List<Products> dtoList = result.getContent();
+		 return new PageResultDTO<>(result , e->dslentityToDto(e));
 	}
 	
-	 ProductsDTO entityToDto(Products entity) {
-		
-		ProductsDTO dto = ProductsDTO.builder()
-				.id(entity.getId())
-				.price(entity.getPrice())
-				.name(entity.getName())
-				.categoryId(entity.getCategoryId())
-				.mainImageName(entity.getMainImageName())
-				.mainDescription(entity.getMainDescription())
-				.build();
-				
-		
-		return dto;
+	public ProductsDTO entityToDto(Products product) {
+	    return ProductsDTO.builder()
+	            .id(product.getId())
+	            .name(product.getName())
+	            .price(product.getPrice())
+	            .mainImageName(product.getMainImageName())
+	            .categoryId(product.getCategoryId())
+	            .mainDescription(product.getMainDescription())
+	    
+	            .build();
 	}
+	
+	
+	public ProductsDTO dslentityToDto(Products product) {
+		return dsrepository.entityToDto(product);
+	}
+	 
+	 @Override
+	 public PageResultDTO<ProductsDTO, Products> pageList(PageRequestDTO requestDTO) {
+		 Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),requestDTO.getKeyword(),pageable);
+		 List<Products> dtoList = result.getContent();
+		 return new PageResultDTO<>(result , e->dslentityToDto(e));
+	 }
+	 
+	 public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO){
+		 Pageable pageable = requestDTO.getPageable(Sort.by("uploadDate").descending());
+		 Page<Products> result = repository.findAll(pageable);
+		 List<Products> dtoList = result.getContent();
+		 return new PageResultDTO<>(result , e->dslentityToDto(e));
+	 }
 	
 	@Override
 	public List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id) {
