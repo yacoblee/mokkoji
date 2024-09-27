@@ -3,8 +3,27 @@ import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-import ProductMainGuide from './ProductMainGuide';
+//import ProductMainGuide from './ProductMainGuide.jsx'; // 현재 캐시 등의 문제로 에러 발생이 보임. 도로 가져옴
+const ProductMainGuide = ({ text }) => {
+    const guideRef = useRef(null);
 
+    useEffect(() => {
+        const guideElement = guideRef.current;
+        const containerWidth = guideElement.offsetWidth;
+        const animationDuration = containerWidth / 30;
+        const animationDelay = -containerWidth / 50;
+
+        guideElement.style.animation = 'none';
+        guideElement.style.animation = `scrollText ${animationDuration}s linear infinite`;
+        guideElement.style.animationDelay = `${animationDelay}s`;
+    }, [text]);
+
+    return (
+        <p className="productMainGuide" ref={guideRef} style={{ animation: "scrollText linear infinite" }}>
+            {text}
+        </p>
+    );
+};
 const ProductList = () => {
     const { category } = useParams();
     const [list, setList] = useState([]);
@@ -184,7 +203,7 @@ const ProductList = () => {
                 <button className='lastButton' onClick={() => setPage(pageMaker.totalPage)}>
                     <img src="/images/buy/next.png" alt="last" disabled={pageMaker.currentPage === pageMaker.totalPage} />
                 </button>
-                </>
+            </>
         );
     };
 
