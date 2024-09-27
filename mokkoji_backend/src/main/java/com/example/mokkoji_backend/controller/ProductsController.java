@@ -72,10 +72,10 @@ public class ProductsController {
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
-	    System.out.println("resultDTO currentPage : "+resultDTO.getCurrentPage());
-	    System.out.println("resultDTO getStartPage : "+resultDTO.getStartPage());
-	    System.out.println("resultDTO getEndPage : "+resultDTO.getEndPage());
-	    System.out.println("resultDTO getPageList : "+resultDTO.getPageList());
+	    //System.out.println("resultDTO currentPage : "+resultDTO.getCurrentPage());
+	    //System.out.println("resultDTO getStartPage : "+resultDTO.getStartPage());
+	    //System.out.println("resultDTO getEndPage : "+resultDTO.getEndPage());
+	    //System.out.println("resultDTO getPageList : "+resultDTO.getPageList());
 	    return ResponseEntity.ok(response);
 	}
 	
@@ -102,7 +102,7 @@ public class ProductsController {
 		    System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
 		    System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
 		    System.out.println("resultDTO getPageList"+resultDTO.getPageList());
-	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword());
+	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword()+", 카테고리 : "+requestDTO.getType() );
 	    }
 	    List<ProductsDTO> productList = resultDTO.getDtoList();
 	    

@@ -31,7 +31,7 @@ const ProductList = () => {
         axios.get(uri, {
             params: {
                 page: page, // 첫 페이지로 설정
-                type: category,
+                type: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
                 ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
             }
         })
@@ -48,8 +48,8 @@ const ProductList = () => {
             });
     }
     useEffect(() => {
-        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
-        SetFilterItem(it => ({ ...it, selectValue: 'allGoodds', inputValue: '' }));
+        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정 -> 비동기 처리시 박자가 늦는 감이 있음.
+        SetFilterItem(it => ({ ...it, selectValue: 'allGoods', inputValue: '' }));
         setPage(1);
         axiosCall();
     }, [category]);
@@ -155,26 +155,36 @@ const ProductList = () => {
         }
 
         return (
-            <div className='pagination'>
+            <>
                 {/* 첫 페이지로 이동 */}
-                <button onClick={() => setPage(1)} disabled={pageMaker.currentPage === 1}>
-                    First
+                <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
+                    <img src="/images/buy/next.png" alt="1" disabled={pageMaker.currentPage === 1} />
                 </button>
+                {/*<button onClick={() => setPage(1)} disabled={pageMaker.currentPage === 1}>
+                    First
+                </button>*/}
                 {/* 이전 페이지 블록으로 이동 */}
                 {pageMaker.hasprev && (
-                    <button onClick={() => setPage(pageMaker.startPage - 1)}>Prev</button>
+                    <button className='nextButton' onClick={() => setPage(pageMaker.startPage - 1)} style={{ transform: 'rotateY(180deg)' }}>
+                        <img src="/images/buy/next2.png" alt="1" />
+                    </button>
                 )}
                 {/* 페이지 번호 버튼들 */}
                 {pages}
                 {/* 다음 페이지 블록으로 이동 */}
                 {pageMaker.hasnext && (
-                    <button onClick={() => setPage(pageMaker.endPage + 1)}>Next</button>
+                    <button className='nextButton' onClick={() => setPage(pageMaker.endPage + 1)}>
+                        <img src="/images/buy/next2.png" alt="1" />
+                    </button>
                 )}
                 {/* 마지막 페이지로 이동 */}
-                <button onClick={() => setPage(pageMaker.totalPage)} disabled={pageMaker.currentPage === pageMaker.totalPage}>
+                {/*<button onClick={() => setPage(pageMaker.totalPage)} disabled={pageMaker.currentPage === pageMaker.totalPage}>
                     Last
+                </button>*/}
+                <button className='lastButton' onClick={() => setPage(pageMaker.totalPage)}>
+                    <img src="/images/buy/next.png" alt="last" disabled={pageMaker.currentPage === pageMaker.totalPage} />
                 </button>
-            </div>
+                </>
         );
     };
 
@@ -204,14 +214,28 @@ const ProductList = () => {
         return number.toLocaleString('en-US');
     };
 
-
-
+    //<NavLink to={`/goods/${items.category}` 카테고리 검색시 내용이 사라지지 않는 문제 발생}
+    //onClick={() => filterItem.inputValue  ? SetFilterItem({ selectValue:category, inputValue: '' }) : null}
+    //key={i}>{items.description}</NavLink>
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
                 <div className='productMenu'>
                     {productMenu.map((items, i) => (
-                        <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
+                        <NavLink to={`/goods/${items.category}`}
+                            onClick={() => {
+                                if (filterItem.inputValue) {
+                                    // 조건 변경후 axious 재요청.
+
+                                    SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
+
+                                    axiosCall();
+                                } else {
+
+                                    null;
+                                }
+                            }}
+                            key={i}>{items.description}</NavLink>
                     ))}
                 </div>
                 <div className='productSearch'>
@@ -246,13 +270,13 @@ const ProductList = () => {
                 ))}
             </div>
             <div className="productPager">
-                <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
+                {/*<button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
                     <img src="/images/buy/next.png" alt="1" />
-                </button>
+                </button>*/}
                 {renderPagination()}
-                <button className='lastButton' onClick={() => setPage(pageMaker.lastPageNumber)}>
+                {/*<button className='lastButton' onClick={() => setPage(pageMaker.endPage)}>
                     <img src="/images/buy/next.png" alt="last" />
-                </button>
+                </button>*/}
             </div>
         </>
     );
