@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
@@ -16,21 +17,27 @@ public interface ProductsService {
 	
 	List<ProductsDTO> findList();
 	
-	PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO);
 	
 	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	
 	List<Products> findAllProducts(Criteria cri);
 	
+	PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO);
+
 	PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO);
 	
-	PageResultDTO<ProductsDTO, Products> pageList(PageRequestDTO requestDTO);
+	//카테고리 , 이름 검색
+	PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO);
+	
+	//이름 검색
+	PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO);
+	
 	
 	ProductDetailDTO findDetailinfo(Long id);
 	
-	int countByCategoryId(String CategoryId);
+	//int countByCategoryId(String CategoryId);
 	
-	int countByAll();
+	//int countByAll();
 	
 	Products findById(Long id);
 	

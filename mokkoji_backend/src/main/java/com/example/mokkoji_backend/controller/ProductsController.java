@@ -55,19 +55,27 @@ public class ProductsController {
 	public ResponseEntity<?> getCategoryList(@PathVariable("sub_type_name") String categoryId,
 			PageRequestDTO requestDTO) {
 	    List<ProductsDTO> productList;
-	    PageResultDTO<ProductsDTO, Products> resultDTO =service.findPageAll(requestDTO);
+	    PageResultDTO<ProductsDTO, Products> resultDTO ;
 	    if ("allGoods".equals(categoryId)) {
-	        productList = resultDTO.getDtoList(); // 전체 상품을 가져옴
+	    		//requestDTO.setType("allGoods");
+	    	 resultDTO =service.findPageAll(requestDTO);
+	        log.info("전체 상품 링크 ?현재 링크 위치 :"+categoryId);
 	    } else {
-	    	
-	        productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
+	    	//requestDTO.setType(categoryId);
+	    	resultDTO =service.findByCategoryId(requestDTO); 
+	        //productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
+	        log.info("카테고리별 링크 ? 현재 링크 위치 :"+categoryId);
 	    }
+	    productList = resultDTO.getDtoList(); // 전체 상품을 가져옴
 
 	    // 응답에 상품 목록 포함
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
-
+	    //System.out.println("resultDTO currentPage : "+resultDTO.getCurrentPage());
+	    //System.out.println("resultDTO getStartPage : "+resultDTO.getStartPage());
+	    //System.out.println("resultDTO getEndPage : "+resultDTO.getEndPage());
+	    //System.out.println("resultDTO getPageList : "+resultDTO.getPageList());
 	    return ResponseEntity.ok(response);
 	}
 	
@@ -75,15 +83,37 @@ public class ProductsController {
 	@GetMapping("/goods/search")
 	public ResponseEntity<?> searchGoods( PageRequestDTO requestDTO) {
 	    // 서비스 계층을 통해 페이징 처리된 결과 가져오기
-	    PageResultDTO<ProductsDTO, Products> resultDTO = service.pageList(requestDTO);
+	    PageResultDTO<ProductsDTO, Products> resultDTO ;
+    	//System.out.println("*****requestDTO getPage"+requestDTO.getPage());
+    	//System.out.println("******requestDTO getSize"+requestDTO.getSize());
+    	//System.out.println("*****requestDTO getType"+requestDTO.getType());
+    	//System.out.println("*****requestDTO getPageList"+requestDTO.getKeyword());
+	    if(requestDTO.getType().equals("allGoods")) {
+	    	resultDTO = service.findByNameContaining(requestDTO);
+	    	System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
+	    	System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
+	    	System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
+	    	System.out.println("resultDTO getPageList"+resultDTO.getPageList());
+	    	log.info("allgoods 검색중 ?검색 키워드 :"+requestDTO.getKeyword());
+	    }else {
+	    	resultDTO = service.findByCategoryIdAndNameContaining(requestDTO);
+	    	System.out.println("");
+	        System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
+		    System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
+		    System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
+		    System.out.println("resultDTO getPageList"+resultDTO.getPageList());
+	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword()+", 카테고리 : "+requestDTO.getType() );
+	    }
 	    List<ProductsDTO> productList = resultDTO.getDtoList();
-	    log.info("검색중 ?");
-	    //log.info("dto ?"+requestDTO);
-	    System.out.println("들어옴 ?검색함");
+	    
+	   
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("productList", productList);
 	    response.put("pageMaker", resultDTO);
-
+//	    System.out.println("resultDTO currentPage"+resultDTO.getCurrentPage());
+//	    System.out.println("resultDTO getStartPage"+resultDTO.getStartPage());
+//	    System.out.println("resultDTO getEndPage"+resultDTO.getEndPage());
+//	    System.out.println("resultDTO getPageList"+resultDTO.getPageList());
 	    return ResponseEntity.ok(response);
 	}
 	

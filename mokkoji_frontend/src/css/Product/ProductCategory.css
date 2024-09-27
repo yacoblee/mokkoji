@@ -311,6 +311,10 @@
 .lastButton {
     padding: 0;
 }
+.nextButton img{
+    height : 20px;
+    padding: 2px;
+}
 
 .productPager img {
     height: 25px;

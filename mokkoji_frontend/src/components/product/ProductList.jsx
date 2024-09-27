@@ -3,27 +3,7 @@ import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-
-const ProductMainGuide = ({ text }) => {
-    const guideRef = useRef(null);
-
-    useEffect(() => {
-        const guideElement = guideRef.current;
-        const containerWidth = guideElement.offsetWidth;
-        const animationDuration = containerWidth / 30;
-        const animationDelay = -containerWidth / 50;
-
-        guideElement.style.animation = 'none';
-        guideElement.style.animation = `scrollText ${animationDuration}s linear infinite`;
-        guideElement.style.animationDelay = `${animationDelay}s`;
-    }, [text]);
-
-    return (
-        <p className="productMainGuide" ref={guideRef} style={{ animation: "scrollText linear infinite" }}>
-            {text}
-        </p>
-    );
-};
+import ProductMainGuide from './ProductMainGuide';
 
 const ProductList = () => {
     const { category } = useParams();
@@ -37,52 +17,22 @@ const ProductList = () => {
     const [resultCount, setResultCount] = useState(0);
     const [displayMessage, setDisplayMessage] = useState('');
     const [pageMaker, setPageMaker] = useState({});
-    // useEffect(() => {
-    //     // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
-    //     SetFilterItem(it => ({ ...it, inputValue: '' }));
-    //     setPage(1); // 페이지 상태만 업데이트 (비동기적임)
 
-    //     // 페이지를 1로 설정한 후, 데이터를 가져오는 것은 두 번째 useEffect에서 처리
-    // }, [category]);
 
-    // useEffect(() => {
-    //     // 페이지 변경 시 데이터 가져오기
-    //     let uri = `${API_BASE_URL}/goods/${category}`;
-
-    //     axios.get(uri, {
-    //         params: {
-    //             currentPage: page, // 현재 페이지를 가져옴
-    //             rowsPerPageCount: 4, // 페이지당 항목 수
-    //             type: category,
-    //             keyword: filterItem.inputValue, // 검색어 추가
-    //         }
-    //     })
-    //         .then(response => {
-    //             const { productList, pageMaker } = response.data;
-    //             setList(productList);
-    //             setResultCount(productList.length);
-    //             setPageMaker(pageMaker);
-    //             console.log(productList);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             setList([]);
-    //         });
-    //     console.log(`카테고리 변했을때 pageMaker `)
-    //     console.log(pageMaker);
-    // }, [page, category, filterItem.inputValue]);
-    useEffect(() => {
-        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정
-        SetFilterItem(it => ({ ...it, inputValue: '' }));
-        SetFilterItem(it => ({ ...it, selectValue: 'allGoods' }));
-
-        setPage(1);
-        let uri = API_BASE_URL + "/goods/" + category;
+    function axiosCall() {
+        let uri;
+        if (filterItem.inputValue.trim() === '') {
+            // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
+            uri = `${API_BASE_URL}/goods/${category}`;
+        } else {
+            // 검색어가 있을 때 검색 API 호출
+            uri = `${API_BASE_URL}/goods/search`;
+        }
         axios.get(uri, {
             params: {
-                currentPage: page, // 첫 페이지로 설정
-                //rowsPerPageCount: 5, // 페이지당 항목 수
-                type: category,
+                page: page, // 첫 페이지로 설정
+                type: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
+                ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
             }
         })
             .then(response => {
@@ -96,16 +46,17 @@ const ProductList = () => {
                 console.log(err);
                 setList([]);
             });
-        console.log(`카테고리 변했을때 pageMaker `)
-        console.log(pageMaker);
+    }
+    useEffect(() => {
+        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정 -> 비동기 처리시 박자가 늦는 감이 있음.
+        SetFilterItem(it => ({ ...it, selectValue: 'allGoods', inputValue: '' }));
+        setPage(1);
+        axiosCall();
     }, [category]);
 
     useEffect(() => {
-
-        onclickSearch();
-
+        axiosCall();
     }, [page]);
-
     const onChangeSelectValue = (e) => {
         SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
     };
@@ -118,43 +69,46 @@ const ProductList = () => {
         SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
     };
 
+    // const onclickSearch = () => {
+    //     let uri;
+    //     if (filterItem.inputValue.trim() === '') {
+    //         // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
+    //         uri = `${API_BASE_URL}/goods/${filterItem.selectValue}`;
+    //     } else {
+    //         // 검색어가 있을 때 검색 API 호출
+    //         uri = `${API_BASE_URL}/goods/search`;
+    //     }
+    //     axios.get(uri, {
+    //         params: {
+    //             page: page,
+    //             type: filterItem.selectValue,
+    //             keyword: filterItem.inputValue
+    //         }
+    //     })
+    //         .then(response => {
+    //             const { productList, pageMaker } = response.data;
+    //             setList(productList);
+    //             setResultCount(productList.length);
+    //             updateDisplayMessage(productList.length);
+    //             setPageMaker(pageMaker);
+    //             console.log(pageMaker);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             setList([]);
+    //             setResultCount(0);
+    //             updateDisplayMessage(0);
+    //         });
+    // };
     const onclickSearch = () => {
         let uri;
-        if (filterItem.inputValue.trim() === '') {
-            // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
-            uri = `${API_BASE_URL}/goods/${filterItem.selectValue}`;
-        } else {
-            // 검색어가 있을 때 검색 API 호출
-            uri = `${API_BASE_URL}/goods/search`;
-        }
-        axios.get(uri, {
-            params: {
-                currentPage: page,
-                //rowsPerPageCount: 4,
-                type: filterItem.selectValue,
-                //sortOption: filterItem.sortOption,
-                keyword: filterItem.inputValue
-            }
-        })
-            .then(response => {
-                const { productList, pageMaker } = response.data;
-                setList(productList);
-                setResultCount(productList.length);
-                updateDisplayMessage(productList.length);
-                setPageMaker(pageMaker);
-                console.log(pageMaker);
-            })
-            .catch(err => {
-                console.log(err);
-                setList([]);
-                setResultCount(0);
-                updateDisplayMessage(0);
-            });
+        axiosCall();
     };
+
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {
-            onclickSearch();
+            axiosCall();
         }
     };
 
@@ -201,26 +155,36 @@ const ProductList = () => {
         }
 
         return (
-            <div className='pagination'>
+            <>
                 {/* 첫 페이지로 이동 */}
-                <button onClick={() => setPage(1)} disabled={pageMaker.currentPage === 1}>
-                    First
+                <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
+                    <img src="/images/buy/next.png" alt="1" disabled={pageMaker.currentPage === 1} />
                 </button>
+                {/*<button onClick={() => setPage(1)} disabled={pageMaker.currentPage === 1}>
+                    First
+                </button>*/}
                 {/* 이전 페이지 블록으로 이동 */}
                 {pageMaker.hasprev && (
-                    <button onClick={() => setPage(pageMaker.startPage - 1)}>Prev</button>
+                    <button className='nextButton' onClick={() => setPage(pageMaker.startPage - 1)} style={{ transform: 'rotateY(180deg)' }}>
+                        <img src="/images/buy/next2.png" alt="1" />
+                    </button>
                 )}
                 {/* 페이지 번호 버튼들 */}
                 {pages}
                 {/* 다음 페이지 블록으로 이동 */}
                 {pageMaker.hasnext && (
-                    <button onClick={() => setPage(pageMaker.endPage + 1)}>Next</button>
+                    <button className='nextButton' onClick={() => setPage(pageMaker.endPage + 1)}>
+                        <img src="/images/buy/next2.png" alt="1" />
+                    </button>
                 )}
                 {/* 마지막 페이지로 이동 */}
-                <button onClick={() => setPage(pageMaker.totalPage)} disabled={pageMaker.currentPage === pageMaker.totalPage}>
+                {/*<button onClick={() => setPage(pageMaker.totalPage)} disabled={pageMaker.currentPage === pageMaker.totalPage}>
                     Last
+                </button>*/}
+                <button className='lastButton' onClick={() => setPage(pageMaker.totalPage)}>
+                    <img src="/images/buy/next.png" alt="last" disabled={pageMaker.currentPage === pageMaker.totalPage} />
                 </button>
-            </div>
+                </>
         );
     };
 
@@ -250,14 +214,28 @@ const ProductList = () => {
         return number.toLocaleString('en-US');
     };
 
-
-
+    //<NavLink to={`/goods/${items.category}` 카테고리 검색시 내용이 사라지지 않는 문제 발생}
+    //onClick={() => filterItem.inputValue  ? SetFilterItem({ selectValue:category, inputValue: '' }) : null}
+    //key={i}>{items.description}</NavLink>
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
                 <div className='productMenu'>
                     {productMenu.map((items, i) => (
-                        <NavLink to={`/goods/${items.category}`} key={i}>{items.description}</NavLink>
+                        <NavLink to={`/goods/${items.category}`}
+                            onClick={() => {
+                                if (filterItem.inputValue) {
+                                    // 조건 변경후 axious 재요청.
+
+                                    SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
+
+                                    axiosCall();
+                                } else {
+
+                                    null;
+                                }
+                            }}
+                            key={i}>{items.description}</NavLink>
                     ))}
                 </div>
                 <div className='productSearch'>
@@ -292,13 +270,13 @@ const ProductList = () => {
                 ))}
             </div>
             <div className="productPager">
-                <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
+                {/*<button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
                     <img src="/images/buy/next.png" alt="1" />
-                </button>
+                </button>*/}
                 {renderPagination()}
-                <button className='lastButton' onClick={() => setPage(pageMaker.lastPageNumber)}>
+                {/*<button className='lastButton' onClick={() => setPage(pageMaker.endPage)}>
                     <img src="/images/buy/next.png" alt="last" />
-                </button>
+                </button>*/}
             </div>
         </>
     );
