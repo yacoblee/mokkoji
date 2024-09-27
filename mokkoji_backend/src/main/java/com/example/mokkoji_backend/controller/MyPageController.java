@@ -29,7 +29,7 @@ public class MyPageController {
 	private CartService cartService;
 	@Resource(name = "ReviewsService")
 	private ReviewsService reviewsService;
-//	@Resource(name = "UsersService")
+	@Resource(name = "UsersService")
 	private UsersService usersService;
 
 	@GetMapping("/user")

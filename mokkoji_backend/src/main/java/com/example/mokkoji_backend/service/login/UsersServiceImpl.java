@@ -10,7 +10,7 @@ import com.example.mokkoji_backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 
 
-@Service
+@Service("UsersService")
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
 	private final UsersRepository repository;
