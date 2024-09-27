@@ -17,7 +17,7 @@ public class ReviewsServiceImpl implements ReviewsService {
 
 	// 1) 각 상품별 review 목록 확인시 사용
 	@Override
-	public List<Reviews> productReviews(int productId) {
+	public List<Reviews> productReviews(long productId) {
 		return reviewsRepository.findByProductIdOrderByReviewDate(productId);
 	}
 

@@ -14,7 +14,7 @@ public interface FavoritesRepository extends JpaRepository<Favorites, FavoritesI
 	List<Favorites> findByUserIdOrderByFavoriteDateDesc(String userId);
 
 	// 한 상품에 대한 favorite의 총 개수
-	int countByProductId(int productId);
+	int countByProductId(long productId);
 
 	// user 별 찜목록 개수
 	int countByUserId(String userId);

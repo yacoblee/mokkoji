@@ -16,7 +16,7 @@ public class CartId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String userId;
-	private int productId;
+	private long productId;
 	private String optionContent;
 	private String packagingOptionContent;
 

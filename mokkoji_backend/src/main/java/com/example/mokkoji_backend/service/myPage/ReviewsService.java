@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReviewsService {
 
-	List<Reviews> productReviews(int productId);
+	List<Reviews> productReviews(long productId);
 
 	List<Reviews> userReviews(String userId);
 

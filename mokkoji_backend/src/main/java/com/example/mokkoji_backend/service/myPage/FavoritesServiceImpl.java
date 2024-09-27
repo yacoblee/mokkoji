@@ -35,7 +35,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 
 	// 2) 찜 개수를 count할 때 사용
 	@Override
-	public int countFavorite(int productId) {
+	public int countFavorite(long productId) {
 		return favoriteRepository.countByProductId(productId);
 	}
 

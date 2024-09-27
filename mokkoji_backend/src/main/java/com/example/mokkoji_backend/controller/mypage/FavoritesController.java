@@ -68,7 +68,7 @@ public class FavoritesController {
 	// 2) 찜목록 삭제
 	// 2.1) 단일 상품 삭제
 	@GetMapping("/favorites/delete/{productId}")
-	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable int productId) {
+	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
 
 		FavoritesId favoritesId = new FavoritesId(userId, productId);
 

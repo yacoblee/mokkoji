@@ -4,11 +4,11 @@ ALTER TABLE cart ADD cart_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP  NULL;
 
 -- 240925 17:53
 -- 구매내역 table 이름 변경
-RENAME TABLE purchasehistorylist TO purchasedetail;
-RENAME TABLE purchasehistory TO purchase;
-RENAME TABLE favorite TO favorites;
-RENAME TABLE purchase TO orders;
-RENAME TABLE purchasedetail TO ordersdetail;
+# RENAME TABLE purchasehistorylist TO purchasedetail;
+# RENAME TABLE purchasehistory TO purchase;
+# RENAME TABLE favorite TO favorites;
+# RENAME TABLE purchase TO orders;
+# RENAME TABLE purchasedetail TO ordersdetail;
 
 -- 240926 13:03
 -- regist table 구성 변경
@@ -20,3 +20,8 @@ ALTER TABLE regist ADD package_detail varchar(200) NULL;
 ALTER TABLE regist ADD restrict_detail varchar(200) NULL;
 ALTER TABLE regist ADD reserve_restrict varchar(200) NULL;
 ALTER TABLE regist ADD etc_detail varchar(200) NULL;
+
+-- 효윤 9.27
+
+ALTER TABLE users
+    ADD COLUMN `is_admin` tinyint(1) DEFAULT 0 COMMENT '관리자 여부 (1: 관리자, 0: 일반 사용자)';

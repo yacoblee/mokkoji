@@ -28,7 +28,7 @@ public class Favorites implements Serializable {
 	private String userId;
 	@Id
 	@Column(name = "product_id")
-	private int productId;
+	private long productId;
 
 	@CreatedDate
 	@Column(name = "favorite_date")

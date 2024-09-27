@@ -27,7 +27,7 @@ public class Cart implements Serializable {
 	private String userId;
 	@Id
 	@Column(name = "product_id")
-	private int productId;
+	private long productId;
 	@Id
 	@Column(name = "option_content")
 	private String optionContent;
