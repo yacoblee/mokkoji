@@ -1,3 +1,5 @@
+ALTER TABLE project.registedhistory MODIFY COLUMN regist_id int auto_increment auto_increment NOT NULL;
+
 -- 240927
 -- CODE 테이블 예약 코드
 INSERT INTO project.code
@@ -8,7 +10,7 @@ VALUES('04RS', '예약', '1', '체험예약');
 -- 예약 게시글 등록
 INSERT INTO project.regist
 (regist_code, name, regist_option, teenager, adult, hightlight_1, hightlight_2, hightlight_3, hightlight_4, package_detail, restrict_detail, reserve_restrict, etc_detail)
-VALUES('', '영롱한 자개소반 미니어처 만들기', '문화체험', 5000, 10000,
+VALUES('04RS', '영롱한 자개소반 미니어처 만들기', '문화체험', 5000, 10000,
 '빛에 따라 색이 달라지는 오묘한 매력의 자개로 나만의 나전칠기 작품을 만들어 보세요.',
 '우리나라 전통 소반을 귀여운 미니어처로 제작하여 세상에 단 하나뿐인 작품을 간직할 수 있어요.',
 '직접 디자인한 영롱한 자개소반을 소중한 사람에게 선물해보는 건 어떠세요?',
@@ -18,13 +20,12 @@ VALUES('', '영롱한 자개소반 미니어처 만들기', '문화체험', 5000
 '그룹 규모: 참여자 수 1-25인.',
 '유모차 및 휠체어 이용이 불가합니다.');
 
-
-
-
 -- 예약 글 정보
 INSERT INTO project.registedhistory
 (regist_code, user_id, teenager_cnt, adult_cnt, person_cnt, regist_cnt, active_date)
 VALUES('04RS', 'user1', 2,1, 3, 20000,   '2024-10-07');
+
+
 
 
 -- 예약 페이지 이미지 정보
