@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.controller;
 
+import com.example.mokkoji_backend.domain.MyPageDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
@@ -42,7 +43,28 @@ public class MyPageController {
 		// 1. id에 맞는 사용자 정보 추출
 		Users users = usersService.selectOne(usersDTO.getUserId());
 
-		log.info(users);
+		int favoritesCnt = favoritesService.countFavorite(users.getUserId());
+		int cartCnt = cartService.countCart(users.getUserId());
+
+		MyPageDTO myPageDTO = MyPageDTO.builder()
+				.userId(users.getUserId())
+				.name(users.getName())
+				.birthDate(users.getBirthDate())
+				.gender(users.getGender())
+				.phoneNumber(users.getPhoneNumber())
+				.email(users.getEmail())
+				.userSequence(users.getUserSequence())
+				.isWithdrawn(users.getIsWithdrawn())
+				.withdrawalDate(users.getWithdrawalDate())
+				.updatedAt(users.getUpdatedAt())
+				.createdAt(users.getCreatedAt())
+				.blockStatus(users.getBlockStatus())
+				.favoritesCnt(favoritesCnt)
+				.cartCnt(cartCnt)
+				.build();
+
+		log.info(myPageDTO);
+
 		try {
 			// 2. null 경우: 사용자 정보 조회 불가
 			if (users == null) {
@@ -51,7 +73,7 @@ public class MyPageController {
 			}
 
 			// 3. 정상적인 경우
-			return ResponseEntity.ok(users);
+			return ResponseEntity.ok(myPageDTO);
 
 		} catch (Exception e) {
 			// 4. 서버에서 발생한 예외 처리

@@ -3,14 +3,16 @@ package com.example.mokkoji_backend.service.myPage;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.repository.myPage.FavoritesRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("FavoritesService")
+@RequiredArgsConstructor
 public class FavoritesServiceImpl implements FavoritesService {
 
-	FavoritesRepository favoriteRepository;
+	final FavoritesRepository favoriteRepository;
 
 	// ** 상품페이지, 마이페이지 모두에서 사용 ==================================
 
@@ -45,4 +47,9 @@ public class FavoritesServiceImpl implements FavoritesService {
 		return favoriteRepository.findByUserIdOrderByFavoriteDateDesc(userId);
 	}
 
+	// 2) 찜목록 전체 개수 표시
+	@Override
+	public int countFavorite(String userId){
+		return favoriteRepository.countByUserId(userId);
+	}
 }

@@ -7,7 +7,22 @@ import { NavLink } from 'react-router-dom';
 
 function MyPageGrid() {
 
-    
+    let userDetailData = JSON.parse(sessionStorage.getItem("userDetailData"));
+
+    const myPageMenu = (url) => {
+        apiCall(url, 'POST', user, null)
+            .then((response) => {
+                alert(`** myPageMenu 성공 url=${url}`);
+                sessionStorage.setItem("userMenuData", JSON.stringify(response.data));
+                navigate("/mypage");
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageMenu 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageMenu
 
     return (
         <div className='MyGrid'>
@@ -15,7 +30,7 @@ function MyPageGrid() {
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
-                        {user.mypage.isLike.length}
+                        {userDetailData.favoritesCnt}
                     </div>
                     <span>찜목록</span>
                 </div>
@@ -24,7 +39,7 @@ function MyPageGrid() {
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
-                        {user.mypage.basket.length}
+                        {userDetailData.cartCnt}
                     </div>
                     <span>장바구니</span>
                 </div>
@@ -49,7 +64,6 @@ function MyPageGrid() {
                 <div className='MyBook'>
                     <div className='IconBook'>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
-                        {user.mypage.Reservation.length}
                     </div>
                     <span>나의 예약</span>
                 </div>

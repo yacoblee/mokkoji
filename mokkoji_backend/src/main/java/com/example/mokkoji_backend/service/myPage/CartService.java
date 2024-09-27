@@ -11,6 +11,9 @@ public interface CartService {
 
 	List<Cart> userCart(String userId);
 
+	// 2) cart의 총 개수 조회
+	int countCart(String userId);
+
 	void updateCart(String userId, int productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount);
 
 	void deleteCart(CartId cartId);

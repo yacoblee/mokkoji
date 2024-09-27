@@ -14,7 +14,6 @@ import MyPageBook from './mypagesub/MyPageBook';
 import MyPageOrders from './mypagesub/MyPageOrders';
 import MyPageUser from './MyPageUser';
 
-
 function MyPageMain() {
 
     return (
@@ -25,7 +24,7 @@ function MyPageMain() {
                 </div>
             </h1>
 
-            {/* <MyPageGrid /> */}
+            <MyPageGrid />
 
             <Routes>
                 <Route path='/*' element={<MyPageUser />} />
