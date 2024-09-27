@@ -2,6 +2,9 @@ package com.example.mokkoji_backend.service.goods;
 
 import java.util.List;
 
+
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
@@ -13,11 +16,15 @@ public interface ProductsService {
 	
 	List<ProductsDTO> findList();
 	
-	List<ProductsDTO> findByCategoryId(String id);
+	PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO);
 	
 	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	
 	List<Products> findAllProducts(Criteria cri);
+	
+	PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO);
+	
+	PageResultDTO<ProductsDTO, Products> pageList(PageRequestDTO requestDTO);
 	
 	ProductDetailDTO findDetailinfo(Long id);
 	

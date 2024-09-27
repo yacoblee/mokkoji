@@ -19,9 +19,9 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	@EntityGraph(attributePaths = {"options"})
 	List<Products> findAll();
 	
-	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
-			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId,p.mainDescription) FROM Products p where p.categoryId=:categoryId")
-	List<ProductsDTO> findByCategoryId(@Param("categoryId") String subTypeName);
+	//@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
+	//		+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId,p.mainDescription) FROM Products p where p.categoryId=:categoryId")
+	Page<Products> findByCategoryId(String subTypeName,  Pageable pageable);
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
 			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId) FROM Products p")
@@ -39,14 +39,18 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 			+ "(p.id, p.name, p.price, p.mainImageName, p.categoryId, p.mainDescription) FROM Products p WHERE p.id = :id")
 	ProductsDTO findDto(@Param("id") Long id);
 	
+	//@Query("SELECT p FROM Products p WHERE p.type = :type AND p.name LIKE %:keyword%")
+	//Page<Products> findByKeywordAndType(@Param("keyword") String keyword, @Param("type") String type, Pageable pageable);
 	
-	Page<ProductsDTO> findByCategoryIdAndNameContaining(String categoryId , String name , Pageable pageable);
+	Page<Products> findByCategoryIdAndNameContaining(String categoryId , String name , Pageable pageable);
+	
+	Page<Products> findAll(Pageable pageable);
+	
 	
 	int countByCategoryId(String subTypeName);
 	
 	int countBy();
 	
-	Page<Products> findAll(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"options"})
 	Optional<Products> findById(@Param("id") Long id);
