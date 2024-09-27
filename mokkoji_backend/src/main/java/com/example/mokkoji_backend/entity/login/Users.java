@@ -59,5 +59,8 @@ public class Users {
 	
 	@Column(name = "block_status")
 	private int blockStatus;
+	
+	@Column(name= "is_admin")
+	private int isAdmin;
 		
 }
