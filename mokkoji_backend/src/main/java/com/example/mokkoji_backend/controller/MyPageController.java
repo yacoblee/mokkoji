@@ -8,6 +8,7 @@ import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,17 @@ import java.util.List;
 @AllArgsConstructor
 public class MyPageController {
 
+	@Resource(name = "FavoritesService")
 	private FavoritesService favoritesService;
+	@Resource(name = "CartService")
 	private CartService cartService;
+	@Resource(name = "ReviewsService")
 	private ReviewsService reviewsService;
+	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	@GetMapping("/detail/{id}")
-	public ResponseEntity<?> myDetail(@PathVariable("id") String id){
+	@GetMapping("/{id}")
+	public ResponseEntity<?> saveUserData(@PathVariable("id") String id){
 		try {
 			// 2. 찜 목록 조회
 			Users users = usersService.selectOne(id);

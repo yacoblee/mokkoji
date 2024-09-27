@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("OrdersService")
 public class OrdersServiceImpl implements OrdersService {
 
 	OrdersRepository ordersRepository;
