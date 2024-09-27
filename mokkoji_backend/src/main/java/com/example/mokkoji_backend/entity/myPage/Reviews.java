@@ -31,7 +31,7 @@ public class Reviews implements Serializable {
 	@Column(name = "user_id")
 	private String userId;
 	@Column(name = "product_id")
-	private int productId;
+	private long productId;
 
 	@Column(name = "review_content")
 	private String reviewContent;

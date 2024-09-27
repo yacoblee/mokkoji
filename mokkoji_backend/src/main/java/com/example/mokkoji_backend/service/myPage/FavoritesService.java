@@ -11,7 +11,7 @@ public interface FavoritesService {
 
 	void insertFavorite(Favorites favorite);
 
-	int countFavorite(int productId);
+	int countFavorite(long productId);
 
 	List<Favorites> userFavorite(String userId);
 

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 
 	// review를 productId로 조회, 날짜순으로 내림차순
-	List<Reviews> findByProductIdOrderByReviewDate(int productId);
+	List<Reviews> findByProductIdOrderByReviewDate(long productId);
 
 	// review를 userId로 조회, 날짜순으로 내림차순
 	List<Reviews> findByUserIdOrderByReviewDateDesc(String userId);

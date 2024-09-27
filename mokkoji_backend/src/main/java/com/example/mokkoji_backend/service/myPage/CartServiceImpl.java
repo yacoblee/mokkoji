@@ -38,7 +38,7 @@ public class CartServiceImpl implements CartService {
 
 	// 3) cart의 각 상품의 개수를 조정할 때 사용
 	@Override
-	public void updateCart(String userId, int productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount) {
+	public void updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount) {
 		cartRepository.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalCount);
 	}
 

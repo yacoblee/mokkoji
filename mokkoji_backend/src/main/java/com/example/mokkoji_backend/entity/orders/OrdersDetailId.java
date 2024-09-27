@@ -16,7 +16,7 @@ public class OrdersDetailId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int purchaseNumber;
-	private int productId;
+	private long productId;
 	private String optionContent;
 	private String packagingOptionContent;
 
