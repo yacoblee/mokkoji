@@ -1,7 +1,7 @@
 import Reservesource from "./ReserveSource";
 
 
-const ReservationDeatil = () => {
+const ReservationDeatil = ({ regists }) => {
 
 
 

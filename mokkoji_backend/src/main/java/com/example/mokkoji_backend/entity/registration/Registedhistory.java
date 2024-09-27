@@ -21,13 +21,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Registedhistory{
- 
-	
-	
-		@Id
-	    @Column(name = "regist_id", nullable = false, length = 100)
-	    private String registId;
 
+		@Id
+	    @Column(name = "regist_id", nullable = false)
+	    private int registId;
 	
 	    @Column(name = "regist_code", nullable = false)
 	    private String registCode;  // 복합키로 등록된 registCode 필드

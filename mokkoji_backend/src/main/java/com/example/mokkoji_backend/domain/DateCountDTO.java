@@ -9,19 +9,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class DateCountDTO {
-	
-	   
+	  
 		private Timestamp date;
-		private long count;
+		private Long count;
 		
 		
+	  public DateCountDTO(Timestamp date, Long count) {
+	        this.date = date;
+	        this.count = count != null ? count : 0L; // null 방어를 위해 기본값 설정
+	    }
 		
-
-	
-	
 }
