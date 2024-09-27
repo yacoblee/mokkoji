@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.controller.mypage;
 import com.example.mokkoji_backend.domain.MyPageDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -55,12 +58,7 @@ public class MyPageController {
 					.gender(users.getGender())
 					.phoneNumber(users.getPhoneNumber())
 					.email(users.getEmail())
-					.userSequence(users.getUserSequence())
-					.isWithdrawn(users.getIsWithdrawn())
-					.withdrawalDate(users.getWithdrawalDate())
-					.updatedAt(users.getUpdatedAt())
 					.createdAt(users.getCreatedAt())
-					.blockStatus(users.getBlockStatus())
 					.favoritesCnt(favoritesCnt)
 					.cartCnt(cartCnt)
 					.build();
@@ -76,7 +74,5 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userDetail");
 		}
 	} //userDetail
-	
-	// 2) Grid에서 필요한 정보 객체들 담아주기
 
 }

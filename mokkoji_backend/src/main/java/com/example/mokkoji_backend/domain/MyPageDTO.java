@@ -20,12 +20,7 @@ public class MyPageDTO {
 	private String gender;
 	private String phoneNumber;
 	private String email;
-	private int userSequence;
-	private int isWithdrawn;
-	private LocalDateTime withdrawalDate;
-	private LocalDateTime updatedAt;
 	private LocalDateTime createdAt;
-	private int blockStatus;
 
 	private int favoritesCnt;
 	private int cartCnt;

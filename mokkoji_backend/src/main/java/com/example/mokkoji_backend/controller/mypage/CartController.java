@@ -35,58 +35,8 @@ public class CartController {
 	// ** 찜목록 관련 ==============================================================
 
 	// 1) 찜목록 전체 최신순 조회
-	@GetMapping("/favorites")
-	public ResponseEntity<?> favoritesListAll(String userId) {
-		// 1. 유효성 검사: userId가 null이거나 빈 값일 때
-		if (userId == null || userId.isEmpty()) {
-			log.error("userId 확인 불가");
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("userId 확인 불가");
-		}
 
-		try {
-			// 2. 찜 목록 조회
-			List<Favorites> favoritesList = favoritesService.userFavorite(userId);
-
-			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
-			if (favoritesList == null || favoritesList.isEmpty()) {
-				log.error("찜목록이 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("찜목록이 비어있음");
-			}
-
-			// 4. 정상적인 경우
-			return ResponseEntity.ok(favoritesList);
-
-		} catch (Exception e) {
-			// 5. 서버에서 발생한 예외 처리
-			log.error("내부 서버 오류 : favoritesListAll");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : favoritesListAll");
-		}
-	} //favoritesListAll
 
 	// 2) 찜목록에서 항목 삭제
-	@GetMapping("/favorites/delete")
-	public ResponseEntity<?> favoritesDelete(FavoritesId favoritesId) {
-		// 1. 유효성 검사: favoritesId가 null일 때
-		if (favoritesId == null) {
-			log.error("favoritesId 확인 불가");
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("favoritesId 확인 불가");
-		}
 
-		try {
-			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
-			favoritesService.deleteFavorite(favoritesId);
-
-			// 3. 삭제 성공 메시지 응답
-			return ResponseEntity.ok("favorites 삭제 성공");
-
-		} catch (Exception e) {
-			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
-			log.error("favoritesId에 해당하는 항목 없음");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("favoritesId에 해당하는 항목 없음");
-		}
-		//		catch (Exception e) {
-		//			// 5. 서버에서 발생한 예외 처리
-		//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
-		//		}
-	} //favoritesDelete
 }

@@ -9,20 +9,22 @@ function MyPageGrid() {
 
     let userDetailData = JSON.parse(sessionStorage.getItem("userDetailData"));
 
-    const myPageMenu = (url) => {
-        apiCall(url, 'POST', user, null)
+    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
+    const myPageMain = (url) => {
+        let userBasicData = JSON.parse(sessionStorage.getItem("inputId"));
+        apiCall(url, 'GET', null, userBasicData.token)
             .then((response) => {
-                alert(`** myPageMenu 성공 url=${url}`);
-                sessionStorage.setItem("userMenuData", JSON.stringify(response.data));
+                //alert(`** myPageMain 성공 url=${url}`);
+                sessionStorage.setItem("userDetailData", JSON.stringify(response.data));
                 navigate("/mypage");
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
                 } else if (err === 403) {
                     alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageMenu 시스템 오류, err = ${err}`);
+                } else alert(`** myPageMain 시스템 오류, err = ${err}`);
             }) //apiCall
-    }; //myPageMenu
+    }; //myPageMain
 
     return (
         <div className='MyGrid'>
