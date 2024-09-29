@@ -46,7 +46,7 @@ public class LoginController {
 	
 	@PostMapping(value = "/Login")
 	public ResponseEntity<?> loginJwt(@RequestBody UsersDTO userDTO, HttpSession session){
-		log.info("들어옴?");
+		
 		String inputPssword = userDTO.getPassword();
 		Users entity = service.selectOne(userDTO.getUserId());// 아이디 검증
 
@@ -69,13 +69,6 @@ public class LoginController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	@PostMapping(value="/logout")
 	      public ResponseEntity<String> logout(HttpSession session){
 	         session.invalidate();
@@ -86,6 +79,14 @@ public class LoginController {
 	
 	
 	
-	
+  @PostMapping(value = "/Membership")
+  public ResponseEntity<?> membership(@RequestBody UsersDTO userDTO, HttpSession session){
+	  log.info("회원가입 들어옴?");
+	  
+	  return ResponseEntity.ok("");
+	  
+  }
+  
+  
 	
 }
