@@ -41,24 +41,13 @@ const Membership = () => {
         emailType: '',
         id: '',
         pw: '',
+        birthDate: '',
         loginCount: '',
         totalPurchaseCount: '',
         totalPurchaseAmount: '',
         lastLoginDate: '',
-        mypage: {
-            history: [
-
-            ],
-            Reservation: [
-                // { reserveItem: '', name: '', date: '', adult: '', teenager: '' },
-            ],
-            review: '',
-            isLike: [],
-            basket: [
-
-            ]
-        }
     })
+    console.log(formData);
 
     // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
     const formErrors = useRef({
@@ -72,11 +61,14 @@ const Membership = () => {
         firstNumber: "",
         secondNumber: "",
         lastNumber: "",
+        birthDate: "",
         gender: "",
         email: "",
         emailType: "",
         clausearea: ""
     });
+
+console.log(formErrors);
 
     // useRef 사용으로 인해 랜더링이 발생되지 않아 예외 처리가 불가능 하여, 임의의 stat 생성하여 강제로 랜더링 발생시킴
     const [forceUpdater, forceUpdate] = useState(false);
@@ -185,7 +177,7 @@ const Membership = () => {
         lastNumber: /^\d+$/,
         email: /^[a-z0-9\s]+$/,
         emailType: /^[a-zA-Z]+\.[a-zA-Z]+$/,
-
+        birthDate: /^\d{4}-\d{2}-\d{2}$/
     }); //terms
 
     // 정규식에 길이 조사가 정상작동하지 않아, 이용자가 입력한 정보 길이 조사하는 함수 구현 
@@ -202,6 +194,8 @@ const Membership = () => {
                 return (value === formData.current.pw);
             case 'addressDetail':
                 return inputLength > 2;
+            case 'birthDate':
+                return !isNaN(Date.parse(value));
             case 'firstNumber':
                 return (inputLength < 6 && inputLength >= 2);
             case 'secondNumber':
@@ -230,6 +224,8 @@ const Membership = () => {
                 return (value !== '' && CheckLength(name, value));
             case 'addressDetail':
                 return (value !== '' && CheckLength(name, value));
+            case 'birthDate':
+                return (value !== '' && terms.birthDate.test(value) && CheckLength(name, value));
             case 'firstNumber':
                 return (value !== '' && terms.firstNum.test(value) && CheckLength(name, value));
             case 'secondNumber':
@@ -245,18 +241,7 @@ const Membership = () => {
         }
     };
 
-    // id 중복 검사 관련 
-    // const [btnAble, setBtnAble] = useState(false)
-    // id 유효성 검사 값이 true인 경우 버튼 활성화 아닌 경우 비활성화 
-    // const IdCheck = () => {
-    //     if (terms.userID.test(formData.current.id)) {
-    //         setBtnAble(true);
-    //     }
-    //     else {
-    //         setBtnAble(false);
-    //     }
 
-    // }
 
     // 비밀번호 확인먼저 입력한경우 
 
@@ -356,6 +341,10 @@ const Membership = () => {
         setIsModalOpen(true);
     }
 
+    // 생년월일
+    const [userbirthday, setuserbirtyday] = useState('');
+    const birtydayR = useRef(null);
+
     // 가입 버튼 
     const navi = useNavigate();
     const goLoginPage = () => {
@@ -453,8 +442,8 @@ const Membership = () => {
                     <hr />
 
                     <h3>개인정보를 입력해주세요</h3>
-                    <form className="formcontainer" id='membership' onSubmit={validate}>
-                        <label for="name">이름</label>
+                    <form className="formcontainer" id='membership' onSubmit={validate} method='post'>
+                        <label htmlFor ="name">이름</label>
                         <input type="text"
                             placeholder='2글자 이상 5글자 이하 이름을 입력해주세요'
                             name="name"
@@ -469,7 +458,7 @@ const Membership = () => {
                         <p>에러</p>
 
 
-                        <label for="id">아이디</label>
+                        <label htmlFor="id">아이디</label>
                         <div className="rowarea">
                             <input type="text"
                                 name="id"
@@ -493,7 +482,7 @@ const Membership = () => {
                         <p>에러</p>
 
 
-                        <label for="pw">비밀번호</label>
+                        <label htmlFor="pw">비밀번호</label>
                         <input type="text"
                             placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
                             maxLength={14}
@@ -507,10 +496,10 @@ const Membership = () => {
                         />
                         <p>에러</p>
 
-                        <label for="checkPw">비밀번호 확인</label>
+                        <label htmlFor="checkPw">비밀번호 확인</label>
                         <input type="text"
                             placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
-                            name="pwCheck"
+                            name="checkPw"
                             id="checkPw"
                             maxLength={14}
                             ref={doubleCheckPw}
@@ -521,6 +510,8 @@ const Membership = () => {
                             }}
                         />
                         <p>에러</p>
+
+
 
 
                         <label>주소</label>
@@ -545,7 +536,7 @@ const Membership = () => {
                         />
                         <p></p>
 
-                        <label for="phoneNumeber">전화번호</label>
+                        <label htmlFor="phoneNumeber">전화번호</label>
                         <div className='phoneNumber'>
                             <input type="text"
                                 id='phoneNumeber'
@@ -580,9 +571,21 @@ const Membership = () => {
                         </div>
                         <p>에러</p>
 
+                        <label htmlFor="birthDate">생년월일</label>
+                        <input type="date"
+                            name="birthDate"
+                            id="birthDate"
+                            ref={birtydayR}
+                            onChange={getInputInfo}
+                            style={{
+                                borderBottom: formErrors.current.name === false ? '1px solid red' : '1px solid #aaaaaa'
+                            }}
+                        />
+                       
+                        <p>에러</p>
 
 
-                        <label for="gender">성별</label>
+                        <label htmlFor="gender">성별</label>
                         <div className='genderbutton'>
                             <button type='button'
                                 id='gender'
@@ -607,7 +610,7 @@ const Membership = () => {
                             >여성</button>
                         </div>
                         <p></p>
-                        <label for='email'>이메일</label>
+                        <label htmlFor='email'>이메일</label>
                         <div className='emailArea'>
                             <input type="text" id='email' name='email' onChange={getInputInfo}
                                 style={{
