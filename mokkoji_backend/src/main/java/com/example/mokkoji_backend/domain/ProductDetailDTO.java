@@ -17,7 +17,7 @@ public class ProductDetailDTO {
 	private String guide;
 	private String sizeInfo;
 	private String mainDescription;
-	private String sub_description;
+	private String subDescription;
 	
 	   // Products 엔티티를 받는 생성자
     public ProductDetailDTO(Products product) {
@@ -26,6 +26,6 @@ public class ProductDetailDTO {
         this.guide = product.getGuide();
         this.sizeInfo = product.getSizeInfo();
         this.mainDescription = product.getMainDescription();
-        this.sub_description = product.getSub_description();
+        this.subDescription = product.getSub_description();
     }
 }

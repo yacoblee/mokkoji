@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef , useCallback } from 'react';
 import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
@@ -38,14 +38,19 @@ const ProductList = () => {
     const [pageMaker, setPageMaker] = useState({});
 
 
-    function axiosCall() {
+    const axiosCall = useCallback(() => {
+        console.log("axiosCall_ProductList.jsx _ inputValue : " + filterItem.inputValue.trim());
         let uri;
         if (filterItem.inputValue.trim() === '') {
             // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
             uri = `${API_BASE_URL}/goods/${category}`;
+            console.log(`axious요청 : 카테고리 별 검색`);
+            //setDisplayMessage('');
         } else {
             // 검색어가 있을 때 검색 API 호출
             uri = `${API_BASE_URL}/goods/search`;
+            console.log(`axious요청 : 서치 검색`);
+            //updateDisplayMessage();
         }
         axios.get(uri, {
             params: {
@@ -65,7 +70,7 @@ const ProductList = () => {
                 console.log(err);
                 setList([]);
             });
-    }
+        }, [category, filterItem, page]);
     useEffect(() => {
         // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정 -> 비동기 처리시 박자가 늦는 감이 있음.
         SetFilterItem(it => ({ ...it, selectValue: 'allGoods', inputValue: '' }));
@@ -141,10 +146,10 @@ const ProductList = () => {
                 <span className='NamedInfo'> {selectedCategory.description}</span>
                 {/*<span className='NamedCategory'>정렬:</span>
                 <span className='NamedInfo'> {selectedSortOption}</span>*/}
-                {count > 0 ? (
-                    <span className='searchResult'>: 검색결과: {count}개</span>
+                {list.length > 0 ? (
+                    <span className='searchResult'>"{filterItem.inputValue}"의 검색결과: {list.length}개</span>
                 ) : (
-                    <p>검색결과가 없습니다. 추천상품을 안내해드리겠습니다.</p>
+                    <p>검색결과가 없습니다.</p>
                 )}
             </>
         );
@@ -179,9 +184,6 @@ const ProductList = () => {
                 <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
                     <img src="/images/buy/next.png" alt="1" disabled={pageMaker.currentPage === 1} />
                 </button>
-                {/*<button onClick={() => setPage(1)} disabled={pageMaker.currentPage === 1}>
-                    First
-                </button>*/}
                 {/* 이전 페이지 블록으로 이동 */}
                 {pageMaker.hasprev && (
                     <button className='nextButton' onClick={() => setPage(pageMaker.startPage - 1)} style={{ transform: 'rotateY(180deg)' }}>
@@ -197,9 +199,6 @@ const ProductList = () => {
                     </button>
                 )}
                 {/* 마지막 페이지로 이동 */}
-                {/*<button onClick={() => setPage(pageMaker.totalPage)} disabled={pageMaker.currentPage === pageMaker.totalPage}>
-                    Last
-                </button>*/}
                 <button className='lastButton' onClick={() => setPage(pageMaker.totalPage)}>
                     <img src="/images/buy/next.png" alt="last" disabled={pageMaker.currentPage === pageMaker.totalPage} />
                 </button>
@@ -245,13 +244,14 @@ const ProductList = () => {
                             onClick={() => {
                                 if (filterItem.inputValue) {
                                     // 조건 변경후 axious 재요청.
-
-                                    SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
-
-                                    axiosCall();
+                                    console.log(`nav의 axious 재요청`)
+                                    try {
+                                        SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
+                                    } finally {
+                                        axiosCall();
+                                    }
                                 } else {
-
-                                    null;
+                                    axiosCall();
                                 }
                             }}
                             key={i}>{items.description}</NavLink>
@@ -268,7 +268,7 @@ const ProductList = () => {
 
                     <input type="text" name="productInput" id="productInput" value={filterItem.inputValue} onChange={onChangeInputValue} onKeyDown={onEnterSearch} />
                     <button onClick={onclickSearch}>검색</button>
-                    {/*span className='displayMessage'>{displayMessage}</span>*/}
+                    {/*<span className='displayMessage'>{displayMessage}</span>*/}
                 </div>
             </div>
             <div className='displayMessage2'>{displayMessage}</div>

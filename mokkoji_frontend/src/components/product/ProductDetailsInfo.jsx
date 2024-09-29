@@ -26,6 +26,8 @@ const ProductDetailsInfo = ({ product }) => {
                 setRecommendItems(recommend);
                 // 콘솔 로그로 데이터 확인
                 console.log(recommend);
+                console.log(review);
+                console.log(detail);
             })
             .catch(err => {
                 //alert(err.message);
@@ -102,10 +104,10 @@ const ProductDetailsInfo = ({ product }) => {
                     <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name} />
 
                     <p>
-                        {text.guideLine}
+                        {text.guide}
                     </p>
                     <p>
-                        {text.productAdditionalDescription}
+                        {text.subDescription}
                     </p>
                     {mainimages[3] ?
                         <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name} />
@@ -119,7 +121,7 @@ const ProductDetailsInfo = ({ product }) => {
                     <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
 
                     <div className="productSizeInfo">
-                        {product.sizeInfo}
+                        {text.sizeInfo}
                     </div>
                     <p><span>배송 정보</span><br /><br />
 
@@ -163,14 +165,14 @@ const ProductDetailsInfo = ({ product }) => {
                                 alt="left" />
                         </button>
                     }
-                    {reviews ? reviews.map((it, i) => <>
+                    {reviews != null || reviews != [] ? reviews.map((it, i) => <>
                         <div key={it.reviewId}
 
                             style={{ transform: `translateX(-${currentSlide * 101}%)` }}
                             className="reviewInfoInner">
 
                             <div className="reviewImgBox">
-                                {it.reviewContent ?
+                                {it.reviewPhoto ?
                                     <img src={`${API_BASE_URL}/resources/productImages/${it.reviewPhoto}`} alt="" />
                                     : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt="" />}
                             </div>
@@ -187,7 +189,8 @@ const ProductDetailsInfo = ({ product }) => {
                                         {it.userId}
                                     </span>
                                     <p>
-                                        {it.reviewDate}
+                                        {it.reviewDate
+                                        }
                                     </p>
                                 </div>
 
