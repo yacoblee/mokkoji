@@ -6,6 +6,7 @@ import ModalNotOption from './ModalNotOption';
 import ModalOkbasket from './ModalOkbasket';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
+import { apiCall } from '../../service/apiService';
 // 선택된 상품 정보를 받는 컴포넌트
 const ProductForm = ({ product }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
@@ -37,6 +38,15 @@ const ProductForm = ({ product }) => {
 
             })
     }, [product.id]);
+
+    // useEffect(()=>{
+    //     //url, method, requestData, token
+    //     const token = JSON.parse(sessionStorage.getItem('userData'));
+    //    //requestData
+    //     apiCall('/product/user','POST',null,token)
+    // },[]);
+
+
 
     // select 옵션가격에 대한 state
     const [options, setOptions] = useState({
@@ -84,8 +94,8 @@ const ProductForm = ({ product }) => {
 
     const calculateTotalPrice = () => {
         if (!product) return 0; // 선택된 상품이 없으면 0 반환
- 
-        return (product.price + options.contentSelect + options.packagingSelect )  * count;
+
+        return (product.price + options.contentSelect + options.packagingSelect) * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트

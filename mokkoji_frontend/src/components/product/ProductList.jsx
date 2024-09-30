@@ -93,42 +93,10 @@ const ProductList = () => {
         SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
     };
 
-    // const onclickSearch = () => {
-    //     let uri;
-    //     if (filterItem.inputValue.trim() === '') {
-    //         // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
-    //         uri = `${API_BASE_URL}/goods/${filterItem.selectValue}`;
-    //     } else {
-    //         // 검색어가 있을 때 검색 API 호출
-    //         uri = `${API_BASE_URL}/goods/search`;
-    //     }
-    //     axios.get(uri, {
-    //         params: {
-    //             page: page,
-    //             type: filterItem.selectValue,
-    //             keyword: filterItem.inputValue
-    //         }
-    //     })
-    //         .then(response => {
-    //             const { productList, pageMaker } = response.data;
-    //             setList(productList);
-    //             setResultCount(productList.length);
-    //             updateDisplayMessage(productList.length);
-    //             setPageMaker(pageMaker);
-    //             console.log(pageMaker);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             setList([]);
-    //             setResultCount(0);
-    //             updateDisplayMessage(0);
-    //         });
-    // };
     const onclickSearch = () => {
         let uri;
         axiosCall();
     };
-
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {
@@ -243,7 +211,7 @@ const ProductList = () => {
                         <NavLink to={`/goods/${items.category}`}
                             onClick={() => {
                                 if (filterItem.inputValue) {
-                                    // 조건 변경후 axious 재요청.
+                                    // 조건 변경후 axious 재요청. 안되는중...
                                     console.log(`nav의 axious 재요청`)
                                     try {
                                         SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
@@ -271,7 +239,8 @@ const ProductList = () => {
                     {/*<span className='displayMessage'>{displayMessage}</span>*/}
                 </div>
             </div>
-            <div className='displayMessage2'>{displayMessage}</div>
+            {/*<div className='displayMessage2'>{displayMessage}</div>*/}
+
             <div className="productItemList">
                 {list.map((product, i) => (
                     <Link to={`/goods/${product.categoryId}/${product.id}`} key={product.id}>
@@ -289,13 +258,7 @@ const ProductList = () => {
                 ))}
             </div>
             <div className="productPager">
-                {/*<button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
-                    <img src="/images/buy/next.png" alt="1" />
-                </button>*/}
                 {renderPagination()}
-                {/*<button className='lastButton' onClick={() => setPage(pageMaker.endPage)}>
-                    <img src="/images/buy/next.png" alt="last" />
-                </button>*/}
             </div>
         </>
     );
