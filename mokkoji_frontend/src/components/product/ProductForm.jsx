@@ -188,8 +188,8 @@ const ProductForm = ({ product, userId }) => {
                 alert(`insert 실패`);
             }
         }
-        insertCart();
-        
+        insertOrder();
+
         // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
         navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
             state: {
@@ -207,11 +207,10 @@ const ProductForm = ({ product, userId }) => {
             setIsLoginModalOpen(true);
             return;
         }
-
+        console.log(`왼쪽 내용 : ${content.contentSelect}`)
+        console.log(`오른쪽 내용 : ${content.packagingSelect}`)
+        console.log(`위의 내용이 없으면 옵션 값이 넘어가지 못해서 모달창이 떠욘`)
         if (!content.contentSelect || !content.packagingSelect) {
-            // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
-            console.log(`optionContent : ${content.contentSelect}`);
-            console.log(`optionContent : ${content.packagingSelect}`);
             setIsModalOptionOpen(true);
             return;
         }
