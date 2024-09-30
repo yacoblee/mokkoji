@@ -1,14 +1,16 @@
 package com.example.mokkoji_backend.entity.myPage;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cart")
@@ -39,7 +41,9 @@ public class Cart implements Serializable {
 	private int productCnt;
 	@Column(name = "product_total_price")
 	private int productTotalPrice;
-	@Column(name = "cart_date")
-	private LocalDate cartDate;
+	@CreatedDate
+	@Column(name = "cart_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDateTime cartDate;
 
 }

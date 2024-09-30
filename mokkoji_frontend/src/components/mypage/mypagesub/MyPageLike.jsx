@@ -7,13 +7,9 @@ import React, { useEffect, useState } from 'react';
 
 function MyPageLike({ change, setChange }) {
 
-    const currentUser = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-    // const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    let userFavorite = JSON.parse(sessionStorage.getItem("userFavorite"));
 
-    const [user, setUser] = useState(currentUser)
-
-
-    // 사진 이름 id 정보만 담긴 새로운 출력용 객체
+    // userId, productId, favoriteDate, categoryId, mainImageName을 담은 새로운 객체
     let likedGoods = user.mypage.isLike.map((like) => {
         let findItem = items.find((item) =>
             item.id === like
@@ -29,80 +25,6 @@ function MyPageLike({ change, setChange }) {
         return likeItem;
     })
 
-
-
-    // 개별 삭제 버튼 로직(id값 비교)
-    const handleDelete = (delId) => {        // 해당 번호가 없어진 새로운 찜 목록 배열을 생성
-        const newLikedItem = likedGoods.filter((item) =>
-            item.id !== delId
-        )
-
-        let newLiked = newLikedItem.map((item) =>
-            item.id
-        )
-
-        let newMyPage = {
-            ...currentUser.mypage,
-            isLike: newLiked
-        }
-
-        let newCurrentUser = {
-            ...currentUser,
-            mypage: newMyPage
-        }
-
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(newCurrentUser));
-
-        setUser(newCurrentUser);
-        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
-    }
-
-
-    // 전체 선택, id값을 체크 배열에 넣는 로직
-    const [checkedGood, setCheckedGood] = useState([]);
-
-    const handleCheckGood = (id) => {
-        setCheckedGood(prechecked => prechecked.includes(id) ? prechecked.filter(goodId => goodId !== id) : [...prechecked, id])
-    }
-
-    const handleCheckAll = (e) => {
-        if (e.target.checked) {
-            setCheckedGood(likedGoods.map(goods => goods.id));
-        } else {
-            setCheckedGood([]);
-        }
-    };
-
-
-    // 선택 삭제 기능
-    const onCheckedDelete = () => {
-        if (checkedGood.length === 0) {
-            alert('선택된 상품이 존재하지 않습니다.');
-            return; // 함수 종료
-        }
-
-        let newIsLike = user.mypage.isLike.filter((id) => {
-            if (!checkedGood.includes(id))
-                return id
-        }
-        );  // newIsLike
-
-        let newMyPage = {
-            ...user.mypage,
-            isLike: newIsLike
-        }
-
-        let newUser = {
-            ...user,
-            mypage: newMyPage
-        }
-
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(newUser))
-
-        setUser(newUser);
-        setCheckedGood([])
-        setChange(!change);     // MyPageIndex에 대한 전체 렌더링
-    }
 
 
     return (

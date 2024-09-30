@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.entity.myPage;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Favorites implements Serializable {
 	private long productId;
 
 	@CreatedDate
-	@Column(name = "favorite_date" ,columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@Column(name = "favorite_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime favoriteDate;
 }

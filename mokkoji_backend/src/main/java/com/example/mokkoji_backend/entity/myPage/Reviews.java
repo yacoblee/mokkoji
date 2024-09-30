@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "reviews")
@@ -37,7 +38,8 @@ public class Reviews implements Serializable {
 
 	@Column(name = "review_content")
 	private String reviewContent;
-	@Column(name = "review_date")
+	@CreatedDate
+	@Column(name = "review_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime reviewDate;
 	@Column(name = "like_dislike")
