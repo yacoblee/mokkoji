@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import '../../../css/mypage/subpage/MyPageCart.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
+import { apiCall } from '../../../service/apiService';
 
 function MyPageCart({ change, setChange }) {
 
@@ -25,6 +26,23 @@ function MyPageCart({ change, setChange }) {
     };
 
     let userCart = JSON.parse(sessionStorage.getItem("userCart"));
+
+    // 개별 삭제
+    const cartDelete = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'DELETE', null, userToken)
+            .then((response) => {
+                //alert(`** cartDelete 성공 url=${url}`);
+                sessionStorage.setItem("userCart", JSON.stringify(response.data));
+                navigate("/mypage/cart");
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** cartDelete 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //cartDelete
 
     return (
         <div className='MyCartList' >
@@ -72,7 +90,7 @@ function MyPageCart({ change, setChange }) {
                                     <img src={`${API_BASE_URL}/resources/productImages/${cart.mainImageName}`} alt={cart.productId} />
                                 </div>
                                 <div className='MyCartInfo'>
-                                    <h5>{cart.productId}</h5>
+                                    <h5>{cart.productName}</h5>
                                 </div>
                                 <div className='MyCartDetail'>
                                     <h5>{cart.optionContent}</h5>
@@ -94,7 +112,7 @@ function MyPageCart({ change, setChange }) {
                                     >
                                         {hoveredButton === cart.productId ? '구매하기' : `${formatNumber(cart.productTotalPrice)}원`}
                                     </button>
-                                    <button onClick={() => handleDelete(cart.productId)}>삭제</button>
+                                    <button onClick={() => cartDelete(`mypage/cart/${cart.productId}`)}>삭제</button>
                                 </div>
                             </div >  // mycartgird
                         )   // return

@@ -1,12 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
 import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from "../../../service/app-config";
+import { apiCall } from '../../../service/apiService';
 
 function MyPageLike({ change, setChange }) {
 
     let userFavorites = JSON.parse(sessionStorage.getItem("userFavorites"));
+
+    const navigate = useNavigate();
+
+    // 개별 삭제
+    const favoritesDelete = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'DELETE', null, userToken)
+            .then((response) => {
+                //alert(`** favoritesDelete 성공 url=${url}`);
+                sessionStorage.setItem("userFavorites", JSON.stringify(response.data));
+                navigate("/mypage/favorites");
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** favoritesDelete 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //favoritesDelete
 
     return (
         <div className='MyLikeList' >
@@ -56,7 +76,7 @@ function MyPageLike({ change, setChange }) {
                                     <Link to={`/goods/${favorites.categoryId}/${favorites.productId}`}>
                                         <button className='ButtonDetail'>상품 상세</button>
                                     </Link>
-                                    <button onClick={() => handleDelete(favorites.productId)}>삭제</button>
+                                    <button onClick={() => favoritesDelete(`/mypage/favorites/${favorites.productId}`)}>삭제</button>
                                 </div>
                             </div >  // mylikegird
                         )   // return

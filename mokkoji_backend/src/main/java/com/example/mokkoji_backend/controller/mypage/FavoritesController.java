@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.FavoritesDTO;
-import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
@@ -79,7 +78,11 @@ public class FavoritesController {
 	// 2) 찜목록 삭제
 	// 2.1) 단일 상품 삭제
 	@DeleteMapping("/favorites/{productId}")
-	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
+//	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
+	public ResponseEntity<?> favoritesDeleteOne(@RequestHeader("Authorization") String header, @PathVariable long productId) {
+		String userId = getUserIdFromHeader(header);
+		log.info(userId);
+		log.info(productId);
 
 		FavoritesId favoritesId = new FavoritesId(userId, productId);
 
@@ -93,8 +96,9 @@ public class FavoritesController {
 			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
 			favoritesService.deleteFavorites(favoritesId);
 
-			// 3. 삭제 성공 메시지 응답
-			return ResponseEntity.ok("favorites 삭제 성공");
+			// 3. 삭제 성공 후 다시 List 출력
+			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
+			return ResponseEntity.ok(favoritesDTOList);
 
 		} catch (Exception e) {
 			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음

@@ -78,6 +78,7 @@ public class CartController {
 		}
 	} //cartListAll
 
-	// 장바구니 항목 삭제
+	// 2) 장바구니 항목 삭제
+	// 2.1) 개별 삭제
 
 }
