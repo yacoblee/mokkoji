@@ -35,6 +35,7 @@ export async function apiCall(url, method, requestData, token) {
   // 1.3) 전송 Data(requestData) 있는 경우 data 속성 추가
   if (requestData) {
     options.data = requestData;
+    //alert("reqestDate id : "+requestData.id);
   }
 
   console.log(`** apiCall options.method=${options.method}`);

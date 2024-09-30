@@ -22,50 +22,43 @@ const ProductDetails = () => { //===============================================
     const [product, setProduct] = useState({});
 
     const [slideimages, setSlideImages] = useState([]);
+    //세션 스토리지의 유저 데이터를 담는 변수.
+    const [userId, setUserId] = useState('');
 
     useEffect(() => {
-
+        const token = JSON.parse(sessionStorage.getItem('userData'));
         let uri = `${API_BASE_URL}/goods/${category}/${id}`;
-        axios.get(uri, {
-            params: {
-                type: 'slide'  // 여러 값을 개별적으로 보냄
-            }
-        })
-            .then(response => {
+
+        // 상품 정보 및 좋아요 상태 가져오기
+        const fetchProductDetails = async () => {
+            try {
+                const response = await axios.get(uri, { params: { type: 'slide' } });
                 const { product, image } = response.data;
                 setSlideImages(image);
-                console.log(product);
-                console.log(image);
-                if (product) {  // product가 유효할 때만 상태와 세션 스토리지 업데이트
+
+                if (product) {
                     setProduct(product);
-                    sessionStorage.setItem('product', JSON.stringify(product));  // 유효할 때만 저장
+                    sessionStorage.setItem('product', JSON.stringify(product));  // 세션 스토리지에 저장
                 }
-            })
-            .catch(err => {
-                console.log(err);
+
+                // 좋아요 상태 가져오기
+                const productData = sessionStorage.getItem('product');
+                const likeResponse = await apiCall('/goods/likedState', 'POST', productData, token);
+                const { liked, userId } = likeResponse.data;
+                setLike(liked);
+                setUserId(userId);
+            } catch (error) {
+                console.log(error);
                 setProduct(null);
                 setSlideImages([]);
-            });
+                setLike(false); // 실패 시 좋아요 초기화
+            }
+        };
 
-    }, [id]);
-    //세션 스토리지의 유저 데이터를 담는 변수.
-    const [user, setUser] = useState({});
-    useEffect(() => {
-        //url, method, requestData, token
-        const token = JSON.parse(sessionStorage.getItem('userData'));
-        console.log(`token : ${token}`)
-        const requestData = product;
-        apiCall('/goods/user', 'POST', requestData, token)
-            .then((response) => {
-                setUser(response.data);
-                console.log(response.data);
-            }).catch((err) => {
-                console.log(err);
-            })
-    }, []);
+        fetchProductDetails();
+    }, [id, category]);
 
-    //추후 지울 변수 -> user로 대체 
-    const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
+
 
     //모달창을 관리할 state
     //로그인 필요합니다
@@ -76,27 +69,46 @@ const ProductDetails = () => { //===============================================
 
 
     //찜 클릭 아이콘을 선택할때의 이벤트
-    const onClickLikeMe = () => {
+    const onClickLikeMe = async () => {
+
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        const insertLike = async () => {
+            try {
+                const response = await apiCall('/goods/liked', 'POST', { userId: userId, productId: product.id }, token);
+                const { liked } = response.data;
+                setLike(liked);
+                alert(`insert 성공`);
+            } catch (error) {
+                setLike(false);
+                console.log(`insert Like error =>${error.message}`)
+                alert(`insert 실패`);
+            }
+        };
+
+        const deleteLike = async () => {
+            try {
+                const response = await apiCall('/goods/liked', 'DELETE', { userId: userId, productId: product.id }, token);
+                //const response = await apiCall('/goods/liked', 'DELETE', { userId: userId, productId: product.id }, token);
+                //const response = await apiCall(`/goods/liked?userId=${userId}&productId=${product.id}`, 'DELETE', null, token);
+                const { liked } = response.data;
+                setLike(liked);
+                alert(`delte 성공`);
+            } catch (error) {
+                setLike(false);
+                console.log(`delete Like error =>${error.message}`)
+                alert(`delete 살패`);
+            }
+        }
 
 
-        // 세션 스토리지의 사용자 정보 업데이트
-        if (userData) {
-            setLike(!like);
-            const updatedLikes =
-                like
-                    ? userData.mypage.isLike.filter(id => id !== product.id) // 이미 찜한 상태라면 제거
-                    : [...userData.mypage.isLike, product.id]; // 찜하지 않은 상태라면 추가
+        // 로그인 유무 확인 -> 상태에 따라 insert / delete
+        if (userId) {
+            if (!like) {
+                await insertLike(); // 찜하지 않은 상태라면 추가
+            } else {
+                await deleteLike(); // 이미 찜한 상태라면 제거
+            }
 
-            const updatedUser = {
-                ...userData,
-                mypage: {
-                    ...userData.mypage,
-                    isLike: updatedLikes
-                }
-            };
-
-            // 업데이트된 사용자 정보를 세션 스토리지에 저장
-            sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
         } else {
 
             setIsLoginModalOpen(true);
@@ -105,13 +117,6 @@ const ProductDetails = () => { //===============================================
         }//user데이터가 없을경우 찜목록 사용 비활성화
 
     }
-    // 컴포넌트가 마운트될 때 세션 스토리지에서 찜하기 상태 초기화
-    // useEffect(() => {
-    //     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
-    //     if (userData && userData.mypage.isLike.includes(selectedProduct.id)) {
-    //         setLike(true); // 찜 목록에 있으면 like 상태를 true로 설정
-    //     }
-    // }, [selectedProduct.id]);
 
     //내부링크 위치 조정을 위한 스크롤 이벤트인데 내가 했다고 말못해...
     const handleScroll = (event, id) => {
@@ -187,7 +192,7 @@ const ProductDetails = () => { //===============================================
                                     </div>
                                 </p>
                             </div>
-                            <ProductForm product={product} user={user} />
+                            <ProductForm product={product} userId={userId} />
                         </div>
 
                     </div>
