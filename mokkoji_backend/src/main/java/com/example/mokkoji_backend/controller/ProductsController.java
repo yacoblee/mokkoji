@@ -184,7 +184,7 @@ public class ProductsController {
 	//좋아요 상태 지우기
 	@DeleteMapping("/goods/liked")
 	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid){
-		System.out.println("*******************entityid : "+entityid);
+		//System.out.println("*******************entityid : "+entityid);
 		Map<String, Object> response = new HashMap<>();
 		try {
 			favService.deleteFavorites(entityid);
@@ -242,13 +242,14 @@ public class ProductsController {
 		String message = "";
 		if(cart!=null) {
 			cartService.duplicateUpate(cart);
-			System.out.println("************cart : "+cart);
+			//System.out.println("************cart : "+cart);
 			message = cart.toString();
+			return ResponseEntity.ok(message);
 		}else {
 			System.out.println("카트 없음 실패");
 			message = "카트 없음 실패";
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(message);
 		}
-		return ResponseEntity.ok(message);
 	}
 	
 	

@@ -165,6 +165,31 @@ const ProductForm = ({ product, userId }) => {
             return;
         }
 
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        const insertOrder = async () => {
+            // 장바구니에 추가할 항목 생성
+            const sendBasket = {
+                userId: userId,
+                productId: product.id,
+                optionContent: content.contentSelect,
+                packagingOptionContent: content.packagingSelect,
+                productCnt: count,
+                productTotalPrice: totalPrice,
+            };
+            try {
+                const response = await apiCall('/order/insertOrder', 'POST', sendBasket, token);
+                //const { message } = response.data;
+                //setLike(liked);
+                //alert(message);
+                alert('성공');
+            } catch (error) {
+                //setLike(false);
+                console.log(`insert Like error =>${error.message}`)
+                alert(`insert 실패`);
+            }
+        }
+        insertCart();
+        
         // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
         navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
             state: {
@@ -203,9 +228,9 @@ const ProductForm = ({ product, userId }) => {
             };
             try {
                 const response = await apiCall('/cart/insertitem', 'POST', sendBasket, token);
-                const { message } = response.data;
+                //const { message } = response.data;
                 //setLike(liked);
-                alert(message);
+                //alert(message);
             } catch (error) {
                 //setLike(false);
                 console.log(`insert Like error =>${error.message}`)
