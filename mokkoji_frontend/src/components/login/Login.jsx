@@ -71,7 +71,7 @@ const Login = () => {
                 if (response.status === 200) {
                     sessionStorage.setItem("isLoggedIn", "true");
                     alert('로그인 성공');
-                    sessionStorage.setItem("inputId", JSON.stringify(response.data));  // response.data 사용
+                    sessionStorage.setItem("userData", JSON.stringify(response.data));  // response.data 사용
                     setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠
                     console.log("네비 이동 직전임");
                     console.log("네비 이동 후");
