@@ -79,7 +79,7 @@ const Header = () => {
         apiCall(url, 'GET', null, userToken)
             .then((response) => {
                 //alert(`** myPageMain 성공 url=${url}`);
-                sessionStorage.setItem("userDetailData", JSON.stringify(response.data));
+                sessionStorage.setItem("userMainData", JSON.stringify(response.data));
                 navigate("/mypage");
             }).catch((err) => {
                 if (err === 502) {
