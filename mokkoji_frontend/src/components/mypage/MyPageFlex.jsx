@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 
 function MyPageFlex() {
 
-    let userDetailData = JSON.parse(sessionStorage.getItem("userDetailData"));
+    let userMainData = JSON.parse(sessionStorage.getItem("userMainData"));
 
     return (
         <div className='MyInfoFlex'>
             <div className="MyInfo">
-                <h1>{userDetailData.userId}, 안녕하세요!</h1>
+                <h1>{userMainData.userId}, 안녕하세요!</h1>
 
                 <div className="MyInfoSet">
                     <Link to='/mypage/set'>
@@ -31,7 +31,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faUser} />
                     </div>
                     <span>
-                        {userDetailData.name}
+                        {userMainData.name}
                     </span>
                 </div>
                 <div>
@@ -39,7 +39,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faMobileScreenButton} />
                     </div>
                     <span>
-                        {userDetailData.phoneNumber}
+                        {userMainData.phoneNumber}
                     </span>
                 </div>
                 <div>
@@ -47,7 +47,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faEnvelope} />
                     </div>
                     <span>
-                        {userDetailData.email}
+                        {userMainData.email}
                     </span>
                 </div>
                 <div>
