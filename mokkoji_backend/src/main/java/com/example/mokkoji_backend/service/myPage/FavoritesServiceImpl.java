@@ -24,38 +24,38 @@ public class FavoritesServiceImpl implements FavoritesService {
 
 	// 1) 찜목록에서 row가 삭제될때 사용
 	@Override
-	public void deleteFavorite(FavoritesId favoriteId) throws Exception {
-		if (!favoriteRepository.existsById(favoriteId)) {
+	public void deleteFavorites(FavoritesId favoritesId) throws Exception {
+		if (!favoriteRepository.existsById(favoritesId)) {
 			throw new Exception("favoritesId에 맞는 항목 없음");
 		}
-		favoriteRepository.deleteById(favoriteId);
+		favoriteRepository.deleteById(favoritesId);
 	}
 
 	// ** 상품 페이지에서만 사용 ==============================================
 	
 	// 1) 찜 여부 확인할 때 사용(하트표시)
 	@Override
-	public Favorites productFavorite(FavoritesId favoritesId) {
+	public Favorites productFavorites(FavoritesId favoritesId) {
 		return favoriteRepository.findById(favoritesId).get();
 	}
 
 	// 2) 찜 개수를 count할 때 사용
 	@Override
-	public int countFavorite(long productId) {
+	public int countFavorites(long productId) {
 		return favoriteRepository.countByProductId(productId);
 	}
 
 	// 3) 찜목록이 추가될때 사용
 	@Override
-	public void insertFavorite(Favorites favorite) {
-		favoriteRepository.save(favorite);
+	public void insertFavorites(Favorites favorites) {
+		favoriteRepository.save(favorites);
 	}
 
 	// ** 마이페이지에서만 사용 ===============================================
 
 	// 1) 찜목록 표시할떄 사용
 	@Override
-	public List<FavoritesDTO> userFavorite(String userId) {
+	public List<FavoritesDTO> userFavorites(String userId) {
 		List<Favorites> favoritesList = favoriteRepository.findByUserIdOrderByFavoriteDateDesc(userId);
 
 		List<FavoritesDTO> favoritesDTOList = favoritesList.stream().map(item -> {
@@ -69,6 +69,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 			// Optional<Products>의 값이 존재하는 경우에만 설정
 			if (products.isPresent()) {
 				Products product = products.get();
+				favoritesDTO.setProductName(product.getName());
 				favoritesDTO.setCategoryId(product.getCategoryId());
 				favoritesDTO.setMainImageName(product.getMainImageName());
 			} else {
@@ -85,7 +86,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 
 	// 2) 찜목록 전체 개수 표시
 	@Override
-	public int countFavorite(String userId){
+	public int countFavorites(String userId){
 		return favoriteRepository.countByUserId(userId);
 	}
 }

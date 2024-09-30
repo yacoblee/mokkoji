@@ -58,8 +58,7 @@ public class FavoritesController {
 
 		try {
 			// 2. 찜 목록 조회
-			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorite(userId);
-
+			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
 
 			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
 			if (favoritesDTOList == null || favoritesDTOList.isEmpty()) {
@@ -92,7 +91,7 @@ public class FavoritesController {
 
 		try {
 			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
-			favoritesService.deleteFavorite(favoritesId);
+			favoritesService.deleteFavorites(favoritesId);
 
 			// 3. 삭제 성공 메시지 응답
 			return ResponseEntity.ok("favorites 삭제 성공");
@@ -128,7 +127,7 @@ public class FavoritesController {
 		try {
 			// 3. favoritesId에 대해 삭제 실행 : 반복문 사용
 			for (FavoritesId favoritesId : favoritesIdList) {
-				favoritesService.deleteFavorite(favoritesId);
+				favoritesService.deleteFavorites(favoritesId);
 			}
 
 			return ResponseEntity.ok("favoritesList 삭제 성공");
