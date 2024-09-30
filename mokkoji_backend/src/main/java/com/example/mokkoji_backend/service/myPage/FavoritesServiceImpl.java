@@ -26,17 +26,23 @@ public class FavoritesServiceImpl implements FavoritesService {
 	}
 
 	// ** 상품 페이지에서만 사용 ==============================================
-
-	// 1) 찜목록이 추가될때 사용
+	
+	// 1) 찜 여부 확인할 때 사용(하트표시)
 	@Override
-	public void insertFavorite(Favorites favorite) {
-		favoriteRepository.save(favorite);
+	public Favorites productFavorite(FavoritesId favoritesId) {
+		return favoriteRepository.findById(favoritesId).get();
 	}
 
 	// 2) 찜 개수를 count할 때 사용
 	@Override
 	public int countFavorite(long productId) {
 		return favoriteRepository.countByProductId(productId);
+	}
+
+	// 3) 찜목록이 추가될때 사용
+	@Override
+	public void insertFavorite(Favorites favorite) {
+		favoriteRepository.save(favorite);
 	}
 
 	// ** 마이페이지에서만 사용 ===============================================

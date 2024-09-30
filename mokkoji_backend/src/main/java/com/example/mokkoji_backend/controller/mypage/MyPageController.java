@@ -42,7 +42,7 @@ public class MyPageController {
 
 		// 2. null 경우: 사용자 정보 조회 불가
 		if (users == null) {
-			log.error("id에 맞는 user 없음");
+			log.warn("id에 맞는 user 없음");
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("id에 맞는 user 없음");
 		}
 
@@ -70,7 +70,7 @@ public class MyPageController {
 
 		} catch (Exception e) {
 			// 4. 서버에서 발생한 예외 처리
-			log.error("내부 서버 오류 : userDetail");
+			log.warn("내부 서버 오류 : userDetail");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userDetail");
 		}
 	} //userDetail
