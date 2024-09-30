@@ -75,8 +75,8 @@ const Header = () => {
 
     // myPage로 넘어갈때 로그인된 사용자의 상세 정보를 담아서 이동
     const myPageMain = (url) => {
-        let userBasicData = JSON.parse(sessionStorage.getItem("inputId"));
-        apiCall(url, 'GET', null, userBasicData.token)
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
             .then((response) => {
                 //alert(`** myPageMain 성공 url=${url}`);
                 sessionStorage.setItem("userDetailData", JSON.stringify(response.data));

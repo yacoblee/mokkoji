@@ -24,7 +24,7 @@ function MyPageMain() {
                 </div>
             </h1>
 
-            {/* <MyPageGrid /> */}
+            <MyPageGrid />
 
             <Routes>
                 <Route path='/*' element={<MyPageUser />} />

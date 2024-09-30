@@ -66,7 +66,7 @@ public class FavoritesController {
 
 	// 2) 찜목록 삭제
 	// 2.1) 단일 상품 삭제
-	@DeleteMapping("/favorites/delete/{productId}")
+	@DeleteMapping("/favorites/{productId}")
 	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
 
 		FavoritesId favoritesId = new FavoritesId(userId, productId);
@@ -96,7 +96,7 @@ public class FavoritesController {
 	} //favoritesDelete
 
 	// 2.2) 체크 상품 삭제
-	@DeleteMapping("")
+	@DeleteMapping("/favorites")
 	public ResponseEntity<?> favoritesDeleteMulti(@AuthenticationPrincipal String userId, @RequestBody List<Long> productIdList) {
 		// 1. 유효성 검사: productId 목록이 null이거나 비어있을때
 		if (productIdList == null || productIdList.isEmpty()) {

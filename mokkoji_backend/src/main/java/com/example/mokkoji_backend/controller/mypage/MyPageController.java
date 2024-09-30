@@ -4,6 +4,7 @@ import com.example.mokkoji_backend.domain.MyPageDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
+import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -31,12 +32,20 @@ public class MyPageController {
 	@Resource(name = "UsersService")
 	private UsersService usersService;
 
+	private TokenProvider tokenProvider;
+
+	public String getUserIdFromHeader(String header) {
+		return tokenProvider.validateAndGetUserId(header.substring(7));
+	}
+
 	// ** 기본 세팅 관련 ============================================================
 
 	// 1) 사용자 상세 정보 조회
 	@GetMapping("/user")
-	public ResponseEntity<?> userDetail(@AuthenticationPrincipal String userId) {
-		log.info(userId);
+//	public ResponseEntity<?> userDetail(@AuthenticationPrincipal String userId) {
+	public ResponseEntity<?> userDetail(@RequestHeader("Authorization") String header) {
+		String userId = getUserIdFromHeader(header);
+		log.info("userId : {}", userId);
 		// 1. id에 맞는 사용자 정보 추출
 		Users users = usersService.selectOne(userId);
 
