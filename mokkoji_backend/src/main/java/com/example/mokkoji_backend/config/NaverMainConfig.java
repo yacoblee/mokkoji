@@ -16,7 +16,7 @@ import jakarta.mail.PasswordAuthentication;
 public class NaverMainConfig {
 
 	private static final String USER_EMAIL = "yacobleee@naver.com";
-	private static final String USER_PASSWORD = "Rhcsladl12!";
+	private static final String USER_PASSWORD = "";
 
 	@Primary
 	@Bean(name = "naverEmailProperties")
