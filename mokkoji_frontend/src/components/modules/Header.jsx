@@ -73,24 +73,6 @@ const Header = () => {
     }
 
 
-    // myPage로 넘어갈때 로그인된 사용자의 상세 정보를 담아서 이동
-    const myPageMain = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageMain 성공 url=${url}`);
-                sessionStorage.setItem("userMainData", JSON.stringify(response.data));
-                navigate("/mypage");
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageMain 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageMain
-
-
 
     return (
         <header id="header" className="deactive">
@@ -112,7 +94,7 @@ const Header = () => {
                                 isLoggedIn ?
                                     <>
                                         <li><NavLink onClick={logout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
-                                        <li><NavLink onClick={() => { myPageMain("/mypage/user") }} className={({ isActive }) => (isActive ? 'active' : '')}><p>Mypage</p></NavLink ></li>
+                                        <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>Mypage</p></NavLink ></li>
                                         <li><NavLink to="/administrator" className={({ isActive }) => (isActive ? 'active' : '')}><p>Admin</p></NavLink ></li>
                                     </>
                                     :

@@ -25,9 +25,27 @@ function MyPageCart({ change, setChange }) {
         setHoveredButton(null);
     };
 
-    let userCart = JSON.parse(sessionStorage.getItem("userCart"));
+    const [userCart, setUserCart] = useState([]);
 
-    const navigate = useNavigate();
+    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
+    const myPageCart = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageCart 성공 url=${url}`);
+                setUserCart(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageCart 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageCart
+
+    useEffect(() => {
+        myPageCart("/mypage/cart")
+    }, [])
 
     // 개별 삭제
     const cartDelete = (url) => {
@@ -35,8 +53,7 @@ function MyPageCart({ change, setChange }) {
         apiCall(url, 'DELETE', null, userToken)
             .then((response) => {
                 //alert(`** cartDelete 성공 url=${url}`);
-                sessionStorage.setItem("userCart", JSON.stringify(response.data));
-                navigate("/mypage/cart");
+                setUserCart(response.data);
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
@@ -45,6 +62,8 @@ function MyPageCart({ change, setChange }) {
                 } else alert(`** cartDelete 시스템 오류, err = ${err}`);
             }) //apiCall
     }; //cartDelete
+
+
 
     return (
         <div className='MyCartList' >

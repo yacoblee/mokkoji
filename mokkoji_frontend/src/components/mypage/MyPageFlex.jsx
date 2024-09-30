@@ -8,14 +8,12 @@ import '../../css/mypage/MyPageUser.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function MyPageFlex() {
-
-    let userMainData = JSON.parse(sessionStorage.getItem("userMainData"));
+function MyPageFlex({ userMain }) {
 
     return (
         <div className='MyInfoFlex'>
             <div className="MyInfo">
-                <h1>{userMainData.userId}, 안녕하세요!</h1>
+                <h1>{userMain.userId}, 안녕하세요!</h1>
 
                 <div className="MyInfoSet">
                     <Link to='/mypage/set'>
@@ -31,7 +29,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faUser} />
                     </div>
                     <span>
-                        {userMainData.name}
+                        {userMain.name}
                     </span>
                 </div>
                 <div>
@@ -39,7 +37,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faMobileScreenButton} />
                     </div>
                     <span>
-                        {userMainData.phoneNumber}
+                        {userMain.phoneNumber}
                     </span>
                 </div>
                 <div>
@@ -47,7 +45,7 @@ function MyPageFlex() {
                         <FontAwesomeIcon icon={faEnvelope} />
                     </div>
                     <span>
-                        {userMainData.email}
+                        {userMain.email}
                     </span>
                 </div>
                 <div>

@@ -2,72 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import '../../css/mypage/MyPageGrid.css';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import { apiCall } from '../../service/apiService';
 
-function MyPageGrid() {
-
-    const navigate = useNavigate();
-
-    let userMainData = JSON.parse(sessionStorage.getItem("userMainData"));
-
-    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
-    const myPageLike = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageLike 성공 url=${url}`);
-                sessionStorage.setItem("userFavorites", JSON.stringify(response.data));
-                navigate("/mypage/favorites");
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageLike 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageLike
-
-    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
-    const myPageCart = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageCart 성공 url=${url}`);
-                sessionStorage.setItem("userCart", JSON.stringify(response.data));
-                navigate("/mypage/cart");
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageCart 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageCart
-
-
-
-
-
-
+function MyPageGrid({ userMain }) {
 
     return (
         <div className='MyGrid'>
-            <NavLink onClick={() => { myPageLike("/mypage/favorites") }}>
+            <NavLink to="/mypage/favorites" >
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
-                        {userMainData.favoritesCnt}
+                        {userMain.favoritesCnt}
                     </div>
                     <span>찜목록</span>
                 </div>
             </NavLink>
-            <NavLink onClick={() => { myPageCart("/mypage/cart") }}>
+            <NavLink to="/mypage/cart" >
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
-                        {userMainData.cartCnt}
+                        {userMain.cartCnt}
                     </div>
                     <span>장바구니</span>
                 </div>
