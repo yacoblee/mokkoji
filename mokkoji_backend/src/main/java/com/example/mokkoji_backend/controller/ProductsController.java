@@ -252,5 +252,16 @@ public class ProductsController {
 		}
 	}
 	
+	// ------------구매 페이지 전환
+//	@PostMapping("/goods/{categoryId}/{productId}/buy")
+//	public ResponseEntity<?> insertCart(@PathVariable("categoryId") String categoryId,
+//            @PathVariable("productId") Long productId,@RequestBody Cart selectedProduct){
+//		Map<String, Object> response = new HashMap<>();
+//		if(selectedProduct!=null) {
+//			response.put("selectedProduct", service.findById(productId));
+//			response.put("options",opservice.findByProductId(productId));
+//
+//		}
+//	}
 	
 }

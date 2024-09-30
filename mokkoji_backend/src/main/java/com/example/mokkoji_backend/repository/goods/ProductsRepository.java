@@ -52,6 +52,6 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	//int countBy();
 	
 	
-	//@EntityGraph(attributePaths = {"options"})
-	//Optional<Products> findById(@Param("id") Long id);
+	@EntityGraph(attributePaths = {"options"})
+	Optional<Products> findById( Long id);
 }
