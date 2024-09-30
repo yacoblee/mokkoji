@@ -62,6 +62,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 			// Optional<Products>로 상품을 가져오기
 			Optional<Products> products = productsRepository.findById(item.getProductId());
 			FavoritesDTO favoritesDTO = new FavoritesDTO();
+
 			favoritesDTO.setUserId(item.getUserId());
 			favoritesDTO.setProductId(item.getProductId());
 			favoritesDTO.setFavoriteDate(item.getFavoriteDate());
@@ -74,6 +75,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 				favoritesDTO.setMainImageName(product.getMainImageName());
 			} else {
 				// 기본값 설정 또는 로깅 등 처리
+				favoritesDTO.setProductName(null);
 				favoritesDTO.setCategoryId(null);
 				favoritesDTO.setMainImageName(null);
 			}

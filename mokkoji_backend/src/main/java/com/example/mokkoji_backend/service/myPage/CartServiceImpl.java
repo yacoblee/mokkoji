@@ -1,18 +1,26 @@
 package com.example.mokkoji_backend.service.myPage;
 
+import com.example.mokkoji_backend.domain.CartDTO;
+import com.example.mokkoji_backend.domain.FavoritesDTO;
+import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
+import com.example.mokkoji_backend.entity.myPage.Favorites;
+import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("CartService")
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
 	final CartRepository cartRepository;
+	final ProductsRepository productsRepository;
 	
 	// ** 상품페이지에서만 사용 ===============================================
 	
@@ -26,8 +34,39 @@ public class CartServiceImpl implements CartService {
 
 	// 1) 사용자별 cart 목록 확인시 사용
 	@Override
-	public List<Cart> userCart(String userId) {
-		return cartRepository.findByUserIdOrderByCartDateDesc(userId);
+	public List<CartDTO> userCart(String userId) {
+		List<Cart> cartList = cartRepository.findByUserIdOrderByCartDateDesc(userId);
+
+		List<CartDTO> cartDTOList = cartList.stream().map(item -> {
+			// Optional<Products>로 상품을 가져오기
+			Optional<Products> products = productsRepository.findById(item.getProductId());
+			CartDTO cartDTO = new CartDTO ();
+
+			cartDTO.setUserId(item.getUserId());
+			cartDTO.setProductId(item.getProductId());
+			cartDTO.setOptionContent(item.getOptionContent());
+			cartDTO.setPackagingOptionContent(item.getPackagingOptionContent());
+			cartDTO.setProductCnt(item.getProductCnt());
+			cartDTO.setProductTotalPrice(item.getProductTotalPrice());
+			cartDTO.setCartDate(item.getCartDate());
+
+			// Optional<Products>의 값이 존재하는 경우에만 설정
+			if (products.isPresent()) {
+				Products product = products.get();
+				cartDTO.setProductName(product.getName());
+				cartDTO.setCategoryId(product.getCategoryId());
+				cartDTO.setMainImageName(product.getMainImageName());
+			} else {
+				// 기본값 설정 또는 로깅 등 처리
+				cartDTO.setProductName(null);
+				cartDTO.setCategoryId(null);
+				cartDTO.setMainImageName(null);
+			}
+
+			return cartDTO;
+		}).collect(Collectors.toList());
+
+		return cartDTOList;
 	}
 
 	// 2) cart의 총 개수 조회
