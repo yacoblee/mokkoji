@@ -4,13 +4,13 @@ import GoodsItems from "./ProductObject";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-const ProductDetailsInfo = ({ product  }) => {
+const ProductDetailsInfo = ({ product }) => {
     const { category, id } = useParams();
 
     const [mainimages, setMainImages] = useState([]);
     const [text, setText] = useState([]);
     const [recommendItems, setRecommendItems] = useState([]);
-    //const [slideimages, setSlideImages] = useState([]);
+    const [reviews, setReviews] = useState([]);
     useEffect(() => {
         let uri = API_BASE_URL + `/goods/${category}/${id}`;
         axios.get(uri, {
@@ -19,13 +19,15 @@ const ProductDetailsInfo = ({ product  }) => {
             }
         })
             .then(response => {
-                const { image, detail, recommend } = response.data;
-
+                const { image, detail, recommend, review } = response.data;
+                setReviews(review);
                 setMainImages(image);
                 setText(detail);
                 setRecommendItems(recommend);
                 // 콘솔 로그로 데이터 확인
                 console.log(recommend);
+                console.log(review);
+                console.log(detail);
             })
             .catch(err => {
                 //alert(err.message);
@@ -102,10 +104,10 @@ const ProductDetailsInfo = ({ product  }) => {
                     <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name} />
 
                     <p>
-                        {text.guideLine}
+                        {text.guide}
                     </p>
                     <p>
-                        {text.productAdditionalDescription}
+                        {text.subDescription}
                     </p>
                     {mainimages[3] ?
                         <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name} />
@@ -119,7 +121,7 @@ const ProductDetailsInfo = ({ product  }) => {
                     <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
 
                     <div className="productSizeInfo">
-                        {product.sizeInfo}
+                        {text.sizeInfo}
                     </div>
                     <p><span>배송 정보</span><br /><br />
 
@@ -163,8 +165,38 @@ const ProductDetailsInfo = ({ product  }) => {
                                 alt="left" />
                         </button>
                     }
+                    {reviews != null || reviews != [] ? reviews.map((it, i) => <>
+                        <div key={it.reviewId}
 
-                    {/* 리뷰 들어갈 자리 */}
+                            style={{ transform: `translateX(-${currentSlide * 101}%)` }}
+                            className="reviewInfoInner">
+
+                            <div className="reviewImgBox">
+                                {it.reviewPhoto ?
+                                    <img src={`${API_BASE_URL}/resources/productImages/${it.reviewPhoto}`} alt="" />
+                                    : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt="" />}
+                            </div>
+                            <div className="reviewContent">
+
+                                <p>
+                                    {/* <p className="reveiwName deleteName">
+                                    </p> */}
+                                    "{it.reviewContent}"
+                                </p>
+
+                                <div className="reviewDateRemove">
+                                    <span>
+                                        {it.userId}
+                                    </span>
+                                    <p>
+                                        {it.reviewDate
+                                        }
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </>) : ''}
                     {
                         currentSlide < maxSlide && <button style={{ right: 5 }}
                             type='button'

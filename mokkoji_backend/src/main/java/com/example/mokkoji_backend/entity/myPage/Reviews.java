@@ -1,5 +1,11 @@
 package com.example.mokkoji_backend.entity.myPage;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,10 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reviews")
@@ -36,6 +38,7 @@ public class Reviews implements Serializable {
 	@Column(name = "review_content")
 	private String reviewContent;
 	@Column(name = "review_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime reviewDate;
 	@Column(name = "like_dislike")
 	private boolean likeDislike;

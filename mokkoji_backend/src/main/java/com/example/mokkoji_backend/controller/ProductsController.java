@@ -18,6 +18,7 @@ import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.entity.myPage.Reviews;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
@@ -165,8 +166,9 @@ public class ProductsController {
 	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
 	        log.info(image);
 	        response.put("image", image);
-	        //List<Reviews> review = reservice.productReviews((int)productId);
 	        if(type.equals("main")) {
+	        	
+	        	response.put("review",reservice.productReviews(productId));
 	        	response.put("detail", service.findDetailinfo(productId));	
 	        	response.put("recommend", service.findTop4ByOrderByCountDescNative(productId));
 	        }else {
