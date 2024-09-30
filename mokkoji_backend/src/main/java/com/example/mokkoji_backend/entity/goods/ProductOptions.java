@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class ProductOptions implements Serializable {
 	
 	@ManyToOne
 	@JsonBackReference
+	//@MapsId("productId") // `productId` 필드와 외래 키를 매핑
     @JoinColumn(name = "productId")
 	private Products product;
 }

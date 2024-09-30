@@ -8,4 +8,5 @@ public interface OrdersService {
 
 	List<Orders> userOrders(String userId);
 
+	void insertOrders(Orders entity);
 }

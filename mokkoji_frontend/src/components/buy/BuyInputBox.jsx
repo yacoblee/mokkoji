@@ -3,42 +3,66 @@ import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from "react-router-dom";
 import BuyComplete from "./BuyComplete";
+import axios from "axios";
+import { apiCall } from "../../service/apiService";
 
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
-const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedProduct, options, productPrice }) => {
+const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState(true);
-
+    const token = JSON.parse(sessionStorage.getItem('userData'));
     //모달창의 스크롤을 해결하기 위한 Ref
     const modalContentRef = useRef(null);
-
-
+    //let selectedProductPrice = totalPrice;
+    const loadingData = async () => {
+        try {
+            const response = await apiCall('/order/users', 'POST', {userId: userId}, token);
+                const { userinfomation } = response.data;
+                setUserInfo({
+                    name: userinfomation.name || '',
+                    phoneNumber: userinfomation.phoneNumber || '',
+                     address: userinfomation.address || '',
+                     addressDetail: userinfomation.addressDetail || '',
+                     zoneCode: userinfomation.zoneCode || ''
+                });
+                setUserInfoError({
+                    name: false,
+                    phoneNumber: false,
+                    addressDetail: false,
+                    zoneCode: false,
+                    deliveryMessage: false,
+                })
+        } catch (error) {
+            console.log(`buy input error =>${error.message}`)
+        }
+    }
     //유저 관리에 대한 저장 변수.
     const [userInfo, setUserInfo] = useState({});
     //유저 관리 에러에 대한 저장 변수.
     const [userInfoError, setUserInfoError] = useState({});
     // console.log(userInfo);
     // 처음 렌더링 시 userInfo를 설정.
-    useEffect(() => {
-        if (userData) {
-            setUserInfo({
-                name: userData.name || '',
-                phoneNumber: userData.phoneNumber || '',
-                address: userData.address || '',
-                addressDetail: userData.addressDetail || '',
-                zoneCode: userData.zoneCode || ''
-            });
-            setUserInfoError({
-                name: false,
-                phoneNumber: false,
-                addressDetail: false,
-                zoneCode: false,
-                deliveryMessage: false,
-            })
-        }
-    }, [userData]);
+     useEffect(() => {
+    //     if (userId) {
+    //         setUserInfo({
+    //             name: userinfomation.name || '',
+    //             phoneNumber: userinfomation.phoneNumber || '',
+    //              address: userinfomation.address || '',
+    //              addressDetail: userinfomation.addressDetail || '',
+    //              zoneCode: userinfomation.zoneCode || ''
+    //         });
+    //         setUserInfoError({
+    //             name: false,
+    //             phoneNumber: false,
+    //             addressDetail: false,
+    //             zoneCode: false,
+    //             deliveryMessage: false,
+    //         })
+    //     }
+        loadingData();
+     }, [userId]);
 
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = () => {
@@ -59,11 +83,11 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
             })
         } else {
             setUserInfo({
-                name: userData.name || '',
-                phoneNumber: userData.phoneNumber || '',
-                address: userData.address || '',
-                addressDetail: userData.addressDetail || '',
-                zoneCode: userData.zoneCode || ''
+                // name: userData.name || '',
+                // phoneNumber: userData.phoneNumber || '',
+                // address: userData.address || '',
+                // addressDetail: userData.addressDetail || '',
+                // zoneCode: userData.zoneCode || ''
             });
             setUserInfoError({
                 name: false,
@@ -232,9 +256,9 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
         }
         setIsModalBuyOpen(true);
         // 깊은 복사를 통해 userData 복사
-        const copyUserData = JSON.parse(JSON.stringify(userData));
-        const currentDate = new Date();
-        const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
+        //const copyUserData = JSON.parse(JSON.stringify(userData));
+        //const currentDate = new Date();
+        //const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
 
         //history 객체 가공 item 배열에 카트 아이템을 추가(push).
         // const history = { date: nowDay, item: [selectedProduct.id] };
@@ -244,14 +268,14 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
             history.item.push(item.productId);
         });
         //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
-        copyUserData.mypage.history.push(history);
+        //copyUserData.mypage.history.push(history);
         // console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
         // console.log(copyUserData.mypage.history);
         //세션 스토리지에 복사된 userData 로 변경..
 
 
         //장바구니와 선택상품이 일치할경우 장바구니의 목록 삭제
-        const userBasket = userData.mypage.basket;
+        //const userBasket = userData.mypage.basket;
         let cartItemsfilter = []
         cartItemsfilter = userBasket.filter((item) => {
             // checkedCartItems 배열에 item.productId와 일치하는 항목이 있는지 확인
@@ -263,8 +287,8 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
         // console.log(checkedCartItems);
         // console.log('필터된 아이템')
         // console.log(cartItemsfilter);
-        copyUserData.mypage.basket = cartItemsfilter;
-        sessionStorage.setItem('LoginUserInfo', JSON.stringify(copyUserData));
+        //copyUserData.mypage.basket = cartItemsfilter;
+        //sessionStorage.setItem('LoginUserInfo', JSON.stringify(copyUserData));
 
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
@@ -477,8 +501,8 @@ const BuyInputBox = ({ userData, totalPrice, amount, checkedCartItems, selectedP
                     <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
-                    <BuyComplete username={userData.name}
-                        amount={amount} options={options} checkedCartItems={checkedCartItems}
+                    <BuyComplete userId={userId}
+                        amount={amount} options={option} checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
                         totalPrice={totalPrice} />

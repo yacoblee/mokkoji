@@ -24,6 +24,7 @@ import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Cart;
@@ -59,6 +60,7 @@ public class ProductsController {
 	private final TokenProvider provider;
 	private final FavoritesService favService;
 	private final CartService cartService;
+	private final PackagingService packSerivce;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -253,15 +255,47 @@ public class ProductsController {
 	}
 	
 	// ------------구매 페이지 전환
-//	@PostMapping("/goods/{categoryId}/{productId}/buy")
-//	public ResponseEntity<?> insertCart(@PathVariable("categoryId") String categoryId,
-//            @PathVariable("productId") Long productId,@RequestBody Cart selectedProduct){
-//		Map<String, Object> response = new HashMap<>();
-//		if(selectedProduct!=null) {
-//			response.put("selectedProduct", service.findById(productId));
-//			response.put("options",opservice.findByProductId(productId));
-//
-//		}
-//	}
+	@PostMapping("/orderpage")
+	public ResponseEntity<?> orderPage(@RequestBody Cart cart){
+		Map<String, Object> response = new HashMap<>();
+		
+		ProductOptionsId optionId = ProductOptionsId.builder()
+				.productId(cart.getProductId())
+				.content(cart.getOptionContent()).build();
+		String packagingId = cart.getPackagingOptionContent();
+		//Packaging packagingEntity = packSerivce.findById(packagingId);
+		if(cart!=null) {
+			try {		
+				System.out.println("*****Cart entity => "+cart);
+				Products pentity = service.findById(cart.getProductId());
+				
+				response.put("product", pentity);
+				ProductOptions opentity = opservice.findById(optionId);
+				
+				response.put("option",opentity);
+				Packaging paentity = packSerivce.findById(packagingId);
+				
+				response.put("packaging",paentity);
+				return ResponseEntity.ok(response);
+			} catch (Exception e) {
+	
+				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
+			}
+
+		}
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
+	}
+	
+	@PostMapping("/order/users")
+	public ResponseEntity<?> userinfomation(@RequestBody UsersDTO entity){
+		Users user = userService.selectOne(entity.getUserId());
+		if(user!=null) {
+			Map<String, Object> response = new HashMap<>();
+			response.put("userinfomation", user);
+			System.out.println("*******userEntity =>"+user);
+			return ResponseEntity.ok(response);
+		}else  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("해당유저 찾지 못함");
+	}
+	
 	
 }
