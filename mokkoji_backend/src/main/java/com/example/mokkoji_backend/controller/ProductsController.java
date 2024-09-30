@@ -136,12 +136,19 @@ public class ProductsController {
 	    return ResponseEntity.ok(response);
 	}
 	
+	//좋아요 상태 찾기
 	@PostMapping("/goods/likedState")
-	public ResponseEntity<?> likedState(@RequestHeader("Authorization") String authHeader,@RequestBody ProductsDTO dto){
-		String token = authHeader.substring(7);
-		String id = provider.validateAndGetUserId(token);
-		System.out.println("/goods/user 의 provider.validateAndGetUserId =>"+id);
-		Users user = userService.selectOne(id);
+	public ResponseEntity<?> likedState(@RequestHeader(value = "Authorization", required = false) String authHeader,@RequestBody ProductsDTO dto){
+		String id = null; 
+		if(authHeader != null) {
+			String token = authHeader.substring(7);
+			id = provider.validateAndGetUserId(token);
+			System.out.println("/goods/user 의 provider.validateAndGetUserId =>"+id);
+			Users user = userService.selectOne(id);
+			
+		}else {
+			System.out.println("로그인 상태가 아님.");
+		}
 		System.out.println("*************************************"+dto);
 		FavoritesId fid = FavoritesId.builder().userId(id).productId(dto.getId()).build();
 		Map<String, Object> response = new HashMap<>();
@@ -157,6 +164,7 @@ public class ProductsController {
 		return ResponseEntity.ok(response);
 	}
 	
+	//좋아요 상태 추가
 	@PostMapping("/goods/liked")
 	public ResponseEntity<?> insertliked(@RequestBody Favorites entity){
 		Map<String, Object> response = new HashMap<>();
@@ -170,6 +178,7 @@ public class ProductsController {
 		}
 	}
 	
+	//좋아요 상태 지우기
 	@DeleteMapping("/goods/liked")
 	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid){
 		System.out.println("*******************entityid : "+entityid);
@@ -222,4 +231,12 @@ public class ProductsController {
 
 	    return ResponseEntity.ok(response);
 	}
+	
+	// -------------- 장바구니 추가 추후 cart 컨트롤러 추가
+	
+	//public ResponseEntity<?> insertCart(){
+		
+	//}
+	
+	
 }

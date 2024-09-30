@@ -56,7 +56,7 @@ const ProductDetails = () => { //===============================================
         };
 
         fetchProductDetails();
-    }, [id, category]);
+    }, [id, category,userId]);
 
 
 
