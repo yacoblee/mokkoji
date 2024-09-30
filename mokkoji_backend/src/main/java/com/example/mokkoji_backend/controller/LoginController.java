@@ -54,12 +54,12 @@ public class LoginController {
 			final String token = tokenProvider.jwtCreate(entity.getUserId());
 			log.info("생성 토큰"+token);
 			
-			final UsersDTO user = UsersDTO.builder()
-										.token(token)
-										.userId(entity.getUserId())
-										.name(entity.getName())
-										.build();
-			return ResponseEntity.ok(user);
+//			final UsersDTO user = UsersDTO.builder()
+//										.token(token)
+//										.userId(entity.getUserId())
+//										.name(entity.getName())
+//										.build();
+			return ResponseEntity.ok(token);
 										
 		}else  log.info("에러");
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("id 또는 비밀번호 오류");
