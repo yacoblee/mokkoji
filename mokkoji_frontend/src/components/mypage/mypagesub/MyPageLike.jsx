@@ -53,7 +53,7 @@ function MyPageLike({ change, setChange }) {
                                     <h4>{favorites.productName}</h4>
                                 </div>
                                 <div className='MyLikeButton'>
-                                    <Link to={`/favorites/${favorites.categoryId}/${favorites.productId}`}>
+                                    <Link to={`/goods/${favorites.categoryId}/${favorites.productId}`}>
                                         <button className='ButtonDetail'>상품 상세</button>
                                     </Link>
                                     <button onClick={() => handleDelete(favorites.productId)}>삭제</button>
