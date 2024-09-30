@@ -27,6 +27,8 @@ function MyPageCart({ change, setChange }) {
 
     let userCart = JSON.parse(sessionStorage.getItem("userCart"));
 
+    const navigate = useNavigate();
+
     // 개별 삭제
     const cartDelete = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
@@ -112,7 +114,7 @@ function MyPageCart({ change, setChange }) {
                                     >
                                         {hoveredButton === cart.productId ? '구매하기' : `${formatNumber(cart.productTotalPrice)}원`}
                                     </button>
-                                    <button onClick={() => cartDelete(`mypage/cart/${cart.productId}`)}>삭제</button>
+                                    <button onClick={() => cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`)}>삭제</button>
                                 </div>
                             </div >  // mycartgird
                         )   // return

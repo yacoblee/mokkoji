@@ -113,6 +113,7 @@ public class FavoritesController {
 
 	// 2.2) 체크 상품 삭제
 	@DeleteMapping("/favorites")
+//	public ResponseEntity<?> favoritesDeleteMulti(@AuthenticationPrincipal String userId, @RequestBody List<Long> productIdList) {
 	public ResponseEntity<?> favoritesDeleteMulti(@AuthenticationPrincipal String userId, @RequestBody List<Long> productIdList) {
 		// 1. 유효성 검사: productId 목록이 null이거나 비어있을때
 		if (productIdList == null || productIdList.isEmpty()) {
