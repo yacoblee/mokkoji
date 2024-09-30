@@ -54,8 +54,8 @@ const ProductDetails = () => { //===============================================
         //url, method, requestData, token
         const token = JSON.parse(sessionStorage.getItem('userData'));
         console.log(`token : ${token}`)
-        //requestData =
-        apiCall('/goods/user', 'POST', null, token)
+        const requestData = product;
+        apiCall('/goods/user', 'POST', requestData, token)
             .then((response) => {
                 setUser(response.data);
                 console.log(response.data);
