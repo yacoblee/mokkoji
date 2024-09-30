@@ -57,7 +57,7 @@ public class MyPageController {
 
 		try {
 			// 3. user 정보에 다른 정보들(찜, 장바구니 등)을 추가한 새로운 DTO 객체 생성
-			int favoritesCnt = favoritesService.countFavorite(users.getUserId());
+			int favoritesCnt = favoritesService.countFavorites(users.getUserId());
 			int cartCnt = cartService.countCart(users.getUserId());
 
 			MyPageDTO myPageDTO = MyPageDTO.builder()

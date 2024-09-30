@@ -18,7 +18,7 @@ function MyPageGrid() {
         apiCall(url, 'GET', null, userToken)
             .then((response) => {
                 //alert(`** myPageLike 성공 url=${url}`);
-                sessionStorage.setItem("userFavorite", JSON.stringify(response.data));
+                sessionStorage.setItem("userFavorites", JSON.stringify(response.data));
                 navigate("/mypage/favorites");
             }).catch((err) => {
                 if (err === 502) {
@@ -29,11 +29,22 @@ function MyPageGrid() {
             }) //apiCall
     }; //myPageLike
 
-
-
-
-
-
+    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
+    const myPageCart = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageCart 성공 url=${url}`);
+                sessionStorage.setItem("userCart", JSON.stringify(response.data));
+                navigate("/mypage/cart");
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageCart 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageCart
 
 
 
@@ -52,7 +63,7 @@ function MyPageGrid() {
                     <span>찜목록</span>
                 </div>
             </NavLink>
-            <NavLink to='/mypage/cart'>
+            <NavLink onClick={() => { myPageCart("/mypage/cart") }}>
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />

@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface FavoritesService {
 
-	void deleteFavorite(FavoritesId favoriteId) throws Exception;
+	void deleteFavorites(FavoritesId favoritesId) throws Exception;
 
-	void insertFavorite(Favorites favorite);
+	void insertFavorites(Favorites favorites);
 
-	int countFavorite(long productId);
+	int countFavorites(long productId);
 
-	List<FavoritesDTO> userFavorite(String userId);
+	List<FavoritesDTO> userFavorites(String userId);
 
-	int countFavorite(String userId);
+	int countFavorites(String userId);
 
-	Favorites productFavorite(FavoritesId favoritesId);
+	Favorites productFavorites(FavoritesId favoritesId);
 
 }
