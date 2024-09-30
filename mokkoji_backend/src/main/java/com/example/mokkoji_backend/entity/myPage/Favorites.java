@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(FavoritesId.class)
+@EntityListeners(AuditingEntityListener.class) // 추가: AuditingEntityListener 활성화
 public class Favorites implements Serializable {
 
 	@Serial
@@ -31,6 +33,6 @@ public class Favorites implements Serializable {
 	private long productId;
 
 	@CreatedDate
-	@Column(name = "favorite_date")
+	@Column(name = "favorite_date" ,columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private LocalDateTime favoriteDate;
 }

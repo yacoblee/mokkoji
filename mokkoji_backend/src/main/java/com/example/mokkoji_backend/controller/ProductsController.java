@@ -6,10 +6,13 @@ import java.util.Map;
 
 import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,8 @@ import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.entity.myPage.Favorites;
+import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.entity.myPage.Reviews;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.UsersRepository;
@@ -30,6 +35,8 @@ import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
+import com.example.mokkoji_backend.service.login.UsersService;
+import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,8 +53,9 @@ public class ProductsController {
 	private final ProductsImagesRepository imservice;
 	private final PackagingService paservice;
 	private final ReviewsService reservice;
-	private final UsersRepository userService;
+	private final UsersService userService;
 	private final TokenProvider provider;
+	private final FavoritesService favService;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -128,19 +136,53 @@ public class ProductsController {
 	    return ResponseEntity.ok(response);
 	}
 	
-	@PostMapping("/goods/user")
-	public ResponseEntity<?> goodsUser(@RequestHeader("Authorization") String authHeader){
+	@PostMapping("/goods/likedState")
+	public ResponseEntity<?> likedState(@RequestHeader("Authorization") String authHeader,@RequestBody ProductsDTO dto){
 		String token = authHeader.substring(7);
 		String id = provider.validateAndGetUserId(token);
 		System.out.println("/goods/user 의 provider.validateAndGetUserId =>"+id);
-		Users user = userService.findById(id).get();
-		if(user!=null) {
-			return ResponseEntity.ok(user);
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("유저를 찾을 수 없습니다.");
+		Users user = userService.selectOne(id);
+		System.out.println("*************************************"+dto);
+		FavoritesId fid = FavoritesId.builder().userId(id).productId(dto.getId()).build();
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			Favorites liked = favService.productFavorite(fid);
+			response.put("liked", true);
+		} catch (Exception e) {
+			System.out.println("찾기 실패");
+			response.put("liked", false);
+		}
+		response.put("userId",id);
+		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/goods/liked")
+	public ResponseEntity<?> insertliked(@RequestBody Favorites entity){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			favService.insertFavorite(entity);
+			response.put("liked", true);
+			return ResponseEntity.ok(response);
+		}catch (Exception e) {
+			response.put("liked", false);
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 	}
-
+	
+	@DeleteMapping("/goods/liked")
+	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid){
+		System.out.println("*******************entityid : "+entityid);
+		Map<String, Object> response = new HashMap<>();
+		try {
+			favService.deleteFavorite(entityid);
+			response.put("liked", false);
+			return ResponseEntity.ok(response);
+		}catch (Exception e) {
+			response.put("liked", true);
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
+		}
+	}
 	
 	@GetMapping("/goods/{categoryId}/{productId}")
 	public ResponseEntity<?> detail(@PathVariable("categoryId") String categoryId,

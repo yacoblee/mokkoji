@@ -25,9 +25,9 @@ const ProductDetailsInfo = ({ product }) => {
                 setText(detail);
                 setRecommendItems(recommend);
                 // 콘솔 로그로 데이터 확인
-                console.log(recommend);
-                console.log(review);
-                console.log(detail);
+                //console.log(recommend);
+                //console.log(review);
+                //console.log(detail);
             })
             .catch(err => {
                 //alert(err.message);

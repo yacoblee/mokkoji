@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 import { apiCall } from '../../service/apiService';
 // 선택된 상품 정보를 받는 컴포넌트
-const ProductForm = ({ product , user }) => {
+const ProductForm = ({ product , userId }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     //const token = JSON.parse(sessionStorage.getItem('userData'));
     //console.log(`token : ${token}`)
@@ -29,7 +29,7 @@ const ProductForm = ({ product , user }) => {
                 setPackaging(packaging);
 
                 // 콘솔 로그로 데이터 확인
-                console.log(option);
+                //console.log(option);
             })
             .catch(err => {
                 //alert(err.message);
@@ -43,15 +43,15 @@ const ProductForm = ({ product , user }) => {
     // useEffect(() => {
     //     //url, method, requestData, token
     //     const token = JSON.parse(sessionStorage.getItem('userData'));
-    //     console.log(`token : ${token}`)
-    //     //requestData =
-    //     apiCall('/goods/user', 'POST', null, token)
-    //         .then((response) => {
-    //             setUser(response.data);
-    //             console.log(response.data);
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         })
+    //     //requestData
+    //     apiCall('/product/user', 'POST', null, token)
+    //     .then((response)=>{
+    //         setUser(response);
+    //         console.log(user);
+    //     })
+    //     .catch((err)=>{
+
+    //     })
     // }, []);
 
 
@@ -124,10 +124,10 @@ const ProductForm = ({ product , user }) => {
 
     // 세션 스토리지에서 사용자의 로그인 상태를 확인하여 업데이트
     useEffect(() => {
-        if (user) {
+        if (userId) {
             setUserLogin(true);
         }
-    }, [user]);
+    }, [userId]);
 
     //모달창을 관리할 state
     //로그인 필요합니다
