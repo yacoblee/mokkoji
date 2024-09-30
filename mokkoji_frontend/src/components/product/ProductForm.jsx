@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 import { apiCall } from '../../service/apiService';
 // 선택된 상품 정보를 받는 컴포넌트
-const ProductForm = ({ product , userId }) => {
+const ProductForm = ({ product, userId }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     //const token = JSON.parse(sessionStorage.getItem('userData'));
     //console.log(`token : ${token}`)
@@ -19,26 +19,26 @@ const ProductForm = ({ product , userId }) => {
     useEffect(() => {
         let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
         const fetchProductForm = async () => {
-        axios.get(uri, {
-            params: {
-                type: 'form'  // 여러 값을 개별적으로 보냄
-            }
-        })
-            .then(response => {
-                const { option, packaging } = response.data;
-                setOption(option);
-                setPackaging(packaging);
-
-                // 콘솔 로그로 데이터 확인
-                //console.log(option);
+            axios.get(uri, {
+                params: {
+                    type: 'form'  // 여러 값을 개별적으로 보냄
+                }
             })
-            .catch(err => {
-                //alert(err.message);
-                console.log(err);
+                .then(response => {
+                    const { option, packaging } = response.data;
+                    setOption(option);
+                    setPackaging(packaging);
 
-                setPackaging([]);
+                    // 콘솔 로그로 데이터 확인
+                    //console.log(option);
+                })
+                .catch(err => {
+                    //alert(err.message);
+                    console.log(err);
 
-            })
+                    setPackaging([]);
+
+                })
         }
         fetchProductForm();
     }, [product.id]);
@@ -67,8 +67,14 @@ const ProductForm = ({ product , userId }) => {
 
     // select 옵션 내용에 대한 state
     const [description, setDescription] = useState({
-        contentSelect: '선택 옵션',   //왼쪽 옵션의 갯수
-        packagingSelect: '포장 여부', //포장 옵션의 갯수
+        contentSelect: '선택 옵션',   //왼쪽 옵션의 내용 + 가격
+        packagingSelect: '포장 여부', //포장 옵션의 갯수 + 가격
+    });
+
+    //select 온전한 옵션 내용에 대한 state
+    const [content, setContent] = useState({
+        contentSelect: '',   //왼쪽 옵션의 내용
+        packagingSelect: '', //포장 옵션의 내용
     });
     //9.11 코드 변경
     const [count, setConut] = useState(1);
@@ -88,6 +94,10 @@ const ProductForm = ({ product , userId }) => {
             ...it,
             [name]: `${description}${value > 0 ? ` (+${value}원)` : ''}`
         }));
+        setContent(it => ({
+            ...it,
+            [name]: description,
+        }))
     };
 
     // 클릭이벤트 -> 숫자 클릭에 대한 state 함수
@@ -149,11 +159,36 @@ const ProductForm = ({ product , userId }) => {
             return;
         }
 
-        if (!options.contentSelect || !options.packagingSelect) {
+        if (!content.contentSelect || !content.packagingSelect) {
             // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
             setIsModalOptionOpen(true);
             return;
         }
+
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        const insertOrder = async () => {
+            // 장바구니에 추가할 항목 생성
+            const sendBasket = {
+                userId: userId,
+                productId: product.id,
+                optionContent: content.contentSelect,
+                packagingOptionContent: content.packagingSelect,
+                productCnt: count,
+                productTotalPrice: totalPrice,
+            };
+            try {
+                const response = await apiCall('/order/insertOrder', 'POST', sendBasket, token);
+                //const { message } = response.data;
+                //setLike(liked);
+                //alert(message);
+                alert('성공');
+            } catch (error) {
+                //setLike(false);
+                console.log(`insert Like error =>${error.message}`)
+                alert(`insert 실패`);
+            }
+        }
+        insertOrder();
 
         // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
         navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
@@ -172,27 +207,36 @@ const ProductForm = ({ product , userId }) => {
             setIsLoginModalOpen(true);
             return;
         }
-
-        if (!options.contentSelect || !options.packagingSelect) {
-            // 모든 옵션을 선택하지 않은 경우 경고 메시지 표시
+        console.log(`왼쪽 내용 : ${content.contentSelect}`)
+        console.log(`오른쪽 내용 : ${content.packagingSelect}`)
+        console.log(`위의 내용이 없으면 옵션 값이 넘어가지 못해서 모달창이 떠욘`)
+        if (!content.contentSelect || !content.packagingSelect) {
             setIsModalOptionOpen(true);
             return;
         }
-
-        // 장바구니에 추가할 항목 생성
-        const sendBasket = {
-            userId: userId,
-            productId: product.id,
-            optionContent:options.contentSelect,
-            packagingOptionContent:options.packagingSelect,
-            productCnt:count,
-            productTotalPrice:totalPrice,
-        };
-
-        const insertCart  = async () => {
-            
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        const insertCart = async () => {
+            // 장바구니에 추가할 항목 생성
+            const sendBasket = {
+                userId: userId,
+                productId: product.id,
+                optionContent: content.contentSelect,
+                packagingOptionContent: content.packagingSelect,
+                productCnt: count,
+                productTotalPrice: totalPrice,
+            };
+            try {
+                const response = await apiCall('/cart/insertitem', 'POST', sendBasket, token);
+                //const { message } = response.data;
+                //setLike(liked);
+                //alert(message);
+            } catch (error) {
+                //setLike(false);
+                console.log(`insert Like error =>${error.message}`)
+                alert(`insert 실패`);
+            }
         }
-        
+        insertCart();
         setIsModalBasketOpen(true);
     }
 

@@ -26,6 +26,7 @@ import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.entity.myPage.Reviews;
@@ -36,6 +37,7 @@ import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
 import com.example.mokkoji_backend.service.login.UsersService;
+import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
@@ -56,6 +58,7 @@ public class ProductsController {
 	private final UsersService userService;
 	private final TokenProvider provider;
 	private final FavoritesService favService;
+	private final CartService cartService;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -181,7 +184,7 @@ public class ProductsController {
 	//좋아요 상태 지우기
 	@DeleteMapping("/goods/liked")
 	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid){
-		System.out.println("*******************entityid : "+entityid);
+		//System.out.println("*******************entityid : "+entityid);
 		Map<String, Object> response = new HashMap<>();
 		try {
 			favService.deleteFavorites(entityid);
@@ -234,9 +237,20 @@ public class ProductsController {
 	
 	// -------------- 장바구니 추가 추후 cart 컨트롤러 추가
 	
-	//public ResponseEntity<?> insertCart(){
-		
-	//}
+	@PostMapping("/cart/insertitem")
+	public ResponseEntity<?> insertCart(@RequestBody Cart cart){
+		String message = "";
+		if(cart!=null) {
+			cartService.duplicateUpate(cart);
+			//System.out.println("************cart : "+cart);
+			message = cart.toString();
+			return ResponseEntity.ok(message);
+		}else {
+			System.out.println("카트 없음 실패");
+			message = "카트 없음 실패";
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(message);
+		}
+	}
 	
 	
 }
