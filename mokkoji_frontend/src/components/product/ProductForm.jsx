@@ -38,13 +38,20 @@ const ProductForm = ({ product }) => {
 
             })
     }, [product.id]);
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        //url, method, requestData, token
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        //requestData
+        apiCall('/product/user', 'POST', null, token)
+        .then((response)=>{
+            setUser(response);
+            console.log(user);
+        })
+        .catch((err)=>{
 
-    // useEffect(()=>{
-    //     //url, method, requestData, token
-    //     const token = JSON.parse(sessionStorage.getItem('userData'));
-    //    //requestData
-    //     apiCall('/product/user','POST',null,token)
-    // },[]);
+        })
+    }, []);
 
 
 
