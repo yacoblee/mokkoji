@@ -177,11 +177,19 @@ const ProductForm = ({ product, userId }) => {
                 productTotalPrice: totalPrice,
             };
             try {
-                const response = await apiCall('/order/insertOrder', 'POST', sendBasket, token);
+                const response = await apiCall(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, 'POST', sendBasket, token);
                 //const { message } = response.data;
                 //setLike(liked);
                 //alert(message);
                 alert('성공');
+                // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
+                // navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
+                //     state: {
+                //         options: options,
+                //         count: count,
+                //         totalPrice: totalPrice
+                //     }
+                // });
             } catch (error) {
                 //setLike(false);
                 console.log(`insert Like error =>${error.message}`)
@@ -190,14 +198,6 @@ const ProductForm = ({ product, userId }) => {
         }
         insertOrder();
 
-        // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
-        navigate(`/goods/${selectedProduct.category}/${selectedProduct.id}/buy`, {
-            state: {
-                options: options,
-                count: count,
-                totalPrice: totalPrice
-            }
-        });
     };
 
 
