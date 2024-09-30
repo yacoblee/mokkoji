@@ -8,10 +8,11 @@ import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 import { apiCall } from '../../service/apiService';
 // 선택된 상품 정보를 받는 컴포넌트
-const ProductForm = ({ product }) => {
+const ProductForm = ({ product , user }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
-    const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
-    const items = JSON.parse(sessionStorage.getItem("goodsList"));
+    //const token = JSON.parse(sessionStorage.getItem('userData'));
+    //console.log(`token : ${token}`)
+
     //const [slideimages, setSlideImages] = useState([]);
     const [option, setOption] = useState([]);
     const [packaging, setPackaging] = useState([]);
@@ -123,10 +124,10 @@ const ProductForm = ({ product }) => {
 
     // 세션 스토리지에서 사용자의 로그인 상태를 확인하여 업데이트
     useEffect(() => {
-        if (userData) {
+        if (user) {
             setUserLogin(true);
         }
-    }, [userData]);
+    }, [user]);
 
     //모달창을 관리할 state
     //로그인 필요합니다

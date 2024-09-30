@@ -1,7 +1,7 @@
 
 
 import { useParams, Link, useNavigate } from "react-router-dom";
-import GoodsItems from "./ProductObject";
+//import GoodsItems from "./ProductObject";
 import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductForm from "./ProductForm";
 import { useEffect, useState } from "react";
@@ -11,11 +11,14 @@ import Modal from 'react-modal';
 import TopButton from "../modules/ScrollToTopBtn";
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
+import { apiCall } from "../../service/apiService";
 
 const ProductDetails = () => { //=========================================================ProductDetails 컴포넌트
     const { category, id } = useParams(); // 아이템을 찾기위한 url 소스 
-    const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
+    //const selectedProduct = GoodsItems.find((item) => item.category === category && item.id === parseInt(id));
+    //좋아요 상태 표현의 state변수
     const [like, setLike] = useState(false);
+    //상품의 정보
     const [product, setProduct] = useState({});
 
     const [slideimages, setSlideImages] = useState([]);
@@ -45,8 +48,23 @@ const ProductDetails = () => { //===============================================
             });
 
     }, [id]);
-
     //세션 스토리지의 유저 데이터를 담는 변수.
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        //url, method, requestData, token
+        const token = JSON.parse(sessionStorage.getItem('userData'));
+        console.log(`token : ${token}`)
+        //requestData =
+        apiCall('/goods/user', 'POST', null, token)
+            .then((response) => {
+                setUser(response.data);
+                console.log(response.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }, []);
+
+    //추후 지울 변수 -> user로 대체 
     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
 
     //모달창을 관리할 state
@@ -66,8 +84,8 @@ const ProductDetails = () => { //===============================================
             setLike(!like);
             const updatedLikes =
                 like
-                    ? userData.mypage.isLike.filter(id => id !== selectedProduct.id) // 이미 찜한 상태라면 제거
-                    : [...userData.mypage.isLike, selectedProduct.id]; // 찜하지 않은 상태라면 추가
+                    ? userData.mypage.isLike.filter(id => id !== product.id) // 이미 찜한 상태라면 제거
+                    : [...userData.mypage.isLike, product.id]; // 찜하지 않은 상태라면 추가
 
             const updatedUser = {
                 ...userData,
@@ -169,7 +187,7 @@ const ProductDetails = () => { //===============================================
                                     </div>
                                 </p>
                             </div>
-                            <ProductForm product={product} />
+                            <ProductForm product={product} user={user} />
                         </div>
 
                     </div>
