@@ -213,7 +213,11 @@ const Reservation = () => {
 
                         {/* 우즉 예약 버튼 위치 */}
                         <div className="calendar-toggle">
-                            <p>₩ 무료</p>
+                        {registsData && registsData.length > 0 ? (
+                            <p>청소년: {registsData[0].teenager} 성인: {registsData[0].adult}</p>
+                        ) : (
+                            <p>로딩 중...</p> // 데이터가 없을 때 보여줄 내용
+                        )}
                             <button type="button" onClick={toggleCalendar} className="calendar-toggle-button">
                                 날짜 확인
                             </button>
