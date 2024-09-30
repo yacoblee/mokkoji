@@ -18,6 +18,7 @@ const ProductForm = ({ product , userId }) => {
     const [packaging, setPackaging] = useState([]);
     useEffect(() => {
         let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
+        const fetchProductForm = async () => {
         axios.get(uri, {
             params: {
                 type: 'form'  // 여러 값을 개별적으로 보냄
@@ -38,6 +39,8 @@ const ProductForm = ({ product , userId }) => {
                 setPackaging([]);
 
             })
+        }
+        fetchProductForm();
     }, [product.id]);
     // const [user, setUser] = useState({});
     // useEffect(() => {
@@ -178,23 +181,18 @@ const ProductForm = ({ product , userId }) => {
 
         // 장바구니에 추가할 항목 생성
         const sendBasket = {
+            userId: userId,
             productId: product.id,
-            options,
-            count,
-            totalPrice
+            optionContent:options.contentSelect,
+            packagingOptionContent:options.packagingSelect,
+            productCnt:count,
+            productTotalPrice:totalPrice,
         };
 
-        // 현재 사용자 데이터 업데이트
-        const updatedUserData = {
-            ...userData,
-            mypage: {
-                ...userData.mypage,
-                basket: [...userData.mypage.basket, sendBasket]
-            }
-        };
-
-        // 세션 스토리지에 업데이트된 사용자 데이터 저장
-        sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUserData));
+        const insertCart  = async () => {
+            
+        }
+        
         setIsModalBasketOpen(true);
     }
 
