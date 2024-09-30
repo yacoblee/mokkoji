@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.config.NaverMainConfig;
 import com.example.mokkoji_backend.domain.EmailRendererDTO;
-
+import com.example.mokkoji_backend.domain.SmtpDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,44 +19,18 @@ import lombok.RequiredArgsConstructor;
 public class SmtpEmailServiceImpl implements SmtpEmailService{
 	
 	
-
 	@Autowired
     private final JavaMailSender emailSender;
-	
-//	@Qualifier("naverEmailProperties")
-//    private final Properties props;
-//    private final NaverMainConfig.SimpleAuthenticator authenticator;
-//	
-//    public void sendMail(String title, String body, String toEmail){
-//        //  JavaMail 세션은 실제 네트워크 연결 세션과는 다름. 정보를 담고 있는 객체
-//        Session session = Session.getInstance(props, authenticator);
-//
-//        try {
-//            Message message = new MimeMessage(session);
-//            message.setFrom(new InternetAddress(props.getProperty("mail.username")));
-//            //TO 수신자, CC 참조, BCC 숨은 참조
-//            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-//             
-//            message.setSubject(title);
-//            message.setText(body);
-//           // Transport 클래스의 정적 send 메소드는 메시지를 보낸 후에 자동으로 연결을 종료 ->close 별도로 필요 없음.
-//            Transport.send(message);
-//        } catch (MessagingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-    
-    
-    
+ 
   
-    
     @Override
-    public void sendMessage(String to, String subject, String text) {
+    public void sendMessage(String from, String subject, String name) {
     	 SimpleMailMessage message = new SimpleMailMessage(); 
-         message.setFrom("yacobleee@naver.com");  
-         message.setTo(to);  
-         message.setSubject(subject); 
-         message.setText(text);
+    	 message.setFrom("yacobleee@naver.com");  // 발신자 
+         message.setTo("yacobleee@naver.com");  // 받는사람
+         message.setSubject(name);  // 제목 
+         message.setText(subject); // 내용 
+    
          emailSender.send(message);
     	
     }

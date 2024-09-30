@@ -4,18 +4,11 @@ import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 
 const PostCard = () => {
-
-   
-
-
-
-
     const imgRef = useRef(null);
 
     const [formData, setFormData] = useState({
         content_name: '',
         content_mail: '',
-        content_title: '',
         content_main: '',
     });
     const [errors, setErrors] = useState({});
@@ -60,9 +53,6 @@ const PostCard = () => {
         if (!formData.content_name) {
             formErrors.content_name = '이름을 입력해 주세요.';
         }
-        if(!formData.content_title){
-            formErrors.content_mail = '문의글 제목을 입력해 주세요.';
-        }
         if (!formData.content_mail) {
             formErrors.content_mail = '이메일을 입력해 주세요.';
         } else if (!/\S+@\S+\.\S+/.test(formData.content_mail)) {
@@ -78,36 +68,36 @@ const PostCard = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validate();
-        
-        
+    
         if (Object.keys(validationErrors).length === 0) {
             // 유효성 검사 통과
             console.log('Form data:', formData);
-
-            useEffect(() => {
-                axios.post(API_BASE_URL+'/send', {
-                    data: {
-                        FormData : FormData
-                      }
-                  })
-                  .then(function (response) {
+    
+            // 이메일 전송 데이터 설정
+            const emailData = {
+                content_mail: formData.content_mail,
+                content_main: formData.content_main,
+                content_name: formData.content_name
+            };
+    
+            // 이메일 전송 요청
+            axios.post(`${API_BASE_URL}/send`, emailData)
+                .then((response) => {
                     console.log(response);
-                    alert('전송 되었습니다.');
-
+                    alert('이메일 전송 되었습니다.');
+    
+                    // 폼 초기화
                     setFormData({
                         content_name: '',
-                        content_title: '',
                         content_mail: '',
                         content_main: '',
                     });
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-            },[]);
-
-        
-          
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert('이메일 전송 실패');
+                });
+    
             setErrors({});
         } else {
             // 유효성 검사 실패
@@ -130,7 +120,7 @@ const PostCard = () => {
                     </div>
 
                     <div className='intro_content_name'>
-                        <label htmlFor="content_name">이름</label>
+                        <label htmlFor="content_name">제목</label>
                         {errors.content_name && <span className="error">{errors.content_name}</span>}
                         <input id='content_name'
                             type="text"
@@ -150,17 +140,6 @@ const PostCard = () => {
                             onChange={handleChange}
                             style={{
                                 borderBottom: errors.content_mail ? '1px solid red' : '1px solid black'
-                            }} />
-                    </div>
-                    <div className='intro_content_title'>
-                        <label htmlFor="content_title">제목</label>
-                        {errors.content_title && <span className="error">{errors.content_title}</span>}
-                        <input id='content_title'
-                            type="text"
-                            value={formData.content_title}
-                            onChange={handleChange}
-                            style={{
-                                borderBottom: errors.content_title ? '1px solid red' : '1px solid black'
                             }} />
                     </div>
                     <div className='intro_content_main'>
