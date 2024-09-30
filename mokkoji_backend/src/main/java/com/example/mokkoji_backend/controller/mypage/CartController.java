@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
+import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/mypage")
 @AllArgsConstructor
 public class CartController {
 
@@ -32,11 +33,17 @@ public class CartController {
 	@Resource(name = "UsersService")
 	private UsersService usersService;
 
-	// ** 찜목록 관련 ==============================================================
+	private TokenProvider tokenProvider;
 
-	// 1) 찜목록 전체 최신순 조회
+	public String getUserIdFromHeader(String header) {
+		return tokenProvider.validateAndGetUserId(header.substring(7));
+	}
+
+	// ** 장바구니 관련 =============================================================
+
+	// 1) userId에 대한 장바구니 전체 최신순 조회
 
 
-	// 2) 찜목록에서 항목 삭제
+	// 장바구니 항목 삭제
 
 }

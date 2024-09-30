@@ -157,7 +157,7 @@ public class ProductsController {
 		Map<String, Object> response = new HashMap<>();
 		
 		try {
-			Favorites liked = favService.productFavorite(fid);
+			Favorites liked = favService.productFavorites(fid);
 			response.put("liked", true);
 		} catch (Exception e) {
 			System.out.println("찾기 실패");
@@ -172,7 +172,7 @@ public class ProductsController {
 	public ResponseEntity<?> insertliked(@RequestBody Favorites entity){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			favService.insertFavorite(entity);
+			favService.insertFavorites(entity);
 			response.put("liked", true);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
@@ -187,7 +187,7 @@ public class ProductsController {
 		System.out.println("*******************entityid : "+entityid);
 		Map<String, Object> response = new HashMap<>();
 		try {
-			favService.deleteFavorite(entityid);
+			favService.deleteFavorites(entityid);
 			response.put("liked", false);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {

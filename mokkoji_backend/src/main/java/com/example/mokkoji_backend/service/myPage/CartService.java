@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.service.myPage;
 
+import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 
@@ -9,7 +10,7 @@ public interface CartService {
 
 	void insertCart(Cart cart);
 
-	List<Cart> userCart(String userId);
+	List<CartDTO> userCart(String userId);
 
 	// 2) cart의 총 개수 조회
 	int countCart(String userId);
