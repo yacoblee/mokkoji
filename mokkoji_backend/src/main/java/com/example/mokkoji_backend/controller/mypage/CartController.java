@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.domain.FavoritesDTO;
+import com.example.mokkoji_backend.entity.myPage.CartId;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
@@ -14,10 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -80,5 +78,40 @@ public class CartController {
 
 	// 2) 장바구니 항목 삭제
 	// 2.1) 개별 삭제
+	@DeleteMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}")
+	//	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
+	public ResponseEntity<?> favoritesDeleteOne(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent) {
+		String userId = getUserIdFromHeader(header);
+		log.info(userId);
+		log.info(productId);
+		log.info(optionContent);
+		log.info(packagingOptionContent);
+
+		CartId cartId = new CartId(userId, productId, optionContent, packagingOptionContent);
+
+		// 1. 유효성 검사: favoritesId가 null일 때
+		if (cartId == null) {
+			log.warn("favoritesId 확인 불가");
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("cartId 확인 불가");
+		}
+
+		try {
+			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
+			cartService.deleteCart(cartId);
+
+			// 3. 삭제 성공 후 다시 List 출력
+			List<CartDTO> cartDTOList = cartService.userCart(userId);
+			return ResponseEntity.ok(cartDTOList);
+
+		} catch (Exception e) {
+			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
+			log.warn("cartId에 해당하는 항목 없음");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("cartId에 해당하는 항목 없음");
+		}
+		//		catch (Exception e) {
+		//			// 5. 서버에서 발생한 예외 처리
+		//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
+		//		}
+	} //favoritesDelete
 
 }
