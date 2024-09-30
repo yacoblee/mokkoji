@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.service.myPage;
 
+import com.example.mokkoji_backend.domain.FavoritesDTO;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 
@@ -13,9 +14,10 @@ public interface FavoritesService {
 
 	int countFavorite(long productId);
 
-	List<Favorites> userFavorite(String userId);
+	List<FavoritesDTO> userFavorite(String userId);
 
 	int countFavorite(String userId);
 
 	Favorites productFavorite(FavoritesId favoritesId);
+
 }

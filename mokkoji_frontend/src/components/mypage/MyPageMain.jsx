@@ -29,7 +29,7 @@ function MyPageMain() {
             <Routes>
                 <Route path='/*' element={<MyPageUser />} />
 
-                <Route path='like' element={<MyPageLike />} />
+                <Route path='favorites' element={<MyPageLike />} />
                 <Route path='cart' element={<MyPageCart />} />
                 <Route path='review' element={<MyPageReview />} />
                 <Route path='orders' element={<MyPageOrders />} />

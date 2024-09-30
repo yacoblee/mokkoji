@@ -3,36 +3,51 @@ import { faCartShopping, faClockRotateLeft, faHeartCirclePlus, faListCheck, faTr
 import '../../css/mypage/MyPageGrid.css';
 
 import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
+import { apiCall } from '../../service/apiService';
 
 function MyPageGrid() {
 
-    let userDetailData = JSON.parse(sessionStorage.getItem("userDetailData"));
+    const navigate = useNavigate();
+
+    let userMainData = JSON.parse(sessionStorage.getItem("userMainData"));
 
     // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
-    const myPageMain = (url) => {
-        let userBasicData = JSON.parse(sessionStorage.getItem("inputId"));
-        apiCall(url, 'GET', null, userBasicData.token)
+    const myPageLike = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
             .then((response) => {
-                //alert(`** myPageMain 성공 url=${url}`);
-                sessionStorage.setItem("userDetailData", JSON.stringify(response.data));
-                navigate("/mypage");
+                //alert(`** myPageLike 성공 url=${url}`);
+                sessionStorage.setItem("userFavorite", JSON.stringify(response.data));
+                navigate("/mypage/favorites");
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
                 } else if (err === 403) {
                     alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageMain 시스템 오류, err = ${err}`);
+                } else alert(`** myPageLike 시스템 오류, err = ${err}`);
             }) //apiCall
-    }; //myPageMain
+    }; //myPageLike
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
         <div className='MyGrid'>
-            <NavLink to='/mypage/like'>
+            <NavLink onClick={() => { myPageLike("/mypage/favorites") }}>
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
-                        {userDetailData.favoritesCnt}
+                        {userMainData.favoritesCnt}
                     </div>
                     <span>찜목록</span>
                 </div>
@@ -41,7 +56,7 @@ function MyPageGrid() {
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
-                        {userDetailData.cartCnt}
+                        {userMainData.cartCnt}
                     </div>
                     <span>장바구니</span>
                 </div>
