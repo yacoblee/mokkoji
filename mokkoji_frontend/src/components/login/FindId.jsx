@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import '../../css/login/FindId.css';
 import { useRef, useState } from "react";
 import userInfo from "./UserInforData";
+import { apiCall } from "../../service/apiService";
 
 
 const FindId = () => {
-
     const labeNameRed = useRef(null);
     const inputNameRef = useRef(null);
 
@@ -30,7 +30,6 @@ const FindId = () => {
         }
     }
 
-
     // label과 input 포커스 기능 연결 
     const LabelClick = (inputRef) => {
         if (inputRef.current) {
@@ -45,48 +44,10 @@ const FindId = () => {
     });
 
     const userFindIdIdErrors = useRef({
-        username: '',
-        PhoneNumber: ''
+        username: false,
+        PhoneNumber: false
     });
 
-    const [forceUpdater, forceUpdate] = useState(false);
-    const [alertShown, setAlertShown] = useState(false);// alket창 1번만 발생시키기 위한 함수 
-    const onChangeInputInfo = (e) => {
-        forceUpdate(!forceUpdater); // 랜더링 위한 임의의 콜백함수 
-        const { name, value } = e.target;
-        userFindIdInfo.current[name] = value;
-
-        if (name === 'username') {
-            const noneUserName = /^[가-힣]+$/;
-            const nameIsString = noneUserName.test(value);
-            if (nameIsString === false) {
-                inputNameRef.current.style.borderBottom = '1px solid red'
-                userFindIdIdErrors.current.username = false;
-            }
-            else {
-                inputNameRef.current.style.borderBottom = '1px solid #aaaaaa'
-                userFindIdIdErrors.current.username = true;
-            }
-        }
-
-
-
-        if (name === 'PhoneNumber') {
-            const noneNumber = /[^0-9]/g;
-            const isValidPhoneNumber = !noneNumber.test(value);
-            if (!isValidPhoneNumber) {
-                alert('-을 제외한 숫자만 입력해주세요');
-                inputPNRef.current.value = '';
-                userFindIdIdErrors.current.PhoneNumber = false;
-                setAlertShown(false);
-            }
-            return;
-        }
-        else {
-            userFindIdIdErrors.current.PhoneNumber = true;
-            setAlertShown(true);
-        }
-    }
 
     const [findinguserinfo, setFindinguserinfo] = useState({
         findingPw: '',
@@ -95,39 +56,63 @@ const FindId = () => {
 
     const pRef2 = useRef(null);
 
+
+    // 유저 이름, 전화번호 유효성 조건  
+    const checkName =  /^[가-힣]+$/;
+    const checkPN = /^\d{2,5}-\d{3,4}-\d{4}$/;
+
+
     const UserFindID = () => {
-        const allUserData = JSON.parse(localStorage.getItem('userInfo'));
-        if (!allUserData) {
+        // 클릭시 유효성 검사 
+        const nameValue = inputNameRef.current.value;
+        const isName = checkName.test(nameValue);
+        const pwValue = inputPNRef.current.value;
+        const isPW = checkPN.test(pwValue);
+
+        console.log("비밀 번호 유효성 검사"+ isPW);    
+        
+        if (isName== false){
+          alert("이름다시 입력하세요")
+            inputNameRef.current.value='';
+            inputPNRef.current.value='';
             return;
-        }
-
-        const isCheck = Object.values(userFindIdIdErrors.current).every(value => value === true);
-        if (isCheck) {
-            const userExistsName = allUserData.find(it => it.name === userFindIdInfo.current.username);
-            const userExistsPhoneNumber = allUserData.find(it => it.phoneNumber === userFindIdInfo.current.PhoneNumber);
-
-            if (userExistsName && userExistsPhoneNumber && userExistsName.name === userExistsPhoneNumber.name) {
-                setFindinguserinfo({
-                    findingName: userExistsName.name,
-                    findingId: userExistsName.id
+        } else if(isPW==false){
+            alert("-를 포함하여 핸드폰 번호를 다시 입력하세요 ")
+            inputNameRef.current.value='';
+            inputPNRef.current.value='';
+            return;
+        } 
+      
+        // apicall 
+        let url = '/Login/FindId'
+        const data = {name : inputNameRef.current.value , phoneNumber : inputPNRef.current.value }
+        apiCall(url,'POST', data, null)
+        .then((response)=>{
+            console.log("아이디 찾기 API 호출 성공:", response);  // 응답 전체 출력
+            console.log("아이디 찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
+           if(response.data==false){
+            pRef.current.style.visibility = 'hidden';
+            pRef2.current.style.visibility='hidden';
+            inputNameRef.current.value='';
+            inputPNRef.current.value='';
+            alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.')
+           } else{
+                    setFindinguserinfo({
+                    findingName: inputNameRef.current.value,
+                    findingId: response.data
                 });
                 pRef.current.style.visibility = 'visible'
                 pRef2.current.style.visibility = 'visible'
+           }
+        }).catch((err)=>{  console.log("아이디 찾기  중 오류 발생:", err);
 
+            // 오류 발생 시 응답 객체에서 상태 코드를 확인
+            if (err.response) {
+                console.log("아이디 찾기  오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
             } else {
-                pRef.current.style.visibility = 'hidden'
-                pRef2.current.style.visibility='hidden'
-                alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.')
+                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다:", err.message);
             }
-        } else {
-            alert('⚠️ 조건에 맞게 정보를 다시입력해주세요')
-            inputPNRef.current.value = '';
-            inputNameRef.current.value = '';
-            inputNameRef.current.style.borderBottom = '1px solid #aaaaaa';
-            inputPNRef.current.style.borderBottom = '1px solid #aaaaaa';
-            MoveToInLabel(labelPNRed, inputPNRef)
-            MoveToInLabel(labeNameRed, inputNameRef)
-        }
+        })
     };
 
 
@@ -148,7 +133,6 @@ const FindId = () => {
                             </ul>
                             <div className="findId-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
                             <h4>아래 개인 정보를 입력해주세요</h4>
-
                             <div className="findId-Box">
                                 <div className="findId-inputArea">
                                     <label className="findId-label"
@@ -156,10 +140,11 @@ const FindId = () => {
                                         onClick={() => LabelClick(inputNameRef)}
                                     >이름</label>
                                     <input type="text"
+                                    placeholder="                                 공백없이 한글만 입력하세요"  
                                         maxLength={4}
                                         name="username"
                                         ref={inputNameRef}
-                                        onChange={onChangeInputInfo}
+                                       // onChange={onChangeInputInfo}
                                         onFocus={() => MoveToOutLabel(labeNameRed)}
                                         onBlur={() => MoveToInLabel(labeNameRed, inputNameRef)} />
                                 </div>
@@ -169,10 +154,11 @@ const FindId = () => {
                                         onClick={() => LabelClick(inputNameRef)}
                                     >핸드폰 번호</label>
                                     <input type="text"
+                                    placeholder="                                 - 포함하여 번호를 입력하세요"  
                                         ref={inputPNRef}
                                         name='PhoneNumber'
-                                        maxLength={11}
-                                        onChange={onChangeInputInfo}
+                                        maxLength={16}
+                                        //onChange={onChangeInputInfo}
                                         onFocus={() => MoveToOutLabel(labelPNRed)}
                                         onBlur={() => MoveToInLabel(labelPNRed, inputPNRef)} />
                                 </div>

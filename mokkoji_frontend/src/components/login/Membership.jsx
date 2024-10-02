@@ -15,23 +15,10 @@ import { apiCall } from '../../service/apiService';
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 const Membership = () => {
-    // 방법 2.
-    // let max = 0;
-    // for (let i = 0; i < userInfo.length; i++) {
-    //     if (max < userInfo[i].index)
-    //         max = userInfo[i].index;
-    // }
-    // const userDateIndex = max + 1;
-
-    // 가입자 index 구하고, 새로 가입하는 유저의 경우 index값 +1 한 뒤 저장 
-    // let userDateIndex = 1;
-
-    // if (userInfo.length > 0)
-    //     userDateIndex = userInfo[userInfo.length - 1].index + 1;
 
     // 사용자 입력값 저장 객체
     const formData = useRef({
-      //  index: '',
+        //  index: '',
         name: '',
         postalCode: '',
         streetAddress: '',
@@ -44,7 +31,7 @@ const Membership = () => {
         password: '',
         birthDate: '',
         createdAt: '',
-        checkPw : ''
+        checkPw: ''
     })
     console.log(formData);
 
@@ -67,7 +54,7 @@ const Membership = () => {
         clausearea: ""
     });
 
-console.log(formErrors);
+    console.log(formErrors);
 
     // useRef 사용으로 인해 랜더링이 발생되지 않아 예외 처리가 불가능 하여, 임의의 stat 생성하여 강제로 랜더링 발생시킴
     const [forceUpdater, forceUpdate] = useState(false);
@@ -209,8 +196,8 @@ console.log(formErrors);
                 return false;
         }
     };
-    console.log(formData.current.password) ; 
-    console.log(formData.current.checkPw) ;
+    console.log(formData.current.password);
+    console.log(formData.current.checkPw);
 
     // 입력값이 정규식과 길이가 각 조건에 부합하면 true, 아니면 false 값 저장 
     const validate = (name, value) => {
@@ -262,46 +249,57 @@ console.log(formErrors);
     }
 
 
-
-    // 목 데이터에서 유저정보 가져옴 
-    const allUserData = JSON.parse(localStorage.getItem('userInfo'));
-
-
     // 아이디 중복체크 확인 상태값 
     const [isOkIdChek, setisOkIdChek] = useState(false);
-
-    //아이디 중복 검사 
     const inputR = useRef(null);
+
     const IsSameId = () => {
-        const userExists = allUserData.find(it => it.id === formData.current.userId);
-        setisOkIdChek(true);
+        let url1 = "/Login/selectOne";
+        const data2 = { userId: inputR.current.value };
+        apiCall(url1, 'POST', data2, null)
+            .then((response) => {
+                console.log("아이디 중복검사 API 호출 성공:", response);  // 응답 전체 출력
+                console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
 
-        if (userExists) {
 
-            alert('⚠️ 동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
-            setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
-                inputR.current.value = ''; // 값 비우기
+                if (response.data === false) {
+                    alert('⚠️ 동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
+                    setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                        inputR.current.value = ''; // 값 비우기
+                    }, 0);
+                    formErrors.current.userId = false;
+                    setisOkIdChek(false)
+                }
+                else if (formErrors.current.userId === false || formData.current.userId === '') {
+                    alert('⚠️ 조건에 맞게 아이디를 다시 입력하세요')
+                    setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                        inputR.current.value = ''; // 값 비우기
+                    }, 0);
+                    formErrors.current.userId = false;
+                    setisOkIdChek(false);
+                } else if (response.data === true) {
+                    alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
+                    formErrors.current.userId = true;
+                    setisOkIdChek(true);
+                }
 
-            }, 0);
-            formErrors.current.userId = false;
-            setisOkIdChek(false)
-        }
-        else if (formErrors.current.userId === false || formData.current.userId === '') {
-            alert('⚠️ 조건에 맞게 아이디를 다시 입력하세요')
-            setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
-                inputR.current.value = ''; // 값 비우기
-            }, 0);
-            formErrors.current.userId = false;
-            setisOkIdChek(false);
-        }
+            }).catch((err) => {
+                console.log("아이디 중복검사 중 오류 발생:", err);
 
-        else {
-            alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
-            formErrors.current.userId = true;
-            setisOkIdChek(true);
+                // 오류 발생 시 응답 객체에서 상태 코드를 확인
+                if (err.response) {
+                    console.log("아이디 중복검사 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
+                } else {
+                    console.log("아이디 중복검사 응답 객체에 상태 코드가 없습니다:", err.message);
+                }
+            })
 
-        }
-    };
+    }
+
+
+
+
+
 
 
     // ==== 주소
@@ -313,7 +311,7 @@ console.log(formErrors);
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = '';
-    
+
         // 도로명 주소일 경우 extraAddress 설정
         if (data.addressType === 'R') {
             if (data.bname !== '') {
@@ -328,7 +326,7 @@ console.log(formErrors);
         setpostalCode(data.zonecode);
         setstreetAddress(fullAddress);
 
-        formData.current.postalCode = data.zonecode; 
+        formData.current.postalCode = data.zonecode;
         formErrors.current.postalCode = true;
 
         formData.current.streetAddress = fullAddress;
@@ -346,7 +344,7 @@ console.log(formErrors);
     // 생년월일
     const [userbirthday, setuserbirtyday] = useState('');
     const birtydayR = useRef(null);
-   
+
 
     // 가입 버튼 
     const navi = useNavigate();
@@ -379,24 +377,20 @@ console.log(formErrors);
             formData.current.email = usereEmail;
             delete formData.current.emailType;
 
-            //세션스토리지에 값 저장 
-            userInfo.push(formData.current);
-            sessionStorage.setItem('userInfo', 'formData');
-
             let url = "/Login/Membership";
             const data = formData.current;
             apiCall(url, 'POST', data, null)
-            .then((response)=>{
-                console.log("API 호출 성공:", response);  // 응답 전체 출력
-                console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
+                .then((response) => {
+                    console.log("API 호출 성공:", response);  // 응답 전체 출력
+                    console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
 
-               
-            }).catch((err)=>{
-                console.log("회원가입 중 오류 발생:", err);
-                console.log("오류 응답 상태 코드:", response.status);  // 상태 코드 출력
-                console.log("응답 객체에 상태 코드가 없습니다:", response);
 
-            })
+                }).catch((err) => {
+                    console.log("회원가입 중 오류 발생:", err);
+                    console.log("오류 응답 상태 코드:", response.status);  // 상태 코드 출력
+                    console.log("응답 객체에 상태 코드가 없습니다:", response);
+
+                })
 
 
             navi('/Login');
@@ -472,7 +466,7 @@ console.log(formErrors);
 
                     <h3>개인정보를 입력해주세요</h3>
                     <form className="formcontainer" id='membership' onSubmit={validate} method='post'>
-                        <label htmlFor ="name">이름</label>
+                        <label htmlFor="name">이름</label>
                         <input type="text"
                             placeholder='2글자 이상 5글자 이하 이름을 입력해주세요'
                             name="name"
@@ -610,7 +604,7 @@ console.log(formErrors);
                                 borderBottom: formErrors.current.name === false ? '1px solid red' : '1px solid #aaaaaa'
                             }}
                         />
-                       
+
                         <p>에러</p>
 
 

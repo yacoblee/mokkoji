@@ -39,8 +39,8 @@ public class Address {
 	@Column(name = "recipient_phone")
 	private String recipientPhone;
 
-	@Column(name = "is_default", columnDefinition = "String default 1")
-	private int isDefault;
+	@Column(name = "is_default")
+	private int isDefault = 0;
 
 	@Column(name = "created_at")
 	private LocalDate created_at;

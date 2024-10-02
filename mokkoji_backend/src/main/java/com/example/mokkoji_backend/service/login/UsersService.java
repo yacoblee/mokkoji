@@ -15,5 +15,6 @@ public interface UsersService {
 	// ** delete
 	void deleteById(String id);
 	
-
+	// ** findById
+	Users findById(String name, String phonNumber);
 }
