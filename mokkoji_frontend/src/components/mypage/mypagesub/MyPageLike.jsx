@@ -8,6 +8,7 @@ import { apiCall } from '../../../service/apiService';
 function MyPageLike({ change, setChange }) {
 
     const [userFavorites, setUserFavorites] = useState([]);
+    const [productIdList, setProductIdList] = useState([]); // State to store checked product IDs
 
     // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
     const myPageLike = (url) => {
@@ -45,6 +46,41 @@ function MyPageLike({ change, setChange }) {
             }) //apiCall
     }; //favoritesDelete
 
+    // 체크 삭제
+    const favoritesCheckDelete = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'DELETE', productIdList, userToken)
+            .then((response) => {
+                //alert(`** favoritesCheckDelete 성공 url=${url}`);
+                setUserFavorites(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** favoritesCheckDelete 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //favoritesCheckDelete
+
+    // 개별 체크박스 핸들러
+    const handleCheckboxChange = (productId) => {
+        if (productIdList.includes(productId)) {
+            setProductIdList(productIdList.filter((id) => id !== productId));
+        } else {
+            setProductIdList([...productIdList, productId]);
+        }
+    };
+
+    // 전체 체크박스 핸들러
+    const handleAllCheckboxChange = () => {
+        if (productIdList.length === userFavorites.length) {
+            setProductIdList([]); // 전체 해제
+        } else {
+            const allProductIds = userFavorites.map((favorite) => favorite.productId);
+            setProductIdList(allProductIds); // 전체 체크
+        }
+    };
+
 
 
     return (
@@ -54,8 +90,8 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                    // onChange={handleCheckAll}
-                    // checked={userFavorites.length > 0 && checkedGood.length === userFavorites.length && userFavorites.length !== 0}
+                        checked={productIdList.length === userFavorites.length}
+                        onChange={handleAllCheckboxChange}
                     />
                 </div>
                 <div></div>
@@ -81,8 +117,8 @@ function MyPageLike({ change, setChange }) {
                                 <div className='MyLikeCheck'>
                                     <input
                                         type="checkbox"
-                                    // checked={checkedGood.includes(favorites.productId)}
-                                    // onChange={() => handleCheckGood(favorites.productId)}
+                                        checked={productIdList.includes(favorites.productId)}
+                                        onChange={() => handleCheckboxChange(favorites.productId)}
                                     />
                                 </div>
                                 <div className="MyLikePhoto">
@@ -107,8 +143,8 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
-                    // onChange={handleCheckAll}
-                    // checked={userFavorites.length > 0 && checkedGood.length === userFavorites.length && userFavorites.length !== 0}
+                        checked={productIdList.length === userFavorites.length}
+                        onChange={handleAllCheckboxChange}
                     />
                 </div>
                 <div></div>
@@ -116,7 +152,7 @@ function MyPageLike({ change, setChange }) {
                 <div>
                     <button
                         className='SelectDeleteButton'
-                    // onClick={onCheckedDelete}
+                        onClick={() => favoritesCheckDelete("/mypage/favorites")}
                     >
                         선택 삭제
                     </button>
