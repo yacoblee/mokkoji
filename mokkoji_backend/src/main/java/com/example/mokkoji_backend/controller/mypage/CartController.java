@@ -51,7 +51,6 @@ public class CartController {
 		// token에서 유효성 검사가 선행되기에 필요없음
 
 		String userId = getUserIdFromHeader(header);
-		log.info("userId : {}", userId);
 
 		try {
 			// 2. 찜 목록 조회
@@ -72,12 +71,34 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : cartListAll");
 		}
 	} //cartListAll
+	
+	// 2) 장바구니 수량 수정
+	@GetMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}/{productTotalPrice}")
+	//	public ResponseEntity<?> cartUpdateCount(@AuthenticationPrincipal String userId, ) {
+	public ResponseEntity<?> cartUpdateCount(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent, @PathVariable int productCnt, @PathVariable int productTotalPrice) {
+		String userId = getUserIdFromHeader(header);
 
-	// 2) 장바구니 항목 삭제
-	// 2.1) 개별 삭제
+		try {
+			// 수량 update 실행
+			cartService.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalPrice);
+
+			// 3. update 성공 후 다시 List 출력
+			List<CartDTO> cartDTOList = cartService.userCart(userId);
+			return ResponseEntity.ok(cartDTOList);
+
+		} catch (Exception e) {
+			// 5. 서버에서 발생한 예외 처리
+			log.warn("내부 서버 오류 : cartUpdateCount");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : cartUpdateCount");
+		}
+
+	}
+
+	// 3) 장바구니 항목 삭제
+	// 3.1) 개별 삭제
 	@DeleteMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}")
-	//	public ResponseEntity<?> favoritesDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
-	public ResponseEntity<?> favoritesDeleteOne(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent) {
+	//	public ResponseEntity<?> cartDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
+	public ResponseEntity<?> cartDeleteOne(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent) {
 		String userId = getUserIdFromHeader(header);
 		log.info(userId);
 		log.info(productId);
@@ -86,14 +107,14 @@ public class CartController {
 
 		CartId cartId = new CartId(userId, productId, optionContent, packagingOptionContent);
 
-		// 1. 유효성 검사: favoritesId가 null일 때
+		// 1. 유효성 검사: cartId가 null일 때
 		if (cartId == null) {
-			log.warn("favoritesId 확인 불가");
+			log.warn("cartId 확인 불가");
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("cartId 확인 불가");
 		}
 
 		try {
-			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
+			// 2. 삭제 실행
 			cartService.deleteCart(cartId);
 
 			// 3. 삭제 성공 후 다시 List 출력
@@ -101,7 +122,7 @@ public class CartController {
 			return ResponseEntity.ok(cartDTOList);
 
 		} catch (Exception e) {
-			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
+			// 4. deleteCartOne에서 발생한 예외 처리 : cartId에 해당하는 항목 없음
 			log.warn("cartId에 해당하는 항목 없음");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("cartId에 해당하는 항목 없음");
 		}
@@ -109,6 +130,6 @@ public class CartController {
 		//			// 5. 서버에서 발생한 예외 처리
 		//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
 		//		}
-	} //favoritesDelete
+	} //cartDeleteOne
 
 }

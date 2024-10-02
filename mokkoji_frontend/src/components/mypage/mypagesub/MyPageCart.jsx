@@ -47,6 +47,23 @@ function MyPageCart({ change, setChange }) {
         myPageCart("/mypage/cart")
     }, [])
 
+    // 수량 업데이트
+    const cartUpdate = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        console.log(url)
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** cartUpdate 성공 url=${url}`);
+                setUserCart(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** cartUpdate 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //cartUpdate
+
     // 개별 삭제
     const cartDelete = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
@@ -119,9 +136,11 @@ function MyPageCart({ change, setChange }) {
                                 </div>
                                 <div className='MyCartCount'>
                                     <div className='MyProductCount'>
-                                        <img src="/images/buy/minus.png" />
-                                        <input type="text" value={cart.productCnt} />
-                                        <img src="/images/buy/plus.png" />
+                                        <img src="/images/buy/minus.png" alt="minus" onClick={() =>
+                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt - 1}/${cart.productTotalPrice}`)} />
+                                        <input type="text" min={1} value={cart.productCnt} />
+                                        <img src="/images/buy/plus.png" alt="plus" onClick={() =>
+                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt + 1}/${cart.productTotalPrice}`)} />
                                     </div>
                                 </div>
                                 <div className='MyCartButton'>
