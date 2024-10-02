@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
+import com.example.mokkoji_backend.domain.ProductBuyDTO;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
@@ -14,6 +15,7 @@ import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +38,7 @@ public class CartServiceImpl implements CartService {
 		cartRepository.save(cart);
 	}
 	
+	// 2) cart에 있는 내용이라면 업데이트 .
 	@Override
 	public void duplicateUpate(Cart cart) {
 		CartId id = CartId.builder()
@@ -57,7 +60,80 @@ public class CartServiceImpl implements CartService {
 			 cartRepository.save(cart);
 		}
 	}
+	// 3) cart find By Id .
+	public Cart findById(CartId id) {
+		Optional<Cart> cart = cartRepository.findById(id);
+		if(cart.isPresent()) {
+			return cart.get();
+		}else return null;
+	}
 	
+	// 4) cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
+	public ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto) {
+		CartId cartId = CartId.builder().userId(dto.getUserId())
+				.productId(dto.getProductId())
+				.optionContent(dto.getOptionContent())
+				.packagingOptionContent(dto.getPackagingContent())
+				.build();
+		Optional<Cart> cart = cartRepository.findById(cartId);
+		if(cart.isPresent()) {//카트가 존재하면 ,
+			Cart entity = cart.get();
+//			ProductOptionsId optionId = ProductOptionsId.builder()
+//					.productId(dto.getProductId())
+//					.content(dto.getOptionContent()).build();
+			try {
+				int count = entity.getProductCnt()+dto.getProductCnt();
+				dto.setProductCnt(count);
+				int totalPrice = entity.getProductTotalPrice()+dto.getProductTotalPrice();
+				dto.setProductTotalPrice(totalPrice);
+				return dto;
+				
+			} catch (Exception e) {
+				return dto;
+			}
+		}else return dto;
+	}
+	// 4) cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
+	public List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto) {
+		CartId cartId = CartId.builder().userId(dto.getUserId())
+				.productId(dto.getProductId())
+				.optionContent(dto.getOptionContent())
+				.packagingOptionContent(dto.getPackagingContent())
+				.build();
+		List<Cart> list ;
+		List<ProductBuyDTO> dtoList=new ArrayList<>();;
+		Optional<Cart> cart = cartRepository.findById(cartId);
+		if(cart.isPresent()) {//카트가 존재하면 ,(String userId, long productId, String optionContent, String packagingOptionContent);
+			 list = cartRepository.findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
+					 (dto.getUserId(),dto.getProductId(),dto.getOptionContent(),dto.getPackagingContent());
+		}else  list = cartRepository.findAll();
+		
+		for (Cart entity : list) {
+			ProductOptionsId productOptionsId = ProductOptionsId.builder()
+					.productId(entity.getProductId())
+					.content(entity.getOptionContent()).build();
+			ProductOptions productOptions = productoptionsService.findById(productOptionsId);
+			Packaging packaging = packagingService.findById(entity.getPackagingOptionContent());
+			Products product = productsRepository.findById(entity.getProductId()).get();
+			
+			ProductBuyDTO makedto = ProductBuyDTO.builder()
+					.userId(entity.getUserId())
+					.productId(entity.getProductId())
+					.categoryId(product.getCategoryId())
+					.productName(product.getName())
+					.mainImageName(product.getMainImageName())
+					.productPrice(product.getPrice())
+					.optionContent(productOptions.getContent())
+					.optionPrice(productOptions.getPrice())
+					.packagingContent(packaging.getPackagingContent())
+					.packagingPrice(packaging.getPackagingPrice())
+					.productCnt(entity.getProductCnt())
+					.productTotalPrice(entity.getProductTotalPrice())
+					.build();
+			dtoList.add(makedto);
+		}
+		return dtoList;
+	}
 	
 	// ** 마이페이지에서만 사용 ===============================================
 

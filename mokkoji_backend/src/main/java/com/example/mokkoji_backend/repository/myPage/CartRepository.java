@@ -25,4 +25,8 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 
 	// cart 개수 계산
 	int countByUserId(String userId);
+	
+	// 단품 구매시 장바구니 불러올때 , id를 제외한 나머지 리스트 반환
+	List<Cart> findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
+	(String userId, long productId, String optionContent, String packagingOptionContent);
 }
