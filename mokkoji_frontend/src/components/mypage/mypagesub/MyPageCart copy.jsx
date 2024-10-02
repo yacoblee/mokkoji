@@ -102,7 +102,7 @@ function MyPageCart({ change, setChange }) {
     // 개별 체크박스
     const handleCheckboxChange = (cartKey) => {
         if (cartKeyList.includes(cartKey)) {
-            setCartKeyList(cartKeyList.filter((key) => key !== cartKey));
+            setCartKeyList(cartKeyList.filter((key) => key !== (key.productId === cartKey.productId && key.optionContent === cartKey.optionContent && key.packagingOptionContent === cartKey.packagingOptionContent)));
         } else {
             setCartKeyList([...cartKeyList, cartKey]);
         }
@@ -113,7 +113,7 @@ function MyPageCart({ change, setChange }) {
         if (cartKeyList.length === userCart.length) {
             setCartKeyList([]); // 전체 해제
         } else {
-            const allCartKey = userCart.map((cart) => `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`);
+            const allCartKey = userCart.map((cart) => cart.cartKey);
             setCartKeyList(allCartKey); // 전체 체크
         }
     };
@@ -129,8 +129,8 @@ function MyPageCart({ change, setChange }) {
                 <div >
                     <input
                         type="checkbox"
-                        checked={cartKeyList.length === userCart.length}
-                        onChange={handleAllCheckboxChange}
+                    // checked={cartKeyList.length === userCart.length}
+                    // onChange={handleAllCheckboxChange}
                     />
                 </div>
                 <div></div>
@@ -154,7 +154,11 @@ function MyPageCart({ change, setChange }) {
                 ) :
                 (
                     userCart.map((cart) => {
-                        const cartKey = `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`;
+                        const cartKey = {
+                            productId: cart.productId,
+                            optionContent: cart.optionContent,
+                            packagingOptionContent: cart.packagingOptionContent
+                        };
 
                         return (
                             <div className="MyCartGrid" key={cartKey} >
@@ -188,10 +192,10 @@ function MyPageCart({ change, setChange }) {
                                     <button
                                         className='buttonChange'
                                         // onclick으로 구매 연결 필요
-                                        onMouseEnter={() => handleMouseEnter(cartKey)}
+                                        onMouseEnter={() => handleMouseEnter(cartKey.productId + cartKey.optionContent + cartKey.packagingOptionContent)}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        {hoveredButton === (cartKey) ? '구매하기' : `${formatNumber(cart.productTotalPrice)} 원`}
+                                        {hoveredButton === (cartKey.productId + cartKey.optionContent + cartKey.packagingOptionContent) ? '구매하기' : `${formatNumber(cart.productTotalPrice)} 원`}
                                     </button>
                                     <button onClick={() => cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`)}>삭제</button>
                                 </div>
@@ -211,7 +215,7 @@ function MyPageCart({ change, setChange }) {
                 <div></div>
                 <div></div>
                 <div>
-                    <button className='SelectDeleteButton' onClick={() => { cartCheckDelete("/mypage/cart") }} >선택 삭제</button>
+                    <button className='SelectDeleteButton' onClick={() => { cartCheckDelete('') }} >선택 삭제</button>
                 </div>
                 <div>
                     <button className='SelectBuyButton' >선택 구매</button>

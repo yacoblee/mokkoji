@@ -10,7 +10,7 @@ function MyPageLike({ change, setChange }) {
     const [userFavorites, setUserFavorites] = useState([]);
     const [productIdList, setProductIdList] = useState([]); // State to store checked product IDs
 
-    // Grid의 각 항목을 실행시킬때 필요한 데이터들을 가져옴
+    // favorites 데이터들을 가져옴
     const myPageLike = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'GET', null, userToken)
@@ -46,6 +46,8 @@ function MyPageLike({ change, setChange }) {
             }) //apiCall
     }; //favoritesDelete
 
+
+
     // 체크 삭제
     const favoritesCheckDelete = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
@@ -62,7 +64,7 @@ function MyPageLike({ change, setChange }) {
             }) //apiCall
     }; //favoritesCheckDelete
 
-    // 개별 체크박스 핸들러
+    // 개별 체크박스
     const handleCheckboxChange = (productId) => {
         if (productIdList.includes(productId)) {
             setProductIdList(productIdList.filter((id) => id !== productId));
@@ -71,13 +73,13 @@ function MyPageLike({ change, setChange }) {
         }
     };
 
-    // 전체 체크박스 핸들러
+    // 전체 체크박스
     const handleAllCheckboxChange = () => {
         if (productIdList.length === userFavorites.length) {
             setProductIdList([]); // 전체 해제
         } else {
-            const allProductIds = userFavorites.map((favorite) => favorite.productId);
-            setProductIdList(allProductIds); // 전체 체크
+            const allProductId = userFavorites.map((favorite) => favorite.productId);
+            setProductIdList(allProductId); // 전체 체크
         }
     };
 

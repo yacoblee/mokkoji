@@ -1,7 +1,9 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
+import com.example.mokkoji_backend.domain.FavoritesDTO;
 import com.example.mokkoji_backend.entity.myPage.CartId;
+import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
@@ -12,8 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -131,5 +135,51 @@ public class CartController {
 		//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류");
 		//		}
 	} //cartDeleteOne
+	
+	// 3.2) 체크 상품 삭제
+	@DeleteMapping("/cart")
+//	public ResponseEntity<?> cartDeleteCheck(@AuthenticationPrincipal String userId,) {
+	public ResponseEntity<?> cartDeleteCheck(@RequestHeader("Authorization") String header, @RequestBody List<String> cartCheckList) {
+		String userId = getUserIdFromHeader(header);
+
+		// 1. 유효성 검사: cartCheckList 목록이 null이거나 비어있을때
+		if (cartCheckList == null || cartCheckList.isEmpty()) {
+			log.warn("cartCheckList 목록 확인 불가");
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("cartCheckList 목록 확인 불가");
+		}
+
+		// 2. CartId에 대한 List 생성 : 반복문 사용
+		List<CartId> cartIdList = new ArrayList<>();
+
+		for (String cartKey : cartCheckList){
+			String[] cc = cartKey.split("-");
+
+			CartId cartId = CartId.builder().userId(userId)
+					.productId(Long.parseLong(cc[0]))
+					.optionContent(cc[1])
+					.packagingOptionContent(cc[2])
+					.build();
+
+			cartIdList.add(cartId);
+		}
+
+		try {
+
+			// 3. favoritesId에 대해 삭제 실행 : 반복문 사용
+			for (CartId cartId : cartIdList) {
+				cartService.deleteCart(cartId);
+			}
+
+			// 4. 삭제 성공 후 다시 List 출력
+			List<CartDTO> cartDTOList = cartService.userCart(userId);
+			return ResponseEntity.ok(cartDTOList);
+
+		} catch (Exception e) {
+			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
+			log.warn("favoritesId에 해당하는 항목 없음");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("favoritesId에 해당하는 항목 없음");
+		}
+
+	}
 
 }
