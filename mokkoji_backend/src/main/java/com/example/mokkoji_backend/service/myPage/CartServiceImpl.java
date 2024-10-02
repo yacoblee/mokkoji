@@ -1,11 +1,16 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
+import com.example.mokkoji_backend.entity.goods.Packaging;
+import com.example.mokkoji_backend.entity.goods.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
+import com.example.mokkoji_backend.service.goods.PackagingService;
+import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +24,9 @@ public class CartServiceImpl implements CartService {
 
 	final CartRepository cartRepository;
 	final ProductsRepository productsRepository;
-	
+	final ProductoptionsService productoptionsService;
+	final PackagingService packagingService;
+
 	// ** 상품페이지에서만 사용 ===============================================
 	
 	// 1) cart에 새로 row를 추가할 때 사용
@@ -64,26 +71,43 @@ public class CartServiceImpl implements CartService {
 			Optional<Products> products = productsRepository.findById(item.getProductId());
 			CartDTO cartDTO = new CartDTO ();
 
+			// Cart에서 직접 가져옴
 			cartDTO.setUserId(item.getUserId());
 			cartDTO.setProductId(item.getProductId());
 			cartDTO.setOptionContent(item.getOptionContent());
 			cartDTO.setPackagingOptionContent(item.getPackagingOptionContent());
 			cartDTO.setProductCnt(item.getProductCnt());
-			cartDTO.setProductTotalPrice(item.getProductTotalPrice());
 			cartDTO.setCartDate(item.getCartDate());
+
+			// ProductOptions에서 price 끌고오기
+			ProductOptionsId productOptionsId = ProductOptionsId.builder()
+					.productId(item.getProductId())
+					.content(item.getOptionContent()).build();
+			ProductOptions productOptions = productoptionsService.findById(productOptionsId);
+			cartDTO.setOptionPrice(productOptions.getPrice());
+
+			// ProductOptions에서 price 끌고오기
+			Packaging packaging = packagingService.findById(item.getPackagingOptionContent());
+			cartDTO.setPackagingOptionPrice(packaging.getPackagingPrice());
 
 			// Optional<Products>의 값이 존재하는 경우에만 설정
 			if (products.isPresent()) {
 				Products product = products.get();
 				cartDTO.setProductName(product.getName());
+				cartDTO.setPrice(product.getPrice());
 				cartDTO.setCategoryId(product.getCategoryId());
 				cartDTO.setMainImageName(product.getMainImageName());
 			} else {
 				// 기본값 설정 또는 로깅 등 처리
 				cartDTO.setProductName(null);
+				cartDTO.setPrice(0);
 				cartDTO.setCategoryId(null);
 				cartDTO.setMainImageName(null);
 			}
+
+			int productPrice = cartDTO.getPrice() + cartDTO.getOptionPrice() + cartDTO.getPackagingOptionPrice();
+
+			cartDTO.setProductTotalPrice(productPrice * cartDTO.getProductCnt());
 
 			return cartDTO;
 		}).collect(Collectors.toList());

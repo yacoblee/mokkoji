@@ -22,4 +22,8 @@ public class CartDTO {
 	private String productName;
 	private String categoryId;
 	private String mainImageName;
+	private int price;
+	private int optionPrice;
+	private int packagingOptionPrice;
+
 }
