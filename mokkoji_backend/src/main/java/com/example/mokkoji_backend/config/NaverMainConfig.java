@@ -1,7 +1,7 @@
 package com.example.mokkoji_backend.config;
 
-import java.util.Properties;
-
+import jakarta.mail.Authenticator;
+import jakarta.mail.PasswordAuthentication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -9,8 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.PasswordAuthentication;
+import java.util.Properties;
 
 @Configuration
 public class NaverMainConfig {

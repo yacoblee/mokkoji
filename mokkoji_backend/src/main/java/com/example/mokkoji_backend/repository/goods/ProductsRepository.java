@@ -1,8 +1,8 @@
 package com.example.mokkoji_backend.repository.goods;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.mokkoji_backend.domain.ProductDetailDTO;
+import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.example.mokkoji_backend.entity.goods.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -10,9 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.mokkoji_backend.domain.ProductDetailDTO;
-import com.example.mokkoji_backend.domain.ProductsDTO;
-import com.example.mokkoji_backend.entity.goods.Products;
+import java.util.List;
+import java.util.Optional;
 
 public interface ProductsRepository extends JpaRepository<Products, Long>{
 	

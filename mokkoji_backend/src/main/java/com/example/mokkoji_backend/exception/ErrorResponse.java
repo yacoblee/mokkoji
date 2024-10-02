@@ -3,9 +3,6 @@ package com.example.mokkoji_backend.exception;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Builder;
-import lombok.Getter;
-
 //@Getter
 public class ErrorResponse {
 

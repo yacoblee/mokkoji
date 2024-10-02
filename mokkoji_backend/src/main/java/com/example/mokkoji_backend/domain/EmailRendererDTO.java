@@ -1,12 +1,8 @@
 package com.example.mokkoji_backend.domain;
 
-import java.util.List;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter

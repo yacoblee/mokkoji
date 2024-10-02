@@ -1,13 +1,11 @@
 package com.example.mokkoji_backend.domain;
 
 
-
-import java.sql.Timestamp;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 //@AllArgsConstructor
 @NoArgsConstructor

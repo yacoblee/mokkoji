@@ -1,15 +1,13 @@
 package com.example.mokkoji_backend.service.goods;
 
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.pageTest.Criteria;
+
+import java.util.List;
 
 public interface ProductsService {
 

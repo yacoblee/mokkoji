@@ -1,16 +1,12 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.FavoritesDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
-import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,38 +1,15 @@
 package com.example.mokkoji_backend.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.catalina.User;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
-import com.example.mokkoji_backend.entity.goods.Packaging;
-import com.example.mokkoji_backend.entity.goods.ProductImages;
-import com.example.mokkoji_backend.entity.goods.ProductOptions;
-import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
-import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.entity.goods.*;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
-import com.example.mokkoji_backend.entity.myPage.Reviews;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
-import com.example.mokkoji_backend.repository.UsersRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
@@ -41,9 +18,15 @@ import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @Log4j2

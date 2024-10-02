@@ -1,22 +1,17 @@
 package com.example.mokkoji_backend;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import com.example.mokkoji_backend.domain.SmtpDTO;
+import com.example.mokkoji_backend.service.smtp.SendMessageService;
+import com.example.mokkoji_backend.service.smtp.SmtpEmailServiceImpl;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.example.mokkoji_backend.domain.SmtpDTO;
-import com.example.mokkoji_backend.service.smtp.SendMessageService;
-import com.example.mokkoji_backend.service.smtp.SmtpEmailServiceImpl;
-
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.repository.login.UsersRepository;
-import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepositoryDSL;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest

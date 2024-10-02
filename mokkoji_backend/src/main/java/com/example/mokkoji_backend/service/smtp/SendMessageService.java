@@ -1,13 +1,11 @@
 package com.example.mokkoji_backend.service.smtp;
 
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2

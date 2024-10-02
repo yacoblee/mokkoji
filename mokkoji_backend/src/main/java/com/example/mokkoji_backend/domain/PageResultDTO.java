@@ -8,15 +8,14 @@ package com.example.mokkoji_backend.domain;
 //  - Page<Entity> 객체들을 DTO 객체로 변환해서 List에 담아줌
 //  - 화면출력을 위한 페이지 정보들 구성
 
+import lombok.Data;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import lombok.Data;
 
 //-------------------------------------------------
 

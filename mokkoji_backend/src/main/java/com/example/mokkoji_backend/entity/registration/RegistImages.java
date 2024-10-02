@@ -1,15 +1,13 @@
 package com.example.mokkoji_backend.entity.registration;
 
 
-import java.io.Serializable;
-
-import com.example.mokkoji_backend.entity.goods.ProductImagesId;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "registimages")

@@ -1,23 +1,20 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
-import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
-import com.example.mokkoji_backend.service.myPage.ReviewsService;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Log4j2
 @RestController

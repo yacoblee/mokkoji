@@ -1,16 +1,11 @@
 package com.example.mokkoji_backend.service.registration;
 
-import java.util.List;
-
+import com.example.mokkoji_backend.entity.registration.RegistImages;
+import com.example.mokkoji_backend.repository.registration.RegistImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.example.mokkoji_backend.entity.goods.ProductImages;
-import com.example.mokkoji_backend.entity.goods.ProductImagesId;
-import com.example.mokkoji_backend.entity.registration.RegistImages;
-import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
-import com.example.mokkoji_backend.repository.registration.RegistImageRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

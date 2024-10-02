@@ -1,13 +1,5 @@
 package com.example.mokkoji_backend.service.goods;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
@@ -16,8 +8,13 @@ import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.pageTest.Criteria;
 import com.example.mokkoji_backend.repository.goods.ProductsDSLRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

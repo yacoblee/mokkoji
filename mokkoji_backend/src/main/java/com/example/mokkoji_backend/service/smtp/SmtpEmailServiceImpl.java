@@ -1,18 +1,11 @@
 package com.example.mokkoji_backend.service.smtp;
 
- 
 
- 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import com.example.mokkoji_backend.config.NaverMainConfig;
-import com.example.mokkoji_backend.domain.EmailRendererDTO;
-import com.example.mokkoji_backend.domain.SmtpDTO;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

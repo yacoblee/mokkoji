@@ -1,10 +1,7 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.FavoritesDTO;
 import com.example.mokkoji_backend.entity.myPage.CartId;
-import com.example.mokkoji_backend.entity.myPage.Favorites;
-import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;

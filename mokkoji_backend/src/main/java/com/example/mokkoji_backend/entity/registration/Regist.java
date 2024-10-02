@@ -3,7 +3,6 @@ package com.example.mokkoji_backend.entity.registration;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;

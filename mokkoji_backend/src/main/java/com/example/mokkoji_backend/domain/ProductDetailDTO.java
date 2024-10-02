@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.domain;
 
 import com.example.mokkoji_backend.entity.goods.Products;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

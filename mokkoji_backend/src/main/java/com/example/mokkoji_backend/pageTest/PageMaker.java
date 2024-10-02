@@ -1,21 +1,12 @@
 package com.example.mokkoji_backend.pageTest;
 //** PageMaker : View 에 필요한 값을 완성
 
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-//=> 전체Row 갯수 (전체 Page수 계산위해 필요)
-//=> 1Page당 표시할 pagendRowNumber갯수
-//=> view 에 표시할 첫 PagendRowNumber
-//=> view 에 표시할 끝 PagendRowNumber
-//=> 출력 가능한 마지막 PagendRowNumber (totalRowsCount, rowsPerPage 로 계산)
-//=> 이전 PageBlock 으로
-//=> 다음 PageBlock 으로
-
-import lombok.Getter;
-import lombok.ToString;
 
 //=> Criteria 를 이용해서..
 
