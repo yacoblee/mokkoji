@@ -25,3 +25,15 @@ ALTER TABLE regist ADD etc_detail varchar(200) NULL;
 
 ALTER TABLE users
     ADD COLUMN `is_admin` tinyint(1) DEFAULT 0 COMMENT '관리자 여부 (1: 관리자, 0: 일반 사용자)';
+
+-- 효윤 10.02
+ALTER TABLE users MODIFY user_sequence INT NOT NULL AUTO_INCREMENT;
+
+WITH ranked_users AS (SELECT user_id,
+                             ROW_NUMBER() OVER (ORDER BY user_id) +
+                             (SELECT MAX(user_sequence) FROM users) AS new_sequence
+                      FROM users
+                      WHERE user_sequence = 0)
+UPDATE users u
+    JOIN ranked_users ru ON u.user_id = ru.user_id
+SET u.user_sequence = ru.new_sequence;
