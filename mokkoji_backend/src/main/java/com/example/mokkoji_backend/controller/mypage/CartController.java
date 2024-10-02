@@ -1,9 +1,7 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.FavoritesDTO;
 import com.example.mokkoji_backend.entity.myPage.CartId;
-import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
@@ -14,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -165,7 +162,7 @@ public class CartController {
 
 		try {
 
-			// 3. favoritesId에 대해 삭제 실행 : 반복문 사용
+			// 3. cartId에 대해 삭제 실행 : 반복문 사용
 			for (CartId cartId : cartIdList) {
 				cartService.deleteCart(cartId);
 			}
