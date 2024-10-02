@@ -20,7 +20,7 @@ public class MyPageDTO {
 	private String gender;
 	private String phoneNumber;
 	private String email;
-	private LocalDateTime createdAt;
+	private LocalDate createdAt;
 
 	private int favoritesCnt;
 	private int cartCnt;

@@ -2,10 +2,12 @@ package com.example.mokkoji_backend.service.login;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.repository.UsersRepository;
+import com.example.mokkoji_backend.repository.login.UsersRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 @Service("UsersService")
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
+	
+	@Autowired
 	private final UsersRepository repository;
 	
 	@Override
@@ -34,6 +38,9 @@ public class UsersServiceImpl implements UsersService{
 	repository.save(entity);
 		
 	}
+	
+	
+	
 	
 	@Override
 	public void deleteById(String id) {

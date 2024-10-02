@@ -25,8 +25,11 @@ public class UsersDTO {
 	private int isWithdrawn;
 	private LocalDateTime withdrawalDate;
 	private LocalDateTime updatedAt;
-	private LocalDateTime createdAt;
+	private LocalDate createdAt;
 	private int blockStatus;
-
+	private String postalCode;
+	private String streetAddress;
+	private String detailedAddress;
+	private String isAdmin;
 	private String token;
 }

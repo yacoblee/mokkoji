@@ -14,6 +14,10 @@ import com.example.mokkoji_backend.service.smtp.SmtpEmailServiceImpl;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.repository.login.UsersRepository;
+import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepositoryDSL;
+
 
 @SpringBootTest
 class MokkojiBackendApplicationTests {
