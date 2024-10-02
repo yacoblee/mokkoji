@@ -170,13 +170,13 @@ const ProductForm = ({ product, userId }) => {
 
         const insertOrder = async () => {
             // 구매하기 정보 추가할 항목 생성
-            const sendBasket = {
-                userId: userId,
-                productId: product.id,
-                optionContent: content.contentSelect,
-                packagingOptionContent: content.packagingSelect,
-                productCnt: count,
-                productTotalPrice: totalPrice,
+            const sendBasket = {// 이형태는 Cart Entity구조 와 동일함
+                userId: userId, // userId 를 찾아 보내줘야함.(String)
+                productId: product.id, // 해당하는 productId를 찾아 보냄.(String)
+                optionContent: content.contentSelect, // 해당하는 상품옵션내용(String)
+                packagingOptionContent: content.packagingSelect,//해당하는 포장옵션내용(String)
+                productCnt: count,//해당하는 갯수(int)
+                productTotalPrice: totalPrice,//총계산을 마친 금액 (int)
             };
             console.log(`${sendBasket.userId}`);
             console.log(`${sendBasket.productId}`);
@@ -186,7 +186,7 @@ const ProductForm = ({ product, userId }) => {
             console.log(`${sendBasket.productTotalPrice}`);
             try {
                 const response = await apiCall(`/orderpage`, 'POST', sendBasket, token);
-                const { product, option, packaging } = response.data;
+                const { product, option, packaging,productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
                 //setLike(liked);
                 //alert(message);
                 console.log(product);
@@ -196,12 +196,13 @@ const ProductForm = ({ product, userId }) => {
                 // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
                 navigate(`/orderpage`, {
                     state: {
-                        userId: userId,
-                        product: product,
-                        option: option,
-                        packaging: packaging,
-                        count: count,
-                        totalPrice: totalPrice
+                        // userId: userId,//input창에서 해당하는 유저를 찾기 위함이야.
+                        // product: product,//해당하는 상품으로 계산을 이루기 위함이야.
+                        // option: option,//현재 해당하는 option의 정보를 보내줘 , 디폴트 값을 유지하기 위함이야.
+                        // packaging: packaging,//현재 해당하는 패키지의 정보를 보내줘 , 디폴트 값을 유지하기 위함이야.
+                        // count: count, // 수량에 대한 정보를 보내줘 , 디폴트값을 유지하기 위함이야.
+                        // totalPrice: totalPrice // 현재 선택이 완료된 총액을 보내줘 , 디폴트값을 유지하기 위함이야.
+                        productBuy : productBuy
                     }
                 });
             } catch (error) {

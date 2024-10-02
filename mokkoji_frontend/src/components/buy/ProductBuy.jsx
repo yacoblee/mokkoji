@@ -15,7 +15,8 @@ const ProductBuy = () => {
     //url 파라미터 , 링크로 전송된 데이터 추출.
     const location = useLocation();
     const { category, id } = useParams();
-    const { userId, product, option, packaging, count, totalPrice } = location.state || {};
+    //const { userId, product, option, packaging, count, totalPrice } = location.state || {};
+    const { productBuy } = location.state || {};
     const token = JSON.parse(sessionStorage.getItem('userData'));
 
     //선택된 상품 해당 값 가져오기.
@@ -26,10 +27,10 @@ const ProductBuy = () => {
 
     //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리 -> 선택 옵션 갯수에 대한 관리
     //9.11코드변경
-    const [amount, setAmount] = useState(count ? count : 1);
+    const [amount, setAmount] = useState(productBuy.productCnt ? +productBuy.productCnt : 1);
     //==================================================================금액 관련 state 
     //최종 금액을 바꿀 state (배송비 제외)
-    const [filterPrice, setFilterPrice] = useState(+totalPrice);
+    const [filterPrice, setFilterPrice] = useState(+productBuy.productTotalPrice);
     //배송비 추가금을 포함한 최종금액 표현.
     const [lastPrice, setLastPrice] = useState(+filterPrice);
     //배송비 문구를 보여줄 state 상태값 (true 면 보여주고 false 면 안보여줄거야)
@@ -38,10 +39,10 @@ const ProductBuy = () => {
 
     //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
     const calculateTotalPrice = () => {
-        if (!product) return 0; // 선택된 상품이 없으면 0 반환
-        let price = +product.price;
-        let packagingPrice = packaging && packaging.packagingPrice ? +packaging.packagingPrice : 0;
-        let contentPrice = option && option.price ? +option.price : 0;
+        if (!productBuy) return 0; // 선택된 상품이 없으면 0 반환
+        let price = +productBuy.productPrice;
+        let packagingPrice = productBuy.packagingPrice ? +productBuy.packagingPrice : 0;
+        let contentPrice = productBuy.optionPrice ? +productBuy.optionPrice : 0;
 
         return (price + contentPrice + packagingPrice) * amount;
     }
@@ -154,7 +155,7 @@ const ProductBuy = () => {
     };
 
     //오류 발생을 대비한 방어 코드.
-    if (!product || !userId) {
+    if (!productBuy || !productBuy.userId) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
                 아이템을 찾을 수 없어요
@@ -187,24 +188,24 @@ const ProductBuy = () => {
                         <input type="checkBox" value={filterPrice}
                             checked={buyCheckBox}
                             onChange={onChangeBuyCheckBox} />
-                        <Link to={`/goods/${product.categoryId}/${product.id}`}
+                        <Link to={`/goods/${productBuy.categoryId}/${productBuy.productId}`}
                             className='deleteName' >
-                            <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`}
-                                className='deleteName' alt={product.name} />
+                            <img src={`${API_BASE_URL}/resources/productImages/${productBuy.mainImageName}`}
+                                className='deleteName' alt={productBuy.productName} />
                         </Link>
-                        <p className='seletedProudctBuyName'>{product.name}
-                            <Link to={`/goods/${product.category}/${product.id}`}>
-                                <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`}
-                                    className='addName img' alt={product.name} />
+                        <p className='seletedProudctBuyName'>{productBuy.productName}
+                            <Link to={`/goods/${productBuy.categoryId}/${productBuy.productId}`}>
+                                <img src={`${API_BASE_URL}/resources/productImages/${productBuy.mainImageName}`}
+                                    className='addName img' alt={productBuy.productName} />
                             </Link>
                         </p>
-                        <p>{formatNumber(product.price)}</p>
+                        <p>{formatNumber(productBuy.productPrice)}</p>
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
-                                    {option.content}
+                                    {productBuy.optionContent}
                                 </p>
-                                <span className='highlight2'>{amount} 개 </span>
+                                <span >(+{productBuy.optionPrice}원) </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -227,9 +228,9 @@ const ProductBuy = () => {
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
-                                    {packaging.packagingContent}
+                                    {productBuy.packagingContent}
                                 </p>
-                                <span className='highlight2'>{amount} 개 </span>
+                                <span >(+{productBuy.packagingPrice}원) </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -248,7 +249,7 @@ const ProductBuy = () => {
                                         <img src="/images/buy/plus.png" alt="" />
                                     </button>
                                 </div> */}
-
+                                <span className='highlight2'>{amount} 개 </span>
                             </p>
                         </p>
                         <p className='priceBox justifySelfEnd'>
@@ -272,12 +273,12 @@ const ProductBuy = () => {
 
                 <h2>주문서 작성</h2>
                 <BuyInputBox
-                    userId={userId}
+                    userId={productBuy.userId}
                     amount={amount}
                     checkedCartItems={checkedCartItems}
-                    option={option}
-                    packaging={packaging}
-                    selectedProduct={buyCheckBox && product}
+                    //option={option}
+                    //packaging={packaging}
+                    selectedProduct={buyCheckBox && productBuy}
                     productPrice={filterPrice}
                     totalPrice={lastPrice} />
                 <TopButton />
