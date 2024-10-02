@@ -23,4 +23,9 @@ public class MyPageDTO {
 
 	private int favoritesCnt;
 	private int cartCnt;
+
+	private String postalCode;
+	private String streetAddress;
+	private String detailedAddress;
+
 }

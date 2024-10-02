@@ -11,22 +11,6 @@ import DaumPostcode from 'react-daum-postcode';
 
 function MyPageSet() {
 
-    const userData = JSON.parse(sessionStorage.getItem("LoginUserInfo"));
-
-    const navigate = useNavigate();     // 버튼으로 링크 이동
-
-    const [user, setUser] = useState(userData);
-
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [emailType, setEmailType] = useState('');
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [address, setAddress] = useState('')
-    const [addressDetail, setAddressDetail] = useState('');
-    const [zoneCode, setZoneCode] = useState()
-
-
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,52 +45,6 @@ function MyPageSet() {
         setIsModalOpen(false);
     };
 
-
-    // 이메일 타입 '직접 입력'시에만 작성이 활성화되기 위한 로직
-    const [emailDisabled, setEmailDisabled] = useState(false);
-    const handleEmailChange = (e) => {
-        const selectedValue = e.target.value;
-        if (selectedValue !== "type") {
-            setEmailType(selectedValue);
-            setEmailDisabled(true);
-        } else {
-            setEmailType('');
-            setEmailDisabled(false);
-        }
-    };
-
-
-
-    // 업데이트된 사용자 정보 저장
-    const updatedUser = {
-        ...user,
-        phoneNumber: phoneNumber || user.phoneNumber,       // 빈값이 저장되지 않도록 함
-        email: email || user.email,
-        emailType: emailType || user.emailType,
-        password: password || user.password,
-        addressDetail: addressDetail || user.addressDetail,
-        zoneCode: zoneCode || user.zoneCode
-    };
-
-
-    const handleSubmit = async (e) => {     // 버튼으로 sessionstorage에 데이터 저장 로직
-        e.preventDefault();
-
-        // 비밀번호 확인하는 절차
-        if (password !== passwordConfirm) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-
-        sessionStorage.setItem("LoginUserInfo", JSON.stringify(updatedUser));       // 변경값 sessionsotrage에 저장
-
-        navigate('/mypage');        // 버튼 이동 경로 지정(마이페이지)
-
-    };
-
-    const [errorMessagePhone, setErrorMessagePhone] = useState('');
-    const [errorMessagePW, setErrorMessagePW] = useState('');
-    const [errorMessagePWC, setErrorMessagePWC] = useState('');
 
     return (
         <form className='MyPageSet' onSubmit={handleSubmit}>
