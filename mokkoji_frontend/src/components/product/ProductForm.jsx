@@ -186,13 +186,13 @@ const ProductForm = ({ product, userId }) => {
             console.log(`${sendBasket.productTotalPrice}`);
             try {
                 const response = await apiCall(`/orderpage`, 'POST', sendBasket, token);
-                const { product, option, packaging,productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
+                const { product, option, packaging, productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
                 //setLike(liked);
                 //alert(message);
                 console.log(product);
                 console.log(option);
                 console.log(packaging);
-                alert('insertOrder 성공');
+                //alert('insertOrder 성공');
                 // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
                 navigate(`/orderpage`, {
                     state: {
@@ -202,7 +202,7 @@ const ProductForm = ({ product, userId }) => {
                         // packaging: packaging,//현재 해당하는 패키지의 정보를 보내줘 , 디폴트 값을 유지하기 위함이야.
                         // count: count, // 수량에 대한 정보를 보내줘 , 디폴트값을 유지하기 위함이야.
                         // totalPrice: totalPrice // 현재 선택이 완료된 총액을 보내줘 , 디폴트값을 유지하기 위함이야.
-                        productBuy : productBuy
+                        productBuy: productBuy
                     }
                 });
             } catch (error) {

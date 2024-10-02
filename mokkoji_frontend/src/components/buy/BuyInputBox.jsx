@@ -33,6 +33,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     const [userInfo, setUserInfo] = useState({});
     //유저 관리 에러에 대한 저장 변수.
     const [userInfoError, setUserInfoError] = useState({});
+    //주소 인덱스를 관리할 변수
+    const [selectedAddressIndex, setSelectedAddressIndex] = useState(0); // 추가: 선택된 주소 인덱스를 추적
     // console.log(userInfo);
     // 처음 렌더링 시 userInfo를 설정.
     useEffect(() => {
@@ -41,6 +43,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
             // addressing이 업데이트된 후 userInfo를 설정
             if (addressing.length > 0) {
+                setSelectedAddressIndex(0);
                 setUserInfo({
                     name: user.name || '',
                     phoneNumber: user.phoneNumber || '',
@@ -49,7 +52,6 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     postalCode: addressing[0].postalCode || ''
                 });
             }
-
             setUserInfoError({
                 name: false,
                 phoneNumber: false,
@@ -60,7 +62,17 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         };
 
         loadDataAndSetUserInfo(); // 함수 호출
-    }, []);
+
+    }, [addressing.length]);
+    // console.log(`userInfo.name : ${userInfo.name}`)
+    // console.log(`userInfo.phoneNumber : ${userInfo.phoneNumber}`)
+    // console.log(`userInfo.detailedAddress : ${userInfo.detailedAddress}`)
+    // console.log(`userInfo.postalCode : ${userInfo.postalCode}`)
+    // console.log(`userInfo.postalCode : ${userInfo.postalCode}`)
+    // console.log(`userInfoError.name : ${userInfoError.name}`)
+    // console.log(`userInfoError.phoneNumber : ${userInfoError.phoneNumber}`)
+    // console.log(`userInfoError.detailedAddress : ${userInfoError.detailedAddress}`)
+    // console.log(`userInfoError.postalCode : ${userInfoError.postalCode}`)
 
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = (index, type) => {
@@ -80,6 +92,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 // deliveryMessage: false,
             })
         } else {
+            setSelectedAddressIndex(index);
             setUserInfo({
                 name: user.name || '',
                 phoneNumber: user.phoneNumber || '',
@@ -175,6 +188,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         deliveryMessage: '문 앞에 놔주세요',
         buyHow: '',
     });
+    console.log(`selectBox.deliveryMessage : ${selectBox.deliveryMessage}`)
+    console.log(`selectBox.buyHow : ${selectBox.buyHow}`)
     // useEffect(()=>{
     //     SetSelectBox((it)=>({...it,deliveryMessage:'문 앞에 놔주세요'}))
     // },[]);
@@ -231,8 +246,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             selectedALLproduct = [...checkedCartItems];
             //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
         }
-        // console.log(selectedALLproduct);
-        // console.log(checkedCartItems);
+
         //checking 이 true , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야 , 직접입력후 기입하여야.
         if (checking && selectBox.buyHow !== '' && selectedALLproduct.length > 0) {
             setIsBuyButtonDisabled(false); //BUY 버튼 활성화
@@ -254,25 +268,13 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         }
         setIsModalBuyOpen(true);
 
-        const history = { date: nowDay, item: selectedProduct ? [selectedProduct.id] : [] };
+        //const history = { date: nowDay, item: selectedProduct ? [selectedProduct.id] : [] };
 
         checkedCartItems.map((item) => {
-            history.item.push(item.productId);
+            //history.item.push(item.productId);
         });
-        //복사된 userData 의 history 앞부분에 넣어줌 (unshift)
-        //copyUserData.mypage.history.push(history);
-        // console.log('buyinputBox의 buy 버튼 클릭. history 추가내역');
-        // console.log(copyUserData.mypage.history);
-        //세션 스토리지에 복사된 userData 로 변경..
 
 
-        //장바구니와 선택상품이 일치할경우 장바구니의 목록 삭제
-        //const userBasket = userData.mypage.basket;
-        let cartItemsfilter = []
-        cartItemsfilter = userBasket.filter((item) => {
-            // checkedCartItems 배열에 item.productId와 일치하는 항목이 있는지 확인
-            return !checkedCartItems.some(checkedItem => checkedItem.productId === item.productId);
-        });
 
 
         if (modalContentRef.current) {
@@ -280,8 +282,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         }
 
     }
-    // console.log(userData.mypage.basket);
-    // console.log(checkedCartItems);
+
     //const [selectedAddressIndex, setSelectedAddressIndex] = useState(0); // 선택된 라디오 버튼의 인덱스를 추적
 
     function addressMaker() {
@@ -294,8 +295,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         name='delivery'
                         key={item.recipientName}
                         id={index}
-                        checked={index === 0}
-                        onChange={() => { onChangeAddressing(index); }}
+                        checked={selectedAddressIndex === index} // 현재 선택된 인덱스를 확인
+                        onChange={() => { onChangeAddressing(index); setSelectedAddressIndex(index); }}
                     />
                     <label htmlFor={index}>{item.recipientName}</label>
                 </>
@@ -314,21 +315,13 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 <div className='buyForm'>
                     <label htmlFor="buyID">배송지선택</label>
                     <div className='buyRadioBox'>
-                        {/* <input
-                            type="radio"
-                            name='delivery'
-                            id='basicsAddress'
-                            checked={addressing}
-                            onChange={onChangeAddressing}
-                        />
-                        <label htmlFor="basicsAddress">기본 배송지</label> */}
                         {addressMaker()}
                         <input
                             type="radio"
                             name='delivery'
                             id='newAddress'
-                            //checked={!addressing}
-                            onChange={() => { onChangeAddressing(null, 'new') }}
+                            checked={selectedAddressIndex === 4} 
+                            onChange={() => { onChangeAddressing(null, 'new'); setSelectedAddressIndex(4);}}
                         />
                         <label htmlFor="newAddress">새로운 배송지</label>
                     </div>
@@ -343,8 +336,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         onChange={onChangeUserInfo}
                         className={userInfoError.name ? 'errors' : ''}
                         required
-                    // style={{ borderBottom : userInfoError.name ? '1px solid red' : '1px solid #aaaaaa'
-                    // }}
+
                     />
                     <label htmlFor="phoneNumber">연락처</label>
                     <input
@@ -414,17 +406,24 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         <select name="deliveryMessage" id="deliveryMessage"
                             value={selectBox.deliveryMessage}
                             onChange={onChangeSelectBox}>
-                            <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
-                            <option value="직접배달(부재시 문앞)">대면 배달(부재시 문앞)</option>
-                            <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
-                            <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
-                            <option value="직접입력">직접 입력</option>
+                            
+                                <>
+                                    <option value="직접입력">직접 입력</option>
+                                    <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
+                                    <option value="직접배달(부재시 문앞)">대면 배달(부재시 문앞)</option>
+                                    <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
+                                    <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
+                                </>
+                            
                         </select>
-                        {directInput
-                            && <input type="text"
+                        {directInput &&
+                            <>                            <input type="text"
                                 className={userInfoError.deliveryMessage ? 'directInput errors' : 'directInput'}
 
-                                onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))} />}
+                                onChange={(e) => SetSelectBox((box) => ({ ...box, deliveryMessage: e.target.value }))} />
+                                <button></button>
+                            </>
+                        }
 
                     </div>
                     <label htmlFor="buyHow">결제 수단 선택</label>
@@ -509,7 +508,9 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete userId={userId}
-                        amount={amount} options={option} checkedCartItems={checkedCartItems}
+                        amount={amount}
+                         //options={option} 
+                         checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
                         totalPrice={totalPrice} />

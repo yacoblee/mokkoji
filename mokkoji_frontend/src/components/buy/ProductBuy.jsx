@@ -143,7 +143,7 @@ const ProductBuy = () => {
             //setDto(updateDto);
             setUserCart(cartList);
             if (cartList) {
-                alert("가져오기 성공");
+                //alert("가져오기 성공");
             }
             console.log("성공했니");
             console.log(cartList);

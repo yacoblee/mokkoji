@@ -1,7 +1,7 @@
 import GoodsItems from "../product/ProductObject"
 
 
-const BuyComplete = ({ productPrice, totalPrice, username, options, amount, checkedCartItems, selectedProduct }) => {
+const BuyComplete = ({ productPrice, totalPrice, userId, amount, checkedCartItems, selectedProduct }) => {
     //
     // 숫자를 포맷팅하는 함수
     const formatNumber = (number) => {
@@ -14,14 +14,14 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, amount, chec
             구매리스트
         </p>
         <div className="BuyComplete">
-            {selectedProduct && selectedProduct.name && (
+            {selectedProduct && selectedProduct.productId && (
                 <ul>
                     <li>상품명</li>
-                    <li className="BuyCompleteItem">{selectedProduct.name}</li>
+                    <li className="BuyCompleteItem">{selectedProduct.productName}</li>
                     <li>상품 옵션</li>
-                    <li>{options.contentSelect}</li>
+                    <li>{selectedProduct.optionContent} (+{selectedProduct.optionPrice}원)</li>
                     <li>포장 옵션</li>
-                    <li>{options.packagingSelect}</li>
+                    <li>{selectedProduct.packagingContent} (+{selectedProduct.packagingPrice}원)</li>
                     <li>상품 갯수 </li>
                     <li>{amount}</li>
                     <li>가격</li>
@@ -31,23 +31,23 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, amount, chec
             }
 
             {checkedCartItems.map(item => {
-                const productName = GoodsItems.find(it => it.id === item.productId).name;
+                //const productName = GoodsItems.find(it => it.id === item.productId).name;
 
                 return (<ul className="checkedCartItems">
                     <li>
                         상품명
                     </li>
                     <li className="BuyCompleteItem">
-                        {productName}
+                        {item.productName}
                     </li>
                     <li>상품 옵션</li>
-                    <li>{item.options.contentSelect}</li>
+                    <li>{item.optionContent} (+{item.optionPrice}원)</li>
                     <li>포장 옵션</li>
-                    <li>{item.options.packagingSelect}</li>
+                    <li>{item.packagingContent} (+{item.packagingPrice}원)</li>
                     <li>상품 갯수</li>
-                    <li>{item.count}</li>
+                    <li>{item.productCnt}</li>
                     <li>상품 가격</li>
-                    <li>{formatNumber(item.totalPrice)}</li>
+                    <li>{formatNumber(item.productTotalPrice)}</li>
 
                 </ul>)
             })}
@@ -56,7 +56,7 @@ const BuyComplete = ({ productPrice, totalPrice, username, options, amount, chec
             총 가격 : <span className="TTPrice">{formatNumber(totalPrice)}</span>
         </p>
         <p>
-            {username}님의 결제가 완료되었습니다.
+            {userId}님의 결제가 완료되었습니다.
         </p>
     </div>)
 }
