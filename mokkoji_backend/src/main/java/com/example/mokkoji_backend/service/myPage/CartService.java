@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
+import com.example.mokkoji_backend.domain.ProductBuyDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 
@@ -16,6 +17,12 @@ public interface CartService {
 	int countCart(String userId);
 	
 	void duplicateUpate(Cart cart);
+	
+	Cart findById(CartId id);
+	
+	 ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto);
+	 
+	 List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto);
 
 	void updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount);
 
