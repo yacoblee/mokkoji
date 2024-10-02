@@ -114,7 +114,9 @@ public class FavoritesController {
 	// 2.2) 체크 상품 삭제
 	@DeleteMapping("/favorites")
 //	public ResponseEntity<?> favoritesDeleteMulti(@AuthenticationPrincipal String userId, @RequestBody List<Long> productIdList) {
-	public ResponseEntity<?> favoritesDeleteMulti(@AuthenticationPrincipal String userId, @RequestBody List<Long> productIdList) {
+	public ResponseEntity<?> favoritesDeleteMulti(@RequestHeader("Authorization") String header, @RequestBody List<Long> productIdList) {
+		String userId = getUserIdFromHeader(header);
+
 		// 1. 유효성 검사: productId 목록이 null이거나 비어있을때
 		if (productIdList == null || productIdList.isEmpty()) {
 			log.warn("productId 목록 확인 불가");
@@ -135,7 +137,9 @@ public class FavoritesController {
 				favoritesService.deleteFavorites(favoritesId);
 			}
 
-			return ResponseEntity.ok("favoritesList 삭제 성공");
+			// 4. 삭제 성공 후 다시 List 출력
+			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
+			return ResponseEntity.ok(favoritesDTOList);
 
 		} catch (Exception e) {
 			// 4. deleteFavorite에서 발생한 예외 처리 : favoritesId에 해당하는 항목 없음
