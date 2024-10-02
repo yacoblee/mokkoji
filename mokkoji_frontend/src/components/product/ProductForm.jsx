@@ -248,7 +248,7 @@ const ProductForm = ({ product, userId }) => {
             } catch (error) {
                 //setLike(false);
                 console.log(`insert Like error =>${error.message}`)
-                alert(`insertCart 실패`);
+                alert(`insert Like_ProductForm error =>${error.message}`);
             }
         }
         insertCart();

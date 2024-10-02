@@ -1,4 +1,4 @@
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import '../../css/buy/ProductBuy.css'
 import GoodsItems from '../product/ProductObject';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,7 @@ const ProductBuy = () => {
     //const { userId, product, option, packaging, count, totalPrice } = location.state || {};
     const { productBuy } = location.state || {};
     const token = JSON.parse(sessionStorage.getItem('userData'));
-
+    const navigate = useNavigate();
     const [dto, setDto] = useState(productBuy ? productBuy : {});
     const [userCart, setUserCart] = useState([]);
     //선택된 상품 해당 값 가져오기.
@@ -29,10 +29,10 @@ const ProductBuy = () => {
 
     //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리 -> 선택 옵션 갯수에 대한 관리
     //9.11코드변경
-    const [amount, setAmount] = useState(productBuy.productCnt ? +productBuy.productCnt : 1);
+    const [amount, setAmount] = useState(productBuy ? +productBuy.productCnt : 1);
     //==================================================================금액 관련 state 
     //최종 금액을 바꿀 state (배송비 제외)
-    const [filterPrice, setFilterPrice] = useState(+productBuy.productTotalPrice);
+    const [filterPrice, setFilterPrice] = useState(productBuy ? +productBuy.productTotalPrice : 0);
     //배송비 추가금을 포함한 최종금액 표현.
     const [lastPrice, setLastPrice] = useState(+filterPrice);
     //배송비 문구를 보여줄 state 상태값 (true 면 보여주고 false 면 안보여줄거야)
@@ -183,9 +183,15 @@ const ProductBuy = () => {
         });
         // console.log(checkedCartItems)
     };
-
+    // 조건을 체크하여 리다이렉션하는 로직
+    useEffect(() => {
+        if (!token || !productBuy) {
+            navigate('/');
+        }
+    }, [token, productBuy]);
     //오류 발생을 대비한 방어 코드.
     if (!dto || !productBuy.userId) {
+
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
                 아이템을 찾을 수 없어요

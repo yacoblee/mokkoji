@@ -45,12 +45,16 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             if (addressing.length > 0) {
                 setSelectedAddressIndex(0);
                 setUserInfo({
+                    orderName: user.name || '',
+                    orderPhone: user.phoneNumber || '',
                     name: user.name || '',
                     phoneNumber: user.phoneNumber || '',
                     streetAddress: addressing[0].streetAddress || '',
                     detailedAddress: addressing[0].detailedAddress || '',
                     postalCode: addressing[0].postalCode || ''
                 });
+            } else {
+                setSelectedAddressIndex(4);
             }
             setUserInfoError({
                 name: false,
@@ -76,14 +80,17 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = (index, type) => {
+        console.log(userInfo.orderName);
+    console.log(userInfo.orderPhone);
         if (type === 'new') {
-            setUserInfo({
-                name: '',
-                phoneNumber: '',
-                streetAddress: '',
-                detailedAddress: '',
-                postalCode: ''
-            });
+            setUserInfo((prevState) => ({
+                ...prevState,
+                name: '', // 받는 사람 이름 초기화
+                phoneNumber: '', // 받는 사람 연락처 초기화
+                streetAddress: '', // 주소 초기화
+                detailedAddress: '', // 상세 주소 초기화
+                postalCode: '', // 우편번호 초기화
+            }));
             setUserInfoError({
                 name: true,
                 phoneNumber: true,
@@ -93,13 +100,15 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             })
         } else {
             setSelectedAddressIndex(index);
-            setUserInfo({
+
+            setUserInfo((prevState) => ({
+                ...prevState,
                 name: user.name || '',
                 phoneNumber: user.phoneNumber || '',
                 streetAddress: addressing[index].streetAddress || '',
                 detailedAddress: addressing[index].detailedAddress || '',
                 postalCode: addressing[index].postalCode || ''
-            });
+            }));
             setUserInfoError({
                 name: false,
                 phoneNumber: false,
@@ -119,7 +128,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             [name]: value,
         }));
         // console.log(`Name: ${name}, Value: ${value}, Length: ${value.length}`);
-
+        console.log(userInfo.orderName);
+        console.log(userInfo.orderPhone)
         if (name === 'name') {
             if (value.length < 2 || value.length > 5) {
                 setUserInfoError((error) => ({ ...error, name: true }))
@@ -190,9 +200,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     });
     console.log(`selectBox.deliveryMessage : ${selectBox.deliveryMessage}`)
     console.log(`selectBox.buyHow : ${selectBox.buyHow}`)
-    // useEffect(()=>{
-    //     SetSelectBox((it)=>({...it,deliveryMessage:'문 앞에 놔주세요'}))
-    // },[]);
+
     //직접 입력시 인풋창을 활성화 시킬 state
     const [directInput, setDirectInput] = useState(false);
     // console.log(selectBox.deliveryMessage)
@@ -303,7 +311,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             )
         })
         return box;
-    }
+        }
 
     return (
         <form className='buyBox' onSubmit={onClickBuyButton}>
@@ -320,12 +328,35 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                             type="radio"
                             name='delivery'
                             id='newAddress'
-                            checked={selectedAddressIndex === 4} 
-                            onChange={() => { onChangeAddressing(null, 'new'); setSelectedAddressIndex(4);}}
+                            checked={selectedAddressIndex === 4}
+                            onChange={() => { onChangeAddressing(null, 'new'); setSelectedAddressIndex(4); }}
                         />
                         <label htmlFor="newAddress">새로운 배송지</label>
                     </div>
-                    <label htmlFor="name">성함</label>
+                    <label htmlFor="name">주문자</label>
+                    <input
+                        type="text"
+                        id='orderName'
+                        name="orderName"
+                        //minLength={2}
+                        //maxLength={5}
+                        value={userInfo.orderName}
+                        //onChange={onChangeUserInfo}
+                        readOnly
+                    />
+                    <label htmlFor="name">주문자 연락처</label>
+                    <input
+                        type="text"
+                        id='orderPhone'
+                        name="orderPhone"
+                        //minLength={2}
+                        //maxLength={5}
+                        value={userInfo.orderPhone}
+                        //onChange={onChangeUserInfo}
+                        readOnly
+
+                    />
+                    <label htmlFor="name">받는 사람</label>
                     <input
                         type="text"
                         id='name'
@@ -338,7 +369,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         required
 
                     />
-                    <label htmlFor="phoneNumber">연락처</label>
+                    <label htmlFor="phoneNumber">받는 사람 연락처</label>
                     <input
                         type="text"
                         id='phoneNumber'
@@ -393,6 +424,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
                         />
                     </div>
+
                 </div>
             </div>
             <div className='buyInput'>
@@ -406,15 +438,15 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         <select name="deliveryMessage" id="deliveryMessage"
                             value={selectBox.deliveryMessage}
                             onChange={onChangeSelectBox}>
-                            
-                                <>
-                                    <option value="직접입력">직접 입력</option>
-                                    <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
-                                    <option value="직접배달(부재시 문앞)">대면 배달(부재시 문앞)</option>
-                                    <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
-                                    <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
-                                </>
-                            
+
+                            <>
+                                <option value="직접입력">직접 입력</option>
+                                <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
+                                <option value="직접배달(부재시 문앞)">대면 배달(부재시 문앞)</option>
+                                <option value="벨 누르지 말아주세요">벨 누르지 말아주세요</option>
+                                <option value="도착후 전화주시면 나갈게요">도착후 전화주시면 나갈게요</option>
+                            </>
+
                         </select>
                         {directInput &&
                             <>                            <input type="text"
@@ -509,8 +541,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete userId={userId}
                         amount={amount}
-                         //options={option} 
-                         checkedCartItems={checkedCartItems}
+                        //options={option} 
+                        checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
                         totalPrice={totalPrice} />
