@@ -30,6 +30,7 @@ public class UsersDTO {
 	private String postalCode;
 	private String streetAddress;
 	private String detailedAddress;
+	private int isDefault;
 	private String isAdmin;
 	private String token;
 }
