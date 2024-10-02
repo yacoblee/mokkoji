@@ -104,8 +104,12 @@ public class CartServiceImpl implements CartService {
 		List<ProductBuyDTO> dtoList=new ArrayList<>();;
 		Optional<Cart> cart = cartRepository.findById(cartId);
 		if(cart.isPresent()) {//카트가 존재하면 ,(String userId, long productId, String optionContent, String packagingOptionContent);
-			 list = cartRepository.findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
+			 list = cartRepository.findByExcludingSpecificCart
 					 (dto.getUserId(),dto.getProductId(),dto.getOptionContent(),dto.getPackagingContent());
+			 System.out.println("카트에 있는 상품이네");
+			 for (Cart c : list) {
+				System.out.println(c);
+			}
 		}else  list = cartRepository.findAll();
 		
 		for (Cart entity : list) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import GoodsItems from '../product/ProductObject';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../../service/app-config';
 
 
 //사용할 때 {userData && <BuyBasketList userCart={userData.mypage.basket} />}
@@ -55,40 +56,41 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                 <li>상품정보</li>
                 <li>포장여부</li>
             </ul>
-            {userCart.map((cartItem, index) => {
-                const product = GoodsItems.find(item => item.id === cartItem.productId);
+            {userCart.map((item, index) => {
+                //const product = GoodsItems.find(item => item.id === cartItem.productId);
                 return (
                     <div key={index} className='buyInfo'>
                         <input type="checkBox"
                             checked={checkedItems[index]}
-                            value={cartItem.totalPrice}
+                            value={item.productTotalPrice}
                             onChange={(e) => onChangeCheckBox(index, e)} />
-                        <Link to={`/goods/${product.category}/${product.id}`}
+                        <Link to={`/goods/${item.categoryId}/${item.productId}`}
                             className='deleteName'>
-                            <img src={product.productSrc[0]} alt={product.name}
+                            <img src={`${API_BASE_URL}/resources/productImages/${item.mainImageName}`} alt={item.productName}
                                 className='deleteName' />
                         </Link>
-                        <p className='seletedProudctBuyName'>{product.name}
-                            <Link to={`/goods/${product.category}/${product.id}`}>
-                                <img src={product.productSrc[0]} alt={product.name}
+                        <p className='seletedProudctBuyName'>{item.productName}
+                            <Link to={`/goods/${item.categoryId}/${item.productId}`}>
+                                <img src={`${API_BASE_URL}/resources/productImages/${item.mainImageName}`} alt={item.name}
                                     className='addName img' />
                             </Link>
                         </p>
-                        <p>{formatNumber(product.price)}</p>
+                        <p>{formatNumber(item.productPrice)}</p>
                         <div className='displayFlexColumn justifyEvenly'>
                             <p style={{ display: 'flex', padding: '0 5px' }}>
-                                {cartItem.options.contentSelect}
+                                {item.optionContent}
                             </p>
-                            <span className='highlight2'>{cartItem.count} 개</span>
+                            <span >(+{item.optionPrice}원)</span>
                         </div>
                         <div className='displayFlexColumn justifyEvenly'>
                             <p>
-                                {cartItem.options.packagingSelect}
+                                {item.packagingContent}
                             </p>
-                            <span className='highlight2'>{cartItem.count} 개</span>
+                            <span >(+{item.packagingPrice}원)</span>
                         </div>
                         <p className='priceBox justifySelfEnd'>
-                            총 금액 : <span className='subTTprice'>{formatNumber(cartItem.totalPrice)}</span>
+                        <span className='highlight2'>{item.productCnt} 개</span>
+                            총 금액 : <span className='subTTprice'>{formatNumber(item.productTotalPrice)}</span>
                         </p>
                     </div>
                 );

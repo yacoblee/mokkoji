@@ -29,4 +29,8 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 	// 단품 구매시 장바구니 불러올때 , id를 제외한 나머지 리스트 반환
 	List<Cart> findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
 	(String userId, long productId, String optionContent, String packagingOptionContent);
+	
+	@Query("SELECT c FROM Cart c WHERE NOT (c.userId = :userId AND c.productId = :productId AND c.optionContent = :optionContent AND c.packagingOptionContent = :packagingOptionContent)")
+	List<Cart> findByExcludingSpecificCart(@Param("userId") String userId, @Param("productId") long productId, @Param("optionContent") String optionContent, @Param("packagingOptionContent") String packagingOptionContent);
+
 }

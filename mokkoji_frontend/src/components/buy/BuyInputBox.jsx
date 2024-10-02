@@ -11,29 +11,20 @@ import { apiCall } from "../../service/apiService";
 const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
-    const [addressing, setAddressing] = useState(true);
+    const [addressing, setAddressing] = useState([]);
+    const [user, setUser] = useState({});
     const token = JSON.parse(sessionStorage.getItem('userData'));
     //모달창의 스크롤을 해결하기 위한 Ref
     const modalContentRef = useRef(null);
     //let selectedProductPrice = totalPrice;
     const loadingData = async () => {
         try {
-            const response = await apiCall('/order/users', 'POST', {userId: userId}, token);
-                const { userinfomation } = response.data;
-                setUserInfo({
-                    name: userinfomation.name || '',
-                    phoneNumber: userinfomation.phoneNumber || '',
-                     address: userinfomation.address || '',
-                     addressDetail: userinfomation.addressDetail || '',
-                     zoneCode: userinfomation.zoneCode || ''
-                });
-                setUserInfoError({
-                    name: false,
-                    phoneNumber: false,
-                    addressDetail: false,
-                    zoneCode: false,
-                    deliveryMessage: false,
-                })
+            const response = await apiCall('/order/users', 'POST', { userId: userId }, token);
+            const { userinfomation, addressList } = response.data;
+            console.log(addressList)
+            setAddressing(addressList);
+            setUser(userinfomation);
+
         } catch (error) {
             console.log(`buy input error =>${error.message}`)
         }
@@ -44,60 +35,67 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     const [userInfoError, setUserInfoError] = useState({});
     // console.log(userInfo);
     // 처음 렌더링 시 userInfo를 설정.
-     useEffect(() => {
-    //     if (userId) {
-    //         setUserInfo({
-    //             name: userinfomation.name || '',
-    //             phoneNumber: userinfomation.phoneNumber || '',
-    //              address: userinfomation.address || '',
-    //              addressDetail: userinfomation.addressDetail || '',
-    //              zoneCode: userinfomation.zoneCode || ''
-    //         });
-    //         setUserInfoError({
-    //             name: false,
-    //             phoneNumber: false,
-    //             addressDetail: false,
-    //             zoneCode: false,
-    //             deliveryMessage: false,
-    //         })
-    //     }
-        loadingData();
-     }, [userId]);
+    useEffect(() => {
+        const loadDataAndSetUserInfo = async () => {
+            await loadingData(); // 데이터 로드가 완료될 때까지 기다림
+
+            // addressing이 업데이트된 후 userInfo를 설정
+            if (addressing.length > 0) {
+                setUserInfo({
+                    name: user.name || '',
+                    phoneNumber: user.phoneNumber || '',
+                    streetAddress: addressing[0].streetAddress || '',
+                    detailedAddress: addressing[0].detailedAddress || '',
+                    postalCode: addressing[0].postalCode || ''
+                });
+            }
+
+            setUserInfoError({
+                name: false,
+                phoneNumber: false,
+                detailedAddress: false,
+                postalCode: false,
+                deliveryMessage: false,
+            });
+        };
+
+        loadDataAndSetUserInfo(); // 함수 호출
+    }, []);
 
     //배송지 선택에 따라 input값을 변환.
-    const onChangeAddressing = () => {
-        if (addressing) {
+    const onChangeAddressing = (index, type) => {
+        if (type === 'new') {
             setUserInfo({
                 name: '',
                 phoneNumber: '',
-                address: '',
-                addressDetail: '',
-                zoneCode: ''
+                streetAddress: '',
+                detailedAddress: '',
+                postalCode: ''
             });
             setUserInfoError({
                 name: true,
                 phoneNumber: true,
-                addressDetail: true,
-                zoneCode: true,
+                detailedAddress: true,
+                postalCode: true,
                 // deliveryMessage: false,
             })
         } else {
             setUserInfo({
-                // name: userData.name || '',
-                // phoneNumber: userData.phoneNumber || '',
-                // address: userData.address || '',
-                // addressDetail: userData.addressDetail || '',
-                // zoneCode: userData.zoneCode || ''
+                name: user.name || '',
+                phoneNumber: user.phoneNumber || '',
+                streetAddress: addressing[index].streetAddress || '',
+                detailedAddress: addressing[index].detailedAddress || '',
+                postalCode: addressing[index].postalCode || ''
             });
             setUserInfoError({
                 name: false,
                 phoneNumber: false,
-                addressDetail: false,
-                zoneCode: false,
+                detailedAddress: false,
+                postalCode: false,
             })
         }
-        setAddressing(!addressing);
     };
+    //setAddressing(!addressing);
     // console.log(userInfoError);
 
     //수기로 작성했을때 onChange 이벤트를 통해 value값을 지정.
@@ -126,7 +124,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 setUserInfoError((error) => ({ ...error, phoneNumber: true }));
             }
         }
-        if (name === 'addressDetail') {
+        if (name === 'detailedAddress') {
             if (value.trim().length < 1) {
                 setUserInfoError((error) => ({ ...error, [name]: true }));
             } else {
@@ -157,10 +155,10 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
         setUserInfo((info) => ({
             ...info,
-            zoneCode: data.zonecode,
-            address: fullAddress
+            postalCode: data.zonecode,
+            streetAddress: fullAddress
         }));
-        setUserInfoError((error) => ({ ...error, zoneCode: false }));
+        setUserInfoError((error) => ({ ...error, postalCode: false }));
 
         setIsModalOpen(false);
     };
@@ -255,13 +253,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             SetSelectBox((it) => ({ ...it, deliveryMessage: '문 앞에 놔주세요' }))
         }
         setIsModalBuyOpen(true);
-        // 깊은 복사를 통해 userData 복사
-        //const copyUserData = JSON.parse(JSON.stringify(userData));
-        //const currentDate = new Date();
-        //const nowDay = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
 
-        //history 객체 가공 item 배열에 카트 아이템을 추가(push).
-        // const history = { date: nowDay, item: [selectedProduct.id] };
         const history = { date: nowDay, item: selectedProduct ? [selectedProduct.id] : [] };
 
         checkedCartItems.map((item) => {
@@ -281,14 +273,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             // checkedCartItems 배열에 item.productId와 일치하는 항목이 있는지 확인
             return !checkedCartItems.some(checkedItem => checkedItem.productId === item.productId);
         });
-        // console.log('장바구니 아이템');
-        // console.log(userBasket);
-        // console.log('선택된 아이템');
-        // console.log(checkedCartItems);
-        // console.log('필터된 아이템')
-        // console.log(cartItemsfilter);
-        //copyUserData.mypage.basket = cartItemsfilter;
-        //sessionStorage.setItem('LoginUserInfo', JSON.stringify(copyUserData));
+
 
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
@@ -297,6 +282,27 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     }
     // console.log(userData.mypage.basket);
     // console.log(checkedCartItems);
+    //const [selectedAddressIndex, setSelectedAddressIndex] = useState(0); // 선택된 라디오 버튼의 인덱스를 추적
+
+    function addressMaker() {
+        const box = [];
+        addressing.map((item, index) => {
+            box.push(
+                <>
+                    <input
+                        type="radio"
+                        name='delivery'
+                        key={item.recipientName}
+                        id={index}
+                        checked={index === 0}
+                        onChange={() => { onChangeAddressing(index); }}
+                    />
+                    <label htmlFor={index}>{item.recipientName}</label>
+                </>
+            )
+        })
+        return box;
+    }
 
     return (
         <form className='buyBox' onSubmit={onClickBuyButton}>
@@ -308,20 +314,21 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 <div className='buyForm'>
                     <label htmlFor="buyID">배송지선택</label>
                     <div className='buyRadioBox'>
-                        <input
+                        {/* <input
                             type="radio"
                             name='delivery'
                             id='basicsAddress'
                             checked={addressing}
                             onChange={onChangeAddressing}
                         />
-                        <label htmlFor="basicsAddress">기본 배송지</label>
+                        <label htmlFor="basicsAddress">기본 배송지</label> */}
+                        {addressMaker()}
                         <input
                             type="radio"
                             name='delivery'
                             id='newAddress'
-                            checked={!addressing}
-                            onChange={onChangeAddressing}
+                            //checked={!addressing}
+                            onChange={() => { onChangeAddressing(null, 'new') }}
                         />
                         <label htmlFor="newAddress">새로운 배송지</label>
                     </div>
@@ -356,14 +363,14 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                             <input
                                 type="text"
                                 id='buyAddress1'
-                                name="zoneCode"
+                                name="postalCode"
                                 placeholder='우편번호'
-                                value={userInfo.zoneCode}
+                                value={userInfo.postalCode}
                                 maxLength={5}
                                 readOnly
                                 required
                                 onChange={onChangeUserInfo}
-                                className={userInfoError.zoneCode ? 'errors' : ''}
+                                className={userInfoError.postalCode ? 'errors' : ''}
 
                             />
                             <button
@@ -375,22 +382,22 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         </div>
                         <input
                             type="text"
-                            id='buyAddress2'
-                            value={userInfo.address}
-                            className={userInfoError.zoneCode ? 'errors' : ''}
+                            id='streetAddress'
+                            value={userInfo.streetAddress}
+                            className={userInfoError.postalCode ? 'errors' : ''}
                             readOnly
                             required
 
                         />
                         <input
                             type="text"
-                            id='addressDetail'
-                            name="addressDetail"
-                            value={userInfo.addressDetail}
+                            id='detailedAddress'
+                            name="detailedAddress"
+                            value={userInfo.detailedAddress}
                             onChange={onChangeUserInfo}
                             required
                             placeholder='상세 주소 입력'
-                            className={userInfoError.addressDetail ? 'errors' : ''}
+                            className={userInfoError.detailedAddress ? 'errors' : ''}
 
                         />
                     </div>

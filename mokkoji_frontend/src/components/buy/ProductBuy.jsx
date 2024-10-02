@@ -19,6 +19,8 @@ const ProductBuy = () => {
     const { productBuy } = location.state || {};
     const token = JSON.parse(sessionStorage.getItem('userData'));
 
+    const [dto, setDto] = useState(productBuy ? productBuy : {});
+    const [userCart, setUserCart] = useState([]);
     //선택된 상품 해당 값 가져오기.
     //const product = GoodsItems.find(item => item.category === category && item.id === parseInt(id));
 
@@ -39,10 +41,10 @@ const ProductBuy = () => {
 
     //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
     const calculateTotalPrice = () => {
-        if (!productBuy) return 0; // 선택된 상품이 없으면 0 반환
-        let price = +productBuy.productPrice;
-        let packagingPrice = productBuy.packagingPrice ? +productBuy.packagingPrice : 0;
-        let contentPrice = productBuy.optionPrice ? +productBuy.optionPrice : 0;
+        if (!dto) return 0; // 선택된 상품이 없으면 0 반환
+        let price = +dto.productPrice;
+        let packagingPrice = dto.packagingPrice ? +dto.packagingPrice : 0;
+        let contentPrice = dto.optionPrice ? +dto.optionPrice : 0;
 
         return (price + contentPrice + packagingPrice) * amount;
     }
@@ -57,7 +59,7 @@ const ProductBuy = () => {
         //전체 금액 합산을 위한 reduce를 사용한 최종금액 계산
 
         //1. 장바구니 토탈금액 계산
-        const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        const cartTotalPrice = checkedCartItems.reduce((acc, item) => acc + +item.productTotalPrice, 0);
 
         //2. selectProduct 가 체크 됬을때는 totalPrice를 더하겠다.
         const combinedPrice = (buyCheckBox ? filterPrice : 0) + cartTotalPrice;
@@ -85,8 +87,8 @@ const ProductBuy = () => {
 
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
-
-    }, [amount, checkedCartItems, filterPrice]);
+        console.log(checkedCartItems);
+    }, [dto, userCart, amount, checkedCartItems, filterPrice]);
     //옵션이 바뀌고 나면 업데이트, 카트아이템이 바뀔때 마다 업데이트,
     // 옵션이 바뀌어 filerprice가 바뀌면 업데이트
     //총금액을 그냥 사용하지않고 LastPrice로 이용한 이유는
@@ -128,6 +130,34 @@ const ProductBuy = () => {
     // 장바구니 불러오기 상태 관리
     const [bringUserCart, setBringUserCart] = useState(false);
 
+    // 장바구니를 담을 상태 관리
+    // const [dto, setDto] = useState(productBuy ? productBuy : {});
+    //const [cartList, setCartList] = useState([]);
+    const updateDtoAndCart = async () => {
+        let url = "/order/bringcart"
+        try {
+            console.log(dto);
+            //(url: any, method: any, requestData: any, token: any):
+            const response = await apiCall(url, 'POST', dto, token);
+            const { cartList } = response.data;
+            //setDto(updateDto);
+            setUserCart(cartList);
+            if (cartList) {
+                alert("가져오기 성공");
+            }
+            console.log("성공했니");
+            console.log(cartList);
+        } catch (error) {
+            alert("가져오기 실패");
+
+        }
+    }
+
+    useEffect(() => {
+        updateDtoAndCart();
+    }, [])
+
+
     // 장바구니 불러오기 버튼 클릭 시 총 금액 및 배송비 재계산
     const onClickBringCart = () => {
         setBringUserCart(!bringUserCart);
@@ -136,26 +166,26 @@ const ProductBuy = () => {
         SetCheckedCartItems([])
     }
 
-
-
     // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
     const onChangeChildCheckbox = (isChecked, items) => {
-
-
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
+
         SetCheckedCartItems(prevItems => {
             if (isChecked) {
                 return [...prevItems, items]
             } else {
-                return prevItems.filter(cartItem => cartItem.productId !== items.productId);
+                return prevItems.filter(cartItem =>
+                    !(cartItem.productId === items.productId &&
+                        cartItem.optionContent === items.optionContent &&
+                        cartItem.packagingOptionContent === items.packagingOptionContent)
+                );
             }
-
         });
         // console.log(checkedCartItems)
     };
 
     //오류 발생을 대비한 방어 코드.
-    if (!productBuy || !productBuy.userId) {
+    if (!dto || !productBuy.userId) {
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
                 아이템을 찾을 수 없어요
@@ -188,24 +218,24 @@ const ProductBuy = () => {
                         <input type="checkBox" value={filterPrice}
                             checked={buyCheckBox}
                             onChange={onChangeBuyCheckBox} />
-                        <Link to={`/goods/${productBuy.categoryId}/${productBuy.productId}`}
+                        <Link to={`/goods/${dto.categoryId}/${dto.productId}`}
                             className='deleteName' >
-                            <img src={`${API_BASE_URL}/resources/productImages/${productBuy.mainImageName}`}
-                                className='deleteName' alt={productBuy.productName} />
+                            <img src={`${API_BASE_URL}/resources/productImages/${dto.mainImageName}`}
+                                className='deleteName' alt={dto.productName} />
                         </Link>
-                        <p className='seletedProudctBuyName'>{productBuy.productName}
-                            <Link to={`/goods/${productBuy.categoryId}/${productBuy.productId}`}>
-                                <img src={`${API_BASE_URL}/resources/productImages/${productBuy.mainImageName}`}
-                                    className='addName img' alt={productBuy.productName} />
+                        <p className='seletedProudctBuyName'>{dto.productName}
+                            <Link to={`/goods/${dto.categoryId}/${dto.productId}`}>
+                                <img src={`${API_BASE_URL}/resources/productImages/${dto.mainImageName}`}
+                                    className='addName img' alt={dto.productName} />
                             </Link>
                         </p>
-                        <p>{formatNumber(productBuy.productPrice)}</p>
+                        <p>{formatNumber(dto.productPrice)}</p>
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
-                                    {productBuy.optionContent}
+                                    {dto.optionContent}
                                 </p>
-                                <span >(+{productBuy.optionPrice}원) </span>
+                                <span >(+{dto.optionPrice}원) </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -228,9 +258,9 @@ const ProductBuy = () => {
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
-                                    {productBuy.packagingContent}
+                                    {dto.packagingContent}
                                 </p>
-                                <span >(+{productBuy.packagingPrice}원) </span>
+                                <span >(+{dto.packagingPrice}원) </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -257,8 +287,8 @@ const ProductBuy = () => {
                         </p>
                     </div>
 
-                    {bringUserCart && userData &&
-                        <BuyBasketList userCart={userData.mypage.basket} onChangeChildCheckbox={onChangeChildCheckbox} />}
+                    {bringUserCart && productBuy &&
+                        <BuyBasketList userCart={userCart} onChangeChildCheckbox={onChangeChildCheckbox} />}
                     <div className='totalPrice'>
                         <p>
                             총 금액 :

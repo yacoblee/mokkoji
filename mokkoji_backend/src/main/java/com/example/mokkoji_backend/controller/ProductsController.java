@@ -7,6 +7,7 @@ import com.example.mokkoji_backend.domain.ProductBuyDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.goods.*;
+import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
@@ -17,6 +18,7 @@ import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
+import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -47,6 +49,7 @@ public class ProductsController {
 	private final FavoritesService favService;
 	private final CartService cartService;
 	private final PackagingService packSerivce;
+	private final AddressService addService;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -276,7 +279,7 @@ public class ProductsController {
 						.productCnt(cart.getProductCnt())
 						.productTotalPrice(cart.getProductTotalPrice())
 						.build();
-				
+				dto = cartService.findentityAndNewReturnDto(dto);
 				response.put("productBuy", dto);
 				return ResponseEntity.ok(response);
 			} catch (Exception e) {
@@ -287,21 +290,35 @@ public class ProductsController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
 	}
-	// List<CartDTO> userCart(String userId)
+	//cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
+	// ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto)
 	
-//	@PostMapping("/order/bringCart") //수정중
-//	public ResponseEntity<?> bringCart(@RequestBody CartId cartId){
-//		if(cartService.fi)
-//		return null;
-//	}
-//
+	//  cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
+	//List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto)
+	
+	@PostMapping("/order/bringcart") //수정중
+	public ResponseEntity<?> bringCart(@RequestBody ProductBuyDTO dto){
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			List<ProductBuyDTO > list = cartService.findentityAndNewReturnList(dto);
+			response.put("cartList", list);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");
+		}
+		
+		return ResponseEntity.ok(response);
+	}
+
 	@PostMapping("/order/users")
 	public ResponseEntity<?> userinfomation(@RequestBody UsersDTO entity){
 		Users user = userService.selectOne(entity.getUserId());
-		if(user!=null) {
+		List<Address> addressList = addService.findByuserId(entity.getUserId());
+		if(user!=null && addressList !=null) {
 			Map<String, Object> response = new HashMap<>();
 			response.put("userinfomation", user);
-			System.out.println("*******userEntity =>"+user);
+			response.put("addressList",addressList);
+			System.out.println("*******addressList =>"+addressList);
 			return ResponseEntity.ok(response);
 		}else  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("해당유저 찾지 못함");
 	}
