@@ -19,6 +19,9 @@ function MyPageFlex({ userMain }) {
                     <Link to='/mypage/set'>
                         <button className="MyInfoSetting">내 정보 수정</button>
                     </Link>
+                    <Link to='/mypage/set'>
+                        <button className="MyInfoSetting">주소지 관리</button>
+                    </Link>
                 </div>
 
             </div>
@@ -53,11 +56,12 @@ function MyPageFlex({ userMain }) {
                         <FontAwesomeIcon icon={faHome} />
                     </div>
                     <span>
-                        주소
+                        ({userMain.postalCode})&nbsp;{userMain.streetAddress}
                         <br />
-                        상세주소
+                        {userMain.detailedAddress}
                     </span>
                 </div>
+
             </div>
 
         </div>

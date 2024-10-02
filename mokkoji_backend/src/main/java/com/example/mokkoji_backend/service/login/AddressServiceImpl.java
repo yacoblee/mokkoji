@@ -30,8 +30,10 @@ public class AddressServiceImpl implements AddressService{
 		
 	}
 
-
-
+	@Override
+	public Address findUserAddress(String userId) {
+		return repository.findByUserIdAndIsDefault(userId, 0);
+	}
 
 
 

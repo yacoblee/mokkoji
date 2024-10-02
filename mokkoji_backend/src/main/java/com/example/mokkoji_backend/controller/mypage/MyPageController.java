@@ -1,8 +1,11 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
+import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.repository.login.AddressRepository;
+import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -11,10 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Log4j2
 @RestController
@@ -28,6 +28,8 @@ public class MyPageController {
 	private CartService cartService;
 	@Resource(name = "UsersService")
 	private UsersService usersService;
+	@Resource(name = "AddressService")
+	private AddressService addressService;
 
 	private TokenProvider tokenProvider;
 
@@ -57,6 +59,12 @@ public class MyPageController {
 			int favoritesCnt = favoritesService.countFavorites(users.getUserId());
 			int cartCnt = cartService.countCart(users.getUserId());
 
+			Address address = addressService.findUserAddress(userId);
+
+			String postalCode = address.getPostalCode();
+			String streetAddress  = address.getStreetAddress();
+			String detailedAddress  = address.getDetailedAddress();
+
 			MyPageDTO myPageDTO = MyPageDTO.builder()
 					.userId(users.getUserId())
 					.name(users.getName())
@@ -67,6 +75,9 @@ public class MyPageController {
 					.createdAt(users.getCreatedAt())
 					.favoritesCnt(favoritesCnt)
 					.cartCnt(cartCnt)
+					.postalCode(postalCode)
+					.streetAddress(streetAddress)
+					.detailedAddress(detailedAddress)
 					.build();
 
 			log.info(myPageDTO);
@@ -80,5 +91,18 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userDetail");
 		}
 	} //userDetail
+	
+	// 2) 사용자 정보 수정
+	// 2.1) 이동
+//	@GetMapping("/set")
+//	public ResponseEntity<?> userSet() {
+//
+//	}
+	 
+	// 2.2) 수정
+//	@PostMapping("/set")
+//	public ResponseEntity<?> userSet() {
+//
+//	}
 
 }
