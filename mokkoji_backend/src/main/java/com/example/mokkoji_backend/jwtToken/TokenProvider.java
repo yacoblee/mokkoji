@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import com.example.mokkoji_backend.repository.UsersRepository;
+import com.example.mokkoji_backend.repository.login.UsersRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

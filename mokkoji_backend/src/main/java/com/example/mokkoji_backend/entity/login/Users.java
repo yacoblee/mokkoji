@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,8 +19,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Component
 @Table(name = "users")
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Users {
@@ -45,25 +47,27 @@ public class Users {
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "user_sequence")
-	private int userSequence;
 	
-	@Column(name = "is_withdrawn")
-	private int isWithdrawn;
-	
-	@Column(name = "withdrawal_date")
-	private LocalDateTime withdrawalDate;
-	
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
+    @Column(name = "user_sequence", unique = true, nullable = false)
+    private int userSequence;
+
+    @Column(name = "is_withdrawn", columnDefinition = "int default 0")
+    private int isWithdrawn;
+
+    @Column(name = "withdrawal_date")
+    private LocalDateTime withdrawalDate;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 	
 	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+	private LocalDate createdAt;
 	
-	@Column(name = "block_status")
+	@Column(name = "block_status", columnDefinition = "int default 0")
 	private int blockStatus;
 	
-	@Column(name= "is_admin")
+	@Column(name= "is_admin", columnDefinition = "String default 0")
 	private String isAdmin;
+
 		
 }

@@ -1,4 +1,4 @@
-package com.example.mokkoji_backend.repository;
+package com.example.mokkoji_backend.repository.login;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

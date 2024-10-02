@@ -60,7 +60,7 @@ const Header = () => {
         apiCall(url, 'POST', null, null)
             .then((response) => {
                 sessionStorage.setItem("isLoggedIn", "false");
-                sessionStorage.removeItem("inputId");
+                sessionStorage.removeItem("userData");
                 console.log(response);
                 alert('로그아웃 성공');
                 setIsLoggedIn(false);

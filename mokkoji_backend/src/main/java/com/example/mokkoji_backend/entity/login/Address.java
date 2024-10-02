@@ -1,9 +1,12 @@
 package com.example.mokkoji_backend.entity.login;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,31 +24,31 @@ public class Address {
 
 	@Id
 	@Column(name = "address_id")
-	private int addressId;	
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int addressId;
+
 	@Column(name = "user_id")
-	private String userId;	
-	
+	private String userId;
+
 	@Column(name = "postal_code")
-	private String postalCode;	
-	
+	private String postalCode;
+
 	@Column(name = "street_address")
-	private String streetAddress;	
-	
+	private String streetAddress;
+
 	@Column(name = "detailed_address")
-	private String detailedAddress;	
-	
+	private String detailedAddress;
+
 	@Column(name = "recipient_name")
-	private String recipientName;	
-	
+	private String recipientName = "집"; // 기본값으로 '집' 설정
+
 	@Column(name = "recipient_phone")
-	private String recipientPhone;	
-	
-	@Column(name = "is_default")
-	private int isDefault;	
-	
+	private String recipientPhone;
+
+	@Column(name = "is_default", columnDefinition = "String default 1")
+	private int isDefault;
+
 	@Column(name = "created_at")
-	private LocalDateTime created_at;	
-	
+	private LocalDate created_at;
 
 }

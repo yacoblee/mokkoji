@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.repository.UsersRepository;
+import com.example.mokkoji_backend.repository.login.UsersRepository;
 import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepositoryDSL;
 
 

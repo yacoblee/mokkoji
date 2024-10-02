@@ -567,3 +567,16 @@ VALUES (19, '대',90000);
 UPDATE project.products
 SET product_name='한국 전통 문양 베개 커버', product_price=25000, product_size_info='상품 크기 : 450x450mm', product_guide='* 손세탁 권장', product_main_description='한국 전통 문양이 새겨진 고급 베개 커버입니다.', product_additional_description='인테리어 소품으로 좋은 패키지에 담겨 있습니다.', main_image_name='pictureFlower5.jpg', like_count=0, status=0, stock_count=100, upload_date='2024-09-24 12:29:38', category_id='C3'
 WHERE product_id=13;
+
+
+ALTER TABLE users MODIFY user_sequence INT NOT NULL AUTO_INCREMENT;
+
+WITH ranked_users AS (
+  SELECT user_id, 
+         ROW_NUMBER() OVER (ORDER BY user_id) + (SELECT MAX(user_sequence) FROM users) AS new_sequence
+  FROM users
+  WHERE user_sequence = 0
+)
+UPDATE users u
+JOIN ranked_users ru ON u.user_id = ru.user_id
+SET u.user_sequence = ru.new_sequence;
