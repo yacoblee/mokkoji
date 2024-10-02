@@ -36,7 +36,7 @@ function MyPageMain() {
     }; //myPageMain
 
     useEffect(() => {
-        myPageMain("/mypage")
+        myPageMain("/mypage/user")
     }, [])
 
     return (

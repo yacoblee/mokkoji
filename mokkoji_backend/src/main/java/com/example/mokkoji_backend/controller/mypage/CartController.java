@@ -74,7 +74,7 @@ public class CartController {
 	
 	// 2) 장바구니 수량 수정
 	@GetMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}/{productTotalPrice}")
-	//	public ResponseEntity<?> cartUpdateCount(@AuthenticationPrincipal String userId, ) {
+//	public ResponseEntity<?> cartUpdateCount(@AuthenticationPrincipal String userId, ) {
 	public ResponseEntity<?> cartUpdateCount(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent, @PathVariable int productCnt, @PathVariable int productTotalPrice) {
 		String userId = getUserIdFromHeader(header);
 
@@ -97,7 +97,7 @@ public class CartController {
 	// 3) 장바구니 항목 삭제
 	// 3.1) 개별 삭제
 	@DeleteMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}")
-	//	public ResponseEntity<?> cartDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
+//	public ResponseEntity<?> cartDeleteOne(@AuthenticationPrincipal String userId, @PathVariable long productId) {
 	public ResponseEntity<?> cartDeleteOne(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent) {
 		String userId = getUserIdFromHeader(header);
 		log.info(userId);
