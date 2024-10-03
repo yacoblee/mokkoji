@@ -8,4 +8,6 @@ import com.example.mokkoji_backend.entity.login.Users;
 
 public interface UsersRepository extends JpaRepository<Users, String>{
 	   Optional<Users> findByNameAndPhoneNumber(String name, String phoneNumber);
+	   
+	   Optional<Users> findByUserIdAndPhoneNumber(String userId, String phoneNumber);
 }

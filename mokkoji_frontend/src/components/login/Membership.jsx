@@ -392,7 +392,6 @@ const Membership = () => {
 
                 })
 
-
             navi('/Login');
             alert(`${formData.current.name}님 회원가입을 축하합니다.`);
             setisOkIdChek(false);
@@ -459,7 +458,6 @@ const Membership = () => {
                         <div className='innerclausearea'>
                             <h5>회원가입 약관에 모두 동의 합니다.</h5>
                             <input type='checkbox' name="allCheck" checked={isAllChecked} onChange={(e) => AllCheck(e)} />
-
                         </div>
                     </div>
                     <hr />
@@ -496,8 +494,6 @@ const Membership = () => {
                                 }}
                             />
                             <button
-                                // disabled={!btnAble}
-
                                 type='button'
                                 onClick={IsSameId}
                             >아이디중복 검사</button>

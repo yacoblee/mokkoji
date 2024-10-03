@@ -38,15 +38,6 @@ const FindId = () => {
     }
     //==============
     const pRef = useRef(null)
-    const userFindIdInfo = useRef({
-        username: '',
-        PhoneNumber: ''
-    });
-
-    const userFindIdIdErrors = useRef({
-        username: false,
-        PhoneNumber: false
-    });
 
 
     const [findinguserinfo, setFindinguserinfo] = useState({
@@ -68,16 +59,14 @@ const FindId = () => {
         const isName = checkName.test(nameValue);
         const pwValue = inputPNRef.current.value;
         const isPW = checkPN.test(pwValue);
-
-        console.log("비밀 번호 유효성 검사"+ isPW);    
         
         if (isName== false){
-          alert("이름다시 입력하세요")
+          alert("⚠️ 이름을 다시 입력하세요")
             inputNameRef.current.value='';
             inputPNRef.current.value='';
             return;
         } else if(isPW==false){
-            alert("-를 포함하여 핸드폰 번호를 다시 입력하세요 ")
+            alert("⚠️ -를 포함하여 핸드폰 번호를 다시 입력하세요")
             inputNameRef.current.value='';
             inputPNRef.current.value='';
             return;
@@ -144,7 +133,6 @@ const FindId = () => {
                                         maxLength={4}
                                         name="username"
                                         ref={inputNameRef}
-                                       // onChange={onChangeInputInfo}
                                         onFocus={() => MoveToOutLabel(labeNameRed)}
                                         onBlur={() => MoveToInLabel(labeNameRed, inputNameRef)} />
                                 </div>
@@ -158,7 +146,6 @@ const FindId = () => {
                                         ref={inputPNRef}
                                         name='PhoneNumber'
                                         maxLength={16}
-                                        //onChange={onChangeInputInfo}
                                         onFocus={() => MoveToOutLabel(labelPNRed)}
                                         onBlur={() => MoveToInLabel(labelPNRed, inputPNRef)} />
                                 </div>
