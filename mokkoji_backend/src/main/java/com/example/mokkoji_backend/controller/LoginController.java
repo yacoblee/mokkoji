@@ -79,10 +79,10 @@ public class LoginController {
 	}//membership
 
 	@PostMapping(value = "/Login/selectOne")
-	public ResponseEntity<?> selectOne(@RequestBody UsersDTO usersDTO, Users dto) {
+	public ResponseEntity<?> selectOne(@RequestBody UsersDTO usersDTO, Users entity) {
 		System.out.println("아이디 찾기" + usersDTO);
-		dto = service.selectOne(usersDTO.getUserId());
-		if (dto.getUserId().equals(usersDTO.getUserId())) {
+		entity = service.selectOne(usersDTO.getUserId());
+		if (entity.getUserId().equals(usersDTO.getUserId())) {
 			return ResponseEntity.ok("false");
 		} else {
 			return ResponseEntity.ok("true");
@@ -90,12 +90,29 @@ public class LoginController {
 	}// selectOne
 
 	@PostMapping(value = "/Login/FindId")
-	public ResponseEntity<?> findId(@RequestBody UsersDTO usersDTO, HttpSession session, Users dto) {
-		dto = service.findById(usersDTO.getName(), usersDTO.getPhoneNumber());
-		if (dto != null) {
-			return ResponseEntity.ok(dto.getUserId());
+	public ResponseEntity<?> findId(@RequestBody UsersDTO usersDTO, HttpSession session, Users entity) {
+		entity = service.findById(usersDTO.getName(), usersDTO.getPhoneNumber());
+		if (entity != null) {
+			return ResponseEntity.ok(entity.getUserId());
 		} else {
 			return ResponseEntity.ok("false");
 		}
 	}//findId
+	
+	
+	@PostMapping(value="/Login/FindPw")
+	public ResponseEntity<?> findEmail(@RequestBody UsersDTO usersDTO, Users entity){
+		log.info("비번 찾기 들어옴");
+		entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
+		if(entity!=null) {
+			Users findingUserInfo = Users.builder()
+									.name(entity.getName())
+									.email(entity.getEmail())
+									.build();
+			return ResponseEntity.ok(findingUserInfo);
+		}else {
+			return ResponseEntity.ok("false");
+		}
+	}//findPw
+	
 }

@@ -17,4 +17,8 @@ public interface UsersService {
 	
 	// ** findById
 	Users findById(String name, String phonNumber);
+	
+	
+	//** 유저 이메일 반환 
+	Users findByUserIdAndPhoneNumber(String userId, String phonNumber);
 }
