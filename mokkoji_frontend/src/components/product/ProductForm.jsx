@@ -185,7 +185,7 @@ const ProductForm = ({ product, userId }) => {
             console.log(`${sendBasket.productCnt}`);
             console.log(`${sendBasket.productTotalPrice}`);
             try {
-                const response = await apiCall(`/orderpage`, 'POST', sendBasket, token);
+                const response = await apiCall(`/order/page`, 'POST', sendBasket, token);
                 const { product, option, packaging, productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
                 //setLike(liked);
                 //alert(message);

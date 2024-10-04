@@ -3,11 +3,15 @@ package com.example.mokkoji_backend.service.orders;
 import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.entity.orders.OrdersDetail;
 import com.example.mokkoji_backend.repository.orders.OrdersDetailRepository;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("OrdersDetailService")
+@AllArgsConstructor
 public class OrdersDetailServiceImpl implements OrdersDetailService {
 
 	OrdersDetailRepository ordersDetailRepository;

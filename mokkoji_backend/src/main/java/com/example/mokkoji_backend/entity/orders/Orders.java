@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,7 @@ public class Orders{
 
 	@Id
 	@Column(name = "purchase_number")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int purchaseNumber;
 	//@Id
 	@Column(name = "user_id")

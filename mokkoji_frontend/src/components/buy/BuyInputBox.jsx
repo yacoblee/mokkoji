@@ -328,7 +328,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
             const orderData = {
                 userId: userId,
-                purchaseNumber: formattedDate,
+                //purchaseNumber: formattedDate,
                 total: totalPrice,
                 method: selectBox.buyHow,
                 purchaseStatus: 1,
@@ -344,7 +344,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             try {
                 let requestData = {
                     addressList: currentAddressing,
-                    orderData: orderData,
+                    order: orderData,
                     cartList: selectedALLproduct,
                     purchaseAddress: purchaseAddress
                 };

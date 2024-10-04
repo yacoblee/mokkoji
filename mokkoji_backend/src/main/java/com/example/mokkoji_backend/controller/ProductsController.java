@@ -15,34 +15,26 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.OrderRequestDTO;
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
-import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
-import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
-import com.example.mokkoji_backend.entity.orders.Orders;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
-import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
-import com.example.mokkoji_backend.service.orders.OrdersDetailService;
-import com.example.mokkoji_backend.service.orders.OrdersService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -62,10 +54,10 @@ public class ProductsController {
 	private final TokenProvider provider;
 	private final FavoritesService favService;
 	private final CartService cartService;
-	private final PackagingService packSerivce;
-	private final AddressService addService;
-	private final OrdersService orderService;
-	private final OrdersDetailService orderDetailSerivce;
+//	private final PackagingService packSerivce;
+//	private final AddressService addService;
+//	private final OrdersService orderService;
+//	private final OrdersDetailService orderDetailSerivce;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -260,101 +252,65 @@ public class ProductsController {
 	}
 	
 	// ------------구매 페이지 전환
-	@PostMapping("/orderpage")
-	public ResponseEntity<?> orderPage(@RequestBody Cart cart){
-		Map<String, Object> response = new HashMap<>();
-		
-		
-		//Packaging packagingEntity = packSerivce.findById(packagingId);
-		if(cart!=null) {
-			try {		
-				System.out.println("*****Cart entity => "+cart);
-	
-				//CartDTO dto = cartService.entityToDto(cart);
-				CartDTO dto = cartService.findentityAndNewReturnDto(cart);
-				response.put("productBuy", dto);
-				return ResponseEntity.ok(response);
-			} catch (Exception e) {
-	
-				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
-			}
-
-		}
-		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
-	}
+//	@PostMapping("/order/page")
+//	public ResponseEntity<?> orderPage(@RequestBody Cart cart){
+//		Map<String, Object> response = new HashMap<>();
+//		
+//		
+//		//Packaging packagingEntity = packSerivce.findById(packagingId);
+//		if(cart!=null) {
+//			try {		
+//				System.out.println("*****Cart entity => "+cart);
+//	
+//				//CartDTO dto = cartService.entityToDto(cart);
+//				CartDTO dto = cartService.findentityAndNewReturnDto(cart);
+//				response.put("productBuy", dto);
+//				return ResponseEntity.ok(response);
+//			} catch (Exception e) {
+//	
+//				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
+//			}
+//
+//		}
+//		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
+//	}
 	//cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
 	// ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto)
 	
 	//  cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
 	//List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto)
 	
-	@PostMapping("/order/bringcart") //수정중
-	public ResponseEntity<?> bringCart(@RequestBody CartDTO dto){
-		Map<String, Object> response = new HashMap<>();
-		
-		try {
-			List<CartDTO> list = cartService.findentityAndNewReturnList(dto);
-			response.put("cartList", list);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");
-		}
-		
-		return ResponseEntity.ok(response);
-	}
+//	@PostMapping("/order/bringcart") //수정중
+//	public ResponseEntity<?> bringCart(@RequestBody CartDTO dto){
+//		Map<String, Object> response = new HashMap<>();
+//		
+//		try {
+//			List<CartDTO> list = cartService.findentityAndNewReturnList(dto);
+//			response.put("cartList", list);
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");
+//		}
+//		
+//		return ResponseEntity.ok(response);
+//	}
 
-	@PostMapping("/order/users")
-	public ResponseEntity<?> userinfomation(@RequestBody UsersDTO entity){
-		Users user = userService.selectOne(entity.getUserId());
-		List<Address> addressList = addService.findByuserId(entity.getUserId());
-		if(user!=null && addressList !=null) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("userinfomation", user);
-			response.put("addressList",addressList);
-			System.out.println("*******addressList =>"+addressList);
-			return ResponseEntity.ok(response);
-		}else  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("해당유저 찾지 못함");
-	}
-	@PostMapping("/order/buy")
-	public ResponseEntity<?> buyNow(@RequestBody OrderRequestDTO request){
-		List<Address> addr = request.getAddressList();
-		Orders order = request.getOrder();
-		List<CartDTO> cart= request.getCartList();
-		Address purchaseAddress = request.getPurchaseAddress();
-		System.out.println("*****************s구매 들어옴 ?");
-		
-		
-		if(addr.size()>3) {
-			Address add= addr.get(2);
-			addService.deleteById(add.getAddressId());
-			addr.remove(2);
-			System.out.println("두개 이상.");
-			
-		}
-		for (Address add : addr) {
-			addService.register(add);
-
-		}
-		if(cart!=null) {
-			cartService.removeIfExists(cart);			
-		}
-		if(order!=null) {
-			System.out.println(order);
-		}
-		if(purchaseAddress!=null) {
-			try {
-				purchaseAddress = addService.findByUserIdAndLocationName(purchaseAddress.getUserId(), purchaseAddress.getLocationName());
-				System.out.println("************************");
-				System.out.println(purchaseAddress);
-				order.setAddressId(purchaseAddress.getAddressId());
-				order = orderService.insertOrders(order);
-				orderDetailSerivce.insertDtoList(cart,order.getPurchaseNumber() );
-				
-			} catch (Exception e) {
-				System.out.println("주소찾기 실패: " + e.getMessage());
-			}
-		}
-		
-		return null;
-	}
-	
+//	@PostMapping("/order/users")
+//	public ResponseEntity<?> userinfomation(@RequestBody UsersDTO entity){
+//		Users user = userService.selectOne(entity.getUserId());
+//		List<Address> addressList = addService.findByuserId(entity.getUserId());
+//		if(user!=null && addressList !=null) {
+//			Map<String, Object> response = new HashMap<>();
+//			response.put("userinfomation", user);
+//			response.put("addressList",addressList);
+//			System.out.println("*******addressList =>"+addressList);
+//			return ResponseEntity.ok(response);
+//		}else  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("해당유저 찾지 못함");
+//	}
+//	@PostMapping("/order/buy")
+//	public ResponseEntity<?> buyNow(@RequestBody OrderRequestDTO request){
+//		orderService.buyList(request);
+//		
+//		return null;
+//	}
+//	
 }
