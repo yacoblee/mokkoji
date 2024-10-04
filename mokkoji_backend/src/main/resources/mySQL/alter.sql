@@ -37,3 +37,8 @@ WITH ranked_users AS (SELECT user_id,
 UPDATE users u
     JOIN ranked_users ru ON u.user_id = ru.user_id
 SET u.user_sequence = ru.new_sequence;
+
+-- 효윤 10.04
+ALTER TABLE project.address CHANGE recipient_name `location_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '받는곳';
+ALTER TABLE project.address MODIFY COLUMN `location_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '받는곳';
+ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
