@@ -1,0 +1,230 @@
+.MyCartList {
+    display: flex;
+    flex-direction: column;
+    word-break: keep-all;
+}
+
+.MyReviewsHeader {
+    border-bottom: 1px solid #000;
+    background-color: #d0c0a058;
+    height: 40px;
+}
+
+.MyReviewsFooter {
+    border-top: 1px solid #000;
+    background-color: #d0c0a008;
+    height: 40px;
+}
+
+.MyCartPhoto img {
+    width: 100px;
+    height: 100px;
+}
+
+.MyCartReviews>div {
+    padding: 10px;
+}
+
+.MyCartInfo *,
+.MyCartDetail * {
+    padding: 10px;
+}
+
+
+.MyCartButton {
+    padding: 0;
+}
+
+.MyCartButton button,
+.SelectBuyButton {
+    width: 130px;
+    height: 30px;
+    padding: 0;
+    margin: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.MyCartCount input {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    border: none;
+}
+
+.MyCartCount img {
+    height: 30px;
+    padding: 10px;
+}
+
+.MyCartReviews {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 150px;
+}
+
+.MyCartReviews:nth-last-child(2) {
+    border: none;
+}
+
+.MyCartCount,
+.MyProductCount {
+    display: flex;
+    align-items: center;
+}
+
+.MyCartCount {
+    flex-direction: column;
+}
+
+.MyProductCount {
+    border: 1px solid;
+    margin: 5px;
+}
+
+.buttonChange,
+.SelectBuyButton {
+    background-color: deepskyblue;
+    color: white;
+}
+
+.TextNoItems * {
+    text-align: center;
+    margin: 5%;
+}
+
+.TextNoItems a {
+    text-decoration: underline;
+}
+
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1351px) {
+
+    .MyReviewsHeader,
+    .MyReviewsFooter,
+    .MyCartReviews {
+        display: grid;
+        grid-template-columns: 50px 130px 1fr 2fr 180px;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .MyCartInfo {
+        text-align: initial;
+        align-items: initial;
+    }
+}
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:520px) and (max-width:1350px) {
+    .MyCartReviews {
+        display: grid;
+        grid-template-areas:
+            "check photo photo"
+            "check info info"
+            "check detail count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        height: initial;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyReviewsHeader,
+    .MyReviewsFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartCheck {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .MyCartPhoto {
+        grid-area: photo;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartInfo {
+        grid-area: info;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartDetail {
+        grid-area: detail;
+    }
+
+    .MyCartCount {
+        grid-area: count;
+    }
+
+    .MyCartButton {
+        grid-area: button;
+    }
+
+    .SelectBuyButton {
+        grid-area: buy;
+    }
+
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width:519px) {
+    .MyCartReviews {
+        display: grid;
+        grid-template-areas:
+            "check photo photo"
+            "check info info"
+            "check detail count"
+            "check button button";
+        grid-template-columns: 50px 1fr 1fr;
+        height: initial;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyReviewsHeader,
+    .MyReviewsFooter {
+        display: grid;
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr 180px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .MyCartCheck {
+        grid-area: check;
+        grid-row: 1 / 5;
+    }
+
+    .MyCartPhoto {
+        grid-area: photo;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartInfo {
+        grid-area: info;
+        grid-column: 2 / 4;
+    }
+
+    .MyCartDetail {
+        grid-area: detail;
+    }
+
+    .MyCartCount {
+        grid-area: count;
+    }
+
+    .MyCartButton {
+        grid-area: button;
+    }
+
+    .SelectBuyButton {
+        grid-area: buy;
+    }
+
+}

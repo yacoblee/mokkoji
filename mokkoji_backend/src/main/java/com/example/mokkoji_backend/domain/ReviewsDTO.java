@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class ReviewsDTO {
 	private String productName;
 
 	private String reviewContent;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime reviewDate;
 	private boolean likeDislike;
 	private String reviewPhoto;
