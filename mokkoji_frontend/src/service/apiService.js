@@ -61,7 +61,7 @@ export async function apiCall(url, method, requestData, token) {
         } else
           return Promise.reject(err.response.status);
       */
-      return Promise.reject(err.response.status);
+      return Promise.reject(err.response);
       // => Promise.reject(err) 의 인자 err 은 객체형이 아니고, 문자형 단일값만
       //    전달하기때문에 필요한 정보 (err.response.status) 만 전달함
     }); //catch

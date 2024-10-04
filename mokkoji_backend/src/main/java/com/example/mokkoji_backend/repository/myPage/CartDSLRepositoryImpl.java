@@ -1,15 +1,15 @@
 package com.example.mokkoji_backend.repository.myPage;
 
-import org.springframework.data.repository.query.Param;
+import static com.example.mokkoji_backend.entity.myPage.QCart.cart;
+
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
-import static com.example.mokkoji_backend.entity.myPage.QCart.cart;
-
-import java.util.List;
 //import static com.example.mokkoji_backend.entity.goods.QProducts.products;
 @Repository
 @RequiredArgsConstructor

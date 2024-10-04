@@ -262,7 +262,7 @@ const Membership = () => {
                 console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
 
 
-                if (response.data === false) {
+                if (response.data === false && response.status===200) {
                     alert('⚠️ 동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
                     setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
                         inputR.current.value = ''; // 값 비우기
@@ -277,21 +277,32 @@ const Membership = () => {
                     }, 0);
                     formErrors.current.userId = false;
                     setisOkIdChek(false);
-                } else if (response.data === true) {
-                    alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
-                    formErrors.current.userId = true;
-                    setisOkIdChek(true);
-                }
+                } 
 
             }).catch((err) => {
-                console.log("아이디 중복검사 중 오류 발생:", err);
+             const errStatus = err.status
 
-                // 오류 발생 시 응답 객체에서 상태 코드를 확인
-                if (err.response) {
-                    console.log("아이디 중복검사 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
-                } else {
-                    console.log("아이디 중복검사 응답 객체에 상태 코드가 없습니다:", err.message);
-                }
+             if(errStatus === 502){
+                alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
+                formErrors.current.userId = true;
+                setisOkIdChek(true);
+             } else if (errStatus === 500 || errStatus === 404 ){
+                alert('⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요');
+                setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                    inputR.current.value = ''; // 값 비우기
+                }, 0);
+                formErrors.current.userId = false;
+                setisOkIdChek(false);
+             } else{
+                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 " , err.message);
+                alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                    inputR.current.value = ''; // 값 비우기
+                }, 0);
+                formErrors.current.userId = false;
+                setisOkIdChek(false);
+            }
+
             })
 
     }
@@ -381,20 +392,19 @@ const Membership = () => {
             const data = formData.current;
             apiCall(url, 'POST', data, null)
                 .then((response) => {
-                    console.log("API 호출 성공:", response);  // 응답 전체 출력
-                    console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
-
+           
+                    alert(`${formData.current.name}님 회원가입을 축하합니다.`);
+                    navi('/Login');
+                    setisOkIdChek(false);
 
                 }).catch((err) => {
-                    console.log("회원가입 중 오류 발생:", err);
-                    console.log("오류 응답 상태 코드:", response.status);  // 상태 코드 출력
-                    console.log("응답 객체에 상태 코드가 없습니다:", response);
+                   if(err.status === 502 || err.status === 500 ||   err.status === 404){
+                    alert("⚠️ 네트워크 에러로 인해 회원 가입을 다시 진행해주세요");
+                    navi('/Login/Membership');
+                   }
 
                 })
 
-            navi('/Login');
-            alert(`${formData.current.name}님 회원가입을 축하합니다.`);
-            setisOkIdChek(false);
 
         }
         else if (isOkIdChek === false) {
@@ -597,7 +607,7 @@ const Membership = () => {
                             ref={birtydayR}
                             onChange={getInputInfo}
                             style={{
-                                borderBottom: formErrors.current.name === false ? '1px solid red' : '1px solid #aaaaaa'
+                                borderBottom: formErrors.current.birthDate === false ? '1px solid red' : '1px solid #aaaaaa'
                             }}
                         />
 

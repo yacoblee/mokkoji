@@ -27,10 +27,14 @@ public class UsersDTO {
 	private LocalDateTime updatedAt;
 	private LocalDate createdAt;
 	private int blockStatus;
+	private String isAdmin;
+	private String token;
+	
 	private String postalCode;
 	private String streetAddress;
 	private String detailedAddress;
 	private int isDefault;
-	private String isAdmin;
-	private String token;
+	private String locationName;
+	private String recipientName;
+	private String recipientPhone;
 }

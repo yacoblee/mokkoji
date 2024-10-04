@@ -79,13 +79,8 @@ const FindId = () => {
         .then((response)=>{
             console.log("아이디 찾기 API 호출 성공:", response);  // 응답 전체 출력
             console.log("아이디 찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
-           if(response.data==false){
-            pRef.current.style.visibility = 'hidden';
-            pRef2.current.style.visibility='hidden';
-            inputNameRef.current.value='';
-            inputPNRef.current.value='';
-            alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.')
-           } else{
+
+            if(response.status === 200){
                     setFindinguserinfo({
                     findingName: inputNameRef.current.value,
                     findingId: response.data
@@ -93,13 +88,27 @@ const FindId = () => {
                 pRef.current.style.visibility = 'visible'
                 pRef2.current.style.visibility = 'visible'
            }
-        }).catch((err)=>{  console.log("아이디 찾기  중 오류 발생:", err);
-
-            // 오류 발생 시 응답 객체에서 상태 코드를 확인
-            if (err.response) {
-                console.log("아이디 찾기  오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
-            } else {
-                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다:", err.message);
+        }).catch((err)=>{    
+            console.log("아이디 찾기 중 오류발생 ", err);
+            const errCode = err.data
+            const errStatus = err.status;
+            console.log(errCode);
+            if(errStatus === 502){
+                pRef.current.style.visibility = 'hidden';
+                pRef2.current.style.visibility='hidden';
+                inputNameRef.current.value='';
+                inputPNRef.current.value='';
+                alert(errCode);
+            }
+            else if (errStatus === 500 || errStatus === 404 ){
+                pRef.current.style.visibility = 'hidden';
+                pRef2.current.style.visibility='hidden';
+                inputNameRef.current.value='';
+                inputPNRef.current.value='';
+                alert("⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요");
+            } else{
+                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 " , err.message);
+                alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
             }
         })
     };

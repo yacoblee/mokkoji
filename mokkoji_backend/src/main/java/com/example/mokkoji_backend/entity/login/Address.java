@@ -33,11 +33,14 @@ public class Address {
 	@Column(name = "detailed_address")
 	private String detailedAddress;
 
-	@Column(name = "recipient_name")
-	private String recipientName = "집"; // 기본값으로 '집' 설정
+	@Column(name = "location_name")
+	private String locationName = "집"; // 기본값으로 '집' 설정
 
+	@Column(name = "recipientName")
+	private String recipientName; 
+	
 	@Column(name = "recipient_phone")
-	private String recipientPhone;
+	private String recipientPhone = " ";
 
 	@Column(name = "is_default")
 	private int isDefault = 0;
