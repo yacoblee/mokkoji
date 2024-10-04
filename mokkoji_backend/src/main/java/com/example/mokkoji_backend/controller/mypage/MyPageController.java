@@ -73,6 +73,7 @@ public class MyPageController {
 					.phoneNumber(users.getPhoneNumber())
 					.email(users.getEmail())
 					.createdAt(users.getCreatedAt())
+					.updatedAt(users.getUpdatedAt())
 					.favoritesCnt(favoritesCnt)
 					.cartCnt(cartCnt)
 					.postalCode(postalCode)

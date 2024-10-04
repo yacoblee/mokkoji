@@ -161,7 +161,6 @@ public class CartController {
 		}
 
 		try {
-
 			// 3. cartId에 대해 삭제 실행 : 반복문 사용
 			for (CartId cartId : cartIdList) {
 				cartService.deleteCart(cartId);

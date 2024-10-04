@@ -18,6 +18,8 @@ import MyPageUser from './MyPageUser';
 function MyPageMain() {
 
     const [userMain, setUserMain] = useState([]);
+    const [favoritesCnt, setFavoritesCnt] = useState();
+    const [cartCnt, setCartCnt] = useState();
 
     // myPage로 넘어갈때 로그인된 사용자의 상세 정보를 담아서 이동
     const myPageMain = (url) => {
@@ -26,6 +28,8 @@ function MyPageMain() {
             .then((response) => {
                 //alert(`** myPageMain 성공 url=${url}`);
                 setUserMain(response.data);
+                setFavoritesCnt(response.data.favoritesCnt);
+                setCartCnt(response.data.cartCnt);
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
@@ -47,7 +51,7 @@ function MyPageMain() {
                 </div>
             </h1>
 
-            <MyPageGrid userMain={userMain} />
+            <MyPageGrid favoritesCnt={favoritesCnt} cartCnt={cartCnt} />
 
             <Routes>
                 <Route path='/*' element={<MyPageUser userMain={userMain} />} />

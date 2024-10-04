@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import { apiCall } from '../../service/apiService';
 
-function MyPageGrid({ userMain }) {
+function MyPageGrid({ favoritesCnt, cartCnt }) {
 
     return (
         <div className='MyGrid'>
@@ -14,7 +14,7 @@ function MyPageGrid({ userMain }) {
                 <div className='MyLike'>
                     <div className='IconLike'>
                         <FontAwesomeIcon icon={faHeartCirclePlus} />
-                        {userMain.favoritesCnt}
+                        {favoritesCnt}
                     </div>
                     <span>찜목록</span>
                 </div>
@@ -23,7 +23,7 @@ function MyPageGrid({ userMain }) {
                 <div className='MyCart'>
                     <div className='IconCart'>
                         <FontAwesomeIcon icon={faCartShopping} />
-                        {userMain.cartCnt}
+                        {cartCnt}
                     </div>
                     <span>장바구니</span>
                 </div>
