@@ -3,6 +3,11 @@ package com.example.mokkoji_backend.service.login;
 
 import java.util.Optional;
 
+import com.example.mokkoji_backend.domain.MyPageDTO;
+import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.entity.login.Address;
+import com.example.mokkoji_backend.service.myPage.CartService;
+import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +28,10 @@ public class UsersServiceImpl implements UsersService {
 	private final UsersRepository repository;
 	@Autowired
 	private Users users;
+
+	private final FavoritesService favoritesService;
+	private final CartService cartService;
+	private final AddressService addressService;
 
 	@Override
 	public Users selectOne(String id) {
@@ -73,5 +82,38 @@ public class UsersServiceImpl implements UsersService {
 	        return emptyUser;
 	    }
 	}//findByUserIdAndPhoneNumber
+
+
+	// *** 마이페이지에서 사용 =====================================================
+	@Override
+	public MyPageDTO findUser(String userId) {
+		Users users = repository.findByUserId(userId);
+
+		int favoritesCnt = favoritesService.countFavorites(users.getUserId());
+		int cartCnt = cartService.countCart(users.getUserId());
+
+		Address address = addressService.findUserHomeAddress(userId);
+
+		return MyPageDTO.builder()
+				.userId(users.getUserId())
+				.name(users.getName())
+				.birthDate(users.getBirthDate())
+				.gender(users.getGender())
+				.phoneNumber(users.getPhoneNumber())
+				.email(users.getEmail())
+				.createdAt(users.getCreatedAt())
+				.updatedAt(users.getUpdatedAt())
+				.favoritesCnt(favoritesCnt)
+				.cartCnt(cartCnt)
+				.postalCode(address.getPostalCode())
+				.streetAddress(address.getStreetAddress())
+				.detailedAddress(address.getDetailedAddress())
+				.build();
+	}
+
+	@Override
+	public void updateUser(String userId, String phoneNumber, String email) {
+		repository.updateUser(userId, phoneNumber, email);
+	}
 
 }

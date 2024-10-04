@@ -14,5 +14,5 @@ public interface AddressService {
 
 
 	// ** 마이페이지에서 사용
-	Address findUserAddress(String userId);
+	Address findUserHomeAddress(String userId);
 }

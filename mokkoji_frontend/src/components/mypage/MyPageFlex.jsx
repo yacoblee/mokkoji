@@ -3,8 +3,6 @@ import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageUser.css';
 
-// import userInfo from "../login/UserInforData";
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,9 +15,9 @@ function MyPageFlex({ userMain }) {
 
                 <div className="MyInfoSet">
                     <Link to='/mypage/set'>
-                        <button className="MyInfoSetting">내 정보 수정</button>
+                        <button className="MyInfoSetting">회원정보 관리</button>
                     </Link>
-                    <Link to='/mypage/set'>
+                    <Link to='/mypage/address'>
                         <button className="MyInfoSetting">주소지 관리</button>
                     </Link>
                 </div>

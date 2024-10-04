@@ -88,7 +88,7 @@ public class FavoritesController {
 		// 1. 유효성 검사: favoritesId가 null일 때
 		if (favoritesId == null) {
 			log.warn("favoritesId 확인 불가");
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("favoritesId 확인 불가");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("favoritesId 확인 불가");
 		}
 
 		try {
@@ -119,7 +119,7 @@ public class FavoritesController {
 		// 1. 유효성 검사: productId 목록이 null이거나 비어있을때
 		if (productIdList == null || productIdList.isEmpty()) {
 			log.warn("productId 목록 확인 불가");
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("productId 목록 확인 불가");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("productId 목록 확인 불가");
 		}
 
 		// 2. favoritesId에 대한 List 생성 : 반복문 사용
