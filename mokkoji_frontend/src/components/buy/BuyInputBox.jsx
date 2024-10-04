@@ -293,7 +293,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     detailedAddress: userInfo.detailedAddress,
                     isDefault: addressing.length >= 3 ? addressing.length - 1 : addressing.length,
                     postalCode: userInfo.postalCode,
-                    recipientName: `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`,
+                    locationName: `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`,
+                    recipientName: userInfo.orderName,
                     recipientPhone: userInfo.orderPhone,
                     streetAddress: userInfo.streetAddress,
                     userId: userId
@@ -302,9 +303,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 // 상태 업데이트가 완료될 때까지 기다립니다.
                 const updatedAddressing = await new Promise((resolve) => {
                     setAddressing((oldData) => {
-                        const updatedAddress = addressing.length >= 3
-                            ? [...oldData.slice(1), newData]
-                            : [...oldData, newData];
+                        const updatedAddress =
+                            [...oldData, newData];
                         resolve(updatedAddress); // 업데이트 완료 후 Promise 해제
                         return updatedAddress;
                     });
@@ -355,12 +355,12 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     <input
                         type="radio"
                         name='delivery'
-                        key={item.recipientName}
+                        key={item.locationName}
                         id={'addr_' + index}
                         checked={selectedAddressIndex === index} // 현재 선택된 인덱스를 확인
                         onChange={() => { onChangeAddressing(index); setSelectedAddressIndex(index); }}
                     />
-                    <label htmlFor={index}>{item.recipientName}</label>
+                    <label htmlFor={index}>{item.locationName}</label>
                 </>
             )
         })

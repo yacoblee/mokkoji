@@ -35,7 +35,19 @@ public class AddressServiceImpl implements AddressService{
 		return repository.findByUserIdAndIsDefault(userId, 0);
 	}
 
-
+	@Override
+	public void deleteById(int id) {
+		repository.deleteById(id);
+//		try { 
+//			List<Address> entities =  findByuserId(userId);
+//			for (Address add : entities) {
+//			}
+//			System.out.println("AddressServiceImpl_deleteById 성공");
+//		} catch (Exception e) {
+//			System.out.println("AddressServiceImpl_deleteById 실패");
+//		}
+		 //repository.deleteById(addressId);
+	}
 
 	
 }

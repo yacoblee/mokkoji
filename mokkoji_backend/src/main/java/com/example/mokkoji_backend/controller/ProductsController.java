@@ -315,14 +315,21 @@ public class ProductsController {
 		List<Address> addr = request.getAddressList();
 		//Orders order = request.getOrder();
 		List<CartDTO> cart= request.getCartList();
-		System.out.println("구매 들어옴 ?");
+		System.out.println("*****************s구매 들어옴 ?");
+		
+		
+		if(addr.size()>3) {
+			Address add= addr.get(2);
+			addService.deleteById(add.getAddressId());
+			addr.remove(2);
+			System.out.println("두개 이상.");
+			
+		}
 		for (Address add : addr) {
-			System.out.println(add);
+			addService.register(add);
+
 		}
-		System.out.println("상품 정보 ?");
-		for (CartDTO c : cart) {
-			System.out.println(c);
-		}
+
 		return null;
 	}
 	
