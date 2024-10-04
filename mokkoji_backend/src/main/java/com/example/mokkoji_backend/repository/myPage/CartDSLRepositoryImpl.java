@@ -1,6 +1,6 @@
 package com.example.mokkoji_backend.repository.myPage;
 
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.mokkoji_backend.entity.myPage.Cart;
