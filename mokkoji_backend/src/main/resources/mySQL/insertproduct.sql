@@ -580,3 +580,6 @@ WITH ranked_users AS (
 UPDATE users u
 JOIN ranked_users ru ON u.user_id = ru.user_id
 SET u.user_sequence = ru.new_sequence;
+
+ALTER TABLE users MODIFY phone_number VARCHAR(20);
+ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';

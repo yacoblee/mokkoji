@@ -1,73 +1,94 @@
 package com.example.mokkoji_backend.service.login;
 
-import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.repository.login.UsersRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.entity.login.Address;
+import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.repository.login.AddressRepository;
+import com.example.mokkoji_backend.repository.login.UsersRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service("UsersService")
 @RequiredArgsConstructor
+@Transactional
 @Log4j2
 public class UsersServiceImpl implements UsersService {
 
-	@Autowired
-	private final UsersRepository repository;
-	@Autowired
-	private Users users;
+	private final UsersRepository userRepository;
+	// private final Users users;
+	private final AddressRepository addressRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Users selectOne(String id) {
-		return repository.findById(id).orElseGet(() -> {
-			// 엔티티가 존재하지 않으면 기본값을 가진 새로운 객체 반환
-			Users emptyUser = new Users();
-			emptyUser.setUserId("Not Found");
-			return emptyUser;
-		});
+		return userRepository.findById(id)
+				.orElseThrow(()->new NoSuchElementException("회원가입이 가능합니다."));
 	}// selectOne
 
-	@Override
-	public void register(Users entity) {
-		repository.save(entity);
 
-	}// register
+	@Override
+	public void registerUserAndAddress(UsersDTO userDTO) {
+		
+			// 유저 정보 저장 
+			Users user = new Users();
+			user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+			user.setName(userDTO.getName());
+			user.setUserId(userDTO.getUserId());
+			user.setGender(userDTO.getGender());
+			user.setPhoneNumber(userDTO.getPhoneNumber());
+			user.setEmail(userDTO.getEmail());
+			user.setBirthDate(userDTO.getBirthDate());
+			user.setCreatedAt(userDTO.getCreatedAt());
+			user.setIsAdmin(userDTO.getIsAdmin() != null ? userDTO.getIsAdmin() : "0");
+			userRepository.save(user);
+			// 유저 주소 저장 
+			Address address = new Address();
+			address.setUserId(userDTO.getUserId());
+			address.setPostalCode(userDTO.getPostalCode());
+			address.setStreetAddress(userDTO.getStreetAddress());
+			address.setDetailedAddress(userDTO.getDetailedAddress());
+			address.setRecipientPhone(userDTO.getPhoneNumber());
+			address.setCreated_at(userDTO.getCreatedAt());
+			addressRepository.save(address);
+		    log.info("유저 및 주소 저장 완료", userDTO.getUserId());
+	}//registerUserAndAddres
+
 
 	@Override
 	public void deleteById(String id) {
 		// TODO Auto-generated method stub
-
 	}
 
+	
 	@Override
 	public Users findById(String name, String phonNumber) {
-		Optional<Users> optionalUser = repository.findByNameAndPhoneNumber(name, phonNumber);
+		return userRepository.findByNameAndPhoneNumber(name, phonNumber)
+							  .orElseThrow(()->new NoSuchElementException("⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다"));
+	}// findById
+
+	
+	
+	@Override
+	public Users findByUserIdAndPhoneNumber(String userId, String phoneNumber) {
+		log.info("userServiceImpl  " + phoneNumber);
+		Optional<Users> optionalUser = userRepository.findByUserIdAndPhoneNumber(userId, phoneNumber);
 		if (optionalUser.isPresent()) {
-			return optionalUser.get();
+			log.info(optionalUser);
+			return optionalUser.get(); // 사용자가 있으면 반환
 		} else {
+			// 사용자가 없으면 기본값 반환
 			Users emptyUser = new Users();
 			emptyUser.setUserId("Not Found");
 			return emptyUser;
 		}
-	}// findById
-
-	
-	@Override
-	public Users findByUserIdAndPhoneNumber(String userId, String phoneNumber) {
-		log.info("userServiceImpl  "+ phoneNumber);
-	    Optional<Users> optionalUser = repository.findByUserIdAndPhoneNumber(userId, phoneNumber);
-	    if (optionalUser.isPresent()) {
-	    	log.info(optionalUser);
-	        return optionalUser.get();  // 사용자가 있으면 반환
-	    } else {
-	        // 사용자가 없으면 기본값 반환
-	        Users emptyUser = new Users();
-	        emptyUser.setUserId("Not Found");
-	        return emptyUser;
-	    }
-	}//findByUserIdAndPhoneNumber
+	}// findByUserIdAndPhoneNumber
 
 }

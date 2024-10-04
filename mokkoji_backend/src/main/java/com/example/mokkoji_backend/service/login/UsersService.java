@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.service.login;
 
+import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 
 
@@ -10,7 +11,8 @@ public interface UsersService {
 	Users selectOne(String id);
 	
 	// ** insert, update
-	void register (Users entity);
+	void registerUserAndAddress(UsersDTO userDTO);
+
 	
 	// ** delete
 	void deleteById(String id);
