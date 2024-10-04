@@ -20,9 +20,11 @@ public interface CartService {
 	
 	Cart findById(CartId id);
 	
-	 ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto);
+	CartDTO entityToDto (Cart cart);
+	
+	 CartDTO findentityAndNewReturnDto(CartDTO dto);
 	 
-	 List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto);
+	 List<CartDTO> findentityAndNewReturnList(CartDTO dto);
 
 	void updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount);
 

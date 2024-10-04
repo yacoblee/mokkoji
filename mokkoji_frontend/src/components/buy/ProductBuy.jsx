@@ -42,8 +42,8 @@ const ProductBuy = () => {
     //배송비 제외 selectProduct 의 금액을 계산하는 함수 -> 추후 filterPrice 로 표현
     const calculateTotalPrice = () => {
         if (!dto) return 0; // 선택된 상품이 없으면 0 반환
-        let price = +dto.productPrice;
-        let packagingPrice = dto.packagingPrice ? +dto.packagingPrice : 0;
+        let price = +dto.price;
+        let packagingPrice = dto.packagingOptionPrice ? +dto.packagingOptionPrice : 0;
         let contentPrice = dto.optionPrice ? +dto.optionPrice : 0;
 
         return (price + contentPrice + packagingPrice) * amount;
@@ -185,12 +185,12 @@ const ProductBuy = () => {
     };
     // 조건을 체크하여 리다이렉션하는 로직
     useEffect(() => {
-        if (!token || !productBuy) {
+        if (!token || !productBuy || !productBuy.userId) {
             navigate('/');
         }
     }, [token, productBuy]);
     //오류 발생을 대비한 방어 코드.
-    if (!dto || !productBuy.userId) {
+    if (!dto) {
 
         return (
             <div className="ProductBuy" style={{ marginTop: '150px' }}>
@@ -235,7 +235,7 @@ const ProductBuy = () => {
                                     className='addName img' alt={dto.productName} />
                             </Link>
                         </p>
-                        <p>{formatNumber(dto.productPrice)}</p>
+                        <p>{formatNumber(+dto.price)}</p>
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
@@ -249,12 +249,12 @@ const ProductBuy = () => {
                                 </span> */}
                                 <div>
                                     <button type='button'
-                                        onClick={() => { onClickbtn('-', 'productPrice') }}>
+                                        onClick={() => { onClickbtn('-', 'price') }}>
                                         <img src="/images/buy/minus.png" alt="" />
                                     </button >
                                     <input type="text" value={amount} readOnly />
                                     <button type='button'
-                                        onClick={() => { onClickbtn('+', 'productPrice') }}>
+                                        onClick={() => { onClickbtn('+', 'price') }}>
                                         <img src="/images/buy/plus.png" alt="" />
                                     </button>
                                 </div>
@@ -264,9 +264,9 @@ const ProductBuy = () => {
                         <p className='displayFlexColumn justifyBetween'>
                             <div className='height50FlexColumn justifyBetween'>
                                 <p>
-                                    {dto.packagingContent}
+                                    {dto.packagingOptionContent}
                                 </p>
-                                <span >(+{dto.packagingPrice}원) </span>
+                                <span >(+{dto.packagingOptionPrice}원) </span>
                             </div>
                             <p className='buySelect'>
                                 {/* <span>
@@ -309,7 +309,7 @@ const ProductBuy = () => {
 
                 <h2>주문서 작성</h2>
                 <BuyInputBox
-                    userId={productBuy.userId}
+                    userId={productBuy ? productBuy.userId : null}
                     amount={amount}
                     checkedCartItems={checkedCartItems}
                     //option={option}

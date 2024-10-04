@@ -259,20 +259,21 @@ public class ProductsController {
 				Packaging paentity = packSerivce.findById(packagingId);
 				
 				//response.put("packaging",paentity);
-				ProductBuyDTO dto = ProductBuyDTO.builder()
-						.userId(cart.getUserId())
-						.productId(cart.getProductId())
-						.categoryId(pentity.getCategoryId())
-						.productName(pentity.getName())
-						.mainImageName(pentity.getMainImageName())
-						.productPrice(pentity.getPrice())
-						.optionContent(opentity.getContent())
-						.optionPrice(opentity.getPrice())
-						.packagingContent(paentity.getPackagingContent())
-						.packagingPrice(paentity.getPackagingPrice())
-						.productCnt(cart.getProductCnt())
-						.productTotalPrice(cart.getProductTotalPrice())
-						.build();
+//				ProductBuyDTO dto = ProductBuyDTO.builder()
+//						.userId(cart.getUserId())
+//						.productId(cart.getProductId())
+//						.categoryId(pentity.getCategoryId())
+//						.productName(pentity.getName())
+//						.mainImageName(pentity.getMainImageName())
+//						.productPrice(pentity.getPrice())
+//						.optionContent(opentity.getContent())
+//						.optionPrice(opentity.getPrice())
+//						.packagingContent(paentity.getPackagingContent())
+//						.packagingPrice(paentity.getPackagingPrice())
+//						.productCnt(cart.getProductCnt())
+//						.productTotalPrice(cart.getProductTotalPrice())
+//						.build();
+				CartDTO dto = cartService.entityToDto(cart);
 				dto = cartService.findentityAndNewReturnDto(dto);
 				response.put("productBuy", dto);
 				return ResponseEntity.ok(response);
@@ -291,11 +292,11 @@ public class ProductsController {
 	//List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto)
 	
 	@PostMapping("/order/bringcart") //수정중
-	public ResponseEntity<?> bringCart(@RequestBody ProductBuyDTO dto){
+	public ResponseEntity<?> bringCart(@RequestBody CartDTO dto){
 		Map<String, Object> response = new HashMap<>();
 		
 		try {
-			List<ProductBuyDTO > list = cartService.findentityAndNewReturnList(dto);
+			List<CartDTO> list = cartService.findentityAndNewReturnList(dto);
 			response.put("cartList", list);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");

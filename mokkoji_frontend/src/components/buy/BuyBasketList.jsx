@@ -62,7 +62,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                     <div key={index} className='buyInfo'>
                         <input type="checkBox"
                             checked={checkedItems[index]}
-                            value={item.productTotalPrice}
+                            value={+item.productTotalPrice}
                             onChange={(e) => onChangeCheckBox(index, e)} />
                         <Link to={`/goods/${item.categoryId}/${item.productId}`}
                             className='deleteName'>
@@ -75,7 +75,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                                     className='addName img' />
                             </Link>
                         </p>
-                        <p>{formatNumber(item.productPrice)}</p>
+                        <p>{formatNumber(+item.productPrice)}</p>
                         <div className='displayFlexColumn justifyEvenly'>
                             <p style={{ display: 'flex', padding: '0 5px' }}>
                                 {item.optionContent}
@@ -84,13 +84,13 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                         </div>
                         <div className='displayFlexColumn justifyEvenly'>
                             <p>
-                                {item.packagingContent}
+                                {item.packagingOptionContent}
                             </p>
-                            <span >(+{item.packagingPrice}원)</span>
+                            <span >(+{item.packagingOptionPrice}원)</span>
                         </div>
                         <p className='priceBox justifySelfEnd'>
-                        <span className='highlight2'>{item.productCnt} 개</span>
-                            총 금액 : <span className='subTTprice'>{formatNumber(item.productTotalPrice)}</span>
+                            <span className='highlight2'>{item.productCnt} 개</span>
+                            총 금액 : <span className='subTTprice'>{formatNumber(+item.productTotalPrice)}</span>
                         </p>
                     </div>
                 );

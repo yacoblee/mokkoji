@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 public class ProductBuyDTO {
 	private String userId;
 	private long productId;
-	private String categoryId;
-	private String productName;
-	private String mainImageName;
-	private int productPrice;
 	private String optionContent;
-	private int optionPrice;
 	private String packagingContent;
-	private int packagingPrice;
 	private int productCnt;
 	private int productTotalPrice;
+	private String productName;
+	private String categoryId;
+	private String mainImageName;
+	private int productPrice;
+	private int optionPrice;
+	private int packagingPrice;
 }
