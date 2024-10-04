@@ -91,7 +91,6 @@ public class UsersServiceImpl implements UsersService {
 			emptyUser.setUserId("Not Found");
 			return emptyUser;
 		}
-	        return emptyUser;
 	}// findByUserIdAndPhoneNumber
 
 }
