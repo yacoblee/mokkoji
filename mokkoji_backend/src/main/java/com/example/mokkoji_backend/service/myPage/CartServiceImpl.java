@@ -9,6 +9,7 @@ import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
+import com.example.mokkoji_backend.repository.myPage.CartDSLRepository;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
@@ -28,6 +29,7 @@ public class CartServiceImpl implements CartService {
 	final ProductsRepository productsRepository;
 	final ProductoptionsService productoptionsService;
 	final PackagingService packagingService;
+	final CartDSLRepository cartDSLRepository;
 
 	// ** 상품페이지에서만 사용 ===============================================
 	// 0) cart entity를 각각의 서비스로 찾아 dto를 반환하는 메서드
@@ -100,29 +102,27 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	// 4) cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
-	public CartDTO findentityAndNewReturnDto(CartDTO dto) {
-		CartId cartId = CartId.builder().userId(dto.getUserId())
-				.productId(dto.getProductId())
-				.optionContent(dto.getOptionContent())
-				.packagingOptionContent(dto.getPackagingOptionContent())
+	//실제 cart와 대조해서 변환하는 것이 아니고 , 
+	public CartDTO findentityAndNewReturnDto(Cart entity) {
+		CartId cartId = CartId.builder().userId(entity.getUserId())
+				.productId(entity.getProductId())
+				.optionContent(entity.getOptionContent())
+				.packagingOptionContent(entity.getPackagingOptionContent())
 				.build();
-		Optional<Cart> cart = cartRepository.findById(cartId);
-		if(cart.isPresent()) {//카트가 존재하면 ,
-			Cart entity = cart.get();
-//			ProductOptionsId optionId = ProductOptionsId.builder()
-//					.productId(dto.getProductId())
-//					.content(dto.getOptionContent()).build();
-			try {
+		Optional<Cart> findcart = cartRepository.findById(cartId);
+		if(findcart.isPresent()) {//카트가 존재하면 ,
+			CartDTO dto = entityToDto(findcart.get());
+
+		
 				int count = entity.getProductCnt()+dto.getProductCnt();
 				dto.setProductCnt(count);
 				int totalPrice = entity.getProductTotalPrice()+dto.getProductTotalPrice();
 				dto.setProductTotalPrice(totalPrice);
+				
 				return dto;
 				
-			} catch (Exception e) {
-				return dto;
-			}
-		}else return dto;
+			
+		}else return entityToDto(entity);
 	}
 	// 4) cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
 	public List<CartDTO> findentityAndNewReturnList(CartDTO dto) {
@@ -133,38 +133,22 @@ public class CartServiceImpl implements CartService {
 				.build();
 		List<Cart> list ;
 		List<CartDTO> dtoList=new ArrayList<>();;
+		System.out.println("*********************** dto.getID=>"+dto.getUserId());
 		Optional<Cart> cart = cartRepository.findById(cartId);
 		if(cart.isPresent()) {//카트가 존재하면 ,(String userId, long productId, String optionContent, String packagingOptionContent);
-			 list = cartRepository.findByExcludingSpecificCart
+			 list = cartDSLRepository.findByExcludingSpecificCart
 					 (dto.getUserId(),dto.getProductId(),dto.getOptionContent(),dto.getPackagingOptionContent());
 			 System.out.println("카트에 있는 상품이네");
 			 for (Cart c : list) {
+				 System.out.println("장바구니에 새로이 들어갈 목록들");
 				System.out.println(c);
 			}
-		}else  list = cartRepository.findAll();
+		}else  {
+			list = cartRepository.findByUserIdOrderByCartDateDesc(dto.getUserId());
+		}
 		
 		for (Cart entity : list) {
-//			ProductOptionsId productOptionsId = ProductOptionsId.builder()
-//					.productId(entity.getProductId())
-//					.content(entity.getOptionContent()).build();
-//			ProductOptions productOptions = productoptionsService.findById(productOptionsId);
-//			Packaging packaging = packagingService.findById(entity.getPackagingOptionContent());
-//			Products product = productsRepository.findById(entity.getProductId()).get();
-//			
-//			ProductBuyDTO makedto = ProductBuyDTO.builder()
-//					.userId(entity.getUserId())
-//					.productId(entity.getProductId())
-//					.categoryId(product.getCategoryId())
-//					.productName(product.getName())
-//					.mainImageName(product.getMainImageName())
-//					.productPrice(product.getPrice())
-//					.optionContent(productOptions.getContent())
-//					.optionPrice(productOptions.getPrice())
-//					.packagingContent(packaging.getPackagingContent())
-//					.packagingPrice(packaging.getPackagingPrice())
-//					.productCnt(entity.getProductCnt())
-//					.productTotalPrice(entity.getProductTotalPrice())
-//					.build();
+
 			CartDTO makedto = entityToDto(entity);
 			dtoList.add(makedto);
 		}

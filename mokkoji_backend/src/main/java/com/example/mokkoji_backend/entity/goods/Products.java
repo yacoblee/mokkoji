@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.entity.goods;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,12 +8,15 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name = "products")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class) // 추가: AuditingEntityListener 활성화
 public class Products {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -42,6 +46,7 @@ public class Products {
 	@Column(name = "stockCount", columnDefinition = "int default 0")
 	private int stock_count;
 	@Column(name = "uploadDate", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime uploadDate;
 	@Column(name = "categoryId")
 	private String categoryId;

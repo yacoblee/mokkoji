@@ -196,12 +196,6 @@ const ProductForm = ({ product, userId }) => {
                 // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
                 navigate(`/orderpage`, {
                     state: {
-                        // userId: userId,//input창에서 해당하는 유저를 찾기 위함이야.
-                        // product: product,//해당하는 상품으로 계산을 이루기 위함이야.
-                        // option: option,//현재 해당하는 option의 정보를 보내줘 , 디폴트 값을 유지하기 위함이야.
-                        // packaging: packaging,//현재 해당하는 패키지의 정보를 보내줘 , 디폴트 값을 유지하기 위함이야.
-                        // count: count, // 수량에 대한 정보를 보내줘 , 디폴트값을 유지하기 위함이야.
-                        // totalPrice: totalPrice // 현재 선택이 완료된 총액을 보내줘 , 디폴트값을 유지하기 위함이야.
                         productBuy: productBuy
                     }
                 });
