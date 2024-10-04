@@ -1,28 +1,22 @@
 package com.example.mokkoji_backend.service.login;
 
 
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.mokkoji_backend.domain.MyPageDTO;
-import com.example.mokkoji_backend.domain.UsersDTO;
-import com.example.mokkoji_backend.entity.login.Address;
-import com.example.mokkoji_backend.service.myPage.CartService;
-import com.example.mokkoji_backend.service.myPage.FavoritesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
 import com.example.mokkoji_backend.repository.login.UsersRepository;
-
+import com.example.mokkoji_backend.service.myPage.CartService;
+import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service("UsersService")
 @RequiredArgsConstructor

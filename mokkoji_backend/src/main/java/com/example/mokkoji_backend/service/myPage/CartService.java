@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.ProductBuyDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 

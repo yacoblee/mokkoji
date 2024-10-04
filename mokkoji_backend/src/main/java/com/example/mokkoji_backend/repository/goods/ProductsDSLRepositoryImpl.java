@@ -1,19 +1,17 @@
 package com.example.mokkoji_backend.repository.goods;
 
 
-import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;
-import static com.example.mokkoji_backend.entity.goods.QProducts.products;
-
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;
+import static com.example.mokkoji_backend.entity.goods.QProducts.products;
 
 @Repository
 @RequiredArgsConstructor

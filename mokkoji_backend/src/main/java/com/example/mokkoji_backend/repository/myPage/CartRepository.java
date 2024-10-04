@@ -1,6 +1,5 @@
 package com.example.mokkoji_backend.repository.myPage;
 
-import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 import jakarta.transaction.Transactional;

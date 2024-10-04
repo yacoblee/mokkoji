@@ -1,8 +1,8 @@
 package com.example.mokkoji_backend.service.login;
 
-import java.util.List;
-
 import com.example.mokkoji_backend.entity.login.Address;
+
+import java.util.List;
 
 public interface AddressService {
 
