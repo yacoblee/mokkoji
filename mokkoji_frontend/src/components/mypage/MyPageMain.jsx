@@ -216,6 +216,28 @@ function MyPageMain() {
 
 
 
+    // ** review ==================================================================================
+
+    const [userReview, setUserReview] = useState([]);
+
+    // Review 데이터들을 가져옴
+    const myPageReview = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageReview 성공 url=${url}`);
+                setUserReview(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageReview 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageReview
+
+
+
     return (
         <div className='MyPage'>
             <h1>
@@ -254,9 +276,23 @@ function MyPageMain() {
                         cartAllCheckBoxChange={cartAllCheckBoxChange}
                     />}
                 />
-                <Route path='review' element={<MyPageReview />} />
-                <Route path='orders' element={<MyPageOrders />} />
-                <Route path='book' element={<MyPageBook />} />
+                <Route
+                    path='orders'
+                    element={<MyPageOrders
+                    />}
+                />
+                <Route
+                    path='review'
+                    element={<MyPageReview
+                        userReview={userReview}
+                        myPageReview={myPageReview}
+                    />}
+                />
+                <Route
+                    path='book'
+                    element={<MyPageBook
+                    />}
+                />
             </Routes>
         </div>
     );

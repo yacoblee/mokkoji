@@ -35,8 +35,6 @@ function MyPageSet({ userMain }) {
         setEmailParts(updatedEmailParts);
     };
 
-    const [userData, setUserData] = useState();
-
 
 
     return (

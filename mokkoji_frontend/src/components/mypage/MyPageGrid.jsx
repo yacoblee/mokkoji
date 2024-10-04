@@ -31,7 +31,7 @@ function MyPageGrid({ favoritesCnt, cartCnt }) {
             <NavLink to='/mypage/orders'>
                 <div className='MyOrders'>
                     <div className='IconOrders'>
-                        <FontAwesomeIcon icon={faListCheck} />
+                        <FontAwesomeIcon icon={faTruckFast} />
                     </div>
                     <span>구매내역</span>
                 </div>
@@ -39,7 +39,7 @@ function MyPageGrid({ favoritesCnt, cartCnt }) {
             <NavLink to='/mypage/review'>
                 <div className='MyReview'>
                     <div className='IconReview'>
-                        <FontAwesomeIcon icon={faTruckFast} />
+                        <FontAwesomeIcon icon={faListCheck} />
                     </div>
                     <span>리뷰 관리</span>
                 </div>
