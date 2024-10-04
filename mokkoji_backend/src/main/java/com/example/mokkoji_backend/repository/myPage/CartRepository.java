@@ -32,7 +32,7 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 	List<Cart> findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
 	(String userId, long productId, String optionContent, String packagingOptionContent);
 	
-	@Query("SELECT c FROM Cart c WHERE NOT (c.userId = :userId AND c.productId = :productId AND c.optionContent = :optionContent AND c.packagingOptionContent = :packagingOptionContent)")
+	@Query("SELECT c FROM Cart c WHERE NOT (c.userId != :userId AND c.productId = :productId AND c.optionContent = :optionContent AND c.packagingOptionContent = :packagingOptionContent)")
 	List<Cart> findByExcludingSpecificCart(@Param("userId") String userId, @Param("productId") long productId, @Param("optionContent") String optionContent, @Param("packagingOptionContent") String packagingOptionContent);
 
 }

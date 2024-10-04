@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import BuyComplete from "./BuyComplete";
 import axios from "axios";
 import { apiCall } from "../../service/apiService";
+import { API_BASE_URL } from "../../service/app-config";
 
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
@@ -12,6 +13,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState([]);
+    const [originalAddressing, setOriginalAddressing] = useState([]); // 백업 상태 추가
     const [user, setUser] = useState({});
     const token = JSON.parse(sessionStorage.getItem('userData'));
     //모달창의 스크롤을 해결하기 위한 Ref
@@ -24,7 +26,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             console.log(addressList)
             setAddressing(addressList);
             setUser(userinfomation);
-
+            setOriginalAddressing(addressList);
         } catch (error) {
             console.log(`buy input error =>${error.message}`)
         }
@@ -81,7 +83,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = (index, type) => {
         console.log(userInfo.orderName);
-    console.log(userInfo.orderPhone);
+        console.log(userInfo.orderPhone);
         if (type === 'new') {
             setUserInfo((prevState) => ({
                 ...prevState,
@@ -98,6 +100,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 postalCode: true,
                 // deliveryMessage: false,
             })
+            setAddressing(originalAddressing);
         } else {
             setSelectedAddressIndex(index);
 
@@ -121,7 +124,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     // console.log(userInfoError);
 
     //수기로 작성했을때 onChange 이벤트를 통해 value값을 지정.
-    const onChangeUserInfo = (e) => {
+    const onChangeUserInfo = (e, selectedAddressIndex) => {
         const { name, value } = e.target;
         setUserInfo((info) => ({
             ...info,
@@ -139,10 +142,11 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         }
 
         if (name === 'phoneNumber') {
-            const noneNumber = /[^0-9]/g;
+            const noneNumber = /^[0-9-]$/;
             const isValidPhoneNumber = !noneNumber.test(value);
-            if (isValidPhoneNumber && value.length > 8 && !(value.includes('-'))) {
+            if (isValidPhoneNumber && value.length > 8 && (value.includes('-'))) {
                 setUserInfoError((error) => ({ ...error, phoneNumber: false })); // 숫자면 들어와요
+
             } else {
                 setUserInfoError((error) => ({ ...error, phoneNumber: true }));
             }
@@ -152,17 +156,21 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 setUserInfoError((error) => ({ ...error, [name]: true }));
             } else {
                 setUserInfoError((error) => ({ ...error, [name]: false }));
-
+                setAddressing((addr) =>
+                    addr.map((it, i) =>
+                        i === selectedAddressIndex ? { ...it, [name]: value } : it
+                    )
+                );
             }
         }
-        // console.log(userInfoError.zoneCode);
+
     };
 
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     //모달창에서 클릭하고 나면 , 값을 가지고 userInfo에 저장 -> value 값으로 전송. / 모달창 닫음.
-    const handleComplete = (data) => {
+    const handleComplete = (data, selectedAddressIndex) => {
         let fullAddress = data.address;
         let extraAddress = '';
 
@@ -182,7 +190,14 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             streetAddress: fullAddress
         }));
         setUserInfoError((error) => ({ ...error, postalCode: false }));
-
+        setAddressing((addr) =>
+            addr.map((it, i) =>
+                i === selectedAddressIndex ? {
+                    ...it, postalCode: data.zonecode,
+                    streetAddress: fullAddress
+                } : it
+            )
+        );
         setIsModalOpen(false);
     };
 
@@ -234,34 +249,28 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     //버튼 상태를 관리할 state.
     const [isBuyButtonDisabled, setIsBuyButtonDisabled] = useState(true);
 
+    //let selectedALLproduct = [];
+    const [selectedALLproduct, setSelectedALLproduct] = useState([]);
 
+    // 1. selectedALLproduct 상태를 업데이트하는 useEffect
     useEffect(() => {
-        //checking 은 userInfo 의 빈문자열인 값들을 저장. 즉 저장된게 없어야 진행.
-        // userInfo의 각 값에 대해 trim()을 적용한 후 빈 문자열인지 확인
-        // const checking = Object.values(userInfo).map(it => it.trim()).filter((it) => it === '');
-        //전부 false 여야지만 true를 반환
+        setSelectedALLproduct(() => {
+            return selectedProduct ? [...checkedCartItems, selectedProduct] : [...checkedCartItems];
+        });
+        console.log("지금 여기 확인중")
+        console.log(selectedALLproduct);
+    }, [selectedProduct, checkedCartItems]);
+
+    // 2. 버튼 활성화 여부를 관리하는 useEffect
+    useEffect(() => {
         const checking = Object.values(userInfoError).every((it) => it === false);
-        // console.log(userInfoError);
-        // console.log(checking);
-        //selectedALLproduct는 본품과 장바구니의 체크여부를 구하기 위해서.
-        //즉 1개 이상 선택되어야지만 진행.
-        let selectedALLproduct = [];
-        if (selectedProduct) {
-            selectedALLproduct = [...checkedCartItems, selectedProduct];
-            // 본품이 존재한다면 -> 본품과 장바구니 항목을 추가 -> 길이를 구하기 위한 로직
-
-        } else {
-            selectedALLproduct = [...checkedCartItems];
-            //본품이 존재하지 않는다면 -> 이전에 구해놓은 장바구니 체크항목을 복사.
-        }
-
-        //checking 이 true , 구매방법을 체크하면서 , 구매할 항목이 하나라도 있어야 , 직접입력후 기입하여야.
         if (checking && selectBox.buyHow !== '' && selectedALLproduct.length > 0) {
-            setIsBuyButtonDisabled(false); //BUY 버튼 활성화
+            setIsBuyButtonDisabled(false); // BUY 버튼 활성화
         } else {
             setIsBuyButtonDisabled(true); // BUY 버튼 비활성화
         }
-    }, [selectBox, selectedProduct, checkedCartItems, userInfoError]);
+    }, [selectedALLproduct, userInfoError, selectBox.buyHow]);
+
 
 
     //구매 확인 버튼의 모달창.
@@ -275,13 +284,58 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             SetSelectBox((it) => ({ ...it, deliveryMessage: '문 앞에 놔주세요' }))
         }
         setIsModalBuyOpen(true);
+        console.log(selectedAddressIndex);
+        console.log(addressing);
 
-        //const history = { date: nowDay, item: selectedProduct ? [selectedProduct.id] : [] };
+        const updateAddressAndInsert = async () => {
+            if (selectedAddressIndex === 4) {
+                let newData = {
+                    detailedAddress: userInfo.detailedAddress,
+                    isDefault: addressing.length >= 3 ? addressing.length - 1 : addressing.length,
+                    postalCode: userInfo.postalCode,
+                    recipientName: `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`,
+                    recipientPhone: userInfo.orderPhone,
+                    streetAddress: userInfo.streetAddress,
+                    userId: userId
+                };
 
-        checkedCartItems.map((item) => {
-            //history.item.push(item.productId);
-        });
+                // 상태 업데이트가 완료될 때까지 기다립니다.
+                const updatedAddressing = await new Promise((resolve) => {
+                    setAddressing((oldData) => {
+                        const updatedAddress = addressing.length >= 3
+                            ? [...oldData.slice(1), newData]
+                            : [...oldData, newData];
+                        resolve(updatedAddress); // 업데이트 완료 후 Promise 해제
+                        return updatedAddress;
+                    });
+                });
 
+                // 이제 최신의 `updatedAddressing`을 사용하여 다음 작업을 진행합니다.
+                insertBuy(updatedAddressing);
+            } else {
+                // 선택된 인덱스가 4가 아닐 때는 바로 insertBuy를 호출합니다.
+                insertBuy(addressing);
+            }
+        };
+
+        const insertBuy = async (currentAddressing) => {
+            let url = "/order/buy";
+            try {
+                let requestData = {
+                    addressList: currentAddressing,
+                    cartList: selectedALLproduct
+                };
+                console.log(currentAddressing);
+
+                const response = await apiCall(url, 'POST', requestData, token);
+                console.log("성공했니");
+            } catch (error) {
+                console.error("구매 실패:", error);
+            }
+        };
+
+        // 비동기 함수 호출
+        updateAddressAndInsert();
 
 
 
@@ -302,7 +356,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         type="radio"
                         name='delivery'
                         key={item.recipientName}
-                        id={index}
+                        id={'addr_' + index}
                         checked={selectedAddressIndex === index} // 현재 선택된 인덱스를 확인
                         onChange={() => { onChangeAddressing(index); setSelectedAddressIndex(index); }}
                     />
@@ -311,7 +365,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             )
         })
         return box;
-        }
+    }
 
     return (
         <form className='buyBox' onSubmit={onClickBuyButton}>
@@ -392,7 +446,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                                 maxLength={5}
                                 readOnly
                                 required
-                                onChange={onChangeUserInfo}
+                                //onChange={onChangeUserInfo}
+                                onChange={(e, selectedAddressIndex) => (onChangeUserInfo(e, selectedAddressIndex))}
                                 className={userInfoError.postalCode ? 'errors' : ''}
 
                             />
@@ -417,7 +472,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                             id='detailedAddress'
                             name="detailedAddress"
                             value={userInfo.detailedAddress}
-                            onChange={onChangeUserInfo}
+                            onChange={(e) => onChangeUserInfo(e, selectedAddressIndex)}
                             required
                             placeholder='상세 주소 입력'
                             className={userInfoError.detailedAddress ? 'errors' : ''}
@@ -507,7 +562,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 }}
             >
                 <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
-                <DaumPostcode onComplete={handleComplete} />
+                <DaumPostcode onComplete={(e) => handleComplete(e, selectedAddressIndex)} />
             </Modal>
 
             <Modal
