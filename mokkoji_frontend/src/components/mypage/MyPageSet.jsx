@@ -1,96 +1,101 @@
 import '../../css/mypage/MyPageUser.css';
 
-// import userInfo from "../login/UserInforData";
-
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal'
 import DaumPostcode from 'react-daum-postcode';
 
-// import axios from 'axios';
 
-function MyPageSet() {
+function MyPageSet({ userMain }) {
 
-    //모달 상태창에 대한 true , false
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // userMain에 대한 data 해체+분해 : phoneNumber
+    const [phoneParts, setPhoneParts] = useState(userMain.phoneNumber.split('-'));
 
+    // userMain에 대한 data 해체+분해 : email
+    const [emailParts, setEmailParts] = useState(userMain.email.split('@'));
 
-    //모달창 오픈
-    const openAddress = (e) => {
-        e.preventDefault();
-        setIsModalOpen(true);
+    // 전화번호 입력 처리
+    const handlePhoneChange = (index, value) => {
+        const updatedPhoneParts = [...phoneParts];
+        updatedPhoneParts[index] = value;
+        setPhoneParts(updatedPhoneParts);
     };
 
-
-    //모달창에서 클릭하고 나면 , 값을 가지고 userInfo에 저장 -> value 값으로 전송. / 모달창 닫음.
-    const handleComplete = (data) => {
-        let fullAddress = data.address;
-        let extraAddress = '';
-
-        if (data.addressType === 'R') {
-            if (data.bname !== '') {
-                extraAddress += data.bname;
-            }
-            if (data.buildingName !== '') {
-                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
-            }
-            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-        }
-
-        setUser((info) => ({
-            ...info,
-            zoneCode: data.zonecode,
-            address: fullAddress
-        }));
-        setIsModalOpen(false);
+    // 이메일 입력 처리
+    const handleEmailChange = (index, value) => {
+        const updatedEmailParts = [...emailParts];
+        updatedEmailParts[index] = value;
+        setEmailParts(updatedEmailParts);
     };
+
+    // select 옵션 변경 처리
+    const handleEmailSelectChange = (e) => {
+        const updatedEmailParts = [...emailParts];
+        updatedEmailParts[1] = e.target.value; // 선택한 도메인으로 뒷부분 설정
+        setEmailParts(updatedEmailParts);
+    };
+
+    const [userData, setUserData] = useState();
+
 
 
     return (
-        <form className='MyPageSet' onSubmit={handleSubmit}>
+        <form className='MyPageSet' method="post" >
             <div className='MyInfoList'>
+                <div className='ListTitle'>아이디</div>
+                <div>{userMain.userId}</div>
+
+                <div className='ListTitle'>비밀번호</div>
+                <div>따로 제작 필요</div>
+
+                <div></div>
+                <div>따로 제작 필요(비번 확인)</div>
+
+
                 <div className='ListTitle'>이름</div>
-                <div>{user.name} ({user.gender})</div>
+                <div>{userMain.name} ({userMain.gender})</div>
 
                 <div className='ListTitle'>생일</div>
-                <div>{user.birth}</div>
+                <div>{userMain.birthDate}</div>
 
                 <div className='ListTitle'>전화번호</div>
                 <div>
                     <input
                         type="text"
-                        value={phoneNumber}
-                        onChange={(num) => {
-                            // 입력된 값이 숫자만 포함하는지 정규식으로 검사
-                            if (/^\d$/.test(num.target.value)) {
-                                // 숫자만 포함하면 phoneNumber state 업데이트
-                                setPhoneNumber(num.target.value);
-                                setErrorMessagePhone(''); // 오류 메시지 초기화
-                            } else
-                                setErrorMessagePhone('전화번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
-                        }}
-                        placeholder={user.phoneNumber}
+                        value={phoneParts[0]}
+                        onChange={(e) => handlePhoneChange(0, e.target.value)} // 앞자리
+                        minLength={3} maxLength={3}
                     />
-                    {errorMessagePhone && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePhone}</span>}
+                    <span>&nbsp;-&nbsp;</span>
+                    <input
+                        type="text"
+                        value={phoneParts[1]}
+                        onChange={(e) => handlePhoneChange(1, e.target.value)} // 중간자리
+                        minLength={3} maxLength={4}
+                    />
+                    <span>&nbsp;-&nbsp;</span>
+                    <input
+                        type="text"
+                        value={phoneParts[2]}
+                        onChange={(e) => handlePhoneChange(2, e.target.value)} // 뒷자리
+                        minLength={4} maxLength={4}
+                    />
                 </div>
 
                 <div className='ListTitle'>이메일</div>
                 <div>
                     <input
                         type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder={user.email}
+                        value={emailParts[0]} // 이메일 앞부분
+                        onChange={(e) => handleEmailChange(0, e.target.value)} // 이메일 앞부분 처리
                     />
-                    <span> @ </span>
+                    <span>&nbsp;@&nbsp;</span>
                     <input
                         type="text"
-                        value={emailType}
-                        onChange={(e) => setEmailType(e.target.value)}
-                        disabled={emailDisabled}
+                        value={emailParts[1]}
                     />
-                    <span> </span>
-                    <select id="EmailList" onChange={handleEmailChange}>
+                    &nbsp;
+                    <select id="EmailList" value={emailParts[1] === '' ? 'type' : emailParts[1]} onChange={handleEmailSelectChange} >
                         <option value="type">직접 입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="google.com">google.com</option>
@@ -100,106 +105,11 @@ function MyPageSet() {
                     </select>
                 </div>
 
-                <div className='ListTitle'>아이디</div>
-                <div>{user.id}</div>
 
-                <div className='ListTitle'>비밀번호</div>
-                <div>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(pw) => {
-                            if (/[a-z.0-9.!-*.@]$/.test(pw.target.value)) {
-                                setPassword(pw.target.value);
-                                setErrorMessagePW(''); // 오류 메시지 초기화
-                            } else
-                                setErrorMessagePW('비밀번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
-                        }}
-                        placeholder={'비밀번호 변경'}
-                    />
-                    {errorMessagePW && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePW}</span>}
-                </div>
-
-                <div></div>
-                <div>
-                    <input
-                        type="password"
-                        value={passwordConfirm}
-                        onChange={(pwc) => {
-                            if (/[a-z.0-9.!-*.@]$/.test(pwc.target.value)) {
-                                setPasswordConfirm(pwc.target.value);
-                                setErrorMessagePWC(''); // 오류 메시지 초기화
-                            } else
-                                setErrorMessagePWC('비밀번호 형식이 올바르지 않습니다'); // 오류 메시지 설정
-                        }}
-                        placeholder={'비밀번호 확인'}
-                    />
-                    {errorMessagePWC && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessagePWC}</span>}
-                </div>
-
-                <div className='ListTitle'>주소</div>
-                <div>
-                    <input
-                        type='text'
-                        value={setZoneCode}
-                        maxLength={5}
-                        placeholder={user.zoneCode}
-                        readOnly
-                    />
-                    <button
-                        type='button
-                        'onClick={openAddress}
-                    >
-                        우편 번호 검색
-                    </button>
-                </div>
-                <div></div>
-                <div>
-                    <input
-                        className='InputAddress'
-                        type="text"
-                        value={setAddress}
-                        placeholder={user.address}
-                        readOnly
-                    />
-                </div>
-                <div></div>
-                <div>
-                    <input
-                        className='InputAddressDetail'
-                        type="text"
-                        value={addressDetail}
-                        onChange={(e) => setAddressDetail(e.target.value)}
-                        placeholder={user.addressDetail} />
-                </div>
             </div>
 
             <button className='MyInfoSave' type='submit'>수정 완료</button>
 
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={() => setIsModalOpen(false)}
-                contentLabel="주소 검색"
-                style={{
-                    content: {
-                        width: '500px',
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)'
-                    }
-                }}
-            >
-                <button
-                    className='modalbtn'
-                    onClick={() => setIsModalOpen(false)}
-                >
-                    X
-                </button>
-                <DaumPostcode onComplete={handleComplete} />
-            </Modal>
         </form>
     )
 }

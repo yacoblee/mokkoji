@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
+import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
@@ -10,6 +11,7 @@ import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import jakarta.annotation.Resource;
+import jakarta.persistence.NoResultException;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -44,50 +46,19 @@ public class MyPageController {
 //	public ResponseEntity<?> userDetail(@AuthenticationPrincipal String userId) {
 	public ResponseEntity<?> userDetail(@RequestHeader("Authorization") String header) {
 		String userId = getUserIdFromHeader(header);
-		log.info("userId : {}", userId);
-		// 1. id에 맞는 사용자 정보 추출
-		Users users = usersService.selectOne(userId);
-
-		// 2. null 경우: 사용자 정보 조회 불가
-		if (users == null) {
-			log.warn("id에 맞는 user 없음");
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("id에 맞는 user 없음");
-		}
 
 		try {
-			// 3. user 정보에 다른 정보들(찜, 장바구니 등)을 추가한 새로운 DTO 객체 생성
-			int favoritesCnt = favoritesService.countFavorites(users.getUserId());
-			int cartCnt = cartService.countCart(users.getUserId());
-
-			Address address = addressService.findUserAddress(userId);
-
-			String postalCode = address.getPostalCode();
-			String streetAddress  = address.getStreetAddress();
-			String detailedAddress  = address.getDetailedAddress();
-
-			MyPageDTO myPageDTO = MyPageDTO.builder()
-					.userId(users.getUserId())
-					.name(users.getName())
-					.birthDate(users.getBirthDate())
-					.gender(users.getGender())
-					.phoneNumber(users.getPhoneNumber())
-					.email(users.getEmail())
-					.createdAt(users.getCreatedAt())
-					.updatedAt(users.getUpdatedAt())
-					.favoritesCnt(favoritesCnt)
-					.cartCnt(cartCnt)
-					.postalCode(postalCode)
-					.streetAddress(streetAddress)
-					.detailedAddress(detailedAddress)
-					.build();
-
-			log.info(myPageDTO);
+			MyPageDTO myPageDTO = usersService.findUser(userId);
 
 			// 4. 정상적인 경우
 			return ResponseEntity.ok(myPageDTO);
 
+		} catch (NoResultException e) {
+			// 5. 서버에서 발생한 예외 처리
+			log.warn("MyPageDTO 오류 : findUser");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("MyPageDTO 오류 : findUser");
 		} catch (Exception e) {
-			// 4. 서버에서 발생한 예외 처리
+			// 6. 서버에서 발생한 예외 처리
 			log.warn("내부 서버 오류 : userDetail");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userDetail");
 		}
@@ -101,9 +72,32 @@ public class MyPageController {
 //	}
 	 
 	// 2.2) 수정
-//	@PostMapping("/set")
-//	public ResponseEntity<?> userSet() {
-//
-//	}
+	@PostMapping("/set")
+	public ResponseEntity<?> userUpdate(@RequestHeader("Authorization") String header, @RequestBody MyPageDTO myPageDTO) {
+		String userId = getUserIdFromHeader(header);
+
+		// 1. RequestBody에서 전화번호와 이메일 추출
+		String phoneNumber = myPageDTO.getPhoneNumber();
+		String email = myPageDTO.getEmail();
+
+		try {
+			// 2. 추출한 전화번호와 이메일을 DB에 업데이트
+			usersService.updateUser(userId, phoneNumber, email);
+
+			// 3. 업데이트된 사용자 정보를 불러오기
+			myPageDTO = usersService.findUser(userId);
+
+			return ResponseEntity.ok(myPageDTO);
+
+		} catch (NoResultException e) {
+			// 4. 서버에서 발생한 예외 처리
+			log.warn("MyPageDTO 오류 : findUser");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("MyPageDTO 오류 : findUser");
+		}  catch (Exception e) {
+			// 5. 서버에서 발생한 예외 처리
+			log.warn("내부 서버 오류 : userUpdate");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userUpdate");
+		}
+	}
 
 }

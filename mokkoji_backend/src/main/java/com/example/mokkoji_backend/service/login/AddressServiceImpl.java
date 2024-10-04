@@ -31,7 +31,7 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public Address findUserAddress(String userId) {
+	public Address findUserHomeAddress(String userId) {
 		return repository.findByUserIdAndIsDefault(userId, 0);
 	}
 
