@@ -8,12 +8,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "address")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class) // 추가: AuditingEntityListener 활성화
 public class Address {
 
 	@Id
@@ -45,7 +51,9 @@ public class Address {
 	@Column(name = "is_default")
 	private int isDefault = 0;
 
-	@Column(name = "created_at")
+	@CreatedDate
+	@Column(name = "created_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate created_at;
 
 }
