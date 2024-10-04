@@ -75,7 +75,7 @@ const BuyBasketList = ({ userCart, onChangeChildCheckbox }) => {
                                     className='addName img' />
                             </Link>
                         </p>
-                        <p>{formatNumber(+item.productPrice)}</p>
+                        <p>{formatNumber(+item.price)}</p>
                         <div className='displayFlexColumn justifyEvenly'>
                             <p style={{ display: 'flex', padding: '0 5px' }}>
                                 {item.optionContent}
