@@ -22,7 +22,7 @@ public interface CartService {
 	
 	CartDTO entityToDto (Cart cart);
 	
-	 CartDTO findentityAndNewReturnDto(CartDTO dto);
+	 CartDTO findentityAndNewReturnDto(Cart entity);
 	 
 	 List<CartDTO> findentityAndNewReturnList(CartDTO dto);
 

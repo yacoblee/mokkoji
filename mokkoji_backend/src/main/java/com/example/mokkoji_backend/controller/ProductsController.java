@@ -242,39 +242,14 @@ public class ProductsController {
 	public ResponseEntity<?> orderPage(@RequestBody Cart cart){
 		Map<String, Object> response = new HashMap<>();
 		
-		ProductOptionsId optionId = ProductOptionsId.builder()
-				.productId(cart.getProductId())
-				.content(cart.getOptionContent()).build();
-		String packagingId = cart.getPackagingOptionContent();
+		
 		//Packaging packagingEntity = packSerivce.findById(packagingId);
 		if(cart!=null) {
 			try {		
 				System.out.println("*****Cart entity => "+cart);
-				Products pentity = service.findById(cart.getProductId());
-				
-				//response.put("product", pentity);
-				ProductOptions opentity = opservice.findById(optionId);
-				
-				//response.put("option",opentity);
-				Packaging paentity = packSerivce.findById(packagingId);
-				
-				//response.put("packaging",paentity);
-//				ProductBuyDTO dto = ProductBuyDTO.builder()
-//						.userId(cart.getUserId())
-//						.productId(cart.getProductId())
-//						.categoryId(pentity.getCategoryId())
-//						.productName(pentity.getName())
-//						.mainImageName(pentity.getMainImageName())
-//						.productPrice(pentity.getPrice())
-//						.optionContent(opentity.getContent())
-//						.optionPrice(opentity.getPrice())
-//						.packagingContent(paentity.getPackagingContent())
-//						.packagingPrice(paentity.getPackagingPrice())
-//						.productCnt(cart.getProductCnt())
-//						.productTotalPrice(cart.getProductTotalPrice())
-//						.build();
-				CartDTO dto = cartService.entityToDto(cart);
-				dto = cartService.findentityAndNewReturnDto(dto);
+	
+				//CartDTO dto = cartService.entityToDto(cart);
+				CartDTO dto = cartService.findentityAndNewReturnDto(cart);
 				response.put("productBuy", dto);
 				return ResponseEntity.ok(response);
 			} catch (Exception e) {
