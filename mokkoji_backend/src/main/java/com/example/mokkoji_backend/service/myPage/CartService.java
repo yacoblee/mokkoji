@@ -1,11 +1,10 @@
 package com.example.mokkoji_backend.service.myPage;
 
+import java.util.List;
+
 import com.example.mokkoji_backend.domain.CartDTO;
-import com.example.mokkoji_backend.domain.ProductBuyDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
-
-import java.util.List;
 
 public interface CartService {
 
@@ -23,6 +22,8 @@ public interface CartService {
 	CartDTO entityToDto (Cart cart);
 	
 	 CartDTO findentityAndNewReturnDto(Cart entity);
+	 
+	 void removeIfExists(List<CartDTO> list);
 	 
 	 List<CartDTO> findentityAndNewReturnList(CartDTO dto);
 

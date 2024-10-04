@@ -1,17 +1,21 @@
 package com.example.mokkoji_backend.entity.orders;
 
+import java.time.LocalDate;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "orders")
@@ -20,19 +24,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class) // 추가: AuditingEntityListener 활성화
-@IdClass(OrdersId.class)
-public class Orders implements Serializable {
+//@IdClass(OrdersId.class)
+public class Orders{
 
-	@Serial
-	private static final long serialVersionUID = 1L;
+	//@Serial
+	//private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "purchase_number")
 	private int purchaseNumber;
-	@Id
+	//@Id
 	@Column(name = "user_id")
 	private String userId;
-	@Id
+	//@Id
 	@Column(name = "address_id")
 	private int addressId;
 

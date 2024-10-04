@@ -20,7 +20,7 @@ public class OrdersServiceImpl implements OrdersService {
 	}
 
 	// ** 상품 페이지 사용 ==================================================
-	public void insertOrders(Orders entity) {
+	public Orders  insertOrders(Orders entity) {
 		/*	 --OrdersId
 		 * 	 int purchaseNumber;
 			 String userId;
@@ -34,7 +34,7 @@ public class OrdersServiceImpl implements OrdersService {
 //			entity.setPurchaseStatus("상품 대기");
 //					
 //		}
-		ordersRepository.save(entity);
+		return ordersRepository.save(entity);
 	}
 	
 }

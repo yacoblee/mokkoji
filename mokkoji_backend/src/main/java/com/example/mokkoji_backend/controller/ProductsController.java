@@ -41,6 +41,8 @@ import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
+import com.example.mokkoji_backend.service.orders.OrdersDetailService;
+import com.example.mokkoji_backend.service.orders.OrdersService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -62,6 +64,8 @@ public class ProductsController {
 	private final CartService cartService;
 	private final PackagingService packSerivce;
 	private final AddressService addService;
+	private final OrdersService orderService;
+	private final OrdersDetailService orderDetailSerivce;
 	
 	//goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
@@ -313,8 +317,9 @@ public class ProductsController {
 	@PostMapping("/order/buy")
 	public ResponseEntity<?> buyNow(@RequestBody OrderRequestDTO request){
 		List<Address> addr = request.getAddressList();
-		//Orders order = request.getOrder();
+		Orders order = request.getOrder();
 		List<CartDTO> cart= request.getCartList();
+		Address purchaseAddress = request.getPurchaseAddress();
 		System.out.println("*****************s구매 들어옴 ?");
 		
 		
@@ -329,7 +334,26 @@ public class ProductsController {
 			addService.register(add);
 
 		}
-
+		if(cart!=null) {
+			cartService.removeIfExists(cart);			
+		}
+		if(order!=null) {
+			System.out.println(order);
+		}
+		if(purchaseAddress!=null) {
+			try {
+				purchaseAddress = addService.findByUserIdAndLocationName(purchaseAddress.getUserId(), purchaseAddress.getLocationName());
+				System.out.println("************************");
+				System.out.println(purchaseAddress);
+				order.setAddressId(purchaseAddress.getAddressId());
+				order = orderService.insertOrders(order);
+				orderDetailSerivce.insertDtoList(cart,order.getPurchaseNumber() );
+				
+			} catch (Exception e) {
+				System.out.println("주소찾기 실패: " + e.getMessage());
+			}
+		}
+		
 		return null;
 	}
 	

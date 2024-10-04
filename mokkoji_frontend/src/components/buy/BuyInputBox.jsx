@@ -6,7 +6,7 @@ import BuyComplete from "./BuyComplete";
 import axios from "axios";
 import { apiCall } from "../../service/apiService";
 import { API_BASE_URL } from "../../service/app-config";
-
+import moment from 'moment';
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
 const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
@@ -53,7 +53,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     phoneNumber: user.phoneNumber || '',
                     streetAddress: addressing[0].streetAddress || '',
                     detailedAddress: addressing[0].detailedAddress || '',
-                    postalCode: addressing[0].postalCode || ''
+                    postalCode: addressing[0].postalCode || '',
+                    locationName: addressing[0].locationName || ''
                 });
             } else {
                 setSelectedAddressIndex(4);
@@ -92,6 +93,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 streetAddress: '', // 주소 초기화
                 detailedAddress: '', // 상세 주소 초기화
                 postalCode: '', // 우편번호 초기화
+                locationName: ''
             }));
             setUserInfoError({
                 name: true,
@@ -110,7 +112,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 phoneNumber: user.phoneNumber || '',
                 streetAddress: addressing[index].streetAddress || '',
                 detailedAddress: addressing[index].detailedAddress || '',
-                postalCode: addressing[index].postalCode || ''
+                postalCode: addressing[index].postalCode || '',
+                locationName: addressing[index].locationName || ''
             }));
             setUserInfoError({
                 name: false,
@@ -320,10 +323,30 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
         const insertBuy = async (currentAddressing) => {
             let url = "/order/buy";
+            const date = new Date();
+            const formattedDate = moment(date).format('YYYYMMDDHHmmss');
+
+            const orderData = {
+                userId: userId,
+                purchaseNumber: formattedDate,
+                total: totalPrice,
+                method: selectBox.buyHow,
+                purchaseStatus: 1,
+            }
+            const purchaseAddress = {
+                userId: userId,
+                locationName: selectedAddressIndex === 4
+                    ?
+                    `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
+                    :
+                    addressing[selectedAddressIndex].locationName,
+            }
             try {
                 let requestData = {
                     addressList: currentAddressing,
-                    cartList: selectedALLproduct
+                    orderData: orderData,
+                    cartList: selectedALLproduct,
+                    purchaseAddress: purchaseAddress
                 };
                 console.log(currentAddressing);
 

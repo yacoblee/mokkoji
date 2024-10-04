@@ -18,4 +18,5 @@ public class OrderRequestDTO {
 	private List<Address> addressList;
 	private Orders order ;
 	private List<CartDTO> cartList;
+	private Address purchaseAddress;
 }

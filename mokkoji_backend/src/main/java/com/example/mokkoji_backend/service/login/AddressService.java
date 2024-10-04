@@ -16,4 +16,7 @@ public interface AddressService {
 
 	// ** 마이페이지에서 사용
 	Address findUserHomeAddress(String userId);
+	
+	// ** 구매페이지 넘어갈때 사용
+	Address findByUserIdAndLocationName(String userId,String locationName);
 }

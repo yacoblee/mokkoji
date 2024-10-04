@@ -60,7 +60,24 @@ public class CartServiceImpl implements CartService {
 				.packagingOptionPrice(packagingEntity.getPackagingPrice())
 				.build();
 	}
-	
+	//cartDTO 에서 id 추출 메서드
+	public CartId createCartId(CartDTO dto) {
+	    return CartId.builder()
+                .userId(dto.getUserId())
+                .productId(dto.getProductId())
+                .optionContent(dto.getOptionContent())
+                .packagingOptionContent(dto.getPackagingOptionContent())
+                .build();
+	}
+	//cart 에서 id 추출 메서드
+	public CartId createCartId(Cart entity) {
+	    return CartId.builder()
+                .userId(entity.getUserId())
+                .productId(entity.getProductId())
+                .optionContent(entity.getOptionContent())
+                .packagingOptionContent(entity.getPackagingOptionContent())
+                .build();
+	}
 	
 	
 	
@@ -74,12 +91,7 @@ public class CartServiceImpl implements CartService {
 	// 2) cart에 있는 내용이라면 업데이트 .
 	@Override
 	public void duplicateUpate(Cart cart) {
-		CartId id = CartId.builder()
-				.userId(cart.getUserId())
-				.productId(cart.getProductId())
-				.optionContent(cart.getOptionContent())
-				.packagingOptionContent(cart.getPackagingOptionContent())
-				.build();
+		CartId id = createCartId(cart);
 		Optional<Cart> selectCart = cartRepository.findById(id);
 		if(selectCart.isPresent()) {//수량 , 금액 증가하고 update.
 			//String userId, long productId, String optionContent, String packagingOptionContent,
@@ -104,11 +116,7 @@ public class CartServiceImpl implements CartService {
 	// 4) cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
 	//실제 cart와 대조해서 변환하는 것이 아니고 , 
 	public CartDTO findentityAndNewReturnDto(Cart entity) {
-		CartId cartId = CartId.builder().userId(entity.getUserId())
-				.productId(entity.getProductId())
-				.optionContent(entity.getOptionContent())
-				.packagingOptionContent(entity.getPackagingOptionContent())
-				.build();
+		CartId cartId = createCartId(entity);
 		Optional<Cart> findcart = cartRepository.findById(cartId);
 		if(findcart.isPresent()) {//카트가 존재하면 ,
 			CartDTO dto = entityToDto(findcart.get());
@@ -126,11 +134,7 @@ public class CartServiceImpl implements CartService {
 	}
 	// 4) cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
 	public List<CartDTO> findentityAndNewReturnList(CartDTO dto) {
-		CartId cartId = CartId.builder().userId(dto.getUserId())
-				.productId(dto.getProductId())
-				.optionContent(dto.getOptionContent())
-				.packagingOptionContent(dto.getPackagingOptionContent())
-				.build();
+		CartId cartId = createCartId(dto);
 		List<Cart> list ;
 		List<CartDTO> dtoList=new ArrayList<>();;
 		System.out.println("*********************** dto.getID=>"+dto.getUserId());
@@ -153,6 +157,18 @@ public class CartServiceImpl implements CartService {
 			dtoList.add(makedto);
 		}
 		return dtoList;
+	}
+	
+	//5 ) 구매시 카트 dto 리스트에서 카트가 있으면 delete 
+	public void removeIfExists(List<CartDTO> list) {
+		for (CartDTO dto : list) {
+			CartId cartId = createCartId(dto);
+			if(findById(cartId)!=null) {
+				System.out.println("removeIfExists _장바구니에 있어요");
+				System.out.println(dto);
+				deleteCart(cartId);
+			}
+		}
 	}
 	
 	// ** 마이페이지에서만 사용 ===============================================
