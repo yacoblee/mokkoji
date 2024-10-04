@@ -21,7 +21,7 @@ const BuyComplete = ({ productPrice, totalPrice, userId, amount, checkedCartItem
                     <li>상품 옵션</li>
                     <li>{selectedProduct.optionContent} (+{selectedProduct.optionPrice}원)</li>
                     <li>포장 옵션</li>
-                    <li>{selectedProduct.packagingContent} (+{selectedProduct.packagingPrice}원)</li>
+                    <li>{selectedProduct.packagingOptionContent} (+{selectedProduct.packagingOptionPrice}원)</li>
                     <li>상품 갯수 </li>
                     <li>{amount}</li>
                     <li>가격</li>
@@ -43,7 +43,7 @@ const BuyComplete = ({ productPrice, totalPrice, userId, amount, checkedCartItem
                     <li>상품 옵션</li>
                     <li>{item.optionContent} (+{item.optionPrice}원)</li>
                     <li>포장 옵션</li>
-                    <li>{item.packagingContent} (+{item.packagingPrice}원)</li>
+                    <li>{item.packagingOptionContent} (+{item.packagingOptionPrice}원)</li>
                     <li>상품 갯수</li>
                     <li>{item.productCnt}</li>
                     <li>상품 가격</li>

@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.repository.myPage;
 
+import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.entity.myPage.Cart;
 import com.example.mokkoji_backend.entity.myPage.CartId;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 
 	// cart 개수 계산
 	int countByUserId(String userId);
+	
 	
 	// 단품 구매시 장바구니 불러올때 , id를 제외한 나머지 리스트 반환
 	List<Cart> findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
