@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import '../../../css/mypage/subpage/MyPageCart.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
-import { apiCall } from '../../../service/apiService';
 
-function MyPageCart({ change, setChange }) {
+function MyPageCart({ userCart, cartKeyList, myPageCart, cartUpdate, cartDelete, cartCheckDelete, cartCheckBoxChange, cartAllCheckBoxChange }) {
 
     // 숫자를 금액처럼 표기하기
     const formatNumber = (number) => {
@@ -25,98 +24,9 @@ function MyPageCart({ change, setChange }) {
         setHoveredButton(null);
     };
 
-    const [userCart, setUserCart] = useState([]);
-    const [cartKeyList, setCartKeyList] = useState([]); // State to store checked cart Keys
-
-    // Cart 데이터들을 가져옴
-    const myPageCart = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageCart 성공 url=${url}`);
-                setUserCart(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageCart 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageCart
-
     useEffect(() => {
         myPageCart("/mypage/cart")
     }, [])
-
-    // 수량 업데이트
-    const cartUpdate = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        console.log(url)
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** cartUpdate 성공 url=${url}`);
-                setUserCart(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** cartUpdate 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //cartUpdate
-
-    // 개별 삭제
-    const cartDelete = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'DELETE', null, userToken)
-            .then((response) => {
-                //alert(`** cartDelete 성공 url=${url}`);
-                setUserCart(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** cartDelete 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //cartDelete
-
-
-
-    // 체크 삭제
-    const cartCheckDelete = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'DELETE', cartKeyList, userToken)
-            .then((response) => {
-                //alert(`** cartCheckDelete 성공 url=${url}`);
-                setUserCart(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** cartCheckDelete 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //cartCheckDelete
-
-    // 개별 체크박스
-    const handleCheckboxChange = (cartKey) => {
-        if (cartKeyList.includes(cartKey)) {
-            setCartKeyList(cartKeyList.filter((key) => key !== cartKey));
-        } else {
-            setCartKeyList([...cartKeyList, cartKey]);
-        }
-    };
-
-    // 전체 체크박스
-    const handleAllCheckboxChange = () => {
-        if (cartKeyList.length === userCart.length) {
-            setCartKeyList([]); // 전체 해제
-        } else {
-            const allCartKey = userCart.map((cart) => `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`);
-            setCartKeyList(allCartKey); // 전체 체크
-        }
-    };
 
 
 
@@ -130,7 +40,7 @@ function MyPageCart({ change, setChange }) {
                     <input
                         type="checkbox"
                         checked={cartKeyList.length === userCart.length}
-                        onChange={handleAllCheckboxChange}
+                        onChange={cartAllCheckBoxChange}
                     />
                 </div>
                 <div></div>
@@ -162,7 +72,7 @@ function MyPageCart({ change, setChange }) {
                                     <input
                                         type="checkbox"
                                         checked={cartKeyList.includes(cartKey)}
-                                        onChange={() => handleCheckboxChange(cartKey)}
+                                        onChange={() => cartCheckBoxChange(cartKey)}
                                     />
                                 </div>
                                 <div className="MyCartPhoto">
@@ -205,6 +115,8 @@ function MyPageCart({ change, setChange }) {
                 <div>
                     <input
                         type="checkbox"
+                        checked={cartKeyList.length === userCart.length}
+                        onChange={cartAllCheckBoxChange}
                     />
                 </div>
                 <div></div>

@@ -1,87 +1,14 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { API_BASE_URL } from "../../../service/app-config";
-import { apiCall } from '../../../service/apiService';
 
-function MyPageLike({ change, setChange }) {
-
-    const [userFavorites, setUserFavorites] = useState([]);
-    const [productIdList, setProductIdList] = useState([]); // State to store checked product IDs
-
-    // favorites 데이터들을 가져옴
-    const myPageLike = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageLike 성공 url=${url}`);
-                setUserFavorites(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageLike 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageLike
+function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete, favoritesCheckDelete, favoritesCheckBoxChange, favoritesAllCheckBoxChange }) {
 
     useEffect(() => {
         myPageLike("/mypage/favorites")
     }, [])
-
-    // 개별 삭제
-    const favoritesDelete = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'DELETE', null, userToken)
-            .then((response) => {
-                //alert(`** favoritesDelete 성공 url=${url}`);
-                setUserFavorites(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** favoritesDelete 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //favoritesDelete
-
-
-
-    // 체크 삭제
-    const favoritesCheckDelete = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'DELETE', productIdList, userToken)
-            .then((response) => {
-                //alert(`** favoritesCheckDelete 성공 url=${url}`);
-                setUserFavorites(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** favoritesCheckDelete 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //favoritesCheckDelete
-
-    // 개별 체크박스
-    const handleCheckboxChange = (productId) => {
-        if (productIdList.includes(productId)) {
-            setProductIdList(productIdList.filter((id) => id !== productId));
-        } else {
-            setProductIdList([...productIdList, productId]);
-        }
-    };
-
-    // 전체 체크박스
-    const handleAllCheckboxChange = () => {
-        if (productIdList.length === userFavorites.length) {
-            setProductIdList([]); // 전체 해제
-        } else {
-            const allProductId = userFavorites.map((favorite) => favorite.productId);
-            setProductIdList(allProductId); // 전체 체크
-        }
-    };
 
 
 
@@ -93,7 +20,7 @@ function MyPageLike({ change, setChange }) {
                     <input
                         type="checkbox"
                         checked={productIdList.length === userFavorites.length}
-                        onChange={handleAllCheckboxChange}
+                        onChange={favoritesAllCheckBoxChange}
                     />
                 </div>
                 <div></div>
@@ -120,7 +47,7 @@ function MyPageLike({ change, setChange }) {
                                     <input
                                         type="checkbox"
                                         checked={productIdList.includes(favorites.productId)}
-                                        onChange={() => handleCheckboxChange(favorites.productId)}
+                                        onChange={() => favoritesCheckBoxChange(favorites.productId)}
                                     />
                                 </div>
                                 <div className="MyLikePhoto">
@@ -146,7 +73,7 @@ function MyPageLike({ change, setChange }) {
                     <input
                         type="checkbox"
                         checked={productIdList.length === userFavorites.length}
-                        onChange={handleAllCheckboxChange}
+                        onChange={favoritesAllCheckBoxChange}
                     />
                 </div>
                 <div></div>
