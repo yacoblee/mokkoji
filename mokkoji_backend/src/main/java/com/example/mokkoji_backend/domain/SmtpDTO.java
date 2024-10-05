@@ -25,9 +25,5 @@ public class SmtpDTO {
     private String contentMail;
     private String contentMain;
  
-    //향후 여유가 되면 생성할 예정
-//    private List<String> items;
-//    private String company;
-//    
 		
 }

@@ -26,8 +26,7 @@ public class Registedhistory{
 
 		@Id
 	    @Column(name = "regist_id", nullable = false)
-		@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	    private int registId;
+	    private String registId;
 	
 	    @Column(name = "regist_code", nullable = false)
 	    private String registCode;  // 복합키로 등록된 registCode 필드

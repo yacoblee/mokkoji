@@ -15,5 +15,5 @@ public interface RegistedHistoryRepositoryDSL {
 
 	 List<DateCountDTO> countByRegDate(Timestamp startDate, Timestamp endDate);
  
- 
+	 
 }

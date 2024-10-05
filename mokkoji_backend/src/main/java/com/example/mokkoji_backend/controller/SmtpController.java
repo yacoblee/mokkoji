@@ -40,26 +40,25 @@ public class SmtpController {
       String fromNumber = data.get("from");        
       String messageText = data.get("text");
 	  
-	  
-	  
       message.setTo("01040529406");
       message.setFrom(fromNumber);
       message.setText(messageText);
 
       SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+      
       System.out.println(response);
 
       return response;
     }
 
-    @PostMapping("/send")
+    @PostMapping("/sendmail")
     public String sendEmail(@RequestBody Map<String,String> data) {
         try {
      
         	String to = data.get("content_mail");
         	String subject = data.get("content_main");
         	String text = data.get("content_name");
-        	log.info("Send Mail INFORMATION "+data );
+        	log.info("Send Mail INFORMATION : "+data );
         	service.sendMessage(to, subject, text);
 
         	

@@ -1,6 +1,9 @@
 package com.example.mokkoji_backend;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.example.mokkoji_backend.domain.SmtpDTO;
+import com.example.mokkoji_backend.entity.registration.Regist;
+import com.example.mokkoji_backend.repository.registration.RegistRepository;
 import com.example.mokkoji_backend.service.smtp.SendMessageService;
 import com.example.mokkoji_backend.service.smtp.SmtpEmailServiceImpl;
 
@@ -24,10 +29,14 @@ class MokkojiBackendApplicationTests {
     @Autowired
     private SmtpEmailServiceImpl emailService;  // 실제 메일 서비스 구현체 주입
     
-
+	@Autowired
+	private RegistRepository registRepository;
     @Autowired
     private SendMessageService sendMessageService;
-    @Test
+  
+    
+    
+    
     public void testSendEmail() {
      
         SmtpDTO dto = SmtpDTO.builder()
@@ -41,7 +50,11 @@ class MokkojiBackendApplicationTests {
         //verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class)); 
     }
     
-    
+    public void testRegist() {
+    	 List<Regist> regists = registRepository.findAll();
+    	 
+    	 System.out.println(regists);
+    }
     
   
     public void testSms () {
