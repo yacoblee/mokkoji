@@ -46,10 +46,10 @@ import lombok.extern.log4j.Log4j2;
 public class ProductsController {
 	
 	private final ProductsService service;
-	private final ProductoptionsService opservice;
-	private final ProductsImagesRepository imservice;
-	private final PackagingService paservice;
-	private final ReviewsService reservice;
+//	private final ProductoptionsService opservice;
+//	private final ProductsImagesRepository imservice;
+//	private final PackagingService paservice;
+//	private final ReviewsService reservice;
 	private final UsersService userService;
 	private final TokenProvider provider;
 	private final FavoritesService favService;
@@ -145,7 +145,7 @@ public class ProductsController {
 		if(authHeader != null) {
 			String token = authHeader.substring(7);
 			id = provider.validateAndGetUserId(token);
-			System.out.println("/goods/user 의 provider.validateAndGetUserId =>"+id);
+			log.info("[/goods/likedState] 의 토큰 의 주체 : id =>"+id);
 			Users user = userService.selectOne(id);
 			
 		}else {
@@ -158,8 +158,9 @@ public class ProductsController {
 		try {
 			Favorites liked = favService.productFavorites(fid);
 			response.put("liked", true);
+			log.info("[/goods/likedState] 해당 제품은 찜 한 상품 .");
 		} catch (Exception e) {
-			System.out.println("찾기 실패");
+			log.info("[/goods/likedState] 해당 제품은 찜 하지 않은 상품 .");
 			response.put("liked", false);
 		}
 		response.put("userId",id);
@@ -173,9 +174,11 @@ public class ProductsController {
 		try {
 			favService.insertFavorites(entity);
 			response.put("liked", true);
+			log.info("[/goods/liked] 찜 상태 추가 완료");
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			response.put("liked", false);
+			log.info("[/goods/liked] 찜 상태 추가 에러 발생 파악 바람");
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 	}
@@ -188,9 +191,11 @@ public class ProductsController {
 		try {
 			favService.deleteFavorites(entityid);
 			response.put("liked", false);
+			log.info("[/goods/liked] 찜 삭제 완료");
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			response.put("liked", true);
+			log.info("[/goods/liked] 찜 삭제 에러 발생 파악 바람");
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 	}
@@ -200,37 +205,7 @@ public class ProductsController {
             @PathVariable("productId") Long productId,
             @RequestParam(value = "type", required = false) String type) {
 
-	    Map<String, Object> response = new HashMap<>();
-	    System.out.println("실행되고 있니 ?");
-	    // 요청된 데이터에 따라 필요한 정보만 반환
-	    if (type != null &&  !type.equals("form")) {
-	    	//recommend, image, detail  , review
-	    	log.info("Finding images with type: " + type);
-	        List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
-	        log.info(image);
-	        response.put("image", image);
-	        if(type.equals("main")) {
-	        	
-	        	response.put("review",reservice.productReviews(productId));
-	        	response.put("detail", service.findDetailinfo(productId));	
-	        	response.put("recommend", service.findTop4ByOrderByCountDescNative(productId));
-	        }else {
-	        	//product, image
-	        	ProductsDTO product = service.findDto(productId);
-	        	response.put("product", product);
-	        }
-	    } 
-	    else {
-	    	
-	    	//option , packaging
-	    	log.info("Finding all packaging");
-	    	List<ProductOptions> options= opservice.findByProductId(productId);
-	    	response.put("option",options );
-	    	log.info("options"+options);
-	        List<Packaging> packaging = paservice.findAll();
-	        response.put("packaging", packaging);
-	    }
-
+		Map<String, Object> response = service.getProductDetails(productId, type);
 	    return ResponseEntity.ok(response);
 	}
 	
@@ -245,7 +220,7 @@ public class ProductsController {
 			message = cart.toString();
 			return ResponseEntity.ok(message);
 		}else {
-			System.out.println("카트 없음 실패");
+			log.info("[/cart/insertitem] 카트에 추가 실패. ");
 			message = "카트 없음 실패";
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(message);
 		}

@@ -20,13 +20,11 @@ public class ProductOptionsServiceImpl implements ProductoptionsService {
 
 	@Override
 	public List<ProductOptions> findByProductId(Long id) {
-		
 		return repository.findByProductId(id);
 	}
 
 	@Override
 	public ProductOptions findById(ProductOptionsId id) {
-		
 		return repository.findById(id).get();
 	}
 
