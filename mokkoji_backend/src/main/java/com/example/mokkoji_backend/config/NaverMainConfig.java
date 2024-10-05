@@ -36,14 +36,14 @@ public class NaverMainConfig {
 	public JavaMailSender getJavaMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.naver.com");
-		mailSender.setPort(465); // Naver 메일의 SMTP 포트
+		mailSender.setPort(465);
 
 		mailSender.setUsername(USER_EMAIL);
 		mailSender.setPassword(USER_PASSWORD);
 		
 		Properties props = emailProperties();
 		mailSender.setJavaMailProperties(props);
-		System.out.println("*************** NaverConfig Props"+props);
+		System.out.println("*************** NaverConfig Props : "+props);
 		return mailSender;
 	}
 

@@ -1,0 +1,171 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumBarunpen';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    /* scroll-behavior: smooth; */
+}
+.container {
+  width: 65vw;
+  height: auto; /* height는 동적으로 조정 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  font-size: 20px;
+  padding: 2rem;
+}
+
+.container input {
+  width: 60%;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid #aaaaaa;
+  background-color: transparent;
+  font-size: 1em;
+  color: black;
+  padding: 2px;
+}
+
+input::placeholder {
+  font-size: .6em;
+}
+
+.container input:focus {
+  outline: 1px solid #979696;
+}
+
+.container p {
+  visibility: hidden;
+  font-size: 15px;
+  color: red;
+  margin-bottom: 1.5rem;
+}
+
+.rowarea {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+
+.rowarea button {
+  margin-left: 10px;
+  height: 2.5rem;
+  width: 15%;
+  border: 1px solid #aaaaaa;
+  background-color: white;
+  transition: all 1s;
+  border-radius: 5px;
+}
+
+.address input {
+  width: 20%;
+}
+
+.formcontainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  margin-top: 7%;
+}
+
+.buttonarea {
+  display: flex;
+  justify-content: start;
+}
+
+.buttonarea button {
+  width: 160px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #aaaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .5s;
+  background-color: white;
+  font-size: .9em;
+  letter-spacing: 2px;
+  word-break: keep-all;
+}
+
+.buttonarea button:hover,
+.rowarea button:hover,
+.genderbutton button:hover {
+  background-color: rgb(31, 30, 30);
+  color: white;
+}
+
+.genderbutton {
+  display: flex;
+  flex-direction: row;
+}
+
+.genderbutton button {
+  margin-top: 10px;
+  width: 20%;
+  height: 2.5rem;
+  margin-right: 10px;
+  transition: all 1s;
+  background-color: white;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+}
+
+.phoneNumber {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.phoneNumber span {
+  margin: 0 5%;
+}
+
+.emailArea {
+  width: 60%;
+  display: flex;
+}
+
+.emailArea input {
+  align-self: end;
+  width: 30%;
+}
+
+.emailArea span {
+  margin: 0 5%;
+  align-self: end;
+}
+
+.emailArea select {
+  margin: 0 2%;
+  display: flex;
+  width: 30%;
+  height: 90%;
+  border: 1px solid #aaaaaa;
+  align-self: end;
+  border-radius: 5px;
+}

@@ -13,23 +13,21 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mokkoji_backend</name>
 	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+	<!-- jitpack.io repository 추가 -->
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
+		<!-- 기존 의존성들 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -46,7 +44,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- 추가된 아임포트 의존성 -->
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.23</version>
+		</dependency>
 
+		<!-- 나머지 기존 의존성들 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -73,15 +78,15 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-				<!-- Log4j2 -->
+
+		<!-- Log4j2 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.1</version>
 		</dependency>
 
-		<!-- *** JSP 사용을 위한 Tomcat JSP 엔진 추가 -->
+		<!-- Tomcat JSP 엔진 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -100,15 +105,7 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 		</dependency>
 
-		<!--
-		*** QueryDSL
-            => 1) 확인: ~~-data-jdbc, ~~-data-jpa
-            => 2) 추가: querydsl 관련 2개, slf4j (slf4j는 로깅 관련 모듈)
-            => 3) <plugin> 설정추가 (아래)
-            => 4) 모두 추가후 이클립스 Restart &  Maven_Update project...
-				- target/generated-sources/java 디렉토리가 추가,
-				- Q클래스 생성
-		-->
+		<!-- QueryDSL 관련 의존성들 -->
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
@@ -127,7 +124,7 @@
 			<version>5.0.0</version>
 		</dependency>
 
-		<!-- ** for JWT-->
+		<!-- JWT 관련 의존성들 -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
@@ -138,13 +135,8 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
-		<!-- ** for JWT2-->
-		<dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-		
-		<!-- SMPT MAIL API-->
+
+		<!-- SMTP MAIL API -->
 		<dependency>
 		    <groupId>com.sun.mail</groupId>
 		    <artifactId>jakarta.mail</artifactId>
@@ -154,13 +146,13 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.nurigo/sdk -->
+
+		<!-- SMS API -->
 		<dependency>
 		    <groupId>net.nurigo</groupId>
 		    <artifactId>sdk</artifactId>
 		    <version>4.3.0</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -177,11 +169,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
-						<!--
-			여기 부터 입니다!!
-			QueryDSL을 사용하기 위한 플러그인 추가
-			-->
+			<!-- QueryDSL 플러그인 -->
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -193,20 +181,11 @@
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/annotations</outputDirectory>
-							<!-- 경로에서 문제 발생 시 /java 대신 /annotations로 통일할 것. -->
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<!--
-			여기 까지 입니다!!
-				=> JPAAnnotationProcessor
-					- Java 컴파일러 플러그인으로서,
-					- 컴파일 단계에서 javax.persistence.Entity 애너테이션을 가진 도메인을 찾아 쿼리타입(Q클래스) 을 생성한다.
-			-->
-			
 		</plugins>
 	</build>
-
 </project>

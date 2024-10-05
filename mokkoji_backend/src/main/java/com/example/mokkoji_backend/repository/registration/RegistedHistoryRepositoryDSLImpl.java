@@ -22,8 +22,7 @@ public class RegistedHistoryRepositoryDSLImpl implements RegistedHistoryReposito
 
 	    @Override
 	    public List<DateCountDTO> countByRegDate(Timestamp startDate, Timestamp endDate) {
-	       
-
+	      
 	        return queryFactory
 	            .select(Projections.constructor(
 	                DateCountDTO.class,
@@ -35,5 +34,8 @@ public class RegistedHistoryRepositoryDSLImpl implements RegistedHistoryReposito
 	            .groupBy(registedhistory.activeDate)
 	            .fetch();
 	    }
+	    
+	    
+	    
 	
 }

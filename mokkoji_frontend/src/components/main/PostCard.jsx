@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
+
 
 const PostCard = () => {
     const imgRef = useRef(null);
@@ -81,7 +81,7 @@ const PostCard = () => {
             };
     
             // 이메일 전송 요청
-            axios.post(`${API_BASE_URL}/send`, emailData)
+            axios.post(`${API_BASE_URL}/sendemail`, emailData)
                 .then((response) => {
                     console.log(response);
                     alert('이메일 전송 되었습니다.');

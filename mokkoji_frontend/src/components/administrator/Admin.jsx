@@ -5,18 +5,18 @@ import '../../css/administrator/admin.css'
 const Admin = () => {
     const { category } = useParams();
     const AdminMenu = [
-        { category: 'allGoods', description: '회원 관련' },
-        { category: 'stationeryGoods', description: '상품' },
-        { category: 'fashionGoods', description: '주문' },
+        { category: 'users', description: '회원 관련' },
+        { category: 'products', description: '상품' },
+        { category: 'orders', description: '주문' },
         { category: 'interiorGoods', description: '주문 통합' },
         { category: 'dashboard', description: '대시보드' },
         { category: 'kitchGoods', description: '테스트' },
     ];
 
     const AdminSubMenu = [
-        { category: 'allGoods', description: '회원 관련' },
-        { category: 'stationeryGoods', description: '상품' },
-        { category: 'fashionGoods', description: '주문' },
+        { category: 'users', description: '회원 관련' },
+        { category: 'products', description: '상품' },
+        { category: 'orders', description: '주문' },
         { category: 'interiorGoods', description: '주문 통합' },
         { category: 'dashboard', description: '대시보드' },
         { category: 'kitchGoods', description: '테스트' },

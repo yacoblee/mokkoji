@@ -12,6 +12,8 @@ import ReservationDeatil from "./ReservationDetail";
 
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
+ 
+//IMP.init('imp12042271'); 
 
 import '../../css/Reserve/reserve.css';
 
@@ -24,11 +26,92 @@ const Reservation = () => {
     const oneMonthLater = moment(today).add(1, 'months').toDate();
     const [showCalendar, setShowCalendar] = useState(false);
     const [reserveImage, setReserveImage] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = "https://cdn.iamport.kr/v1/iamport.js";
+        script.async = true;
+    
+        document.body.appendChild(script);
+    
+        script.onload = () => {
+          if (window.IMP) {
+            const { IMP } = window;
+            IMP.init('imp12042271'); // 가맹점 식별코드
+          }
+        };
+    
+        return () => {
+          document.body.removeChild(script);
+        };
+      }, []);
+    
+      const onClickPay = async () => {
+        const { IMP } = window;
+    
+
+    const teenager = btnValue.teenSelect;
+    const adult = btnValue.adultSelect;
+    const personCnt = teenager + adult; // 청소년과 성인의 합
+
+    // registsData가 로딩된 상태에서만 계산
+    if (registsData.length > 0) {
+        const teenagerTotal = teenager * registsData[0].teenager; // 청소년 총 가격 계산
+        const adultTotal = adult * registsData[0].adult; // 성인 총 가격 계산
+
+        // 결제 정보를 위한 데이터 객체
+        const data = {
+            pg: "html5_inicis",
+            pay_method: "card",
+            merchant_uid: `merchant_${new Date().getTime()}`, 
+            //amount: teenagerTotal + adultTotal,  // 총 가격
+            amount: 100, 
+            teenager: teenager,
+            adult: adult, 
+            personCnt: personCnt,  // 총 인원수
+            reserve_date: moment(date).format("YYYY-MM-DD"),
+        };
+        setLoading(true); 
+        IMP.request_pay(data, async (rsp) => {
+            if (rsp.success) {
+                try {
+                    // 비동기 API 호출
+                    const response = await axios.post(`${API_BASE_URL}/purchase/${rsp.imp_uid}`, { 
+                        registId: data.merchant_uid,
+                        activeDate: data.reserve_date,
+                        adult: data.adult,
+                        teenager: data.teenager,
+                        personCnt: data.personCnt,
+                        registCnt: data.amount,
+                        
+                    });
+    
+                    console.log("결제 성공:", response.data);
+                    // 결제 성공 메시지 보여주기
+                    alert("결제가 완료되었습니다.");
+                } catch (error) {
+                    console.error("결제 처리 중 오류 발생:", error);
+                    alert("결제에 실패했습니다. 다시 시도해 주세요.");
+                }
+                console.log("결제 성공");
+            } else {
+                console.log("결제 실패:", rsp.error_msg);
+                alert("결제 실패: " + rsp.error_msg);
+            }
+            
+            setLoading(false);
+            });
+        }else{
+            alert('예약 데이터 불러오는중입니다.');
+        }
+    }
+         
+
 
 
     useEffect(() => {
-        //if (getStorageData() !== null) setList(getStorageData());
-        //else alert(' 출력할 내용이 없습니다 ~~ ');
         let uri = API_BASE_URL + "/reserve";
         axios.get(uri)
             .then(response => {
@@ -36,7 +119,6 @@ const Reservation = () => {
                
                 if (dateCounts && Array.isArray(dateCounts)) {
                     const counts = {};  // 예약 카운트를 저장할 객체
-                    // dateCounts 배열을 안전하게 반복
                     dateCounts.forEach((data) => {
                         const formattedDate = moment(data.date).format("YYYY-MM-DD");
                         counts[formattedDate] = data.count;
@@ -90,25 +172,6 @@ const Reservation = () => {
         const counts = {};
        
 
-
-     
-//{date: '2024-10-07T00:00:00.000+00:00', count: 1}
-
-       
-        // ReserveObject.forEach((month) => {
-        //     month.days.forEach((dayData) => {
-        //         const dayDate = new Date(dayData.year, dayData.month - 1, dayData.day);
-        //         if (dayDate >= today && dayDate <= oneMonthLater) {
-        //             const formattedDate = moment(dayDate).format("YYYY-MM-DD");
-        //             counts[formattedDate] = dayData.id.length;
-        //         }
-        //     });
-        // });
-        // 로컬 스토리지에 업데이트 될 경우 정보 리로드
-        // ReserveObject.forEach(reservation => {
-        //     const formattedDate = moment(reservation.date).format("YYYY-MM-DD");
-        //     counts[formattedDate] = (counts[formattedDate] || 0) + 1;
-        // });
         setReservationCounts(counts);
     };
 
@@ -241,8 +304,8 @@ const Reservation = () => {
                                     <hr />
                                 </ul>
                             </div>
-                            <button type="button" onClick={handleFormSubmit} className="calendar-toggle-submit">
-                                예약 하기
+                            <button type="button" onClick={onClickPay} className="calendar-toggle-submit" disabled={loading}>
+                                {loading ? "처리 중..." : "예약하기"}
                             </button>
                         </div>
 
