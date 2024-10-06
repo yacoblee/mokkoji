@@ -14,8 +14,8 @@ function ProductContainer() {
                 Choose your GOODS:
             </h1>
             <ProductMainSlide />
-            <TopButton/>
-            <ProductMainList title='베스트 상품' sort='count' />
+            <TopButton />
+            <ProductMainList title='베스트 상품' sort='like_conut' />
 
             <ProductMainList title='신상품' />
         </div>

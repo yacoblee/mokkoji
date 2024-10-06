@@ -44,7 +44,7 @@ import lombok.extern.log4j.Log4j2;
 //@RequestMapping("/goods")
 @RequiredArgsConstructor
 public class ProductsController {
-	
+
 	private final ProductsService service;
 //	private final ProductoptionsService opservice;
 //	private final ProductsImagesRepository imservice;
@@ -58,234 +58,168 @@ public class ProductsController {
 //	private final AddressService addService;
 //	private final OrdersService orderService;
 //	private final OrdersDetailService orderDetailSerivce;
-	
-	//goods index page , 추천상품등 리스트 보여주기 위함.
+
+	// goods index page , 추천상품등 리스트 보여주기 위함.
 	@GetMapping("/goods")
-	public ResponseEntity<?> indexPage(){
-		//데이터 포멧 넘침으로 인해 , dto로 변환된 list를 가져옴
+	public ResponseEntity<?> indexPage() {
+		// 데이터 포멧 넘침으로 인해 , dto로 변환된 list를 가져옴
 		List<ProductsDTO> productList = service.findList();
-		
-		if(productList != null && !productList.isEmpty()) {
+
+		if (productList != null && !productList.isEmpty()) {
 			log.info("/goods _ 성공했니 ?");
+			
+			for (ProductsDTO productsDTO : productList) {
+				System.out.println(productsDTO);
+			}
 			return ResponseEntity.ok(productList);
 		}
 		log.info("/goods _ 실패했니 ?");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
-	}//indexPage
-	
-	//goods index 페이지에서 링크 이동을 통해 들어오면 데이터 걸러서 들어오게됨.
-	//nav바를 통해 이동하더라도 이 메서드로 작동하게끔 분기 시킴.
-	//페이지 네이션이 기본적으로 이루어 져야함.
+	}// indexPage
+
+	// goods index 페이지에서 링크 이동을 통해 들어오면 데이터 걸러서 들어오게됨.
+	// nav바를 통해 이동하더라도 이 메서드로 작동하게끔 분기 시킴.
+	// 페이지 네이션이 기본적으로 이루어 져야함.
 	@GetMapping("/goods/{sub_type_name}")
 	public ResponseEntity<?> getCategoryList(@PathVariable("sub_type_name") String categoryId,
 			PageRequestDTO requestDTO) {
-	    PageResultDTO<ProductsDTO, Products> resultDTO ;
-	    //1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
-	    //2. 결과를 담을 listDTO가 필요 : productList
-	    //3. pageMaker를 위해 dto 변환값을 저장하여 response 해준다.
-	    
-	    
-	    //** nav의 allGoods 처리
-	    if ("allGoods".equals(categoryId)) {
-	    		
-	    	 resultDTO =service.findPageAll(requestDTO);
-	        log.info("전체 상품 링크 ?현재 링크 위치 :"+categoryId);
-	    } else {
-	    	// v1 : 페이징 처리 없음 
-	    	//productList = service.findByCategoryId(requestDTO).getDtoList(); // 특정 카테고리 상품을 가져옴
-	    	
-	    	resultDTO =service.findByCategoryId(requestDTO); 
-	        log.info("카테고리 별 링크 ? 현재 링크 위치 :"+categoryId);
+		
+	    if (categoryId == null || categoryId.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 카테고리입니다.");
 	    }
-	    // 상황에 맞는 상품을 리스트로 변환
-	    List<ProductsDTO> productList = resultDTO.getDtoList();
-
-	    // 응답에 여러가지를 담기 위해 hashMap을 이용
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("productList", productList);
-	    response.put("pageMaker", resultDTO);
 	    
-	    return ResponseEntity.ok(response);
-	}//getCategoryList
-	
-	
-	//검색을 하면 들어오는 메서드.
-	@GetMapping("/goods/search")
-	public ResponseEntity<?> searchGoods( PageRequestDTO requestDTO) {
-	    // 1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
-	    PageResultDTO<ProductsDTO, Products> resultDTO ;
-    	
-	  //** select 타입의 allGoods 처리
-	    //1. 모든 상품에 대해서는  name like %??%
-	    //2. 카테고리 선정 상품에 대해서는 where name like %?% and categoryId = 블라블라
-	    if(requestDTO.getType().equals("allGoods")) {
-	    	resultDTO = service.findByNameContaining(requestDTO);
+	    try {			
+	    	PageResultDTO<ProductsDTO, Products> resultDTO = service.linkGoods(categoryId, requestDTO);
+	    	// 1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
+	    	// 2. 결과를 담을 listDTO가 필요 : productList
+	    	// 3. pageMaker를 위해 dto 변환값을 저장하여 response 해준다.
 	    	
-	    	log.info("allgoods 검색중 ?검색 키워드 :"+requestDTO.getKeyword());
-	    }else {
-	    	resultDTO = service.findByCategoryIdAndNameContaining(requestDTO);
+	    	// ** nav의 allGoods 처리
 	    	
-	    	log.info("카테고리 검색중 ? 검색 키워드 :"+requestDTO.getKeyword()+", 카테고리 : "+requestDTO.getType() );
-	    }
-	 // 상황에 맞는 상품을 리스트로 변환
-	    List<ProductsDTO> productList = resultDTO.getDtoList();
-	    
-	   
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("productList", productList);
-	    response.put("pageMaker", resultDTO);
-
-	    return ResponseEntity.ok(response);
-	}
-	
-	//좋아요 상태 찾기
-	@PostMapping("/goods/likedState")
-	public ResponseEntity<?> likedState(@RequestHeader(value = "Authorization", required = false) String authHeader,@RequestBody ProductsDTO dto){
-		String id = null; 
-		if(authHeader != null) {
-			String token = authHeader.substring(7);
-			id = provider.validateAndGetUserId(token);
-			log.info("[/goods/likedState] 의 토큰 의 주체 : id =>"+id);
-			Users user = userService.selectOne(id);
-			
-		}else {
-			System.out.println("로그인 상태가 아님.");
+	    	// 상황에 맞는 상품을 리스트로 변환
+	    	List<ProductsDTO> productList = resultDTO.getDtoList();
+	    	
+	    	// 응답에 여러가지를 담기 위해 hashMap을 이용
+	    	Map<String, Object> response = new HashMap<>();
+	    	response.put("productList", productList);
+	    	response.put("pageMaker", resultDTO);
+	    	
+	    	return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			log.error("상품 링크 중 오류 발생: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("상품 링크 중 오류 발생");
 		}
-		System.out.println("*************************************"+dto);
-		FavoritesId fid = FavoritesId.builder().userId(id).productId(dto.getId()).build();
-		Map<String, Object> response = new HashMap<>();
+	}// getCategoryList
+
+	// 검색을 하면 들어오는 메서드.
+	@GetMapping("/goods/search")
+	public ResponseEntity<?> searchGoods(PageRequestDTO requestDTO) {
+		// 1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
+		
 		
 		try {
-			Favorites liked = favService.productFavorites(fid);
-			response.put("liked", true);
-			log.info("[/goods/likedState] 해당 제품은 찜 한 상품 .");
+			
+			PageResultDTO<ProductsDTO, Products> resultDTO = service.searchGoods(requestDTO);
+			
+			// ** select 타입의 allGoods 처리
+			// 1. 모든 상품에 대해서는 name like %??%
+			// 2. 카테고리 선정 상품에 대해서는 where name like %?% and categoryId = 블라블라
+			
+			// 상황에 맞는 상품을 리스트로 변환
+			List<ProductsDTO> productList = resultDTO.getDtoList();
+			
+			Map<String, Object> response = new HashMap<>();
+			response.put("productList", productList);
+			response.put("pageMaker", resultDTO);
+			
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
-			log.info("[/goods/likedState] 해당 제품은 찜 하지 않은 상품 .");
-			response.put("liked", false);
+			log.info("상품 검색 오류 발생");
+			log.info(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("상품 검색 오류 발생");
 		}
-		response.put("userId",id);
-		return ResponseEntity.ok(response);
 	}
-	
-	//좋아요 상태 추가
-	@PostMapping("/goods/liked")
-	public ResponseEntity<?> insertliked(@RequestBody Favorites entity){
-		Map<String, Object> response = new HashMap<>();
+
+	// 좋아요 상태 찾기
+	@PostMapping("/goods/likedState")
+	public ResponseEntity<?> likedState(@RequestHeader(value = "Authorization", required = false) String authHeader,
+			@RequestBody ProductsDTO dto) {
+		String id = null;
 		try {
-			favService.insertFavorites(entity);
-			response.put("liked", true);
+			if (authHeader != null) {
+				String token = authHeader.substring(7);
+				id = provider.validateAndGetUserId(token);
+				log.info("[/goods/likedState] 의 토큰 의 주체 : id =>" + id);
+
+			} else {
+				System.out.println("로그인 상태가 아님.");
+			}
+
+			Map<String, Object> response = favService.getLikedState(dto, id);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("[/goods/likedState] 토큰 검증 실패" + e.getMessage());
+		}
+	}
+
+	// 좋아요 상태 추가
+	@PostMapping("/goods/liked")
+	public ResponseEntity<?> insertliked(@RequestBody Favorites entity) {
+		Map<String, Object> response = new HashMap<>();
+
+		boolean insertSuccess = favService.insertSuccess(entity);
+
+		response.put("liked", insertSuccess);
+
+		if (insertSuccess) {
 			log.info("[/goods/liked] 찜 상태 추가 완료");
 			return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			response.put("liked", false);
-			log.info("[/goods/liked] 찜 상태 추가 에러 발생 파악 바람");
+		} else {
+			log.info("[/goods/liked] 찜 상태 추가 실패");
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 	}
-	
-	//좋아요 상태 지우기
+
+	// 좋아요 상태 지우기
 	@DeleteMapping("/goods/liked")
-	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid){
-		//System.out.println("*******************entityid : "+entityid);
+	public ResponseEntity<?> delteliked(@RequestBody FavoritesId entityid) {
+		// System.out.println("*******************entityid : "+entityid);
 		Map<String, Object> response = new HashMap<>();
-		try {
-			favService.deleteFavorites(entityid);
-			response.put("liked", false);
+		boolean deleteSuccess = favService.deleteSuccess(entityid);
+		// false 가 성공을 의미.
+
+		if (!deleteSuccess) {
 			log.info("[/goods/liked] 찜 삭제 완료");
 			return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			response.put("liked", true);
-			log.info("[/goods/liked] 찜 삭제 에러 발생 파악 바람");
+		} else {
+			log.info("[/goods/liked] 찜 삭제 실패");
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 	}
-	
+
 	@GetMapping("/goods/{categoryId}/{productId}")
 	public ResponseEntity<?> detail(@PathVariable("categoryId") String categoryId,
-            @PathVariable("productId") Long productId,
-            @RequestParam(value = "type", required = false) String type) {
+			@PathVariable("productId") Long productId, @RequestParam(value = "type", required = false) String type) {
 
 		Map<String, Object> response = service.getProductDetails(productId, type);
-	    return ResponseEntity.ok(response);
+		return ResponseEntity.ok(response);
 	}
-	
+
 	// -------------- 장바구니 추가 추후 cart 컨트롤러 추가
-	
+
 	@PostMapping("/cart/insertitem")
-	public ResponseEntity<?> insertCart(@RequestBody Cart cart){
+	public ResponseEntity<?> insertCart(@RequestBody Cart cart) {
 		String message = "";
-		if(cart!=null) {
+		if (cart != null) {
 			cartService.duplicateUpate(cart);
-			//System.out.println("************cart : "+cart);
+			// System.out.println("************cart : "+cart);
 			message = cart.toString();
 			return ResponseEntity.ok(message);
-		}else {
+		} else {
 			log.info("[/cart/insertitem] 카트에 추가 실패. ");
 			message = "카트 없음 실패";
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(message);
 		}
 	}
-	
-	// ------------구매 페이지 전환
-//	@PostMapping("/order/page")
-//	public ResponseEntity<?> orderPage(@RequestBody Cart cart){
-//		Map<String, Object> response = new HashMap<>();
-//		
-//		
-//		//Packaging packagingEntity = packSerivce.findById(packagingId);
-//		if(cart!=null) {
-//			try {		
-//				System.out.println("*****Cart entity => "+cart);
-//	
-//				//CartDTO dto = cartService.entityToDto(cart);
-//				CartDTO dto = cartService.findentityAndNewReturnDto(cart);
-//				response.put("productBuy", dto);
-//				return ResponseEntity.ok(response);
-//			} catch (Exception e) {
-//	
-//				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
-//			}
-//
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
-//	}
-	//cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
-	// ProductBuyDTO findentityAndNewReturnDto(ProductBuyDTO dto)
-	
-	//  cart에 있는지 확인해서 있다면 , 리스트 줄여서 반환.
-	//List<ProductBuyDTO> findentityAndNewReturnList(ProductBuyDTO dto)
-	
-//	@PostMapping("/order/bringcart") //수정중
-//	public ResponseEntity<?> bringCart(@RequestBody CartDTO dto){
-//		Map<String, Object> response = new HashMap<>();
-//		
-//		try {
-//			List<CartDTO> list = cartService.findentityAndNewReturnList(dto);
-//			response.put("cartList", list);
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");
-//		}
-//		
-//		return ResponseEntity.ok(response);
-//	}
 
-//	@PostMapping("/order/users")
-//	public ResponseEntity<?> userinfomation(@RequestBody UsersDTO entity){
-//		Users user = userService.selectOne(entity.getUserId());
-//		List<Address> addressList = addService.findByuserId(entity.getUserId());
-//		if(user!=null && addressList !=null) {
-//			Map<String, Object> response = new HashMap<>();
-//			response.put("userinfomation", user);
-//			response.put("addressList",addressList);
-//			System.out.println("*******addressList =>"+addressList);
-//			return ResponseEntity.ok(response);
-//		}else  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("해당유저 찾지 못함");
-//	}
-//	@PostMapping("/order/buy")
-//	public ResponseEntity<?> buyNow(@RequestBody OrderRequestDTO request){
-//		orderService.buyList(request);
-//		
-//		return null;
-//	}
-//	
 }

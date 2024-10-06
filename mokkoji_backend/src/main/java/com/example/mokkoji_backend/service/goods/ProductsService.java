@@ -28,12 +28,17 @@ public interface ProductsService {
 	PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO);
 	// 전체 검색(allGoods)
 	PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO);
+	// 상우 링크 통합 서비스
+	PageResultDTO<ProductsDTO, Products> linkGoods(String categoryId,PageRequestDTO requestDTO);
 	
 	
 	//카테고리 , 이름 검색
 	PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO);
 	//이름 검색
 	PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO);
+	// 상위 검색 통합 서비스
+	PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO);
+	
 	
 	// dto로 형성된 table내의 text 찾아오기
 	ProductDetailDTO findDetailinfo(Long id);
@@ -47,6 +52,11 @@ public interface ProductsService {
 	// - insert , update
 	void save(Products item);
 	
+	// 좋아요 상태 업데이트
+	boolean updateLikeCount(Long productId, String sign);
+	
+	// 재고 상태 업데이트
+	boolean updateStockCont(Long productId,int productCnt, String sign);
 	
 	// - delete
 	void deleteById(Long id);

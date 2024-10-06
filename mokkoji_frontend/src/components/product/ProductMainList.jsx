@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import GoodsItems from "./ProductObject";
 import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from "../../service/app-config";
 import { getStorageData } from "../../service/apiService";
@@ -31,8 +30,8 @@ const ProductMainList = ({ title, sort }) => {
 
 
     //프롭스로 받은 값에 따라 필터링 적용
-    if (sort === 'count') {
-        list.sort((a, b) => b.count - a.count);
+    if (sort === 'like_conut') {
+        list.sort((a, b) => (+b.like_conut) - (+a.like_conut));
     }
 
     //슬라이드 구현을 위한 state
