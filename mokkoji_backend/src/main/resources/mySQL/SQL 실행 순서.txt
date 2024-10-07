@@ -8,3 +8,4 @@
 3. insertImages
 4. insertCartReview
 5. insertRegist
+6. insertAddress

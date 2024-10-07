@@ -8,6 +8,7 @@ import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -93,7 +94,10 @@ public class FavoritesController {
 
 		try {
 			// 2. 삭제할 항목이 존재하는지 확인 + 삭제
-			favoritesService.deleteFavorites(favoritesId);
+//			favoritesService.deleteFavorites(favoritesId);
+
+			// 2. 삭제할 항목이 존재하는지 확인 + 삭제 + 상품의 찜 카운트 (-1)
+			favoritesService.deleteSuccess(favoritesId);
 
 			// 3. 삭제 성공 후 다시 List 출력
 			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
