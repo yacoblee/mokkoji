@@ -74,7 +74,7 @@ public class CartController {
 	} //cartListAll
 	
 	// 2) 장바구니 수량 수정
-	@GetMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}/{productTotalPrice}")
+	@PatchMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}/{productTotalPrice}")
 //	public ResponseEntity<?> cartUpdateCount(@AuthenticationPrincipal String userId, ) {
 	public ResponseEntity<?> cartUpdateCount(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent, @PathVariable int productCnt, @PathVariable int productTotalPrice) {
 		String userId = getUserIdFromHeader(header);

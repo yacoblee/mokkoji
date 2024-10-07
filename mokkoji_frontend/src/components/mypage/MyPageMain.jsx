@@ -45,8 +45,6 @@ function MyPageMain() {
         myPageMain("/mypage/user")
     }, [])
 
-    
-
 
 
     // ** favorites ===============================================================================
@@ -150,7 +148,7 @@ function MyPageMain() {
     const cartUpdate = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         console.log(url)
-        apiCall(url, 'GET', null, userToken)
+        apiCall(url, 'PATCH', null, userToken)
             .then((response) => {
                 //alert(`** cartUpdate 성공 url=${url}`);
                 setUserCart(response.data);
@@ -216,6 +214,8 @@ function MyPageMain() {
         }
     };
 
+    // 구매로 이동
+
 
 
     // ** review ==================================================================================
@@ -268,6 +268,7 @@ function MyPageMain() {
                 <Route
                     path='cart'
                     element={<MyPageCart
+                        userMain={userMain}
                         userCart={userCart}
                         cartKeyList={cartKeyList}
                         myPageCart={myPageCart}

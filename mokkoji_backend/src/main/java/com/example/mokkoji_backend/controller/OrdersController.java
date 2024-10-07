@@ -106,4 +106,27 @@ public class OrdersController {
 		
 		return null;
 	}
+
+	@PostMapping("/cartpage")
+	public ResponseEntity<?> orderCartPage(@RequestBody Cart cart){
+		Map<String, Object> response = new HashMap<>();
+
+
+		//Packaging packagingEntity = packSerivce.findById(packagingId);
+		if(cart!=null) {
+			try {
+				System.out.println("*****Cart entity => "+cart);
+
+				//CartDTO dto = cartService.entityToDto(cart);
+				CartDTO dto = cartService.entityToDto(cart);
+				response.put("productBuy", dto);
+				return ResponseEntity.ok(response);
+			} catch (Exception e) {
+
+				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
+			}
+
+		}
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
+	}
 }

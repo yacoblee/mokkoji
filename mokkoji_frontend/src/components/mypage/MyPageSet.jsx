@@ -1,9 +1,6 @@
 import '../../css/mypage/MyPageUser.css';
 
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Modal from 'react-modal'
-import DaumPostcode from 'react-daum-postcode';
+import React, { useState } from 'react';
 import axios from 'axios'; // axios 추가
 import { API_BASE_URL } from "../../service/app-config";
 
@@ -160,6 +157,7 @@ function MyPageSet({ userMain }) {
 
             </div>
 
+            <button className='MyInfoSave' type='submit'>수정 완료</button>
             <button className='MyInfoSave' type='submit'>수정 완료</button>
 
         </form>
