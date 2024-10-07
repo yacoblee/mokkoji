@@ -38,17 +38,25 @@ public interface ProductsService {
 	PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO);
 	// 상위 검색 통합 서비스
 	PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO);
-	
-	
+	//날짜 검색
+	PageResultDTO<ProductsDTO, Products> findByUploadDateBetween(PageRequestDTO requestDTO);
+	//제품 상태값 검색
+	PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO);
+	//이름 + 상태검색
+	//findByNameContainingAndStatus
+	PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO);
+	//이름 + 날짜 findByNameContainingAndUploadDateBetween
+	PageResultDTO<ProductsDTO, Products> findByNameContainingAndUploadDateBetween(PageRequestDTO requestDTO);
+	//통합 겁색 complexSearch
+	PageResultDTO<ProductsDTO, Products> complexSearch(PageRequestDTO requestDTO);
+	// 관리자 페이지 서비스
+	PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO);
 	// dto로 형성된 table내의 text 찾아오기
 	ProductDetailDTO findDetailinfo(Long id);
-	
 	//select ONE entity
 	Products findById(Long id);
 	
-	//select ONE Dto
-	ProductsDTO findDto(Long id);
-	
+
 	// - insert , update
 	void save(Products item);
 	

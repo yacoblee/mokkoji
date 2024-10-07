@@ -1,0 +1,94 @@
+.searchProductAdmin {
+    font-family: 'SUITE-Regular';
+}
+
+.adminProductBox {
+    /* background-color: bisque; */
+    display: grid;
+}
+
+.searchProductAdmin h1 {
+    width: 300px;
+    border: 1px solid;
+    border-radius: 5px;
+    position: relative;
+    padding-left: 8px;
+}
+
+.searchProductAdmin h1:before {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #1a4e99;
+    content: '';
+}
+
+.searchProductAdmin h3 {
+    position: relative;
+    padding-left: 8px;
+    margin: 10px 0;
+}
+
+.searchProductAdmin h3::before {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #1a4f9981;
+    content: '';
+}
+
+.searchProductAdmin input{
+    padding: 2px;
+    margin: 2px;
+}
+.buttonwrapper button,
+.searchProductAdmin input[type="button"] {
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid #ccc;
+}
+
+.searchProductAdmin input[type="button"]:hover {
+    background: #e6e6e6;
+}
+
+/* .searchProductAdmin input[type="date"] {
+    padding: 2px;
+    margin: 2px;
+} */
+
+ .seachStockCount input {
+
+    width: 50px;
+} 
+
+.seachvalue {
+    width: 200px;
+}
+
+.searchgrid {
+    display: grid;
+}
+
+.buttonwrapper {
+    text-align: center;
+    margin: auto;
+}
+
+
+.searchProductBar {
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px;
+}
+
+.productListUp {
+    text-align: center;
+    margin: 10px;
+}

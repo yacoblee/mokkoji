@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef , useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 //import ProductMainGuide from './ProductMainGuide.jsx'; // 현재 캐시 등의 문제로 에러 발생이 보임. 도로 가져옴
+import RenderPagination from "./RenderPagination";
+
 const ProductMainGuide = ({ text }) => {
     const guideRef = useRef(null);
 
@@ -70,7 +72,7 @@ const ProductList = () => {
                 console.log(err);
                 setList([]);
             });
-        }, [category, filterItem, page]);
+    }, [category, filterItem, page]);
     useEffect(() => {
         // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정 -> 비동기 처리시 박자가 늦는 감이 있음.
         SetFilterItem(it => ({ ...it, selectValue: 'allGoods', inputValue: '' }));
@@ -94,13 +96,15 @@ const ProductList = () => {
     };
 
     const onclickSearch = () => {
-        let uri;
+        setPage(1);
         axiosCall();
     };
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {
-            axiosCall();
+            // setPage(1);
+            // axiosCall();
+            onclickSearch();
         }
     };
 
@@ -123,60 +127,6 @@ const ProductList = () => {
         );
     };
 
-    const renderPagination = () => {
-        if (!pageMaker) return null;
-
-        const pages = [];
-
-        // 페이지 번호 버튼 생성
-        for (let i = pageMaker.startPage; i <= pageMaker.endPage; i++) {
-            pages.push(
-                <button
-                    key={i}
-                    onClick={() => setPage(i)}
-                    style={{
-                        boxShadow: page === i && 'inset 0px -5px 0px rgba(166, 255, 0, 0.233)',
-                        color: page === i && 'red',
-                        fontSize: page === i && '18px',
-                        fontWeight: page === i && '700'
-                    }} // 현재 페이지 강조
-                >
-                    {i}
-                </button>
-            );
-        }
-
-        return (
-            <>
-                {/* 첫 페이지로 이동 */}
-                <button className='lastButton' onClick={() => setPage(1)} style={{ transform: 'rotateY(180deg)' }}>
-                    <img src="/images/buy/next.png" alt="1" disabled={pageMaker.currentPage === 1} />
-                </button>
-                {/* 이전 페이지 블록으로 이동 */}
-                {pageMaker.hasprev && (
-                    <button className='nextButton' onClick={() => setPage(pageMaker.startPage - 1)} style={{ transform: 'rotateY(180deg)' }}>
-                        <img src="/images/buy/next2.png" alt="1" />
-                    </button>
-                )}
-                {/* 페이지 번호 버튼들 */}
-                {pages}
-                {/* 다음 페이지 블록으로 이동 */}
-                {pageMaker.hasnext && (
-                    <button className='nextButton' onClick={() => setPage(pageMaker.endPage + 1)}>
-                        <img src="/images/buy/next2.png" alt="1" />
-                    </button>
-                )}
-                {/* 마지막 페이지로 이동 */}
-                <button className='lastButton' onClick={() => setPage(pageMaker.totalPage)}>
-                    <img src="/images/buy/next.png" alt="last" disabled={pageMaker.currentPage === pageMaker.totalPage} />
-                </button>
-            </>
-        );
-    };
-
-    const setPageAndFetch = (pageNum) => {
-        setPage(pageNum);
-    };
 
     // 메뉴바의 구성
     const productMenu = [
@@ -210,16 +160,11 @@ const ProductList = () => {
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`}
                             onClick={() => {
+                                // 상태만 업데이트하고 axiosCall은 useEffect에서 처리
                                 if (filterItem.inputValue) {
-                                    // 조건 변경후 axious 재요청. 안되는중...
-                                    console.log(`nav의 axious 재요청`)
-                                    try {
-                                        SetFilterItem({ selectValue: 'allGoods', inputValue: '' });
-                                    } finally {
-                                        axiosCall();
-                                    }
-                                } else {
-                                    axiosCall();
+                                    SetFilterItem((it) => ({
+                                        ...it, inputValue: ''
+                                    }))
                                 }
                             }}
                             key={i}>{items.description}</NavLink>
@@ -257,9 +202,10 @@ const ProductList = () => {
                     </Link>
                 ))}
             </div>
-            <div className="productPager">
-                {renderPagination()}
-            </div>
+            {/* <div className="productPager"> */}
+            {/* {renderPagination()} */}
+            <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
+            {/* </div> */}
         </>
     );
 }

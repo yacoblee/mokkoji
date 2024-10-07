@@ -1,11 +1,14 @@
 package com.example.mokkoji_backend.domain;
 
+import java.time.LocalDate;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 
 //** PageList 요청 처리 DTO
 //=> 재사용 가능 구조: 다양한 Table에 적용가능
@@ -62,42 +65,92 @@ import org.springframework.data.domain.Pageable;
 //----------------------------------------------------------
 
 //@NoArgsConstructor
-@AllArgsConstructor
+
 @Builder
 @Data
-public class PageRequestDTO {//->페이징 조건들
-    private int page; //출력할 Page 번호
-    private int size; // 출력할 row 갯수
-    private String type;// 카테고리 비교
-    private String keyword;//검색어 비교
-    
-    public PageRequestDTO() {
-    	this.page=1;
-    	this.size=4;
-    }// 기본 생성자를 활용하여 page 와 size를 초기화.
-    
-    public PageRequestDTO(int page,String type) {
-    	this.page=page;
-    	this.type=type;
-    }
-    
-    public PageRequestDTO(int page,String type,String keyword) {
-    	this.page=page;
-    	this.type=type;
-    	this.keyword=keyword;
-    }
-    
-    public Pageable getPageable(){
-    	
-    	
-    	//return PageRequest.of(page-1, size, sort);
-    	//return PageRequest.of(page-1, size, sort);
-    	return PageRequest.of(page-1, size);
-        // => of: 페이징을 위한 데이터의 조건을 적어주는 메서드
-        // => JPA 에서는 pageNo 가 0 부터 시작하기 때문에 page-1
-        //       단, application.properties에서 변경가능  
-        //      # pageable : 1페이지부터 시작하도록 변경
-        //      spring.data.web.pageable.one-indexed-parameters=true
-        // => sort: 필요시 사용을 위함.
-    }//getPageable
+@AllArgsConstructor
+public class PageRequestDTO {// ->페이징 조건들
+	private int page; // 출력할 Page 번호
+	private int size; // 출력할 row 갯수
+	private String type;// 카테고리 비교(첫번째 컬럼명)
+	private String keyword;// 검색어 비교
+	private String typeSecond;// 두번째 컬럼명
+	private boolean ascending; // 첫 번째 정렬 기준의 오름차순/내림차순 여부
+	private boolean ascendingSecond; // 두 번째 정렬 기준의 오름차순/내림차순 여부
+
+	private String sub_type;// 코드 테이블 내용을 가져올 상품 상태값(status)
+	private LocalDate startDate; // 검색 시작 날짜
+	private LocalDate endDate; // 검색 종료 날짜
+
+	public PageRequestDTO() {
+		this.page = 1;
+		// this.size = 4;
+		this.ascending = true;
+		this.ascendingSecond = true;
+	}// 기본 생성자를 활용하여 page 와 size를 초기화.
+
+	public PageRequestDTO(int page, String type) {
+		this.page = page;
+		this.type = type;
+	}
+
+	public PageRequestDTO(int page, String type, String keyword) {
+		this.page = page;
+		this.type = type;
+		this.keyword = keyword;
+	}
+
+	public PageRequestDTO(int page, int size, String type, String keyword, boolean ascending) {
+		this.page = page;
+		this.size = size;
+		this.type = type;
+		this.keyword = keyword;
+		this.ascending = ascending;
+	}
+
+	// order by를 활용할 메서드
+	public Pageable getPageable() {
+		Sort sort;
+	
+//		if (type == null && typeSecond != null) {
+//			type = typeSecond;
+//			typeSecond = null;
+//		}
+//		// 정렬 조건이 없는 경우 처리
+//		if (type == null || type.isEmpty()) {
+//			return PageRequest.of(page - 1, size); // 정렬 없이 페이징만 수행
+//		}
+
+		if (typeSecond != null) {
+			// 두 번째 정렬 기준이 있는 경우
+			System.out.println("정렬 조건 ?");
+			System.out.println("정렬 : "+typeSecond+(ascendingSecond? ", 오름차순 " : ", 내림차순 " ));
+			if (ascendingSecond) {
+				sort = Sort.by( Sort.Order.asc(typeSecond));
+			} else {
+				sort = Sort.by(Sort.Order.desc(typeSecond));
+			}
+			return PageRequest.of(page-1,size,sort);
+		}
+		
+	
+	return PageRequest.of(page-1,size);
+//		else {
+//			return PageRequest.of(page - 1, size);
+//		}
+//	   
+	// return PageRequest.of(page-1, size, sort);
+	// => of: 페이징을 위한 데이터의 조건을 적어주는 메서드
+	// => JPA 에서는 pageNo 가 0 부터 시작하기 때문에 page-1
+	// 단, application.properties에서 변경가능
+	// # pageable : 1페이지부터 시작하도록 변경
+	// spring.data.web.pageable.one-indexed-parameters=true
+	// => sort: 필요시 사용을 위함.
+	}// getPageable
+
+	// 카테고리 링크 분기시 사용 .
+	public Pageable getPageable(int size) {
+		this.size = size;
+		return PageRequest.of(page - 1, size);
+	}
 }

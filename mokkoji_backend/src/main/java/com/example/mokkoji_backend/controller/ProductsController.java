@@ -50,7 +50,6 @@ public class ProductsController {
 //	private final ProductsImagesRepository imservice;
 //	private final PackagingService paservice;
 //	private final ReviewsService reservice;
-	private final UsersService userService;
 	private final TokenProvider provider;
 	private final FavoritesService favService;
 	private final CartService cartService;
@@ -68,14 +67,11 @@ public class ProductsController {
 		if (productList != null && !productList.isEmpty()) {
 			log.info("/goods _ 성공했니 ?");
 			
-			for (ProductsDTO productsDTO : productList) {
-				System.out.println(productsDTO);
-			}
 			return ResponseEntity.ok(productList);
 		}
 		log.info("/goods _ 실패했니 ?");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
-	}// indexPage
+	}
 
 	// goods index 페이지에서 링크 이동을 통해 들어오면 데이터 걸러서 들어오게됨.
 	// nav바를 통해 이동하더라도 이 메서드로 작동하게끔 분기 시킴.

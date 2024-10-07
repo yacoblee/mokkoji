@@ -16,6 +16,7 @@ const ProductForm = ({ product, userId }) => {
     //const [slideimages, setSlideImages] = useState([]);
     const [option, setOption] = useState([]);
     const [packaging, setPackaging] = useState([]);
+    const [message, setMessage] = useState('');
     useEffect(() => {
         let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
         const fetchProductForm = async () => {
@@ -25,10 +26,10 @@ const ProductForm = ({ product, userId }) => {
                 }
             })
                 .then(response => {
-                    const { option, packaging } = response.data;
+                    const { option, packaging, message } = response.data;
                     setOption(option);
                     setPackaging(packaging);
-
+                    setMessage(message);
                     // 콘솔 로그로 데이터 확인
                     //console.log(option);
                 })
@@ -311,6 +312,7 @@ const ProductForm = ({ product, userId }) => {
                     구매하기
                 </button>
             </div>
+            {message && <div className="content_message">{message}</div>}
             <Modal
                 isOpen={isModalLoginOpen}
                 ariaHideApp={false}

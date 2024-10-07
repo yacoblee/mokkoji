@@ -36,15 +36,15 @@ public class Products {
 	@Column(name = "productMainDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String mainDescription;
 	@Column(name = "productAdditionalDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
-	private String sub_description;
+	private String subDescription;
 	@Column(name = "mainImageName")
 	private String mainImageName;
 	@Column(name = "likeCount", columnDefinition = "int default 0")
-	private int like_conut;
+	private int likeCount;
 	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
 	@Column(name = "stockCount", columnDefinition = "int default 0")
-	private int stock_count;
+	private int stockCount;
 	@Column(name = "uploadDate", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime uploadDate;

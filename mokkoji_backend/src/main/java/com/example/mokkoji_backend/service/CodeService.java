@@ -8,6 +8,7 @@ import java.util.List;
 public interface CodeService {
 	public List<Code> selectList();
 	public List<Code> selectPCList();
+	public List<Code> selectPSList();
 	public Code selectOne(CodeId id);
 	public void save(Code entity);
 	public void delete(CodeId id);
