@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useRef } from "react";
 import '../../css/login/FindPw.css';
 import axios from "axios";
@@ -6,6 +6,10 @@ import axios from "axios";
 const VerifyCode = () => {
     const labelCodeRef = useRef(null);
     const inputCodeRef = useRef(null);
+    // 전달된 데이터가 state에 저장됨
+    const location = useLocation(); // navigate로 전달된 state 받기
+    const dbData = JSON.stringify(location.state);
+
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
@@ -23,7 +27,7 @@ const VerifyCode = () => {
             }
         }
     }
-
+    console.log('프론트 저장 데이터 ' + dbData);
 
     // label과 input 포커스 기능 연결 
     const LabelClick = (inputRef) => {
@@ -49,8 +53,10 @@ const VerifyCode = () => {
         })
             .then((response) => {
                 console.log("메일인증 호출 성공:", response.status);
-                navigate('/login/findPw/verifyCode/resetPassword');
-
+                navigate('/login/findPw/verifyCode/resetPassword', {
+                    state: dbData
+                });
+            
             })
             .catch((error) => {
                 if (error.response) {
@@ -108,6 +114,7 @@ const VerifyCode = () => {
 
                                 <button onClick={checkverifyCode}>비밀번호 찾기
                                 </button>
+
                                 <p>아이디가 기억나지 않는다면 <Link to={'/Login/FindId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
                             </div>
 

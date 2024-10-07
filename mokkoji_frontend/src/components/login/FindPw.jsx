@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import '../../css/login/FindPw.css';
 import { apiCall } from "../../service/apiService";
@@ -39,56 +39,52 @@ const FindPw = () => {
             inputRef.current.focus();
         }
     }
-    //==============
-    const pRef = useRef(null)
-    const userFindIdInfo = useRef({
-        userId: '',
-        PhoneNumber: ''
-    });
-
-    const userFindPwIdErrors = useRef({
-        userId: '',
-        PhoneNumber: ''
-    });
 
 
   
 // 버튼 활성 비활성 
     const userfindpwButton = useRef(null);
-    const [isDisabled, setIsDisabled] = useState(false);
 
  // 유저 아이디, 전화번호 유효성 조건  
  const checkID =  /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
  const checkPN = /^\d{2,5}-\d{3,4}-\d{4}$/;
 
     // 비밀번호 찾기 버튼 눌렀을 경우 
+    const [dbData, setDBdata] = useState({dbUserID : ''}); // 서버에서 받은 데이터를 저장하는 상태
+
+        // dbData 상태가 변경될 때마다 콘솔에 출력
+        useEffect(() => {
+            if (dbData.dbUserID && dbData.dbUserCode) {
+              console.log("프론트 저장: ", dbData);
+            }
+          }, [dbData]);
+
     const UserFindPW = (e) => {
-        
         // 클릭 시 유효성 검사
         const nameValue = inputIdRef.current.value;
         const isName = checkID.test(nameValue);
         const pwValue = inputPNRef.current.value;
         const isPW = checkPN.test(pwValue);
-        
-        if (isName == false) {
+
+        if (!isName) {
             alert("⚠️ 아이디를 다시 입력하세요");
             inputIdRef.current.value = '';
             inputPNRef.current.value = '';
             return;
-        } else if (isPW == false) {
+        } else if (!isPW) {
             alert("⚠️ -를 포함하여 핸드폰 번호를 다시 입력하세요");
             inputIdRef.current.value = '';
             inputPNRef.current.value = '';
             return;
         }
-    
+
         const url = 'http://localhost:8080/login/findPw';
         const inputUserId = inputIdRef.current.value;
         const inputUserPN = inputPNRef.current.value;
         const data = { userId: inputUserId, phoneNumber: inputUserPN };
-    
+  
         // axios로 POST 요청 전송
-        axios.post(url,data,{
+        axios.post(url, data, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -99,27 +95,30 @@ const FindPw = () => {
     
             // 정상적인 응답 처리 (200번대 응답)
             console.log(response.data);
-             navigate('/login/findPw/verifyCode');  // 상태가 맞으면 '/verifyCode'로 이동
+            setDBdata({
+                dbUserID: response.data.userId   // userId 값을 설정
+            })
+            navigate('/login/findPw/verifyCode', {
+                state: { dbUserID: response.data.userId}
+            });
+
         })
         .catch((err) => {
-            // 오류 발생 시 처리
             if (err.response) {
                 console.log("API 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
                 
-                // 404 상태 코드 처리
-                if (err.response.status == 502) {
+                if (err.response.status === 502) {
                     inputIdRef.current.value = '';
                     inputPNRef.current.value = '';
                     alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
                 } else {
-                    // 다른 상태 코드에 대한 처리
                     alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
                 }
             } else {
                 console.log("응답 객체에 상태 코드가 없습니다:", err.message);
             }
         });
-        }
+    };
     return (
         <div>
             <div className="findId-body">
@@ -167,7 +166,7 @@ const FindPw = () => {
 
                                 <button onClick={UserFindPW} ref={userfindpwButton} >비밀번호 찾기
                                 </button>
-                                <p>아이디가 기억나지 않는다면 <Link to={'/Login/FindId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
+                                <p>아이디가 기억나지 않는다면 <Link to={'/login/findId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
                             </div>
 
                         </div>

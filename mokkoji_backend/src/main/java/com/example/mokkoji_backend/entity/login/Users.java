@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -54,8 +56,10 @@ public class Users {
     @Column(name = "withdrawal_date")
     private LocalDateTime withdrawalDate;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDateTime updatedAt;
+    
 	
 	@Column(name = "created_at")
 	private LocalDate createdAt;

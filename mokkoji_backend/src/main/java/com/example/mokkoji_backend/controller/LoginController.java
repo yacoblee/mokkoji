@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.controller;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,10 @@ public class LoginController {
 	private final TokenProvider tokenProvider;
 	PasswordEncoder passwordEncoder;
 	private EmailService emailService;
+	
 
+	
+	
 	@PostMapping(value = "/Login")
 	public ResponseEntity<?> loginJwt(@RequestBody UsersDTO userDTO) {
 
@@ -104,13 +108,19 @@ public class LoginController {
 		log.info("비번 찾기 들어옴");
 
 		Users entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
-
 		if (entity != null) {
 			emailService.sendMail(entity.getEmail());
 
 			if (emailService.getVerificationCode() != null) {
 				log.info("1. 세션에 코드 저장: " + emailService.getVerificationCode());
-				return ResponseEntity.ok("인증번호: " + emailService.getVerificationCode());
+				UsersDTO newusersDTO = UsersDTO.builder()
+	                      .userId(usersDTO.getUserId())
+	                      .phoneNumber(usersDTO.getPhoneNumber())
+	                      .userCode(emailService.getVerificationCode())
+	                      .build();
+									
+				//return ResponseEntity.ok("인증번호: " + emailService.getVerificationCode()+usersDTO.getUserId(),usersDTO.getPhoneNumber());
+				return ResponseEntity.ok(newusersDTO);
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
 			}
@@ -135,12 +145,12 @@ public class LoginController {
 	
 	
 	@PostMapping(value = "/login/findPw/verifyCode/resetPassword")
-	public ResponseEntity passwordUpdate(@RequestBody UsersDTO usersDTO, Users userEntity) {
+	public ResponseEntity<?> passwordUpdate(@RequestBody UsersDTO usersDTO, Users userEntity) {
+		log.info("유저 입력값" + usersDTO);
 		
-		userEntity.setUserId(usersDTO.getUserId());
-		userEntity.setPassword(passwordEncoder.encode(usersDTO.getPassword()));
 		try {
-			service.updatePassword(usersDTO.getUserId(), passwordEncoder.encode(usersDTO.getPassword()));
+			service.updatePassword(usersDTO.getUserId(), passwordEncoder.encode(usersDTO.getPassword()),LocalDateTime.now());
+			log.info("비밀번호 변경완료");
 			return ResponseEntity.ok("변경완료");
 		}catch(Exception e) {
 			log.error("password save (update) 실패 !"+e.toString());
@@ -148,11 +158,7 @@ public class LoginController {
 			
 		}
 		
-		
-		
-		
-		
-	}
+	}//
 	
 	
 

@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { Link,useNavigate,useLocation } from "react-router-dom";
+import { useRef,useEffect } from "react";
 import userInfo from "./UserInforData";
 import '../../css/login/FindPw.css';
 import { apiCall } from "../../service/apiService";
@@ -13,6 +13,23 @@ const ResetPassword = () => {
 
     const labelPWCheckRef = useRef(null);
     const inputPWCheckRef = useRef(null);
+   
+    const location = useLocation(); 
+    let dbData = location.state;  // 전달된 dbData 객체
+
+    // dbData가 문자열인지 확인 후, JSON 파싱
+    if (typeof dbData === 'string') {
+        dbData = JSON.parse(dbData);  // JSON 문자열을 객체로 변환
+    }
+
+    // 객체에서 dbUserID 추출
+    const dbuserid = dbData?.dbUserID || "값이 없습니다";
+
+    // 로그로 값 확인
+    console.log("전달된 dbData 객체: ", dbData);   // 전체 객체 확인
+    console.log("dbUserID 값: ", dbuserid);        // dbUserID 추출 확인
+
+
 
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
@@ -42,9 +59,14 @@ const ResetPassword = () => {
     //==============
     const pRef = useRef(null)
 
+    useEffect(() => {
+        // dbuserid 값이 null이 아닌지 확인
+        console.log("전달된 dbUserID: ", dbuserid);
+    }, [dbuserid]);
 
 
- // 유저 아이디, 전화번호 유효성 조건  
+    const navigate = useNavigate(); 
+    // 유저 아이디, 전화번호 유효성 조건  
  const termsPW =  /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{7,14}$/;
  // 비밀번호 찾기 버튼 눌렀을 경우 
  const UserFindPW = () => {
@@ -52,48 +74,49 @@ const ResetPassword = () => {
         const inputPWvalue = inputPWRef.current.value;
         const inputCheck =  termsPW.test(inputPWvalue);
         const inputDoubleCheckPW = inputPWvalue == inputPWCheckRef.current.value;
-        if(inputCheck===false){
+        if(!inputCheck){
             alert("⚠️ 조건에 맞게 비밀번호를 다시 입력하세요");
             inputPWvalue="";
-        }else if(inputDoubleCheckPW===false){
+        }else if(!inputDoubleCheckPW){
             alert("⚠️ 입력한 비밀번호가 다릅니다. 다시 입력하세요");
             inputPWCheckRef.current.value = "";
         
-        }else if(inputCheck===true && inputDoubleCheckPW===true){
-
-        }
-        const url = 'http://localhost:8080/login/findPw/verifyCode/resetPassword';
-        const data = { password : inputPWvalue }
-        axios.post(url,data,{
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
-            console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
-    
-            // 정상적인 응답 처리 (200번대 응답)
-            console.log(response.data);
-             navigate('/login/findPw/verifyCode');  // 상태가 맞으면 '/verifyCode'로 이동
-        })
-        .catch((err) => {
-            // 오류 발생 시 처리
-            if (err.response) {
-                console.log("API 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
-                
-                // 404 상태 코드 처리
-                if (err.response.status == 502) {
-                    inputIdRef.current.value = '';
-                    inputPNRef.current.value = '';
-                    alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
-                } else {
-                    // 다른 상태 코드에 대한 처리
-                    alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }else{
+            const url = 'http://localhost:8080/login/findPw/verifyCode/resetPassword';
+            const data = { userId: dbuserid, password: inputPWvalue }; 
+            axios.post(url,data,{
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            } else {
-                console.log("응답 객체에 상태 코드가 없습니다:", err.message);
-            }
-        });
+            }).then((response) => {
+                console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
+                console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
+        
+                // 정상적인 응답 처리 (200번대 응답)
+                console.log(response.data);
+                alert('비밀번호 변경 완료');
+                 navigate('/login');  // 상태가 맞으면 '/verifyCode'로 이동
+            })
+            .catch((err) => {
+                // 오류 발생 시 처리
+                if (err.response) {
+                    console.log("API 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
+                    
+                    // 404 상태 코드 처리
+                    if (err.response.status == 502) {
+                        inputPWRef.current.value = '';
+                        inputPWCheckRef.current.value = '';
+                        alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
+                    } else {
+                        // 다른 상태 코드에 대한 처리
+                        alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                    }
+                } else {
+                    console.log("응답 객체에 상태 코드가 없습니다:", err.message);
+                }
+            });
+        }
+      
         }
     return (
         <div>
