@@ -1,0 +1,19 @@
+.AddressListTable {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px;
+}
+
+.AddressListTable .AddressNameCell {
+    width: 200px;
+    font-size: 20px;
+}
+
+.AddressListTable td {
+    height: 23px;
+}
+
+.AddressListTable .MainAddressCell {
+    width: 500px;
+}
