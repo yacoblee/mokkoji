@@ -25,6 +25,6 @@ public class ProductDetailDTO {
         this.guide = product.getGuide();
         this.sizeInfo = product.getSizeInfo();
         this.mainDescription = product.getMainDescription();
-        this.subDescription = product.getSub_description();
+        this.subDescription = product.getSubDescription();
     }
 }

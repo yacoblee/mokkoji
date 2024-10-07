@@ -33,10 +33,10 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 			             products.sizeInfo, 
 			             products.guide,
 			             products.mainDescription, 
-			             products.sub_description, 
-			             products.like_conut, 
+			             products.subDescription, 
+			             products.likeCount, 
 			             products.status, 
-			             products.stock_count, 
+			             products.stockCount, 
 			             products.uploadDate
 			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId)).fetchJoin().fetch();
 	}
@@ -53,10 +53,10 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 			             products.sizeInfo, 
 			             products.guide,
 			             products.mainDescription, 
-			             products.sub_description, 
-			             products.like_conut, 
+			             products.subDescription, 
+			             products.likeCount, 
 			             products.status, 
-			             products.stock_count, 
+			             products.stockCount, 
 			             products.uploadDate
 			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId))
 				.where(products.id.eq(id)).fetchJoin().fetchOne();
@@ -93,7 +93,11 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	                    products.name,
 	                    products.price,
 	                    products.mainDescription,
-	                    products.mainImageName
+	                    products.mainImageName,
+	                    products.likeCount,
+	                    products.status,
+	                    products.stockCount,
+	                    products.uploadDate
 	            ))
 	            .from(products)
 	            .where(products.id.eq(items.getId())) // 전달된 엔티티의 ID를 기준으로 필터링

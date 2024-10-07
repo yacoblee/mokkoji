@@ -18,8 +18,13 @@ public class CodeServiceImpl implements CodeService{
 		// select * from Code
 		return repository.findAll();
 	}
+	@Override
 	public List<Code> selectPCList(){
 		return repository.findPC();
+	}
+	@Override
+	public List<Code> selectPSList() {
+		return repository.findPS();
 	}
 
 	@Override

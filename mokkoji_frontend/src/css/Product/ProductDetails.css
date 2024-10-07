@@ -411,6 +411,11 @@
     font-weight: 800;
 }
 
+.content_message {
+    color: red;
+    font-weight: 800;
+}
+
 .priceifo ul {
     display: flex;
     /* column-gap: 20px; */

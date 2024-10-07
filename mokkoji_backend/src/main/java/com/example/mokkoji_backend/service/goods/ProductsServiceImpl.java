@@ -1,5 +1,7 @@
 package com.example.mokkoji_backend.service.goods;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,6 @@ import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -60,11 +61,6 @@ public class ProductsServiceImpl implements ProductsService {
 		return repository.findById(id).get();
 	}
 
-	// select ONE Dto
-	@Override
-	public ProductsDTO findDto(Long id) {
-		return repository.findDto(id);
-	}
 
 	// - insert , update
 	@Override
@@ -125,7 +121,7 @@ public class ProductsServiceImpl implements ProductsService {
 
 	//// 1. 전체 링크(allGoods)
 	@Override
-	public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO ) {
 		Page<Products> result = repository.findAll(requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -133,7 +129,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 2. 카테고리 링크
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryId(requestDTO.getType(), requestDTO.getPageable());
+		Page<Products> result = repository.findByCategoryId(requestDTO.getCategoryId(), requestDTO.getPageable());
 		List<Products> dtoList = result.getContent();
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -153,7 +149,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 카테고리 , 이름 검색
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),
+		Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getCategoryId(),
 				requestDTO.getKeyword(), requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -169,13 +165,74 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO) {
 
-		if ("allGoods".equals(requestDTO.getType())) {
+//		if(requestDTO.getKeyword())
+		if ("allGoods".equals(requestDTO.getCategoryId())) {
 			log.info("allgoods 검색중 ?검색 키워드 :" + requestDTO.getKeyword());
 			return findByNameContaining(requestDTO);
 		} else {
-			log.info("카테고리 검색중 ? 검색 키워드 :" + requestDTO.getKeyword() + ", 카테고리 : " + requestDTO.getType());
+			log.info("카테고리 검색중 ? 검색 키워드 :" + requestDTO.getKeyword() + ", 카테고리 : " + requestDTO.getCategoryId());
 			return findByCategoryIdAndNameContaining(requestDTO);
 		}
+	}
+	//날짜 검색
+	@Override
+	public PageResultDTO<ProductsDTO, Products> findByUploadDateBetween(PageRequestDTO requestDTO) {
+		LocalDate startDate = requestDTO.getStartDate();
+		LocalDate endDate = requestDTO.getEndDate();
+
+		LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+		LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
+
+		Page<Products> result = repository.findByUploadDateBetween(startDateTime, endDateTime,requestDTO.getPageable());
+		return new PageResultDTO<>(result, e -> dslentityToDto(e));
+	}
+	// 제품 상태 검색
+	@Override
+	public PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO) {
+		
+		int status = Integer.parseInt(requestDTO.getState());
+		Page<Products> result = repository.findByStatus(status,requestDTO.getPageable());
+		return new PageResultDTO<>(result, e -> dslentityToDto(e));
+	}
+	
+	@Override
+	public PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO) {
+		Page<Products> result = repository.findByNameContainingAndStatus(requestDTO.getKeyword(),requestDTO.getState(),requestDTO.getPageable());
+		return new PageResultDTO<>(result, e -> dslentityToDto(e));
+	}
+	
+	@Override
+	public PageResultDTO<ProductsDTO, Products> findByNameContainingAndUploadDateBetween(PageRequestDTO requestDTO) {
+		LocalDate startDate = requestDTO.getStartDate();
+		LocalDate endDate = requestDTO.getEndDate();
+
+		LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+		LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
+		Page<Products> result = repository.findByNameContainingAndUploadDateBetween(
+				requestDTO.getKeyword(),startDateTime,endDateTime,requestDTO.getPageable());
+		return new PageResultDTO<>(result, e -> dslentityToDto(e));
+	}
+	
+	@Override
+	public PageResultDTO<ProductsDTO, Products> complexSearch(PageRequestDTO requestDTO) {
+		  LocalDate startDate = requestDTO.getStartDate();
+	        LocalDate endDate = requestDTO.getEndDate();
+	        
+	        LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+	        LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
+		
+		Page<Products> result =repository.complexSearch(requestDTO.getKeyword(), requestDTO.getCategoryId(), startDateTime, endDateTime, requestDTO.getState(), requestDTO.getPageable());
+		
+		return  new PageResultDTO<>(result, e -> dslentityToDto(e));
+	}
+	// 관리자 페이지 서비스
+	@Override
+	public PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO){
+      //첫 요청 :
+        //PageRequestDTO(page=1, size=10, categoryId=allGoods, 
+        //keyword=, typeSecond=null, ascending=true, ascendingSecond=true, sub_type=null, startDate=null, endDate=null)
+        log.info("관리자 페이지 검색 : "+requestDTO);	
+        return complexSearch(requestDTO);
 	}
 
 	//// 추천 리스트 반환 (DSR 이용)
@@ -195,7 +252,13 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public Map<String, Object> getProductDetails(Long productId, String type) {
 		Map<String, Object> response = new HashMap<>();
-
+		
+		Products entity = findById(productId);
+		
+		if(entity==null) {
+			log.error("[getProductDetails]해당하는 상품을 찾을 수 없습니다");
+		}
+		
 		if (type != null && !type.equals("form")) {
 			log.info("[/goods/{categoryId}/{productId}] 현재 타입 요청의 명은 ? : " + type);
 			List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
@@ -208,8 +271,8 @@ public class ProductsServiceImpl implements ProductsService {
 				response.put("recommend", findTop4ByOrderByCountDescNative(productId));
 			} else {
 				log.info("[/goods/{categoryId}/{productId}] 상품 정보 , 이미지 정보 발송 ");
-				ProductsDTO product = findDto(productId);
-				response.put("product", product);
+				ProductsDTO dto = dslentityToDto(entity);
+				response.put("product", dto);
 			}
 		} else {
 			log.info("[/goods/{categoryId}/{productId}] 옵션정보 , 패키지 정보 발송 ");
@@ -217,6 +280,11 @@ public class ProductsServiceImpl implements ProductsService {
 			response.put("option", options);
 			List<Packaging> packaging = paservice.findAll();
 			response.put("packaging", packaging);
+			//int stockCount = repository.getProductStockCount(productId);
+			int stockCount = entity.getStockCount();
+			if(entity!=null &&stockCount<=5) {
+				response.put("message", "품절 임박 , 재고가 "+stockCount+"개 남았습니다.");
+			}
 		}
 
 		return response;

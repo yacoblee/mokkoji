@@ -281,7 +281,7 @@
 }
 
 .productPager {
-    width: 95vw;
+    /* width: 95vw; */
     margin: auto;
     display: flex;
     gap: 10px;
@@ -289,7 +289,7 @@
     height: 70px;
     align-items: center;
     padding: 20px 0;
-    background-color: #d0c0a00d;
+    /* background-color: #d0c0a00d; */
 }
 
 .productPager button {
