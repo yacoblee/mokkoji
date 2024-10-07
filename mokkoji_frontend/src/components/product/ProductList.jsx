@@ -45,8 +45,9 @@ const ProductList = () => {
         let uri;
         if (filterItem.inputValue.trim() === '') {
             // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
-            uri = `${API_BASE_URL}/goods/${category}`;
+            uri = `${API_BASE_URL}/goods/${filterItem.selectValue ? filterItem.selectValue : category}`;
             console.log(`axious요청 : 카테고리 별 검색`);
+            console.log(`filterItem.selectValue : ${filterItem.selectValue}`);
             //setDisplayMessage('');
         } else {
             // 검색어가 있을 때 검색 API 호출
@@ -56,8 +57,9 @@ const ProductList = () => {
         }
         axios.get(uri, {
             params: {
+                size: 4,
                 page: page, // 첫 페이지로 설정
-                type: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
+                categoryId: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
                 ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
             }
         })

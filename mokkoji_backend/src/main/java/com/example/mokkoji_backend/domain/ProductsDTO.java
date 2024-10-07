@@ -1,10 +1,12 @@
 package com.example.mokkoji_backend.domain;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +27,11 @@ public class ProductsDTO {
 	private String mainImageName;
 
 	private String categoryId;
-	private int like_conut;
+	private int likeConut;
+	private int status;
+	private int stockCount;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDateTime uploadDate;
 	private List<ProductOptions> options;  // 추가된 필드
 	
 	
@@ -35,7 +41,7 @@ public class ProductsDTO {
 		this.price = price;
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
-		this.like_conut = likeCount;
+		this.likeConut = likeCount;
 	}
 	public ProductsDTO(Long id,String name ,int price ,String mainImageName, String categoryId ,String mainDescription,int likeCount) {
 		this.id=id;
@@ -44,7 +50,7 @@ public class ProductsDTO {
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
 		this.mainDescription = mainDescription;
-		this.like_conut = likeCount;
+		this.likeConut = likeCount;
 	}
 	
 
@@ -67,7 +73,7 @@ public class ProductsDTO {
 		this.mainImageName = product.getMainImageName();
 		this.categoryId = product.getCategoryId();
 		this.mainDescription = product.getMainDescription();
-		this.like_conut = product.getLikeCount();
+		this.likeConut = product.getLikeCount();
 		this.options = product.getOptions();  // 연관된 options 필드도 처리
 	}
 	

@@ -13,17 +13,20 @@ const ProductManagement = () => {
   const [page, setPage] = useState(1);
   const [code, setCode] = useState([]);
   //관리자 페이지 샘플 - > 샘플샵
-  const [pageRequest, setPageRequest] = useState({
+
+  //초기 객체 상태
+  const fistPageRequest = {
     size: 10,
-    page: page,
-    type: 'allGoods',
-    ascending: true,
-    ascendingSecond: 'true',
+    page: 1,
+    categoryId: 'allGoods',
+    ascendingFirst: true,
+    sortingFirstColumn: '',
     keyword: '',
-    sub_type: 'allGoods',
+    state: 'allGoods',
     startDate: '',
     endDate: '',
-  });
+  };
+  const [pageRequest, setPageRequest] = useState(fistPageRequest);
 
   const searchData = async () => {
     let uri = API_BASE_URL + "/administrator/products";
@@ -31,12 +34,11 @@ const ProductManagement = () => {
       params: {
         page: pageRequest.page,
         size: pageRequest.size,
-        type: pageRequest.type,
-        ascending: pageRequest.ascending,
-        ascendingSecond: pageRequest.ascendingSecond,
-        typeSecond: pageRequest.typeSecond,
-        keyword: pageRequest.keyword,
-        sub_type: pageRequest.sub_type == 'allGoods' ? null : pageRequest.sub_type,
+        categoryId: pageRequest.categoryId == 'allGoods' ? null : pageRequest.categoryId,
+        ascendingFirst: pageRequest.ascendingFirst,
+        sortingFirstColumn: pageRequest.sortingFirstColumn == '' ? null : pageRequest.sortingFirstColumn,
+        keyword: pageRequest.keyword.trim() == '' ? null : pageRequest.keyword.trim(),
+        state: pageRequest.state == 'allGoods' ? null : pageRequest.state,
         startDate: pageRequest.startDate,
         endDate: pageRequest.endDate,
       },
@@ -61,7 +63,7 @@ const ProductManagement = () => {
   useEffect(() => {
     searchData();
   }, [pageRequest.page]);
-
+  const [searchRequest, setSearchRequest] = useState(false); // 검색 요청 여부를 추적
   const selectorderBy = [
     {
       name: 'name',
@@ -85,24 +87,24 @@ const ProductManagement = () => {
     },
   ]
   //string 으로 이루어진 컬럼들 .
-  // const selectKeyword = [
-  //   {
-  //     name: 'name',
-  //     description: '상품 이름',
-  //   },
-  //   {
-  //     name: 'sizeInfo',
-  //     description: '상품 사이즈 정보',
-  //   },
-  //   {
-  //     name: 'mainDescription',
-  //     description: '상품 메인 정보',
-  //   },
-  //   {
-  //     name: 'subDescription',
-  //     description: '상품 추가 정보',
-  //   },
-  // ]
+  const sizeArr = [
+    {
+      name: '5',
+      description: '5개씩 보기',
+    },
+    {
+      name: '10',
+      description: '10개씩 보기',
+    },
+    {
+      name: '15',
+      description: '15개씩 보기',
+    },
+    {
+      name: '20',
+      description: '20개씩 보기',
+    },
+  ]
   // 메뉴바의 구성 카테고리별 검색
   const productMenu = [
     { category: 'allGoods', description: '전체상품' },
@@ -139,18 +141,23 @@ const ProductManagement = () => {
       default:
         return;
     }
-
-
     setPageRequest((it) => ({
       ...it,
       startDate: start,
       endDate: end
     }))
   }
+  const onChangeDateInput = (e) => {
+    const { name, value } = e.target;
+    setPageRequest((it) => ({
+      ...it,
+      [name]: value
+    }));
+  };
   const onChaneAsc = (value) => {
 
     setPageRequest((it) => ({
-      ...it, ascendingSecond: value
+      ...it, ascendingFirst: value
     }))
   }
   const onchangeRequest = (e) => {
@@ -161,14 +168,6 @@ const ProductManagement = () => {
   }
 
   console.log(pageRequest);
-  // const [pageRequest, setPageRequest] = useState({
-  //   page: page,
-  //   type: '',
-  //   typeSecond: '',
-  //   ascending: true,
-  //   ascendingSecond: 'true',
-  //   keyword: '',
-  // });
 
   const searchProductAdmin = () => {
     // 기본 폼 제출 동작 막기
@@ -185,6 +184,19 @@ const ProductManagement = () => {
     e.preventDefault(); // 기본 폼 제출 동작 막기
     searchProductAdmin(); // 검색 실행
   };
+
+  const resetPageRequest = () => {
+    setPageRequest(fistPageRequest); // 초기 상태로 리셋
+    setPage(1);  // 페이지도 초기화
+    setSearchRequest(true);
+  };
+  console.log(searchRequest);
+  useEffect(() => {
+    if (searchRequest) {
+      searchData();
+      setSearchRequest(false); // 플래그를 다시 false로 설정하여 다음 요청을 방지
+    }
+  }, [searchRequest])
   return (
     <div className="searchProductAdmin">
       <h1>Product Management</h1>
@@ -195,8 +207,8 @@ const ProductManagement = () => {
             <tr>
               <th>검색어</th>
               <td>
-                {/* <select name="typeSecond" id="productSearch"
-                  value={pageRequest.typeSecond}
+                {/* <select name="sortingFirstColumn" id="productSearch"
+                  value={pageRequest.sortingFirstColumn}
                   onChange={(e) => onchangeRequest(e)} >
                   {selectKeyword.map((items, i) => <option value={items.name} key={i}>{items.description}</option>)}
                 </select> */}
@@ -210,8 +222,8 @@ const ProductManagement = () => {
             <tr>
               <th>카테고리</th>
               <td>
-                <select name="type" id="productSearch"
-                  value={pageRequest.type}
+                <select name="categoryId" id="productSearch"
+                  value={pageRequest.categoryId}
                   onChange={(e) => onchangeRequest(e)} >
                   {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
                 </select>
@@ -220,19 +232,19 @@ const ProductManagement = () => {
             <tr>
               <th>정렬</th>
               <td>
-                <select name="typeSecond" id="productSearch"
-                  value={pageRequest.typeSecond}
+                <select name="sortingFirstColumn" id="productSearch"
+                  value={pageRequest.sortingFirstColumn}
                   onChange={(e) => onchangeRequest(e)} >
                   {selectorderBy.map((items, i) => <option value={items.name} key={i}>{items.description}</option>)}
                 </select>
                 <label htmlFor="ascending">
                   <input type="radio" id="ascending" name="ascending"
                     value="true" onChange={(e) => onChaneAsc(e.target.value)}
-                    checked={pageRequest.ascendingSecond == 'true'} />
+                    checked={pageRequest.ascendingFirst == 'true'} />
                   오름 차순</label>
                 <label htmlFor="descending">
                   <input type="radio" id="descending" name="ascending" value="false"
-                    checked={pageRequest.ascendingSecond == 'false'}
+                    checked={pageRequest.ascendingFirst == 'false'}
                     onChange={(e) => onChaneAsc(e.target.value)} />
                   내림 차순</label>
               </td>
@@ -241,9 +253,9 @@ const ProductManagement = () => {
               <th>기간검색</th>
               <td>
                 <input type="date" name="startDate" value={pageRequest.startDate}
-                  onChange={(e) => onClickDate(e.target.value)} />
+                  onChange={onChangeDateInput} />
                 <input type="date" name="endDate" value={pageRequest.endDate}
-                  onChange={(e) => onClickDate(e.target.value)} />
+                  onChange={onChangeDateInput} />
                 <input type="button" value="전체"
                   onClick={(e) => onClickDate(e.target.value)} />
                 <input type="button" value="오늘"
@@ -271,10 +283,10 @@ const ProductManagement = () => {
                 <label htmlFor={`allGoods`}>
                   <input
                     type="radio"
-                    name="sub_type"
+                    name="state"
                     id={`allGoods`}
                     value="allGoods"
-                    checked={pageRequest.sub_type == 'allGoods'}
+                    checked={pageRequest.state == 'allGoods'}
                     onChange={(e) => onchangeRequest(e)}
                   />
                   모든 상품
@@ -283,10 +295,10 @@ const ProductManagement = () => {
                   <label key={index} htmlFor={`code_${item.sub_type}`}>
                     <input
                       type="radio"
-                      name="sub_type"
+                      name="state"
                       value={`${item.sub_type}`}
                       id={`code_${item.sub_type}`}
-                      checked={pageRequest.sub_type == `${item.sub_type}`}
+                      checked={pageRequest.state == `${item.sub_type}`}
                       onChange={(e) => onchangeRequest(e)}
                     />
                     {item.sub_type_name}
@@ -294,10 +306,29 @@ const ProductManagement = () => {
                 ))}
               </td>
             </tr>
+            <tr>
+              <th>보기</th>
+              <td>
+
+                {sizeArr.map((item, index) => (
+                  <label key={index} htmlFor={`size_${item.name}`}>
+                    <input
+                      type="radio"
+                      name="size"
+                      value={`${item.name}`}
+                      id={`size_${item.name}`}
+                      checked={pageRequest.size == `${item.name}`}
+                      onChange={(e) => onchangeRequest(e)}
+                    />
+                    {item.description}
+                  </label>
+                ))}
+              </td>
+            </tr>
           </table>
           <div className="buttonwrapper">
             <button type="button" onClick={searchProductAdmin}>검색</button>
-            <button type="button">초기화</button>
+            <button type="button" onClick={resetPageRequest}>초기화</button>
           </div>
         </form>
         <h3>리스트</h3>
@@ -307,6 +338,9 @@ const ProductManagement = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Price</th>
+              <th>StockCount</th>
+              <th>LikeCount</th>
+              <th>UploadDate</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -316,6 +350,9 @@ const ProductManagement = () => {
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
+                <td>{product.stockCount}</td>
+                <td>{product.likeConut}</td>
+                <td>{product.uploadDate}</td>
                 <td>
                   <button>Edit</button>
                   <button>Delete</button>

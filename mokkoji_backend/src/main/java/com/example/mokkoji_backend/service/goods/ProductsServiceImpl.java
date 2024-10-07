@@ -129,7 +129,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 2. 카테고리 링크
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryId(requestDTO.getType(), requestDTO.getPageable());
+		Page<Products> result = repository.findByCategoryId(requestDTO.getCategoryId(), requestDTO.getPageable());
 		List<Products> dtoList = result.getContent();
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -149,7 +149,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 카테고리 , 이름 검색
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getType(),
+		Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getCategoryId(),
 				requestDTO.getKeyword(), requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -165,11 +165,12 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO) {
 
-		if ("allGoods".equals(requestDTO.getType())) {
+//		if(requestDTO.getKeyword())
+		if ("allGoods".equals(requestDTO.getCategoryId())) {
 			log.info("allgoods 검색중 ?검색 키워드 :" + requestDTO.getKeyword());
 			return findByNameContaining(requestDTO);
 		} else {
-			log.info("카테고리 검색중 ? 검색 키워드 :" + requestDTO.getKeyword() + ", 카테고리 : " + requestDTO.getType());
+			log.info("카테고리 검색중 ? 검색 키워드 :" + requestDTO.getKeyword() + ", 카테고리 : " + requestDTO.getCategoryId());
 			return findByCategoryIdAndNameContaining(requestDTO);
 		}
 	}
@@ -189,14 +190,14 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO) {
 		
-		int status = Integer.parseInt(requestDTO.getSub_type());
+		int status = Integer.parseInt(requestDTO.getState());
 		Page<Products> result = repository.findByStatus(status,requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 	
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByNameContainingAndStatus(requestDTO.getKeyword(),requestDTO.getSub_type(),requestDTO.getPageable());
+		Page<Products> result = repository.findByNameContainingAndStatus(requestDTO.getKeyword(),requestDTO.getState(),requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 	
@@ -220,91 +221,18 @@ public class ProductsServiceImpl implements ProductsService {
 	        LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
 	        LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
 		
-		Page<Products> result =repository.complexSearch(requestDTO.getKeyword(), requestDTO.getType(), startDateTime, endDateTime, requestDTO.getSub_type(), requestDTO.getPageable());
+		Page<Products> result =repository.complexSearch(requestDTO.getKeyword(), requestDTO.getCategoryId(), startDateTime, endDateTime, requestDTO.getState(), requestDTO.getPageable());
 		
 		return  new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 	// 관리자 페이지 서비스
 	@Override
 	public PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO){
-        // 키워드 : 검색어를 이름과 비교
-        String keyword = requestDTO.getKeyword();
-        // 타입 : 카테고리컬럼 값에 해당
-        String type = requestDTO.getType();
-        // orderby 컬럼에 해당.
-        String typeSecond = requestDTO.getTypeSecond();
-        //검색 시작& 끝 날짜
-        LocalDate startDate = requestDTO.getStartDate();
-        LocalDate endDate = requestDTO.getEndDate();
-        
-        LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
-        LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
-        //상품 상태검색
-        String state = requestDTO.getSub_type();
-        System.out.println("*****************************************************");
-        System.out.println(requestDTO);
-        //1.키워드가 없을 경우
-        
-        //2.타입이 없을경우 -> allGoods일 경우와 동일
-        
-        //3. 검색 날짜가 없을 경우 
-        
-        //4. 상품 상태 검색이 없는 경우 allGoods 일 경우
-        
-        //1. 키워드, 타입, 정렬 기준, 날짜, 상태 조건이 모두 없는 경우 (전체 상품 조회)
-        if(keyword==null &&(type == null || type.equals("allGoods"))
-        		 && endDate==null 
-        		&& (state == null || state.equals("allGoods"))) {
-        	log.info("키워드, 타입, 정렬 기준, 날짜, 상태 조건이 모두 없는 경우 (전체 상품 조회)" );
-        	return findPageAll(requestDTO);
-        	
-        // 2. 키워드만 있을 경우 (이름 검색)
-        }else if(keyword != null && (type == null || type.equals("allGoods")) 
-        		&& startDate == null &&(state == null || state.equals("allGoods"))) {
-        	log.info("키워드만 있을 경우 (이름 검색)" );
-        	return findByNameContaining(requestDTO);
-        
-        // 3. 타입만 있을 경우 (카테고리별 조회)
-        }else if(keyword == null && type != null 
-        		&& !type.equals("allGoods") 
-        		&& startDate == null && (state == null || state.equals("allGoods"))) {
-        	log.info("타입만 있을 경우 (카테고리별 조회)" );
-        	return findByCategoryIdAndNameContaining(requestDTO);
-        }
-     // 4. 날짜만 있을 경우 (기간별 조회)
-        else if(keyword == null && (type == null || type.equals("allGoods")) 
-        		&& startDate != null && endDate != null 
-        		&& (state == null || state.equals("allGoods"))) {
-        	log.info("날짜만 있을 경우 (기간별 조회)" );
-        	return findByUploadDateBetween(requestDTO);
-        }
-     // 5. 상품 상태만 있을 경우 (상태별 조회)
-        else if(keyword == null && (type == null || type.equals("allGoods")) 
-        		&& startDate == null && state != null) {
-        	log.info("상품 상태만 있을 경우 (상태별 조회)" );
-        	return findByStatus(requestDTO);
-        }
-     // 6. 키워드 + 타입 검색
-        else if(keyword != null && type != null && !type.equals("allGoods") 
-        		&& startDate == null && (state == null || state.equals("allGoods"))) {
-        	log.info("키워드 + 타입 검색" );
-        	return findByCategoryIdAndNameContaining(requestDTO);
-        }
-     // 7. 키워드 + 상태 검색
-        else if(keyword != null && (type == null || type.equals("allGoods")) 
-        		&& startDate == null && state != null) {
-        	log.info("키워드 + 상태 검색" );
-        	return findByNameContainingAndStatus(requestDTO);
-        }
-        // 8. 키워드 + 기간 검색
-        else if(keyword != null && (type == null || type.equals("allGoods")) 
-        		&& startDate != null && (state == null || state.equals("allGoods"))) {
-        	log.info("키워드 + 기간 검색" );
-        	return findByNameContainingAndUploadDateBetween(requestDTO);
-        }else {
-        	log.info("전체 검색" );
-        	return complexSearch(requestDTO);
-        }
+      //첫 요청 :
+        //PageRequestDTO(page=1, size=10, categoryId=allGoods, 
+        //keyword=, typeSecond=null, ascending=true, ascendingSecond=true, sub_type=null, startDate=null, endDate=null)
+        log.info("관리자 페이지 검색 : "+requestDTO);	
+        return complexSearch(requestDTO);
 	}
 
 	//// 추천 리스트 반환 (DSR 이용)

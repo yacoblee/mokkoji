@@ -112,7 +112,7 @@ public class ProductsController {
 	public ResponseEntity<?> searchGoods(PageRequestDTO requestDTO) {
 		// 1. PageResultDTO <DTO , Entity>를 통해 pageMaker의 역할과 dto변환을 맡음.
 		
-		
+		log.info(requestDTO);
 		try {
 			
 			PageResultDTO<ProductsDTO, Products> resultDTO = service.searchGoods(requestDTO);

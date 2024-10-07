@@ -94,7 +94,10 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	                    products.price,
 	                    products.mainDescription,
 	                    products.mainImageName,
-	                    products.likeCount
+	                    products.likeCount,
+	                    products.status,
+	                    products.stockCount,
+	                    products.uploadDate
 	            ))
 	            .from(products)
 	            .where(products.id.eq(items.getId())) // 전달된 엔티티의 ID를 기준으로 필터링

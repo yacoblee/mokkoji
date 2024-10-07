@@ -72,80 +72,101 @@ import lombok.Data;
 public class PageRequestDTO {// ->페이징 조건들
 	private int page; // 출력할 Page 번호
 	private int size; // 출력할 row 갯수
-	private String type;// 카테고리 비교(첫번째 컬럼명)
+	private String categoryId;// 카테고리 비교(받아올 속성값으로 활용)
 	private String keyword;// 검색어 비교
-	private String typeSecond;// 두번째 컬럼명
-	private boolean ascending; // 첫 번째 정렬 기준의 오름차순/내림차순 여부
-	private boolean ascendingSecond; // 두 번째 정렬 기준의 오름차순/내림차순 여부
-
-	private String sub_type;// 코드 테이블 내용을 가져올 상품 상태값(status)
+	private String sortingFirstColumn;// orderby의  컬럼명
+	private boolean ascendingFirst; // 첫 번째 정렬 기준의 오름차순/내림차순 여부
+	//private boolean ascendingSecond; // 두 번째 정렬 기준의 오름차순/내림차순 여부
+	//private String sortingSecondColumn;
+	private String state;// 코드 테이블 내용을 가져올 상품 상태값(status)(받아올 속성값으로 활용)
 	private LocalDate startDate; // 검색 시작 날짜
 	private LocalDate endDate; // 검색 종료 날짜
 
+	
+	//**1탄 리액트에서 axios 보내는 법============================
+	// 필요한 정보만 간단하게 보내는 법
+//    axios.get(uri, {
+//        params: {
+//            size: 4,
+//            page: page, // 첫 페이지로 설정
+//            categoryId: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
+//            ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
+//        }
+//    })
+//        .then(response => {
+//            const { productList, pageMaker } = response.data;
+//            setList(productList);
+//            setResultCount(productList.length);
+//            setPageMaker(pageMaker);
+//            console.log(productList);
+	//****2탄 리액트에서 axios 보내는 법 ==========================
+	//page를 활용하기 위해서는 ,state 값을 활용해서 변수에 저장할것.
+//	   let uri = API_BASE_URL + "/administrator/products";
+//	    axios.get(uri, {
+//	      params: {
+//	        page: pageRequest.page,
+//	        size: pageRequest.size,
+//	        categoryId: pageRequest.categoryId == 'allGoods' ? null : pageRequest.categoryId,
+//	        ascendingFirst: pageRequest.ascendingFirst,
+//	        sortingFirstColumn: pageRequest.sortingFirstColumn == '' ? null : pageRequest.sortingFirstColumn,
+//	        keyword: pageRequest.keyword.trim() == '' ? null : pageRequest.keyword.trim(),
+//	        state: pageRequest.state == 'allGoods' ? null : pageRequest.state,
+//	        startDate: pageRequest.startDate,
+//	        endDate: pageRequest.endDate,
+//	      },
+//	    .then(response => {
+//	        const { productList, pageMaker, code } = response.data;
+//	        setList(productList);
+//	        setPageMaker(pageMaker);
+//	        setCode(code);
+//	        console.log(response.data);
+//	      })
+	
+	
 	public PageRequestDTO() {
 		this.page = 1;
 		// this.size = 4;
-		this.ascending = true;
-		this.ascendingSecond = true;
+		this.ascendingFirst = true;
+		//this.ascendingSecond = true;
 	}// 기본 생성자를 활용하여 page 와 size를 초기화.
 
-	public PageRequestDTO(int page, String type) {
+	public PageRequestDTO(int page, String categoryId) {
 		this.page = page;
-		this.type = type;
+		this.categoryId = categoryId;
 	}
 
-	public PageRequestDTO(int page, String type, String keyword) {
+	public PageRequestDTO(int page, String categoryId, String keyword) {
 		this.page = page;
-		this.type = type;
+		this.categoryId = categoryId;
 		this.keyword = keyword;
 	}
 
-	public PageRequestDTO(int page, int size, String type, String keyword, boolean ascending) {
+	public PageRequestDTO(int page, int size, String type, String keyword, String categoryId, boolean ascending) {
 		this.page = page;
 		this.size = size;
-		this.type = type;
+		this.categoryId = categoryId;
 		this.keyword = keyword;
-		this.ascending = ascending;
+		this.ascendingFirst = ascending;
 	}
 
 	// order by를 활용할 메서드
 	public Pageable getPageable() {
-		Sort sort;
 	
-//		if (type == null && typeSecond != null) {
-//			type = typeSecond;
-//			typeSecond = null;
-//		}
-//		// 정렬 조건이 없는 경우 처리
-//		if (type == null || type.isEmpty()) {
-//			return PageRequest.of(page - 1, size); // 정렬 없이 페이징만 수행
-//		}
-
-		if (typeSecond != null) {
-			// 두 번째 정렬 기준이 있는 경우
+		if (sortingFirstColumn != null) {
+			Sort sort;
+			// 정렬 컬럼이 있는 경우
 			System.out.println("정렬 조건 ?");
-			System.out.println("정렬 : "+typeSecond+(ascendingSecond? ", 오름차순 " : ", 내림차순 " ));
-			if (ascendingSecond) {
-				sort = Sort.by( Sort.Order.asc(typeSecond));
+			System.out.println("정렬 : "+sortingFirstColumn+(ascendingFirst? ", 오름차순 " : ", 내림차순 " ));
+			if (ascendingFirst) {
+				sort = Sort.by( Sort.Order.asc(sortingFirstColumn));
 			} else {
-				sort = Sort.by(Sort.Order.desc(typeSecond));
+				sort = Sort.by(Sort.Order.desc(sortingFirstColumn));
 			}
 			return PageRequest.of(page-1,size,sort);
 		}
 		
 	
 	return PageRequest.of(page-1,size);
-//		else {
-//			return PageRequest.of(page - 1, size);
-//		}
-//	   
-	// return PageRequest.of(page-1, size, sort);
-	// => of: 페이징을 위한 데이터의 조건을 적어주는 메서드
-	// => JPA 에서는 pageNo 가 0 부터 시작하기 때문에 page-1
-	// 단, application.properties에서 변경가능
-	// # pageable : 1페이지부터 시작하도록 변경
-	// spring.data.web.pageable.one-indexed-parameters=true
-	// => sort: 필요시 사용을 위함.
 	}// getPageable
 
 	// 카테고리 링크 분기시 사용 .
