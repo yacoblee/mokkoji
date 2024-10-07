@@ -63,16 +63,9 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userDetail");
 		}
 	} //userDetail
-	
-	// 2) 사용자 정보 수정
-	// 2.1) 이동
-//	@GetMapping("/set")
-//	public ResponseEntity<?> userSet() {
-//
-//	}
-	 
+
 	// 2.2) 수정
-	@PostMapping("/set")
+	@PatchMapping("/set")
 	public ResponseEntity<?> userUpdate(@RequestHeader("Authorization") String header, @RequestBody MyPageDTO myPageDTO) {
 		String userId = getUserIdFromHeader(header);
 

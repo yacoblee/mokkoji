@@ -1,18 +1,19 @@
 import '../../css/mypage/MyPageUser.css';
 
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Modal from 'react-modal'
 import DaumPostcode from 'react-daum-postcode';
+import axios from 'axios'; // axios 추가
+import { API_BASE_URL } from "../../service/app-config";
 
 
 function MyPageSet({ userMain }) {
 
-    // userMain에 대한 data 해체+분해 : phoneNumber
-    const [phoneParts, setPhoneParts] = useState(userMain.phoneNumber.split('-'));
+    const [userInfo, setUserInfo] = useState(userMain);
 
-    // userMain에 대한 data 해체+분해 : email
-    const [emailParts, setEmailParts] = useState(userMain.email.split('@'));
+    // userMain에 대한 data 해체+분해 : phoneNumber
+    const [phoneParts, setPhoneParts] = useState(userInfo.phoneNumber.split('-'));
 
     // 전화번호 입력 처리
     const handlePhoneChange = (index, value) => {
@@ -21,40 +22,91 @@ function MyPageSet({ userMain }) {
         setPhoneParts(updatedPhoneParts);
     };
 
-    // 이메일 입력 처리
+
+
+    // userMain에 대한 data 해체+분해 : email
+    const [emailParts, setEmailParts] = useState(userInfo.email.split('@'));
+
+    // select 옵션 변경 처리
+    const [emailDisabled, setEmailDisabled] = useState(false);
+    const handleEmailSelectChange = (e) => {
+        const updatedEmailParts = [...emailParts];
+        const selectedValue = e.target.value;
+        if (selectedValue === 'type') {
+            // "직접 입력"을 선택하면 뒷부분을 빈 값으로 설정
+            updatedEmailParts[1] = '';
+            setEmailDisabled(false);
+        } else {
+            // 선택한 도메인으로 뒷부분 설정
+            updatedEmailParts[1] = selectedValue;
+            setEmailDisabled(true);
+        }
+        setEmailParts(updatedEmailParts);
+    };
+
+    // 이메일 입력 처리 (뒷부분도 직접 입력 가능하도록)
     const handleEmailChange = (index, value) => {
         const updatedEmailParts = [...emailParts];
         updatedEmailParts[index] = value;
         setEmailParts(updatedEmailParts);
     };
 
-    // select 옵션 변경 처리
-    const handleEmailSelectChange = (e) => {
-        const updatedEmailParts = [...emailParts];
-        updatedEmailParts[1] = e.target.value; // 선택한 도메인으로 뒷부분 설정
-        setEmailParts(updatedEmailParts);
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // 일반 필드 업데이트
+        if (name !== 'phoneNumber' && name !== 'email') {
+            setUserInfo({
+                ...userInfo,
+                [name]: value,
+            });
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // 기본 폼 제출 동작을 막음
+
+        const token = JSON.parse(sessionStorage.getItem("userData"));
+
+        try {
+            const updatedUserInfo = {
+                ...userInfo,
+                phoneNumber: phoneParts.join('-'),
+                email: emailParts.join('@'),
+            };
+
+            const response = await axios.patch(`${API_BASE_URL}/mypage/set`, updatedUserInfo, {
+                headers: {
+                    'Authorization': `Bearer ${token}`, // 필요한 경우 토큰 추가
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log('Success:', response.data);
+            window.location.href = '/mypage';
+        } catch (error) {
+            console.error('Error:', error.response);
+        }
     };
 
 
 
     return (
-        <form className='MyPageSet' method="post" >
+        <form className='MyPageSet' method="post" onSubmit={handleSubmit} >
             <div className='MyInfoList'>
                 <div className='ListTitle'>아이디</div>
-                <div>{userMain.userId}</div>
+                <div>{userInfo.userId}</div>
+
+                <div className='ListTitle'>이름</div>
+                <div>{userInfo.name} ({userInfo.gender})</div>
 
                 <div className='ListTitle'>비밀번호</div>
                 <div>따로 제작 필요</div>
 
-                <div></div>
-                <div>따로 제작 필요(비번 확인)</div>
-
-
-                <div className='ListTitle'>이름</div>
-                <div>{userMain.name} ({userMain.gender})</div>
-
                 <div className='ListTitle'>생일</div>
-                <div>{userMain.birthDate}</div>
+                <div>{userInfo.birthDate}</div>
 
                 <div className='ListTitle'>전화번호</div>
                 <div>
@@ -84,16 +136,19 @@ function MyPageSet({ userMain }) {
                 <div>
                     <input
                         type="text"
-                        value={emailParts[0]} // 이메일 앞부분
-                        onChange={(e) => handleEmailChange(0, e.target.value)} // 이메일 앞부분 처리
+                        value={emailParts[0]}
+                        onChange={(e) => handleEmailChange(0, e.target.value)}
+                        placeholder={userInfo.email}
                     />
                     <span>&nbsp;@&nbsp;</span>
                     <input
                         type="text"
                         value={emailParts[1]}
+                        onChange={(e) => handleEmailChange(1, e.target.value)}
+                        disabled={emailDisabled}
                     />
-                    &nbsp;
-                    <select id="EmailList" value={emailParts[1] === '' ? 'type' : emailParts[1]} onChange={handleEmailSelectChange} >
+                    <span> </span>
+                    <select id="EmailList" onChange={handleEmailSelectChange}>
                         <option value="type">직접 입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="google.com">google.com</option>
@@ -102,7 +157,6 @@ function MyPageSet({ userMain }) {
                         <option value="kakao.com">kakao.com</option>
                     </select>
                 </div>
-
 
             </div>
 

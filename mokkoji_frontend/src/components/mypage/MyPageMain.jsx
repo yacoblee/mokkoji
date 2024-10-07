@@ -17,7 +17,7 @@ import MyPageUser from './MyPageUser';
 
 function MyPageMain() {
 
-    const [userMain, setUserMain] = useState([]);
+    const [userMain, setUserMain] = useState({});   //userMain은 객체
     const [favoritesCnt, setFavoritesCnt] = useState();
     const [cartCnt, setCartCnt] = useState();
 
@@ -44,6 +44,8 @@ function MyPageMain() {
     useEffect(() => {
         myPageMain("/mypage/user")
     }, [])
+
+    
 
 
 
