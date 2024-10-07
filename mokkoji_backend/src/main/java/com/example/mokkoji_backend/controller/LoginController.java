@@ -113,9 +113,10 @@ public class LoginController {
 		Users entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
 		
 		if (entity != null) {
-			String generatedCode =emailService.sendMail(entity.getEmail());
+			//테스트중 메일 지속적인 발송으로 인해 일시적으로 막아둠
+			//String generatedCode =emailService.sendMail(entity.getEmail());
 			
-			
+			String generatedCode ="5555";
 			if(generatedCode!=null) {
 			    return ResponseEntity.ok("인증번호: " + generatedCode);
 			} else {

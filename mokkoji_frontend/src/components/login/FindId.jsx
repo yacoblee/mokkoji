@@ -126,8 +126,8 @@ const FindId = () => {
                         <div className="findId-textarea">
                             <ul>
                                 <Link to={'/'}><li>홈 &gt;</li></Link>
-                                <Link to={'/Login'}><li>로그인 &gt;</li></Link>
-                                <Link to={'/Login/FindId'}><li>아이디 찾기</li></Link>
+                                <Link to={'/login'}><li>로그인 &gt;</li></Link>
+                                <Link to={'/login/findId'}><li>아이디 찾기</li></Link>
                             </ul>
                             <div className="findId-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
                             <h4>아래 개인 정보를 입력해주세요</h4>
@@ -160,7 +160,7 @@ const FindId = () => {
                                 </div>
                                 <div>
                                     <p className="ptag" ref={pRef}><span className="showname">{findinguserinfo.findingName}</span>님의 아이디는 : <span className="showname">{findinguserinfo.findingId}</span>입니다.</p>
-                                    <p  ref={pRef2} className="goLogin"><Link to={'/Login'}><span className="find-span">
+                                    <p  ref={pRef2} className="goLogin"><Link to={'/login'}><span className="find-span">
                                     로그인 페이지로 돌아가기</span></Link></p>
                                 </div>
 

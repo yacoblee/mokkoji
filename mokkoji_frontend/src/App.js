@@ -22,6 +22,8 @@ import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
 import OrderManagement from './components/administrator/OrderManagement';
 import MyPageMain from './components/mypage/MyPageMain';
+import VerifyCode from './components/login/VerifyCode';
+import ResetPassword from './components/login/ResetPassword';
 
 
 const App = () => {
@@ -39,11 +41,13 @@ const App = () => {
         <Route path="/goods/:category/:id/*" element={<ProductDetails />} />
         <Route path="/orderpage" element={<ProductBuy />} />
         <Route path="/reserve/*" element={<Reservation />} />
-        <Route path="/Login/*" element={<Login />} />
-        <Route path='/Login/Membership' element={<Membership />} />
+        <Route path="/login/*" element={<Login />} />
+        <Route path='/login/membership' element={<Membership />} />
         {/* <Route path="/address-search" element={<AddressSearch />} /> */}
-        <Route path='/Login/FindId' element={<FindId />} />
-        <Route path='/Login/FindPw' element={<FindPw />} />
+        <Route path='/login/findId' element={<FindId />} />
+        <Route path='/login/findPw' element={<FindPw />} />
+        <Route path='/login/findPw/verifyCode' element={<VerifyCode />} />
+        <Route path='/login/findPw/verifyCode/resetPassword' element={<ResetPassword />} />
         <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/introduction" element={<Introduction />} />
         <Route path="/buy" element={<Buy />} />
