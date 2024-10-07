@@ -264,8 +264,6 @@ const ProductManagement = () => {
                   onClick={(e) => onClickDate(e.target.value)} />
                 <input type="button" value="일주일"
                   onClick={(e) => onClickDate(e.target.value)} />
-                <input type="button" value="1개월"
-                  onClick={(e) => onClickDate(e.target.value)} />
                 <input type="button" value="한달"
                   onClick={(e) => onClickDate(e.target.value)} />
               </td>
