@@ -35,7 +35,7 @@ CREATE TABLE `products` (
                             `upload_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '업로드 날짜',
                             `category_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '카테고리',
                             PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- project.regist definition
@@ -78,7 +78,7 @@ CREATE TABLE `users` (
                          PRIMARY KEY (`user_id`),
                          UNIQUE KEY `user_sequence` (`user_sequence`),
                          CONSTRAINT `users_chk_1` CHECK ((`gender` in (_utf8mb4'M',_utf8mb4'F')))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- project.address definition
@@ -97,7 +97,7 @@ CREATE TABLE `address` (
                            PRIMARY KEY (`address_id`),
                            KEY `user_id` (`user_id`),
                            CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- project.favorites definition
@@ -124,10 +124,10 @@ CREATE TABLE `orders` (
                           `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '구매 날짜',
                           `purchase_status` varchar(100) DEFAULT NULL COMMENT '구매 상태',
                           PRIMARY KEY (`purchase_number`),
-                          KEY `purchasehistory_customer_FK` (`user_id`),
-                          KEY `purchasehistory_addresses_FK` (`address_id`),
-                          CONSTRAINT `purchasehistory_addresses_FK` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`),
-                          CONSTRAINT `purchasehistory_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+                          KEY `orders_customer_FK` (`user_id`),
+                          KEY `orders_addresses_FK` (`address_id`),
+                          CONSTRAINT `orders_addresses_FK` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`),
+                          CONSTRAINT `orders_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -165,7 +165,7 @@ CREATE TABLE `registedhistory` (
                                    `regist_cnt` int DEFAULT NULL COMMENT '총합산금액',
                                    `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                    `active_date` timestamp NULL DEFAULT NULL,
-                                   `regist_id` varchar(150) NOT NULL,
+                                   `regist_id` int NOT NULL AUTO_INCREMENT,
                                    PRIMARY KEY (`regist_id`),
                                    UNIQUE KEY `registedhistory_unique` (`reg_date`),
                                    KEY `registedhistory_regist_FK` (`regist_code`),
@@ -202,7 +202,7 @@ CREATE TABLE `reviews` (
                            KEY `reviews_products_FK` (`product_id`),
                            CONSTRAINT `reviews_products_FK` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
                            CONSTRAINT `reviews_users_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- project.cart definition
@@ -234,11 +234,11 @@ CREATE TABLE `ordersdetail` (
                                 `product_cnt` int DEFAULT NULL COMMENT '상품 갯수',
                                 `product_total_price` int DEFAULT NULL COMMENT '선택 상품 총액',
                                 PRIMARY KEY (`purchase_number`,`product_id`,`packaging_option_content`,`option_content`),
-                                KEY `purchaselist_product_FK` (`product_id`),
-                                KEY `purchaselist_packaging_FK` (`packaging_option_content`),
-                                KEY `purchaselist_purchasehistory_FK` (`purchase_number`),
-                                KEY `purchaselist_productoptions_FK` (`product_id`,`option_content`),
-                                CONSTRAINT `purchaselist_packaging_FK` FOREIGN KEY (`packaging_option_content`) REFERENCES `packaging` (`packaging_option_content`),
-                                CONSTRAINT `purchaselist_productoptions_FK` FOREIGN KEY (`product_id`, `option_content`) REFERENCES `productoptions` (`product_id`, `option_content`),
-                                CONSTRAINT `purchaselist_purchasehistory_FK` FOREIGN KEY (`purchase_number`) REFERENCES `orders` (`purchase_number`)
+                                KEY `ordersdetail_product_FK` (`product_id`),
+                                KEY `ordersdetail_packaging_FK` (`packaging_option_content`),
+                                KEY `ordersdetail_orders_FK` (`purchase_number`),
+                                KEY `ordersdetail_productoptions_FK` (`product_id`,`option_content`),
+                                CONSTRAINT `ordersdetail_orders_FK` FOREIGN KEY (`purchase_number`) REFERENCES `orders` (`purchase_number`),
+                                CONSTRAINT `ordersdetail_packaging_FK` FOREIGN KEY (`packaging_option_content`) REFERENCES `packaging` (`packaging_option_content`),
+                                CONSTRAINT `ordersdetail_productoptions_FK` FOREIGN KEY (`product_id`, `option_content`) REFERENCES `productoptions` (`product_id`, `option_content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

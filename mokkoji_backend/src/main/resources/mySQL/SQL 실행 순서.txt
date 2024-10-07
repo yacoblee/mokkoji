@@ -1,9 +1,10 @@
 ** DDL로 한번에 모든 테이블 작성 가능합니다
-** insertProduct, insertRegist 파일 내부의 Alter 구문 구의해주세요
+** ALTER 모두 포함된 DDL입니다
+** insert~.sql 내부의 ALTER 주석 풀면 오류납니다...
+** ID 변경할떄 -> insertCartReview, insertRegist 내부에서 모두 변경해야합니다
 
-1. final
-2. alter
-3. insertProduct
-4. insertImages
-5. insertCartReview
-6. insertRegist
+1. DDL
+2. insertProduct
+3. insertImages
+4. insertCartReview
+5. insertRegist

@@ -1,4 +1,4 @@
-ALTER TABLE project.registedhistory MODIFY COLUMN regist_id int auto_increment auto_increment NOT NULL;
+# ALTER TABLE project.registedhistory MODIFY COLUMN regist_id int auto_increment auto_increment NOT NULL;
 
 -- 240927
 -- CODE 테이블 예약 코드
@@ -23,7 +23,7 @@ VALUES('04RS', '영롱한 자개소반 미니어처 만들기', '문화체험', 
 -- 예약 글 정보
 INSERT INTO project.registedhistory
 (regist_code, user_id, teenager_cnt, adult_cnt, person_cnt, regist_cnt, active_date)
-VALUES('04RS', 'user1', 2,1, 3, 20000,   '2024-10-07');
+VALUES('04RS', 's1', 2,1, 3, 20000,'2024-10-07');
 
 
 

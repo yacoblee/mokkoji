@@ -47,7 +47,7 @@ product_size_Info, product_guide,product_main_description,product_additional_des
         선비들의 얼굴이 붉게 물들며
         즐거운 술자리 분위기를 연출합니다.');
 -- 2. productoptions      
-INSERT INTO productoptions(product_id,option_content)
+INSERT INTO productoptions(product_id, option_content)
  	values(1, '취객선비 3인방 변색 잔세트');
        
        
@@ -569,7 +569,7 @@ SET product_name='한국 전통 문양 베개 커버', product_price=25000, prod
 WHERE product_id=13;
 
 
-ALTER TABLE users MODIFY user_sequence INT NOT NULL AUTO_INCREMENT;
+# ALTER TABLE users MODIFY user_sequence INT NOT NULL AUTO_INCREMENT;
 
 WITH ranked_users AS (
   SELECT user_id, 
@@ -581,5 +581,5 @@ UPDATE users u
 JOIN ranked_users ru ON u.user_id = ru.user_id
 SET u.user_sequence = ru.new_sequence;
 
-ALTER TABLE users MODIFY phone_number VARCHAR(20);
-ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
+# ALTER TABLE users MODIFY phone_number VARCHAR(20);
+# ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
