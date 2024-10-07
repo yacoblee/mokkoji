@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import userInfo from "./UserInforData";
 import '../../css/login/FindPw.css';
 import { apiCall } from "../../service/apiService";
 
 
-const FindPw = () => {
+const VerifyCode = () => {
     const labelPNRef = useRef(null);
     const inputPNRef = useRef(null);
 
     const labelIdRef = useRef(null);
     const inputIdRef = useRef(null);
 
-    const navi = useNavigate(); 
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
@@ -50,11 +49,13 @@ const FindPw = () => {
         PhoneNumber: ''
     });
 
-
+    const [forceUpdater, forceUpdate] = useState(false);
   
-// 버튼 활성 비활성 
-    const userfindpwButton = useRef(null);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [findinguserinfo, setFindinguserinfo] = useState({
+        findingPw: '',
+        findingName: ''
+    });
+
 
  // 유저 아이디, 전화번호 유효성 조건  
  const checkID =  /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
@@ -89,7 +90,6 @@ const FindPw = () => {
         .then((response)=>{
             console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
             console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 
-            navi('/login/findPw/verifyCode');
 
             if(response.data==false){
                 inputIdRef.current.value='';
@@ -99,6 +99,11 @@ const FindPw = () => {
             }else{
              
                 console.log(response.data)
+                setFindinguserinfo({
+                                findingPw: response.data.email,
+                                findingName: response.data.name
+                            });
+                            pRef.current.style.visibility = 'visible'
             }
 
         }).catch((err)=>{
@@ -110,7 +115,35 @@ const FindPw = () => {
                 console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다:", err.message);
             }
         })
+        // const allUserData = JSON.parse(localStorage.getItem('userInfo'));
+        // if (!allUserData) {
+        //     return;
+        // }
 
+        // const isCheck = Object.values(userFindPwIdErrors.current).every(value => value === true);
+        // if (isCheck) {
+        //     const userExistsName = allUserData.find(it => it.id === userFindIdInfo.current.userId);
+        //     const userExistsPhoneNumber = allUserData.find(it => it.phoneNumber === userFindIdInfo.current.PhoneNumber);
+
+        //     if (userExistsName && userExistsPhoneNumber) {
+        //         setFindinguserinfo({
+        //             findingPw: userExistsName.pw,
+        //             findingName: userExistsName.name
+        //         });
+        //         pRef.current.style.visibility = 'visible'
+        //     } else {
+        //         pRef.current.style.visibility = 'hidden'
+        //         alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.')
+        //     }
+        // } else {
+        //     alert('⚠️ 조건에 맞게 정보를 다시입력해주세요')
+        //     inputIdRef.current.value = '';
+        //     inputPNRef.current.value = '';
+        //     inputPNRef.current.style.borderBottom = '1px solid #aaaaaa';
+        //     inputIdRef.current.style.borderBottom = '1px solid #aaaaaa';
+        //     MoveToInLabel(labelIdRef, inputIdRef)
+        //     MoveToInLabel(labelPNRef, inputPNRef)
+        // }
     };
 
     return (
@@ -125,17 +158,18 @@ const FindPw = () => {
                             <ul>
                                 <Link to={'/'}><li>홈 &gt;</li></Link>
                                 <Link to={'/Login'}><li>로그인 &gt;</li></Link>
-                                <Link to={'/Login/FindPw/'}><li>비밀번호 찾기</li></Link>
+                                <Link to={'/login/findPw/'}><li>비밀번호 찾기&gt;</li></Link>
+                                <Link to={'/login/findPw/'}><li>인증번호 입력</li></Link>
                             </ul>
                             <div className="findId-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
-                            <h4>아래 개인 정보를 입력해주세요</h4>
+                            <h4>아래 인증코드를 작성해주세요</h4>
 
                             <div className="findId-Box">
                                 <div className="findId-inputArea">
                                     <label className="findId-label"
                                         ref={labelIdRef}
                                         onClick={() => LabelClick(inputPNRef)}
-                                    >아이디</label>
+                                    >인증번호</label>
 
                                     <input type="text"
                                         ref={inputIdRef}
@@ -144,21 +178,14 @@ const FindPw = () => {
                                         onFocus={() => MoveToOutLabel(labelIdRef)}
                                         onBlur={() => MoveToInLabel(labelIdRef, inputIdRef)} />
                                 </div>
-                                <div className="findId-inputArea">
-                                    <label className="findId-label"
-                                        ref={labelPNRef}
-                                        onClick={() => LabelClick(inputPNRef)}
-                                    >핸드폰 번호</label>
+                               
 
-                                    <input type="text"
-                                        maxLength={16}
-                                        name="PhoneNumber"
-                                        ref={inputPNRef}
-                                        onFocus={() => MoveToOutLabel(labelPNRef)}
-                                        onBlur={() => MoveToInLabel(labelPNRef, inputPNRef)} />
+                                <div>
+                                    <p className="ptag0
+                                    ." ref={pRef}><span className="showname">{findinguserinfo.findingName}</span>님의 이메일은 : <span className="showname">{findinguserinfo.findingPw}</span>입니다.</p>
                                 </div>
 
-                                <button onClick={UserFindPW} ref={userfindpwButton} >비밀번호 찾기
+                                <button onClick={UserFindPW}>인증번호 입력
                                 </button>
                                 <p>아이디가 기억나지 않는다면 <Link to={'/Login/FindId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
                             </div>
@@ -171,4 +198,4 @@ const FindPw = () => {
     );
 }
 
-export default FindPw;
+export default VerifyCode;

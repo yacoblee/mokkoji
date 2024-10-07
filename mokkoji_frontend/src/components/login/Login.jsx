@@ -92,7 +92,7 @@ const Login = () => {
 
                 }
                 setIsLoggedIn(false);
-                window.location.href = '/Login';
+                window.location.href = '/login';
             });
 
     }

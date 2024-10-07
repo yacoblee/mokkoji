@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.controller;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.service.email.EmailService;
 import com.example.mokkoji_backend.service.login.UsersService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class LoginController {
 	private final UsersService service;
 	private final TokenProvider tokenProvider;
 	PasswordEncoder passwordEncoder;
+	private EmailService emailService;
 
 	@PostMapping(value = "/Login")
 	public ResponseEntity<?> loginJwt(@RequestBody UsersDTO userDTO) {
@@ -105,13 +107,24 @@ public class LoginController {
 	
 	
 	@PostMapping(value = "/Login/FindPw")
-	public ResponseEntity<?> findEmail(@RequestBody UsersDTO usersDTO, Users entity) {
+	public ResponseEntity<?> findEmail(@RequestBody UsersDTO usersDTO) {
 		log.info("비번 찾기 들어옴");
-		entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
+		
+		Users entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
+		
 		if (entity != null) {
-			Users findingUserInfo = Users.builder().name(entity.getName()).email(entity.getEmail()).build();
-			return ResponseEntity.ok(findingUserInfo);
-		} else {
+			//테스트중 메일 지속적인 발송으로 인해 일시적으로 막아둠
+			//String generatedCode =emailService.sendMail(entity.getEmail());
+			
+			String generatedCode ="5555";
+			if(generatedCode!=null) {
+			    return ResponseEntity.ok("인증번호: " + generatedCode);
+			} else {
+				
+				return ResponseEntity.ok("메일 발송에 실패했습니다");
+			}
+		} 
+		else {
 			return ResponseEntity.ok("false");
 		}
 	}// findPw

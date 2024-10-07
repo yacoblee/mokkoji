@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import userInfo from "./UserInforData";
 import '../../css/login/FindPw.css';
 import { apiCall } from "../../service/apiService";
 
 
-const FindPw = () => {
+const ResetPassword = () => {
     const labelPNRef = useRef(null);
     const inputPNRef = useRef(null);
 
     const labelIdRef = useRef(null);
     const inputIdRef = useRef(null);
 
-    const navi = useNavigate(); 
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
@@ -50,11 +49,57 @@ const FindPw = () => {
         PhoneNumber: ''
     });
 
-
+    const [forceUpdater, forceUpdate] = useState(false);
   
-// 버튼 활성 비활성 
-    const userfindpwButton = useRef(null);
-    const [isDisabled, setIsDisabled] = useState(false);
+  
+  
+  
+    // const onChangeInputInfo = (e) => {
+    //     forceUpdate(!forceUpdater); // 랜더링 위한 임의의 콜백함수 
+    //     const { name, value } = e.target;
+    //     userFindIdInfo.current[name] = value;
+
+    //     if (name === 'userId') {
+    //         const noneId = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
+    //         const isValidId = noneId.test(value);
+    //         if (isValidId === false) {
+    //             inputIdRef.current.style.borderBottom = '1px solid red'
+    //             userFindPwIdErrors.current.userId = false;
+    //         }
+    //         else {
+    //             inputIdRef.current.style.borderBottom = '1px solid #aaaaaa'
+    //             userFindPwIdErrors.current.userId = true;
+    //         }
+    //     }
+
+    //     if (name === 'PhoneNumber') {
+    //         const noneNumber = /[^0-9]/g;
+    //         const isValidPhoneNumber = !noneNumber.test(value);
+    //         if (!isValidPhoneNumber) {
+    //             alert('-을 제외한 숫자만 입력해주세요');
+    //             inputPNRef.current.value = '';
+    //             userFindPwIdErrors.current.PhoneNumber = false;
+    //             setAlertShown(false);
+    //         }
+    //         else {
+    //             userFindPwIdErrors.current.PhoneNumber = true;
+    //             setAlertShown(true);
+    //         }
+    //     }
+
+    // }
+
+
+
+
+
+
+
+    const [findinguserinfo, setFindinguserinfo] = useState({
+        findingPw: '',
+        findingName: ''
+    });
+
 
  // 유저 아이디, 전화번호 유효성 조건  
  const checkID =  /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
@@ -89,7 +134,6 @@ const FindPw = () => {
         .then((response)=>{
             console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
             console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 
-            navi('/login/findPw/verifyCode');
 
             if(response.data==false){
                 inputIdRef.current.value='';
@@ -99,6 +143,11 @@ const FindPw = () => {
             }else{
              
                 console.log(response.data)
+                setFindinguserinfo({
+                                findingPw: response.data.email,
+                                findingName: response.data.name
+                            });
+                            pRef.current.style.visibility = 'visible'
             }
 
         }).catch((err)=>{
@@ -110,7 +159,6 @@ const FindPw = () => {
                 console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다:", err.message);
             }
         })
-
     };
 
     return (
@@ -124,11 +172,13 @@ const FindPw = () => {
                         <div className="findId-textarea">
                             <ul>
                                 <Link to={'/'}><li>홈 &gt;</li></Link>
-                                <Link to={'/Login'}><li>로그인 &gt;</li></Link>
-                                <Link to={'/Login/FindPw/'}><li>비밀번호 찾기</li></Link>
+                                <Link to={'/login'}><li>로그인 &gt;</li></Link>
+                                <Link to={'/login/findPw'}><li>비밀번호 찾기&gt;</li></Link>
+                                <Link to={'/login/findPw/verifyCode'}><li>인증코드 검증&gt;</li></Link>
+                                <Link to={'/login/findPw/verifyCode/resetPassword'}><li>비밀번호 변경</li></Link>
                             </ul>
                             <div className="findId-imgBox"><Link to='/'><img src="/images/main/main1.png" alt="로고이미지" /></Link></div>
-                            <h4>아래 개인 정보를 입력해주세요</h4>
+                            <h4>변경할 비밀번호를 입력하세요</h4>
 
                             <div className="findId-Box">
                                 <div className="findId-inputArea">
@@ -158,7 +208,11 @@ const FindPw = () => {
                                         onBlur={() => MoveToInLabel(labelPNRef, inputPNRef)} />
                                 </div>
 
-                                <button onClick={UserFindPW} ref={userfindpwButton} >비밀번호 찾기
+                                <div>
+                                    <p className="ptag" ref={pRef}><span className="showname">{findinguserinfo.findingName}</span>님의 이메일은 : <span className="showname">{findinguserinfo.findingPw}</span>입니다.</p>
+                                </div>
+
+                                <button onClick={UserFindPW}>비밀번호 찾기
                                 </button>
                                 <p>아이디가 기억나지 않는다면 <Link to={'/Login/FindId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
                             </div>
@@ -171,4 +225,4 @@ const FindPw = () => {
     );
 }
 
-export default FindPw;
+export default ResetPassword;
