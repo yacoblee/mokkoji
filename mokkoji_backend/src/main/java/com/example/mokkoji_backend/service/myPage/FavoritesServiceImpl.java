@@ -41,7 +41,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 		favoriteRepository.deleteById(favoritesId);
 	}
 
-	// ** 상품 페이지에서만 사용 ==============================================
+	// ** 상품 페이지에서만 사용 =========================================================================
 	
 	// 1-1) 찜 여부 확인할 때 사용(하트표시)
 	@Override
@@ -116,7 +116,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 	}
 
 
-	// ** 마이페이지에서만 사용 ===============================================
+	// ** 마이페이지에서만 사용 ==========================================================================
 
 	// 1) 찜목록 표시할떄 사용
 	@Override

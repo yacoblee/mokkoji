@@ -1,8 +1,19 @@
-function MyPageAddress() {
-    return (
-        <form method="post">
+import React, { useState, useEffect } from 'react';
 
-        </form>
+function MyPageAddress({ userMain, userAddress, myPageAddress }) {
+
+    useEffect(() => {
+        myPageAddress("/mypage/address")
+    }, [])
+
+    return (
+        <>
+            <div>
+
+                Juso
+
+            </div>
+        </>
     )
 }
 

@@ -30,10 +30,6 @@ public class AddressServiceImpl implements AddressService{
 		
 	}
 
-	@Override
-	public Address findUserHomeAddress(String userId) {
-		return repository.findByUserIdAndIsDefault(userId, 0);
-	}
 
 	@Override
 	public void deleteById(int id) {
@@ -47,5 +43,16 @@ public class AddressServiceImpl implements AddressService{
 		return repository.findByUserIdAndLocationName(userId, locationName);
 	}
 
-	
+
+	// ** 마이페이지 사용 ============================================================================
+
+	@Override
+	public Address findUserHomeAddress(String userId) {
+		return repository.findByUserIdAndIsDefault(userId, 0);
+	}
+
+	@Override
+	public List<Address> findUserAddress(String userId) {
+		return repository.findByUserIdOrderByIsDefault(userId);
+	}
 }

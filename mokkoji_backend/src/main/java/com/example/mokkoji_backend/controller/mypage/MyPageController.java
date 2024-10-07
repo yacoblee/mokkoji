@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequestMapping("/mypage")
@@ -93,4 +95,21 @@ public class MyPageController {
 		}
 	}
 
+	
+	// 3. 주소지 관련
+	@GetMapping("/address")
+	public ResponseEntity<?> addressList(@RequestHeader("Authorization") String header) {
+		String userId = getUserIdFromHeader(header);
+
+		try {
+			// 1. Address List 불러오기
+			List<Address> addressList = addressService.findUserAddress(userId);
+			log.info(addressList);
+			return ResponseEntity.ok(addressList);
+
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : addressList");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressList");
+		}
+	}
 }

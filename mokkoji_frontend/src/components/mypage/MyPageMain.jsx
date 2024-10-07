@@ -214,8 +214,6 @@ function MyPageMain() {
         }
     };
 
-    // 구매로 이동
-
 
 
     // ** review ==================================================================================
@@ -240,6 +238,28 @@ function MyPageMain() {
 
 
 
+    // ** address =================================================================================
+
+    const [userAddress, setUserAddress] = useState([]);
+
+    // Address 데이터들을 가져옴
+    const myPageAddress = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageAddress 성공 url=${url}`);
+                setUserAddress(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageAddress 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageAddress
+
+
+
     return (
         <div className='MyPage'>
             <h1>
@@ -251,7 +271,14 @@ function MyPageMain() {
             <MyPageGrid favoritesCnt={favoritesCnt} cartCnt={cartCnt} />
 
             <Routes>
-                <Route path='/*' element={<MyPageUser userMain={userMain} />} />
+                <Route
+                    path='/*'
+                    element={<MyPageUser
+                        userMain={userMain}
+                        userAddress={userAddress}
+                        myPageAddress={myPageAddress}
+                    />}
+                />
 
                 <Route
                     path='favorites'

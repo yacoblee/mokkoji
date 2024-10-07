@@ -8,13 +8,20 @@ import { Route, Routes, Link } from 'react-router-dom';
 import MyPageAddress from './MyPageAddress';
 
 
-function MyPageUser({ userMain }) {
+function MyPageUser({ userMain, userAddress, myPageAddress }) {
     return (
         <div className='MyPageUser'>
             <Routes>
                 <Route path='/' element={<MyPageFlex userMain={userMain} />} />
                 <Route path='set' element={<MyPageSet userMain={userMain} />} />
-                <Route path='address' element={<MyPageAddress userMain={userMain} />} />
+                <Route
+                    path='address'
+                    element={<MyPageAddress
+                        userMain={userMain}
+                        userAddress={userAddress}
+                        myPageAddress={myPageAddress}
+                    />}
+                />
             </Routes>
         </div>
     )
