@@ -1,14 +1,5 @@
 package com.example.mokkoji_backend.controller;
 
-import com.example.mokkoji_backend.domain.UsersDTO;
-import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.jwtToken.TokenProvider;
-import com.example.mokkoji_backend.service.email.EmailService;
-import com.example.mokkoji_backend.service.login.UsersService;
-import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-
 import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
@@ -17,6 +8,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.entity.login.Users;
+import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.service.email.EmailService;
+import com.example.mokkoji_backend.service.login.UsersService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
@@ -44,9 +45,8 @@ public class LoginController {
 		} else
 			log.info("에러");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("id 또는 비밀번호 오류");
-	}//loginJwt
+	}// loginJwt
 
-	
 	@PostMapping(value = "/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.invalidate();
@@ -54,42 +54,37 @@ public class LoginController {
 
 	}// logout
 
-	
 	@PostMapping(value = "/Login/Membership")
 	public ResponseEntity<?> membership(@RequestBody UsersDTO userDTO) {
 		try {
 			service.registerUserAndAddress(userDTO);
-			return ResponseEntity.ok("true");			
-		}catch (Exception e) {
-	        // 기타 예외 처리
-	        log.error("회원가입 처리 중 오류 발생: " + e.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다.");
-	    }
+			return ResponseEntity.ok("true");
+		} catch (Exception e) {
+			// 기타 예외 처리
+			log.error("회원가입 처리 중 오류 발생: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다.");
+		}
 	}// membership
 
-	
 	@PostMapping(value = "/Login/selectOne")
 	public ResponseEntity<?> idRedundancyCheck(@RequestBody UsersDTO usersDTO) {
 
-		try{
+		try {
 			Users userEntity = service.selectOne(usersDTO.getUserId());
-			if(userEntity.getUserId()!=null) {
+			if (userEntity.getUserId() != null) {
 				log.error("회원가입이 불가합니다");
 				return ResponseEntity.ok("false");
-			}else{
+			} else {
 				log.error("회원가입을 진행해주세요");
 				return ResponseEntity.ok("true");
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.info("Exception 발생 " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
 		}
-		
+
 	}// idRedundancyCheck
 
-	
-	
-	
 	@PostMapping(value = "/Login/FindId")
 	public ResponseEntity<?> findId(@RequestBody UsersDTO usersDTO, Users userEntity) {
 		try {
@@ -97,36 +92,68 @@ public class LoginController {
 			return ResponseEntity.ok(userEntity.getUserId());
 		} catch (NoSuchElementException e) {
 			log.info("NoSuchElementException 발생 " + e.getMessage());
-			return	ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
-		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
+		} catch (Exception e) {
 			log.info("Exception 발생 " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
 		}
 	}// findId
 
-	
-	
-	@PostMapping(value = "/Login/FindPw")
+	@PostMapping(value = "/login/findPw")
 	public ResponseEntity<?> findEmail(@RequestBody UsersDTO usersDTO) {
 		log.info("비번 찾기 들어옴");
-		
+
 		Users entity = service.findByUserIdAndPhoneNumber(usersDTO.getUserId(), usersDTO.getPhoneNumber());
-		
+
 		if (entity != null) {
-			//테스트중 메일 지속적인 발송으로 인해 일시적으로 막아둠
-			//String generatedCode =emailService.sendMail(entity.getEmail());
-			
-			String generatedCode ="5555";
-			if(generatedCode!=null) {
-			    return ResponseEntity.ok("인증번호: " + generatedCode);
+			emailService.sendMail(entity.getEmail());
+
+			if (emailService.getVerificationCode() != null) {
+				log.info("1. 세션에 코드 저장: " + emailService.getVerificationCode());
+				return ResponseEntity.ok("인증번호: " + emailService.getVerificationCode());
 			} else {
-				
-				return ResponseEntity.ok("메일 발송에 실패했습니다");
+				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
 			}
-		} 
-		else {
+		} else {
 			return ResponseEntity.ok("false");
 		}
 	}// findPw
+
+	@PostMapping(value = "/login/findPw/verifyCode")
+	public ResponseEntity<?> checkVerifyCode(@RequestBody UsersDTO usersDTO) {
+		log.info("2. 코드 인증 들어옴");
+		log.info("2. 유저가 입력한 코드: " + usersDTO.getUserCode());
+		log.info("2. 이메일로 발송된 코드 : " + emailService.getVerificationCode());
+		if (emailService.getVerificationCode().equals(usersDTO.getUserCode())) {
+			return ResponseEntity.ok("인증번호 일치");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("인증번호 불일치");
+		}
+
+	}//checkVerifyCode
+	
+	
+	
+	@PostMapping(value = "/login/findPw/verifyCode/resetPassword")
+	public ResponseEntity passwordUpdate(@RequestBody UsersDTO usersDTO, Users userEntity) {
+		
+		userEntity.setUserId(usersDTO.getUserId());
+		userEntity.setPassword(passwordEncoder.encode(usersDTO.getPassword()));
+		try {
+			service.updatePassword(usersDTO.getUserId(), passwordEncoder.encode(usersDTO.getPassword()));
+			return ResponseEntity.ok("변경완료");
+		}catch(Exception e) {
+			log.error("password save (update) 실패 !"+e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("실패");
+			
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
 
 }

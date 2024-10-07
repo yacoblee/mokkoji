@@ -17,11 +17,21 @@ public interface UsersRepository extends JpaRepository<Users, String>{
 	Optional<Users> findByNameAndPhoneNumber(String name, String phoneNumber);
 
 	Optional<Users> findByUserIdAndPhoneNumber(String userId, String phoneNumber);
-
+	
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE Users u SET u.password = :password WHERE u.userId = :userId")
+	void updatePassword(@Param("userId") String userId,@Param("password") String password);
+	
 	@Modifying
 	@Transactional
 	@Query("UPDATE Users AS u SET u.phoneNumber = :phoneNumber, u.email = :email WHERE u.userId = :userId")
 	void updateUser(@Param("userId") String userId, @Param("phoneNumber") String phoneNumber, @Param("email") String email);
 
 	Users findByUserId(String userId);
+
+	
+	
+	
 }

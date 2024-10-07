@@ -6,7 +6,6 @@ import axios from "axios";
 // => 요청시 필요한 정보를 매개변수로 전달받음
 // => ACCESS_TOKEN 도 매개변수로 전달함
 export async function apiCall(url, method, requestData, token) {
-
   // 1.1) headers & token
   // => indexOf('join')
   //  - JavasScript 의 문자열 확인함수

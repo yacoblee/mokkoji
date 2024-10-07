@@ -25,6 +25,9 @@ public interface UsersService {
 	//** 유저 이메일 반환
 	Users findByUserIdAndPhoneNumber(String userId, String phonNumber);
 
+	//** 유저 비밀번호 변경 
+	void updatePassword(String userId,String password);
+	
 
 	// ** 사용자 정보 마이페이지 전용 객체
 	MyPageDTO findUser(String userId);
