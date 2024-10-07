@@ -42,3 +42,6 @@ SET u.user_sequence = ru.new_sequence;
 ALTER TABLE project.address CHANGE recipient_name `location_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '받는곳';
 ALTER TABLE project.address MODIFY COLUMN `location_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '받는곳';
 ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
+
+-- 승현 10.07
+ALTER TABLE project.registedhistory MODIFY COLUMN regist_id VARCHAR(150) NOT NULL;

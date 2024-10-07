@@ -1,3 +1,6 @@
+** DDL로 한번에 모든 테이블 작성 가능합니다
+** insertProduct, insertRegist 파일 내부의 Alter 구문 구의해주세요
+
 1. final
 2. alter
 3. insertProduct
