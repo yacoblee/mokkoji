@@ -10,7 +10,7 @@ const Admin = () => {
         { category: 'orders', description: '주문' },
         { category: 'interiorGoods', description: '주문 통합' },
         { category: 'dashboard', description: '대시보드' },
-        { category: 'kitchGoods', description: '테스트' },
+        { category: 'reserve', description: '예약' },
     ];
 
     const AdminSubMenu = [
@@ -21,8 +21,9 @@ const Admin = () => {
         { category: 'dashboard', description: '대시보드' },
         { category: 'kitchGoods', description: '테스트' },
     ];
+    
     return (
-        <>
+    <>
         <div className="admin-layout">
         <aside className="admin-sidebar" style={{ marginTop: "150px" }}>
             <h3 style={{ margin: "0px 0px 20px 0px" }}>Admin Dashboard</h3>
@@ -30,9 +31,7 @@ const Admin = () => {
                 <ul>
                 {AdminMenu.map((items, i) => (
                     <li>
-                    
                         <NavLink to={`/administrator/${items.category}`} key={i}  >{items.description}
-            
                         </NavLink></li>
                 ))}
                 </ul>

@@ -25,10 +25,10 @@ import com.example.mokkoji_backend.repository.registration.RegistRepository;
 class MokkojiBackendApplicationTests {
 
 	@Autowired
-    private JavaMailSender javaMailSender;  // JavaMailSender를 MockBean으로 주입
+    private JavaMailSender javaMailSender;   
 
     @Autowired
-    private SmtpEmailServiceImpl emailService;  // 실제 메일 서비스 구현체 주입
+    private SmtpEmailServiceImpl emailService;  
     
 	@Autowired
 	private RegistRepository registRepository;
