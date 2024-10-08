@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.service.login;
 
 
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -82,7 +83,13 @@ public class UsersServiceImpl implements UsersService {
 		return userRepository.findByNameAndPhoneNumber(name, phonNumber)
 							  .orElseThrow(()->new NoSuchElementException("⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다"));
 	}// findById
-
+	
+	@Override
+	public void updatePassword(String userId, String password, LocalDateTime updatedAt) {
+		userRepository.updatePassword(userId, password, updatedAt);		
+	}
+	
+	
 
 
 	@Override
@@ -132,5 +139,8 @@ public class UsersServiceImpl implements UsersService {
 	public void updateUser(String userId, String phoneNumber, String email) {
 		userRepository.updateUser(userId, phoneNumber, email);
 	}
+	
+	
+	
 
 }

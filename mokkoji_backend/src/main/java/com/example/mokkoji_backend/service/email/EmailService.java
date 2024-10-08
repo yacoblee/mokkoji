@@ -13,7 +13,9 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service("EmailService")
 public class EmailService {
 	private static final String HOST = "smtp.naver.com";
@@ -21,6 +23,7 @@ public class EmailService {
     private static final String PASSWORD = "6SS66EPVUDZR";      // 앱 비밀번호로 변경 필요
     private static final String FROM = "mudsproject@naver.com";  // 보내는 사람 이메일
     
+    private String code;
     public void sendEmail(String recipientEmail, String subject, String body) {
         // SMTP 서버 속성 설정
         Properties properties = new Properties();
@@ -50,7 +53,7 @@ public class EmailService {
 
             // 이메일 전송
             Transport.send(message);
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$ Email Sent successfully to: " + recipientEmail);
+            System.out.println("$$$ Email Sent successfully to: " + recipientEmail);
 
         } catch (MessagingException mex) {
             System.err.println("Error sending email: " + mex.getMessage());
@@ -58,17 +61,24 @@ public class EmailService {
         }
     }
     
-    public String sendMail(String userEmail) {
+    public void sendMail(String userEmail) {
     	  EmailService emailService = new EmailService();
     	  if(userEmail !=null) {
-    		  String resultNum =randomNum();
-    		   emailService.sendEmail(userEmail,"MUDS 비밀번호 변경 보안 코드 입니다.", " [MUDS] 인증번호"+resultNum +"\n 타인에게 절대 알려주지 마세요");  
-    	 return resultNum;
+    		 this.code =  randomNum();
+    		 log.info("sendMail 랜덤번호" + code);
+    		   emailService.sendEmail(userEmail,"MUDS 비밀번호 변경 보안 코드 입니다.", " [MUDS] 인증번호"+code +"\n 타인에게 절대 알려주지 마세요");  
+    	// return code
     	  }else {
     		  System.out.println("User email not found for user ID: " + userEmail);
-              return null;
+              //return null;
           }
     }//sendMail
+    
+    // 전역 변수로 저장된 인증번호를 반환하는 메서드 추가
+    public String getVerificationCode() {
+   	 log.info("getVerificationCode 랜덤번호" + code);
+        return this.code;
+    }
     
     public String randomNum() {
      	Random random = new Random();		//랜덤 함수 선언

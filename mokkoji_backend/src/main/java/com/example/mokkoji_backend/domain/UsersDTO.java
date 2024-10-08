@@ -37,4 +37,5 @@ public class UsersDTO {
 	private String locationName;
 	private String recipientName;
 	private String recipientPhone;
+	private String userCode;
 }

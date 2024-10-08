@@ -439,7 +439,7 @@ const Membership = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="container">
+                <div className="mcontainer">
                     <div className="clausearea">
                         <h3>약관동의 및 개인정보처리방침</h3>
 

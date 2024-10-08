@@ -42,12 +42,15 @@ public class RegistController {
 	private final TokenProvider provider;
 	private final PaymentService paymentService;
 	
+	
 	private IamportClient iamportClient;
 
 	@PostConstruct
     public void init() {
         this.iamportClient = new IamportClient("2533046824212561", "Kc9bnIDch7znR6cdCX024s352Pq8YHDbfPDR0kCllDkvZEjY1iTweOxXcMHxUEX2LLa3ws5YhPYnySmk");
     }
+	
+	
     @GetMapping("/reserve")
     public ResponseEntity<Map<String,Object>> getRegistsAndCounts(@RequestHeader(value = "Authorization", required = false) String authHeader) {
         String id = null; 

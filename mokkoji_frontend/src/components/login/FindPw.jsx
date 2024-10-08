@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import '../../css/login/FindPw.css';
 import { apiCall } from "../../service/apiService";
+import axios from "axios";
 
 
 const FindPw = () => {
@@ -12,7 +13,7 @@ const FindPw = () => {
     const labelIdRef = useRef(null);
     const inputIdRef = useRef(null);
 
-    const navi = useNavigate(); 
+    const navigate = useNavigate(); 
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
     const MoveToOutLabel = (labelRef) => {
         if (labelRef.current) {
@@ -38,81 +39,86 @@ const FindPw = () => {
             inputRef.current.focus();
         }
     }
-    //==============
-    const pRef = useRef(null)
-    const userFindIdInfo = useRef({
-        userId: '',
-        PhoneNumber: ''
-    });
-
-    const userFindPwIdErrors = useRef({
-        userId: '',
-        PhoneNumber: ''
-    });
 
 
   
 // 버튼 활성 비활성 
     const userfindpwButton = useRef(null);
-    const [isDisabled, setIsDisabled] = useState(false);
 
  // 유저 아이디, 전화번호 유효성 조건  
  const checkID =  /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]+$/;
  const checkPN = /^\d{2,5}-\d{3,4}-\d{4}$/;
 
     // 비밀번호 찾기 버튼 눌렀을 경우 
-    const UserFindPW = () => {
-    // 클릭시 유효성 검사 
-    const nameValue = inputIdRef.current.value;
-    const isName = checkID.test(nameValue);
-    const pwValue = inputPNRef.current.value;
-    const isPW = checkPN.test(pwValue);
-    
-    if (isName== false){
-      alert("⚠️ 아이디를 다시 입력하세요")
-      inputIdRef.current.value='';
-      inputPNRef.current.value='';
-        return;
-    } else if(isPW==false){
-        alert("⚠️ -를 포함하여 핸드폰 번호를 다시 입력하세요")
-        inputIdRef.current.value='';
-        inputPNRef.current.value='';
-        return;
-    } 
+    const [dbData, setDBdata] = useState({dbUserID : ''}); // 서버에서 받은 데이터를 저장하는 상태
 
+        // dbData 상태가 변경될 때마다 콘솔에 출력
+        useEffect(() => {
+            if (dbData.dbUserID && dbData.dbUserCode) {
+              console.log("프론트 저장: ", dbData);
+            }
+          }, [dbData]);
 
-        const url = '/Login/FindPw';
+    const UserFindPW = (e) => {
+        // 클릭 시 유효성 검사
+        const nameValue = inputIdRef.current.value;
+        const isName = checkID.test(nameValue);
+        const pwValue = inputPNRef.current.value;
+        const isPW = checkPN.test(pwValue);
+
+        if (!isName) {
+            alert("⚠️ 아이디를 다시 입력하세요");
+            inputIdRef.current.value = '';
+            inputPNRef.current.value = '';
+            return;
+        } else if (!isPW) {
+            alert("⚠️ -를 포함하여 핸드폰 번호를 다시 입력하세요");
+            inputIdRef.current.value = '';
+            inputPNRef.current.value = '';
+            return;
+        }
+
+        const url = 'http://localhost:8080/login/findPw';
         const inputUserId = inputIdRef.current.value;
         const inputUserPN = inputPNRef.current.value;
-        const data = {userId : inputUserId, phoneNumber :  inputUserPN}
-        apiCall(url,"POST", data, null)
-        .then((response)=>{
-            console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
-            console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 
-            navi('/login/findPw/verifyCode');
-
-            if(response.data==false){
-                inputIdRef.current.value='';
-                inputPNRef.current.value='';
-                pRef.current.style.visibility = 'hidden'
-                alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.')
-            }else{
-             
-                console.log(response.data)
-            }
-
-        }).catch((err)=>{
-
-            // 오류 발생 시 응답 객체에서 상태 코드를 확인
-            if (err.response) {
-                console.log("아이디 찾기  오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
-            } else {
-                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다:", err.message);
+        const data = { userId: inputUserId, phoneNumber: inputUserPN };
+  
+        // axios로 POST 요청 전송
+        axios.post(url, data, {
+            headers: {
+                'Content-Type': 'application/json'
             }
         })
+        .then((response) => {
+            console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
+            console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
+    
+            // 정상적인 응답 처리 (200번대 응답)
+            console.log(response.data);
+            setDBdata({
+                dbUserID: response.data.userId   // userId 값을 설정
+            })
+            navigate('/login/findPw/verifyCode', {
+                state: { dbUserID: response.data.userId}
+            });
 
+        })
+        .catch((err) => {
+            if (err.response) {
+                console.log("API 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
+                
+                if (err.response.status === 502) {
+                    inputIdRef.current.value = '';
+                    inputPNRef.current.value = '';
+                    alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
+                } else {
+                    alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                }
+            } else {
+                console.log("응답 객체에 상태 코드가 없습니다:", err.message);
+            }
+        });
     };
-
     return (
         <div>
             <div className="findId-body">
@@ -160,7 +166,7 @@ const FindPw = () => {
 
                                 <button onClick={UserFindPW} ref={userfindpwButton} >비밀번호 찾기
                                 </button>
-                                <p>아이디가 기억나지 않는다면 <Link to={'/Login/FindId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
+                                <p>아이디가 기억나지 않는다면 <Link to={'/login/findId'} className="findIdLink">아이디 찾기</Link> 페이지로 이동해주세요</p>
                             </div>
 
                         </div>

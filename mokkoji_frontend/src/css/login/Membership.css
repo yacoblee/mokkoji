@@ -10,7 +10,7 @@
     flex-direction: row;
 }
 
-.container {
+.mcontainer {
     width: 65vw;
     height: 2550px;
     display: flex;
@@ -26,7 +26,7 @@
     font-size: 1em;
 }
 
-.container input {
+.mcontainer input {
     width: 60%;
     height: 3rem;
     border: none;
@@ -41,11 +41,11 @@ input::placeholder {
     font-size: .6em;
 }
 
-.container input:focus {
+.mcontainer input:focus {
     outline: 1px solid #979696;
 }
 
-.container p {
+.mcontainer p {
     visibility: hidden;
     font-size: 15px;
     color: red;
@@ -141,7 +141,7 @@ input::placeholder {
     object-fit: fill;
 }
 
-.container hr {
+.mcontainer hr {
     width: 90%;
     border: 1px solid #aaaaaa;
     margin: 60px 0 60px 0;
@@ -377,11 +377,11 @@ input::placeholder {
         left: 10%;
     }
 
-    .container {
+    .mcontainer {
         padding: 1rem;
     }
 
-    .container h3,
+    .mcontainer h3,
     .clausearea h3 {
         font-size: .9em;
     }
