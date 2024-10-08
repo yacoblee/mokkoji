@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { API_BASE_URL } from "../../service/app-config";
 import { getStorageData } from '../../service/apiService';
 import { apiCall } from '../../service/apiService';
+import axios from 'axios'; // axios 추가
 
 import '../../css/mypage/subpage/MyPageAddress.css';
 
@@ -90,7 +91,7 @@ function MyPageAddressForm({ userAddressDetail }) {
         try {
             const updateAddressInfo = {
                 ...addressInfo,
-                recipientPhone: phoneParts.join('-'), // 여기에서 phoneParts로 recipientPhone 업데이트
+                // recipientPhone: phoneParts.join('-'), // 여기에서 phoneParts로 recipientPhone 업데이트
             };
 
             const response = await axios.patch(`${API_BASE_URL}/mypage/address`, updateAddressInfo, {
