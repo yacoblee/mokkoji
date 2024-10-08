@@ -65,12 +65,9 @@ public class EmailService {
     	  EmailService emailService = new EmailService();
     	  if(userEmail !=null) {
     		 this.code =  randomNum();
-    		 log.info("sendMail 랜덤번호" + code);
-    		   emailService.sendEmail(userEmail,"MUDS 비밀번호 변경 보안 코드 입니다.", " [MUDS] 인증번호"+code +"\n 타인에게 절대 알려주지 마세요");  
-    	// return code
+    		   emailService.sendEmail(userEmail,"MUDS 비밀번호 변경 보안 코드 입니다.", " [MUDS] 인증번호" + code +"\n 타인에게 절대 알려주지 마세요");  
     	  }else {
     		  System.out.println("User email not found for user ID: " + userEmail);
-              //return null;
           }
     }//sendMail
     

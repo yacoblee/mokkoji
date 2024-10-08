@@ -115,11 +115,8 @@ public class LoginController {
 				log.info("1. 세션에 코드 저장: " + emailService.getVerificationCode());
 				UsersDTO newusersDTO = UsersDTO.builder()
 	                      .userId(usersDTO.getUserId())
-	                      .phoneNumber(usersDTO.getPhoneNumber())
-	                      .userCode(emailService.getVerificationCode())
 	                      .build();
 									
-				//return ResponseEntity.ok("인증번호: " + emailService.getVerificationCode()+usersDTO.getUserId(),usersDTO.getPhoneNumber());
 				return ResponseEntity.ok(newusersDTO);
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
@@ -131,7 +128,6 @@ public class LoginController {
 
 	@PostMapping(value = "/login/findPw/verifyCode")
 	public ResponseEntity<?> checkVerifyCode(@RequestBody UsersDTO usersDTO) {
-		log.info("2. 코드 인증 들어옴");
 		log.info("2. 유저가 입력한 코드: " + usersDTO.getUserCode());
 		log.info("2. 이메일로 발송된 코드 : " + emailService.getVerificationCode());
 		if (emailService.getVerificationCode().equals(usersDTO.getUserCode())) {
@@ -155,10 +151,8 @@ public class LoginController {
 		}catch(Exception e) {
 			log.error("password save (update) 실패 !"+e.toString());
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("실패");
-			
 		}
-		
-	}//
+	}//passwordUpdate
 	
 	
 

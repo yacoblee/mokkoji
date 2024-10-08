@@ -1,154 +1,101 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Modal from 'react-modal';
+import React, { useState } from 'react';
 import '../../css/administrator/adminUsers.css';
+import { Table } from 'antd';
+import Operation from 'antd/es/transfer/operation';
 const UserManagement = () => {
-  const [users, setUsers] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com" },
-  ]);
-
-  return (
-    <div>
-      <h1>User Management</h1>
-      <div className="container">
-          <form className="formcontainer" id='membership' method='post'>
-              <label htmlFor ="name">이름</label>
-              <input type="text"/>
 
 
+    return (
+        <div className="user-container">
+            <h2 className="user-title">회원 정보관리</h2>
 
-              <label htmlFor="id">아이디</label>
-              <div className="rowarea">
-                  <input type="text"
-                      name="id"
-                      id="id"
-                      maxLength={13}
-                      placeholder='test'
+            <div className="user-subContainer">
+                <h3 className="user-subTitle">기본검색</h3>
 
-                  />
-                  <button
-                      type='button'>검사</button>
-              </div>
+                <form>
+                    <table className="user-table">
+                        <tr>
+                            <th>검색어</th>
+                            <td className="user-table-td">
+                                <select name="categoryId" id="productSearch">
+                                    <option value="" key="">아이디</option>
+                                    <option value="" key="">회원명</option>
+                                    <option value="" key="">핸드폰번호</option>
+                                </select>
 
+                                <input type="text" name="keyword" id="productInput" className="seachvalue" />
+                            </td>
+                        </tr>
 
-
-              <label htmlFor="pw">비밀번호</label>
-              <input type="text"
-                  placeholder='7~14글자 이하 영문 숫자 특수문자 조합으로 비밀번호를 입력해주세요'
-                  maxLength={14}
-                  name="pw"
-                  id="pw"
-
-              />
-              <p>에러</p>
-
-              <label htmlFor="checkPw">비밀번호 확인</label>
-              <input type="text"
-                  placeholder='위에서 입력한 비밀번호와 동일하게 입력해주세요'
-                  name="checkPw"
-                  id="checkPw"
-                  maxLength={14}
-
-              />
+                        <tr>
+                            <th>기간검색</th>
+                            <td className="user-table-td">
+                                <select name="categoryId" id="productSearch">
+                                    <option value="" key="">최근접속</option>
+                                    <option value="" key="">가입날짜</option>
+                                </select>
 
 
+                                <input type="date" name="startDate"
+                                />
+                                ~
+                                <input type="date" name="endDate"
+                                />
+                                <input type="button" value="전체"
+                                />
+                                <input type="button" value="오늘"
+                                />
+                                <input type="button" value="어제"
+                                />
+                                <input type="button" value="일주일"
+                                />
+                                <input type="button" value="한달"
+                                />
+                            </td>
+                        </tr>
 
-              <label>주소</label>
-              <div className="rowarea address">
-                  <input type="text"
-                      placeholder='우편번호'
-                      name='zoneCode'
-                      maxLength={5} readOnly />
-                  <button id='btn'>우편번호 검색</button>
-              </div>
-              <input type="text"
-                  placeholder='주소'
-                  name='address' readOnly />
-              <input type="text"
-                  name='addressDetail'
-                  placeholder='주소'
+                        <tr>
+                            <th>레벨</th>
+                            <td className="radio-group">
+                                <label><input type="radio" name="categoryId" value="1" /> 유저</label>
+                                <label><input type="radio" name="categoryId" value="2" /> 관리자</label>
+                            </td>
+                        </tr>
 
-              />
-              <p></p>
-
-              <label htmlFor="phoneNumeber">전화번호</label>
-              <div className='phoneNumber'>
-                  <input type="text"
-                      id='phoneNumeber'
-                      maxLength={5}
-                      placeholder='2~5자리'
-                      name='firstNumber'
-
-                  />
-                  <span>-</span>
-                  <input type="text"
-                      placeholder='3~4자리'
-                      maxLength={4}
-                      name='secondNumber'
-       
-                  />
-                  <span>-</span>
-                  <input type="text"
-                      placeholder='4자리'
-                      maxLength={4}
-                      name='lastNumber'
-
-                  />
-              </div>
-              <p>에러</p>
-
-              <label htmlFor="birthDate">생년월일</label>
-              <input type="date"
-                  name="birthDate"
-                  id="birthDate"
-
-              />
-              
-              <p>에러</p>
+                    </table>
+                    <div className="user-button">
+                        <button type="button">검색</button>
+                        <button type="button" >초기화</button>
+                    </div>
+                </form>
+                <p className="user-count">총 회원 수 : { }</p>
+                <h3 className="user-subTitle">검색 결과</h3>
+                <div className="user-button2">
+                    <button type="button">전체메일 발송</button>
+                    <button type="button" > + 회원추가</button>
+                </div>
+                <table className="user-resultArea">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>회원명</th>
+                            <th>아이디</th>
+                            <th>레벨</th>
+                            <th>핸드폰</th>
+                            <th>가입일시</th>
+                            <th>구매수</th>
+                            <th>로그인</th>
+                            <th>접근차단</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
-              <label htmlFor="gender">성별</label>
-              <div className='genderbutton'>
-                  <button type='button'
-                      id='gender'
-                      name='gender'
-                      value='M'
-                  >
-                      남성</button>
-
-                  <button type='button'
-                      name='gender'
-                      value='F'
-
-                  >여성</button>
-              </div>
-              <p></p>
-              <label htmlFor='email'>이메일</label>
-              <div className='emailArea'>
-                  <input type="text" id='email' name='email' />
-                  <span>@</span>
-                  <input type="text"
-                      name='emailType'
-                  />
-                  <select className="box"
-                      id="domain-list" >
-                      <option value="self">직접입력</option>
-                      <option value="naver.com">naver.com</option>
-                      <option value="google.com">google.com</option>
-                      <option value="hanmail.net">hanmail.net</option>
-                      <option value="nate.com">nate.com</option>
-                      <option value="kakao.com">kakao.com</option>
-                  </select>
-              </div>
-              <br />
-              <div className='buttonarea'>
-                  <button type='button' >가입하기</button>
-              </div>
-          </form>
-      </div>
-
-    </div>
-  );
+    );
 };
 
 export default UserManagement;

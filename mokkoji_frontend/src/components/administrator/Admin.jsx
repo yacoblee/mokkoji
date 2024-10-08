@@ -5,7 +5,7 @@ import '../../css/administrator/admin.css'
 const Admin = () => {
     const { category } = useParams();
     const AdminMenu = [
-        { category: 'users', description: '회원 관련' },
+        { category: 'users', description: '회원정보관리' },
         { category: 'products', description: '상품' },
         { category: 'orders', description: '주문' },
         { category: 'interiorGoods', description: '주문 통합' },
@@ -14,7 +14,7 @@ const Admin = () => {
     ];
 
     const AdminSubMenu = [
-        { category: 'users', description: '회원 관련' },
+        { category: 'users', description: '회원정보관리' },
         { category: 'products', description: '상품' },
         { category: 'orders', description: '주문' },
         { category: 'interiorGoods', description: '주문 통합' },
