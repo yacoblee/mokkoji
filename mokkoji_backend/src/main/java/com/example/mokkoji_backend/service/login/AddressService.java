@@ -20,7 +20,10 @@ public interface AddressService {
 	// ** 마이페이지에서 사용 ==============================================================================s
 	// 1. 대표 주소 갖고오기
 	Address findUserHomeAddress(String userId);
-	
+
 	// 2. 주소지 목록 들고오기
 	List<Address> findUserAddress(String userId);
+
+	// 3. 개별 주소지 정보 들고오기
+	Address findUserAddressDetail(String userId, int isDefault);
 }

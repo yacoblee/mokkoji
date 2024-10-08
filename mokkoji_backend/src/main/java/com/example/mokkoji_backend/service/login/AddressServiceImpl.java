@@ -52,6 +52,11 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
+	public Address findUserAddressDetail(String userId, int isDefault) {
+		return repository.findByUserIdAndIsDefault(userId, isDefault);
+	}
+
+	@Override
 	public List<Address> findUserAddress(String userId) {
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}

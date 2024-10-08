@@ -17,7 +17,6 @@ function MyPageUser({ userMain, userAddress, myPageAddress }) {
                 <Route
                     path='address'
                     element={<MyPageAddress
-                        userMain={userMain}
                         userAddress={userAddress}
                         myPageAddress={myPageAddress}
                     />}
