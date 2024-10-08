@@ -116,6 +116,11 @@
     font-family: Arial, sans-serif !important;
 }
 
+.MyPagePhoneInput {
+    width: 50px;
+    text-align: center;
+}
+
 
 /* PC (해상도 1024px)*/
 @media all and (min-width:1024px) {}

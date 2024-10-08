@@ -57,6 +57,12 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
+	public List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault) {
+		repository.updateAddressDetail(postalCode, streetAddress, detailedAddress, locationName, recipientName, recipientPhone, userId, isDefault);
+		return repository.findByUserIdOrderByIsDefault(userId);
+	}
+
+	@Override
 	public List<Address> findUserAddress(String userId) {
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}

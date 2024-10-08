@@ -1,5 +1,6 @@
 .AddressListTable {
     text-align: left;
+    width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px;
@@ -15,5 +16,18 @@
 }
 
 .AddressListTable .MainAddressCell {
-    width: 500px;
+    /* width: 500px; */
+}
+
+.addressModalBtn {
+    width: 130px;
+    height: 30px;
+    border: none;
+    margin-left: 86%;
+    margin-top: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(65, 88, 137);
+    font-weight: bold;
+    font-size: 14px;
 }

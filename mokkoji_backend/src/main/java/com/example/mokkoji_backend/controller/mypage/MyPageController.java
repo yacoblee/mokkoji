@@ -114,18 +114,28 @@ public class MyPageController {
 		}
 	}
 	
-	// 3.2. 선택한 주소지 정보 뽑아오기
-	@GetMapping("/address/{isDefault}")
-	public ResponseEntity<?> addressDetail(@RequestHeader("Authorization") String header, @PathVariable int isDefault) {
+	// 3.2. 주소지 수정
+	@PatchMapping("/address")
+	public ResponseEntity<?> addressUpdate(@RequestHeader("Authorization") String header, @RequestBody Address address) {
 		String userId = getUserIdFromHeader(header);
 
 		try {
-			Address address = addressService.findUserAddressDetail(userId, isDefault);
+			List<Address> addressList = addressService.updateAddress(
+					address.getUserId(),
+					address.getPostalCode(),
+					address.getStreetAddress(),
+					address.getDetailedAddress(),
+					address.getLocationName(),
+					address.getRecipientName(),
+					address.getRecipientPhone(),
+					address.getIsDefault());
 
-			return ResponseEntity.ok(address);
+			return ResponseEntity.ok(addressList);
+
 		} catch (Exception e) {
-			log.warn("내부 서버 오류 : addressDetail");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressDetail");
+			log.warn("내부 서버 오류 : addressUpdate");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressUpdate");
 		}
 	}
+
 }

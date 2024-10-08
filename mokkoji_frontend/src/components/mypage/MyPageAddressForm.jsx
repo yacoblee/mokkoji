@@ -1,17 +1,20 @@
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { API_BASE_URL } from "../../service/app-config";
 import { getStorageData } from '../../service/apiService';
 import { apiCall } from '../../service/apiService';
 
+import '../../css/mypage/subpage/MyPageAddress.css';
 
-function MyPageAddressForm({ addressDetail }) {
 
-    const [addressInfo, setAddressInfo] = useState(addressDetail);
+function MyPageAddressForm({ userAddressDetail }) {
+
+    const [addressInfo, setAddressInfo] = useState(userAddressDetail);
 
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
     //모달창 오픈
@@ -57,18 +60,40 @@ function MyPageAddressForm({ addressDetail }) {
 
 
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // 일반 필드 업데이트
+        if (name !== 'recipientPhone') {
+            setAddressInfo({
+                ...addressInfo,
+                [name]: value,
+            });
+        } else {
+            // recipientPhone 업데이트 처리
+            setAddressInfo({
+                ...addressInfo,
+                recipientPhone: phoneParts.join('-'),
+            });
+        }
+    };
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // 기본 폼 제출 동작을 막음
 
         const token = JSON.parse(sessionStorage.getItem("userData"));
 
+        console.log(addressInfo);
+
         try {
             const updateAddressInfo = {
                 ...addressInfo,
-                phoneNumber: phoneParts.join('-'),
+                recipientPhone: phoneParts.join('-'), // 여기에서 phoneParts로 recipientPhone 업데이트
             };
 
-            const response = await axios.patch(`${API_BASE_URL}/mypage/set`, updateAddressInfo, {
+            const response = await axios.patch(`${API_BASE_URL}/mypage/address`, updateAddressInfo, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // 필요한 경우 토큰 추가
                     'Content-Type': 'application/json',
@@ -86,58 +111,79 @@ function MyPageAddressForm({ addressDetail }) {
 
     return (
         <>
-            <form className="" method="patch">
+            <form className="addressDetailForm" method="patch" onSubmit={handleSubmit}>
                 <table className="AddressListTable">
                     <tr>
-                        <th className="AddressNameCell" rowspan="2">
-                            <input type="text" placeholder={userAddress.locationName} />
-                        </th>
-                        <th>&nbsp;</th>
-                        <td style={{ width: '100px' }} rowspan="4">
+                        <th>주소지 이름</th>
+                        <td>
+                            <input type="text" name="locationName" onChange={handleChange} placeholder={addressInfo.locationName} />
+                        </td>
+                        <td rowspan="5">
                             <button onClick={openAddress} className="MyInfoSetting">우편번호 검색</button>
                         </td>
                     </tr>
+
                     <tr>
-                        <th>
-                            <input type="text" placeholder={userAddress.postalCode} />
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <input type="text" placeholder={userAddress.recipientName} />
-                        </th>
-                        <td className="MainAddressCell">
-                            <input type="text" placeholder={userAddress.streetAddress} />
+                        <th>수취인 성명</th>
+                        <td>
+                            <input type="text" name="recipientName" onChange={handleChange} placeholder={addressInfo.recipientName} />
                         </td>
                     </tr>
+
                     <tr>
-                        <th>
-                            <input
+                        <th>수취인 연락처</th>
+                        <td>
+                            <input className="MyPagePhoneInput"
                                 type="text"
                                 value={phoneParts[0]}
                                 onChange={(e) => handlePhoneChange(0, e.target.value)} // 앞자리
                                 minLength={3} maxLength={3}
                             />
                             <span>&nbsp;-&nbsp;</span>
-                            <input
+                            <input className="MyPagePhoneInput"
                                 type="text"
                                 value={phoneParts[1]}
                                 onChange={(e) => handlePhoneChange(1, e.target.value)} // 중간자리
                                 minLength={3} maxLength={4}
                             />
                             <span>&nbsp;-&nbsp;</span>
-                            <input
+                            <input className="MyPagePhoneInput"
                                 type="text"
                                 value={phoneParts[2]}
                                 onChange={(e) => handlePhoneChange(2, e.target.value)} // 뒷자리
                                 minLength={4} maxLength={4}
                             />
-                        </th>
-                        <td>
-                            <input type="text" placeholder={userAddress.detailedAddress} />
                         </td>
                     </tr>
+
+                    <tr>
+                        <th>주소</th>
+                        <td>
+                            <input
+                                className="MyPagePhoneInput"
+                                name="postalCode"
+                                type="text"
+                                placeholder={addressInfo.postalCode}
+                            />
+                            <input type="text" nama="streetAddress" placeholder={addressInfo.streetAddress} />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>상세주소</th>
+                        <td>
+                            <input type="text" name="detailedAddress" onChange={handleChange} placeholder={addressInfo.detailedAddress} />
+                        </td>
+                    </tr>
+
                 </table>
+
+                <button
+                    className='addressModalBtn'
+                    type='submit'
+                >
+                    저장
+                </button>
 
                 <Modal
                     isOpen={isModalOpen}

@@ -15,36 +15,18 @@ function MyPageAddress({ userMain, userAddress, myPageAddress }) {
         myPageAddress("/mypage/address")
     }, [])
 
-
+    const [userAddressDetail, setUserAddressDetail] = useState();
 
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     //모달창 오픈
-    const openAddressForm = (e) => {
+    const openAddressForm = (e, isDefault) => {
         e.preventDefault();
+        setUserAddressDetail(userAddress.find((address) => isDefault === address.isDefault));
         setIsModalOpen(true);
     };
-
-
-
-    // Address 데이터들을 가져옴
-    const addressDetail = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** addressDetail 성공 url=${url}`);
-                setUserAddress(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** addressDetail 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //addressDetail
-
 
 
 
@@ -60,7 +42,7 @@ function MyPageAddress({ userMain, userAddress, myPageAddress }) {
                             </th>
                             <th>&nbsp;</th>
                             <td style={{ width: '100px' }} rowspan="4">
-                                <button onClick={openAddressForm} className="MyInfoSetting">주소지 수정</button>
+                                <button onClick={(event) => openAddressForm(event, address.isDefault)} className="MyInfoSetting">주소지 수정</button>
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +70,7 @@ function MyPageAddress({ userMain, userAddress, myPageAddress }) {
                 contentLabel="주소 검색"
                 style={{
                     content: {
-                        width: '500px',
+                        width: '1000px',
                         top: '50%',
                         left: '50%',
                         right: 'auto',
@@ -98,14 +80,8 @@ function MyPageAddress({ userMain, userAddress, myPageAddress }) {
                     }
                 }}
             >
-                <button
-                    className='modalbtn'
-                    onClick={() => setIsModalOpen(false)}
-                >
-                    X
-                </button>
                 <MyPageAddressForm
-                    addressDetail={addressDetail}
+                    userAddressDetail={userAddressDetail}
                 />
             </Modal>
         </>

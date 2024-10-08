@@ -50,18 +50,6 @@ function MyPageSet({ userMain }) {
 
 
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        // 일반 필드 업데이트
-        if (name !== 'phoneNumber' && name !== 'email') {
-            setUserInfo({
-                ...userInfo,
-                [name]: value,
-            });
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault(); // 기본 폼 제출 동작을 막음
 
@@ -107,21 +95,21 @@ function MyPageSet({ userMain }) {
 
                 <div className='ListTitle'>전화번호</div>
                 <div>
-                    <input
+                    <input className="MyPagePhoneInput"
                         type="text"
                         value={phoneParts[0]}
                         onChange={(e) => handlePhoneChange(0, e.target.value)} // 앞자리
                         minLength={3} maxLength={3}
                     />
                     <span>&nbsp;-&nbsp;</span>
-                    <input
+                    <input className="MyPagePhoneInput"
                         type="text"
                         value={phoneParts[1]}
                         onChange={(e) => handlePhoneChange(1, e.target.value)} // 중간자리
                         minLength={3} maxLength={4}
                     />
                     <span>&nbsp;-&nbsp;</span>
-                    <input
+                    <input className="MyPagePhoneInput"
                         type="text"
                         value={phoneParts[2]}
                         onChange={(e) => handlePhoneChange(2, e.target.value)} // 뒷자리
@@ -157,7 +145,6 @@ function MyPageSet({ userMain }) {
 
             </div>
 
-            <button className='MyInfoSave' type='submit'>수정 완료</button>
             <button className='MyInfoSave' type='submit'>수정 완료</button>
 
         </form>

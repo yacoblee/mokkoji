@@ -26,4 +26,7 @@ public interface AddressService {
 
 	// 3. 개별 주소지 정보 들고오기
 	Address findUserAddressDetail(String userId, int isDefault);
+	
+	// 4. 주소지 수정
+	List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault);
 }
