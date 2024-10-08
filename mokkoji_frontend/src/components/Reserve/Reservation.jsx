@@ -66,8 +66,8 @@ const Reservation = () => {
             pg: "html5_inicis",
             pay_method: "card",
             merchant_uid: `merchant_${new Date().getTime()}`, 
-            //amount: teenagerTotal + adultTotal,  // 총 가격
-            amount: 100, 
+            //amount: teenagerTotal + adultTotal,  // 총 가격 
+            amount: 100,  // 테스트용 가격
             teenager: teenager,
             adult: adult, 
             personCnt: personCnt,  // 총 인원수
@@ -89,7 +89,6 @@ const Reservation = () => {
                     });
     
                     console.log("결제 성공:", response.data);
-                    // 결제 성공 메시지 보여주기
                     alert("결제가 완료되었습니다.");
                 } catch (error) {
                     console.error("결제 처리 중 오류 발생:", error);
@@ -109,8 +108,6 @@ const Reservation = () => {
     }
          
 
-
-
     useEffect(() => {
         let uri = API_BASE_URL + "/reserve";
         axios.get(uri)
@@ -121,8 +118,7 @@ const Reservation = () => {
                     const counts = {};  // 예약 카운트를 저장할 객체
                     dateCounts.forEach((data) => {
                         const formattedDate = moment(data.date).format("YYYY-MM-DD");
-                        counts[formattedDate] = data.count;
-                        
+                        counts[formattedDate] = data.count; 
                     });
                     // 예약 카운트 상태 업데이트
                     setReservationCounts(counts);

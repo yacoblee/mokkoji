@@ -21,6 +21,7 @@ import Dashboard from './components/administrator/Dashboard';
 import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
 import OrderManagement from './components/administrator/OrderManagement';
+import RegistManagement from './components/administrator/RegistManagement'
 import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
 import ResetPassword from './components/login/ResetPassword';
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="orders" element={<OrderManagement />} />
+          <Route path="reserve" element={<RegistManagement />} />
         </Route>
         {/** 관리자 페이지 라우팅 E */}
       </Routes>
