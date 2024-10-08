@@ -97,6 +97,7 @@ public class MyPageController {
 
 	
 	// 3. 주소지 관련
+	// 3.1. 주소지 리스트 뽑아오기
 	@GetMapping("/address")
 	public ResponseEntity<?> addressList(@RequestHeader("Authorization") String header) {
 		String userId = getUserIdFromHeader(header);
@@ -110,6 +111,21 @@ public class MyPageController {
 		} catch (Exception e) {
 			log.warn("내부 서버 오류 : addressList");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressList");
+		}
+	}
+	
+	// 3.2. 선택한 주소지 정보 뽑아오기
+	@GetMapping("/address/{isDefault}")
+	public ResponseEntity<?> addressDetail(@RequestHeader("Authorization") String header, @PathVariable int isDefault) {
+		String userId = getUserIdFromHeader(header);
+
+		try {
+			Address address = addressService.findUserAddressDetail(userId, isDefault);
+
+			return ResponseEntity.ok(address);
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : addressDetail");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressDetail");
 		}
 	}
 }

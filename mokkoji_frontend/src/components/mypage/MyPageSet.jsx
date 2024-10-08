@@ -81,7 +81,7 @@ function MyPageSet({ userMain }) {
                 },
             });
 
-            console.log('Success:', response.data);
+            alert("개인정보 수정 성공");
             window.location.href = '/mypage';
         } catch (error) {
             console.error('Error:', error.response);
@@ -91,7 +91,7 @@ function MyPageSet({ userMain }) {
 
 
     return (
-        <form className='MyPageSet' method="post" onSubmit={handleSubmit} >
+        <form className='MyPageSet' method="patch" onSubmit={handleSubmit} >
             <div className='MyInfoList'>
                 <div className='ListTitle'>아이디</div>
                 <div>{userInfo.userId}</div>
