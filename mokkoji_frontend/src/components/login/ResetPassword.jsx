@@ -1,9 +1,6 @@
 import { Link,useNavigate,useLocation } from "react-router-dom";
 import { useRef,useEffect } from "react";
-import userInfo from "./UserInforData";
 import '../../css/login/FindPw.css';
-import { apiCall } from "../../service/apiService";
-import Password from "antd/es/input/Password";
 import axios from "axios";
 
 
