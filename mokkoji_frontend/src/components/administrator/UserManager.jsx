@@ -1,8 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../css/administrator/adminUsers.css';
-import { Table } from 'antd';
-import Operation from 'antd/es/transfer/operation';
+import { apiCall } from '../../service/apiService';
+
+
 const UserManagement = () => {
+    const [list, setList] = useState([]);  // 리스트 상태 초기화
+    const [count,setCount] = useState(0);
+    const inputData = {
+      keyword: '',
+      searchType: 'all',
+    };
+    const [input, setInput] = useState(inputData);  // 입력 상태 초기화
+  
+    // 입력 값 변경 핸들러
+    const onChangeValue = (e) => {
+      const { name, value } = e.target;
+      setInput((prev) => ({
+        ...prev,
+        [name]: value
+      }));
+    };
+  
+    // 선택 값 변경 핸들러
+    const selectChange = (e) => {
+      const selectType = e.target.value;
+      setInput((prev) => ({
+        ...prev,
+        searchType: selectType
+      }));
+    };
+  
+    // 폼 제출 핸들러
+    const onSubmitHandler = (e) => {
+      e.preventDefault();
+      serchDB();  // 검색 함수 호출
+    };
+  
+    // 검색 DB 함수
+    const serchDB = () => {
+        let url = "/administrator/users";
+        apiCall(url, 'POST', input, null)
+        .then((response) => {
+          console.log("Response data:", response);  // 응답의 data 확인
+            setList(response.data.users);  // 리스트 상태 업데이트
+            setCount(response.data.count);// 카운트 상태 업데이트
+        })
+        .catch((err) => {
+          console.error("Error during API call:", err);  // 에러 로그 출력
+          setList([]);  // 에러 발생 시 빈 배열로 설정
+        });
+      };
+  
+    // list가 변경된 후 실행되는 useEffect
+    useEffect(() => {
+      console.log("Updated list:", list);  // list 상태가 변경된 후 출력
+    }, [list]);  // list가 변경될 때마다 실행
+  
 
 
     return (
@@ -12,18 +65,19 @@ const UserManagement = () => {
             <div className="user-subContainer">
                 <h3 className="user-subTitle">기본검색</h3>
 
-                <form>
+                <form onSubmit={onSubmitHandler}>
                     <table className="user-table">
                         <tr>
                             <th>검색어</th>
                             <td className="user-table-td">
-                                <select name="categoryId" id="productSearch">
-                                    <option value="" key="">아이디</option>
-                                    <option value="" key="">회원명</option>
-                                    <option value="" key="">핸드폰번호</option>
+                                <select name="searchType" id="searchType" onChange={selectChange}>
+                                    <option value="all">전체검색</option>
+                                    <option value="userId">아이디</option>
+                                    <option value="name">회원명</option>
+                                    <option value="phoneNumber">핸드폰번호</option>
                                 </select>
 
-                                <input type="text" name="keyword" id="productInput" className="seachvalue" />
+                                <input type="text" name="keyword" id="productInput" className="seachvalue" onChange={onChangeValue} />
                             </td>
                         </tr>
 
@@ -31,8 +85,8 @@ const UserManagement = () => {
                             <th>기간검색</th>
                             <td className="user-table-td">
                                 <select name="categoryId" id="productSearch">
-                                    <option value="" key="">최근접속</option>
-                                    <option value="" key="">가입날짜</option>
+                                    <option value="1" key="1">최근접속</option>
+                                    <option value="2" key="2">가입날짜</option>
                                 </select>
 
 
@@ -57,18 +111,18 @@ const UserManagement = () => {
                         <tr>
                             <th>레벨</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="categoryId" value="1" /> 유저</label>
-                                <label><input type="radio" name="categoryId" value="2" /> 관리자</label>
+                                <label><input type="radio" name="categoryId" value="0" /> 유저</label>
+                                <label><input type="radio" name="categoryId" value="1" /> 관리자</label>
                             </td>
                         </tr>
 
                     </table>
                     <div className="user-button">
-                        <button type="button">검색</button>
+                        <button type="button" onClick={serchDB}>검색</button>
                         <button type="button" >초기화</button>
                     </div>
                 </form>
-                <p className="user-count">총 회원 수 : { }</p>
+                <p >총 회원 수 : <span className="user-count">{count}</span></p>
                 <h3 className="user-subTitle">검색 결과</h3>
                 <div className="user-button2">
                     <button type="button">전체메일 발송</button>
@@ -83,12 +137,25 @@ const UserManagement = () => {
                             <th>레벨</th>
                             <th>핸드폰</th>
                             <th>가입일시</th>
-                            <th>구매수</th>
+                            <th>이메일</th>
                             <th>로그인</th>
                             <th>접근차단</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="user-resultArea2">
+                        {list.map(users => (
+                            <tr key={users.userSequence}>
+                               <td>{users.userSequence}</td>
+                               <td> <a href="/" className="users-movimodal">{users.name}</a></td> 
+                                <td>{users.userId}</td>
+                                <td>{users.isAdmin}</td>
+                                <td>{users.phoneNumber}</td>
+                                <td>{users.createdAt}</td>
+                                <td>{users.email}</td>
+                                <td>{users.loginCount}</td>
+                                <td>{users.blockStatus}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

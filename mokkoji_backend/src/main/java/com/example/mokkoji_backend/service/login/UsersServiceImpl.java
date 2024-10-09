@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.service.login;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -140,7 +141,18 @@ public class UsersServiceImpl implements UsersService {
 		userRepository.updateUser(userId, phoneNumber, email);
 	}
 	
+	@Override
+	public List<Users> findUserinfoToSearch(String keyword, String searchType) {
+		return userRepository.findBySearchUser(keyword, searchType);
+	}
 	
-	
+	@Override
+	public int countBy() {
+		return userRepository.countBy();
+	}
 
+@Override
+	public void updateLoginCount(Users entity) {
+		 userRepository.save(entity);		
+	}
 }

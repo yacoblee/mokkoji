@@ -81,7 +81,8 @@ public class PageRequestDTO {// ->페이징 조건들
 	private String state;// 코드 테이블 내용을 가져올 상품 상태값(status)(받아올 속성값으로 활용)
 	private LocalDate startDate; // 검색 시작 날짜
 	private LocalDate endDate; // 검색 종료 날짜
-
+//	**********************************
+	private String searchType;
 	
 	//**1탄 리액트에서 axios 보내는 법============================
 	// 필요한 정보만 간단하게 보내는 법
@@ -174,4 +175,14 @@ public class PageRequestDTO {// ->페이징 조건들
 		this.size = size;
 		return PageRequest.of(page - 1, size);
 	}
+	
+	
+	
+	/*
+	 * public PageRequestDTO(String keyword, String searchType) { this.keyword =
+	 * keyword; this.searchType = searchType; }
+	 */
+	
+	
+	
 }

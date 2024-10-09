@@ -70,5 +70,7 @@ public class Users {
 	@Column(name= "is_admin", columnDefinition = "String default 0")
 	private String isAdmin;
 
+	@Column(name = "login_count", columnDefinition = "int default 0")
+	private int loginCount;
 		
 }
