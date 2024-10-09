@@ -29,7 +29,7 @@ public class LoginController {
 	private final TokenProvider tokenProvider;
 	PasswordEncoder passwordEncoder;
 	private EmailService emailService;
-	
+	private Users entity;
 
 	
 	
@@ -39,9 +39,14 @@ public class LoginController {
 		String inputPssword = userDTO.getPassword();
 		Users entity = service.selectOne(userDTO.getUserId());// 아이디 검증
 
+		// test를 위한 유저정보의 경우 passwordEncoder 미적용으로 비밀번호 확인을 위한 방법 2개임
 		if (entity != null && inputPssword.equals(entity.getPassword())
 				|| passwordEncoder.matches(inputPssword, entity.getPassword())) {
-			// test를 위한 유저정보의 경우 passwordEncoder 미적용으로 비밀번호 확인을 위한 방법 2개임
+			
+			//로그인 횟수 증가 
+			entity.setLoginCount(entity.getLoginCount()+1);
+			service.updateLoginCount(entity);
+			
 			final String token = tokenProvider.jwtCreate(entity.getUserId());
 			log.info("생성 토큰" + token);
 			return ResponseEntity.ok(token);

@@ -29,6 +29,7 @@ public class UsersDTO {
 	private int blockStatus;
 	private String isAdmin;
 	private String token;
+	private int loginCount;
 	
 	private String postalCode;
 	private String streetAddress;

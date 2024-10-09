@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.repository.login;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,7 +33,15 @@ public interface UsersRepository extends JpaRepository<Users, String>{
 
 	Users findByUserId(String userId);
 
+	@Query("SELECT u FROM Users u WHERE " +
+	       "(:searchType = 'all' AND (u.userId LIKE %:keyword% OR u.name LIKE %:keyword% OR u.phoneNumber LIKE %:keyword%)) OR " +
+	       "(:searchType != 'all' AND " +
+	       " CASE WHEN :searchType = 'userId' THEN u.userId LIKE %:keyword% " +
+	       "      WHEN :searchType = 'name' THEN u.name LIKE %:keyword% " +
+	       "      WHEN :searchType = 'phoneNumber' THEN u.phoneNumber LIKE %:keyword% " +
+	       " ELSE false END)")
+	List<Users> findBySearchUser(@Param("keyword") String keyword, @Param("searchType") String searchType);
 	
-	
+	int countBy();
 	
 }

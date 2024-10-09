@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
@@ -14,6 +16,7 @@ import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
@@ -53,5 +56,19 @@ public class AdminProductsController {
 		}
 		log.info("/goods _ 실패했니 ?");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
+	}
+	
+	@PostMapping("/administrator/users")
+	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO){
+		System.out.println("들어왔니?");
+		log.info("********" + requestDTO);
+		List<Users> user = userService.findUserinfoToSearch(requestDTO.getKeyword(),requestDTO.getSearchType());
+		int count = userService.countBy();
+		log.info("$$ 서치 결과"+user);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("users", user);
+	    response.put("count", count);
+		
+		return ResponseEntity.ok(response);
 	}
 }
