@@ -143,7 +143,19 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public List<Users> findUserinfoToSearch(String keyword, String searchType) {
-		return userRepository.findBySearchUser(keyword, searchType);
+		
+		switch(searchType) {
+			case "all":
+				return userRepository.findBySearchAll(keyword,searchType);
+			case "name":
+				return userRepository.findBySearchUserName(keyword,searchType);
+			case "userId":
+				return userRepository.findBySearchUserId(keyword,searchType);
+			case "phoneNumber":
+				return userRepository.findBySearchUserPhoneNumber(keyword,searchType);
+		}
+		
+		return null;
 	}
 	
 	@Override

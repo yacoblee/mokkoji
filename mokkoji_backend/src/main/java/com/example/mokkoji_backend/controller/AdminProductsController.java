@@ -63,6 +63,11 @@ public class AdminProductsController {
 		System.out.println("들어왔니?");
 		log.info("********" + requestDTO);
 		List<Users> user = userService.findUserinfoToSearch(requestDTO.getKeyword(),requestDTO.getSearchType());
+		if(user == null) {
+			log.info("[suchDB] user is null");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
+		}
+		
 		int count = userService.countBy();
 		log.info("$$ 서치 결과"+user);
 	    Map<String, Object> response = new HashMap<>();
