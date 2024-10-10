@@ -1,12 +1,12 @@
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import React, { useRef, useState, useEffect } from 'react';
-import { API_BASE_URL } from "../../service/app-config";
-import { getStorageData } from '../../service/apiService';
-import { apiCall } from '../../service/apiService';
+import { API_BASE_URL } from "../../../service/app-config";
+import { getStorageData } from '../../../service/apiService';
+import { apiCall } from '../../../service/apiService';
 import axios from 'axios'; // axios 추가
 
-import '../../css/mypage/subpage/MyPageAddress.css';
+import '../../../css/mypage/subpage/MyPageAddress.css';
 
 
 function MyPageAddressForm({ userAddressDetail }) {
@@ -119,7 +119,7 @@ function MyPageAddressForm({ userAddressDetail }) {
                     <tr>
                         <th>주소지 이름</th>
                         <td>
-                            <input type="text" name="locationName" onChange={handleChange} placeholder={addressInfo.locationName} />
+                            <input type="text" name="locationName" onChange={handleChange} value={addressInfo.locationName} />
                         </td>
                         <td rowspan="5">
                             <button onClick={openAddress} className="MyInfoSetting">우편번호 검색</button>
@@ -129,7 +129,7 @@ function MyPageAddressForm({ userAddressDetail }) {
                     <tr>
                         <th>수취인 성명</th>
                         <td>
-                            <input type="text" name="recipientName" onChange={handleChange} placeholder={addressInfo.recipientName} />
+                            <input type="text" name="recipientName" onChange={handleChange} value={addressInfo.recipientName} />
                         </td>
                     </tr>
 
@@ -166,16 +166,17 @@ function MyPageAddressForm({ userAddressDetail }) {
                                 className="MyPagePhoneInput"
                                 name="postalCode"
                                 type="text"
+                                readonly="true"
                                 placeholder={addressInfo.postalCode}
                             />
-                            <input type="text" nama="streetAddress" placeholder={addressInfo.streetAddress} />
+                            <input type="text" name="streetAddress" readonly="true" placeholder={addressInfo.streetAddress} />
                         </td>
                     </tr>
 
                     <tr>
                         <th>상세주소</th>
                         <td>
-                            <input type="text" name="detailedAddress" onChange={handleChange} placeholder={addressInfo.detailedAddress} />
+                            <input type="text" name="detailedAddress" onChange={handleChange} value={addressInfo.detailedAddress} />
                         </td>
                     </tr>
 

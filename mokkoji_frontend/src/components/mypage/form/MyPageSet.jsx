@@ -1,8 +1,8 @@
-import '../../css/mypage/MyPageUser.css';
+import '../../../css/mypage/MyPageUser.css';
 
 import React, { useState } from 'react';
 import axios from 'axios'; // axios 추가
-import { API_BASE_URL } from "../../service/app-config";
+import { API_BASE_URL } from "../../../service/app-config";
 
 
 function MyPageSet({ userMain }) {

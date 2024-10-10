@@ -3,7 +3,7 @@ import '../../css/mypage/MyPageUser.css';
 import React from 'react';
 
 import MyPageFlex from './MyPageFlex';
-import MyPageSet from './MyPageSet'
+import MyPageSet from './form/MyPageSet'
 import { Route, Routes, Link } from 'react-router-dom';
 import MyPageAddress from './MyPageAddress';
 
