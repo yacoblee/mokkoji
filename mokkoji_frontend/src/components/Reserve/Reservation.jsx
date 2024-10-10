@@ -190,7 +190,7 @@ const Reservation = () => {
         } else {
             setDate(newDate);
         }
-        setShowCalendar(false); // 오픈된 달력 닫기
+        setShowCalendar(false);  
     };
 
     const toggleCalendar = () => { // 날짜 확인 클릭되고 있음을 알려주는 이벤트
@@ -200,62 +200,62 @@ const Reservation = () => {
         }
     };
 
-    const handleFormSubmit = () => {
-        const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
+    // const handleFormSubmit = () => {
+    //     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
 
-        const reservationData = {
-            reserveItem: Reservesource[0].reserveItem,
-            name: Reservesource[0].name,
-            date: moment(date).format("YYYY-MM-DD"),
-            adult: btnValue.adultSelect,
-            teenager: btnValue.teenSelect,
-        };
-        if (!userData) {
-            alert('로그인 후 이용 가능합니다.');
-            return false;
-        }
-        // 기존 예약 필터링
-        if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
+    //     const reservationData = {
+    //         reserveItem: Reservesource[0].reserveItem,
+    //         name: Reservesource[0].name,
+    //         date: moment(date).format("YYYY-MM-DD"),
+    //         adult: btnValue.adultSelect,
+    //         teenager: btnValue.teenSelect,
+    //     };
+    //     if (!userData) {
+    //         alert('로그인 후 이용 가능합니다.');
+    //         return false;
+    //     }
+    //     // 기존 예약 필터링
+    //     if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
 
-            // 중복 예약 예외처리
-            const checkDate = userData.mypage.Reservation.find(reserve => reserve.date === reservationData.date);
-            if (checkDate) {
-                alert('중복 예약은 불가능합니다.');
-                return false;
-            }
+    //         // 중복 예약 예외처리
+    //         const checkDate = userData.mypage.Reservation.find(reserve => reserve.date === reservationData.date);
+    //         if (checkDate) {
+    //             alert('중복 예약은 불가능합니다.');
+    //             return false;
+    //         }
 
-            let updatedReserve = userData.mypage.Reservation.filter(reserve => reserve.date !== reservationData.date);
-            updatedReserve.push(reservationData);
+    //         let updatedReserve = userData.mypage.Reservation.filter(reserve => reserve.date !== reservationData.date);
+    //         updatedReserve.push(reservationData);
 
-            const updatedUser = {
-                ...userData,
-                mypage: {
-                    ...userData.mypage,
-                    Reservation: updatedReserve
-                }
-            };
+    //         const updatedUser = {
+    //             ...userData,
+    //             mypage: {
+    //                 ...userData.mypage,
+    //                 Reservation: updatedReserve
+    //             }
+    //         };
 
-            // 업데이트정보 세션에 다시 저장
-            sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
+    //         // 업데이트정보 세션에 다시 저장
+    //         sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
 
 
-            existingReservations.push(reservationData);
-            localStorage.setItem('reservations', JSON.stringify(existingReservations));
+    //         existingReservations.push(reservationData);
+    //         localStorage.setItem('reservations', JSON.stringify(existingReservations));
 
-            // 예약 완료 후 reservationCounts 업데이트
-            setReservationCounts(prevCounts => {
-                const newCounts = { ...prevCounts };
-                const formattedDate = moment(date).format("YYYY-MM-DD");
-                newCounts[formattedDate] = (newCounts[formattedDate] || 0) + 1;
-                return newCounts;
-            });
+    //         // 예약 완료 후 reservationCounts 업데이트
+    //         setReservationCounts(prevCounts => {
+    //             const newCounts = { ...prevCounts };
+    //             const formattedDate = moment(date).format("YYYY-MM-DD");
+    //             newCounts[formattedDate] = (newCounts[formattedDate] || 0) + 1;
+    //             return newCounts;
+    //         });
 
-            alert('예약이 완료되었습니다!');
-        } else {
-            alert('예약 정보를 확인해주세요.');
-            return false;
-        }
-    };
+    //         alert('예약이 완료되었습니다!');
+    //     } else {
+    //         alert('예약 정보를 확인해주세요.');
+    //         return false;
+    //     }
+    // };
 
     return (
         <div className="reservation-container">

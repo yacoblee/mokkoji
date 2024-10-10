@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.service.registration;
 
 
 import com.example.mokkoji_backend.domain.DateCountDTO;
+import com.example.mokkoji_backend.domain.RegistDTO;
 import com.example.mokkoji_backend.entity.registration.Regist;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface RegistService {
 	List<DateCountDTO> getCountsDays();
 	
 	Map<String, Object> getRegistsAndDateCounts();
+	
+	void saveRegistData(List<RegistDTO> dto);
 }

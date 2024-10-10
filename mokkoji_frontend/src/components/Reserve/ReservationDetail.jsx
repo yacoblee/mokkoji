@@ -18,7 +18,7 @@ const ReservationDeatil = ({ regists }) => {
     return (
         <div className="reservation_detail_inner">
 
-            <div className="detail_inner_ul1">
+            <div classame="detail_inner_ul1">
                 <div className="detail_inner_head">
                     <h2>상세정보</h2>
                 </div>
@@ -61,9 +61,6 @@ const ReservationDeatil = ({ regists }) => {
                     ))}
 
 
-                    {/* {Reservesource.flatMap(item => item.productSrc).map((src, i) => (
-                        <img key={i} className="" src={src} alt={`slide ${i}`} />
-                    ))} */}
                 </div>
             </div>
 

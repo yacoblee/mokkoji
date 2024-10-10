@@ -1,9 +1,14 @@
 package com.example.mokkoji_backend.service.registration;
 
 import com.example.mokkoji_backend.domain.DateCountDTO;
+import com.example.mokkoji_backend.domain.RegistDTO;
 import com.example.mokkoji_backend.entity.registration.Regist;
+import com.example.mokkoji_backend.entity.registration.RegistImages;
+import com.example.mokkoji_backend.repository.registration.RegistImageRepository;
 import com.example.mokkoji_backend.repository.registration.RegistRepository;
 import com.example.mokkoji_backend.repository.registration.RegistedHistoryRepositoryDSL;
+
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,8 @@ import java.util.Map;
 public class RegistServiceImpl implements RegistService{
 	private final RegistedHistoryRepositoryDSL historyrepository;
 	private final RegistRepository repository;
+	private final RegistImageRepository imasgrepository;
+	
 	@Override
 	public List<Regist> getAllRegists() {
 		
@@ -53,6 +60,30 @@ public class RegistServiceImpl implements RegistService{
         
         return result;
     }
+	
+	@Override
+	@Transactional
+	public void saveRegistData(List<RegistDTO> dtoList) {
+	  if (dtoList.isEmpty()) {
+            return ;
+        }
+		
+		String registCode = dtoList.get(0).getRegistCode(); // PK나 고유 식별자로 사용할 필드
+		imasgrepository.deleteByRegistCode(registCode);
+		
+		for(RegistDTO dto: dtoList) {
+			System.out.println(dto);
+			
+			RegistImages registEntity = new RegistImages();
+	        registEntity.setRegistCode(dto.getRegistCode());
+	        registEntity.setImageName(dto.getImageName());
+	        registEntity.setImageOrder(dto.getImageOrder());
+	        registEntity.setImageType(dto.getImageType());
+
+        	imasgrepository.save(registEntity);
+		}
+		
+	}
 	
 	
 }

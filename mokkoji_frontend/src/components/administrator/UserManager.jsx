@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import '../../css/administrator/adminUsers.css';
-import { Table } from 'antd';
-import Operation from 'antd/es/transfer/operation';
 const UserManagement = () => {
 
 
