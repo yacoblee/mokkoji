@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -44,5 +45,8 @@ public class Reviews implements Serializable {
 	private boolean likeDislike;
 	@Column(name = "review_photo")
 	private String reviewPhoto;
+
+	@Transient
+	private MultipartFile reviewPhotoF;
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 	// review 내용을 수정
 	@Modifying
 	@Transactional
-	@Query("UPDATE Reviews AS r SET r.reviewContent = :reviewContent WHERE r.reviewId = :reviewId")
-	void updateReview(@Param("reviewId") int reviewId, @Param("reviewContent") String reviewContent);
+	@Query("UPDATE Reviews AS r SET r.reviewContent = :reviewContent, r.likeDislike = :likeDislike, r.reviewPhoto = :reviewPhoto WHERE r.reviewId = :reviewId AND r.userId = :userId")
+	void updateReview(@Param("userId") String userId, @Param("reviewId") int reviewId, @Param("reviewContent") String reviewContent, @Param("likeDislike") boolean likeDislike, @Param("reviewPhoto") String reviewPhoto);
 
 }

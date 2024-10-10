@@ -4,15 +4,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 
 import { Link } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
+import ReviewPatchForm from '../form/ReviewPatchForm';
 
 function MyPageReview({ userReview, myPageReview }) {
 
     useEffect(() => {
         myPageReview("/mypage/review")
     }, [])
+
+    const [userReviewDetail, setUserReviewDetail] = useState();
+
+    //모달 상태창에 대한 true , false
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+    //모달창 오픈
+    const openReviewForm = (e, reviewsId) => {
+        e.preventDefault();
+        setUserReviewDetail(userReview.find((reviews) => reviewsId === reviews.reviewsId));
+        setIsModalOpen(true);
+    };
+
+
 
     return (
 
@@ -58,7 +75,7 @@ function MyPageReview({ userReview, myPageReview }) {
                                 </div>
                                 <div className='MyLikeButton'>
                                     {reviews.reviewDate}
-                                    <button >리뷰 삭제</button>
+                                    <button onClick={(event) => openReviewForm(event, reviews.reviewsId)} >리뷰 수정</button>
                                 </div>
                             </div >  // mylikegird
                         )   // return
@@ -66,16 +83,27 @@ function MyPageReview({ userReview, myPageReview }) {
                 )
             }
 
-            <div className='MyReviewsFooter'>
-
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>
-                    {/* <button className='SelectBuyButton' >리뷰 작성</button> */}
-                </div>
-            </div>
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
+                style={{
+                    content: {
+                        width: '500px',
+                        height: '500px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <ReviewPatchForm
+                    userReviewDetail={userReviewDetail}
+                />
+            </Modal>
 
         </div>
     )

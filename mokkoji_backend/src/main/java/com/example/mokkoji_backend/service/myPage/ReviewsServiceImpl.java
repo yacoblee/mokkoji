@@ -69,8 +69,8 @@ public class ReviewsServiceImpl implements ReviewsService {
 
 	// 3) review 내용 수정할 때 사용
 	@Override
-	public void updateReviews(int reviewId, String reviewContent) {
-		reviewsRepository.updateReview(reviewId, reviewContent);
+	public void updateReviews(String userId,int reviewId, String reviewContent, boolean likeDislike, String reviewPhoto) {
+		reviewsRepository.updateReview(userId, reviewId, reviewContent, likeDislike, reviewPhoto);
 	}
 
 	// 4) review 삭제할 떄 사용

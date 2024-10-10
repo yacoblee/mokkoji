@@ -63,8 +63,6 @@ function MyPageAddressForm({ userAddressDetail }) {
             ...addressInfo,
             recipientPhone: updatedPhoneParts.join('-'),
         });
-
-
     };
 
 
@@ -77,8 +75,6 @@ function MyPageAddressForm({ userAddressDetail }) {
             ...addressInfo,
             [name]: value,
         });
-
-
     };
 
 
@@ -87,8 +83,6 @@ function MyPageAddressForm({ userAddressDetail }) {
         e.preventDefault(); // 기본 폼 제출 동작을 막음
 
         const token = JSON.parse(sessionStorage.getItem("userData"));
-
-        console.log(JSON.stringify(addressInfo));
 
         try {
             const updateAddressInfo = {

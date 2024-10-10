@@ -306,7 +306,7 @@ function ProductsInsert() {
                         <input
                             name="imageName"
                             type="file"
-                        
+
                             onChange={(e) => handleImageChange(index, e)}
                         />
                     </>

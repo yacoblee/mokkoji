@@ -142,7 +142,6 @@ function MyPageSet({ userMain }) {
                         <option value="kakao.com">kakao.com</option>
                     </select>
                 </div>
-
             </div>
 
             <button className='MyInfoSave' type='submit'>수정 완료</button>

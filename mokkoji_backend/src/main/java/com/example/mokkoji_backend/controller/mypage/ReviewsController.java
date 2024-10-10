@@ -8,14 +8,12 @@ import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -65,7 +63,32 @@ public class ReviewsController {
 			log.warn("내부 서버 오류 : reviewListAll");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : reviewListAll");
 		}
+	}
 
+	// 2) Review 입력
+
+	// 3) Review 수정
+	@Transactional
+	@PatchMapping("/review")
+	public  ResponseEntity<?> reviewUpdate(@RequestHeader("Authorization") String header, @RequestBody ReviewsDTO reviewsDTO) {
+		String userId = getUserIdFromHeader(header);
+
+		try {
+			reviewsService.updateReviews(userId, reviewsDTO.getReviewId(), reviewsDTO.getReviewContent(), reviewsDTO.isLikeDislike(), reviewsDTO.getReviewPhoto());
+
+			List<ReviewsDTO> reviewsDTOList = reviewsService.userReviews(userId);
+			if (reviewsDTOList == null || reviewsDTOList.isEmpty()) {
+				log.warn("리뷰목록이 비어있음");
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("리뷰목록이 비어있음");
+			}
+
+			return ResponseEntity.ok(reviewsDTOList);
+
+		} catch (Exception e) {
+			// 5. 서버에서 발생한 예외 처리
+			log.warn("내부 서버 오류 : reviewUpdate");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : reviewUpdate");
+		}
 	}
 
 }

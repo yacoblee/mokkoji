@@ -13,7 +13,7 @@ public interface ReviewsService {
 
 	void insertReviews(Reviews reviews);
 
-	void updateReviews(int reviewId, String reviewContent);
+	void updateReviews(String userId,int reviewId, String reviewContent, boolean likeDislike, String reviewPhoto);
 
 	void deleteReviews(int reviewId);
 
