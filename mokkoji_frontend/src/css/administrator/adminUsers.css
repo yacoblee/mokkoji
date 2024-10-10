@@ -1,0 +1,439 @@
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Chosunilbo_myungjo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumBarunpen';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  /* scroll-behavior: smooth; */
+}
+
+.upload-container {
+  width: 65vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  font-size: 20px;
+  padding: 2rem;
+}
+
+.upload-container input {
+  width: 60%;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid #aaaaaa;
+  background-color: transparent;
+  font-size: 1em;
+  color: black;
+  padding: 2px;
+}
+
+input::placeholder {
+  font-size: .6em;
+}
+
+.upload-container input:focus {
+  outline: 1px solid #979696;
+}
+
+.upload-container p {
+  visibility: hidden;
+  font-size: 15px;
+  color: red;
+  margin-bottom: 1.5rem;
+}
+
+.rowarea button {
+  margin-left: 10px;
+  height: 2.5rem;
+  width: 15%;
+  border: 1px solid #aaaaaa;
+  background-color: white;
+  transition: all 1s;
+  border-radius: 5px;
+}
+
+.address input {
+  width: 20%;
+}
+
+.formcontainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  margin-top: 7%;
+}
+
+.buttonarea {
+  display: flex;
+  justify-content: start;
+}
+
+.buttonarea button {
+  width: 160px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #aaaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .5s;
+  background-color: white;
+  font-size: .9em;
+  letter-spacing: 2px;
+  word-break: keep-all;
+}
+
+
+
+/* RegistManagement CSS  S*/
+
+.existing-image {
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+  max-width: 600px;
+  min-width: 300px;
+  width: 50vw;
+  height: 350px;
+  max-height: 350px;
+  overflow-y: scroll;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.image-upload {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-family: 'Chosunilbo_myungjo';
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ececec;
+}
+
+.existing-image {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-input-label {
+  background-color: #d0c0a02f;
+  ;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #f0df99c1;
+}
+
+.remove-image-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-image-btn:hover {
+  background-color: #c0392b;
+}
+
+/* RegistManagement CSS  E */
+.user-container {
+  width: 70vw;
+  max-width: 1400px;
+  min-width: 600px;
+  height: 100vh;
+  margin-top: 40px;
+  /* background-color: beige; */
+}
+
+.user-title {
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #888 !important;
+  font-size: 2em;
+  line-height: 1em;
+}
+
+
+.user-subContainer {
+  padding: 15px;
+}
+
+.user-subTitle {
+  position: relative;
+  padding-left: 8px;
+  margin: 15px 0;
+}
+
+.user-subTitle::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #1a4f9981;
+  content: '';
+}
+
+.user-table {
+  border-top: 1px solid #888;
+  width: 100%;
+  color: #454545;
+}
+
+.user-subContainer table select {
+  font-size: 12px;
+  height: 23px;
+  padding: 1px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.user-subContainer table input {
+  font-size: 12px;
+  height: 23px;
+  padding: 1px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+
+.user-subContainer table th {
+  background-color: #f8f8f8;
+  white-space: nowrap;
+  line-height: 2.5em;
+}
+
+.user-table-td input {
+  margin: 2px;
+}
+
+.radio-group {
+  display: flex;
+  /* 요소를 플렉스 박스로 설정 */
+  align-items: center;
+  justify-content: left;
+  /* 수평 왼쪽 정렬 */
+  gap: 10px;
+  /* 각 라벨 사이에 간격 추가 */
+  padding: 10px 0;
+  /* 위아래로 10px의 패딩을 추가하여 아래로 내림 */
+}
+
+/* 라디오 버튼과 라벨을 같은 줄에 배치 */
+.radio-group label {
+  display: flex;
+  align-items: center;
+  /* 라디오 버튼과 텍스트가 수직 중앙에 정렬되도록 함 */
+  gap: 5px;
+  /* 라디오 버튼과 텍스트 사이의 간격 */
+}
+
+.user-button {
+  margin-top: 15px;
+  text-align: center;
+  border-bottom: 1.5px solid #888 !important;
+}
+
+.user-button button,
+.user-button2 button {
+  color: white;
+  font-weight: bold;
+  margin: 5px;
+  width: 95px;
+  height: 30px;
+  background-color: #888;
+  margin-bottom: 25px;
+  border: none;
+  /* 버튼의 테두리도 없애고 싶다면 추가 */
+  border-radius: 3px;
+  transition: all .5s;
+}
+
+.user-button button:hover,
+.user-button2 button:hover {
+  background-color: #393c3a;
+}
+
+.user-count {
+  line-height: 3em;
+  text-decoration: underline;
+  margin-bottom: 30px;
+}
+
+.user-button2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-resultArea {
+  width: 100%;
+  border-top: 1px solid #aeaeae;
+  line-height: 2em;
+}
+
+.user-resultArea th {
+  border-right: 1px solid#e4e5e7;
+  border-bottom: 1px solid#e4e5e7;
+  /* 아래쪽 테두리 */
+}
+
+.user-resultArea td {
+  border-bottom: 1px solid#e4e5e7;
+  /* 아래쪽 테두리 */
+  border-right: 1px solid#e4e5e7;
+  padding: 8px;
+  /* 셀 내부 여백 */
+}
+
+.user-resultArea td:last-child,
+.user-resultArea th:last-child {
+  border-right: 0;
+  /* 마지막 셀의 오른쪽 테두리 제거 */
+}
+
+.user-resultArea th {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.user-resultArea2 {
+  text-align: center;
+}
+
+.users-movimodal {
+  text-decoration: underline solid .5px;
+  color: rgb(55, 55, 186);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  /* scroll-behavior: smooth; */
+}
+
+.upload-container {
+  width: 65vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  font-size: 20px;
+  padding: 2rem;
+}
+
+.upload-container input {
+  width: 60%;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid #aaaaaa;
+  background-color: transparent;
+  font-size: 1em;
+  color: black;
+  padding: 2px;
+}
+
+input::placeholder {
+  font-size: .6em;
+}
+
+.upload-container input:focus {
+  outline: 1px solid #979696;
+}
+
+.upload-container p {
+  visibility: hidden;
+  font-size: 15px;
+  color: red;
+  margin-bottom: 1.5rem;
+}
+
+.rowarea button {
+  margin-left: 10px;
+  height: 2.5rem;
+  width: 15%;
+  border: 1px solid #aaaaaa;
+  background-color: white;
+  transition: all 1s;
+  border-radius: 5px;
+}
+
+.address input {
+  width: 20%;
+}
+
+.formcontainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  margin-top: 7%;
+}
+
+.buttonarea {
+  display: flex;
+  justify-content: start;
+}
+
+.buttonarea button {
+  width: 160px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #aaaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .5s;
+  background-color: white;
+  font-size: .9em;
+  letter-spacing: 2px;
+  word-break: keep-all;
+}
