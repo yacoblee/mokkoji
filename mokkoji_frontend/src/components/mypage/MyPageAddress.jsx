@@ -7,7 +7,7 @@ import { apiCall } from '../../service/apiService';
 
 
 import '../../css/mypage/subpage/MyPageAddress.css';
-import MyPageAddressForm from './MyPageAddressForm';
+import MyPageAddressForm from './form/MyPageAddressForm';
 
 function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddress }) {
 

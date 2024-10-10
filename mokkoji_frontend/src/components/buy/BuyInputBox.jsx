@@ -25,7 +25,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             const { userinfomation, addressList } = response.data;
             console.log(addressList)
             setAddressing(addressList);
-            setUser(userinfomation);
+            setUser(userinfomation);ㄴㄴㄴㄴ
             setOriginalAddressing(addressList);
         } catch (error) {
             console.log(`buy input error =>${error.message}`)
@@ -619,7 +619,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete userId={userId}
                         amount={amount}
-                        //options={option} 
+                        //options={option}
                         checkedCartItems={checkedCartItems}
                         selectedProduct={selectedProduct}
                         productPrice={productPrice}
