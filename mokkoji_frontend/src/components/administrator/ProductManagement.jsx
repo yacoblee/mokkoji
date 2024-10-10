@@ -219,7 +219,7 @@ const ProductManagement = () => {
           state: {
             selectproduct: selectProduct,
             option: option,
-            image: image,
+            //image: image,
             sendcode: code
           }
         });
@@ -228,13 +228,52 @@ const ProductManagement = () => {
         console.log(err);
       });
   }
+  //onClickImage(product) 
+  function onClickImage(product) {
+    let uri = API_BASE_URL + "/administrator/pimage";
 
+    // axios.get 요청 후 데이터를 받아온 후 navigate 호출
+    axios.get(uri, {
+      params: {
+        id: product.id
+      },
+    })
+      .then(response => {
+        const { selectProduct, mainImages, slideImages ,code} = response.data;
+
+        // 응답 받은 데이터를 상태로 저장하고 페이지 이동
+        navigate(`/administrator/products/image`, {
+          state: {
+            selectproduct: selectProduct,
+            mainImages: mainImages,
+            slideImages: slideImages,
+            sendcode: code
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  // function onClickDelete(productId) {
+  //   const uri = API_BASE_URL + "/administrator/deleteproduct?productId=" + productId;
+  //   axios.delete(uri)
+  //     .then(response => {
+  //       // handle success
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       // handle error
+  //       console.log(error);
+  //     })
+
+  // }
 
   return (
     <div className="searchProductAdmin">
-      <h1>Product Management</h1>
+      <h1 className="productMainTitle">Product Management</h1>
       <div className="adminProductBox">
-        <h3>검색</h3>
+        <h3 className="productTitle">검색</h3>
         <form className="searchgrid" onSubmit={onSubmitHandler}>
           <table className="searchProductBar">
             <tr>
@@ -360,9 +399,10 @@ const ProductManagement = () => {
           <div className="buttonwrapper">
             <button type="button" onClick={searchProductAdmin}>검색</button>
             <button type="button" onClick={resetPageRequest}>초기화</button>
+            <button type="button">상품 등록</button>
           </div>
         </form>
-        <h3>리스트</h3>
+        <h3 className="productTitle">리스트</h3>
         <table className="productListUp">
           <thead>
             <tr>
@@ -385,8 +425,9 @@ const ProductManagement = () => {
                 <td>{product.likeConut}</td>
                 <td>{product.uploadDate}</td>
                 <td>
-                  <button onClick={() => { onClickInset(product) }}>Edit</button>
-                  <button>Delete</button>
+                  <button onClick={() => { onClickInset(product) }}>product & option Edit</button>
+                  {/* <button onClick={() => onClickDelete(product.id)}>Delete</button> */}
+                  <button onClick={() => { onClickImage(product) }}>image Edit</button>
                 </td>
               </tr>
             ))}

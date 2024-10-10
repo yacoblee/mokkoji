@@ -14,4 +14,10 @@ public interface CodeRepository extends JpaRepository<Code, CodeId> {
 	
 	@Query(nativeQuery=true,value="select * from code where main_type='03PS'")
 	List<Code> findPS();
+	
+	@Query(nativeQuery=true,value="select * from code where main_type='02PI'")
+	List<Code> findPI();
+	
+	@Query(nativeQuery=true,value="select * from code where main_type='04RS'")
+	List<Code> findRS();
 }

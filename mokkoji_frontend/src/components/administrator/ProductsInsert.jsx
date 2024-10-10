@@ -135,6 +135,10 @@ function ProductsInsert() {
             });
             //const response = await axios('/insertproduct/image', formData, token);
             console.log('업로드 성공:', response.data);
+            const { selectProduct, option, image } = response.data;
+            setProduct(selectProduct);
+            setOptions(option);
+
         } catch (err) {
             console.error('업로드 실패:', err);
         }
@@ -158,8 +162,10 @@ function ProductsInsert() {
         { category: 'C5', description: '주방/식기' },
     ];
     return (
+        <>
+        <h1 className="productMainTitle">상품 & 옵션 수정</h1>
         <form onSubmit={saveSubmit} method="post" enctype="multipart/form-data" id="saveProduct">
-            <h2>상품 정보 입력</h2>
+            <h3 className="productTitle">상품 정보 입력</h3>
             <div className="inserProductsForm1">
                 {/* <label>상품 ID</label>
                 <input name="id"
@@ -246,7 +252,7 @@ function ProductsInsert() {
                     ))}
                 </div>
             </div>
-            <h3>상품 옵션</h3>
+            <h3 className="productTitle">상품 옵션</h3>
             <div className="inserProductsForm2">
 
 
@@ -316,6 +322,7 @@ function ProductsInsert() {
 
             <button type="submit">저장</button>
         </form>
+        </>
     );
 }
 
