@@ -39,7 +39,7 @@ public interface UsersService {
 	void updateUser(String userId, String phoneNumber, String email);
 	
 	// 유저 정보 찾기 
-	List<Users> findUserinfoToSearch (String keyword, String searchType);
+//	List<Users> findUserinfoToSearch (String keyword, String searchType);
 	
 	int countBy();
 	

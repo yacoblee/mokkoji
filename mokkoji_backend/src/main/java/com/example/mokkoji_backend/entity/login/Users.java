@@ -58,7 +58,7 @@ public class Users {
 
     @Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDateTime updatedAt;
+	private LocalDate updatedAt;
     
 	
 	@Column(name = "created_at")
