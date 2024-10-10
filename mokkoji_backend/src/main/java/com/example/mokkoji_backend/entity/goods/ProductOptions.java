@@ -28,9 +28,9 @@ public class ProductOptions implements Serializable {
 	@Column(name="optionPrice")
 	private int price;
 	
-	@ManyToOne
-	@JsonBackReference
-	//@MapsId("productId") // `productId` 필드와 외래 키를 매핑
-    @JoinColumn(name = "productId")
-	private Products product;
+//	@ManyToOne
+//	@JsonBackReference
+//	//@MapsId("productId") // `productId` 필드와 외래 키를 매핑
+//    @JoinColumn(name = "productId" ,insertable = false)
+//	private Products product;
 }

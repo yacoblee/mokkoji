@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 
 public interface ProductsRepository extends JpaRepository<Products, Long>{
 	
-	@EntityGraph(attributePaths = {"options"})
+	//@EntityGraph(attributePaths = {"options"})
 	List<Products> findAll();
 	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
@@ -66,7 +66,7 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
     @Query("UPDATE Products p SET p.stockCount = p.stockCount - :count WHERE p.id = :productId")
     int decreaseStockCount(@Param("productId") Long productId, @Param("count") int count);
 
-    @EntityGraph(attributePaths = {"options"})
+//    @EntityGraph(attributePaths = {"options"})
 	Optional<Products> findById( Long id);
     
 //    @Query("SELECT p FROM Products p WHERE "

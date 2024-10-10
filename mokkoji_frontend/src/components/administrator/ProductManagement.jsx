@@ -6,7 +6,7 @@ import axios from "axios";
 import RenderPagination from "../product/RenderPagination";
 import LoginValidityCheck from './../login/LoginValidityCheck';
 import moment from 'moment';
-
+import { useNavigate } from 'react-router-dom';
 const ProductManagement = () => {
   const [list, setList] = useState([]);
   const [pageMaker, setPageMaker] = useState({});
@@ -197,6 +197,39 @@ const ProductManagement = () => {
       setSearchRequest(false); // 플래그를 다시 false로 설정하여 다음 요청을 방지
     }
   }, [searchRequest])
+  const navigate = useNavigate();
+
+  // const [selectProduct, setSelectProduct] = useState({});
+  // const [option, setOption] = useState([]);
+  // const [image, setImage] = useState([]);
+  function onClickInset(product) {
+    let uri = API_BASE_URL + "/administrator/psave";
+
+    // axios.get 요청 후 데이터를 받아온 후 navigate 호출
+    axios.get(uri, {
+      params: {
+        id: product.id
+      },
+    })
+      .then(response => {
+        const { selectProduct, option, image } = response.data;
+
+        // 응답 받은 데이터를 상태로 저장하고 페이지 이동
+        navigate(`/administrator/products/insert`, {
+          state: {
+            selectproduct: selectProduct,
+            option: option,
+            image: image,
+            sendcode: code
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+
   return (
     <div className="searchProductAdmin">
       <h1>Product Management</h1>
@@ -352,7 +385,7 @@ const ProductManagement = () => {
                 <td>{product.likeConut}</td>
                 <td>{product.uploadDate}</td>
                 <td>
-                  <button>Edit</button>
+                  <button onClick={() => { onClickInset(product) }}>Edit</button>
                   <button>Delete</button>
                 </td>
               </tr>

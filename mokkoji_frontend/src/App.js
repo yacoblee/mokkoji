@@ -20,6 +20,7 @@ import Admin from './components/administrator/Admin';
 import Dashboard from './components/administrator/Dashboard';
 import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
+import ProductInserts from './components/administrator/ProductsInsert';
 import OrderManagement from './components/administrator/OrderManagement';
 import RegistManagement from './components/administrator/RegistManagement'
 import MyPageMain from './components/mypage/MyPageMain';
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />
+          <Route path="products/insert" element={<ProductInserts />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="reserve" element={<RegistManagement />} />
         </Route>

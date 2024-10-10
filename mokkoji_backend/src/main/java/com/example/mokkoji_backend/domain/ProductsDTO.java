@@ -74,7 +74,7 @@ public class ProductsDTO {
 		this.categoryId = product.getCategoryId();
 		this.mainDescription = product.getMainDescription();
 		this.likeConut = product.getLikeCount();
-		this.options = product.getOptions();  // 연관된 options 필드도 처리
+		//this.options = product.getOptions();  // 연관된 options 필드도 처리
 	}
 	
 }
