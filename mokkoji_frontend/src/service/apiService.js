@@ -13,7 +13,7 @@ export async function apiCall(url, method, requestData, token) {
   //  - 존재하면 찾는문자열이 첫번째 나타나는 위치(index) 를 return,
   //    없으면 -1 을 return
   let headers = '';
-  if (url.indexOf('join') >= 0 && token == null) {
+  if (url.indexOf('image') >= 0 && token == null) {
     headers = { 'Content-Type': 'multipart/form-data' };
   } else if (token !== null) {// 토큰이 있다면 ,
     headers = {

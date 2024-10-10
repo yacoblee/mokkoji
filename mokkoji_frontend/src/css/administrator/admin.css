@@ -1,40 +1,44 @@
 @font-face {
-    font-family: 'SUITE-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Chosunilbo_myungjo';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Chosunilbo_myungjo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'NanumBarunpen';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'NanumBarunpen';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    /* scroll-behavior: smooth; */
+  margin: 0;
+  padding: 0;
+  /* scroll-behavior: smooth; */
 }
+
 .admin-content::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 8px;
+  /* Width of the scrollbar */
 }
 
 .admin-content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar handle */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Color of the scrollbar handle */
   border-radius: 10px;
 }
 
 .admin-content::-webkit-scrollbar-track {
-  background-color: #f4f4f4; /* Color of the scrollbar track */
+  background-color: #f4f4f4;
+  /* Color of the scrollbar track */
 }
 
 .adminMenu {
@@ -64,68 +68,69 @@
 
 
 .admin-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    background-color: white;
-    width: 100vw;
-    min-height: 1000px;
-    height: 100vh;
-  }
-  aside,
-  .admin-sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    background-color: #d0c0a02f;
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px #d0c0a092;
-    width: 20vw;
-    height: 500px;
-    max-width: 200px;
-    margin: 100px auto;
-    padding: 20px;
-  }
- 
-  .admin-sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .admin-sidebar ul li {
-    margin-bottom: 10px;
-  }
-  
-  .admin-sidebar ul li a {
-    color: #0b0b0b;
-    text-decoration: none;
-  }
-  
-  .stat-box {
-    background-color: #f4f4f4;
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* .admin-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  width: 100vw;
+  min-height: 1000px;
+  height: 100vh;
+}
+
+aside,
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  background-color: #d0c0a02f;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #d0c0a092;
+  width: 20vw;
+  height: 500px;
+  max-width: 200px;
+  margin: 100px auto;
+  padding: 20px;
+}
+
+.admin-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.admin-sidebar ul li a {
+  color: #0b0b0b;
+  text-decoration: none;
+}
+
+.stat-box {
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* .admin-content{
     width: 80vw;
     max-width:1400px;
     min-width: 600px;
 
   } */
 
-  .admin-content {
-    width: 80vw;
-    max-width: 1400px;
-    min-width: 600px;
-    height: 100vh;  
-    overflow: auto;  
-    padding: 20px;
-    box-sizing: border-box;
-    margin-top: 100px;
-  }
+.admin-content {
+  width: 80vw;
+  max-width: 1400px;
+  min-width: 600px;
+  height: 100vh;
+  /* overflow: auto;   */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 100px;
+}

@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "productimages")
 @Data
@@ -28,4 +32,7 @@ public class ProductImages implements Serializable{
 	private String type;
 	@Column(name = "imageName", nullable = false)
 	private String name;
+	@Transient //SQL 구문처리에서 제외시켜줌
+	@JsonIgnore  // JSON 직렬화에서 제외
+	private MultipartFile uploadfilef;
 }

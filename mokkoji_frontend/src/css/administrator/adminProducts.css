@@ -58,15 +58,9 @@
     background: #e6e6e6;
 }
 
-/* .searchProductAdmin input[type="date"] {
-    padding: 2px;
-    margin: 2px;
-} */
-
- .seachStockCount input {
-
+.seachStockCount input {
     width: 50px;
-} 
+}
 
 .seachvalue {
     width: 200px;
@@ -91,4 +85,36 @@
 .productListUp {
     text-align: center;
     margin: 10px;
+}
+/* ============================ */
+/* insert(Save) From */
+
+.inserProductsForm1{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 10px;
+    padding: 20px;
+    margin: 20px;
+}
+.inserProductsForm2{
+    display: grid;
+     width: 50%; 
+    grid-template-columns: 1fr 2fr 1fr 2fr ;
+    gap: 10px;
+    padding: 20px;
+    background-color: aqua;
+    margin: 20px auto;
+}
+.inserProductsForm3{
+    display: grid;
+     /* width: 50%;  */
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr ;
+    gap: 10px;
+    padding: 20px;
+    background-color: aqua;
+    margin: 20px;
+}
+.adminProductImage img{
+    width: 50px;
+    margin : 10px
 }

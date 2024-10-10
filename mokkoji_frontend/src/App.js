@@ -20,6 +20,7 @@ import Admin from './components/administrator/Admin';
 import Dashboard from './components/administrator/Dashboard';
 import UserManagement from './components/administrator/UserManager';
 import ProductManagement from './components/administrator/ProductManagement';
+import ProductInserts from './components/administrator/ProductsInsert';
 import OrderManagement from './components/administrator/OrderManagement';
 import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />
+          <Route path="products/insert" element={<ProductInserts />} />
           <Route path="orders" element={<OrderManagement />} />
         </Route>
         {/** 관리자 페이지 라우팅 E */}

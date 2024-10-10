@@ -9,7 +9,8 @@ public interface ProductImageService {
 	List<ProductImages> findAll();
 
 	List<ProductImages> findByProductIdAndType(Long productId, String type);
-
+	List<ProductImages> findByProductId(Long productId);
+	
 	ProductImages findById(ProductImagesId id);
 
 	void save(ProductImages options);

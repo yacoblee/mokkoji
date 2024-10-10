@@ -20,6 +20,8 @@ public interface ProductsService {
 	
 	// 각 type에 따른 정보를 가져오는 메서드(detail 페이지에서 사용)
 	Map<String, Object> getProductDetails(Long productId, String type);
+	
+	Map<String, Object> getProductDetails(Long productId);
 	//추천 리스트 반환
 	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	

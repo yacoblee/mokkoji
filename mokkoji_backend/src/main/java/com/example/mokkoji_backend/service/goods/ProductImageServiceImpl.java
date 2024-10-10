@@ -23,7 +23,10 @@ public class ProductImageServiceImpl implements ProductImageService {
 	public List<ProductImages> findByProductIdAndType(Long productId, String type) {
 		return repository.findByProductIdAndType(productId,type);
 	}
-
+	@Override
+	public List<ProductImages> findByProductId(Long productId){
+		return repository.findByProductId(productId);
+	}
 	@Override
 	public ProductImages findById(ProductImagesId id) {
 		

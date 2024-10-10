@@ -43,7 +43,7 @@ public class CartServiceImpl implements CartService {
 				.build();
 		//2.각 엔터티 값 찾기
 		Products productEntity = productsRepository.findById(cart.getProductId()).get();
-		ProductOptions productOptionEntity = productoptionsService.findById(optionPk);
+		ProductOptions productOptionEntity = productoptionsService.findById(optionPk).get();
 		Packaging packagingEntity = packagingService.findById(cart.getPackagingOptionContent());
 		
 		return CartDTO.builder().userId(cart.getUserId())
@@ -195,7 +195,7 @@ public class CartServiceImpl implements CartService {
 			ProductOptionsId productOptionsId = ProductOptionsId.builder()
 					.productId(item.getProductId())
 					.content(item.getOptionContent()).build();
-			ProductOptions productOptions = productoptionsService.findById(productOptionsId);
+			ProductOptions productOptions = productoptionsService.findById(productOptionsId).get();
 			cartDTO.setOptionPrice(productOptions.getPrice());
 
 			// ProductOptions에서 price 끌고오기
