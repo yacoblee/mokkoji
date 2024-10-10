@@ -11,4 +11,8 @@ import java.util.List;
 public interface RegistImageRepository extends JpaRepository<RegistImages, RegistImagesId>{
 	
 	public List<RegistImages> findByRegistCode(String registCode);
+	
+	
+	void deleteByRegistCode(String registCode);
+	
 }
