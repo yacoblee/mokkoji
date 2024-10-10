@@ -394,6 +394,9 @@ const Membership = () => {
                 .then((response) => {
            
                     alert(`${formData.current.name}님 회원가입을 축하합니다.`);
+                   //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
+                    window.opener.alert("회원가입이 완료되었습니다!");  // 부모 창에 알림
+                    window.close();
                     navi('/Login');
                     setisOkIdChek(false);
 

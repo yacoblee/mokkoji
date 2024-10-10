@@ -419,4 +419,16 @@ word-break: keep-all;
 }
 
 
+.user-table-td input[type="button"] {
+  padding: 0 5px ;
+  background-color: #fff; /* 기본 배경 색 */
+  border: 1px solid #ccc;    /* 기본 테두리 색 */
+  cursor: pointer;           /* 마우스 커서를 포인터로 변경 */
+  transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 색상 전환 */
+}
 
+.user-table-td input[type="button"]:hover {
+  background-color: #1a1d2081; /* hover 시 배경 색 */
+  color: #fff;               /* hover 시 글자 색 */
+  border-color: #ccc;     /* hover 시 테두리 색 */
+}

@@ -26,7 +26,7 @@ import RegistManagement from './components/administrator/RegistManagement'
 import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
 import ResetPassword from './components/login/ResetPassword';
-
+import ProductsInsert from './components/administrator/ProductsInsert.jsx';
 
 const App = () => {
 

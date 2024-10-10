@@ -27,6 +27,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 		LocalDate startDate = requestDTO.getStartDate();
 		LocalDate endDate = requestDTO.getEndDate();
 		String dateSearchType = requestDTO.getDateSearchType();
+		int isAdmin = requestDTO.getIsAdmin();
 
 		if (keyword != null && !keyword.isEmpty()) {
 			switch (searchType) {
@@ -45,7 +46,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 				throw new IllegalArgumentException("Invalid searchType: " + searchType);
 			}
 		}
-		if(dateSearchType !=null && !dateSearchType.isEmpty()) {
+		if(dateSearchType.isEmpty()) {
 			switch (dateSearchType) {
 			case "createdAt":
 				builder.and(users.createdAt.between(startDate, endDate));
@@ -57,6 +58,13 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 			default:
 				throw new IllegalArgumentException("dateSearchType value: " + dateSearchType);
 			}
+		}
+		if(isAdmin==0) {
+			builder.and(users.isAdmin.eq("0"));
+		}else if( isAdmin==1) {
+			builder.and(users.isAdmin.eq("1"));
+		}else {
+			throw new IllegalArgumentException("isAdmin value: " + isAdmin);
 		}
 
 		return jpaQueryFactory.selectFrom(users)
