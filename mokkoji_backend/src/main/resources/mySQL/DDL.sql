@@ -242,3 +242,17 @@ CREATE TABLE `ordersdetail` (
                                 CONSTRAINT `ordersdetail_packaging_FK` FOREIGN KEY (`packaging_option_content`) REFERENCES `packaging` (`packaging_option_content`),
                                 CONSTRAINT `ordersdetail_productoptions_FK` FOREIGN KEY (`product_id`, `option_content`) REFERENCES `productoptions` (`product_id`, `option_content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+
+
+
+
+
+
+
+-- 10.09 효윤
+ALTER TABLE users ADD login_count INT NOT NULL DEFAULT 0 COMMENT '로그인횟수';

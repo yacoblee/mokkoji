@@ -121,13 +121,13 @@ public class MyPageController {
 
 		try {
 			List<Address> addressList = addressService.updateAddress(
-					address.getUserId(),
 					address.getPostalCode(),
 					address.getStreetAddress(),
 					address.getDetailedAddress(),
 					address.getLocationName(),
 					address.getRecipientName(),
 					address.getRecipientPhone(),
+					address.getUserId(),
 					address.getIsDefault());
 
 			return ResponseEntity.ok(addressList);
@@ -135,6 +135,21 @@ public class MyPageController {
 		} catch (Exception e) {
 			log.warn("내부 서버 오류 : addressUpdate");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressUpdate");
+		}
+	}
+	
+	// 3.3. 기본 주소지 변경
+	@PatchMapping("/address/{isDefault}")
+	public ResponseEntity<?> addressDefaultUpdate(@RequestHeader("Authorization") String header, @PathVariable int isDefault) {
+		String userId = getUserIdFromHeader(header);
+
+		try {
+			List<Address> addressList = addressService.changeDefaultAddress(userId, isDefault);
+			return ResponseEntity.ok(addressList);
+
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : addressDefaultUpdate");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressDefaultUpdate");
 		}
 	}
 

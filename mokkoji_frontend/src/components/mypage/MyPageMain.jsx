@@ -258,6 +258,23 @@ function MyPageMain() {
             }) //apiCall
     }; //myPageAddress
 
+    // 기본 주소지 변경 로직
+    // myPage로 넘어갈때 로그인된 사용자의 상세 정보를 담아서 이동
+    const changeDefaultAddress = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'PATCH', null, userToken)
+            .then((response) => {
+                //alert(`** changeDefaultAddress 성공 url=${url}`);
+                setUserAddress(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** changeDefaultAddress 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //changeDefaultAddress
+
 
 
     return (
@@ -277,6 +294,7 @@ function MyPageMain() {
                         userMain={userMain}
                         userAddress={userAddress}
                         myPageAddress={myPageAddress}
+                        changeDefaultAddress={changeDefaultAddress}
                     />}
                 />
 

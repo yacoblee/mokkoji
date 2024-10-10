@@ -29,4 +29,7 @@ public interface AddressService {
 	
 	// 4. 주소지 수정
 	List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault);
+
+	// 5. 기본 주소지 변경
+	List<Address> changeDefaultAddress(String userId, int isDefault);
 }

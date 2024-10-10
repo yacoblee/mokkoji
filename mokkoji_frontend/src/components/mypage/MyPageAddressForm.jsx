@@ -56,7 +56,15 @@ function MyPageAddressForm({ userAddressDetail }) {
     const handlePhoneChange = (index, value) => {
         const updatedPhoneParts = [...phoneParts];
         updatedPhoneParts[index] = value;
-        setPhoneParts(updatedPhoneParts);
+
+        setPhoneParts(updatedPhoneParts);   // 마지막 set이 실행 안되는 오류 있음, 그러나 DB반영은 정상적
+
+        setAddressInfo({
+            ...addressInfo,
+            recipientPhone: updatedPhoneParts.join('-'),
+        });
+
+
     };
 
 
@@ -65,18 +73,12 @@ function MyPageAddressForm({ userAddressDetail }) {
         const { name, value } = e.target;
 
         // 일반 필드 업데이트
-        if (name !== 'recipientPhone') {
-            setAddressInfo({
-                ...addressInfo,
-                [name]: value,
-            });
-        } else {
-            // recipientPhone 업데이트 처리
-            setAddressInfo({
-                ...addressInfo,
-                recipientPhone: phoneParts.join('-'),
-            });
-        }
+        setAddressInfo({
+            ...addressInfo,
+            [name]: value,
+        });
+
+
     };
 
 
@@ -86,7 +88,7 @@ function MyPageAddressForm({ userAddressDetail }) {
 
         const token = JSON.parse(sessionStorage.getItem("userData"));
 
-        console.log(addressInfo);
+        console.log(JSON.stringify(addressInfo));
 
         try {
             const updateAddressInfo = {

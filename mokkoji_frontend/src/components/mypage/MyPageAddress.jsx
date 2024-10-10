@@ -9,7 +9,7 @@ import { apiCall } from '../../service/apiService';
 import '../../css/mypage/subpage/MyPageAddress.css';
 import MyPageAddressForm from './MyPageAddressForm';
 
-function MyPageAddress({ userMain, userAddress, myPageAddress }) {
+function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddress }) {
 
     useEffect(() => {
         myPageAddress("/mypage/address")
@@ -37,7 +37,12 @@ function MyPageAddress({ userMain, userAddress, myPageAddress }) {
                     <table className="AddressListTable" key={address.isDefault}>
                         <tr>
                             <th className="AddressNameCell" rowspan="2">
-                                <input type="radio" name="defaultAddress" />
+                                <input
+                                    type="radio"
+                                    name="defaultAddress"
+                                    checked={address.isDefault === 0}
+                                    onChange={() => changeDefaultAddress(`/mypage/address/${address.isDefault}`)}
+                                />
                                 <span>&nbsp;{address.locationName}</span>
                             </th>
                             <th>&nbsp;</th>
