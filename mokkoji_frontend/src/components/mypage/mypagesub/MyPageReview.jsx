@@ -23,13 +23,13 @@ function MyPageReview({ userReview, myPageReview }) {
 
 
     //모달창 오픈
-    const openReviewForm = (e, reviewsId) => {
+    const openReviewForm = (e, reviewId) => {
         e.preventDefault();
-        setUserReviewDetail(userReview.find((reviews) => reviewsId === reviews.reviewsId));
+        setUserReviewDetail(userReview.find((reviews) => reviewId === reviews.reviewId));
         setIsModalOpen(true);
     };
 
-
+    console.log(userReview)
 
     return (
 
@@ -59,13 +59,13 @@ function MyPageReview({ userReview, myPageReview }) {
                 (
                     userReview.map((reviews) => {
                         return (
-                            <div className="MyCartReviews" key={reviews.reviewsId} >
+                            <div className="MyCartReviews" key={reviews.reviewId} >
                                 <div className='MyCartCheck'>
                                     {reviews.likeDislike ? <FontAwesomeIcon icon={faThumbsUp} size="xl" /> : <FontAwesomeIcon icon={faThumbsDown} size="xl" />}
                                 </div>
 
                                 <div className="MyLikePhoto">
-                                    <img src={`${API_BASE_URL}/resources/reviewsImages/${reviews.reviewPhoto}`} alt={reviews.productName} />
+                                    <img src={`${API_BASE_URL}/resources/reviewImages/${reviews.reviewPhoto}`} alt={reviews.productName} />
                                 </div>
                                 <div className='MyLikeInfo'>
                                     <h4>{reviews.productName}</h4>
@@ -75,7 +75,7 @@ function MyPageReview({ userReview, myPageReview }) {
                                 </div>
                                 <div className='MyLikeButton'>
                                     {reviews.reviewDate}
-                                    <button onClick={(event) => openReviewForm(event, reviews.reviewsId)} >리뷰 수정</button>
+                                    <button onClick={(event) => openReviewForm(event, reviews.reviewId)} >리뷰 수정</button>
                                 </div>
                             </div >  // mylikegird
                         )   // return

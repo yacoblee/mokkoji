@@ -8,13 +8,17 @@ import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.List;
 
 @Log4j2
@@ -70,8 +74,52 @@ public class ReviewsController {
 	// 3) Review 수정
 	@Transactional
 	@PatchMapping("/review")
-	public  ResponseEntity<?> reviewUpdate(@RequestHeader("Authorization") String header, @RequestBody ReviewsDTO reviewsDTO) {
+	public  ResponseEntity<?> reviewUpdate(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO, HttpServletRequest request) throws IOException {
 		String userId = getUserIdFromHeader(header);
+
+		log.warn(reviewsDTO.toString());
+
+		// 2) Upload File 처리 *********************************
+		// 2.1) 물리적 실제 저장위치 확인 : file1
+		String realPath = request.getServletContext().getRealPath("/");
+
+		realPath += "resources\\reviewImages\\" ;
+
+		// 2.2) realPath 존재확인 및 생성
+		File file = new File(realPath);
+		if ( !file.exists() ) file.mkdir();
+		// => 저장폴더가 존재하지 않으면 생성해줌.
+
+		// 2.3) basicman.png  Copy 하기 (IO Stream 실습)
+		// => 기본Image (basicman.png) 가 uploadImages 폴더에 없는 경우
+		//    images 폴더에서 복사하기
+		// => IO 발생: Checked Exception
+		file = new File(realPath+"basicImage.jpg");
+		if ( !file.exists() ) {
+			String basicImagePath = "C:\\Users\\admin\\Documents\\GitHub\\mokkoji\\mokkoji_backend\\src\\main\\webapp\\resources\\reviewImages\\basicImage.jpg";
+			FileInputStream fin = new FileInputStream(new File(basicImagePath));
+			// => basicImage 를 읽어 파일입력 바이트스트림 생성
+			FileOutputStream fout = new FileOutputStream(file);
+			// => 목적지(realPath+"basicman.png") 파일출력 바이트스트림 생성
+			FileCopyUtils.copy(fin, fout);
+		}
+
+		// 2.4) 저장경로 완성하기
+		// => 물리적 저장위치 : file1
+		// => table 저장값_파일명 : file2
+		String file1="", file2="basicImage.jpg";
+
+		MultipartFile uploadfilef = reviewsDTO.getReviewPhotoF();
+		// => 업로드 파일 선택여부 확인
+		if ( uploadfilef!=null && !uploadfilef.isEmpty() ) {
+			// => imageFile 선택 -> 저장
+			file1 = realPath + uploadfilef.getOriginalFilename(); //저장경로(realPath + 화일명) 완성
+			uploadfilef.transferTo(new File(file1)); // file1 경로에 저장(붙여넣기)
+
+			// => Table 저장값 완성
+			file2 = uploadfilef.getOriginalFilename();
+		}
+		reviewsDTO.setReviewPhoto(file2);
 
 		try {
 			reviewsService.updateReviews(userId, reviewsDTO.getReviewId(), reviewsDTO.getReviewContent(), reviewsDTO.isLikeDislike(), reviewsDTO.getReviewPhoto());
