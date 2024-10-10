@@ -83,7 +83,8 @@ public class PageRequestDTO {// ->페이징 조건들
 	private LocalDate endDate; // 검색 종료 날짜
 //	**********************************
 	private String searchType;
-	
+	private String dateSearchType;
+	private int isAdmin;
 	//**1탄 리액트에서 axios 보내는 법============================
 	// 필요한 정보만 간단하게 보내는 법
 //    axios.get(uri, {

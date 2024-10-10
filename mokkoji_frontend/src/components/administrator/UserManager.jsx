@@ -5,57 +5,65 @@ import { apiCall } from '../../service/apiService';
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
-    const [count,setCount] = useState(0);
+    const [count, setCount] = useState(0);
     const inputData = {
-      keyword: '',
-      searchType: 'all',
+        keyword: '',
+        searchType: 'all',
+        dateSearchType: 'createdAt',
+        startDate: '',
+        endDate: '',
+        isAdmin: 0,
+        size : 5
+
     };
     const [input, setInput] = useState(inputData);  // 입력 상태 초기화
-  
+
     // 입력 값 변경 핸들러
     const onChangeValue = (e) => {
-      const { name, value } = e.target;
-      setInput((prev) => ({
-        ...prev,
-        [name]: value
-      }));
+        const { name, value } = e.target;
+        console.log("검색어 이벤트 밸류" + e.target.value);
+        setInput((prev) => ({
+            ...prev,
+            [name]: value
+        }));
     };
-  
+
     // 선택 값 변경 핸들러
     const selectChange = (e) => {
-      const selectType = e.target.value;
-      setInput((prev) => ({
-        ...prev,
-        searchType: selectType
-      }));
+        const { name, value } = e.target;
+        console.log(e.target.value);
+        setInput((prev) => ({
+            ...prev,
+            [name]: value
+        }));
     };
-  
+    console.log(input);
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
-      e.preventDefault();
-      serchDB();  // 검색 함수 호출
+        e.preventDefault();
+        serchDB();  // 검색 함수 호출
     };
-  
+
     // 검색 DB 함수
     const serchDB = () => {
         let url = "/administrator/users";
         apiCall(url, 'POST', input, null)
-        .then((response) => {
-          console.log("Response data:", response);  // 응답의 data 확인
-            setList(response.data.users);  // 리스트 상태 업데이트
-            setCount(response.data.count);// 카운트 상태 업데이트
-        })
-        .catch((err) => {
-          console.error("Error during API call:", err);  // 에러 로그 출력
-          setList([]);  // 에러 발생 시 빈 배열로 설정
-        });
-      };
-  
+            .then((response) => {
+                console.log("Response data:", response);  // 응답의 data 확인
+                setList(response.data.users);  // 리스트 상태 업데이트
+                setCount(response.data.count);// 카운트 상태 업데이트
+            })
+            .catch((err) => {
+                console.error("Error during API call:", err);  // 에러 로그 출력
+                setList([]);  // 에러 발생 시 빈 배열로 설정
+            });
+    };
+
     // list가 변경된 후 실행되는 useEffect
     useEffect(() => {
-      console.log("Updated list:", list);  // list 상태가 변경된 후 출력
+        console.log("Updated list:", list);  // list 상태가 변경된 후 출력
     }, [list]);  // list가 변경될 때마다 실행
-  
+
 
 
     return (
@@ -77,23 +85,23 @@ const UserManagement = () => {
                                     <option value="phoneNumber">핸드폰번호</option>
                                 </select>
 
-                                <input type="text" name="keyword" id="productInput" className="seachvalue" onChange={onChangeValue} />
+                                <input type="text" name="keyword" id="keyword" className="seachvalue" onChange={onChangeValue} />
                             </td>
                         </tr>
 
                         <tr>
                             <th>기간검색</th>
                             <td className="user-table-td">
-                                <select name="categoryId" id="productSearch">
-                                    <option value="1" key="1">최근접속</option>
-                                    <option value="2" key="2">가입날짜</option>
+                                <select name="dateSearchType" id="dateSearchType" onChange={selectChange}>
+                                    <option value="createdAt" key="1">가입날짜</option>
+                                    <option value="updatedAt" key="2">수정날짜</option>
                                 </select>
 
 
-                                <input type="date" name="startDate"
+                                <input type="date" name="startDate" onChange={selectChange}
                                 />
                                 ~
-                                <input type="date" name="endDate"
+                                <input type="date" name="endDate" onChange={selectChange}
                                 />
                                 <input type="button" value="전체"
                                 />
@@ -111,8 +119,18 @@ const UserManagement = () => {
                         <tr>
                             <th>레벨</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="categoryId" value="0" /> 유저</label>
-                                <label><input type="radio" name="categoryId" value="1" /> 관리자</label>
+                                <label><input type="radio" name="isAdmin" value="0" onChange={selectChange} /> 유저</label>
+                                <label><input type="radio" name="isAdmin" value="1" onChange={selectChange} /> 관리자</label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>보기</th>
+                            <td className="radio-group">
+                                <label><input type="radio" name="size" value="5" onChange={selectChange} /> 5개</label>
+                                <label><input type="radio" name="size" value="10" onChange={selectChange} /> 10개</label>
+                                <label><input type="radio" name="size" value="15" onChange={selectChange} /> 15개</label>
+                                <label><input type="radio" name="size" value="20" onChange={selectChange} /> 20개</label>
                             </td>
                         </tr>
 
@@ -145,8 +163,8 @@ const UserManagement = () => {
                     <tbody className="user-resultArea2">
                         {list.map(users => (
                             <tr key={users.userSequence}>
-                               <td>{users.userSequence}</td>
-                               <td> <a href="/" className="users-movimodal">{users.name}</a></td> 
+                                <td>{users.userSequence}</td>
+                                <td> <a href="/" className="users-movimodal">{users.name}</a></td>
                                 <td>{users.userId}</td>
                                 <td>{users.isAdmin}</td>
                                 <td>{users.phoneNumber}</td>

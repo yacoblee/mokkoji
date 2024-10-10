@@ -26,6 +26,7 @@ import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductImageService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
@@ -49,7 +50,10 @@ public class AdminProductsController {
 	private final CartService cartService;
 	private final CodeService codeService;
 	private final ProductoptionsService optionService;
+	
 	private final ProductImageService imageService;
+	private final UsersDSLRepository userDSLRepository;
+	
 	
 	@GetMapping("/administrator/products")
 	public ResponseEntity<?> indexPage(PageRequestDTO requestDTO) {
@@ -76,7 +80,12 @@ public class AdminProductsController {
 	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO){
 		System.out.println("들어왔니?");
 		log.info("********" + requestDTO);
-		List<Users> user = userService.findUserinfoToSearch(requestDTO.getKeyword(),requestDTO.getSearchType());
+		List<Users> user = userDSLRepository.findUserinfoToSearch(requestDTO);
+		if(user == null) {
+			log.info("[suchDB] user is null");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
+		}
+		
 		int count = userService.countBy();
 		log.info("$$ 서치 결과"+user);
 	    Map<String, Object> response = new HashMap<>();
