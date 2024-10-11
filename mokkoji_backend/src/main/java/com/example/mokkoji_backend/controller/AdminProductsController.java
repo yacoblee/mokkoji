@@ -21,6 +21,7 @@ import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
+import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
@@ -157,4 +158,52 @@ public class AdminProductsController {
 	    }
 
 	}
+	
+    @PostMapping("/administrator/saveallproduct")
+    public ResponseEntity<?> saveProduct(
+            @RequestPart("productData") ProductSaveDTO productSaveDTO,  // 상품 데이터와 옵션 데이터를 포함한 DTO
+            @RequestPart(value = "mainImages", required = false) MultipartFile[] mainImages,  // 메인 이미지 파일
+            @RequestPart(value = "slideImages", required = false) MultipartFile[] slideImages,
+            @RequestPart(value = "uploadfilef", required = false) MultipartFile uploadfilef// 슬라이드 이미지 파일
+    ) throws IOException {
+
+        // DTO에서 상품 데이터 접근
+        Products product = productSaveDTO.getProduct();
+        List<ProductOptions> options = productSaveDTO.getOptions();
+        //List<ProductImages> images = productSaveDTO.getImages();
+
+        // 상품 정보 처리
+        if(product !=null) {
+        	log.info(product);
+        }
+
+        // 옵션 처리
+        for (ProductOptions option : options) {
+        	log.info(option);
+        }
+
+        // 메인 이미지 처리
+        if (mainImages != null) {
+            for (MultipartFile mainImage : mainImages) {
+                System.out.println("Main Image: " + mainImage.getOriginalFilename());
+                // 파일 저장 로직 추가
+            }
+        }
+
+        // 슬라이드 이미지 처리
+        if (slideImages != null) {
+            for (MultipartFile slideImage : slideImages) {
+                System.out.println("Slide Image: " + slideImage.getOriginalFilename());
+                // 파일 저장 로직 추가
+            }
+        }
+        if(uploadfilef !=null) {
+        	System.out.println("uploadfilef 존재");
+        }
+
+   
+        // 실제 데이터베이스 저장 로직 추가
+
+        return ResponseEntity.ok("Product saved successfully!");
+    }
 }

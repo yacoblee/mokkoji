@@ -29,6 +29,7 @@ import ResetPassword from './components/login/ResetPassword';
 import ProductImageSave from './components/administrator/ProductImageSave';
 import MultipleBuy from './components/mypage/MultipleBuy';
 
+import ProductRelatedStorage from './components/administrator/ProductRelatedStorage';
 
 const App = () => {
 
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/insert" element={<ProductInserts />} />
+          <Route path='products/allinsert' element={<ProductRelatedStorage />} />
           <Route path="products/image" element={<ProductImageSave />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="reserve" element={<RegistManagement />} />

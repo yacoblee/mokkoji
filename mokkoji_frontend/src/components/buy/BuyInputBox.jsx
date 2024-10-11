@@ -25,7 +25,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             const { userinfomation, addressList } = response.data;
             console.log(addressList)
             setAddressing(addressList);
-            setUser(userinfomation);ㄴㄴㄴㄴ
+            setUser(userinfomation);
             setOriginalAddressing(addressList);
         } catch (error) {
             console.log(`buy input error =>${error.message}`)
