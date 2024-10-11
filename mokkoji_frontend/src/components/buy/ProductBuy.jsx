@@ -30,7 +30,7 @@ const ProductBuy = () => {
     //Link 로 받아온 값을 넣어줌 ->구매 수량 상태 관리 -> 선택 옵션 갯수에 대한 관리
     //9.11코드변경
     const [amount, setAmount] = useState(productBuy ? +productBuy.productCnt : 1);
-    //==================================================================금액 관련 state 
+    //==================================================================금액 관련 state
     //최종 금액을 바꿀 state (배송비 제외)
     const [filterPrice, setFilterPrice] = useState(productBuy ? +productBuy.productTotalPrice : 0);
     //배송비 추가금을 포함한 최종금액 표현.
@@ -64,7 +64,7 @@ const ProductBuy = () => {
         //2. selectProduct 가 체크 됬을때는 totalPrice를 더하겠다.
         const combinedPrice = (buyCheckBox ? filterPrice : 0) + cartTotalPrice;
 
-        // 만약 계산된 총 금액이 30000원보다 작으면, 
+        // 만약 계산된 총 금액이 30000원보다 작으면,
         //배송비 3000원을 추가한 값을 lastPrice로 설정
         //계산된 총합이 0원이면 -> 아무것도 선택되지 않았다면 0원.
         if (combinedPrice === 0) {

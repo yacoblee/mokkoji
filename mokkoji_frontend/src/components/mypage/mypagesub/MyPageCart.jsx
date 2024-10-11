@@ -75,6 +75,16 @@ function MyPageCart({ userMain, userCart, cartKeyList, myPageCart, cartUpdate, c
 
 
 
+    const takeListToBuy = () => {
+        navigate(`/buym`, {
+            state: {
+                cartKeyList: cartKeyList
+            }
+        })
+    }
+
+
+
     return (
 
         <div className='MyCartList' >
@@ -172,7 +182,10 @@ function MyPageCart({ userMain, userCart, cartKeyList, myPageCart, cartUpdate, c
                     <button className='SelectDeleteButton' onClick={() => { cartCheckDelete("/mypage/cart") }} >선택 삭제</button>
                 </div>
                 <div>
-                    <button className='SelectBuyButton' >선택 구매</button>
+                    <button
+                        className='SelectBuyButton'
+                        onClick={() => takeListToBuy()}
+                    >선택 구매</button>
                 </div>
 
             </div>

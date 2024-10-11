@@ -27,6 +27,7 @@ import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
 import ResetPassword from './components/login/ResetPassword';
 import ProductImageSave from './components/administrator/ProductImageSave';
+import MultipleBuy from './components/mypage/MultipleBuy';
 
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
         <Route path='/login/findPw/verifyCode' element={<VerifyCode />} />
         <Route path='/login/findPw/verifyCode/resetPassword' element={<ResetPassword />} />
         <Route path="/mypage/*" element={<MyPageMain />} />
+        <Route path='/buym' element={<MultipleBuy />} />
         <Route path="/introduction" element={<Introduction />} />
         <Route path="/buy" element={<Buy />} />
         {/* <div id="map" className="map"/> */}
