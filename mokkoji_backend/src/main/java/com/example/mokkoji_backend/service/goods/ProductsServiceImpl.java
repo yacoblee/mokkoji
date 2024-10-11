@@ -359,22 +359,7 @@ public class ProductsServiceImpl implements ProductsService {
 	        
 	        if(product.getUploadfilef()!=null&&!product.getUploadfilef().isEmpty()) {
 				MultipartFile newuploadFile = product.getUploadfilef();
-				 LocalDateTime now = LocalDateTime.now();
-				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss_");
-				 String formattedDate = now.format(formatter);
-				//물리적 저장위치 확인
-				String realPath = request.getServletContext().getRealPath("/");
-				realPath +="resources\\productImages\\";
-				System.out.println(realPath);
-				log.info("파일이 전달됨: - 이미지 수정이 있어야함 getOriginalFilename() : " + newuploadFile.getOriginalFilename());
-//				File oldfile = new File(realPath+entity.getMainImageName());
-//				if(oldfile.isFile()) {
-//					oldfile.delete();
-//				}
-				String newFileName = formattedDate + newuploadFile.getOriginalFilename();
-//				realPath += uploadfilef.getOriginalFilename();
-				realPath += newFileName;
-				newuploadFile.transferTo(new File(realPath));//throws IOException 추가해야 함
+				String newFileName = imservice.uploadFile(newuploadFile, request);
 				product.setMainImageName(newFileName);
 			
 			}else {
@@ -422,5 +407,7 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 		deleteById(id);
 	}
+	
+	
 	
 }

@@ -34,6 +34,26 @@ const ProductImageSave = () => {
         let otherImages = imageType === 'mainImage' ? [...slideImage] : [...mainImage];
 
         if (name === 'type') {
+            // if((imageType =='mainImage'&& slideImage.length>4 || mainImage.length<=3)||
+            // (imageType =='slideImage'&& (mainImage.length<3 || mainImage.length>=4))){
+            //     alert('이미지 갯수 초과'); return;
+            // }
+
+            if (imageType == 'mainImage') {
+                if (slideImage.length > 4) {
+                    alert('슬라이드 이미지 갯수 초과'); return;
+                }
+                if (mainImage.length <= 3) {
+                    alert('내용 이미지 갯수 미만'); return;
+                }
+            } else {
+                if (mainImage.length < 3) {
+                    alert('내용 이미지 갯수 미만'); return;
+                }
+                if (mainImage.length >= 4) {
+                    alert('내용 이미지 갯수 초과'); return;
+                }
+            }
             // 타입 변경이 감지되었을 때 배열 이동 처리
             const movedImage = currentImages.splice(index, 1)[0]; // 현재 배열에서 이미지 제거
             //movedImage.type = value=='mainImage'? 'slideImage' : 'mainImage' ; // 타입 업데이트
@@ -63,7 +83,23 @@ const ProductImageSave = () => {
             }
         } else {
             if (type === 'file') {
-                currentImages[index][name] = files[0];
+                // const reader = new FileReader();
+                // currentImages[index][name] = files[0];
+                // reader.onloadend = () => {
+                //     currentImages[index][preview] =reader.result;
+                // }
+                const reader = new FileReader();
+                currentImages[index][name] = files[0];  // 파일 저장
+                reader.onloadend = () => {
+                    currentImages[index].preview = reader.result;  // 미리보기 URL을 preview에 저장
+                    // 상태 업데이트
+                    if (imageType === 'mainImage') {
+                        setMainImage([...currentImages]);
+                    } else {
+                        setSlideImage([...currentImages]);
+                    }
+                };
+                reader.readAsDataURL(files[0]);  // 파일을 base64 URL로 변환
             } else {
                 currentImages[index][name] = value;
             }
@@ -122,6 +158,18 @@ const ProductImageSave = () => {
             }
         }
     };
+    const navigate = useNavigate();
+
+    const handleDeleteImage = (index, imageType) => {
+        if (imageType === 'mainImage') {
+            // 삭제된 요소를 제외한 새로운 배열을 반환
+            const updatedMainImage = mainImage.filter((_, imgIndex) => imgIndex !== index);
+            setMainImage(updatedMainImage);
+        } else {
+            const updatedSlideImage = slideImage.filter((_, imgIndex) => imgIndex !== index);
+            setSlideImage(updatedSlideImage);
+        }
+    };
     const handleSubmit = async () => {
         // FormData 생성
         const formData = new FormData();
@@ -129,17 +177,15 @@ const ProductImageSave = () => {
         const combinedImages = [...mainImage, ...slideImage];
 
         // 파일과 JSON 데이터 처리
-        const imagesData = combinedImages.map((image, index) => {
+        // 서버로 전송할 데이터에서 preview 속성을 제외
+        const imagesData = combinedImages.map((image) => {
+            const { preview, ...rest } = image; // 구조분해 할당을 이용하여 preview 제거
             if (image.name instanceof File) {
-                console.log(`files [${index}] added:`, image.name);
-                formData.append(`files`, image.name);  // 파일을 FormData로 전송
-                return { ...image, name: image.name.name };  // 파일 이름만 JSON에 추가
-            } else {
-                //formData.append(`files[${index}]`, null);  
-                return image;  // 파일이 아닌 경우 그대로 처리
+                formData.append('files', image.name);  // 파일을 FormData로 전송
+                return { ...rest, name: image.name.name };  // 파일 이름만 JSON에 추가
             }
+            return rest;  // 파일이 아닌 경우 그대로 처리
         });
-
         // JSON 데이터를 문자열로 변환하여 추가
         formData.append('images', JSON.stringify(imagesData));  // JSON으로 전송
 
@@ -147,59 +193,19 @@ const ProductImageSave = () => {
         formData.forEach((value, key) => {
             console.log(`Key: ${key}, Value: ${value}`);
         });
-        // // 파일 데이터 추가
-        // combinedImages.forEach((image, index) => {
-        //     if (image.name instanceof File) {
-        //         formData.append(`files`, image.name);  // 파일이 있으면 파일을 추가
-        //     }
-        // });
 
-        // combinedImages.forEach((image, index) => {
-        //     // formData.append(`images[${index}][productId]`, product.id);
-        //     // formData.append(`images[${index}][order]`, image.order);
-        //     // formData.append(`images[${index}][type]`, image.type);
-        //     if (image.name instanceof File) {
-        //         formData.append(`files[${index}]`, image.name);
-        //     }
-        //     // else{
-        //     //     formData.append(`images[${index}][name]`, image.name);
-        //     // }
-        // });
-        // formData.append('images', JSON.stringify(combinedImages));
-        // 메인 이미지 배열 처리
-        // mainImage.forEach((image, index) => {
-        //     formData.append(`mainImage[${index}][productId]`, product.id);
-        //     formData.append(`mainImage[${index}][order]`, image.order);
-        //     formData.append(`mainImage[${index}][type]`, image.type);
-        //     formData.append(`mainImage[${index}][name]`, image.name);
-        //     if (image.name instanceof File) {
-        //         formData.append(`mainImage[${index}][uploadfilef]`, image.name);
-        //     }
-        // });
-
-        // // 슬라이드 이미지 배열 처리
-        // slideImage.forEach((image, index) => {
-        //     formData.append(`slideImage[${index}][productId]`, product.id);
-        //     formData.append(`slideImage[${index}][order]`, image.order);
-        //     formData.append(`slideImage[${index}][type]`, image.type);
-        //     formData.append(`slideImage[${index}][name]`, image.name);
-        //     if (image.name instanceof File) { // 파일인 경우만 append
-        //         formData.append(`slideImage[${index}][uploadfilef]`, image.name);
-        //     }
-        // });
 
         // axios 요청으로 서버에 전송
         try {
-            const response = await axios.post(`${API_BASE_URL}/administrator/imagesave`, formData, {
-                headers: {
-                    //'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log(response.data);
+            const response = await axios.post(`${API_BASE_URL}/administrator/imagesave`, formData);
+            const { selectProduct } = response.data;
+            alert(`${selectProduct.name}의 수정이 완료되었습니다.`);
+            navigate('/administrator/products');
         } catch (error) {
             console.error("Error uploading images:", error);
         }
     };
+
 
     return (<>
         <h1 className="productMainTitle">이미지 수정</h1>
@@ -210,48 +216,8 @@ const ProductImageSave = () => {
             <li>상품 가격 </li>
             <li>{product.price}</li>
         </ul>
-
         <h3 className="productTitle">슬라이드 이미지</h3>
-        <div className="inserProductsForm3">
-
-            {mainImage && mainImage.map((image, index) => (
-                <>
-                    <label>이미지 순서:</label>
-                    <input
-
-                        name="order"
-                        value={image.order}
-                        onChange={(e) => handleImageChange(index, e, 'mainImage')}
-                    />
-
-                    <label>이미지 타입:</label>
-                    <select name="type"
-                        value={image.type}
-                        onChange={(e) => handleImageChange(index, e, 'mainImage')} >
-                        {code && code.length > 0 && code.map((item, codeIndex) => (
-                            <option key={codeIndex} value={item.sub_type}>
-                                {item.sub_type_name}
-                            </option>
-                        ))}
-                    </select>
-                    <label>이미지 파일</label>
-                    <img src={`${API_BASE_URL}/resources/productImages/${image.name}`} alt={image.name} />
-                    <input
-                        name="name"
-                        type="file"
-                        onChange={(e) => handleImageChange(index, e, 'mainImage')}
-                    />
-                    <div>
-                        <button onClick={() => moveImageUp(index, 'mainImage')}>위로 이동</button>
-                        <button onClick={() => moveImageDown(index, 'mainImage')}>아래로 이동</button>
-                    </div>
-                    <button type="button"> DELETE</button>
-                </>
-            ))}
-            <button type="button" onClick={() => addImage('mainImage')}>이미지 추가</button>
-        </div>
-
-        <h3 className="productTitle">내용 이미지</h3>
+        <p>슬라이드이미지는 5개까지 가능합니다.</p>
         <div className="inserProductsForm3">
 
             {slideImage && slideImage.map((image, index) => (
@@ -275,7 +241,7 @@ const ProductImageSave = () => {
                         ))}
                     </select>
                     <label>이미지 파일</label>
-                    <img src={`${API_BASE_URL}/resources/productImages/${image.name}`} alt={image.name} />
+                    <img src={image.preview ? image.preview : `${API_BASE_URL}/resources/productImages/${image.name}`} alt={image.name} />
                     <input
                         name="name"
                         type="file"
@@ -285,11 +251,53 @@ const ProductImageSave = () => {
                         <button onClick={() => moveImageUp(index, 'slideImage')}>위로 이동</button>
                         <button onClick={() => moveImageDown(index, 'slideImage')}>아래로 이동</button>
                     </div>
-                    <button type="button"> DELETE</button>
+                    <button type="button" onClick={() => handleDeleteImage(index, 'slideImage')}> DELETE</button>
                 </>
             ))}
             <button type="button" onClick={() => addImage('slideImage')}>이미지 추가</button>
         </div>
+
+        <h3 className="productTitle">내용 이미지</h3>
+        <p>본문 이미지는 3개 이상 4이하까지 가능합니다.</p>
+        <div className="inserProductsForm3">
+
+            {mainImage && mainImage.map((image, index) => (
+                <>
+                    <label>이미지 순서:</label>
+                    <input
+
+                        name="order"
+                        value={image.order}
+                        onChange={(e) => handleImageChange(index, e, 'mainImage')}
+                    />
+
+                    <label>이미지 타입:</label>
+                    <select name="type"
+                        value={image.type}
+                        onChange={(e) => handleImageChange(index, e, 'mainImage')} >
+                        {code && code.length > 0 && code.map((item, codeIndex) => (
+                            <option key={codeIndex} value={item.sub_type}>
+                                {item.sub_type_name}
+                            </option>
+                        ))}
+                    </select>
+                    <label>이미지 파일</label>
+                    <img src={image.preview ? image.preview : `${API_BASE_URL}/resources/productImages/${image.name}`} alt={image.name} />
+                    <input
+                        name="name"
+                        type="file"
+                        onChange={(e) => handleImageChange(index, e, 'mainImage')}
+                    />
+                    <div>
+                        <button onClick={() => moveImageUp(index, 'mainImage')}>위로 이동</button>
+                        <button onClick={() => moveImageDown(index, 'mainImage')}>아래로 이동</button>
+                    </div>
+                    <button type="button" onClick={() => handleDeleteImage(index, 'mainImage')}> DELETE</button>
+                </>
+            ))}
+            <button type="button" onClick={() => addImage('mainImage')}>이미지 추가</button>
+        </div>
+
         <div>
             <button onClick={handleSubmit}>SAVE</button>
         </div>

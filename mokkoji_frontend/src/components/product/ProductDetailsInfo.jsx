@@ -173,7 +173,7 @@ const ProductDetailsInfo = ({ product }) => {
 
                             <div className="reviewImgBox">
                                 {it.reviewPhoto ?
-                                    <img src={`${API_BASE_URL}/resources/productImages/${it.reviewPhoto}`} alt="" />
+                                    <img src={`${API_BASE_URL}/resources/reviewImages/${it.reviewPhoto}`} alt="" />
                                     : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt="" />}
                             </div>
                             <div className="reviewContent">
