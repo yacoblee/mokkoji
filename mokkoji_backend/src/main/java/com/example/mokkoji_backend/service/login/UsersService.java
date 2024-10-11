@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 
@@ -44,4 +46,6 @@ public interface UsersService {
 	int countBy();
 	
 	void updateLoginCount(Users entity);
+	
+	 PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO);
 }

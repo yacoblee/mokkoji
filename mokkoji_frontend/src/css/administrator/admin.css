@@ -70,13 +70,13 @@
 .admin-layout {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   position: relative;
   z-index: 1;
   background-color: white;
   width: 100vw;
   min-height: 1000px;
-  height: 100vh;
+  height: 170vh;
 }
 
 aside,
@@ -91,7 +91,7 @@ aside,
   width: 20vw;
   height: 500px;
   max-width: 200px;
-  margin: 100px auto;
+  margin: 100px 50px;
   padding: 20px;
 }
 
@@ -121,7 +121,7 @@ aside,
     width: 80vw;
     max-width:1400px;
     min-width: 600px;
-
+background-color: rgb(185, 153, 218);
   } */
 
 .admin-content {

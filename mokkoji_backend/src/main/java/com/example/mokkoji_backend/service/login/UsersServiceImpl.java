@@ -3,18 +3,21 @@ package com.example.mokkoji_backend.service.login;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
+import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
 import com.example.mokkoji_backend.repository.login.UsersRepository;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
@@ -37,6 +40,7 @@ public class UsersServiceImpl implements UsersService {
 	private final FavoritesService favoritesService;
 	private final CartService cartService;
 	private final AddressService addressService;
+	private final UsersDSLRepository usersDSLRepository;
 
 	@Override
 	public Users selectOne(String id) {
@@ -167,4 +171,34 @@ public class UsersServiceImpl implements UsersService {
 	public void updateLoginCount(Users entity) {
 		 userRepository.save(entity);		
 	}
+
+public UsersDTO entityToDto(Users user) {
+	return UsersDTO.builder()
+			.userId(user.getUserId())
+			.password(user.getPassword())
+			.name(user.getName())
+			.birthDate(user.getBirthDate())
+			.gender(user.getGender())
+			.phoneNumber(user.getPhoneNumber())
+			.email(user.getEmail())
+			.userSequence(user.getUserSequence())
+			.isWithdrawn(user.getIsWithdrawn())
+			.withdrawalDate(user.getWithdrawalDate())
+			.updatedAt(user.getUpdatedAt())
+			.createdAt(user.getCreatedAt())
+			.blockStatus(user.getBlockStatus())
+			.isAdmin(user.getIsAdmin())
+			.loginCount(user.getLoginCount())
+			.build();
+}
+    @Override
+	public PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO) {
+		Page<Users> result = usersDSLRepository.findUserinfoToSearch(requestDTO);
+		return new PageResultDTO<> (result, e -> entityToDto(e));
+	}
+
+
+
+
+
 }

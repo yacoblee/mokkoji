@@ -21,6 +21,7 @@ import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
@@ -76,24 +77,30 @@ public class AdminProductsController {
 	}
 
 	
+	
+	
+	
+	
 	@PostMapping("/administrator/users")
 	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO){
 		System.out.println("들어왔니?");
 		log.info("********" + requestDTO);
-		List<Users> user = userDSLRepository.findUserinfoToSearch(requestDTO);
-		if(user == null) {
-			log.info("[suchDB] user is null");
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
-		}
-		
+		PageResultDTO<UsersDTO, Users> result = userService.findUserinfoToSearch(requestDTO);
+		List<UsersDTO> dto = result.getDtoList();
+//		if(result == null) {
+//			log.info("[suchDB] user is null");
+//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
+//		}
 		int count = userService.countBy();
-		log.info("$$ 서치 결과"+user);
+		log.info("$$ 서치 결과"+result);
 	    Map<String, Object> response = new HashMap<>();
-	    response.put("users", user);
+	    response.put("users", dto );
+	    response.put("pageMaker", result);
 	    response.put("count", count);
-		
 		return ResponseEntity.ok(response);
 	}
+	
+	
 
 	@GetMapping("/administrator/psave")
 	public ResponseEntity<?> savePage( Long id) {

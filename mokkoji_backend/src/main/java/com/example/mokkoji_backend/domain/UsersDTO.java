@@ -24,7 +24,7 @@ public class UsersDTO {
 	private int userSequence;
 	private int isWithdrawn;
 	private LocalDateTime withdrawalDate;
-	private LocalDateTime updatedAt;
+	private LocalDate updatedAt;
 	private LocalDate createdAt;
 	private int blockStatus;
 	private String isAdmin;

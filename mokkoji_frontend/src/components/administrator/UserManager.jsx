@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../../css/administrator/adminUsers.css';
 import { apiCall } from '../../service/apiService';
 import moment from 'moment';
-import { Modal } from 'react-modal';
-import { Link } from 'react-router-dom';
-import Membership from './../login/Membership';
+import RenderPagination from "../product/RenderPagination";
+
 
 
 const UserManagement = () => {
@@ -13,6 +12,8 @@ const UserManagement = () => {
     const stday = useRef(null);
     const edday = useRef(null);
     const [responsLength, setResponseLength] = useState('');
+    const [pageMaker, setPageMaker] = useState({});
+    const [page, setPage] = useState(1);
 
     console.log(responsLength);
     const inputData = {
@@ -21,12 +22,12 @@ const UserManagement = () => {
         dateSearchType: 'createdAt',
         startDate: '',
         endDate: '',
-        isAdmin: 0,
-        size: 5
-
+        isAdmin: "0",
+        size: "5",
+        page: 1,
     };
     const [input, setInput] = useState(inputData);  // 입력 상태 초기화
-
+    const [pageRequest, setPageRequest] = useState(inputData);
     // 입력 값 변경 핸들러
     const onChangeValue = (e) => {
         const { name, value } = e.target;
@@ -85,13 +86,13 @@ const UserManagement = () => {
         }));
         stday.current.value = start;
         edday.current.value = end;
-
     }
 
 
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
+        setPage(1);
         serchDB();  // 검색 함수 호출
     };
 
@@ -100,10 +101,13 @@ const UserManagement = () => {
         let url = "/administrator/users";
         apiCall(url, 'POST', input, null)
             .then((response) => {
+                const { users, count, pageMaker } = response.data;
+                console.log(response);
 
-                console.log("Response data:", response);  // 응답의 data 확인
-                setList(response.data.users);  // 리스트 상태 업데이트
-                setCount(response.data.count);// 카운트 상태 업데이트
+                setList(users);  // 리스트 상태 업데이트
+                setCount(count);// 카운트 상태 업데이트
+                setPageMaker(pageMaker);
+                setResponseLength(pageMaker.totalElements);
             })
             .catch((err) => {
                 console.error("Error during API call:", err);  // 에러 로그 출력
@@ -114,10 +118,20 @@ const UserManagement = () => {
     // list가 변경된 후 실행되는 useEffect
     useEffect(() => {
         console.log("Updated list:", list);  // list 상태가 변경된 후 출력
-        setResponseLength(list.length);
     }, [list]);  // list가 변경될 때마다 실행
 
+    useEffect(() => {
+        // 페이지 변경 시 pageRequest를 업데이트하고 searchData 호출
+        setInput(prev => ({ ...prev, page: page }));
+    }, [page]);
+
+    useEffect(() => {
+        serchDB();
+    }, [input.page]);
+
+
     const reset = () => {
+        setPage(1);
         setInput(inputData);
         console.log("초기화 버튼 클릭됨");
     }
@@ -185,18 +199,19 @@ const UserManagement = () => {
                         <tr>
                             <th>레벨</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="isAdmin" value="0" onChange={selectChange} checked={input.isAdmin === '0'} /> 유저</label>
-                                <label><input type="radio" name="isAdmin" value="1" onChange={selectChange} checked={input.isAdmin === '1'} /> 관리자</label>
+                                <label><input type="radio" name="isAdmin" value="2" onChange={selectChange} checked={input.isAdmin === "2"} /> 전체</label>
+                                <label><input type="radio" name="isAdmin" value="0" onChange={selectChange} checked={input.isAdmin === "0"} /> 유저</label>
+                                <label><input type="radio" name="isAdmin" value="1" onChange={selectChange} checked={input.isAdmin === "1"} /> 관리자</label>
                             </td>
                         </tr>
 
                         <tr>
                             <th>보기</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="size" value="5" onChange={selectChange} /> 5개</label>
-                                <label><input type="radio" name="size" value="10" onChange={selectChange} /> 10개</label>
-                                <label><input type="radio" name="size" value="15" onChange={selectChange} /> 15개</label>
-                                <label><input type="radio" name="size" value="20" onChange={selectChange} /> 20개</label>
+                                <label><input type="radio" name="size" value="5" onChange={selectChange} checked={input.size === "5"} /> 5개</label>
+                                <label><input type="radio" name="size" value="10" onChange={selectChange} checked={input.size === "10"} /> 10개</label>
+                                <label><input type="radio" name="size" value="15" onChange={selectChange} checked={input.size === "15"} /> 15개</label>
+                                <label><input type="radio" name="size" value="20" onChange={selectChange} checked={input.size === "20"} /> 20개</label>
                             </td>
                         </tr>
 
@@ -210,7 +225,7 @@ const UserManagement = () => {
 
                 <h3 className="user-subTitle">검색 결과</h3>
                 <div className="user-button2">
-                    <button type="button">전체메일 발송</button>
+                    <button type="button">메일발송</button>
                     <button type="button" onClick={openNewWindow} >+ 회원추가</button>
                 </div>
                 <table className="user-resultArea">
@@ -244,6 +259,7 @@ const UserManagement = () => {
                     </tbody>
                 </table>
             </div>
+            <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
         </div>
 
 
