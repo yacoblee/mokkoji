@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useRecoilState } from 'react';
 import '../../css/administrator/adminUsers.css';
 import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
+import UserInfoWindow from '../login/UserInfoWindow';
 
-
-
-const UserManagement = () => {
+const UserManagement = ({ users }) => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
     const [count, setCount] = useState(0);
     const stday = useRef(null);
@@ -14,6 +13,22 @@ const UserManagement = () => {
     const [responsLength, setResponseLength] = useState('');
     const [pageMaker, setPageMaker] = useState({});
     const [page, setPage] = useState(1);
+    const [isWindowOpen, setIsWindowOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const [userinfo, setUserinfo] = useState(list);
+    // 윈도우 창 열기 함수
+    const openWindow = (users) => {
+        console.log("User Info:", users);
+        setSelectedUser(users);
+        setIsWindowOpen(true);
+    };
+
+    // 윈도우 창 닫기 함수
+    const closeWindow = () => {
+        setIsWindowOpen(false);
+        setSelectedUser(null);
+    };
 
     console.log(responsLength);
     const inputData = {
@@ -92,7 +107,6 @@ const UserManagement = () => {
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        setPage(1);
         serchDB();  // 검색 함수 호출
     };
 
@@ -118,6 +132,7 @@ const UserManagement = () => {
     // list가 변경된 후 실행되는 useEffect
     useEffect(() => {
         console.log("Updated list:", list);  // list 상태가 변경된 후 출력
+        setUserinfo(list);
     }, [list]);  // list가 변경될 때마다 실행
 
     useEffect(() => {
@@ -144,6 +159,7 @@ const UserManagement = () => {
         )
 
     }
+
 
     return (
         <div className="user-container">
@@ -246,7 +262,7 @@ const UserManagement = () => {
                         {list.map(users => (
                             <tr key={users.userSequence}>
                                 <td>{users.userSequence}</td>
-                                <td> <a href="/" className="users-movimodal">{users.name}</a></td>
+                                <td><a onClick={() => openWindow(users)}> {users.name} </a></td>
                                 <td>{users.userId}</td>
                                 <td>{users.isAdmin}</td>
                                 <td>{users.phoneNumber}</td>
@@ -260,6 +276,12 @@ const UserManagement = () => {
                 </table>
             </div>
             <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
+
+       
+      {/* UserInfoWindow 컴포넌트 사용 */}
+      {isWindowOpen && selectedUser && (
+        <UserInfoWindow users={selectedUser} onClose={closeWindow} />
+      )}
         </div>
 
 

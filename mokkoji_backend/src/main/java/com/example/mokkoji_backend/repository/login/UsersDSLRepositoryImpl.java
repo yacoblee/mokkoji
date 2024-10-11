@@ -52,7 +52,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 				throw new IllegalArgumentException("Invalid searchType: " + searchType);
 			}
 		}
-		if(dateSearchType.isEmpty()) {
+		if(startDate != null && endDate != null) {
 			switch (dateSearchType) {
 			case "createdAt":
 				builder.and(users.createdAt.between(startDate, endDate));
@@ -70,7 +70,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 		}else if( isAdmin==1) {
 			builder.and(users.isAdmin.eq("1"));
 		}else if(isAdmin==2) {
-		   builder.and(users.isAdmin.between("0", "1"));
+		   
 		}
 		else {
 			throw new IllegalArgumentException("isAdmin value: " + isAdmin);

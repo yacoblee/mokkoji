@@ -460,3 +460,11 @@ input::placeholder {
   border-color: #ccc;
   /* hover 시 테두리 색 */
 }
+
+.user-resultArea2 a{
+  pointer-events: auto; /* 클릭 가능 */
+  cursor: pointer;
+  vertical-align: middle;
+  color:rgba(0, 0, 255, 0.725);
+  text-decoration: underline solid 1px;
+}
