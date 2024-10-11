@@ -201,18 +201,6 @@ const RegistManagement = () => {
     });
 
       
-      // formData.append('reserveData.adultPrice', adultPrice);
-      // formData.append('reserveData.teenagerPrice', teenagerPrice);
-      // // 상세 정보 수정 추가
-      // formData.append('reserveData.packageDetail', packageDetail);
-      // formData.append('reserveData.restrictDetail', restrictDetail);
-      // formData.append('reserveData.reserveRestrict', reserveRestrict);
-      // formData.append('reserveData.etcDetail', etcDetail);
-
-      // // 하이라이트 정보 추가
-      // Object.keys(highlights).forEach((key) => {
-      //   formData.append(`reserveData.highlights${key}`, highlights[key]);
-      // });
       const reserveData = {
         registName,
         adultPrice,
