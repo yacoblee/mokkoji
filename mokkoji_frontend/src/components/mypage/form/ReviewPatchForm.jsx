@@ -9,10 +9,20 @@ function ReviewPatchForm({ userReviewDetail }) {
     const [reviewInfo, setReviewInfo] = useState(userReviewDetail);
 
     const [reviewPhoto, setReviewPhoto] = useState();
+    const [likeDislike, setLikeDislike] = useState(reviewInfo.likeDislike);
+    const [reviewContent, setReviewContent] = useState(reviewInfo.reviewContent);
 
     const handleFileChange = (e) => {
         setReviewPhoto(e.target.files[0]);
     }
+
+    const handleCheckChange = (e) => {
+        setLikeDislike(e.target.value === 'true');
+    };
+
+    const handleContentChange = (e) => {
+        setReviewContent(e.target.value);
+    };
 
 
 
@@ -21,14 +31,17 @@ function ReviewPatchForm({ userReviewDetail }) {
 
         // FormData 객체 생성
         const formData = new FormData(document.getElementById("detailReview"));
-        // formData.append('file', file); // 파일 추가
-        // formData.append('description', description); // 텍스트 데이터 추가
+
+        formData.append("reviewId", reviewInfo.reviewId);
+
+
+        // 사진 미추가시 리셋되는 문제 해결 필요
+        // if (!reviewPhoto) {
+        //     formData.delete("reviewPhotoF");
+        //     formData.append("reviewPhotoF", reviewInfo.reviewPhoto); // 기존 사진 정보를 유지
+        // }
 
         const token = JSON.parse(sessionStorage.getItem("userData"));
-
-        // const updateReviewInfo = {
-        //     ...reviewInfo,
-        // }
 
         try {
             // 서버에 파일 업로드 요청
@@ -50,12 +63,22 @@ function ReviewPatchForm({ userReviewDetail }) {
     return (
         <>
             <form id="detailReview" onSubmit={handleSubmit} method="PATCH">
-                <input name="reviewId" id="reviewId" value={reviewInfo.reviewId} />
-                <input name="likeDislike" id="likeDislike" value={reviewInfo.likeDislike} />
                 <div>{reviewInfo.productName}</div>
                 <div>
-                    {/* <input type="radio" /><FontAwesomeIcon icon={faThumbsUp} size="xl" />
-                    <input type="radio" /><FontAwesomeIcon icon={faThumbsDown} size="xl" /> */}
+                    <input
+                        name="likeDislike"
+                        type="radio"
+                        checked={likeDislike === true}
+                        onChange={handleCheckChange}
+                        value="true"
+                    /><FontAwesomeIcon icon={faThumbsUp} size="xl" />
+                    <input
+                        name="likeDislike"
+                        type="radio"
+                        checked={likeDislike === false}
+                        onChange={handleCheckChange}
+                        value="false"
+                    /><FontAwesomeIcon icon={faThumbsDown} size="xl" />
                 </div>
                 <div>
                     <textarea
@@ -63,7 +86,8 @@ function ReviewPatchForm({ userReviewDetail }) {
                         name="reviewContent"
                         rows="5"
                         cols="50"
-                        value={reviewInfo.reviewContent}
+                        onChange={handleContentChange}
+                        value={reviewContent}
                     />
                 </div>
                 <div>

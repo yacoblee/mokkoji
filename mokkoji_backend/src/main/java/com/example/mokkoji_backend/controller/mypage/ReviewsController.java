@@ -96,7 +96,8 @@ public class ReviewsController {
 		// => IO 발생: Checked Exception
 		file = new File(realPath+"basicImage.jpg");
 		if ( !file.exists() ) {
-			String basicImagePath = "C:\\Users\\admin\\Documents\\GitHub\\mokkoji\\mokkoji_backend\\src\\main\\webapp\\resources\\reviewImages\\basicImage.jpg";
+			String basicImagePath = realPath + "basicImage.jpg";
+
 			FileInputStream fin = new FileInputStream(new File(basicImagePath));
 			// => basicImage 를 읽어 파일입력 바이트스트림 생성
 			FileOutputStream fout = new FileOutputStream(file);
