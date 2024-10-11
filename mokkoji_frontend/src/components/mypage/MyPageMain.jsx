@@ -275,6 +275,22 @@ function MyPageMain() {
             }) //apiCall
     }; //changeDefaultAddress
 
+    // 개별 삭제
+    const addressDelete = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'DELETE', null, userToken)
+            .then((response) => {
+                alert("삭제 성공");
+                setUserAddress(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** addressDelete 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //addressDelete
+
 
 
     return (
@@ -295,6 +311,7 @@ function MyPageMain() {
                         userAddress={userAddress}
                         myPageAddress={myPageAddress}
                         changeDefaultAddress={changeDefaultAddress}
+                        addressDelete={addressDelete}
                     />}
                 />
 

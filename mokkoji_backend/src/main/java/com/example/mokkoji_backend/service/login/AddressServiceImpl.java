@@ -60,6 +60,7 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
+	@Transactional
 	public List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault) {
 		repository.updateAddressDetail(postalCode, streetAddress, detailedAddress, locationName, recipientName, recipientPhone, userId, isDefault);
 		return repository.findByUserIdOrderByIsDefault(userId);
@@ -80,6 +81,20 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public List<Address> findUserAddress(String userId) {
+		return repository.findByUserIdOrderByIsDefault(userId);
+	}
+
+	@Override
+	@Transactional
+	public List<Address> deleteAddress(String userId, int addressId) {
+		repository.deleteById(addressId);
+		return repository.findByUserIdOrderByIsDefault(userId);
+	}
+
+	@Transactional
+	@Override
+	public List<Address> createInsertAddress(String userId, String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientPhone, String recipientName){
+		repository.createAddress(userId, postalCode, streetAddress, detailedAddress, locationName, recipientPhone, recipientName);
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}
 }

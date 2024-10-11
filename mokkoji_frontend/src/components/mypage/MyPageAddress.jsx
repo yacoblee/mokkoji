@@ -8,8 +8,9 @@ import { apiCall } from '../../service/apiService';
 
 import '../../css/mypage/subpage/MyPageAddress.css';
 import MyPageAddressForm from './form/MyPageAddressForm';
+import AddressInsertForm from './form/AddressInsertForm';
 
-function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddress }) {
+function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddress, addressDelete }) {
 
     useEffect(() => {
         myPageAddress("/mypage/address")
@@ -22,10 +23,22 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
 
 
     //모달창 오픈
-    const openAddressForm = (e, isDefault) => {
+    const openAddressForm = (e, addressId) => {
         e.preventDefault();
-        setUserAddressDetail(userAddress.find((address) => isDefault === address.isDefault));
+        setUserAddressDetail(userAddress.find((address) => addressId === address.addressId));
         setIsModalOpen(true);
+    };
+
+
+
+    //모달 상태창에 대한 true , false
+    const [isModalInsertOpen, setIsModalInsertOpen] = useState(false);
+
+
+    //모달창 오픈
+    const openAddressInsertForm = (e) => {
+        e.preventDefault();
+        setIsModalInsertOpen(true);
     };
 
 
@@ -34,7 +47,7 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
         <>
             {userAddress.map((address) => {
                 return (
-                    <table className="AddressListTable" key={address.isDefault}>
+                    <table className="AddressListTable" key={address.addressId}>
                         <tr>
                             <th className="AddressNameCell" rowspan="2">
                                 <input
@@ -47,7 +60,9 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
                             </th>
                             <th>&nbsp;</th>
                             <td style={{ width: '100px' }} rowspan="4">
-                                <button onClick={(event) => openAddressForm(event, address.isDefault)} className="MyInfoSetting">주소지 수정</button>
+                                <button onClick={(event) => openAddressForm(event, address.addressId)} className="MyInfoSetting">주소지 수정</button>
+                                {address.isDefault === 0 ?
+                                    null : <button onClick={() => addressDelete(`/mypage/address/${address.addressId}`)} className="MyInfoSetting">주소지 삭제</button>}
                             </td>
                         </tr>
                         <tr>
@@ -69,10 +84,15 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
                 )
             })}
 
+
+            {
+                userAddress.length < 3 ? <button onClick={(event) => openAddressInsertForm(event)} className="MyInfoSetting">주소지 등록</button> : null
+            }
+
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
-                contentLabel="주소 검색"
+                contentLabel="주소 수정"
                 style={{
                     content: {
                         width: '1000px',
@@ -88,6 +108,25 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
                 <MyPageAddressForm
                     userAddressDetail={userAddressDetail}
                 />
+            </Modal>
+
+            <Modal
+                isOpen={isModalInsertOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 입력"
+                style={{
+                    content: {
+                        width: '1000px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <AddressInsertForm />
             </Modal>
         </>
     )

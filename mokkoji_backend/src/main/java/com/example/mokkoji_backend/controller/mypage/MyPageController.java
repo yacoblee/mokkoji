@@ -152,5 +152,32 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressDefaultUpdate");
 		}
 	}
+	
+	// 3.4. 주소지 삭제
+	@DeleteMapping("/address/{addressId}")
+	public ResponseEntity<?> addressDelete(@RequestHeader("Authorization") String header, @PathVariable int addressId) {
+		String userId = getUserIdFromHeader(header);
 
+		try {
+			List<Address> addressList = addressService.deleteAddress(userId, addressId);
+			return ResponseEntity.ok(addressList);
+
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : addressDelete");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressDelete");
+		}
+	}
+
+	// 3.5. 주소지 입력
+	@PostMapping("/address")
+	public ResponseEntity<?> addressCreate(@RequestHeader("Authorization") String header, @RequestBody Address address) {
+		String userId = getUserIdFromHeader(header);
+
+		try {
+			List<Address> addressList = addressService.createInsertAddress(userId, address.getPostalCode(), address.getStreetAddress(), address.getDetailedAddress(),address.getLocationName(),address.getRecipientPhone(),address.getRecipientName());
+			return ResponseEntity.ok(addressList);
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : addressCreate");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : addressCreate");
+		}}
 }

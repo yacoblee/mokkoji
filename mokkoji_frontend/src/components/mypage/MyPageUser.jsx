@@ -8,7 +8,7 @@ import { Route, Routes, Link } from 'react-router-dom';
 import MyPageAddress from './MyPageAddress';
 
 
-function MyPageUser({ userMain, userAddress, myPageAddress, changeDefaultAddress }) {
+function MyPageUser({ userMain, userAddress, myPageAddress, changeDefaultAddress, addressDelete }) {
     return (
         <div className='MyPageUser'>
             <Routes>
@@ -20,8 +20,10 @@ function MyPageUser({ userMain, userAddress, myPageAddress, changeDefaultAddress
                         userAddress={userAddress}
                         myPageAddress={myPageAddress}
                         changeDefaultAddress={changeDefaultAddress}
+                        addressDelete={addressDelete}
                     />}
                 />
+
             </Routes>
         </div>
     )

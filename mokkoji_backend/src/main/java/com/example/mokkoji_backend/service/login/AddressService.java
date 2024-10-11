@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.service.login;
 import java.util.List;
 
 import com.example.mokkoji_backend.entity.login.Address;
+import jakarta.transaction.Transactional;
 
 public interface AddressService {
 
@@ -32,4 +33,10 @@ public interface AddressService {
 
 	// 5. 기본 주소지 변경
 	List<Address> changeDefaultAddress(String userId, int isDefault);
+
+	// 6. 주소지 삭제
+	List<Address> deleteAddress(String userId, int addressId);
+
+	// 7. 주소지 생성 엽력
+	List<Address> createInsertAddress(String userId, String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientPhone, String recipientName);
 }

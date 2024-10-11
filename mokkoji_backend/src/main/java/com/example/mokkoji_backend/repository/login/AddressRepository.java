@@ -44,8 +44,26 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 	@Transactional
 	@Query("UPDATE Address AS a SET a.isDefault = :isDefault WHERE a.userId = :userId AND a.isDefault = 3")
 	void changeDefaultThird(@Param("userId") String userId, @Param("isDefault") int isDefault);
-	
-	
+
+	// 마이페이지 : 주소 입력
+	@Modifying
+	@Transactional
+	default void createAddress(String userId, String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientPhone, String recipientName){
+		Address address = new Address().builder()
+				.userId(userId)
+				.postalCode(postalCode)
+				.streetAddress(streetAddress)
+				.detailedAddress(detailedAddress)
+				.locationName(locationName)
+				.recipientPhone(recipientPhone)
+				.isDefault(1)
+				.recipientName(recipientName)
+				.build();
+
+		this.save(address);
+	}
+
+
 	//구매시 현재 있는 데이터에서 , id를 찾기위한 메서드 . (구매테이블에 넣어야됨)
 	Address findByUserIdAndLocationName(String userId,String locationName);
 }
