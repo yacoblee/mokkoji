@@ -30,14 +30,14 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 	// 마이페이지 : 기본주소 변경 1단계 - 기존 기본주소의 isDefault 값을 3으로 설정
 	@Modifying
 	@Transactional
-	@Query("UPDATE Address AS a SET a.isDefault = 3 WHERE a.userId = :userId AND a.isDefault = 0")
+	@Query("UPDATE Address AS a SET a.isDefault = 1 WHERE a.userId = :userId AND a.isDefault = 0")
 	void changeDefaultFirst(@Param("userId") String userId);
 
 	// 마이페이지 : 기본주소 변경 2단계 - 선택한 주소지의 isDefault를 0으로 새로 설정
 	@Modifying
 	@Transactional
-	@Query("UPDATE Address AS a SET a.isDefault = 0 WHERE a.userId = :userId AND a.isDefault = :isDefault")
-	void changeDefaultSecond(@Param("userId") String userId, @Param("isDefault") int isDefault);
+	@Query("UPDATE Address AS a SET a.isDefault = 0 WHERE a.userId = :userId AND a.addressId = :addressId")
+	void changeDefaultSecond(@Param("userId") String userId, @Param("addressId") int addressId);
 
 	// 마이페이지 : 기본주소 변경 3단계 - isDefault=3인 주소의 isDefault 값을 선택한 항목의 isDefault로 교체
 	@Modifying

@@ -139,12 +139,12 @@ public class MyPageController {
 	}
 	
 	// 3.3. 기본 주소지 변경
-	@PatchMapping("/address/{isDefault}")
-	public ResponseEntity<?> addressDefaultUpdate(@RequestHeader("Authorization") String header, @PathVariable int isDefault) {
+	@PatchMapping("/address/{addressId}")
+	public ResponseEntity<?> addressDefaultUpdate(@RequestHeader("Authorization") String header, @PathVariable int addressId) {
 		String userId = getUserIdFromHeader(header);
 
 		try {
-			List<Address> addressList = addressService.changeDefaultAddress(userId, isDefault);
+			List<Address> addressList = addressService.changeDefaultAddress(userId, addressId);
 			return ResponseEntity.ok(addressList);
 
 		} catch (Exception e) {

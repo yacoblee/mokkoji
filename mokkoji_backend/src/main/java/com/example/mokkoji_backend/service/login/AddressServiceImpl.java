@@ -68,13 +68,13 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	@Transactional
-	public List<Address> changeDefaultAddress(String userId, int isDefault) {
+	public List<Address> changeDefaultAddress(String userId, int addressId) {
 		// 1단계 - 기존 기본주소의 isDefault 값을 3으로 설정
 		repository.changeDefaultFirst(userId);
 		// 2단계 - 선택한 주소지의 isDefault를 0으로 새로 설정
-		repository.changeDefaultSecond(userId, isDefault);
+		repository.changeDefaultSecond(userId, addressId);
 		// 3단계 - isDefault=3인 주소의 isDefault 값을 선택한 항목의 isDefault로 교체
-		repository.changeDefaultThird(userId, isDefault);
+//		repository.changeDefaultThird(userId, isDefault);
 
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}

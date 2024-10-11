@@ -54,7 +54,7 @@ function MyPageAddress({ userMain, userAddress, myPageAddress, changeDefaultAddr
                                     type="radio"
                                     name="defaultAddress"
                                     checked={address.isDefault === 0}
-                                    onChange={() => changeDefaultAddress(`/mypage/address/${address.isDefault}`)}
+                                    onChange={() => changeDefaultAddress(`/mypage/address/${address.addressId}`)}
                                 />
                                 <span>&nbsp;{address.locationName}</span>
                             </th>
