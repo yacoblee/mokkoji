@@ -1,6 +1,11 @@
 package com.example.mokkoji_backend.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -61,4 +66,11 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		.allowCredentials(true)
 		.maxAge(MAX_AGE_SECS);
 	}//addCorsMappings : React project CORS 방침 설정
+	
+	
+	  @Override
+	    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+	        converters.add(new ByteArrayHttpMessageConverter());  // 파일 처리
+	        converters.add(new StringHttpMessageConverter());  // 문자열 처리
+	    }
 }

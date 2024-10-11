@@ -177,10 +177,10 @@ input::placeholder {
 .remove-image-btn:hover {
   background-color: #c0392b;  
 }
-
+/* 
 input[type="file"] {
   display: none;  
-}
+} */
 
 /* RegistManagement CSS  E */
 .user-container {

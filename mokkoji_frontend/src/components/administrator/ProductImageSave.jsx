@@ -24,8 +24,7 @@ const ProductImageSave = () => {
         setSlideImage(slideImages);
         setCode(sendcode);
     }, [])
-    console.log(mainImages);
-    console.log(slideImages);
+
     console.log(code);
 
     const handleImageChange = (index, e, imageType) => {
@@ -37,16 +36,30 @@ const ProductImageSave = () => {
         if (name === 'type') {
             // 타입 변경이 감지되었을 때 배열 이동 처리
             const movedImage = currentImages.splice(index, 1)[0]; // 현재 배열에서 이미지 제거
-            movedImage.type = value; // 타입 업데이트
+            //movedImage.type = value=='mainImage'? 'slideImage' : 'mainImage' ; // 타입 업데이트
+            movedImage.type = value;
             movedImage.order = otherImages.length + 1;
             otherImages.push(movedImage); // 다른 배열에 추가
 
+            // 현재 배열과 다른 배열을 모두 재정렬하여 order 값을 설정
+            const updatedCurrentImages = currentImages.map((img, idx) => ({
+                ...img,
+                order: idx + 1, // 인덱스에 맞춰 order 재정렬
+            }));
+
+            const updatedOtherImages = otherImages.map((img, idx) => ({
+                ...img,
+                order: idx + 1, // 인덱스에 맞춰 order 재정렬
+            }));
+
+
             if (imageType === 'mainImage') {
-                setMainImage(currentImages);
-                setSlideImage(otherImages);
+                setMainImage(updatedCurrentImages);
+                setSlideImage(updatedOtherImages);
+
             } else {
-                setMainImage(otherImages);
-                setSlideImage(currentImages);
+                setMainImage(updatedOtherImages);
+                setSlideImage(updatedCurrentImages);
             }
         } else {
             if (type === 'file') {
@@ -60,7 +73,16 @@ const ProductImageSave = () => {
                 setSlideImage(currentImages);
             }
         }
+
     };
+    useEffect(() => {
+        console.log("메인", mainImage);
+    }, [mainImage]);
+
+    useEffect(() => {
+        console.log("슬라이드", slideImage);
+    }, [slideImage]);
+
 
     const addImage = (string) => {
         if (string === 'mainImage') {
@@ -103,34 +125,74 @@ const ProductImageSave = () => {
     const handleSubmit = async () => {
         // FormData 생성
         const formData = new FormData();
+        // 메인 이미지와 슬라이드 이미지를 합친다
+        const combinedImages = [...mainImage, ...slideImage];
 
-        // 메인 이미지 배열 처리
-        mainImage.forEach((image, index) => {
-            formData.append(`mainImage[${index}][productId]`, product.id);
-            formData.append(`mainImage[${index}][order]`, image.order);
-            formData.append(`mainImage[${index}][type]`, image.type);
-            formData.append(`mainImage[${index}][name]`, image.name);
+        // 파일과 JSON 데이터 처리
+        const imagesData = combinedImages.map((image, index) => {
             if (image.name instanceof File) {
-                formData.append(`mainImage[${index}][uploadfilef]`, image.name);
+                console.log(`files [${index}] added:`, image.name);
+                formData.append(`files`, image.name);  // 파일을 FormData로 전송
+                return { ...image, name: image.name.name };  // 파일 이름만 JSON에 추가
+            } else {
+                //formData.append(`files[${index}]`, null);  
+                return image;  // 파일이 아닌 경우 그대로 처리
             }
         });
 
-        // 슬라이드 이미지 배열 처리
-        slideImage.forEach((image, index) => {
-            formData.append(`slideImage[${index}][productId]`, product.id);
-            formData.append(`slideImage[${index}][order]`, image.order);
-            formData.append(`slideImage[${index}][type]`, image.type);
-            formData.append(`slideImage[${index}][name]`, image.name);
-            if (image.name instanceof File) { // 파일인 경우만 append
-                formData.append(`slideImage[${index}][uploadfilef]`, image.name);
-            }
+        // JSON 데이터를 문자열로 변환하여 추가
+        formData.append('images', JSON.stringify(imagesData));  // JSON으로 전송
+
+        // 네트워크 요청을 보내기 전, FormData 내용 확인
+        formData.forEach((value, key) => {
+            console.log(`Key: ${key}, Value: ${value}`);
         });
+        // // 파일 데이터 추가
+        // combinedImages.forEach((image, index) => {
+        //     if (image.name instanceof File) {
+        //         formData.append(`files`, image.name);  // 파일이 있으면 파일을 추가
+        //     }
+        // });
+
+        // combinedImages.forEach((image, index) => {
+        //     // formData.append(`images[${index}][productId]`, product.id);
+        //     // formData.append(`images[${index}][order]`, image.order);
+        //     // formData.append(`images[${index}][type]`, image.type);
+        //     if (image.name instanceof File) {
+        //         formData.append(`files[${index}]`, image.name);
+        //     }
+        //     // else{
+        //     //     formData.append(`images[${index}][name]`, image.name);
+        //     // }
+        // });
+        // formData.append('images', JSON.stringify(combinedImages));
+        // 메인 이미지 배열 처리
+        // mainImage.forEach((image, index) => {
+        //     formData.append(`mainImage[${index}][productId]`, product.id);
+        //     formData.append(`mainImage[${index}][order]`, image.order);
+        //     formData.append(`mainImage[${index}][type]`, image.type);
+        //     formData.append(`mainImage[${index}][name]`, image.name);
+        //     if (image.name instanceof File) {
+        //         formData.append(`mainImage[${index}][uploadfilef]`, image.name);
+        //     }
+        // });
+
+        // // 슬라이드 이미지 배열 처리
+        // slideImage.forEach((image, index) => {
+        //     formData.append(`slideImage[${index}][productId]`, product.id);
+        //     formData.append(`slideImage[${index}][order]`, image.order);
+        //     formData.append(`slideImage[${index}][type]`, image.type);
+        //     formData.append(`slideImage[${index}][name]`, image.name);
+        //     if (image.name instanceof File) { // 파일인 경우만 append
+        //         formData.append(`slideImage[${index}][uploadfilef]`, image.name);
+        //     }
+        // });
 
         // axios 요청으로 서버에 전송
         try {
             const response = await axios.post(`${API_BASE_URL}/administrator/imagesave`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    //'Content-Type': 'multipart/form-data',
                 },
             });
             console.log(response.data);
