@@ -11,36 +11,52 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CodeServiceImpl implements CodeService{
+public class CodeServiceImpl implements CodeService {
 	final CodeRepository repository;
+
 	@Override
 	public List<Code> selectList() {
 		// select * from Code
 		return repository.findAll();
 	}
+
 	@Override
-	public List<Code> selectPCList(){
+	public List<Code> selectPCList() {
 		return repository.findPC();
 	}
+
 	@Override
 	public List<Code> selectPSList() {
 		return repository.findPS();
 	}
 
 	@Override
+	public List<Code> selectPIList() {
+
+		return repository.findPI();
+	}
+
+	@Override
+	public List<Code> selectRSList() {
+
+		return repository.findRS();
+	}
+
+	@Override
 	public Code selectOne(CodeId id) {
 		// select * from Code where id = id ;
 		Optional<Code> entity = repository.findById(id);
-		if(entity.isPresent()) {			
+		if (entity.isPresent()) {
 			return entity.get();
-		}else return null;
+		} else
+			return null;
 	}
 
 	@Override
 	public void save(Code entity) {
 		// update , insert
 		repository.save(entity);
-		
+
 	}
 
 	@Override

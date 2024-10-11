@@ -7,7 +7,7 @@
     display: grid;
 }
 
-.searchProductAdmin h1 {
+.productMainTitle {
     width: 300px;
     border: 1px solid;
     border-radius: 5px;
@@ -15,7 +15,7 @@
     padding-left: 8px;
 }
 
-.searchProductAdmin h1:before {
+.productMainTitle:before {
     display: inline-block;
     position: absolute;
     left: 0;
@@ -26,13 +26,13 @@
     content: '';
 }
 
-.searchProductAdmin h3 {
+.productTitle {
     position: relative;
     padding-left: 8px;
     margin: 10px 0;
 }
 
-.searchProductAdmin h3::before {
+.productTitle::before {
     display: inline-block;
     position: absolute;
     left: 0;
@@ -108,7 +108,7 @@
 .inserProductsForm3{
     display: grid;
      /* width: 50%;  */
-    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr ;
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr  1fr 1fr 1fr ;
     gap: 10px;
     padding: 20px;
     background-color: aqua;
@@ -116,5 +116,14 @@
 }
 .adminProductImage img{
     width: 50px;
-    margin : 10px
+    margin : 10px;
+}
+.inserProductsForm3 img{
+    width: 50px;
+    margin : 10px;
+}
+.productDescription{
+    display: grid;
+    width: 300px;
+    grid-template-columns: 1fr 2fr;
 }

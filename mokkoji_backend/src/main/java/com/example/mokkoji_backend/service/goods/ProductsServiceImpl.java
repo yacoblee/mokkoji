@@ -1,29 +1,37 @@
 package com.example.mokkoji_backend.service.goods;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
+import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
+import com.example.mokkoji_backend.entity.goods.ProductImagesId;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.ProductOptionsId;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.repository.goods.ProductsDSLRepository;
-import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -44,6 +52,7 @@ public class ProductsServiceImpl implements ProductsService {
 	private ProductsDTO dslentityToDto(Products product) {
 		return dsrepository.entityToDto(product);
 	}
+
 
 	// 전체 리스트 엔터티 반환
 	@Override
@@ -314,6 +323,104 @@ public class ProductsServiceImpl implements ProductsService {
 		response.put("image", images);
 		//response.put("code", codeList);
 		return response;
+	}
+	@Override
+	public Map<String, Object> getImageList(Long productId){
+		Map<String, Object> response = new HashMap<>();
+		Products entity = findById(productId);
+		
+		List<ProductImages> mainImages = imservice.findByProductIdAndType(productId,"main");
+		List<ProductImages> slideImages = imservice.findByProductIdAndType(productId,"slide");
+		//List<Code> codeList = codeService.selectPSList();
+		if (entity == null) {
+			log.error("[getProductDetails]해당하는 상품을 찾을 수 없습니다");
+		}
+		List<Code> code = codeService.selectPIList();
+		response.put("mainImages", mainImages);
+		response.put("slideImages", slideImages);
+		response.put("selectProduct", entity);
+		response.put("code", code);
+		
+		//response.put("code", codeList);
+		return response;
+	}
+	@Override
+	@Transactional
+	public Map<String, Object> updateProductAndOptions
+	(ProductSaveDTO saveDTO, MultipartFile uploadfilef, HttpServletRequest request) 
+			 throws IOException{
+	      Products product = saveDTO.getProduct();
+	      List<ProductOptions> options = saveDTO.getOptions();
+	    
+	      // 이미지 처리 로직 분리
+	        if (uploadfilef != null) {
+	            product.setUploadfilef(uploadfilef);
+	        }
+	        
+	        if(product.getUploadfilef()!=null&&!product.getUploadfilef().isEmpty()) {
+				MultipartFile newuploadFile = product.getUploadfilef();
+				 LocalDateTime now = LocalDateTime.now();
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss_");
+				 String formattedDate = now.format(formatter);
+				//물리적 저장위치 확인
+				String realPath = request.getServletContext().getRealPath("/");
+				realPath +="resources\\productImages\\";
+				System.out.println(realPath);
+				log.info("파일이 전달됨: - 이미지 수정이 있어야함 getOriginalFilename() : " + newuploadFile.getOriginalFilename());
+//				File oldfile = new File(realPath+entity.getMainImageName());
+//				if(oldfile.isFile()) {
+//					oldfile.delete();
+//				}
+				String newFileName = formattedDate + newuploadFile.getOriginalFilename();
+//				realPath += uploadfilef.getOriginalFilename();
+				realPath += newFileName;
+				newuploadFile.transferTo(new File(realPath));//throws IOException 추가해야 함
+				product.setMainImageName(newFileName);
+			
+			}else {
+				 log.info("이미지 파일이 전달되지 않음.- 이미지 수정은 없는 상태");
+			}
+	        
+			save(product);
+			  
+			if(options !=null) {			
+				for (ProductOptions option : options) {
+					String content = option.getContent();
+		            if (content == null || content.isEmpty()|| content =="") {
+		                continue;
+		            }
+					//option.setProductId(product.getId());  // productId를 명시적으로 설정
+					opservice.save(option);					
+				}
+			}
+			
+			return getProductDetails(product.getId());
+	}
+	@Override
+	@Transactional
+	public void deleteProduct(Long id){
+		List<ProductOptions> optionList =  opservice.findByProductId(id);
+		if(optionList !=null) {
+			for (ProductOptions option : optionList) {
+				ProductOptionsId optionId = ProductOptionsId.builder()
+						.productId(option.getProductId())
+						.content(option.getContent())
+						.build();
+				opservice.deleteById(optionId);
+			}
+		}
+		List<ProductImages> imageList = imservice.findByProductId(id);
+		if(imageList!=null) {
+			for (ProductImages image : imageList) {
+				ProductImagesId imageId = ProductImagesId
+						.builder().productId(image.getProductId())
+						.order(image.getOrder())
+						.type(image.getType())
+						.build();
+				imservice.deleteById(imageId);
+			}
+		}
+		deleteById(id);
 	}
 	
 }

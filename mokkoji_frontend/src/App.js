@@ -26,7 +26,8 @@ import RegistManagement from './components/administrator/RegistManagement'
 import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
 import ResetPassword from './components/login/ResetPassword';
-import ProductsInsert from './components/administrator/ProductsInsert.jsx';
+import ProductImageSave from './components/administrator/ProductImageSave';
+
 
 const App = () => {
 
@@ -61,6 +62,7 @@ const App = () => {
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/insert" element={<ProductInserts />} />
+          <Route path="products/image" element={<ProductImageSave />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="reserve" element={<RegistManagement />} />
         </Route>

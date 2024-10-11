@@ -9,6 +9,8 @@ public interface CodeService {
 	public List<Code> selectList();
 	public List<Code> selectPCList();
 	public List<Code> selectPSList();
+	public List<Code> selectPIList();
+	public List<Code> selectRSList();
 	public Code selectOne(CodeId id);
 	public void save(Code entity);
 	public void delete(CodeId id);

@@ -1,9 +1,6 @@
 package com.example.mokkoji_backend.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +20,7 @@ import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.Code;
-import com.example.mokkoji_backend.entity.goods.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
@@ -35,6 +32,9 @@ import com.example.mokkoji_backend.service.goods.ProductsService;
 import com.example.mokkoji_backend.service.login.UsersService;
 import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -112,55 +112,123 @@ public class AdminProductsController {
 	public ResponseEntity<?> savePage (@RequestPart ProductSaveDTO saveDTO,
 			@RequestPart(value = "uploadfilef", required = false) MultipartFile uploadfilef,
 			HttpServletRequest request) throws IOException{
-		Products product = saveDTO.getProduct();
-		List<ProductOptions> options = saveDTO.getOptions();
-		log.info(saveDTO);
-		if(uploadfilef!=null) {
-			product.setUploadfilef(uploadfilef);
-		}
-		//전달된 이미지 처리
-		//1. 이미지 선택 여부를 확인
-		if(product.getUploadfilef()!=null&&!product.getUploadfilef().isEmpty()) {
-			MultipartFile newuploadFile = product.getUploadfilef();
-			 LocalDateTime now = LocalDateTime.now();
-			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss_");
-			 String formattedDate = now.format(formatter);
-			//물리적 저장위치 확인
-			String realPath = request.getServletContext().getRealPath("/");
-			realPath +="resources\\productImages\\";
-			System.out.println(realPath);
-			log.info("파일이 전달됨: - 이미지 수정이 있어야함 getOriginalFilename() : " + newuploadFile.getOriginalFilename());
-//			File oldfile = new File(realPath+entity.getMainImageName());
-//			if(oldfile.isFile()) {
-//				oldfile.delete();
-//			}
-			String newFileName = formattedDate + newuploadFile.getOriginalFilename();
-//			realPath += uploadfilef.getOriginalFilename();
-			realPath += newFileName;
-			newuploadFile.transferTo(new File(realPath));//throws IOException 추가해야 함
-			product.setMainImageName(newFileName);
 		
+		if(saveDTO !=null) {
+			 Map<String, Object> response =service.updateProductAndOptions(saveDTO, uploadfilef, request);
+			 //Map<String, Object> response = service.getProductDetails(saveDTO.getProduct().getId());
+			 
+			 return ResponseEntity.ok(response);
 		}else {
-			 log.info("이미지 파일이 전달되지 않음.- 이미지 수정은 없는 상태");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("정보를 찾을 수 없습니다.");
 		}
+	}
+	
+//	@DeleteMapping("/administrator/deleteproduct")
+//	public ResponseEntity<?> deleteProduct(@RequestParam Long productId){
+//		log.info("productId =>"+productId);
+//		service.deleteProduct(productId);
+//		return null;
+//	}
+	
+	//GET /api/administrator/{productId}/images
+	@GetMapping("/administrator/pimage")
+	public ResponseEntity<?> pageImage( Long id) {
+		// - service를 통해 나오는 image List
+		//response.put("mainImages", mainImages);
+		//response.put("slideImages", slideImages);
+		//response.put("selectProduct", entity);
+		//response.put("code", code);
+		Map<String, Object> response = service.getImageList(id);
+		return ResponseEntity.ok(response);
+	}
+	@PostMapping("/administrator/imagesave")
+	public ResponseEntity<?> saveImage(@RequestPart("images") String images  // JSON 데이터를 문자열로 받음
+//			@RequestPart("images") List<ProductImages> images
+			 ,@RequestPart(value = "files", required = false) MultipartFile[] files
+			 ){
+		   // JSON 데이터를 객체로 변환
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    List<ProductImages> imageList = null;
+	    try {
+	    	imageList = objectMapper.readValue(images, new TypeReference<List<ProductImages>>() {});
+	    } catch (JsonProcessingException e) {
+	        // 예외 처리
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON format");
+	    }
 		
-		
-		for (ProductOptions option : options) {
-			log.info(option);
+	    for (ProductImages image : imageList) {
+			log.info(image);
 		}
+        Long productId = (imageList.get(0).getProductId());
+
+        // 1. 기존의 이미지 데이터를 삭제
+        //productImageService.deleteImagesByProductId(productId);
+        // **파일 처리 로직**
+        if (files == null) {
+            log.info("files 객체가 null 입니다. 파일이 전송되지 않았습니다.");
+        } else if (files.length == 0) {
+            log.info("files 배열이 비어 있습니다. 파일이 전송되지 않았습니다.");
+        } else {
+            log.info("전송된 파일 수: {}", files.length);
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                if (file != null && !file.isEmpty()) {
+                    log.info("파일 [{}]: 이름: {}, 크기: {} bytes", i, file.getOriginalFilename(), file.getSize());
+                } else {
+                    log.info("파일 [{}]는 비어 있습니다.", i);
+                }
+            }
+        }
+        // 2. 새로운 이미지 데이터를 처리
+        for (int i = 0; i < imageList.size(); i++) {
+        	
+        	//MultipartFile file = (files != null && i < files.length ) ? files[i] : null;
+        	MultipartFile file =null;
+        	String imageName = imageList.get(i).getName();
+        	int order = imageList.get(i).getOrder();
+        	String type = imageList.get(i).getType();
+        	if(files != null ) {
+        		for (int j = 0; j < files.length; j++) {
+                    if (files[j].getOriginalFilename().equals(imageName)) {
+                        file = files[j];
+                        break;  // 해당 파일을 찾으면 루프 종료
+                    }
+				}
+        	}
+        	 //MultipartFile file = (files != null && files.get(i) !=null) ? files.get(i) : null;
+            //MultipartFile file = files.get(i);
+        	// System.out.println(files.get(String.valueOf(i)));
+            // 파일이 없으면 기존 파일 이름을 유지
+            
+            // **파일이 제대로 들어왔는지 로그 확인**
+//            if (files == null) {
+//                log.info("파일이 전송되지 않았습니다.");
+//            } else {
+//                log.info("파일이 전송되었습니다. 파일 수: ", files.length);
+//            }
+            if (file == null ||file.isEmpty()) {
+//                imageName = imageData.get(i).get("name");
+            	log.info("order : "+order+"type : "+type+"imageName : "+imageName);
+            } else {
+                // 파일이 존재하면 새로 저장
+                //String storedFileName = saveFile(file);  // 파일 저장 로직
+                //imageName = storedFileName;
+            	log.info("파일이 존재합니다*************");
+            	log.info("order : "+order+"type : "+type+"imageName : "+imageName);
+            }
+
+            // ProductImages 엔티티 생성
+            ProductImages productImage = ProductImages.builder()
+                    .productId(productId)
+                    .order(order)
+                    .type(type)
+                    .name(imageName)
+                    .build();
+            log.info(productImage);
+            //productImageService.saveOrUpdateImage(productImage); // 데이터베이스에 insert
+        }
+
+        return ResponseEntity.ok("Images saved successfully");
 		
-		service.save(product);
-	  
-		if(options !=null) {			
-			for (ProductOptions option : options) {
-				String content = option.getContent();
-				if(content=="") continue;
-				option.setProductId(product.getId());  // productId를 명시적으로 설정
-				//option.setProduct(product);  // product를 명시적으로 설정
-				optionService.save(option);					
-			}
-		}
-		
-		return null;
 	}
 }
