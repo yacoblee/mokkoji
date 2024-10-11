@@ -155,9 +155,9 @@ margin: 15px 0;
   background-color: #c0392b;  
 }
 
-input[type="file"] {
+/* input[type="file"] {
   display: none;  
-}
+} */
 
 
 .regist-container input {
