@@ -79,7 +79,7 @@ const ProductDetailsInfo = ({ product }) => {
     const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
         .sort((a, b) => b.reviews.length - a.reviews.length)
         .slice(0, 4);
-    //숫자를 금액형태로 
+    //숫자를 금액형태로
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     }
@@ -173,7 +173,7 @@ const ProductDetailsInfo = ({ product }) => {
 
                             <div className="reviewImgBox">
                                 {it.reviewPhoto ?
-                                    <img src={`${API_BASE_URL}/resources/productImages/${it.reviewPhoto}`} alt="" />
+                                    <img src={`${API_BASE_URL}/resources/reviewImages/${it.reviewPhoto}`} alt="" />
                                     : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt="" />}
                             </div>
                             <div className="reviewContent">

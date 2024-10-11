@@ -293,6 +293,29 @@ function MyPageMain() {
 
 
 
+    // ** Orders ==================================================================================
+
+    const [userOrders, setUserOrders] = useState([]);
+    const [userOrdersDetail, setUserOrdersDetail] = useState([]);
+
+    // List 불러오기
+    const myPageOrders = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageOrders 성공 url=${url}`);
+                setUserOrders(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageOrders 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageOrders
+
+
+
     return (
         <div className='MyPage'>
             <h1>

@@ -30,7 +30,7 @@ public class ProductsDTO {
 	private int likeConut;
 	private int status;
 	private int stockCount;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime uploadDate;
 	private List<ProductOptions> options;  // 추가된 필드
 	
