@@ -1,14 +1,19 @@
 package com.example.mokkoji_backend.repository.login;
 
 import static com.example.mokkoji_backend.entity.login.QUsers.users;
+
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -20,13 +25,15 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 	// 생성을 위한 Bean 설정을 DemoConfig에 추가해야함.
 
 	@Override
-	public List<Users> findUserinfoToSearch(PageRequestDTO requestDTO) {
+	public Page<Users> findUserinfoToSearch(PageRequestDTO requestDTO) {
 		BooleanBuilder builder = new BooleanBuilder();
 		String searchType = requestDTO.getSearchType();
 		String keyword = requestDTO.getKeyword();
 		LocalDate startDate = requestDTO.getStartDate();
 		LocalDate endDate = requestDTO.getEndDate();
 		String dateSearchType = requestDTO.getDateSearchType();
+		Pageable pagerable = requestDTO.getPageable();
+		int isAdmin = requestDTO.getIsAdmin();
 
 		if (keyword != null && !keyword.isEmpty()) {
 			switch (searchType) {
@@ -45,7 +52,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 				throw new IllegalArgumentException("Invalid searchType: " + searchType);
 			}
 		}
-		if(dateSearchType !=null && !dateSearchType.isEmpty()) {
+		if(dateSearchType.isEmpty()) {
 			switch (dateSearchType) {
 			case "createdAt":
 				builder.and(users.createdAt.between(startDate, endDate));
@@ -58,10 +65,28 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 				throw new IllegalArgumentException("dateSearchType value: " + dateSearchType);
 			}
 		}
+		if(isAdmin==0) {
+			builder.and(users.isAdmin.eq("0"));
+		}else if( isAdmin==1) {
+			builder.and(users.isAdmin.eq("1"));
+		}else if(isAdmin==2) {
+		   builder.and(users.isAdmin.between("0", "1"));
+		}
+		else {
+			throw new IllegalArgumentException("isAdmin value: " + isAdmin);
+		}
 
-		return jpaQueryFactory.selectFrom(users)
+	QueryResults<Users> result = jpaQueryFactory.selectFrom(users)
                 .where(builder)
-                .fetch();
+                .offset(pagerable.getOffset())
+                .limit(pagerable.getPageSize())
+                .fetchResults();
+	
+
+		List<Users> users = result.getResults();
+		long total = result.getTotal();
+		
+		return new PageImpl<>(users, pagerable, total);
 	}
 
 }

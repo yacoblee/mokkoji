@@ -1,27 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../css/administrator/adminUsers.css';
 import { apiCall } from '../../service/apiService';
+import moment from 'moment';
+import RenderPagination from "../product/RenderPagination";
+
 
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
     const [count, setCount] = useState(0);
+    const stday = useRef(null);
+    const edday = useRef(null);
+    const [responsLength, setResponseLength] = useState('');
+    const [pageMaker, setPageMaker] = useState({});
+    const [page, setPage] = useState(1);
+
+    console.log(responsLength);
     const inputData = {
         keyword: '',
         searchType: 'all',
         dateSearchType: 'createdAt',
         startDate: '',
         endDate: '',
-        isAdmin: 0,
-        size : 5
-
+        isAdmin: "0",
+        size: "5",
+        page: 1,
     };
     const [input, setInput] = useState(inputData);  // 입력 상태 초기화
-
+    const [pageRequest, setPageRequest] = useState(inputData);
     // 입력 값 변경 핸들러
     const onChangeValue = (e) => {
         const { name, value } = e.target;
-        console.log("검색어 이벤트 밸류" + e.target.value);
         setInput((prev) => ({
             ...prev,
             [name]: value
@@ -38,9 +47,52 @@ const UserManagement = () => {
         }));
     };
     console.log(input);
+
+    // 날짜 버튼값 변경 핸들러
+    const onClickDate = (value) => {
+        let start, end;
+        switch (value) {
+            case '오늘':
+                start = moment().format('YYYY-MM-DD');
+                end = start;
+                break;
+            case '어제':
+                start = moment().subtract(1, 'day').format('YYYY-MM-DD');
+                end = moment().format('YYYY-MM-DD');
+                break;
+            case '일주일':
+                start = moment().subtract(7, 'day').format('YYYY-MM-DD');
+                end = moment().format('YYYY-MM-DD');
+                break;
+            case '한달':
+                start = moment().subtract(1, 'months').format('YYYY-MM-DD');
+                end = moment().format('YYYY-MM-DD');
+                break;
+            case '일년':
+                start = moment().subtract(1, 'year').format('YYYY-MM-DD');
+                end = moment().format('YYYY-MM-DD');
+                break;
+            case '전체':
+                start = '';
+                end = '';
+                break;
+            default:
+                return;
+        }
+        setInput((it) => ({
+            ...it,
+            startDate: start,
+            endDate: end
+        }));
+        stday.current.value = start;
+        edday.current.value = end;
+    }
+
+
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
+        setPage(1);
         serchDB();  // 검색 함수 호출
     };
 
@@ -49,9 +101,13 @@ const UserManagement = () => {
         let url = "/administrator/users";
         apiCall(url, 'POST', input, null)
             .then((response) => {
-                console.log("Response data:", response);  // 응답의 data 확인
-                setList(response.data.users);  // 리스트 상태 업데이트
-                setCount(response.data.count);// 카운트 상태 업데이트
+                const { users, count, pageMaker } = response.data;
+                console.log(response);
+
+                setList(users);  // 리스트 상태 업데이트
+                setCount(count);// 카운트 상태 업데이트
+                setPageMaker(pageMaker);
+                setResponseLength(pageMaker.totalElements);
             })
             .catch((err) => {
                 console.error("Error during API call:", err);  // 에러 로그 출력
@@ -64,7 +120,30 @@ const UserManagement = () => {
         console.log("Updated list:", list);  // list 상태가 변경된 후 출력
     }, [list]);  // list가 변경될 때마다 실행
 
+    useEffect(() => {
+        // 페이지 변경 시 pageRequest를 업데이트하고 searchData 호출
+        setInput(prev => ({ ...prev, page: page }));
+    }, [page]);
 
+    useEffect(() => {
+        serchDB();
+    }, [input.page]);
+
+
+    const reset = () => {
+        setPage(1);
+        setInput(inputData);
+        console.log("초기화 버튼 클릭됨");
+    }
+
+    const openNewWindow = () => {
+        const newWindow = window.open(
+            "http://localhost:3000/Login/Membership",
+            "_blank",
+            "width=800,height=600"
+        )
+
+    }
 
     return (
         <div className="user-container">
@@ -78,40 +157,41 @@ const UserManagement = () => {
                         <tr>
                             <th>검색어</th>
                             <td className="user-table-td">
-                                <select name="searchType" id="searchType" onChange={selectChange}>
+                                <select name="searchType" id="searchType" value={input.searchType} onChange={selectChange}>
                                     <option value="all">전체검색</option>
                                     <option value="userId">아이디</option>
                                     <option value="name">회원명</option>
                                     <option value="phoneNumber">핸드폰번호</option>
                                 </select>
 
-                                <input type="text" name="keyword" id="keyword" className="seachvalue" onChange={onChangeValue} />
+                                <input type="text" name="keyword" id="keyword" value={input.keyword} className="seachvalue" onChange={onChangeValue} />
                             </td>
                         </tr>
 
                         <tr>
                             <th>기간검색</th>
                             <td className="user-table-td">
-                                <select name="dateSearchType" id="dateSearchType" onChange={selectChange}>
+                                <select name="dateSearchType" id="dateSearchType" value={input.dateSearchType} onChange={selectChange}>
                                     <option value="createdAt" key="1">가입날짜</option>
                                     <option value="updatedAt" key="2">수정날짜</option>
                                 </select>
 
 
-                                <input type="date" name="startDate" onChange={selectChange}
+                                <input type="date" name="startDate" onChange={selectChange} ref={stday} value={input.startDate}
                                 />
                                 ~
-                                <input type="date" name="endDate" onChange={selectChange}
+                                <input type="date" name="endDate" onChange={selectChange} ref={edday} value={input.endDate}
                                 />
-                                <input type="button" value="전체"
+                                <input type="button" value="전체" onClick={(e) => onClickDate(e.target.value)}
                                 />
-                                <input type="button" value="오늘"
+                                <input type="button" value="오늘" onClick={(e) => onClickDate(e.target.value)}
                                 />
-                                <input type="button" value="어제"
+                                <input type="button" value="어제" onClick={(e) => onClickDate(e.target.value)}
                                 />
-                                <input type="button" value="일주일"
+                                <input type="button" value="일주일" onClick={(e) => onClickDate(e.target.value)} />
+                                <input type="button" value="한달" onClick={(e) => onClickDate(e.target.value)}
                                 />
-                                <input type="button" value="한달"
+                                <input type="button" value="일년" onClick={(e) => onClickDate(e.target.value)}
                                 />
                             </td>
                         </tr>
@@ -119,32 +199,34 @@ const UserManagement = () => {
                         <tr>
                             <th>레벨</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="isAdmin" value="0" onChange={selectChange} /> 유저</label>
-                                <label><input type="radio" name="isAdmin" value="1" onChange={selectChange} /> 관리자</label>
+                                <label><input type="radio" name="isAdmin" value="2" onChange={selectChange} checked={input.isAdmin === "2"} /> 전체</label>
+                                <label><input type="radio" name="isAdmin" value="0" onChange={selectChange} checked={input.isAdmin === "0"} /> 유저</label>
+                                <label><input type="radio" name="isAdmin" value="1" onChange={selectChange} checked={input.isAdmin === "1"} /> 관리자</label>
                             </td>
                         </tr>
 
                         <tr>
                             <th>보기</th>
                             <td className="radio-group">
-                                <label><input type="radio" name="size" value="5" onChange={selectChange} /> 5개</label>
-                                <label><input type="radio" name="size" value="10" onChange={selectChange} /> 10개</label>
-                                <label><input type="radio" name="size" value="15" onChange={selectChange} /> 15개</label>
-                                <label><input type="radio" name="size" value="20" onChange={selectChange} /> 20개</label>
+                                <label><input type="radio" name="size" value="5" onChange={selectChange} checked={input.size === "5"} /> 5개</label>
+                                <label><input type="radio" name="size" value="10" onChange={selectChange} checked={input.size === "10"} /> 10개</label>
+                                <label><input type="radio" name="size" value="15" onChange={selectChange} checked={input.size === "15"} /> 15개</label>
+                                <label><input type="radio" name="size" value="20" onChange={selectChange} checked={input.size === "20"} /> 20개</label>
                             </td>
                         </tr>
 
                     </table>
                     <div className="user-button">
                         <button type="button" onClick={serchDB}>검색</button>
-                        <button type="button" >초기화</button>
+                        <button type="button" onClick={reset}>초기화</button>
                     </div>
                 </form>
-                <p >총 회원 수 : <span className="user-count">{count}</span></p>
+                <p>총 회원 수 : <span className="user-count">{count}</span> &nbsp;&nbsp; &nbsp;|&nbsp;&nbsp; 검색 회원 수 : <span className="user-count">{responsLength}</span> </p>
+
                 <h3 className="user-subTitle">검색 결과</h3>
                 <div className="user-button2">
-                    <button type="button">전체메일 발송</button>
-                    <button type="button" > + 회원추가</button>
+                    <button type="button">메일발송</button>
+                    <button type="button" onClick={openNewWindow} >+ 회원추가</button>
                 </div>
                 <table className="user-resultArea">
                     <thead>
@@ -177,6 +259,7 @@ const UserManagement = () => {
                     </tbody>
                 </table>
             </div>
+            <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
         </div>
 
 

@@ -583,3 +583,23 @@ SET u.user_sequence = ru.new_sequence;
 
 # ALTER TABLE users MODIFY phone_number VARCHAR(20);
 # ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
+
+ALTER TABLE users ADD login_count INT NOT NULL DEFAULT 0 COMMENT '로그인횟수';
+
+INSERT INTO Users (user_id, password, name, birth_date, gender, phone_number, email, is_withdrawn, withdrawal_date, updated_at, created_at, block_status, is_admin, login_count)
+VALUES 
+('user001', 'password001', '김철수', '1990-01-15', 'M', '010-1234-5678', 'kimcheolsu@example.com', 0, NULL, '2024-10-10', '2020-01-01', 0, '0', 10),
+('user002', 'password002', '이영희', '1985-05-22', 'F', '010-2345-6789', 'leeyounghee@example.com',  0, NULL, '2024-10-10', '2020-02-10', 0, '0', 20),
+('user003', 'password003', '박민수', '1978-11-03', 'M', '010-3456-7890', 'parkminsu@example.com',  0, NULL, '2024-10-09', '2020-03-15', 1, '0', 15),
+('user004', 'password004', '최지현', '1992-04-12', 'F', '010-4567-8901', 'choijihyun@example.com',  0, NULL, '2024-10-08', '2020-04-20', 0, '0', 7),
+('user005', 'password005', '정우성', '1988-07-19', 'M', '010-5678-9012', 'jungwoosung@example.com',  1, '2022-05-01 10:00:00', '2022-04-30', '2019-05-01', 1, '0', 12),
+('user006', 'password006', '김수현', '1995-02-28', 'F', '010-6789-0123', 'kimsuhyun@example.com',  0, NULL, '2024-10-07', '2020-06-01', 0, '0', 5),
+('user007', 'password007', '이동욱', '1983-10-15', 'M', '010-7890-1234', 'leedongwook@example.com',  0, NULL, '2024-10-06', '2020-07-01', 1, '0', 8),
+('user008', 'password008', '박은정', '1991-12-11', 'F', '010-8901-2345', 'parkunjung@example.com',  0, NULL, '2024-10-05', '2020-08-15', 0, '0', 9),
+('user009', 'password009', '이재호', '1987-06-30', 'M', '010-9012-3456', 'leejaeho@example.com',  0, NULL, '2024-10-04', '2020-09-10', 0, '0', 18),
+('user010', 'password010', '김소희', '1994-03-22', 'F', '010-0123-4567', 'kimsohee@example.com',  0, NULL, '2024-10-03', '2020-10-01', 1, '0', 11),
+('user011', 'password011', '한기준', '1980-09-07', 'M', '010-2345-6789', 'hankijun@example.com',  0, NULL, '2024-10-02', '2020-11-20', 0, '0', 22),
+('user012', 'password012', '오은지', '1993-08-12', 'F', '010-3456-7890', 'oeunji@example.com',  0, NULL, '2024-10-01', '2020-12-05', 0, '0', 16),
+('user013', 'password013', '박상민', '1979-04-04', 'M', '010-4567-8901', 'parksangmin@example.com',  1, '2023-01-15 10:00:00', '2023-01-14', '2020-01-15', 1, '0', 5),
+('user014', 'password014', '서지현', '1991-11-23', 'F', '010-5678-9012', 'seojihyun@example.com', 0, NULL, '2024-09-25', '2021-01-01', 0, '0', 6),
+('user015', 'password015', '류수영', '1985-02-14', 'M', '010-6789-0123', 'ryusuyoung@example.com',  0, NULL, '2024-08-30', '2021-03-10', 0, '0', 13);
