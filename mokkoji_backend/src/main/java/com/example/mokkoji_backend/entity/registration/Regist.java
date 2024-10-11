@@ -1,15 +1,29 @@
 package com.example.mokkoji_backend.entity.registration;
 
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.example.mokkoji_backend.domain.RegistDTO;
+import com.example.mokkoji_backend.entity.goods.ProductOptions;
+import com.example.mokkoji_backend.entity.goods.Products;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "regist")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Regist {
 		@Id
 	    @Column(name = "regist_code")
@@ -51,7 +65,22 @@ public class Regist {
 	    @Column(name = "etc_detail")
 	    private String etcDetail;
 	    
-//	    @OneToMany(mappedBy = "regist")
-//	    private List<RegistImages> registImages;
+	    
+	    
+	    public static Regist fromDTO(RegistDTO dto) {
+	        return Regist.builder()
+	        		.name(dto.getRegistName())
+	                .teenager(dto.getTeenagerPrice())
+	                .adult(dto.getAdultPrice())
+	                .hightlight1(dto.getHighlights().getOrDefault("hightlight_1", null))
+	                .hightlight2(dto.getHighlights().getOrDefault("hightlight_2", null))
+	                .hightlight3(dto.getHighlights().getOrDefault("hightlight_3", null))
+	                .hightlight4(dto.getHighlights().getOrDefault("hightlight_4", null))
+	                .packageDetail(dto.getPackageDetail())
+	                .restrictDetail(dto.getRestrictDetail())
+	                .reserveRestrict(dto.getReserveRestrict())
+	                .etcDetail(dto.getEtcDetail())
+	                .build();
+	    }
 	
 }

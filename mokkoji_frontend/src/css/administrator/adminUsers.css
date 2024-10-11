@@ -27,6 +27,35 @@
 .upload-container {
   width: 65vw;
   height: auto;  
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Chosunilbo_myungjo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumBarunpen';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  /* scroll-behavior: smooth; */
+}
+
+.upload-container {
+  width: 65vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,16 +132,25 @@ input::placeholder {
   letter-spacing: 2px;
   word-break: keep-all;
 }
+
  
 
 
 /* RegistManagement CSS  S*/
  
+
+
+
+
+/* RegistManagement CSS  S*/
+
 .existing-image {
   margin-right: 10px;
   border: 1px solid #ccc;
   padding: 5px;
 }
+
+
 .image-upload-container {
   display: flex;
   flex-direction: column;
@@ -127,6 +165,10 @@ input::placeholder {
   background-color: #f9f9f9;  
   border: 1px solid #ddd;  
   border-radius: 10px;  
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 
 .image-upload {
@@ -137,7 +179,7 @@ input::placeholder {
   padding: 10px;
   font-size: 1.2rem;
   font-family: 'Chosunilbo_myungjo';
-  margin-bottom: 15px;  
+  margin-bottom: 15px;
   border-bottom: 1px solid #ececec;
 }
 
@@ -151,6 +193,12 @@ input::placeholder {
 
 .file-input-label {
   background-color: #d0c0a02f;;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-input-label {
+  background-color: #d0c0a02f;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -160,7 +208,7 @@ input::placeholder {
 }
 
 .file-input-label:hover {
-  background-color: #f0df99c1;  
+  background-color: #f0df99c1;
 }
 
 .remove-image-btn {
@@ -190,6 +238,17 @@ input[type="file"] {
   height: 100vh;  
   margin-top: 40px;
  /* background-color: beige; */
+  background-color: #c0392b;
+}
+
+/* RegistManagement CSS  E */
+.user-container {
+  width: 70vw;
+  max-width: 1400px;
+  min-width: 600px;
+  height: 100vh;
+  margin-top: 40px;
+  /* background-color: beige; */
 }
 
 .user-title {

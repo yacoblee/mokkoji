@@ -2,6 +2,7 @@ package com.example.mokkoji_backend.service.registration;
 
 import com.example.mokkoji_backend.domain.DateCountDTO;
 import com.example.mokkoji_backend.domain.RegistDTO;
+import com.example.mokkoji_backend.domain.RegistImageDTO;
 import com.example.mokkoji_backend.entity.registration.Regist;
 import com.example.mokkoji_backend.entity.registration.RegistImages;
 import com.example.mokkoji_backend.repository.registration.RegistImageRepository;
@@ -52,7 +53,7 @@ public class RegistServiceImpl implements RegistService{
         List<Regist> regists = getAllRegists();  // Regist 리스트 가져오기
         List<DateCountDTO> dateCounts = getCountsDays();  // 날짜별 Count 가져오기
         
-        System.out.println("(*()*()*()*()*()*)*)("+dateCounts);
+        
    
         Map<String, Object> result = new HashMap();
         result.put("regists", regists);
@@ -63,7 +64,7 @@ public class RegistServiceImpl implements RegistService{
 	
 	@Override
 	@Transactional
-	public void saveRegistData(List<RegistDTO> dtoList) {
+	public void saveRegistData(List<RegistImageDTO> dtoList, Regist rdto) {
 	  if (dtoList.isEmpty()) {
             return ;
         }
@@ -71,7 +72,7 @@ public class RegistServiceImpl implements RegistService{
 		String registCode = dtoList.get(0).getRegistCode(); // PK나 고유 식별자로 사용할 필드
 		imasgrepository.deleteByRegistCode(registCode);
 		
-		for(RegistDTO dto: dtoList) {
+		for(RegistImageDTO dto: dtoList) {
 			System.out.println(dto);
 			
 			RegistImages registEntity = new RegistImages();
@@ -79,11 +80,16 @@ public class RegistServiceImpl implements RegistService{
 	        registEntity.setImageName(dto.getImageName());
 	        registEntity.setImageOrder(dto.getImageOrder());
 	        registEntity.setImageType(dto.getImageType());
-
+	        
         	imasgrepository.save(registEntity);
 		}
+		rdto.setRegistCode(registCode);
+		repository.save(rdto);
+	
 		
 	}
+	
+ 
 	
 	
 }
