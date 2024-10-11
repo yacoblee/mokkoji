@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mokkoji_backend.domain.PaymentRequestDto;
 import com.example.mokkoji_backend.domain.RegistDTO;
+import com.example.mokkoji_backend.domain.RegistImageDTO;
 import com.example.mokkoji_backend.entity.registration.Regist;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.registration.RegistRepository;
@@ -39,11 +40,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.Map;
 
@@ -57,7 +54,7 @@ public class AdminRegistController {
 	private final TokenProvider provider;
 	private final RegistRepository registRepository;
  
-
+	
  
 	
 	
@@ -86,23 +83,56 @@ public class AdminRegistController {
         return ResponseEntity.ok(registsAndCounts);
     }
     
-    @PostMapping("/regist/upload")
-    public ResponseEntity<String> uploadReserve(
-            @RequestPart(value = "mainImage", required = false) List<MultipartFile> mainImages,
+    @PostMapping(value = "/regist/upload", consumes = { "multipart/form-data" })
+    public ResponseEntity<String> uploadReserve(      
+    		@RequestPart(value = "mainImage", required = false) List<MultipartFile> mainImages,
             @RequestParam(value = "existingMainImageIds", required = false) List<String> existingMainImageIds,
             @RequestPart(value = "detailImage", required = false) List<MultipartFile> detailImages,
             @RequestParam(value = "existingDetailImageIds", required = false) List<String> existingDetailImageIds,
-            HttpServletRequest request) {
-
-        
-        List<RegistDTO> dtoList = new ArrayList<>();
+            @RequestParam(value = "deleteImageIds", required = false) List<String> deleteFiles,
+            @RequestPart(value = "reserveData", required = false) RegistDTO reserveData,
+            HttpServletRequest request) { 
+    	
+    	String realPath = request.getServletContext().getRealPath("/resources/reserveImages/");
+    	
+    	
+    	List<RegistImageDTO> dtoList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
+       
+    	
+    	
+    	File dir = new File(realPath);
+   	    if (!dir.exists()) {
+   	        dir.mkdirs();
+   	    }
+    	
+    	//기존 이미지 삭제 - 테스트중
+	   	 if (deleteFiles != null && !deleteFiles.isEmpty()) {
+	   	    try {
+	   	        for (String jsonString : deleteFiles) {
+	    
+	   	        	jsonString = jsonString.trim();
+
+	   	            File oldFile = new File(realPath + "/" + jsonString);
+	   	            if (oldFile.exists()) {
+	   	                if (oldFile.delete()) {
+	   	                    System.out.println("Deleted file: " + oldFile.getName());
+	   	                } else {
+	   	                    System.out.println("Failed to delete file: " + oldFile.getName());
+	   	                }
+	   	            }
+	   	        }
+	   	    } catch (Exception e) {
+	   	        log.info("Failed to parse deleteFiles: " + deleteFiles);
+	   	        e.printStackTrace();
+	   	    }
+	   	}
 
 
         if (existingMainImageIds != null && !existingMainImageIds.isEmpty()) {
             for (String jsonString : existingMainImageIds) {
                 try {
-                    RegistDTO mainImageDTO = objectMapper.readValue(jsonString, RegistDTO.class);
+                	RegistImageDTO mainImageDTO = objectMapper.readValue(jsonString, RegistImageDTO.class);
                     dtoList.add(mainImageDTO);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -114,23 +144,23 @@ public class AdminRegistController {
         if (mainImages != null && !mainImages.isEmpty()) {
             for (MultipartFile file : mainImages) {
                 String originalFilename = file.getOriginalFilename();
-                System.out.println("New Main Image Content Type: " + file.getContentType());
-                System.out.println("New Main Image Original Filename: " + originalFilename);
 
                 try {
                     int lastUnderscoreIndex = originalFilename.lastIndexOf('_');
                     int lastDotIndex = originalFilename.lastIndexOf('.');
                     
-                    // _ 뒤에 있는 인덱스 부분 제거, 확장자는 그대로 유지
+                     
                     String filenameWithoutIndex = originalFilename.substring(0, lastUnderscoreIndex);
                     String fileExtension = originalFilename.substring(lastDotIndex);
                     String finalFilename = filenameWithoutIndex + fileExtension;
 
-                    // 인덱스 추출 (_ 뒤의 숫자 부분)
+            
                     String indexPart = originalFilename.substring(lastUnderscoreIndex + 1, lastDotIndex);
                     int index = Integer.parseInt(indexPart) + 1;
-                    System.out.println("main"+index);
-                    RegistDTO dto = new RegistDTO();
+
+      	            file.transferTo(new File(realPath+ "/"+ finalFilename)); // 파일 저장
+         
+      	          RegistImageDTO dto = new RegistImageDTO();
                     
                         List<Regist> regists = registRepository.findAll();
                         String registCode = regists.get(0).getRegistCode();
@@ -149,11 +179,12 @@ public class AdminRegistController {
             }
         }
 
-        // 3. 기존 상세 이미지 ID 처리
+ 
         if (existingDetailImageIds != null && !existingDetailImageIds.isEmpty()) {
             for (String jsonString : existingDetailImageIds) {
                 try {
-                    RegistDTO detailImageDTO = objectMapper.readValue(jsonString, RegistDTO.class);
+                	RegistImageDTO detailImageDTO = objectMapper.readValue(jsonString, RegistImageDTO.class);
+                     
                     dtoList.add(detailImageDTO);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -161,15 +192,12 @@ public class AdminRegistController {
             }
         }
 
-        // 4. 새로 업로드된 상세 이미지 처리
+ 
         if (detailImages != null && !detailImages.isEmpty()) {
             for (MultipartFile file : detailImages) {
                 String originalFilename = file.getOriginalFilename();
-                System.out.println("New Detail Image Content Type: " + file.getContentType());
-                System.out.println("New Detail Image Original Filename: " + originalFilename);
-
                 try {
-
+                	
                     int lastUnderscoreIndex = originalFilename.lastIndexOf('_');
                     int lastDotIndex = originalFilename.lastIndexOf('.');
                     
@@ -181,11 +209,14 @@ public class AdminRegistController {
 
                     String indexPart = originalFilename.substring(lastUnderscoreIndex + 1, lastDotIndex);
                     int index = Integer.parseInt(indexPart) + 1;
-                    System.out.println("detail"+index);
-                    RegistDTO dto = new RegistDTO();
                     
-                        List<Regist> regists = registRepository.findAll();
-                        String registCode = regists.get(0).getRegistCode();
+                    
+                    file.transferTo(new File(realPath+ "/"+ finalFilename)); // 파일 저장
+                    
+                    RegistImageDTO dto = new RegistImageDTO();
+                    
+                    List<Regist> regists = registRepository.findAll();
+                    String registCode = regists.get(0).getRegistCode();
                         
                         dto.setRegistCode(registCode);
                         dto.setImageOrder(index);
@@ -194,26 +225,17 @@ public class AdminRegistController {
                         
                         dtoList.add(dto);
 
- 
-                    
                 } catch (Exception e) {
                 	log.info("Error processing new detail image: " + originalFilename);
                     e.printStackTrace();
                 }
             }
-        }// Detail 새이미지 추가 E
+        }// Detail 새 이미지 추가 E
         
+        System.out.println("@@@@@@@@@@@@@@@@@"+reserveData);
+        Regist regist = Regist.fromDTO(reserveData);
+        service.saveRegistData(dtoList, regist);
         
-
-        
-        
-        
-        
-        
-        
-        
-        service.saveRegistData(dtoList);
-
         return ResponseEntity.ok("Images processed successfully.");
     }
 

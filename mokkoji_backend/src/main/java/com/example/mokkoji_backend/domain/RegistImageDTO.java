@@ -21,11 +21,12 @@ public class RegistImageDTO {
 
 
 	private String registCode;
+	 
 	private int imageOrder;
-	private String imageType;
-	private String imageName;
 	
-	private MultipartFile files;
+	private String imageType;
+	
+	private String imageName;
 
 
 }

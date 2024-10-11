@@ -8,10 +8,12 @@ const RegistManagement = () => {
   const [mainImages, setMainImages] = useState([]); // 메인 이미지 미리보기
   const [detailImages, setDetailImages] = useState([]); // 상세 이미지 미리보기
   const [registsData, setRegistsData] = useState([]);
-  
+  const [deleteImages , setDeleteImages ] = useState([]); // 삭제할 이미지 - 테스트중
+
   const [adultPrice, setAdultPrice] = useState(''); // 성인 가격
   const [teenagerPrice, setTeenagerPrice] = useState(''); // 청소년 가격
 
+  const [registName, setRegistName] = useState('');
   // 예약 상세정보
   const [packageDetail, setPackageDetail] = useState('');
   const [restrictDetail, setRestrictDetail] = useState('');
@@ -44,6 +46,8 @@ const RegistManagement = () => {
           .sort((a, b) => a.imageOrder - b.imageOrder);
         setDetailImages(filteredDetailImages);
 
+        setRegistName(regists[0].name || ''); 
+
         // 가격 정보 설정
         setAdultPrice(regists[0].adult || ''); 
         setTeenagerPrice(regists[0].teenager || ''); 
@@ -69,8 +73,10 @@ const RegistManagement = () => {
    // 메인 이미지 업로드 핸들러
    const handleImageUpload = (index, event) => {
     const file = event.target.files[0];
-  
     if (file) {
+      const imageToDelete = mainImages[index];
+      setDeleteImages([...deleteImages, imageToDelete]); 
+      
       const reader = new FileReader();
       const modifiedFileName = `${file.name.split('.')[0]}_${index}.${file.name.split('.').pop()}`;
   
@@ -111,6 +117,9 @@ const RegistManagement = () => {
     const file = event.target.files[0];
   
     if (file) {
+      const imageToDelete = detailImages[index];
+      setDeleteImages([...deleteImages, imageToDelete]);
+
       const reader = new FileReader();
       const modifiedFileName = `${file.name.split('.')[0]}_${index}.${file.name.split('.').pop()}`;
   
@@ -149,13 +158,18 @@ const RegistManagement = () => {
   // 이미지 삭제 핸들러
   const handleRemoveImage = (index, type) => {
     if (type === 'main') {
-      const newMainImages = mainImages.filter((_, imgIndex) => imgIndex !== index);
-      setMainImages(newMainImages);
+        const imageToDelete = mainImages[index];
+        setDeleteImages([...deleteImages, imageToDelete]); // 삭제된 이미지를 deleteImages에 추가
+        const newMainImages = mainImages.filter((_, imgIndex) => imgIndex !== index);
+        setMainImages(newMainImages);
+
     } else if (type === 'detail') {
-      const newDetailImages = detailImages.filter((_, imgIndex) => imgIndex !== index);
-      setDetailImages(newDetailImages);
+        const imageToDelete = detailImages[index];
+        setDeleteImages([...deleteImages, imageToDelete]); // 삭제된 이미지를 deleteImages에 추가
+        const newDetailImages = detailImages.filter((_, imgIndex) => imgIndex !== index);
+        setDetailImages(newDetailImages);
     }
-  };
+};
 
   // 데이터 전송 핸들러
   const handleSubmit = (e) => {
@@ -182,26 +196,49 @@ const RegistManagement = () => {
       }
     });
 
-      // 가격 정보 추가
-      formData.append('adultPrice', adultPrice);
-      formData.append('teenagerPrice', teenagerPrice);
-      // 상세 정보 수정 추가
-      formData.append('packageDetail', packageDetail);
-      formData.append('restrictDetail', restrictDetail);
-      formData.append('reserveRestrict', reserveRestrict);
-      formData.append('etcDetail', etcDetail);
+    deleteImages.forEach((image) => {
+      formData.append('deleteImageIds', image.imageName); // 삭제된 이미지 이름만 전송 - 다른 방법 찾는 중
+    });
 
-      // 하이라이트 정보 추가
-      Object.keys(highlights).forEach((key) => {
-        formData.append(`highlights[${key}]`, highlights[key]);
-      });
+      
+      // formData.append('reserveData.adultPrice', adultPrice);
+      // formData.append('reserveData.teenagerPrice', teenagerPrice);
+      // // 상세 정보 수정 추가
+      // formData.append('reserveData.packageDetail', packageDetail);
+      // formData.append('reserveData.restrictDetail', restrictDetail);
+      // formData.append('reserveData.reserveRestrict', reserveRestrict);
+      // formData.append('reserveData.etcDetail', etcDetail);
 
+      // // 하이라이트 정보 추가
+      // Object.keys(highlights).forEach((key) => {
+      //   formData.append(`reserveData.highlights${key}`, highlights[key]);
+      // });
+      const reserveData = {
+        registName,
+        adultPrice,
+        teenagerPrice,
+        packageDetail,
+        restrictDetail,
+        reserveRestrict,
+        etcDetail,
+        highlights: {
+          hightlight_1: highlights.hightlight1,
+          hightlight_2: highlights.hightlight2,
+          hightlight_3: highlights.hightlight3,
+          hightlight_4: highlights.hightlight4
+        }
+      };
+    
+      formData.append('reserveData', new Blob([JSON.stringify(reserveData)], { type: 'application/json' }));
+  
+      
     axios.post(`${API_BASE_URL}/regist/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
     .then(response => {
+      alert('수정에 성공했습니다.');
       console.log('Data submitted successfully:', response.data);
     })
     .catch(error => {
@@ -264,10 +301,21 @@ const RegistManagement = () => {
           </div>
         </div>
 
+        {/* 예약페이지 제목/이름 수정란 */}
+        <h3 className="regist-subTitle">제목 수정</h3>
+        <div className="detail-inputs">
+          <label htmlFor="registName">예약페이지 제목</label>
+          <input
+            type="text"
+            id="registName"
+            value={registName}
+            onChange={(e) => setRegistName(e.target.value)}
+          />
 
+        </div>
 
         {/* 가격 정보 입력 필드 */}
-        <h3 className="regist-subTitle">Price Information</h3>
+        <h3 className="regist-subTitle">가격 수정</h3>
         <div className="price-info">
           <label htmlFor="adultPrice">성인 가격</label>
           <input
