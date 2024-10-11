@@ -127,3 +127,8 @@
     width: 300px;
     grid-template-columns: 1fr 2fr;
 }
+/* ====================================== */
+.fileResult img{
+    width: 150px;
+    margin : 10px;
+}

@@ -6,7 +6,8 @@ import axios from "axios";
 import RenderPagination from "../product/RenderPagination";
 import LoginValidityCheck from './../login/LoginValidityCheck';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import TopButton from './../modules/ScrollToTopBtn';
 const ProductManagement = () => {
   const [list, setList] = useState([]);
   const [pageMaker, setPageMaker] = useState({});
@@ -239,7 +240,7 @@ const ProductManagement = () => {
       },
     })
       .then(response => {
-        const { selectProduct, mainImages, slideImages ,code} = response.data;
+        const { selectProduct, mainImages, slideImages, code } = response.data;
 
         // 응답 받은 데이터를 상태로 저장하고 페이지 이동
         navigate(`/administrator/products/image`, {
@@ -399,7 +400,7 @@ const ProductManagement = () => {
           <div className="buttonwrapper">
             <button type="button" onClick={searchProductAdmin}>검색</button>
             <button type="button" onClick={resetPageRequest}>초기화</button>
-            <button type="button">상품 등록</button>
+            <Link to="/administrator/products/allinsert">상품 등록</Link>
           </div>
         </form>
         <h3 className="productTitle">리스트</h3>
