@@ -2,51 +2,34 @@ package com.example.mokkoji_backend.controller.admin;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.mokkoji_backend.domain.PaymentRequestDto;
 import com.example.mokkoji_backend.domain.RegistDTO;
 import com.example.mokkoji_backend.domain.RegistImageDTO;
 import com.example.mokkoji_backend.entity.registration.Regist;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.registration.RegistRepository;
-import com.example.mokkoji_backend.service.PaymentService;
 import com.example.mokkoji_backend.service.registration.RegistImageService;
 import com.example.mokkoji_backend.service.registration.RegistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 
-import jakarta.annotation.PostConstruct;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @Log4j2
