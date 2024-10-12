@@ -246,7 +246,7 @@ const RegistManagement = () => {
     <div className="regist-container">
       <h2 className="regist-title">예약 관리 페이지</h2>
 
-      <form className="regist-container" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h3 className="regist-subTitle">예약 메인 이미지</h3>
         <div className="image-upload-container">
           {mainImages.map((image, index) => (
