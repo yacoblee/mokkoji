@@ -135,17 +135,17 @@ public class AdminProductsController {
 	@PostMapping("/administrator/imagesave")
 	public ResponseEntity<?> saveImage(@RequestPart("images") String images // JSON 데이터를 문자열로 받음
 //			@RequestPart("images") List<ProductImages> images
-			, @RequestPart(value = "files", required = false) MultipartFile[] files
-			, HttpServletRequest request)throws IOException {
+			, @RequestPart(value = "files", required = false) MultipartFile[] files, HttpServletRequest request)
+			throws IOException {
 		// JSON 데이터를 객체로 변환
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<ProductImages> imageList = null;
 		try {
 			imageList = objectMapper.readValue(images, new TypeReference<List<ProductImages>>() {
 			});
-			
+
 			imageService.saveImages(imageList, files, request);
-			
+
 			log.info("오류없이 작동완료");
 			Long productId = imageList.get(0).getProductId();
 			Map<String, Object> response = service.getImageList(productId);
@@ -153,57 +153,36 @@ public class AdminProductsController {
 		} catch (JsonProcessingException e) {
 			// 예외 처리
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("JsonProcessingException");
-		}catch (IOException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미지 파일화 실패");
-	    }
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미지 파일화 실패");
+		}
 
 	}
-	
-    @PostMapping("/administrator/saveallproduct")
-    public ResponseEntity<?> saveProduct(
-            @RequestPart("productData") ProductSaveDTO productSaveDTO,  // 상품 데이터와 옵션 데이터를 포함한 DTO
-            @RequestPart(value = "mainImages", required = false) MultipartFile[] mainImages,  // 메인 이미지 파일
-            @RequestPart(value = "slideImages", required = false) MultipartFile[] slideImages,
-            @RequestPart(value = "uploadfilef", required = false) MultipartFile uploadfilef// 슬라이드 이미지 파일
-    ) throws IOException {
 
-        // DTO에서 상품 데이터 접근
-        Products product = productSaveDTO.getProduct();
-        List<ProductOptions> options = productSaveDTO.getOptions();
-        //List<ProductImages> images = productSaveDTO.getImages();
+	@PostMapping("/administrator/saveallproduct")
+	public ResponseEntity<?> saveProduct(@RequestPart("productData") ProductSaveDTO productSaveDTO, // 상품 데이터와 옵션 데이터를
+																									// 포함한 DTO
+			@RequestPart(value = "mainImages", required = false) MultipartFile[] mainImages, // 메인 이미지 파일
+			@RequestPart(value = "slideImages", required = false) MultipartFile[] slideImages,
+			@RequestPart(value = "uploadfilef", required = false) MultipartFile uploadfilef// 슬라이드 이미지 파일
+			, HttpServletRequest request)  {
 
-        // 상품 정보 처리
-        if(product !=null) {
-        	log.info(product);
-        }
+		// DTO에서 상품 데이터 접근
+		Products product = productSaveDTO.getProduct();
+		List<ProductOptions> options = productSaveDTO.getOptions();
+		// List<ProductImages> images = productSaveDTO.getImages();
 
-        // 옵션 처리
-        for (ProductOptions option : options) {
-        	log.info(option);
-        }
+		// 상품 정보 처리
+		try {
+			if (product != null) {
+				service.insertAllProduct(productSaveDTO, mainImages, slideImages, uploadfilef, request);
+			}
+			return ResponseEntity.ok("Product saved successfully!");
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("sorry , i can't");
+		}
 
-        // 메인 이미지 처리
-        if (mainImages != null) {
-            for (MultipartFile mainImage : mainImages) {
-                System.out.println("Main Image: " + mainImage.getOriginalFilename());
-                // 파일 저장 로직 추가
-            }
-        }
 
-        // 슬라이드 이미지 처리
-        if (slideImages != null) {
-            for (MultipartFile slideImage : slideImages) {
-                System.out.println("Slide Image: " + slideImage.getOriginalFilename());
-                // 파일 저장 로직 추가
-            }
-        }
-        if(uploadfilef !=null) {
-        	System.out.println("uploadfilef 존재");
-        }
-
-   
-        // 실제 데이터베이스 저장 로직 추가
-
-        return ResponseEntity.ok("Product saved successfully!");
-    }
+	}
 }

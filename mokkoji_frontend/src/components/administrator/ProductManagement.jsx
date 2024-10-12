@@ -20,8 +20,8 @@ const ProductManagement = () => {
     size: 10,
     page: 1,
     categoryId: 'allGoods',
-    ascendingFirst: true,
-    sortingFirstColumn: '',
+    ascendingFirst: false,
+    sortingFirstColumn: 'id',
     keyword: '',
     state: 'allGoods',
     startDate: '',
@@ -67,23 +67,23 @@ const ProductManagement = () => {
   const [searchRequest, setSearchRequest] = useState(false); // 검색 요청 여부를 추적
   const selectorderBy = [
     {
-      name: 'name',
+      order: 'name',
       description: '상품 이름',
     },
     {
-      name: 'price',
+      order: 'price',
       description: '상품 가격',
     },
     {
-      name: 'likeCount',
+      order: 'likeCount',
       description: '좋아요 갯수',
     },
     {
-      name: 'stockCount',
+      order: 'stockCount',
       description: '재고',
     },
     {
-      name: 'uploadDate',
+      order: 'uploadDate',
       description: '최근 수정 날짜',
     },
   ]
@@ -308,7 +308,7 @@ const ProductManagement = () => {
                 <select name="sortingFirstColumn" id="productSearch"
                   value={pageRequest.sortingFirstColumn}
                   onChange={(e) => onchangeRequest(e)} >
-                  {selectorderBy.map((items, i) => <option value={items.name} key={i}>{items.description}</option>)}
+                  {selectorderBy.map((items, i) => <option value={items.order} key={i}>{items.description}</option>)}
                 </select>
                 <label htmlFor="ascending">
                   <input type="radio" id="ascending" name="ascending"

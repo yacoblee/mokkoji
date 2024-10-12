@@ -74,8 +74,8 @@ public class ProductsServiceImpl implements ProductsService {
 
 	// - insert , update
 	@Override
-	public void save(Products entity) {
-		repository.save(entity);
+	public Products save(Products entity) {
+		return repository.save(entity);
 	}
 
 	// 좋아요 수 없데이트 (+,- 통합)
@@ -406,6 +406,83 @@ public class ProductsServiceImpl implements ProductsService {
 			}
 		}
 		deleteById(id);
+	}
+	@Override
+	@Transactional
+	public void insertAllProduct(ProductSaveDTO productSaveDTO,
+			 MultipartFile[] mainImages,MultipartFile[] slideImages,
+			 MultipartFile uploadfilef, HttpServletRequest request) throws IOException {
+		Products product = productSaveDTO.getProduct();
+		List<ProductOptions> options = productSaveDTO.getOptions();
+		// 상품 정보 처리
+		Products savedEntity;
+		if (product!=null&&uploadfilef != null) {
+			String newFileName = imservice.uploadFile(uploadfilef, request);
+			product.setMainImageName(newFileName);
+			System.out.println("uploadfilef 존재 : " + uploadfilef.getOriginalFilename());
+			log.info(product);
+		}
+		savedEntity = save(product);
+		
+		
+
+		// 옵션 처리
+		for (ProductOptions option : options) {
+			option.setProductId(savedEntity.getId());
+			if(option.getContent()=="") {
+				continue;
+			}
+			opservice.save(option);
+			log.info(option);
+		}
+
+		// 메인 이미지 처리
+		if (mainImages != null) {
+		    // for문을 사용하여 인덱스를 직접 제어
+		    for (int i = 0; i < mainImages.length; i++) {
+		        MultipartFile mainImage = mainImages[i];
+		        //System.out.println("Main Image: " + mainImage.getOriginalFilename());
+		        
+		        // 이미지 업로드 처리 (파일 저장 로직)
+		        String newName = imservice.uploadFile(mainImage, request);
+		        
+		        //저장 수행후 새로운 이름
+		        System.out.println("Main new ImageName: " + newName);
+		        // ProductImages 객체 생성
+		        ProductImages image = ProductImages.builder()
+		                .productId(savedEntity.getId())
+		                .name(newName)
+		                .type("main")
+		                .order(i + 1) // i는 0부터 시작하므로, 순서값은 i + 1로 설정
+		                .build();
+		        log.info(image);
+		        imservice.save(image);
+		    }
+		}
+
+		// 슬라이드 이미지 처리
+		if (slideImages != null) {
+		    for (int i = 0; i < slideImages.length; i++) {
+		        MultipartFile slideImage = slideImages[i];
+		        //System.out.println("Main Image: " + mainImage.getOriginalFilename());
+		        
+		        // 이미지 업로드 처리 (파일 저장 로직)
+		        String newName = imservice.uploadFile(slideImage, request);
+		        
+		        //저장 수행후 새로운 이름
+		        System.out.println("slide new ImageName: " + newName);
+		        // ProductImages 객체 생성
+		        ProductImages image = ProductImages.builder()
+		                .productId(savedEntity.getId())
+		                .name(newName)
+		                .type("slide")
+		                .order(i + 1) // i는 0부터 시작하므로, 순서값은 i + 1로 설정
+		                .build();
+		        log.info(image);
+		        imservice.save(image);
+		    }
+		}
+	
 	}
 	
 	
