@@ -27,7 +27,7 @@ public class ProductsDTO {
 	private String mainImageName;
 
 	private String categoryId;
-	private int likeConut;
+	private int likeCount;
 	private int status;
 	private int stockCount;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -41,7 +41,7 @@ public class ProductsDTO {
 		this.price = price;
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
-		this.likeConut = likeCount;
+		this.likeCount = likeCount;
 	}
 	public ProductsDTO(Long id,String name ,int price ,String mainImageName, String categoryId ,String mainDescription,int likeCount) {
 		this.id=id;
@@ -50,7 +50,7 @@ public class ProductsDTO {
 		this.mainImageName = mainImageName;
 		this.categoryId = categoryId;
 		this.mainDescription = mainDescription;
-		this.likeConut = likeCount;
+		this.likeCount = likeCount;
 	}
 	
 
@@ -73,7 +73,7 @@ public class ProductsDTO {
 		this.mainImageName = product.getMainImageName();
 		this.categoryId = product.getCategoryId();
 		this.mainDescription = product.getMainDescription();
-		this.likeConut = product.getLikeCount();
+		this.likeCount = product.getLikeCount();
 		//this.options = product.getOptions();  // 연관된 options 필드도 처리
 	}
 	

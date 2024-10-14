@@ -132,3 +132,11 @@
     width: 150px;
     margin : 10px;
 }
+
+.ProductRelatedStorage button {
+    font-family: 'SUITE-Regular';
+    padding: 5px;
+    margin: 2px;
+    border: 1px solid #ccc;
+}
+/* ---------------------------------------- */

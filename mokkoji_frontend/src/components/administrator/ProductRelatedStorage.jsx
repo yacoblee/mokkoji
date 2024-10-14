@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../service/app-config';
 
-function ProductRelatedStorage() {
+function ProductRelatedStorage({ sendCode }) {
     const [product, setProduct] = useState({});
     const [mainImage, setMainImage] = useState([]);
     const [slideImage, setSlideImage] = useState([]);
@@ -17,7 +17,14 @@ function ProductRelatedStorage() {
             [name]: value,
         }));
     };
-
+    useEffect(() => {
+        setCode(sendCode);
+        console.log("code :", code);
+        setProduct((prevState) => ({
+            ...prevState,
+            status: '0',
+        }));
+    }, [sendCode])
     // 옵션 추가
     const addOption = () => {
         setOptions([...options, { content: '', price: '' }]);
@@ -160,7 +167,7 @@ function ProductRelatedStorage() {
     console.log(options);
     console.log(product);
     return (
-        <div>
+        <div className='ProductRelatedStorage'>
             <h1 className="productMainTitle">상품 등록</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 {/* 상품 정보 입력 */}
@@ -225,7 +232,7 @@ function ProductRelatedStorage() {
                                 <input
                                     type="radio"
                                     name="status"
-                                    value={`${item.sub_type}`}
+                                    value={product.status || ''}
                                     id={`code_${item.sub_type}`}
                                     checked={product.status == `${item.sub_type}`}
                                     onChange={onChangeProduct}

@@ -105,7 +105,7 @@ public class AdminProductsController {
 			throws IOException {
 
 		if (saveDTO != null) {
-			Map<String, Object> response = service.updateProductAndOptions(saveDTO, uploadfilef, request);
+			Map<String, Object> response = service.updateProductAndOptions(saveDTO, uploadfilef);
 
 			return ResponseEntity.ok(response);
 		} else {
@@ -144,7 +144,7 @@ public class AdminProductsController {
 			imageList = objectMapper.readValue(images, new TypeReference<List<ProductImages>>() {
 			});
 
-			imageService.saveImages(imageList, files, request);
+			imageService.saveImages(imageList, files);
 
 			log.info("오류없이 작동완료");
 			Long productId = imageList.get(0).getProductId();
@@ -175,7 +175,7 @@ public class AdminProductsController {
 		// 상품 정보 처리
 		try {
 			if (product != null) {
-				service.insertAllProduct(productSaveDTO, mainImages, slideImages, uploadfilef, request);
+				service.insertAllProduct(productSaveDTO, mainImages, slideImages, uploadfilef);
 			}
 			return ResponseEntity.ok("Product saved successfully!");
 			

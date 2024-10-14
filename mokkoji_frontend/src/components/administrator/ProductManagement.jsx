@@ -8,12 +8,34 @@ import LoginValidityCheck from './../login/LoginValidityCheck';
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 import TopButton from './../modules/ScrollToTopBtn';
+import Modal from 'react-modal';
+import ProductRelatedStorage from "./ProductRelatedStorage";
+
+
 const ProductManagement = () => {
   const [list, setList] = useState([]);
   const [pageMaker, setPageMaker] = useState({});
   const [page, setPage] = useState(1);
   const [code, setCode] = useState([]);
+  //Modal.setAppElement('#root');
   //관리자 페이지 샘플 - > 샘플샵
+
+  //시간날짜 포멧
+  const formatToKoreanTime = (dateString) => {
+    // dateString을 Date 객체로 변환
+    const date = new Date(dateString);
+
+    // 한국 시간(UTC+9)으로 변환한 후 포맷팅
+    return date.toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  };
 
   //초기 객체 상태
   const fistPageRequest = {
@@ -269,7 +291,19 @@ const ProductManagement = () => {
   //     })
 
   // }
+  //모달창을 관리할 state
+  //상품 등록.
+  const [isModalProductALLOpen, setIsModalProductALLOpen] = useState(false);
+  //상품 정보보기.
+  const [isModalProductDetails, setIsModalProductDetails] = useState(false);
+  //선택된 상품 아이디를 전송할 state
+  const [selectedProductId, setSelectedProductId] = useState(null); 
 
+
+  const onClickProductDetail = (id)=>{
+    setSelectedProductId(id);
+    setIsModalProductDetails(true);
+  }
   return (
     <div className="searchProductAdmin">
       <h1 className="productMainTitle">Product Management</h1>
@@ -400,7 +434,15 @@ const ProductManagement = () => {
           <div className="buttonwrapper">
             <button type="button" onClick={searchProductAdmin}>검색</button>
             <button type="button" onClick={resetPageRequest}>초기화</button>
-            <Link to="/administrator/products/allinsert">상품 등록</Link>
+            <button type="button" onClick={() => {
+              setIsModalProductALLOpen(true);
+              console.log("모달 열림 상태:", isModalProductALLOpen); // 상태값 확인용
+            }}>
+              상품 등록
+            </button>
+
+            {/* <button type="button" onClick={() => setIsModalProductALLOpen(true)}>상품 등록</button> */}
+            {/* <Link to="/administrator/products/allinsert">상품 등록</Link> */}
           </div>
         </form>
         <h3 className="productTitle">리스트</h3>
@@ -423,8 +465,8 @@ const ProductManagement = () => {
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.stockCount}</td>
-                <td>{product.likeConut}</td>
-                <td>{product.uploadDate}</td>
+                <td>{product.likeCount}</td>
+                <td>{formatToKoreanTime(product.uploadDate)}</td>
                 <td>
                   <button onClick={() => { onClickInset(product) }}>product & option Edit</button>
                   {/* <button onClick={() => onClickDelete(product.id)}>Delete</button> */}
@@ -436,7 +478,62 @@ const ProductManagement = () => {
         </table>
       </div>
       <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
-
+      <Modal
+        isOpen={isModalProductALLOpen}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => setIsModalProductALLOpen(false)}
+        contentLabel="로그인 필요"
+        style={{
+          content: {
+            height: '80%',
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            zIndex: '2000',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+          }
+        }}
+      >
+        <div className='Modalbutton'>
+          <button onClick={() => setIsModalProductALLOpen(false)}>닫기</button>
+        </div>
+        <ProductRelatedStorage sendCode={code} />
+      </Modal>
+      <Modal
+        isOpen={isModalProductDetails}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => setIsModalProductDetails(false)}
+        contentLabel="로그인 필요"
+        style={{
+          content: {
+            height: '80%',
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            zIndex: '2000',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+          }
+        }}
+      >
+        <div className='Modalbutton'>
+          <button onClick={() => setIsModalProductDetails(false)}>닫기</button>
+        </div>
+        <ProductRelatedStorage sendCode={code} />
+      </Modal>
     </div>
   );
 };

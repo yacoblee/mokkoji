@@ -163,131 +163,132 @@ function ProductsInsert() {
     ];
     return (
         <>
-        <h1 className="productMainTitle">상품 & 옵션 수정</h1>
-        <form onSubmit={saveSubmit} method="post" enctype="multipart/form-data" id="saveProduct">
-            <h3 className="productTitle">상품 정보 입력</h3>
-            <div className="inserProductsForm1">
-                {/* <label>상품 ID</label>
+            <h1 className="productMainTitle">상품 & 옵션 수정</h1>
+            <form onSubmit={saveSubmit} method="post" enctype="multipart/form-data" id="saveProduct">
+                <h3 className="productTitle">상품 정보 입력</h3>
+                <div className="inserProductsForm1">
+                    {/* <label>상품 ID</label>
                 <input name="id"
                     value={product.id}
                     onChange={onChangeProduct} /> */}
-                <input type="text" name="id" value={product.id} hidden />
-                <input type="text" name="mainImageName" value={product.mainImageName} hidden />
-                <input type="text" name="likeCount" value={product.likeCount} hidden />
-                <input type="date" name="uploadDate" value={product.uploadDate} hidden />
-                {/* <input type="text" name="uploadDate" hidden /> */}
-                <label>상품 이름</label>
-                <input name="name"
-                    value={product.name}
-                    onChange={onChangeProduct} />
+                    <input type="text" name="id" value={product.id} hidden />
+                    <input type="text" name="mainImageName" value={product.mainImageName} hidden />
+                    <input type="text" name="likeCount" value={product.likeCount} hidden />
+                    <input type="date" name="uploadDate" value={product.uploadDate} hidden />
+                    {/* <input type="text" name="uploadDate" hidden /> */}
+                    <label>상품 이름</label>
+                    <input name="name"
+                        value={product.name}
+                        onChange={onChangeProduct} />
 
-                <label>상품 가격</label>
-                <input name="price"
-                    value={product.price}
-                    onChange={onChangeProduct} />
+                    <label>상품 가격</label>
+                    <input name="price"
+                        value={product.price} type="number"
+                        onChange={onChangeProduct} />
 
-                <label>상품 크기 정보</label>
-                <textarea name="sizeInfo"
-                    value={product.sizeInfo}
-                    onChange={onChangeProduct} />
+                    <label>상품 크기 정보</label>
+                    <textarea name="sizeInfo"
+                        value={product.sizeInfo}
+                        onChange={onChangeProduct} />
 
-                <label>상품 가이드</label>
-                <textarea name="guide"
-                    value={product.guide}
-                    onChange={onChangeProduct} />
+                    <label>상품 가이드</label>
+                    <textarea name="guide"
+                        value={product.guide}
+                        onChange={onChangeProduct} />
 
-                <label>메인 설명</label>
-                <textarea name="mainDescription"
-                    value={product.mainDescription}
-                    onChange={onChangeProduct} />
+                    <label>메인 설명</label>
+                    <textarea name="mainDescription"
+                        value={product.mainDescription}
+                        onChange={onChangeProduct} />
 
-                <label>추가 설명</label>
-                <textarea name="subDescription"
-                    value={product.subDescription}
-                    onChange={onChangeProduct} />
+                    <label>추가 설명</label>
+                    <textarea name="subDescription"
+                        value={product.subDescription}
+                        onChange={onChangeProduct} />
 
-                <label>메인 이미지 파일명</label>
-                <div className="adminProductImage">
-                    {/* 파일이 없을 때는 기존 이미지, 파일이 있으면 업로드된 파일의 미리보기 이미지 */}
-                    {product.uploadfilef ? (
-                        <img src={imagePreview} alt="미리보기 이미지" />
-                    ) : (
-                        <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`} alt={product.name} />
-                    )}
-                    <input name="uploadfilef"
-                        type="file"
-                        // value={product.uploadfilef}
-                        onChange={onClickFileUpload} />
-                </div>
+                    <label>메인 이미지 파일명</label>
+                    <div className="adminProductImage">
+                        {/* 파일이 없을 때는 기존 이미지, 파일이 있으면 업로드된 파일의 미리보기 이미지 */}
+                        {product.uploadfilef ? (
+                            <img src={imagePreview} alt="미리보기 이미지" />
+                        ) : (
+                            <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`} alt={product.name} />
+                        )}
+                        <input name="uploadfilef"
+                            type="file"
+                            // value={product.uploadfilef}
+                            onChange={onClickFileUpload} />
+                    </div>
 
-                <label>재고 수량</label>
-                <input name="stockCount"
-                    value={product.stockCount}
-                    onChange={onChangeProduct} />
+                    <label>재고 수량</label>
+                    <input name="stockCount"
+                        type="number"
+                        value={product.stockCount}
+                        onChange={onChangeProduct} />
 
-                {/* <label>업로드 날짜:</label>
+                    {/* <label>업로드 날짜:</label>
             <input type="datetime-local" name="uploadDate" value={product.uploadDate} onChange={onChangeProduct} /> */}
 
-                <label>카테고리 ID</label>
-                <select name="categoryId" id="productSearch"
-                    value={product.categoryId}
-                    onChange={onChangeProduct} >
-                    {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
-                </select>
+                    <label>카테고리 ID</label>
+                    <select name="categoryId" id="productSearch"
+                        value={product.categoryId}
+                        onChange={onChangeProduct} >
+                        {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
+                    </select>
 
-                <label>제품 상태 </label>
-                <div>
-                    {code && code.length > 0 && code.map((item, index) => (
-                        <label key={index} htmlFor={`code_${item.sub_type}`}>
-                            <input
-                                type="radio"
-                                name="status"
-                                value={`${item.sub_type}`}
-                                id={`code_${item.sub_type}`}
-                                checked={product.status == `${item.sub_type}`}
-                                onChange={onChangeProduct}
-                            />
-                            {item.sub_type_name}
-                        </label>
-                    ))}
+                    <label>제품 상태 </label>
+                    <div>
+                        {code && code.length > 0 && code.map((item, index) => (
+                            <label key={index} htmlFor={`code_${item.sub_type}`}>
+                                <input
+                                    type="radio"
+                                    name="status"
+                                    value={`${item.sub_type}`}
+                                    id={`code_${item.sub_type}`}
+                                    checked={product.status == `${item.sub_type}`}
+                                    onChange={onChangeProduct}
+                                />
+                                {item.sub_type_name}
+                            </label>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <h3 className="productTitle">상품 옵션</h3>
-            <div className="inserProductsForm2">
+                <h3 className="productTitle">상품 옵션</h3>
+                <div className="inserProductsForm2">
 
 
-                {options.map((option, index) => (
-                    <>
-                        <input type="text" name="productId" value={product.id} hidden />
-                        <label>옵션 내용:</label>
-                        <input
-                            name="content"
-                            value={option.content}
-                            onChange={(e) => onChangeOption(index, e)}
-                        />
-                        {/* <input
+                    {options.map((option, index) => (
+                        <>
+                            <input type="text" name="productId" value={product.id} hidden />
+                            <label>옵션 내용:</label>
+                            <input
+                                name="content"
+                                value={option.content}
+                                onChange={(e) => onChangeOption(index, e)}
+                            />
+                            {/* <input
                             name={`product.options[${index}].content`}
                             value={product.options[index].content}
                             onChange={(e) => onChangeOption(index, e)}
                         /> */}
-                        <label>옵션 가격:</label>
-                        <input
-                            name="price"
-                            value={option.price}
-                            onChange={(e) => onChangeOption(index, e)}
-                        />
-                        {/* <input
+                            <label>옵션 가격:</label>
+                            <input
+                                name="price"
+                                value={option.price}
+                                onChange={(e) => onChangeOption(index, e)}
+                            />
+                            {/* <input
                             name={`options[${index}].price`}
                             value={product.options[index].price}
                             onChange={(e) => onChangeOption(index, e)}
                         /> */}
-                    </>
-                ))}
+                        </>
+                    ))}
 
-                <button type="button" onClick={addOption}>옵션 추가</button>
-            </div>
+                    <button type="button" onClick={addOption}>옵션 추가</button>
+                </div>
 
-            {/* <h3>상품 이미지</h3>
+                {/* <h3>상품 이미지</h3>
             <div className="inserProductsForm3">
 
 
@@ -320,8 +321,8 @@ function ProductsInsert() {
                 <button type="button" onClick={addImage}>이미지 추가</button>
             </div> */}
 
-            <button type="submit">저장</button>
-        </form>
+                <button type="submit">저장</button>
+            </form>
         </>
     );
 }
