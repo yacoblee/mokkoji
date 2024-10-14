@@ -52,6 +52,16 @@ const ProductBuy = () => {
     //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
     const [checkedCartItems, SetCheckedCartItems] = useState([]);
 
+    // buyPrice(옵션갯수)가 변경될 때마다 총 금액 재계산
+    useEffect(() => {
+        // 옵션에 의해 총 금액을 계산하는 함수 호출
+        const totalPrice = calculateTotalPrice();
+
+        // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
+        updatePrices(totalPrice);
+        console.log(checkedCartItems);
+    }, [checkedCartItems, filterPrice]);
+
     // 총 금액 및 배송비 상태 업데이트 함수
     const updatePrices = (totalPrice) => {
         //1차 필터 계산하여 배송비포함되지 않는 가격 계산

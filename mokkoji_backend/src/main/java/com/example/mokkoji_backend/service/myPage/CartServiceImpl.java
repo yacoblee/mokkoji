@@ -209,12 +209,14 @@ public class CartServiceImpl implements CartService {
 				cartDTO.setPrice(product.getPrice());
 				cartDTO.setCategoryId(product.getCategoryId());
 				cartDTO.setMainImageName(product.getMainImageName());
+				cartDTO.setStockCount(product.getStockCount());
 			} else {
 				// 기본값 설정 또는 로깅 등 처리
 				cartDTO.setProductName(null);
 				cartDTO.setPrice(0);
 				cartDTO.setCategoryId(null);
 				cartDTO.setMainImageName(null);
+				cartDTO.setStockCount(0);
 			}
 
 			int productPrice = cartDTO.getPrice() + cartDTO.getOptionPrice() + cartDTO.getPackagingOptionPrice();

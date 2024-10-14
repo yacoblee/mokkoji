@@ -19,11 +19,12 @@ public class CartDTO {
 	private int productCnt;
 	private int productTotalPrice;
 	private LocalDateTime cartDate;
-	private String productName;
-	private String categoryId;
-	private String mainImageName;
-	private int price;
 	private int optionPrice;
 	private int packagingOptionPrice;
 
+	private String productName;
+	private int price;
+	private String categoryId;
+	private String mainImageName;
+	private int stockCount;
 }

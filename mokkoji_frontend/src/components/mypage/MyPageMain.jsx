@@ -214,6 +214,26 @@ function MyPageMain() {
         }
     };
 
+    //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
+    const [checkedCartItems, setCheckedCartItems] = useState([]);
+
+    // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
+    const onChangeChildCheckbox = (isChecked, items) => {
+        //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
+
+        setCheckedCartItems(prevItems => {
+            if (isChecked) {
+                return [...prevItems, items]
+            } else {
+                return prevItems.filter(cartItem =>
+                    !(cartItem.productId === items.productId &&
+                        cartItem.optionContent === items.optionContent &&
+                        cartItem.packagingOptionContent === items.packagingOptionContent)
+                );
+            }
+        });
+    };
+
 
 
     // ** review ==================================================================================
@@ -356,9 +376,11 @@ function MyPageMain() {
                         userMain={userMain}
                         userCart={userCart}
                         cartKeyList={cartKeyList}
+                        checkedCartItems={checkedCartItems}
                         myPageCart={myPageCart}
                         cartUpdate={cartUpdate}
                         cartDelete={cartDelete}
+                        onChangeChildCheckbox={onChangeChildCheckbox}
                         cartCheckDelete={cartCheckDelete}
                         cartCheckBoxChange={cartCheckBoxChange}
                         cartAllCheckBoxChange={cartAllCheckBoxChange}

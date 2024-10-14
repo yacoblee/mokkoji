@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
 import { apiCall } from '../../../service/apiService';
 
-function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCart, cartUpdate, cartDelete, onChangeChildCheckbox, checkedCartItems, cartAllCheckBoxChange, cartCheckBoxChange }) {
+function MyPageCart({ userMain, userCart, cartKeyList, myPageCart, cartUpdate, cartDelete, cartCheckDelete, cartCheckBoxChange, cartAllCheckBoxChange }) {
 
     const navigate = useNavigate();
 
@@ -75,38 +75,13 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
 
 
 
-    // 체크리스트를 들고 구매페이지로 이동
     const takeListToBuy = () => {
         navigate(`/buym`, {
             state: {
-                checkedCartItems: checkedCartItems
+                cartKeyList: cartKeyList
             }
         })
     }
-
-
-
-    // 각 장바구니 항목의 체크 상태를 관리하는 배열
-    const [checkedItems, setCheckedItems] = useState(
-        userCart.map(() => false)
-    );
-
-    // 체크박스 상태 변경 함수
-    const onChangeCheckBox = (index, event) => {
-        const isChecked = (event.target.checked);
-
-        const item = userCart[index];
-
-        // 해당 인덱스의 체크 상태를 업데이트
-        setCheckedItems((it) => {
-            const copyIschecked = [...it];
-            copyIschecked[index] = isChecked;
-            return copyIschecked;
-        });
-
-        // 상위 컴포넌트에 상태 변경 알림
-        onChangeChildCheckbox(isChecked, item);
-    };
 
 
 
@@ -143,16 +118,16 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                     </div>
                 ) :
                 (
-                    userCart.map((cart, index) => {
+                    userCart.map((cart) => {
                         const cartKey = `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`;
 
                         return (
                             <div className="MyCartGrid" key={cartKey} >
                                 <div className='MyCartCheck'>
-                                    <input type="checkBox"
-                                        checked={checkedItems[index]}
-                                        value={+cart.productTotalPrice}
-                                        onChange={(e) => onChangeCheckBox(index, e)}
+                                    <input
+                                        type="checkbox"
+                                        checked={cartKeyList.includes(cartKey)}
+                                        onChange={() => cartCheckBoxChange(cartKey)}
                                     />
                                 </div>
                                 <div className="MyCartPhoto">
@@ -184,13 +159,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                     >
                                         {hoveredButton === (cartKey) ? '구매하기' : `${formatNumber(cart.productTotalPrice)} 원`}
                                     </button>
-                                    <button onClick={() => {
-                                        if (cart.productCnt > cart.stockCount) {
-                                            alert("상품 재고 부족으로 현재 구매가 불가능합니다.")
-                                        } else {
-                                            cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`)
-                                        }
-                                    }}>삭제</button>
+                                    <button onClick={() => cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`)}>삭제</button>
                                 </div>
                             </div >  // mycartgird
                         )   // return
