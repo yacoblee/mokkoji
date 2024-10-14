@@ -80,9 +80,7 @@ public class OrdersController {
 		try {
 			List<CartDTO> list = cartService.findentityAndNewReturnList(dto);
 			response.put("cartList", list);
-			response.put("success", true);
 		} catch (Exception e) {
-			response.put("success", false);
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("카트 서비스 오류");
 		}
 		

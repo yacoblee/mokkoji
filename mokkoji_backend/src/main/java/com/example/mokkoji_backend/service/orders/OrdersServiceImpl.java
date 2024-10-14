@@ -50,7 +50,7 @@ public class OrdersServiceImpl implements OrdersService {
 		Orders order = request.getOrder();
 		List<CartDTO> cart = request.getCartList();
 		Address purchaseAddress = request.getPurchaseAddress();
-		System.out.println("purchaseAddress 111111111111111" + purchaseAddress);
+
 		if (addr != null) {
 			if (addr.size() > 3) {
 				Address add = addr.get(2);
@@ -82,12 +82,10 @@ public class OrdersServiceImpl implements OrdersService {
 			try {
 				purchaseAddress = addressService.findByUserIdAndLocationName(purchaseAddress.getUserId(),
 						purchaseAddress.getLocationName());
-				System.out.println("purchaseAddress @@@@@@@@@@@@@@@@@@@" + purchaseAddress);
-
+				System.out.println("************************");
+				System.out.println(purchaseAddress);
 				order.setAddressId(purchaseAddress.getAddressId());
 				order = insertOrders(order);
-				
-				System.out.println("order 222222222222222222"+order);
 				System.out.println("buyList_  Purchase Number: " + order.getPurchaseNumber());
 				orderDetailSerivce.insertDtoList(cart, order.getPurchaseNumber());
 
