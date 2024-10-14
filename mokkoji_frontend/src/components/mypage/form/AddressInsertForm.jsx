@@ -9,7 +9,7 @@ import axios from 'axios'; // axios 추가
 import '../../../css/mypage/subpage/MyPageAddress.css';
 
 
-function MyPageAddressForm({ }) {
+function MyPageAddressForm( ) {
 
     const [addressInfo, setAddressInfo] = useState({
         locationName: '',
