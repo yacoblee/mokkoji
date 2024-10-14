@@ -76,7 +76,8 @@
   background-color: white;
   width: 100vw;
   min-height: 1000px;
-  height: 170vh;
+  height: auto;
+
 }
 
 aside,

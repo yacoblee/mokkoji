@@ -1,0 +1,104 @@
+/* 
+.user-info { 
+  margin-bottom: 20px; 
+}
+
+.user-info h2 { 
+  margin: 0; 
+}
+
+.close-btn {
+   padding: 10px; 
+   background-color: #f44336; color: white; border: none; cursor: pointer; 
+  }
+
+.user-title{
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #888 !important;
+  font-size: 2em;
+  line-height: 1em;
+}
+
+.user-subTitle {
+  position: relative;
+  padding-left: 8px;
+  margin: 15px 0;
+}
+
+.user-subTitle::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #1a4f9981;
+  content: '';
+} */
+
+
+.userinfo-container {
+  width: 75vw;
+  max-width: 1400px;
+  min-width: 600px;
+  height: auto;
+  /* background-color: antiquewhite; */
+}
+
+.userinfo-title {
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #888 !important;
+}
+
+
+.close-btn {
+  padding: 5px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+margin-left: 10%;
+}
+
+.user-subTitle {
+  position: relative;
+  padding-left: 8px;
+  margin: 15px 0;
+}
+
+.user-subTitle::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #1a4f9981;
+  content: '';
+}
+
+.tableoutline {
+  border-collapse: collapse;
+width: 100%;
+
+}
+
+.tableoutline th, .tableoutline td {
+  border: 1px solid #ddd; 
+  padding: 8px; 
+  text-align: left; /* 텍스트 정렬 */
+}
+
+.tableoutline th {
+  background-color: #f2f2f2; 
+  font-weight: bold; 
+  width: 10%;
+}
+.tableoutline td {
+  width: 25%; /* 모든 th와 td의 너비를 25%로 고정 */
+  border: 1px solid #ddd; /* 셀 테두리 */
+  padding: 8px; /* 셀 안쪽 여백 */
+  text-align: left; /* 텍스트 정렬 */
+}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +24,10 @@ import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.repository.login.AddressRepository;
 import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductImageService;
@@ -57,7 +60,9 @@ public class AdminProductsController {
 
 	private final ProductImageService imageService;
 	private final UsersDSLRepository userDSLRepository;
-
+	private final AddressRepository addressRepository;
+	
+	
 	@GetMapping("/administrator/products")
 	public ResponseEntity<?> indexPage(PageRequestDTO requestDTO) {
 		// 데이터 포멧 넘침으로 인해 , dto로 변환된 list를 가져옴
@@ -76,6 +81,11 @@ public class AdminProductsController {
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
 	}
 
+	
+	
+	
+	
+	
 	@PostMapping("/administrator/users")
 	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO) {
 		System.out.println("들어왔니?");
@@ -87,13 +97,15 @@ public class AdminProductsController {
 //			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
 //		}
 		int count = userService.countBy();
-		log.info("$$ 서치 결과" + result);
-		Map<String, Object> response = new HashMap<>();
-		response.put("users", dto);
-		response.put("pageMaker", result);
-		response.put("count", count);
+		log.info("$$ 서치 결과"+result);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("users", dto );
+	    response.put("pageMaker", result);
+	    response.put("count", count);
 		return ResponseEntity.ok(response);
 	}
+	
+	
 
 	@GetMapping("/administrator/psave")
 	public ResponseEntity<?> savePage(Long id) {

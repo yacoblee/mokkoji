@@ -3,8 +3,8 @@ import '../../css/administrator/adminUsers.css';
 import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
-
-
+import UserInfoWindow from '../login/UserInfoWindow';
+import { useNavigate } from 'react-router-dom';
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
@@ -14,8 +14,13 @@ const UserManagement = () => {
     const [responsLength, setResponseLength] = useState('');
     const [pageMaker, setPageMaker] = useState({});
     const [page, setPage] = useState(1);
+    const [isWindowOpen, setIsWindowOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const navigate = useNavigate();
+    const [userAddress, setUsersAddress] = useState([]);
 
-    console.log(responsLength);
+    const [userinfo, setUserinfo] = useState(list);
+
     const inputData = {
         keyword: '',
         searchType: 'all',
@@ -92,7 +97,6 @@ const UserManagement = () => {
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        setPage(1);
         serchDB();  // 검색 함수 호출
     };
 
@@ -102,8 +106,6 @@ const UserManagement = () => {
         apiCall(url, 'POST', input, null)
             .then((response) => {
                 const { users, count, pageMaker } = response.data;
-                console.log(response);
-
                 setList(users);  // 리스트 상태 업데이트
                 setCount(count);// 카운트 상태 업데이트
                 setPageMaker(pageMaker);
@@ -117,7 +119,7 @@ const UserManagement = () => {
 
     // list가 변경된 후 실행되는 useEffect
     useEffect(() => {
-        console.log("Updated list:", list);  // list 상태가 변경된 후 출력
+        setUserinfo(list);
     }, [list]);  // list가 변경될 때마다 실행
 
     useEffect(() => {
@@ -144,6 +146,39 @@ const UserManagement = () => {
         )
 
     }
+
+    const moveToUserinfo = (users) => {
+        let url = "/administrator/users/address";
+        // 사용자 정보 상태로 저장
+        setSelectedUser(users);
+        // API 호출
+        apiCall(url, 'POST', users, null)
+            .then((response) => {
+                console.log(response);
+                console.log(response.data);
+
+
+                setUsersAddress(response.data);
+            })
+            .catch((err) => {
+                console.error("Error during API call:", err);  // 에러 로그 출력
+                setUsersAddress(null);  // 에러 발생 시 주소 정보 초기화
+            });
+
+    }
+
+    useEffect(() => {
+        if (userAddress && userAddress.length > 0 && selectedUser) {
+            console.log('Updated userAddress:', userAddress);
+    
+            // 상태가 업데이트된 후에 navigate 호출
+            navigate(`/administrator/users/userinfo`, {
+                state: { users: selectedUser, userAddress }
+            });
+        } else {
+            console.log("Address is empty or invalid.");
+        }
+    }, [userAddress, selectedUser]);  // userAddress와 selectedUser가 설정될 때만 실행
 
     return (
         <div className="user-container">
@@ -246,7 +281,10 @@ const UserManagement = () => {
                         {list.map(users => (
                             <tr key={users.userSequence}>
                                 <td>{users.userSequence}</td>
-                                <td> <a href="/" className="users-movimodal">{users.name}</a></td>
+                                {/* onClick에서 users 객체를 moveToUserinfo로 전달 */}
+                                <td><a onClick={() => {
+                                    moveToUserinfo(users);
+                                }}> {users.name} </a></td>
                                 <td>{users.userId}</td>
                                 <td>{users.isAdmin}</td>
                                 <td>{users.phoneNumber}</td>
@@ -260,6 +298,12 @@ const UserManagement = () => {
                 </table>
             </div>
             <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
+
+
+            {/* UserInfoWindow 컴포넌트 사용 */}
+            {isWindowOpen && selectedUser && (
+                <UserInfoWindow users={selectedUser} onClose={closeWindow} />
+            )}
         </div>
 
 
