@@ -28,6 +28,7 @@ import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductImageService;
+import com.example.mokkoji_backend.service.goods.ProductStatisticsService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
 import com.example.mokkoji_backend.service.goods.ProductsService;
 import com.example.mokkoji_backend.service.login.UsersService;
@@ -52,6 +53,7 @@ public class AdminProductsController {
 	private final CartService cartService;
 	private final CodeService codeService;
 	private final ProductoptionsService optionService;
+	private final ProductStatisticsService statisticsService ;
 
 	private final ProductImageService imageService;
 	private final UsersDSLRepository userDSLRepository;
@@ -184,5 +186,11 @@ public class AdminProductsController {
 		}
 
 
+	}
+	
+	@GetMapping("/administrator/statistics")
+	public ResponseEntity<?> statistics(Long id) {
+		Map<String, Object> response = statisticsService.findGenderPurchase(id);
+		return ResponseEntity.ok(response);
 	}
 }
