@@ -27,19 +27,30 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	public List<GenderPurchaseDTO> findGenderPurchase(Long productId) {
 	    // M과 F를 미리 정의한 리스트
 	    List<String> genders = Arrays.asList("M", "F");
-	    
-	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
-	            Projections.bean(GenderPurchaseDTO.class,
-	                    users.gender,
-	                    ordersDetail.purchaseNumber.count().as("purchaseCount")))
-	         .from(ordersDetail)
-	         .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
-	         .leftJoin(users).on(orders.userId.eq(users.userId))
-	         .where(ordersDetail.productId.eq(productId)
-	         .and(users.gender.in(genders)))  // M과 F만 가져오기
-	         .groupBy(users.gender)
-	         .fetch();
-
+//	    
+//	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
+//	            Projections.bean(GenderPurchaseDTO.class,
+//	                    users.gender,
+//	                    ordersDetail.purchaseNumber.count().as("purchaseCount")))
+//	         .from(ordersDetail)
+//	         .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
+//	         .leftJoin(users).on(orders.userId.eq(users.userId))
+//	         .where(ordersDetail.productId.eq(productId)
+//	         .and(users.gender.in(genders)))  // M과 F만 가져오기
+//	         .groupBy(users.gender)
+//	         .fetch();
+		List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
+		        Projections.bean(GenderPurchaseDTO.class,
+		                users.gender,
+		                ordersDetail.productId,
+		                ordersDetail.purchaseNumber.count().as("purchaseCount")))  // 각 상품별 구매 수를 집계
+		    .from(ordersDetail)
+		    .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
+		    .leftJoin(users).on(orders.userId.eq(users.userId))
+		    .where(ordersDetail.productId.eq(productId)
+		    .and(users.gender.in(genders)))  // M과 F만 가져오기
+		    .groupBy(users.gender, ordersDetail.productId)  // 성별과 상품별로 그룹화
+		    .fetch();
 	    // M 성별이 없으면 추가
 	    if (dtoList.stream().noneMatch(dto -> "M".equals(dto.getGender()))) {
 	        dtoList.add(GenderPurchaseDTO.builder()

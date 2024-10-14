@@ -77,6 +77,7 @@ public class OrdersServiceImpl implements OrdersService {
 			}
 		}
 		if (purchaseAddress != null) {
+			
 			try {
 				purchaseAddress = addressService.findByUserIdAndLocationName(purchaseAddress.getUserId(),
 						purchaseAddress.getLocationName());
