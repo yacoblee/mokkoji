@@ -14,6 +14,7 @@ import ProductStatistics from "./ProductStatistics";
 
 
 const ProductManagement = () => {
+  
   const [list, setList] = useState([]);
   const [pageMaker, setPageMaker] = useState({});
   const [page, setPage] = useState(1);
