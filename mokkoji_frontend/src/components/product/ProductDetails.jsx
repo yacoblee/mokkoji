@@ -151,7 +151,7 @@ const ProductDetails = () => { //===============================================
 
                 </div>
                 <p className="productName hi" >
-                    {product.name}
+                    {product?.name || 'Loading...'}
                 </p>
                 <div className='box'>
                     <div className='imgBox'>
@@ -182,7 +182,7 @@ const ProductDetails = () => { //===============================================
                         <div className='forminner'>
                             <div className="selectedInfo">
                                 <p className="productName">
-                                    {product.name}
+                                    {product?.name || 'Loading...'}
                                 </p>
                                 {product.guide}
                                 <p className='deliveryifo'>

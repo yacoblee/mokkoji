@@ -93,15 +93,15 @@ const ProductDetailsInfo = ({ product }) => {
                 </h2>
                 <div className='imgInfo'  >
 
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />
                     <p>
                         {text.name}
                     </p>
                     <p>
                         {text.mainDescription}
                     </p>
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1].name}`} alt={product.name} />
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1].name}`} alt={product.name? product.name:''} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name? product.name:''} />
 
                     <p>
                         {text.guide}
@@ -110,15 +110,15 @@ const ProductDetailsInfo = ({ product }) => {
                         {text.subDescription}
                     </p>
                     {mainimages[3] ?
-                        <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name} />
-                        : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />}
+                        <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name? product.name:''} />
+                        : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />}
                 </div>
                 <hr />
                 <h2 id="shipping">
                     배송 / 사이즈
                 </h2>
                 <div className='deliSizeInfo' >
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />
 
                     <div className="productSizeInfo">
                         {text.sizeInfo}

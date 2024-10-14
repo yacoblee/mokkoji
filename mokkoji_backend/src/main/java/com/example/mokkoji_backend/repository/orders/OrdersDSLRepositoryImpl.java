@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.repository.orders;
 import com.example.mokkoji_backend.domain.OrdersDTO;
 import com.example.mokkoji_backend.domain.productStatistics.FavoriteGenderDTO;
 import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
+import com.example.mokkoji_backend.domain.productStatistics.RegDatePurchaseDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -29,18 +30,42 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	    // M과 F를 미리 정의한 리스트
 	    List<String> genders = Arrays.asList("M", "F");
 
-	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
-	            Projections.bean(GenderPurchaseDTO.class,
-	                    users.gender,
-	                    ordersDetail.purchaseNumber.count().as("purchaseCount")))
-	         .from(ordersDetail)
-	         .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
-	         .leftJoin(users).on(orders.userId.eq(users.userId))
-	         .where(ordersDetail.productId.eq(productId)
-	         .and(users.gender.in(genders)))  // M과 F만 가져오기
-	         .groupBy(users.gender)
-	         .fetch();
+//	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
+//	            Projections.bean(GenderPurchaseDTO.class,
+//	                    users.gender,
+//	                    ordersDetail.purchaseNumber.count().as("purchaseCount")))
+//	         .from(ordersDetail)
+//	         .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
+//	         .leftJoin(users).on(orders.userId.eq(users.userId))
+//	         .where(ordersDetail.productId.eq(productId)
+//	         .and(users.gender.in(genders)))  // M과 F만 가져오기
+//	         .groupBy(users.gender)
+//	         .fetch();
 
+//	    
+//	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
+//	            Projections.bean(GenderPurchaseDTO.class,
+//	                    users.gender,
+//	                    ordersDetail.purchaseNumber.count().as("purchaseCount")))
+//	         .from(ordersDetail)
+//	         .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
+//	         .leftJoin(users).on(orders.userId.eq(users.userId))
+//	         .where(ordersDetail.productId.eq(productId)
+//	         .and(users.gender.in(genders)))  // M과 F만 가져오기
+//	         .groupBy(users.gender)
+//	         .fetch(); 
+		List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
+		        Projections.bean(GenderPurchaseDTO.class,
+		                users.gender,
+		                ordersDetail.productId,
+		                ordersDetail.purchaseNumber.count().as("purchaseCount")))  // 각 상품별 구매 수를 집계
+		    .from(ordersDetail)
+		    .leftJoin(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber))
+		    .leftJoin(users).on(orders.userId.eq(users.userId))
+		    .where(ordersDetail.productId.eq(productId)
+		    .and(users.gender.in(genders)))  // M과 F만 가져오기
+		    .groupBy(users.gender, ordersDetail.productId)  // 성별과 상품별로 그룹화
+		    .fetch();
 	    // M 성별이 없으면 추가
 	    if (dtoList.stream().noneMatch(dto -> "M".equals(dto.getGender()))) {
 	        dtoList.add(GenderPurchaseDTO.builder()
@@ -119,4 +144,28 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 				.fetch();  // 결과 반환
 	}
 
+//	SELECT o.reg_date , COUNT(od.purchase_number) AS purchase_count
+//	FROM ordersdetail od
+//	JOIN orders o ON od.purchase_number = o.purchase_number
+//	JOIN users u ON o.user_id = u.user_id
+//
+//	WHERE od.product_id = 15
+//	GROUP BY o.reg_date;
+	@Override
+	public List<RegDatePurchaseDTO> findRegDatePurchase(Long productId) {
+	    
+	    List<RegDatePurchaseDTO> dtoList = jpaQueryFactory.select(
+	            Projections.bean(RegDatePurchaseDTO.class, 
+	                orders.regDate.as("regDate"),
+	                ordersDetail.purchaseNumber.count().as("purchaseCount"))) // 특정 컬럼 카운트
+	        .from(ordersDetail)
+	        .join(orders).on(ordersDetail.purchaseNumber.eq(orders.purchaseNumber)) // INNER JOIN
+	        .where(ordersDetail.productId.eq(productId))
+	        .groupBy(orders.regDate)
+	        .fetch();
+	        
+	    return dtoList;
+	}
+
+	
 }
