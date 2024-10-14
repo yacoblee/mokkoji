@@ -2,14 +2,14 @@ import React from 'react';
 import axios from 'axios';
 const UserInfoWindow = ({ users, onClose }) => {
 
-  React.useEffect(() => {
-    console.log("UserInfoWindow opened with user:", users); // 확인용 로그
-    const newWindow = window.open("", "_blank", "width=600,height=400");
+	React.useEffect(() => {
+		console.log("UserInfoWindow opened with user:", users); // 확인용 로그
+		const newWindow = window.open("", "_blank", "width=600,height=400");
 
-    console.log("New window object:", newWindow); // 새 창 객체가 제대로 생성되는지 확인
+		console.log("New window object:", newWindow); // 새 창 객체가 제대로 생성되는지 확인
 
-    if (newWindow) {
-      const windowContent = `
+		if (newWindow) {
+			const windowContent = `
         <html>
           <head>
             <title>User Info</title>
@@ -169,28 +169,28 @@ this.form.intercept_date.value=this.form.intercept_date.defaultValue; }">
         </html>
       `;
 
-      newWindow.document.write(windowContent);
-      newWindow.document.close();
+			newWindow.document.write(windowContent);
+			newWindow.document.close();
 
 
-      if (newWindow.closed) {
-        onClose();
-        clearInterval(timer);
-      }
+			if (newWindow.closed) {
+				onClose();
+				clearInterval(timer);
+			}
 
 
-      return () => {
-        if (!newWindow.closed) {
-          newWindow.close();
-        }
-      };
-    } else {
-      console.log("Pop-up was blocked."); // 팝업 차단 확인 로그
-      alert("팝업이 차단되었습니다. 브라우저 설정을 확인하세요.");
-    }
-  }, [users, onClose]);
+			return () => {
+				if (!newWindow.closed) {
+					newWindow.close();
+				}
+			};
+		} else {
+			console.log("Pop-up was blocked."); // 팝업 차단 확인 로그
+			alert("팝업이 차단되었습니다. 브라우저 설정을 확인하세요.");
+		}
+	}, [users, onClose]);
 
-  return null; // 컴포넌트 자체는 렌더링하지 않음
+	return null; // 컴포넌트 자체는 렌더링하지 않음
 };
 
 export default UserInfoWindow;

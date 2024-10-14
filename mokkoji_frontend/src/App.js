@@ -27,6 +27,7 @@ import MyPageMain from './components/mypage/MyPageMain';
 import VerifyCode from './components/login/VerifyCode';
 import ResetPassword from './components/login/ResetPassword';
 import ProductsInsert from './components/administrator/ProductsInsert.jsx';
+import Userinfo from './components/login/Userinfo.jsx';
 
 const App = () => {
 
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/administrator/*" element={<Admin />} >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="users/userinfo" element={<Userinfo />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/insert" element={<ProductInserts />} />
           <Route path="orders" element={<OrderManagement />} />

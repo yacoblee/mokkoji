@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +26,10 @@ import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
 import com.example.mokkoji_backend.entity.goods.Products;
+import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.repository.login.AddressRepository;
 import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductImageService;
@@ -54,7 +57,7 @@ public class AdminProductsController {
 	
 	private final ProductImageService imageService;
 	private final UsersDSLRepository userDSLRepository;
-	
+	private final AddressRepository addressRepository;
 	
 	@GetMapping("/administrator/products")
 	public ResponseEntity<?> indexPage(PageRequestDTO requestDTO) {
@@ -80,7 +83,7 @@ public class AdminProductsController {
 	
 	
 	
-	
+	// 유저 검색 
 	@PostMapping("/administrator/users")
 	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO){
 		System.out.println("들어왔니?");
@@ -93,6 +96,7 @@ public class AdminProductsController {
 //		}
 		int count = userService.countBy();
 		log.info("$$ 서치 결과"+result);
+		
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("users", dto );
 	    response.put("pageMaker", result);
@@ -100,6 +104,13 @@ public class AdminProductsController {
 		return ResponseEntity.ok(response);
 	}
 	
+	// 유저 주소 검색 
+	@PostMapping("/administrator/users/address")
+	public ResponseEntity<?> suchUsersAddress(@RequestBody UsersDTO requestDTO){
+		log.info("주소 찾기 들어옴?" + requestDTO);
+		List<Address> address = addressRepository.findByUserId(requestDTO.getUserId());  
+		return ResponseEntity.ok(address);
+	}
 	
 
 	@GetMapping("/administrator/psave")
