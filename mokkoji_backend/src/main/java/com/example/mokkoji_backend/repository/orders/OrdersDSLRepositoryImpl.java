@@ -1,25 +1,22 @@
 package com.example.mokkoji_backend.repository.orders;
 
-import static com.example.mokkoji_backend.entity.login.QUsers.users;
-import static com.example.mokkoji_backend.entity.orders.QOrders.orders;
-import static com.example.mokkoji_backend.entity.orders.QOrdersDetail.ordersDetail;
-import static com.example.mokkoji_backend.entity.myPage.QFavorites.favorites;
-import static com.example.mokkoji_backend.entity.goods.QProducts.products;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
+import com.example.mokkoji_backend.domain.OrdersDTO;
 import com.example.mokkoji_backend.domain.productStatistics.FavoriteGenderDTO;
 import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-import com.example.mokkoji_backend.domain.OrdersDTO;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.example.mokkoji_backend.entity.goods.QProducts.products;
 import static com.example.mokkoji_backend.entity.login.QAddress.address;
+import static com.example.mokkoji_backend.entity.login.QUsers.users;
+import static com.example.mokkoji_backend.entity.myPage.QFavorites.favorites;
+import static com.example.mokkoji_backend.entity.orders.QOrders.orders;
+import static com.example.mokkoji_backend.entity.orders.QOrdersDetail.ordersDetail;
 
 
 @RequiredArgsConstructor
