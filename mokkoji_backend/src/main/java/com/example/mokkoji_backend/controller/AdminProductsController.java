@@ -105,6 +105,15 @@ public class AdminProductsController {
 		return ResponseEntity.ok(response);
 	}
 	
+	// 유저 주소 검색 
+	@PostMapping("/administrator/users/address")
+	public ResponseEntity<?> suchUsersAddress(@RequestBody UsersDTO requestDTO){
+		log.info("주소 찾기 들어옴?" + requestDTO);
+		List<Address> address = addressRepository.findByUserId(requestDTO.getUserId());  
+		return ResponseEntity.ok(address);
+	}
+		
+	
 	
 
 	@GetMapping("/administrator/psave")
