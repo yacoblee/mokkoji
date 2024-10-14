@@ -27,6 +27,22 @@ function ProductRelatedStorage() {
     const handleFileChange = (e, imageType) => {
         const files = e.target.files;
         const fileArray = Array.from(files);
+        if (imageType === 'mainImage' && fileArray.length < 3) {
+            alert("메인 이미지는 최소 3개 등록 해주세요");
+            setMainImage([]); return
+        }
+        if (imageType === 'mainImage' && fileArray.length > 4) {
+            alert("메인 이미지는 4개까지 노출 됩니다.");
+            setMainImage([]); return
+        }
+        if (imageType === 'slideImage' && fileArray.length < 1) {
+            alert("슬라이드 이미지는 최소 1개 등록 해주세요");
+            setMainImage([]); return
+        }
+        if (imageType === 'slideImage' && fileArray.length > 5) {
+            alert("슬라이드 이미지는 5개까지 노출 됩니다.");
+            setMainImage([]); return
+        }
         const previews = fileArray.map((file) => {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -69,7 +85,24 @@ function ProductRelatedStorage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-
+        if (product.name == null || product.price == null ||
+            product.sizeInfo == null || product.stockCount == null || product.categoryId == null) {
+            alert("상품 필수 정보를 등록해 주세요."); return
+        }
+        if (product.uploadfilef == null) {
+            alert("상품 대표이미지를 등록해 주세요."); return
+        }
+        if (options.length < 1) {
+            if (options[0].content == '' || options[0].price == '') {
+                alert("옵션을 하나이상 등록해 주세요."); return
+            }
+        }
+        if (mainImage.length > 4 || mainImage.length < 3) {
+            alert("메인 이미지를 적절히 등록해 주세요."); return
+        }
+        if (slideImage.length > 5 || slideImage.length < 1) {
+            alert("슬라이드 이미지를 적절히 등록해 주세요."); return
+        }
         // 메인 이미지 추가
         mainImage.forEach((image, index) => {
             formData.append('mainImages', image);  // 파일들을 FormData에 추가
@@ -133,18 +166,19 @@ function ProductRelatedStorage() {
                 {/* 상품 정보 입력 */}
                 <h3 className="productTitle">상품 정보 입력</h3>
                 <div className="inserProductsForm1">
-                    <label>상품 이름</label>
+                    <label>상품 이름 (*)</label>
                     <input name="name" value={product.name || ''} onChange={onChangeProduct} />
 
-                    <label>상품 가격</label>
-                    <input name="price" value={product.price || ''} onChange={onChangeProduct} />
+                    <label>상품 가격 (*)</label>
+                    <input name="price" value={product.price || ''}
+                        type="number" onChange={onChangeProduct} />
 
-                    <label>상품 크기 정보</label>
+                    <label>상품 크기 정보 (*)</label>
                     <textarea name="sizeInfo"
                         value={product.sizeInfo || ''}
                         onChange={onChangeProduct} />
 
-                    <label>상품 가이드</label>
+                    <label>상품 가이드 (*)</label>
                     <textarea name="guide"
                         value={product.guide || ''}
                         onChange={onChangeProduct} />
@@ -157,13 +191,13 @@ function ProductRelatedStorage() {
                     <textarea name="subDescription"
                         value={product.subDescription || ''}
                         onChange={onChangeProduct} />
-                    <label>메인 이미지 파일명</label>
+                    <label>상품 대표 이미지 (*)</label>
                     <div className="adminProductImage">
                         {/* 파일이 없을 때는 기존 이미지, 파일이 있으면 업로드된 파일의 미리보기 이미지 */}
                         {product.uploadfilef ? (
                             <img src={imagePreview} alt="미리보기 이미지" />
                         ) : (
-                            <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName ||''}`} alt={product.mainImageName ||''} />
+                            <img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName || ''}`} alt={product.mainImageName || ''} />
                         )}
                         <input name="uploadfilef"
                             type="file"
@@ -171,14 +205,16 @@ function ProductRelatedStorage() {
                             onChange={(e) => handleFileChange(e, 'uploadfilef')}
                         />
                     </div>
-                    <label>재고 수량</label>
+                    <label>재고 수량 (*)</label>
                     <input name="stockCount"
+                        type="number"
                         value={product.stockCount || ''}
                         onChange={onChangeProduct} />
                     <label>카테고리 ID</label>
                     <select name="categoryId" id="productSearch"
                         value={product.categoryId}
-                        onChange={onChangeProduct} >
+                        onChange={onChangeProduct} required >
+                        <option disabled selected>카테고리를 입력해주세요</option>
                         {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
                     </select>
 
@@ -217,6 +253,7 @@ function ProductRelatedStorage() {
                         <input
                             name="price"
                             value={option.price}
+                            type="number"
                             onChange={(e) => {
                                 const newOptions = [...options];
                                 newOptions[index].price = e.target.value;

@@ -68,7 +68,7 @@ public interface ProductsService {
 	
 
 	// - insert , update
-	void save(Products item);
+	Products save(Products item);
 	
 	// 좋아요 상태 업데이트
 	boolean updateLikeCount(Long productId, String sign);
@@ -84,6 +84,9 @@ public interface ProductsService {
 	Map<String, Object> updateProductAndOptions
 	(ProductSaveDTO saveDTO, MultipartFile uploadfilef, HttpServletRequest request) throws IOException;
 
+	 void insertAllProduct(ProductSaveDTO productSaveDTO,
+			 MultipartFile[] mainImages,MultipartFile[] slideImages,
+			 MultipartFile uploadfilef, HttpServletRequest request) throws IOException ;
 	//ProductsDTO findByJoinOne(Long id);
 	//List<Products> findAllProducts(Criteria cri);
 	//int countByCategoryId(String CategoryId);
