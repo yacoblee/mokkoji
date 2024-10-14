@@ -82,11 +82,11 @@ public interface ProductsService {
 	void deleteProduct(Long id);
 	
 	Map<String, Object> updateProductAndOptions
-	(ProductSaveDTO saveDTO, MultipartFile uploadfilef, HttpServletRequest request) throws IOException;
+	(ProductSaveDTO saveDTO, MultipartFile uploadfilef) throws IOException;
 
 	 void insertAllProduct(ProductSaveDTO productSaveDTO,
 			 MultipartFile[] mainImages,MultipartFile[] slideImages,
-			 MultipartFile uploadfilef, HttpServletRequest request) throws IOException ;
+			 MultipartFile uploadfilef) throws IOException ;
 	//ProductsDTO findByJoinOne(Long id);
 	//List<Products> findAllProducts(Criteria cri);
 	//int countByCategoryId(String CategoryId);

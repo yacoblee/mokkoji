@@ -16,10 +16,11 @@ public interface ProductImageService {
 	List<ProductImages> findByProductIdAndType(Long productId, String type);
 	List<ProductImages> findByProductId(Long productId);
 	String uploadFile(MultipartFile file 
-			,HttpServletRequest request)throws IOException;
+			)throws IOException;
 	 void saveImages(List<ProductImages> imageList
-				, MultipartFile[] files,
-				HttpServletRequest request) throws IOException;
+				, MultipartFile[] files) throws IOException;
+	 
+	 void saveImageListWithProduct(MultipartFile[] imageList,Long productId ,String type) throws IOException;
 	ProductImages findById(ProductImagesId id);
 
 	void save(ProductImages options);

@@ -16,8 +16,8 @@ import com.example.mokkoji_backend.entity.goods.ProductImagesId;
 import com.example.mokkoji_backend.repository.goods.ProductsImagesRepository;
 import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -28,6 +28,14 @@ public class ProductImageServiceImpl implements ProductImageService {
 
 	private final ProductsImagesRepository repository;
 	private final ProductsRepository productService;
+	private final ServletContext servletContext;
+	
+	private String getProductImagesRealPath() {
+	    String realPath = servletContext.getRealPath("/");
+	    realPath += "resources" + File.separator + "productImages" + File.separator;
+	    return realPath;
+	}
+	
 	@Override
 	public List<ProductImages> findAll() {
 		return repository.findAll();
@@ -72,14 +80,12 @@ public class ProductImageServiceImpl implements ProductImageService {
 	}
 	
 	@Override
-	public String uploadFile(MultipartFile file ,HttpServletRequest request)throws IOException {
+	public String uploadFile(MultipartFile file)throws IOException {
 		 LocalDateTime now = LocalDateTime.now();
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss_");
 		 String formattedDate = now.format(formatter);
 		//물리적 저장위치 확인
-		String realPath = request.getServletContext().getRealPath("/");
-		//realPath +="resources\\productImages\\";
-		realPath += "resources" + File.separator + "productImages" + File.separator;
+		String realPath = getProductImagesRealPath();
 		// 디렉토리 생성 확인
 	    File directory = new File(realPath);
 	    if (!directory.exists()) {
@@ -110,8 +116,7 @@ public class ProductImageServiceImpl implements ProductImageService {
 	@Override
 	//@Transactional // 트랜잭션 처리 적용
 	public void saveImages(List<ProductImages> imageList
-			, MultipartFile[] files,
-			HttpServletRequest request) throws IOException{
+			, MultipartFile[] files) throws IOException{
 		  Long productId = imageList.get(0).getProductId();
 		  try {
 			  // 1. 기존의 이미지 데이터를 삭제
@@ -138,7 +143,7 @@ public class ProductImageServiceImpl implements ProductImageService {
 					  
 					  // 파일이 존재하면 파일을 업로드
 					  if (file != null) {
-						  String uploadedFileName = uploadFile(file, request);
+						  String uploadedFileName = uploadFile(file);
 						  imageName = uploadedFileName;  // 파일 업로드 후 새로운 파일 이름으로 업데이트
 					  }
 					  
@@ -167,5 +172,23 @@ public class ProductImageServiceImpl implements ProductImageService {
 			log.info("전체 오류");
 		}
 	}
+	
+	public void saveImageListWithProduct(MultipartFile[] imageList,Long productId ,String type) throws IOException {
+		for (int i = 0; i < imageList.length; i++) {
+			MultipartFile image = imageList[i];
+			String newName = uploadFile(image);
+			log.info("saveList 파일 저장 이름 : "+newName);
+			ProductImages entity = ProductImages.builder()
+			         .productId(productId)
+		                .name(newName)
+		                .type(type)
+		                .order(i + 1) // i는 0부터 시작하므로, 순서값은 i + 1로 설정
+		                .build();
+			log.info(entity);
+			save(entity);
+		}
+		
+	}
+	
 
 }
