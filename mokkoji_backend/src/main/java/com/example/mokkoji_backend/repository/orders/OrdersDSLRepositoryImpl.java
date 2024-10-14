@@ -18,8 +18,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 
-@Repository
+import com.example.mokkoji_backend.domain.OrdersDTO;
+import static com.example.mokkoji_backend.entity.login.QAddress.address;
+
+
 @RequiredArgsConstructor
+@Repository
 public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	private final JPAQueryFactory jpaQueryFactory;
 
@@ -27,7 +31,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	public List<GenderPurchaseDTO> findGenderPurchase(Long productId) {
 	    // M과 F를 미리 정의한 리스트
 	    List<String> genders = Arrays.asList("M", "F");
-	    
+
 	    List<GenderPurchaseDTO> dtoList = jpaQueryFactory.select(
 	            Projections.bean(GenderPurchaseDTO.class,
 	                    users.gender,
@@ -59,7 +63,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	public List<FavoriteGenderDTO> findGenderFavorite(Long productId) {
 	    // M과 F를 미리 정의한 리스트
 	    List<String> genders = Arrays.asList("M", "F");
-	    
+
 	    List<FavoriteGenderDTO> dtoList = jpaQueryFactory.select(
 	            Projections.bean(FavoriteGenderDTO.class,
 	                    users.gender,
@@ -86,4 +90,33 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 
 	    return dtoList;
 	}
+	
+	
+	// ** 마이페이지에서 사용 ============================================================
+	
+	// 1. 리스트 전체
+	public List<OrdersDTO> findAllByUserId(String userId){
+		return jpaQueryFactory
+				.select(Projections.bean(OrdersDTO.class,
+						orders.purchaseNumber,
+						orders.userId,
+						orders.addressId,
+						address.locationName,
+						orders.total,
+						orders.regDate,
+						ordersDetail.productId,
+						products.name,
+						ordersDetail.optionContent,
+						ordersDetail.packagingOptionContent,
+						ordersDetail.productCnt,
+						ordersDetail.productTotalPrice
+				))
+				.from(orders)
+				.leftJoin(ordersDetail).on(orders.purchaseNumber.eq(ordersDetail.purchaseNumber))  // Orders와 OrdersDetail을 JOIN
+				.leftJoin(products).on(ordersDetail.productId.eq(products.id))  // OrdersDetail과 Product를 JOIN
+				.leftJoin(address).on(orders.addressId.eq(address.addressId))  // Orders와 Address를 JOIN
+				.where(orders.userId.eq(userId))  // 특정 userId로 필터링
+				.fetch();  // 결과 반환
+	}
+
 }

@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.mokkoji_backend.domain.OrdersDTO;
+import com.example.mokkoji_backend.entity.orders.Orders;
+import com.example.mokkoji_backend.jwtToken.TokenProvider;
+import com.example.mokkoji_backend.service.orders.OrdersDetailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.domain.OrderRequestDTO;
@@ -35,6 +36,14 @@ public class OrdersController {
 	private final UsersService userService;
 	private final AddressService addressService;
 	private final OrdersService orderService;
+
+	private final TokenProvider tokenProvider;
+
+	public String getUserIdFromHeader(String header) {
+		return tokenProvider.validateAndGetUserId(header.substring(7));
+	}
+
+
 	// ** 혜미 1 )구매 페이지로의 전환
 	//단품 구매시 
 	//cart에 있는지 확인해서 있다면 , dto 내용 추가해서 반환.
@@ -107,26 +116,22 @@ public class OrdersController {
 		return null;
 	}
 
-	@PostMapping("/cartpage")
-	public ResponseEntity<?> orderCartPage(@RequestBody Cart cart){
-		Map<String, Object> response = new HashMap<>();
+	// ** 마이페이지 사용 ==================================================================
 
+	// 1. DTO 리스트 출력
+	@GetMapping("/list")
+	public ResponseEntity<?> ordersList(@RequestHeader("Authorization") String header) {
+		String userId = getUserIdFromHeader(header);
 
-		//Packaging packagingEntity = packSerivce.findById(packagingId);
-		if(cart!=null) {
-			try {
-				System.out.println("*****Cart entity => "+cart);
+		try {
+			List<OrdersDTO> ordersList = orderService.listAllOrders(userId);
 
-				//CartDTO dto = cartService.entityToDto(cart);
-				CartDTO dto = cartService.entityToDto(cart);
-				response.put("productBuy", dto);
-				return ResponseEntity.ok(response);
-			} catch (Exception e) {
+			return ResponseEntity.ok(ordersList);
 
-				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("서비스 단에서 찾지 못함");
-			}
-
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : ordersList");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : ordersList");
 		}
-		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾지못함");
 	}
+
 }
