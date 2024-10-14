@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TopButton from './../modules/ScrollToTopBtn';
 import Modal from 'react-modal';
 import ProductRelatedStorage from "./ProductRelatedStorage";
+import ProductStatistics from "./ProductStatistics";
 
 
 const ProductManagement = () => {
@@ -297,10 +298,10 @@ const ProductManagement = () => {
   //상품 정보보기.
   const [isModalProductDetails, setIsModalProductDetails] = useState(false);
   //선택된 상품 아이디를 전송할 state
-  const [selectedProductId, setSelectedProductId] = useState(null); 
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
 
-  const onClickProductDetail = (id)=>{
+  const onClickProductDetail = (id) => {
     setSelectedProductId(id);
     setIsModalProductDetails(true);
   }
@@ -462,7 +463,8 @@ const ProductManagement = () => {
             {list.map(product => (
               <tr key={product.id}>
                 <td>{product.id}</td>
-                <td>{product.name}</td>
+                <td className="clickProductDetailTd"
+                onClick={() => onClickProductDetail(product.id)}>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.stockCount}</td>
                 <td>{product.likeCount}</td>
@@ -506,6 +508,7 @@ const ProductManagement = () => {
         </div>
         <ProductRelatedStorage sendCode={code} />
       </Modal>
+
       <Modal
         isOpen={isModalProductDetails}
         ariaHideApp={false}
@@ -516,8 +519,8 @@ const ProductManagement = () => {
           content: {
             height: '80%',
             width: '50%',
-            display: 'flex',
-            flexDirection: 'column-reverse',
+            // display: 'flex',
+            // flexDirection: 'column-reverse',
             alignItems: 'center',
             zIndex: '2000',
             top: '50%',
@@ -532,7 +535,7 @@ const ProductManagement = () => {
         <div className='Modalbutton'>
           <button onClick={() => setIsModalProductDetails(false)}>닫기</button>
         </div>
-        <ProductRelatedStorage sendCode={code} />
+        <ProductStatistics productId={selectedProductId} />
       </Modal>
     </div>
   );

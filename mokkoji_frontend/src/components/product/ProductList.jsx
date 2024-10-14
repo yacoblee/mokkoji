@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, NavLink, Link } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-//import ProductMainGuide from './ProductMainGuide.jsx'; // 현재 캐시 등의 문제로 에러 발생이 보임. 도로 가져옴
 import RenderPagination from "./RenderPagination";
 
 const ProductMainGuide = ({ text }) => {
@@ -26,111 +25,98 @@ const ProductMainGuide = ({ text }) => {
         </p>
     );
 };
+
 const ProductList = () => {
     const { category } = useParams();
     const [list, setList] = useState([]);
-    const [filterItem, SetFilterItem] = useState({
-        selectValue: 'allGoods',
-        //sortOption: 'uploadDateAsc',
-        inputValue: '',
+    const [page, setPage] = useState(1); // 페이지 상태를 독립적으로 관리
+    const [filterItem, setFilterItem] = useState({
+        size: 4,
+        categoryId: category,
+        keyword: '',
     });
-    const [page, setPage] = useState(1);
     const [resultCount, setResultCount] = useState(0);
-    const [displayMessage, setDisplayMessage] = useState('');
     const [pageMaker, setPageMaker] = useState({});
 
+    // API 호출 함수
+    const axiosCall = () => {
+        console.log("axiosCall_ProductList.jsx _ keyword : " + filterItem.keyword.trim());
 
-    const axiosCall = useCallback(() => {
-        console.log("axiosCall_ProductList.jsx _ inputValue : " + filterItem.inputValue.trim());
         let uri;
-        if (filterItem.inputValue.trim() === '') {
-            // 검색어가 없을 때 카테고리 전체를 가져오기 위한 URI
-            uri = `${API_BASE_URL}/goods/${filterItem.selectValue ? filterItem.selectValue : category}`;
-            console.log(`axious요청 : 카테고리 별 검색`);
-            console.log(`filterItem.selectValue : ${filterItem.selectValue}`);
-            //setDisplayMessage('');
+        if (filterItem.keyword.trim() === '') {
+            // 카테고리 전체를 가져오기 위한 URI
+            uri = `${API_BASE_URL}/goods/${filterItem.categoryId}`;
         } else {
-            // 검색어가 있을 때 검색 API 호출
+            // 검색 API 호출
             uri = `${API_BASE_URL}/goods/search`;
-            console.log(`axious요청 : 서치 검색`);
-            //updateDisplayMessage();
         }
+
         axios.get(uri, {
             params: {
-                size: 4,
-                page: page, // 첫 페이지로 설정
-                categoryId: (filterItem.inputValue.trim() === '' ? category : filterItem.selectValue),
-                ...(filterItem.inputValue.trim() ? { keyword: filterItem.inputValue } : {})
-            }
+                size: filterItem.size,
+                page: page, // 페이지 값은 별도 관리
+                categoryId: filterItem.categoryId,
+                keyword: filterItem.keyword.trim(),
+            },
         })
             .then(response => {
                 const { productList, pageMaker } = response.data;
                 setList(productList);
                 setResultCount(productList.length);
                 setPageMaker(pageMaker);
-                console.log(productList);
             })
             .catch(err => {
                 console.log(err);
                 setList([]);
             });
-    }, [category, filterItem, page]);
+    };
+
+    // 카테고리 변경 시 필터와 페이지 초기화 및 API 호출
     useEffect(() => {
-        // 카테고리 변경 시 검색어 초기화 및 첫 페이지로 설정 -> 비동기 처리시 박자가 늦는 감이 있음.
-        SetFilterItem(it => ({ ...it, selectValue: 'allGoods', inputValue: '' }));
-        setPage(1);
-        axiosCall();
+        setFilterItem(it => ({
+            ...it,
+            categoryId: category, // URL에서 변경된 카테고리를 반영
+            keyword: '', // 카테고리가 변경될 때 검색어를 초기화
+        }));
+        setPage(1); // 카테고리가 변경될 때 페이지를 1로 초기화
+
     }, [category]);
 
+    // 페이지 또는 카테고리가 변경될 때 API 호출
     useEffect(() => {
         axiosCall();
-    }, [page]);
-    const onChangeSelectValue = (e) => {
-        SetFilterItem(it => ({ ...it, selectValue: e.target.value }));
+    }, [page, filterItem.categoryId]); // 페이지와 카테고리 변경 시 호출
+
+    // 카테고리 선택 변경 처리
+    const onChangeCategoryId = (e) => {
+        setFilterItem(it => ({
+            ...it,
+            categoryId: e.target.value,
+        }));
+        setPage(1); // 카테고리 변경 시 페이지를 1로 초기화
     };
 
-    // const onChangeSortOption = (e) => {
-    //     SetFilterItem(it => ({ ...it, sortOption: e.target.value }));
-    // };
-
-    const onChangeInputValue = (e) => {
-        SetFilterItem(it => ({ ...it, inputValue: e.target.value }));
+    // 키워드 변경 처리
+    const onChangeKeyword = (e) => {
+        setFilterItem(it => ({
+            ...it,
+            keyword: e.target.value,
+        }));
     };
 
-    const onclickSearch = () => {
-        setPage(1);
+    // 검색 버튼 클릭 시 API 호출
+    const onClickSearch = () => {
+        setPage(1); // 검색 시 첫 페이지로 초기화
         axiosCall();
     };
 
     const onEnterSearch = (e) => {
         if (e.key === "Enter") {
-            // setPage(1);
-            // axiosCall();
-            onclickSearch();
+            onClickSearch();
         }
     };
 
-    const updateDisplayMessage = (count) => {
-        const selectedCategory = productMenu.find(menu => menu.category === filterItem.selectValue);
-        //const selectedSortOption = sortOptions.find(option => option.value === filterItem.sortOption)?.label;
-
-        setDisplayMessage(
-            <>
-                <span className='NamedCategory'>카테고리:</span>
-                <span className='NamedInfo'> {selectedCategory.description}</span>
-                {/*<span className='NamedCategory'>정렬:</span>
-                <span className='NamedInfo'> {selectedSortOption}</span>*/}
-                {list.length > 0 ? (
-                    <span className='searchResult'>"{filterItem.inputValue}"의 검색결과: {list.length}개</span>
-                ) : (
-                    <p>검색결과가 없습니다.</p>
-                )}
-            </>
-        );
-    };
-
-
-    // 메뉴바의 구성
+    // 메뉴바의 구성 카테고리별 검색
     const productMenu = [
         { category: 'allGoods', description: '전체상품' },
         { category: 'C1', description: '문구/사무' },
@@ -140,21 +126,11 @@ const ProductList = () => {
         { category: 'C5', description: '주방/식기' },
     ];
 
-    // 검색 조건에 대한 옵션
-    // const sortOptions = [
-    //     { value: 'like_conutDesc', label: '인기순' },
-    //     { value: 'priceDesc', label: '높은가격순' },
-    //     { value: 'priceAsc', label: '낮은가격순' },
-    //     { value: 'uploadDateAsc', label: '최신순' }
-    // ];
-
+    // 숫자를 금액으로 포맷팅하는 함수
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
 
-    //<NavLink to={`/goods/${items.category}` 카테고리 검색시 내용이 사라지지 않는 문제 발생}
-    //onClick={() => filterItem.inputValue  ? SetFilterItem({ selectValue:category, inputValue: '' }) : null}
-    //key={i}>{items.description}</NavLink>
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
@@ -162,31 +138,24 @@ const ProductList = () => {
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`}
                             onClick={() => {
-                                // 상태만 업데이트하고 axiosCall은 useEffect에서 처리
-                                if (filterItem.inputValue) {
-                                    SetFilterItem((it) => ({
-                                        ...it, inputValue: ''
-                                    }))
+                                if (filterItem.keyword) {
+                                    setFilterItem((it) => ({
+                                        ...it, keyword: ''
+                                    }));
                                 }
                             }}
                             key={i}>{items.description}</NavLink>
                     ))}
                 </div>
                 <div className='productSearch'>
-                    <select name="productSearch" id="productSearch" value={filterItem.selectValue} onChange={onChangeSelectValue}>
+                    <select name="productSearch" id="productSearch" value={filterItem.categoryId} onChange={onChangeCategoryId}>
                         {productMenu.map((items, i) => <option value={items.category} key={i}>{items.description}</option>)}
                     </select>
 
-                    {/*<select name="productSort" id="productSort" value={filterItem.sortOption} onChange={onChangeSortOption}>
-                        {sortOptions.map((items, i) => <option value={items.value} key={i}>{items.label}</option>)}
-                    </select>*/}
-
-                    <input type="text" name="productInput" id="productInput" value={filterItem.inputValue} onChange={onChangeInputValue} onKeyDown={onEnterSearch} />
-                    <button onClick={onclickSearch}>검색</button>
-                    {/*<span className='displayMessage'>{displayMessage}</span>*/}
+                    <input type="text" name="productInput" id="productInput" value={filterItem.keyword} onChange={onChangeKeyword} onKeyDown={onEnterSearch} />
+                    <button onClick={onClickSearch}>검색</button>
                 </div>
             </div>
-            {/*<div className='displayMessage2'>{displayMessage}</div>*/}
 
             <div className="productItemList">
                 {list.map((product, i) => (
@@ -204,12 +173,10 @@ const ProductList = () => {
                     </Link>
                 ))}
             </div>
-            {/* <div className="productPager"> */}
-            {/* {renderPagination()} */}
+
             <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
-            {/* </div> */}
         </>
     );
-}
+};
 
 export default ProductList;

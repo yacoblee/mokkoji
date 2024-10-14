@@ -30,6 +30,7 @@ public interface ProductsService {
 	Map<String, Object> getProductDetails(Long productId);
 	
 	Map<String, Object> getImageList(Long productId);
+	
 	//추천 리스트 반환
 	List<ProductsDTO> findTop4ByOrderByCountDescNative(Long id);
 	

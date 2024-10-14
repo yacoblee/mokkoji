@@ -18,6 +18,7 @@ import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
@@ -48,6 +49,8 @@ public class ProductsServiceImpl implements ProductsService {
 	private final PackagingService paservice;
 	private final ReviewsService reservice;
 	private final CodeService codeService;
+	
+	
 	// entity -> dto 변환 메서드 (DSR 이용)
 	private ProductsDTO dslentityToDto(Products product) {
 		return dsrepository.entityToDto(product);
@@ -324,6 +327,8 @@ public class ProductsServiceImpl implements ProductsService {
 		//response.put("code", codeList);
 		return response;
 	}
+	
+
 	@Override
 	public Map<String, Object> getImageList(Long productId){
 		Map<String, Object> response = new HashMap<>();

@@ -43,10 +43,11 @@
     content: '';
 }
 
-.searchProductAdmin input{
+.searchProductAdmin input {
     padding: 2px;
     margin: 2px;
 }
+
 .buttonwrapper button,
 .searchProductAdmin input[type="button"] {
     padding: 2px;
@@ -86,51 +87,58 @@
     text-align: center;
     margin: 10px;
 }
+
 /* ============================ */
 /* insert(Save) From */
 
-.inserProductsForm1{
+.inserProductsForm1 {
     display: grid;
     grid-template-columns: 1fr 4fr;
     gap: 10px;
     padding: 20px;
     margin: 20px;
 }
-.inserProductsForm2{
+
+.inserProductsForm2 {
     display: grid;
-     width: 50%; 
-    grid-template-columns: 1fr 2fr 1fr 2fr ;
+    width: 50%;
+    grid-template-columns: 1fr 2fr 1fr 2fr;
     gap: 10px;
     padding: 20px;
     background-color: aqua;
     margin: 20px auto;
 }
-.inserProductsForm3{
+
+.inserProductsForm3 {
     display: grid;
-     /* width: 50%;  */
-    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr  1fr 1fr 1fr ;
+    /* width: 50%;  */
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 1fr 1fr;
     gap: 10px;
     padding: 20px;
     background-color: aqua;
     margin: 20px;
 }
-.adminProductImage img{
+
+.adminProductImage img {
     width: 50px;
-    margin : 10px;
+    margin: 10px;
 }
-.inserProductsForm3 img{
+
+.inserProductsForm3 img {
     width: 50px;
-    margin : 10px;
+    margin: 10px;
 }
-.productDescription{
+
+.productDescription {
     display: grid;
     width: 300px;
     grid-template-columns: 1fr 2fr;
 }
+
 /* ====================================== */
-.fileResult img{
+.fileResult img {
     width: 150px;
-    margin : 10px;
+    margin: 10px;
 }
 
 .ProductRelatedStorage button {
@@ -139,4 +147,24 @@
     margin: 2px;
     border: 1px solid #ccc;
 }
+
 /* ---------------------------------------- */
+.clickProductDetailTd {
+    cursor: pointer;
+}
+
+.clickProductDetailTd:hover {
+    background: #e6e6e646;
+}
+
+.genderPurchases{
+    font-family: 'SUITE-Regular';
+    border:1px solid #ccc ;
+    padding: 5px;
+    width: 150px;
+    height: 250px;
+}
+.genderPurchasesresult span{
+    padding: 2px;
+    margin: 2px;
+}
