@@ -2,6 +2,8 @@ package com.example.mokkoji_backend.service.orders;
 
 import java.util.List;
 
+import com.example.mokkoji_backend.domain.OrdersDTO;
+import com.example.mokkoji_backend.repository.orders.OrdersDSLRepository;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.domain.CartDTO;
@@ -25,13 +27,14 @@ public class OrdersServiceImpl implements OrdersService {
 	AddressService addressService;
 	CartService cartService;
 	OrdersDetailService orderDetailSerivce;
+	OrdersDSLRepository ordersDSLRepository;
 
 	// ** 마이페이지에서만 사용 ===============================================
 
 	// 1) 사용자별 구매내역 조회
 	@Override
-	public List<Orders> userOrders(String userId) {
-		return ordersRepository.findByUserIdOrderByRegDateDesc(userId);
+	public List<OrdersDTO> listAllOrders(String userId) {
+		return ordersDSLRepository.findAllByUserId(userId);
 	}
 
 	// ** 상품 페이지 사용 ==================================================

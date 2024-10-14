@@ -335,6 +335,22 @@ function MyPageMain() {
             }) //apiCall
     }; //myPageOrders
 
+    // List 불러오기
+    const myPageOrdersDetail = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageOrdersDetail 성공 url=${url}`);
+                setUserOrdersDetail(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageOrdersDetail 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageOrdersDetail
+
 
 
     return (
@@ -390,6 +406,10 @@ function MyPageMain() {
                 <Route
                     path='orders'
                     element={<MyPageOrders
+                        userOrders={userOrders}
+                        userOrdersDetail={userOrdersDetail}
+                        myPageOrders={myPageOrders}
+                        myPageOrdersDetail={myPageOrdersDetail}
                     />}
                 />
                 <Route
