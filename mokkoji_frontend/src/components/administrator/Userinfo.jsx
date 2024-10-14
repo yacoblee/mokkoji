@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import '../../css/login/UserInfo.css';
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -20,33 +21,78 @@ const Userinfo = () => {
             .slice()  // 원본 배열을 복사하여 정렬
             .sort((a, b) => a.isDefault - b.isDefault);
     };
-
     const defaultAddress = getDefaultAddress(userAddress) || [];
     console.log("000", defaultAddress);
 
 
+    const [rows, setRows] = useState(defaultAddress);
+    const [currentIndex, setCurrentIndex] = useState(null);  // 현재 선택한 인덱스를 저장하는 상태
+
+    // 배송지 추가 함수
+    const addRow = () => {
+        const newAddress = {
+            addressId: '',  // 고유한 id 생성
+            locationName: '',
+            postalCode: '',
+            streetAddress: '',
+            detailedAddress: '',
+            recipientName: '',
+            recipientPhone: ''
+        };
+        setRows([...rows, newAddress]); // 새 항목을 추가
+    };
+
+    // 주소 검색 버튼 클릭 이벤트 핸들러
+    const openAddress = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    //배열 길이가 3이상일 경우 버튼 disable
+    const isDisabled = rows.length >= 3;
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [streetAddress, setstreetAddress] = useState('');
-    const [postalCode, setpostalCode] = useState('');
 
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = '';
 
+        // 도로명 주소일 경우 extraAddress 설정
         if (data.addressType === 'R') {
             if (data.bname !== '') {
-                extraAddress += data.bname;
+                extraAddress += data.bname; // 동 이름
             }
             if (data.buildingName !== '') {
-                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName); // 건물 이름
             }
-            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : ''); // 전체 주소
         }
 
-        setpostalCode(data.zonecode);
-        setstreetAddress(fullAddress);
-        setIsModalOpen(false); // 모달 닫기
+        // 해당 인덱스의 주소를 업데이트
+
+        // 해당 인덱스의 주소를 업데이트
+        setRows(prevRows => {
+            const updatedRows = [...prevRows];
+            updatedRows[currentIndex] = {
+                ...updatedRows[currentIndex],
+                postalCode: data.zonecode,
+                streetAddress: fullAddress
+            };
+            return updatedRows;
+        });
+
+
+        setIsModalOpen(false);  // 모달 닫기
     };
+
+
+    // 주소 검색 버튼 클릭 시 모달을 열고, 인덱스를 저장함
+    const openAddressSearch = (index) => {
+        setCurrentIndex(index);  // 현재 인덱스를 상태로 저장
+        setIsModalOpen(true);
+    };
+
+
 
     return (
         <div className='userinfo-container'>
@@ -92,14 +138,19 @@ const Userinfo = () => {
                                         <td>{users.isAdmin ? "관리자" : "일반 회원"}</td>
                                     </tr>
 
-                                    {defaultAddress.map(ad => (
-                                        <tr>
-                                            <th key={ad.addressId}>배송지명<br />  &#91; {ad.locationName}  &#93;  </th>
+                                    {rows.map((ad, index) => (
+                                        <tr key={ad.addressId || index}>
+                                            <th>배송지명<br />&#91; {ad.locationName || <input type="text" size="6" />} &#93;</th>
                                             <td colSpan="3">
-                                                <input type="text" defaultValue={ad.postalCode} />
-                                                <a href="/">주소검색</a>
-                                                <p><input type="text" defaultValue={ad.streetAddress} size="60" /> 기본주소</p>
-                                                <p><input type="text" defaultValue={ad.detailedAddress} size="60" /> 상세주소</p>
+                                                <p>우편번호 &nbsp; &nbsp;&nbsp; <input type="text" defaultValue={ad.postalCode} />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span className='userinfo-addressAdd' onClick={() => openAddressSearch(index)}>주소검색</span></p>
+                                                <p>기본주소 &nbsp; &nbsp;&nbsp; <input type="text" defaultValue={ad.streetAddress} size="60" /></p>
+                                                <p>상세주소 &nbsp; &nbsp;&nbsp; <input type="text" defaultValue={ad.detailedAddress} size="60" /></p>
+                                                <p>받는 사람  &nbsp;  &nbsp; <input type="text" defaultValue={ad.recipientName} size="60" />
+                                                </p>
+                                                <p>핸드폰 번호 <input type="text" defaultValue={ad.
+                                                    recipientPhone} size="60" />
+                                                </p>
                                             </td>
                                         </tr>
                                     ))}
@@ -107,7 +158,19 @@ const Userinfo = () => {
                                     {defaultAddress.length < 3 && (
                                         <tr>
                                             <td colSpan="4">
-                                                <button onClick={handleComplete}>+ 배송지 추가</button>
+                                            <p   style={{  color: isDisabled ? 'red' : 'white', // 비활성화 시 색상 변경 
+                                            }}>
+                                                <sapn className={`userinfo-addressAdd ${isDisabled ? 'disabled' : ''}`} onClick={() => {
+                                                    if (!isDisabled) {
+                                                        addRow();
+                                                    }
+                                                }}
+                                                    style={{
+                                                        cursor: isDisabled ? 'not-allowed' : 'pointer', // 비활성화 시 커서 변경
+                                                        color: isDisabled ? 'gray' : 'white', // 비활성화 시 색상 변경
+                                                    }}
+                                                >+ 배송지 추가</sapn>
+                                               &nbsp;더 이상 배송지목록을 추가할 수 없습니다.</p>
                                             </td>
                                         </tr>
                                     )}
@@ -171,21 +234,26 @@ const Userinfo = () => {
                     </div>
                 </form>
             </div>
-            {/* <Modal
-                visible={isModalOpen}
-                onCancel={() => setIsModalOpen(false)}  // Modal을 닫는 함수
-                title="주소 검색"
-                footer={null}  // Footer 부분을 없앰
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
                 style={{
-                    width: '500px',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)'
+
+                    content: {
+                        width: '500px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
                 }}
             >
                 <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
                 <DaumPostcode onComplete={handleComplete} />
-            </Modal> */}
+            </Modal>
         </div>
     );
 };

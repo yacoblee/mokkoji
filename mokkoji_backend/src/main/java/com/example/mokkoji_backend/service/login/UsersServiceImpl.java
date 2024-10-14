@@ -69,7 +69,8 @@ public class UsersServiceImpl implements UsersService {
 			address.setUserId(userDTO.getUserId());
 			address.setPostalCode(userDTO.getPostalCode());
 			address.setStreetAddress(userDTO.getStreetAddress());
-			address.setDetailedAddress(userDTO.getDetailedAddress());
+			address.setDetailedAddress(userDTO.getRecipientName()!=null ? userDTO.getRecipientName() : userDTO.getName());
+			address.setRecipientName(userDTO.getName());
 			address.setRecipientPhone(userDTO.getPhoneNumber());
 			address.setCreated_at(userDTO.getCreatedAt());
 			addressRepository.save(address);
