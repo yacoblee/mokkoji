@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import '../../css/login/UserInfo.css';
-//import { Modal } from 'antd';
 import React, { useState } from 'react';
+import DaumPostcode from 'react-daum-postcode';
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 const Userinfo = () => {
