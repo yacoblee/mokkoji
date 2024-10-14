@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import '../../css/login/UserInfo.css';
-//import { Modal } from 'antd';
 import React, { useState } from 'react';
 
 
