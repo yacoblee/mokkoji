@@ -3,7 +3,6 @@ import '../../css/administrator/adminUsers.css';
 import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
-import UserInfoWindow from '../login/UserInfoWindow';
 import { useNavigate } from 'react-router-dom';
 
 const UserManagement = () => {
@@ -170,7 +169,7 @@ const UserManagement = () => {
     useEffect(() => {
         if (userAddress && userAddress.length > 0 && selectedUser) {
             console.log('Updated userAddress:', userAddress);
-    
+
             // 상태가 업데이트된 후에 navigate 호출
             navigate(`/administrator/users/userinfo`, {
                 state: { users: selectedUser, userAddress }

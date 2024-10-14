@@ -6,9 +6,6 @@ import Clausearea02 from './Clausearea02';
 import Marketing from './Marketing';
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
-import About from './../main/About';
-import Background from './../main/Backgroud';
-import userInfo from './UserInforData';
 import { all } from 'axios';
 import { apiCall } from '../../service/apiService';
 

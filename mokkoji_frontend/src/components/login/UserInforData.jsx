@@ -1,4 +1,4 @@
-const userInfo = [
+const UserInforData = [
     {
         index: 1,
         name: '김철수',
@@ -549,4 +549,4 @@ const userInfo = [
     }
 ];
 
-export default userInfo;
+export default UserInforData;

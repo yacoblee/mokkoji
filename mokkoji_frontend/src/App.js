@@ -31,7 +31,7 @@ import MultipleBuy from './components/mypage/MultipleBuy';
 
 import ProductRelatedStorage from './components/administrator/ProductRelatedStorage';
 import ProductsInsert from './components/administrator/ProductsInsert.jsx';
-import Userinfo from './components/login/Userinfo.jsx';
+import Userinfo from './components/administrator/Userinfo.jsx';
 
 const App = () => {
 
