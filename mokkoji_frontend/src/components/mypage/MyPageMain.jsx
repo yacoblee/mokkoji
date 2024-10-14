@@ -216,6 +216,7 @@ function MyPageMain() {
     };
 
     //장바구니 항목 체크 박스에 대해 정보를 저장할 배열 변수.
+    // 이부분state cart로 가고 프롭스를 지워도 무방. ************************ -혜미가
     const [checkedCartItems, setCheckedCartItems] = useState([]);
 
     // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
