@@ -222,17 +222,17 @@ function MyPageMain() {
     const onChangeChildCheckbox = (isChecked, items) => {
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
 
-        setCheckedCartItems(prevItems => {
-            if (isChecked) {
-                return [...prevItems, items]
-            } else {
-                return prevItems.filter(cartItem =>
-                    !(cartItem.productId === items.productId &&
-                        cartItem.optionContent === items.optionContent &&
-                        cartItem.packagingOptionContent === items.packagingOptionContent)
-                );
-            }
-        });
+        // setCheckedCartItems(prevItems => {
+        //     if (isChecked) {
+        //         return [...prevItems, items]
+        //     } else {
+        //         return prevItems.filter(cartItem =>
+        //             !(cartItem.productId === items.productId &&
+        //                 cartItem.optionContent === items.optionContent &&
+        //                 cartItem.packagingOptionContent === items.packagingOptionContent)
+        //         );
+        //     }
+        // });
     };
 
 
@@ -385,6 +385,7 @@ function MyPageMain() {
                         cartCheckDelete={cartCheckDelete}
                         cartCheckBoxChange={cartCheckBoxChange}
                         cartAllCheckBoxChange={cartAllCheckBoxChange}
+                        setCheckedCartItems={setCheckedCartItems}
                     />}
                 />
                 <Route

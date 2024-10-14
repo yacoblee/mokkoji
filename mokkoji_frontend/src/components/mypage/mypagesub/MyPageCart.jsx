@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
 import { apiCall } from '../../../service/apiService';
 
-function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCart, cartUpdate, cartDelete, onChangeChildCheckbox, checkedCartItems, cartAllCheckBoxChange, cartCheckBoxChange }) {
+function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCart, cartUpdate, cartDelete, onChangeChildCheckbox, checkedCartItems,setCheckedCartItems, cartCheckBoxChange }) {
 
     const navigate = useNavigate();
 
@@ -104,11 +104,37 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             return copyIschecked;
         });
 
+        setCheckedCartItems(prevItems => {
+            if (isChecked) {
+                return [...prevItems, item]
+            } else {
+                return prevItems.filter(cartItem =>
+                    !(cartItem.productId === item.productId &&
+                        cartItem.optionContent === item.optionContent &&
+                        cartItem.packagingOptionContent === item.packagingOptionContent)
+                );
+            }
+        });
         // 상위 컴포넌트에 상태 변경 알림
         onChangeChildCheckbox(isChecked, item);
     };
 
+    // 전체 선택/해제 체크박스 처리
+    const cartAllCheckBoxChange = (event) => {
+        const isChecked = event.target.checked;
+        if (isChecked) {
+            // 모두 선택
+            const allCartKeys = userCart.map(cart => `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`);
+            setCheckedItems(userCart.map(() => true));
+            setCheckedCartItems(userCart); // 전체 선택된 항목을 checkedCartItems로 설정
+        } else {
+            // 모두 해제
+            setCheckedItems(userCart.map(() => false));
+            setCheckedCartItems([]); // 모든 항목 선택 해제
+        }
 
+        
+    };
 
     return (
 
@@ -119,7 +145,8 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                 <div >
                     <input
                         type="checkbox"
-                        checked={cartKeyList.length === userCart.length}
+                        checked={checkedCartItems.length === userCart.length && userCart.length > 0}
+                        //checked={cartKeyList.length === userCart.length}
                         onChange={cartAllCheckBoxChange}
                     />
                 </div>
@@ -208,7 +235,8 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                 <div>
                     <input
                         type="checkbox"
-                        checked={cartKeyList.length === userCart.length}
+                        checked={checkedCartItems.length === userCart.length && userCart.length > 0}
+                        //checked={cartKeyList.length === userCart.length}
                         onChange={cartAllCheckBoxChange}
                     />
                 </div>
