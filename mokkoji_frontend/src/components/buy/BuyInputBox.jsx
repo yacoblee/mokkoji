@@ -329,6 +329,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     setAddressing((oldData) => {
                         const updatedAddress =
                             [...oldData, newData];
+                            console.log('Updated addressing:', updatedAddress);
                         resolve(updatedAddress); // 업데이트 완료 후 Promise 해제
                         return updatedAddress;
                     });
@@ -356,15 +357,27 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 method: selectBox.buyHow,
                 purchaseStatus: 1,
             }
+            // const purchaseAddress = {
+            //     userId: userId,
+            //     locationName: selectedAddressIndex === 4
+            //         ?
+            //         `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
+            //         :
+            //         addressing[selectedAddressIndex].locationName,
+            // }
+
             const purchaseAddress = {
                 userId: userId,
                 locationName: selectedAddressIndex === 4
-                    ?
-                    `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
-                    :
-                    addressing[selectedAddressIndex].locationName,
-            }
-
+                    ? `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
+                    : addressing[selectedAddressIndex].locationName,
+                postalCode: addressing[selectedAddressIndex].postalCode,
+                streetAddress: addressing[selectedAddressIndex].streetAddress,
+                detailedAddress: addressing[selectedAddressIndex].detailedAddress,
+                recipientName: addressing[selectedAddressIndex].recipientName,
+                recipientPhone: addressing[selectedAddressIndex].recipientPhone,
+            };
+            console.log("Sending purchaseAddress:", purchaseAddress.locationName);
             const data = {
                 pg: "html5_inicis",
                 pay_method: "card",
@@ -374,6 +387,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 addressList: currentAddressing,
 
             };
+            
             if(selectBox.buyHow == '신용 카드'){
 
                 IMP.request_pay(data, async (rsp) => {
