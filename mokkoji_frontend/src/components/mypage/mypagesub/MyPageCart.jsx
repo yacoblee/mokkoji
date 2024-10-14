@@ -149,10 +149,14 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                         return (
                             <div className="MyCartGrid" key={cartKey} >
                                 <div className='MyCartCheck'>
-                                    <input type="checkBox"
-                                        checked={checkedItems[index]}
+                                    <input
+                                        type="checkbox"
+                                        checked={cartKeyList.includes(cartKey) || checkedItems[index]}
                                         value={+cart.productTotalPrice}
-                                        onChange={(e) => onChangeCheckBox(index, e)}
+                                        onChange={(e) => {
+                                            cartCheckBoxChange(cartKey);
+                                            onChangeCheckBox(index, e);  // e 이벤트 객체를 onChangeCheckBox로 전달
+                                        }}
                                     />
                                 </div>
                                 <div className="MyCartPhoto">
