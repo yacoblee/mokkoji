@@ -221,30 +221,23 @@ input::placeholder {
 }
 
 .user-container {
-  width: 100%;
-  max-width: 1000px;
+  width: 90%;
+  max-width: 1400px;
   min-width: 600px;
-  height: 160vh;
+  height: 170vh;
 }
 
 
 .user-title {
-  margin: 0 0 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1.5px solid #888 !important;
   font-size: 2em;
   line-height: 1em;
 }
 
-
-.user-subContainer {
-  padding: 15px;
-}
-
 .user-subTitle {
   position: relative;
   padding-left: 8px;
-  margin: 15px 0;
 }
 
 .user-subTitle::before {
@@ -339,9 +332,8 @@ input::placeholder {
 }
 
 .user-count {
-  line-height: 3em;
+  line-height: 2em;
   text-decoration: underline;
-  margin-bottom: 30px;
 }
 
 .user-button2 {
@@ -352,7 +344,7 @@ input::placeholder {
 .user-resultArea {
   width: 100%;
   border-top: 1px solid #aeaeae;
-  line-height: 2em;
+  line-height: 1.3em;
 }
 
 .user-resultArea th {
