@@ -113,6 +113,9 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 				.leftJoin(products).on(ordersDetail.productId.eq(products.id))  // OrdersDetail과 Product를 JOIN
 				.leftJoin(address).on(orders.addressId.eq(address.addressId))  // Orders와 Address를 JOIN
 				.where(orders.userId.eq(userId))  // 특정 userId로 필터링
+				.orderBy(orders.regDate.desc()) // 최신순
+				.orderBy(orders.purchaseNumber.asc()) // 주문번호순
+				.orderBy(ordersDetail.productId.asc()) // 상품ID순
 				.fetch();  // 결과 반환
 	}
 

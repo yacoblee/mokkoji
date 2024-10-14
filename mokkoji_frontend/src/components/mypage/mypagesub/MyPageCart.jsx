@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from "../../../service/app-config";
 import { apiCall } from '../../../service/apiService';
 
-function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCart, cartUpdate, cartDelete, onChangeChildCheckbox, checkedCartItems,setCheckedCartItems, cartCheckBoxChange }) {
+function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCart, cartUpdate, cartDelete, onChangeChildCheckbox, checkedCartItems, setCheckedCartItems, cartCheckBoxChange }) {
 
     const navigate = useNavigate();
 
@@ -104,6 +104,9 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             return copyIschecked;
         });
 
+
+
+        // ㅁㄴㅇㄹ 추가된 부분
         setCheckedCartItems(prevItems => {
             if (isChecked) {
                 return [...prevItems, item]
@@ -115,10 +118,16 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                 );
             }
         });
+
+
+
         // 상위 컴포넌트에 상태 변경 알림
         onChangeChildCheckbox(isChecked, item);
     };
 
+
+
+    // ㅁㄴㅇㄹ 해결된 부분
     // 전체 선택/해제 체크박스 처리
     const cartAllCheckBoxChange = (event) => {
         const isChecked = event.target.checked;
@@ -133,7 +142,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             setCheckedCartItems([]); // 모든 항목 선택 해제
         }
 
-        
+
     };
 
     return (
@@ -146,7 +155,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                     <input
                         type="checkbox"
                         checked={checkedCartItems.length === userCart.length && userCart.length > 0}
-                        //checked={cartKeyList.length === userCart.length}
+                        //checked={cartKeyList.length === userCart.length}  // ㅁㄴㅇㄹ 삭데된 부분
                         onChange={cartAllCheckBoxChange}
                     />
                 </div>
@@ -236,7 +245,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                     <input
                         type="checkbox"
                         checked={checkedCartItems.length === userCart.length && userCart.length > 0}
-                        //checked={cartKeyList.length === userCart.length}
+                        //checked={cartKeyList.length === userCart.length}  // ㅁㄴㅇㄹ 삭제된 부분
                         onChange={cartAllCheckBoxChange}
                     />
                 </div>

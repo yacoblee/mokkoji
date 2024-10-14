@@ -219,6 +219,9 @@ function MyPageMain() {
     // 이부분state cart로 가고 프롭스를 지워도 무방. ************************ -혜미가
     const [checkedCartItems, setCheckedCartItems] = useState([]);
 
+
+
+    // ㅁㄴㅇㄹ 껍데기만 전달?
     // 장바구니 항목 체크박스 상태 변경 함수 // 하위컴포넌트로 프롭스로 전달.
     const onChangeChildCheckbox = (isChecked, items) => {
         //체크된 항목을 하위 컴포넌트로 전송하기 위한 배열 형성.
@@ -318,7 +321,6 @@ function MyPageMain() {
     // ** Orders ==================================================================================
 
     const [userOrders, setUserOrders] = useState([]);
-    const [userOrdersDetail, setUserOrdersDetail] = useState([]);
 
     // List 불러오기
     const myPageOrders = (url) => {
@@ -335,22 +337,6 @@ function MyPageMain() {
                 } else alert(`** myPageOrders 시스템 오류, err = ${err}`);
             }) //apiCall
     }; //myPageOrders
-
-    // List 불러오기
-    const myPageOrdersDetail = (url) => {
-        let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageOrdersDetail 성공 url=${url}`);
-                setUserOrdersDetail(response.data);
-            }).catch((err) => {
-                if (err === 502) {
-                    alert(`처리도중 오류 발생, err = ${err}`);
-                } else if (err === 403) {
-                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
-                } else alert(`** myPageOrdersDetail 시스템 오류, err = ${err}`);
-            }) //apiCall
-    }; //myPageOrdersDetail
 
 
 
@@ -402,16 +388,14 @@ function MyPageMain() {
                         cartCheckDelete={cartCheckDelete}
                         cartCheckBoxChange={cartCheckBoxChange}
                         cartAllCheckBoxChange={cartAllCheckBoxChange}
-                        setCheckedCartItems={setCheckedCartItems}
+                        setCheckedCartItems={setCheckedCartItems}   // ㅁㄴㅇㄹ 새로 추가된 부분(useState에서 Set도 보내기)
                     />}
                 />
                 <Route
                     path='orders'
                     element={<MyPageOrders
                         userOrders={userOrders}
-                        userOrdersDetail={userOrdersDetail}
                         myPageOrders={myPageOrders}
-                        myPageOrdersDetail={myPageOrdersDetail}
                     />}
                 />
                 <Route
