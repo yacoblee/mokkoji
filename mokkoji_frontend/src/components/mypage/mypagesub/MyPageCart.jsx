@@ -184,17 +184,19 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                         onMouseEnter={() => handleMouseEnter(cartKey)}
                                         onMouseLeave={handleMouseLeave}
                                         // onclick으로 구매 연결 필요
-                                        onClick={() => insertOrder(cart.productId, cart.optionContent, cart.packagingOptionContent, cart.productCnt, cart.productTotalPrice)}
+                                        onClick={() => {
+                                            if (cart.productCnt > cart.stockCount) {
+                                                alert("상품 재고 부족으로 현재 구매가 불가능합니다.")
+                                            } else {
+                                                insertOrder(cart.productId, cart.optionContent, cart.packagingOptionContent, cart.productCnt, cart.productTotalPrice)
+                                            }
+                                        }}
                                     >
                                         {hoveredButton === (cartKey) ? '구매하기' : `${formatNumber(cart.productTotalPrice)} 원`}
                                     </button>
-                                    <button onClick={() => {
-                                        if (cart.productCnt > cart.stockCount) {
-                                            alert("상품 재고 부족으로 현재 구매가 불가능합니다.")
-                                        } else {
-                                            cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`)
-                                        }
-                                    }}>삭제</button>
+                                    <button onClick={() => { cartDelete(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}`) }}>
+                                        삭제
+                                    </button>
                                 </div>
                             </div >  // mycartgird
                         )   // return

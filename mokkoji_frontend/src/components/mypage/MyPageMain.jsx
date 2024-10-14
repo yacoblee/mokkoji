@@ -135,6 +135,7 @@ function MyPageMain() {
             .then((response) => {
                 //alert(`** myPageCart 성공 url=${url}`);
                 setUserCart(response.data);
+                console.log(response.data)
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
