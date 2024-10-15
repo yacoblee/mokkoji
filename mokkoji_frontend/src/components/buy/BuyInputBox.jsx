@@ -10,6 +10,28 @@ import moment from 'moment';
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
 const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
+
+        // 결제 API
+        useEffect(() => {
+            const script = document.createElement('script');
+            script.src = "https://cdn.iamport.kr/v1/iamport.js";
+            script.async = true;
+        
+            document.body.appendChild(script);
+        
+            script.onload = () => {
+              if (window.IMP) {
+                const { IMP } = window;
+                IMP.init('imp12042271'); // 가맹점 식별코드 - 필수!
+              }
+            };
+        
+            return () => {
+              document.body.removeChild(script);
+            };
+          }, []);  
+
+
     const navigate = useNavigate()
     //배송지 선택에 대한 true false 관리.
     const [addressing, setAddressing] = useState([]);
@@ -71,15 +93,6 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         loadDataAndSetUserInfo(); // 함수 호출
 
     }, [addressing.length]);
-    // console.log(`userInfo.name : ${userInfo.name}`)
-    // console.log(`userInfo.phoneNumber : ${userInfo.phoneNumber}`)
-    // console.log(`userInfo.detailedAddress : ${userInfo.detailedAddress}`)
-    // console.log(`userInfo.postalCode : ${userInfo.postalCode}`)
-    // console.log(`userInfo.postalCode : ${userInfo.postalCode}`)
-    // console.log(`userInfoError.name : ${userInfoError.name}`)
-    // console.log(`userInfoError.phoneNumber : ${userInfoError.phoneNumber}`)
-    // console.log(`userInfoError.detailedAddress : ${userInfoError.detailedAddress}`)
-    // console.log(`userInfoError.postalCode : ${userInfoError.postalCode}`)
 
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = (index, type) => {
@@ -219,8 +232,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         deliveryMessage: '문 앞에 놔주세요',
         buyHow: '',
     });
-    // console.log(`selectBox.deliveryMessage : ${selectBox.deliveryMessage}`)
-    // console.log(`selectBox.buyHow : ${selectBox.buyHow}`)
+
 
     //직접 입력시 인풋창을 활성화 시킬 state
     const [directInput, setDirectInput] = useState(false);
@@ -293,7 +305,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         if (!selectBox.deliveryMessage) {
             SetSelectBox((it) => ({ ...it, deliveryMessage: '문 앞에 놔주세요' }))
         }
-        setIsModalBuyOpen(true);
+        // setIsModalBuyOpen(true);
         console.log(selectedAddressIndex);
         console.log(addressing);
 
@@ -329,6 +341,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         };
 
         const insertBuy = async (currentAddressing) => {
+            const { IMP } = window;
             let url = "/order/buy";
             const date = new Date();
             const formattedDate = moment(date).format('YYYYMMDDHHmmss');
@@ -343,28 +356,69 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             const purchaseAddress = {
                 userId: userId,
                 locationName: selectedAddressIndex === 4
-                    ?
-                    `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
-                    :
-                    addressing[selectedAddressIndex].locationName,
+                ? `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
+                : addressing[selectedAddressIndex].locationName,
             }
-            try {
-                let requestData = {
-                    addressList: currentAddressing,
-                    order: orderData,
-                    cartList: selectedALLproduct,
-                    purchaseAddress: purchaseAddress
-                };
-                let data = {
-                    //user = //객체
-                    //adress = // 배열
-                }
-                console.log(currentAddressing);
 
-                const response = await apiCall(url, 'POST', requestData, token);
-                console.log("성공했니");
-            } catch (error) {
-                console.error("구매 실패:", error);
+            const data = {
+                pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: `merchant_${new Date().getTime()}`, 
+                //amount: totalPrice,  // 총 가격 
+                amount: 100,  // 테스트용 가격
+                addressList: currentAddressing,
+
+
+            };
+            
+            if(selectBox.buyHow == '신용 카드'){
+
+                IMP.request_pay(data, async (rsp) => {
+                    if (rsp.success) { 
+                        try {
+                            const requestData = {
+                                addressList: currentAddressing,
+                                order: orderData,
+                                cartList: selectedALLproduct,
+                                purchaseAddress: purchaseAddress,
+                            };
+                            const response = await apiCall(url, 'POST', requestData, token);
+                            console.log("구매 성공:", response.data);
+                            if(response.data.success){
+                                alert("구매가 완료되었습니다.");
+                                setIsModalBuyOpen(true);
+                            }else{
+                                return false;
+                            }
+                        } catch (error) {
+                            console.error("구매 실패:", error);
+                            alert("구매 처리 중 오류가 발생했습니다.");
+                        }
+                    } else {
+                        console.log("결제 실패:", rsp.error_msg);
+                        alert("결제 실패: " + rsp.error_msg);
+                    }
+                });
+            }else{
+                try {
+                    const requestData = {
+                        addressList: currentAddressing,
+                        order: orderData,
+                        cartList: selectedALLproduct,
+                        purchaseAddress: purchaseAddress,
+                    };
+                    const response = await apiCall(url, 'POST', requestData, token);
+                    console.log("구매 성공:", response.data);
+                    if(response.data.success){
+                        alert("구매가 완료되었습니다.");
+                        setIsModalBuyOpen(true);
+                    }else{
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("구매 실패:", error);
+                    alert("구매 처리 중 오류가 발생했습니다.");
+                }
             }
         };
 

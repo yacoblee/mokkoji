@@ -106,14 +106,22 @@ public class OrdersController {
 	//** 혜미 4 )구매시 이벤트를 , @Transactional으로 처리.
 	@PostMapping("/buy")
 	public ResponseEntity<?> buyNow(@RequestBody OrderRequestDTO request){
-		orderService.buyList(request);
-		//1 ) address List가 3이 넘어간다면 2번째를 지우고 , 배열에서도 제외
-		//2 ) 제외시킨 배열을 업데이트
-		//3 ) 구매 목록 리스트들이 카트에 담겨있다면 , 지움.
-		//4 ) 배송지 입력값을 저장한뒤 order에 PK의 addressId를 채워 insert
-		//5 ) insert 의 반환값을 통해 참고하여 구매 리스트들을 save하는 메서드 실행
 		
-		return null;
+		
+		 Map<String, Object> response = new HashMap<>();
+		
+		try {
+			orderService.buyList(request);
+		
+			response.put("success", "success");
+		
+		return ResponseEntity.ok(response);
+	} catch (Exception e) {
+		
+		response.put("failed", "error");
+		return ResponseEntity.ok(response);
+	}
+		
 	}
 
 	// ** 마이페이지 사용 ==================================================================
