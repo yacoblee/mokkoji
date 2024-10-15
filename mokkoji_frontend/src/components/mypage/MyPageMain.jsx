@@ -340,6 +340,79 @@ function MyPageMain() {
 
 
 
+    // ** Book ====================================================================================
+
+    const [userRegist, setUserRegist] = useState([]);
+
+    // List 불러오기
+    const myPageRegist = (url) => {
+        console.log(url)
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'GET', null, userToken)
+            .then((response) => {
+                //alert(`** myPageRegist 성공 url=${url}`);
+                setUserRegist(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** myPageRegist 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //myPageRegist
+
+    // 수량 업데이트
+    const bookUpdateAdult = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        console.log(url)
+        apiCall(url, 'PATCH', null, userToken)
+            .then((response) => {
+                //alert(`** bookUpdateAdult 성공 url=${url}`);
+                setUserRegist(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** bookUpdateAdult 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //bookUpdateAdult
+
+    const bookUpdateTeen = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        console.log(url)
+        apiCall(url, 'PATCH', null, userToken)
+            .then((response) => {
+                //alert(`** bookUpdateTeen 성공 url=${url}`);
+                setUserRegist(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** bookUpdateTeen 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //bookUpdateTeen
+
+    // 개별 삭제
+    const bookDelete = (url) => {
+        let userToken = JSON.parse(sessionStorage.getItem("userData"));
+        apiCall(url, 'DELETE', null, userToken)
+            .then((response) => {
+                // alert("삭제 성공");
+                setUserRegist(response.data);
+            }).catch((err) => {
+                if (err === 502) {
+                    alert(`처리도중 오류 발생, err = ${err}`);
+                } else if (err === 403) {
+                    alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
+                } else alert(`** bookDelete 시스템 오류, err = ${err}`);
+            }) //apiCall
+    }; //bookDelete
+
+
+
+
     return (
         <div className='MyPage'>
             <h1>
@@ -408,6 +481,11 @@ function MyPageMain() {
                 <Route
                     path='book'
                     element={<MyPageBook
+                        myPageRegist={myPageRegist}
+                        bookUpdateAdult={bookUpdateAdult}
+                        bookUpdateTeen={bookUpdateTeen}
+                        bookDelete={bookDelete}
+                        userRegist={userRegist}
                     />}
                 />
             </Routes>
