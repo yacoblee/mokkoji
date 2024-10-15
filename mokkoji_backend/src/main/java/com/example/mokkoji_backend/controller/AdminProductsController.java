@@ -20,6 +20,8 @@ import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.domain.productStatistics.TotalPurchaseDTO;
+import com.example.mokkoji_backend.domain.productStatistics.TotalYearMonthPurchaseDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
 import com.example.mokkoji_backend.entity.goods.ProductOptions;
@@ -29,6 +31,7 @@ import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
 import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
+import com.example.mokkoji_backend.repository.orders.OrdersDSLRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.goods.ProductImageService;
 import com.example.mokkoji_backend.service.goods.ProductStatisticsService;
@@ -61,7 +64,7 @@ public class AdminProductsController {
 	private final ProductImageService imageService;
 	private final UsersDSLRepository userDSLRepository;
 	private final AddressRepository addressRepository;
-	
+	private final OrdersDSLRepository orderRepository;
 	
 	@GetMapping("/administrator/products")
 	public ResponseEntity<?> indexPage(PageRequestDTO requestDTO) {
@@ -214,4 +217,35 @@ public class AdminProductsController {
 		Map<String, Object> response = statisticsService.findGenderPurchase(id);
 		return ResponseEntity.ok(response);
 	}
+	
+	
+	@GetMapping("/administrator/orders")
+	public ResponseEntity<?> getTotalMoney() {
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		try {
+			List<TotalPurchaseDTO> monthData = orderRepository.findTotalMonthPurchase();
+			List<TotalPurchaseDTO> yearData = orderRepository.findTotalYearPurchase();
+			List<TotalYearMonthPurchaseDTO> yearMonthData = orderRepository.findTotalYearMonthPurchase();
+					
+			
+			response.put("year", yearData);
+			response.put("month", monthData);
+			response.put("yearmonth", yearMonthData);
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (Exception e) {
+			log.info("getTotalMoney Error : "+e.toString());
+			return ResponseEntity.badRequest().build();
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 }
