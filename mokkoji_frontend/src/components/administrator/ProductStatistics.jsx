@@ -14,6 +14,7 @@ function ProductStatistics({ productId }) {
     const [genderPurchases, setGenderPurchases] = useState([]);
     const [genderFavorites, setGenderFavorites] = useState([]);
     const [regDatePurchases, setRegDatePurchase] = useState([]);
+    const [sumOptions, setSumOptions] = useState([]);
 
     useEffect(() => {
         let uri = API_BASE_URL + "/administrator/statistics";
@@ -23,13 +24,14 @@ function ProductStatistics({ productId }) {
             },
         })
             .then(response => {
-                const { selectProduct, genderPurchase, genderFavorite, regDatePurchase } = response.data;
+                const { selectProduct, genderPurchase, genderFavorite, regDatePurchase, sumOption } = response.data;
 
                 // 응답 받은 데이터를 상태로 저장하고 페이지 이동
                 setProduct(selectProduct);
                 setGenderPurchases(genderPurchase);
                 setGenderFavorites(genderFavorite);
                 setRegDatePurchase(regDatePurchase);
+                setSumOptions(sumOption);
             })
             .catch(err => {
                 console.log(err);
@@ -85,6 +87,44 @@ function ProductStatistics({ productId }) {
             }
         </>;
     };
+    const optionFavoritePie = () => {
+        if (!sumOptions || sumOptions.length === 0) {
+            return <p>Loading...</p>;
+        }
+        // 미리 준비한 여러 가지 색상 목록
+        const colors = ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+
+        // sumOptions 길이에 맞게 색상 배열을 준비 (부족하면 반복)
+        const backgroundColors = sumOptions.map((_, index) => colors[index % colors.length]);
+        const data = {
+            labels: sumOptions.map(gp => `${gp.optionContent} - ${gp.packagingContent}`),
+            datasets: [
+                {
+                    data: sumOptions.map(gp => gp.sumProductCnt),
+                    backgroundColor: backgroundColors,
+                },
+            ],
+        };
+        const totalCount = sumOptions.reduce((acc, it) => acc + it.sumProductCnt, 0);
+
+        return <>
+            <Pie data={data} />
+            {
+                sumOptions.map((it) => {
+                    return (
+                        <div className='genderPurchasesresult'>
+                            {it.optionContent}({+it.optionPrice}원) - {it.packagingContent}({+it.packagingPrice}원)
+                            <span>: {it.sumProductCnt + '회'}</span>
+                            <span>{(it.sumProductCnt / totalCount * 100).toFixed(2) + '%'} </span>
+
+                        </div>
+                    )
+                })
+            }
+        </>;
+    }
+
+
 
     console.log("**************")
     console.log(genderPurchases);
@@ -134,9 +174,10 @@ function ProductStatistics({ productId }) {
         if (!regDatePurchases.some(gp => gp.regDate === todayString)) {
             regDatePurchasesData.push({
                 regDate: todayString,
-                purchaseCount: null, // 판매량 데이터가 없는 경우 null 또는 0을 사용
+                purchaseCount: 0, // 판매량 데이터가 없는 경우 null 또는 0을 사용
             });
         }
+        console.log('regDatePurchasesData', regDatePurchasesData);
         const data = {
             labels: regDatePurchases.map(gp => gp.regDate),
             datasets: [
@@ -150,6 +191,7 @@ function ProductStatistics({ productId }) {
                     pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgb(75, 192, 192)',
                     borderColor: 'rgba(75, 192, 192, 0.2)',
+                    spanGaps: true, // 빈 데이터 포인트가 있어도 선을 연결
                 },
             ],
         };
@@ -176,7 +218,21 @@ function ProductStatistics({ productId }) {
                 },
             },
         };
-        return <Line data={data} options={options} />;
+        return <>
+            <Line data={data} options={options} />
+            {
+                regDatePurchases.map((it) => {
+                    return (
+                        <div className='genderPurchasesresult'>
+
+                            <span>{it.regDate}</span>
+                            <span>{it.purchaseCount + '회 구매'} </span>
+
+                        </div>
+                    )
+                })
+            }
+        </>
     };
     const emptyDataLine = (type) => {
         const today = new Date(); // 오늘 날짜
@@ -216,7 +272,7 @@ function ProductStatistics({ productId }) {
             </>
         )
     }
-
+    console.log('sumOptions', sumOptions);
     return (
         <div className='ProductStatistics'>
             <h1 className="productMainTitle">상품 정보</h1>
@@ -229,30 +285,10 @@ function ProductStatistics({ productId }) {
                 <li>상품 이미지</li>
                 <li><img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`} alt={product.name ? product.name : ''} /></li>
             </ul>
-            <div className='piegender'>
-                <div>
-                    <h3 className="productTitle">구매 성비</h3>
-                    <div className='genderPurchases' >
-                        {genderPurchases.every(it => it.purchaseCount === 0) ?
-                            emptyDataPie('구매') : genderPurchasesPie()}
-                        {/* {genderPurchases.some(it => it.purchaseCount !== 0) &&
-                    <div> 구매 이력 있음</div>} */}
-                    </div>
-                </div>
-                <div>
-                    <h3 className="productTitle">좋아요 성비</h3>
-                    <div className='genderPurchases' >
-                        {genderFavorites.every(it => it.favoriteCount === 0) ?
-                            emptyDataPie('좋아요') : genderFavoritePie()}
-                        {/* {genderPurchases.some(it => it.purchaseCount !== 0) &&
-                    <div> 구매 이력 있음</div>} */}
-                    </div>
-                </div>
-            </div>
             <div className='linePurchases'>
                 <div>
                     <h3 className="productTitle">구매 그래프 </h3>
-                    <div>
+                    <div className='lineResult'>
                         {
                             regDatePurchases.every(it => it.purchaseCount === 0) ?
                                 emptyDataLine('판매량') :
@@ -261,7 +297,35 @@ function ProductStatistics({ productId }) {
 
                     </div>
                 </div>
+                <div>
+                    <h3 className="productTitle">옵션 선호율</h3>
+                    <div className='pieResult' >
+                        {sumOptions.every(it => it.sumProductCnt === 0) ?
+                            emptyDataPie('옵션 선호율') : optionFavoritePie()}
+
+                    </div>
+                </div>
             </div>
+
+            <div className='piegender'>
+                <div>
+                    <h3 className="productTitle">구매 성비</h3>
+                    <div className='pieResult' >
+                        {genderPurchases.every(it => it.purchaseCount === 0) ?
+                            emptyDataPie('구매') : genderPurchasesPie()}
+
+                    </div>
+                </div>
+                <div>
+                    <h3 className="productTitle">좋아요 성비</h3>
+                    <div className='pieResult' >
+                        {genderFavorites.every(it => it.favoriteCount === 0) ?
+                            emptyDataPie('좋아요') : genderFavoritePie()}
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }

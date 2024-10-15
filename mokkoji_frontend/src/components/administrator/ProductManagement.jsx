@@ -470,7 +470,7 @@ const ProductManagement = () => {
                 <td>{product.stockCount}</td>
                 <td>{product.likeCount}</td>
                 <td>{formatToKoreanTime(product.uploadDate)}</td>
-                <td>
+                <td className="buttonwrapper">
                   <button onClick={() => { onClickInset(product) }}>product & option Edit</button>
                   {/* <button onClick={() => onClickDelete(product.id)}>Delete</button> */}
                   <button onClick={() => { onClickImage(product) }}>image Edit</button>
@@ -519,7 +519,7 @@ const ProductManagement = () => {
         style={{
           content: {
             height: '80%',
-            width: '50%',
+            width: '80%',
             // display: 'flex',
             // flexDirection: 'column-reverse',
             alignItems: 'center',
@@ -529,14 +529,14 @@ const ProductManagement = () => {
             right: 'auto',
             bottom: 'auto',
             marginRight: '-50%',
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -44%)'
           }
         }}
       >
-        <div className='Modalbutton'>
+        <ProductStatistics productId={selectedProductId} />
+        <div className='buttonwrapper'>
           <button onClick={() => setIsModalProductDetails(false)}>닫기</button>
         </div>
-        <ProductStatistics productId={selectedProductId} />
       </Modal>
     </div>
   );

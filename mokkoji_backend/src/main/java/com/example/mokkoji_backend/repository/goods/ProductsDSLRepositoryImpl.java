@@ -2,13 +2,15 @@ package com.example.mokkoji_backend.repository.goods;
 
 
 import static com.example.mokkoji_backend.entity.goods.QProductOptions.productOptions;
+import static com.example.mokkoji_backend.entity.goods.QPackaging.packaging;
 import static com.example.mokkoji_backend.entity.goods.QProducts.products;
-
+import static com.example.mokkoji_backend.entity.orders.QOrdersDetail.ordersDetail;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.example.mokkoji_backend.domain.productStatistics.SumOptionsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,7 +23,7 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	private final JPAQueryFactory jpaQueryFactory;
     // 생성을 위한 Bean 설정을 DemoConfig에 추가해야함.
 	
-	@Override
+	@Override // 연습용
 	public List<ProductsDTO> findByJoinList() {
 
 		return jpaQueryFactory.select(
@@ -42,7 +44,7 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	}
 
 	
-	@Override
+	@Override// 연습용
 	public ProductsDTO findByJoinOne(Long id) {
 		return jpaQueryFactory.select(
 			     Projections.bean(ProductsDTO.class, 
@@ -80,11 +82,6 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	@Override
 	public ProductsDTO entityToDto(Products items) {
 		
-	    // 엔티티 ID 목록 추출
-//	    List<Long> productIds = productList.stream()
-//	            .map(Products::getId)
-//	            .collect(Collectors.toList());
-
 	    // QueryDSL을 사용하여 DTO로 변환
 	    return jpaQueryFactory
 	            .select(Projections.bean(ProductsDTO.class, 
@@ -102,5 +99,24 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	            .from(products)
 	            .where(products.id.eq(items.getId())) // 전달된 엔티티의 ID를 기준으로 필터링
 	            .fetchOne();
+	}
+	@Override
+	public List<SumOptionsDTO> sumOptions(Long productId){
+		return jpaQueryFactory
+				.select(Projections.bean(SumOptionsDTO.class,
+						ordersDetail.productCnt.sum().as("sumProductCnt"),
+						productOptions.content.as("optionContent"),
+						productOptions.price.as("optionPrice"),
+						packaging.packagingContent.as("packagingContent"),
+						packaging.packagingPrice.as("packagingPrice")))
+					.from(ordersDetail)
+					.join(productOptions)
+					.on(ordersDetail.optionContent.eq(productOptions.content)
+							.and(ordersDetail.productId.eq(productOptions.productId)))
+					.join(packaging)
+					.on(ordersDetail.packagingOptionContent.eq(packaging.packagingContent))
+					.where(ordersDetail.productId.eq(productId))
+					.groupBy(ordersDetail.optionContent,ordersDetail.packagingOptionContent)
+					.fetch();
 	}
 }

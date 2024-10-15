@@ -355,6 +355,10 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     cartList: selectedALLproduct,
                     purchaseAddress: purchaseAddress
                 };
+                let data = {
+                    //user = //객체
+                    //adress = // 배열
+                }
                 console.log(currentAddressing);
 
                 const response = await apiCall(url, 'POST', requestData, token);
