@@ -4,7 +4,11 @@ import com.example.mokkoji_backend.domain.OrdersDTO;
 import com.example.mokkoji_backend.domain.productStatistics.FavoriteGenderDTO;
 import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
 import com.example.mokkoji_backend.domain.productStatistics.RegDatePurchaseDTO;
+import com.example.mokkoji_backend.domain.productStatistics.TotalPurchaseDTO;
+import com.example.mokkoji_backend.domain.productStatistics.TotalYearMonthPurchaseDTO;
+import com.example.mokkoji_backend.entity.orders.QOrders;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -166,5 +170,59 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 	    return dtoList;
 	}
 
+	
+	@Override
+	public List<TotalPurchaseDTO> findTotalMonthPurchase() {
+		QOrders orders = QOrders.orders; 
+		
+		
+		return jpaQueryFactory
+		         .select(Projections.constructor(TotalPurchaseDTO.class,
+	                 Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate).as("yearmonth"),
+	                 orders.total.sum().as("total_price")
+	             ))
+	             .from(orders)
+	             .groupBy(Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate))
+	             .orderBy(Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate).asc())
+	             .fetch();
+    }
+	
+	@Override
+	public List<TotalPurchaseDTO> findTotalYearPurchase() {
+		QOrders orders = QOrders.orders; 
+		
+		
+		return jpaQueryFactory
+	         .select(Projections.constructor(TotalPurchaseDTO.class,
+                 Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate).as("yearmonth"),
+                 orders.total.sum().as("total_price")
+             ))
+             .from(orders)
+             .groupBy(Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate))
+             .orderBy(Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate).asc())
+             .fetch();
+    }
+	
+	@Override
+	public List<TotalYearMonthPurchaseDTO> findTotalYearMonthPurchase() {
+		QOrders orders = QOrders.orders;
+		
+	    return jpaQueryFactory
+	            .select(Projections.constructor(TotalYearMonthPurchaseDTO.class,
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate).as("year"),
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate).as("yearmonth"),
+	                orders.total.sum().as("totalPrice")
+	            ))
+	            .from(orders)
+	            .groupBy(
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate),
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate)
+	            )
+	            .orderBy(
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y')", orders.regDate).asc(),
+	                Expressions.stringTemplate("DATE_FORMAT({0}, '%Y-%m')", orders.regDate).asc()
+	            )
+	            .fetch();
+	}
 	
 }

@@ -26,7 +26,8 @@
 }
 
 .order-management {
-  width: 100%;
+  width: 80vw;
+  height: 100vh;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
@@ -36,7 +37,10 @@
   font-size: 2rem;
   color: #333;
 } */
-
+.chart-container {
+  width:70vw;  
+  height: 400px;
+}
 .order-table {
   width: 100%;
   border-collapse: collapse;

@@ -3,6 +3,7 @@ package com.example.mokkoji_backend.service.orders;
 import com.example.mokkoji_backend.domain.CartDTO;
 import com.example.mokkoji_backend.domain.OrderRequestDTO;
 import com.example.mokkoji_backend.domain.OrdersDTO;
+import com.example.mokkoji_backend.domain.productStatistics.TotalPurchaseDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.orders.Orders;
 import com.example.mokkoji_backend.repository.orders.OrdersDSLRepository;
@@ -95,4 +96,5 @@ public class OrdersServiceImpl implements OrdersService {
 		}
 
 	}
+	
 }

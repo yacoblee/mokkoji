@@ -1,28 +1,28 @@
 @font-face {
-    font-family: 'SUITE-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Chosunilbo_myungjo';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Chosunilbo_myungjo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'NanumBarunpen';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'NanumBarunpen';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    /* scroll-behavior: smooth; */
+  margin: 0;
+  padding: 0;
+  /* scroll-behavior: smooth; */
 }
 
 
@@ -31,45 +31,45 @@
 
 
 .regist-container {
-  width: 75vw;
-  max-width: 1400px;
-  min-width: 600px;
-  height: 100%;
-  
-  display: flex;
-  flex-direction: column;  
-  flex-wrap: nowrap;  
-  justify-content: flex-start;  
-  align-items: stretch;  
-  overflow: auto;  
-  font-size: 20px;
+width: 75vw;
+max-width: 1400px;
+min-width: 600px;
+height: 100%;
+
+display: flex;
+flex-direction: column;  
+flex-wrap: nowrap;  
+justify-content: flex-start;  
+align-items: stretch;  
+overflow: auto;  
+font-size: 20px;
 }
 
 
 
 .regist-title{
-  margin: 0 0 20px;
-  width: 100%;
-  padding-bottom: 20px;
-  border-bottom: 1.5px solid #888 !important;
-  font-size: 2em;
-  line-height: 1em;
+margin: 0 0 20px;
+width: 100%;
+padding-bottom: 20px;
+border-bottom: 1.5px solid #888 !important;
+font-size: 2em;
+line-height: 1em;
 }
 
 
 
 .regist-container input::placeholder {
-  font-size: .6em;
+font-size: .6em;
 }
 
 .regist-container input:focus {
-  outline: 1px solid #979696;
+outline: 1px solid #979696;
 }
 
 .regist-container input[type="file"] {
-  display: none;  
+display: none;  
 }
- 
+
 
 .regist-subTitle {
 position: relative;
@@ -78,165 +78,165 @@ margin: 15px 0;
 }
 
 .regist-subTitle::before {
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: #1a4f9981;
-  content: '';
+display: inline-block;
+position: absolute;
+left: 0;
+top: 0;
+width: 4px;
+height: 100%;
+background: #1a4f9981;
+content: '';
 }
 
 
 .existing-image {
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  padding: 5px;
+margin-right: 10px;
+border: 1px solid #ccc;
+padding: 5px;
 }
 .image-upload-container {
-  display: flex;
-  flex-direction: column;
-  align-content: start;
-  max-width: 600px;
-  min-width: 300px;
-  width: 50vw;
-  height: auto; /* 높이가 콘텐츠에 따라 자동으로 조정 */
-  max-height: 500px !important; /* 필요 시 최대 높이 설정 */
-  overflow-y: auto; /* 내용이 넘칠 때만 스크롤 */
-  max-height: 350px;
-  padding: 10px;  
-  background-color: #f9f9f9;  
-  border: 1px solid #ddd;  
-  border-radius: 10px;  
+display: flex;
+flex-direction: column;
+align-content: start;
+max-width: 600px;
+min-width: 300px;
+width: 50vw;
+height: auto; /* 높이가 콘텐츠에 따라 자동으로 조정 */
+max-height: 500px !important; /* 필요 시 최대 높이 설정 */
+overflow-y: auto; /* 내용이 넘칠 때만 스크롤 */
+max-height: 350px;
+padding: 10px;  
+background-color: #f9f9f9;  
+border: 1px solid #ddd;  
+border-radius: 10px;  
 }
 
 .image-upload {
-  display: flex;
-  align-items: center;  
-  width: 100%;
-  height: 80px;
-  padding: 10px;
-  font-size: 1.2rem;
-  font-family: 'Chosunilbo_myungjo';
-  margin-bottom: 15px;  
-  border-bottom: 1px solid #ececec;
+display: flex;
+align-items: center;  
+width: 100%;
+height: 80px;
+padding: 10px;
+font-size: 1.2rem;
+font-family: 'Chosunilbo_myungjo';
+margin-bottom: 15px;  
+border-bottom: 1px solid #ececec;
 }
 
 .existing-image {
-  width: 100px;
-  height: auto;
-  margin-right: 10px;
-  border-radius: 8px;  
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  
+width: 100px;
+height: auto;
+margin-right: 10px;
+border-radius: 8px;  
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  
 }
 
 .file-input-label {
-  background-color: #d0c0a02f;;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
+background-color: #d0c0a02f;;
+color: white;
+padding: 8px 12px;
+border-radius: 5px;
+cursor: pointer;
+margin-right: 10px;
+transition: background-color 0.3s ease;
 }
 
 .file-input-label:hover {
-  background-color: #f0df99c1;  
+background-color: #f0df99c1;  
 }
 
 .remove-image-btn {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
+background-color: #e74c3c;
+color: white;
+border: none;
+padding: 8px 12px;
+border-radius: 5px;
+cursor: pointer;
+margin-left: 10px;
+transition: background-color 0.3s ease;
 }
 
 .remove-image-btn:hover {
-  background-color: #c0392b;  
+background-color: #c0392b;  
 }
 
 
 .regist-container input[type="file"] {
-  display: none;  
+display: none;  
 } 
 
 
 .regist-container input {
-  width: 60%;
-  height: 3rem;
-  border: none;
-  border-bottom: 1px solid #aaaaaa;
-  background-color: transparent;
-  font-size: 1em;
-  color: black;
-  padding: 2px;
+width: 60%;
+height: 3rem;
+border: none;
+border-bottom: 1px solid #aaaaaa;
+background-color: transparent;
+font-size: 1em;
+color: black;
+padding: 2px;
 }
 
 
 /* Price Information Styling S*/
 .price-info {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 400px;
+display: flex;
+flex-direction: column;
+margin: 20px 0;
+width: 100%;
+max-width: 400px;
 }
 
 .price-info label {
-  font-family: 'NanumBarunpen', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
+font-family: 'NanumBarunpen', sans-serif;
+font-size: 1.2rem;
+font-weight: 600;
+margin-bottom: 10px;
+color: #333;
 }
 
 .price-info input {
-  font-family: 'SUITE-Regular', sans-serif;
-  width: 100%;
-  height: 40px;
-  padding: 8px;
-  font-size: 1.1rem;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
+font-family: 'SUITE-Regular', sans-serif;
+width: 100%;
+height: 40px;
+padding: 8px;
+font-size: 1.1rem;
+color: #333;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-bottom: 15px;
+transition: all 0.3s ease;
 }
 
 .price-info input:focus {
-  border-color: #1a4f99;
-  box-shadow: 0 0 8px rgba(26, 79, 153, 0.2);
-  outline: none;
+border-color: #1a4f99;
+box-shadow: 0 0 8px rgba(26, 79, 153, 0.2);
+outline: none;
 }
 
 .price-info label::after {
-  content: ":";
-  margin-left: 5px;
+content: ":";
+margin-left: 5px;
 }
 
 .price-info input::placeholder {
-  color: #aaa;
-  font-size: 0.9rem;
+color: #aaa;
+font-size: 0.9rem;
 }
 
 .price-info button {
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+background-color: #4caf50;
+color: white;
+font-weight: bold;
+padding: 10px 15px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
 .price-info button:hover {
-  background-color: #45a049;
+background-color: #45a049;
 }
 /* Price Information Styling E*/
 
@@ -244,61 +244,61 @@ margin: 15px 0;
 
 /* HighLight Style S */
 .highlight-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-bottom: 20px;
 }
 
 .highlight-input label {
-  font-weight: bold;
-  margin-bottom: 5px;
+font-weight: bold;
+margin-bottom: 5px;
 }
 
 .highlight-input input {
-  font-family: 'SUITE-Regular', sans-serif;
-  min-width: 300px;
-  width: 40vw;
-  height: 40px;
-  padding: 8px;
-  font-size: 1.1rem;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
+font-family: 'SUITE-Regular', sans-serif;
+min-width: 300px;
+width: 40vw;
+height: 40px;
+padding: 8px;
+font-size: 1.1rem;
+color: #333;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-bottom: 15px;
+transition: all 0.3s ease;
 }
 
 .highlight-input input::placeholder {
-  color: #aaa;
-  font-size: 0.9rem;
+color: #aaa;
+font-size: 0.9rem;
 }
 /* HighLight Style E */
 
 
 /* 상세 정보 input 필드 스타일 S*/
 .detail-inputs label {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
+display: block;
+margin-top: 10px;
+font-weight: bold;
 }
 
 .detail-inputs input {
-  font-family: 'SUITE-Regular', sans-serif;
-  min-width: 300px;
-  width: 40vw;
-  height: 40px;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 1em;
+font-family: 'SUITE-Regular', sans-serif;
+min-width: 300px;
+width: 40vw;
+height: 40px;
+padding: 10px;
+margin-top: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+font-size: 1em;
 }
 
 .detail-input input::placeholder {
-  color: #aaa;
-  font-size: 0.9rem;
+color: #aaa;
+font-size: 0.9rem;
 }
 /* 상세 정보 input 필드 스타일 E*/
 
