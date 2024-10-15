@@ -69,7 +69,7 @@ function MyPageSet({ userMain }) {
                 },
             });
 
-            alert("개인정보 수정 성공");
+            // alert("개인정보 수정 성공");
             window.location.href = '/mypage';
         } catch (error) {
             console.error('Error:', error.response);

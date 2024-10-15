@@ -44,21 +44,21 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             productCnt: cart.productCnt,//해당하는 갯수(int)
             productTotalPrice: cart.productTotalPrice,//총계산을 마친 금액 (int)
         };
-        console.log(`${sendBasket.userId}`);
-        console.log(`${sendBasket.productId}`);
-        console.log(`${sendBasket.optionContent}`);
-        console.log(`${sendBasket.packagingOptionContent}`);
-        console.log(`${sendBasket.productCnt}`);
-        console.log(`${sendBasket.productTotalPrice}`);
+        // console.log(`${sendBasket.userId}`);
+        // console.log(`${sendBasket.productId}`);
+        // console.log(`${sendBasket.optionContent}`);
+        // console.log(`${sendBasket.packagingOptionContent}`);
+        // console.log(`${sendBasket.productCnt}`);
+        // console.log(`${sendBasket.productTotalPrice}`);
         try {
             const response = await apiCall(`/order/page`, 'POST', sendBasket, token);
             const { product, option, packaging, productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
             //setLike(liked);
             //alert(message);
-            console.log(product);
-            console.log(option);
-            console.log(packaging);
-            console.log(productBuy);
+            // console.log(product);
+            // console.log(option);
+            // console.log(packaging);
+            // console.log(productBuy);
             //alert('insertOrder 성공');
             // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
             navigate(`/orderpage`, {
@@ -68,8 +68,8 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             });
         } catch (error) {
             //setLike(false);
-            console.log(`insert order error =>${error.message}`)
-            alert(`insertOrder 실패`);
+            // console.log(`insert order error =>${error.message}`)
+            alert(`insertOrder 실패 => ${error.message}`);
         }
     }
 

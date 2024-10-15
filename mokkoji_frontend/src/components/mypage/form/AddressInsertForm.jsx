@@ -9,7 +9,7 @@ import axios from 'axios'; // axios 추가
 import '../../../css/mypage/subpage/MyPageAddress.css';
 
 
-function MyPageAddressForm( ) {
+function MyPageAddressForm() {
 
     const [addressInfo, setAddressInfo] = useState({
         locationName: '',
@@ -104,7 +104,7 @@ function MyPageAddressForm( ) {
                 },
             });
 
-            alert("개인정보 수정 성공");
+            // alert("개인정보 수정 성공");
             window.location.href = '/mypage/address';
         } catch (error) {
             console.error('Error:', error.response);

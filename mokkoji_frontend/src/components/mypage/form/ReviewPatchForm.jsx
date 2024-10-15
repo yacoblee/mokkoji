@@ -51,7 +51,7 @@ function ReviewPatchForm({ userReviewDetail }) {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            alert("파일 업로드 성공:", response.data);
+            // alert("파일 업로드 성공:", response.data);
             window.location.href = '/mypage/review';
         } catch (error) {
             alert("파일 업로드 중 에러 발생:", error);
@@ -64,6 +64,8 @@ function ReviewPatchForm({ userReviewDetail }) {
         <>
             <form id="detailReview" onSubmit={handleSubmit} method="PATCH">
                 <div>{reviewInfo.productName}</div>
+                <br />
+
                 <div>
                     <input
                         name="likeDislike"
@@ -80,6 +82,8 @@ function ReviewPatchForm({ userReviewDetail }) {
                         value="false"
                     /><FontAwesomeIcon icon={faThumbsDown} size="xl" />
                 </div>
+                <br />
+
                 <div>
                     <textarea
                         id="reviewContent"

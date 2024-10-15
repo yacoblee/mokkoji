@@ -33,7 +33,7 @@ function ReviewInsertForm({ userReviewInsert }) {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            alert("파일 업로드 성공:", response.data);
+            // alert("파일 업로드 성공:", response.data);
             window.location.href = '/mypage/review';
         } catch (error) {
             alert("파일 업로드 중 에러 발생:", error);
