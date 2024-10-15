@@ -138,7 +138,8 @@ function ProductsInsert() {
             const { selectProduct, option, image } = response.data;
             setProduct(selectProduct);
             setOptions(option);
-
+            alert(`${selectProduct.name}의 수정이 완료되었습니다.`);
+            navigate('/administrator/products');
         } catch (err) {
             console.error('업로드 실패:', err);
         }
