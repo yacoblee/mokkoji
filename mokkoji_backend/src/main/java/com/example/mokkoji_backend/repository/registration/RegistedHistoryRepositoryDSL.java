@@ -15,7 +15,6 @@ public interface RegistedHistoryRepositoryDSL {
 
 	 List<DateCountDTO> countByRegDate(Timestamp startDate, Timestamp endDate);
 
-
 	List<RegistedHistoryDTO> findByUserIdList(String userId);
 
 	void changeAdultCnt(String userId, String registId, int adultCnt);
