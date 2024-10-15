@@ -73,7 +73,7 @@ function MyPageMain() {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'DELETE', null, userToken)
             .then((response) => {
-                alert("삭제 성공");
+                // alert("삭제 성공");
                 setUserFavorites(response.data);
                 setFavoritesCnt(favoritesCnt - 1)
             }).catch((err) => {
@@ -90,7 +90,7 @@ function MyPageMain() {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'DELETE', productIdList, userToken)
             .then((response) => {
-                alert(`${productIdList.length}개 삭제 성공`);
+                // alert(`${productIdList.length}개 삭제 성공`);
                 setUserFavorites(response.data);
                 setFavoritesCnt(favoritesCnt - productIdList.length)
             }).catch((err) => {
@@ -167,7 +167,7 @@ function MyPageMain() {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'DELETE', null, userToken)
             .then((response) => {
-                alert("삭제 성공");
+                // alert("삭제 성공");
                 setUserCart(response.data);
                 setCartCnt(cartCnt - 1)
             }).catch((err) => {
@@ -184,7 +184,7 @@ function MyPageMain() {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'DELETE', cartKeyList, userToken)
             .then((response) => {
-                alert(`${cartKeyList.length}개 삭제 성공`);
+                // alert(`${cartKeyList.length}개 삭제 성공`);
                 setUserCart(response.data);
                 setCartCnt(cartCnt - cartKeyList.length)
             }).catch((err) => {
@@ -305,7 +305,7 @@ function MyPageMain() {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'DELETE', null, userToken)
             .then((response) => {
-                alert("삭제 성공");
+                // alert("삭제 성공");
                 setUserAddress(response.data);
             }).catch((err) => {
                 if (err === 502) {
