@@ -123,7 +123,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 						orders.purchaseNumber,
 						orders.userId,
 						orders.addressId,
-						address.locationName,
+						address.streetAddress,
 						orders.total,
 						orders.regDate,
 						ordersDetail.productId,
@@ -131,7 +131,8 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 						ordersDetail.optionContent,
 						ordersDetail.packagingOptionContent,
 						ordersDetail.productCnt,
-						ordersDetail.productTotalPrice
+						ordersDetail.productTotalPrice,
+						products.mainImageName
 				))
 				.from(orders)
 				.leftJoin(ordersDetail).on(orders.purchaseNumber.eq(ordersDetail.purchaseNumber))  // Orders와 OrdersDetail을 JOIN
@@ -139,8 +140,6 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 				.leftJoin(address).on(orders.addressId.eq(address.addressId))  // Orders와 Address를 JOIN
 				.where(orders.userId.eq(userId))  // 특정 userId로 필터링
 				.orderBy(orders.regDate.desc()) // 최신순
-				.orderBy(orders.purchaseNumber.asc()) // 주문번호순
-				.orderBy(ordersDetail.productId.asc()) // 상품ID순
 				.fetch();  // 결과 반환
 	}
 

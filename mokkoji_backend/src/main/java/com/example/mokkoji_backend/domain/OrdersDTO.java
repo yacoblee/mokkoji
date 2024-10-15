@@ -17,7 +17,7 @@ public class OrdersDTO {
 	private String userId;
 	private int addressId;
 
-	private String locationName;
+	private String streetAddress;
 
 	private int total;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -32,4 +32,5 @@ public class OrdersDTO {
 	private int productCnt;
 	private int productTotalPrice;
 
+	private String mainImageName;
 }
