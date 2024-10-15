@@ -1,9 +1,33 @@
 import '../../../css/mypage/subpage/MyPageOrders.css'
+import ReviewInsertForm from '../form/ReviewInsertForm';
 
 import { API_BASE_URL } from "../../../service/app-config";
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 
-function MyPageOrders({ userOrders, myPageOrders, myPageOrdersDetail }) {
+function MyPageOrders({ userOrders, myPageOrders }) {
+
+    // 숫자를 금액처럼 표기하기
+    const formatNumber = (number) => {
+        return number.toLocaleString('en-US');
+    };
+
+    //모달 상태창에 대한 true , false
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [userReviewInsert, setUserReviewInsert] = useState(); // 기본 상품 정보
+
+    //모달창 오픈
+    const openReviewForm = (e, productId, productName) => {
+        e.preventDefault();
+        setUserReviewInsert({
+            productId: productId,
+            productName: productName
+        })
+        setIsModalOpen(true);
+    };
+
+
 
     useEffect(() => {
         myPageOrders("/order/list")
@@ -44,7 +68,7 @@ function MyPageOrders({ userOrders, myPageOrders, myPageOrdersDetail }) {
                                     <div>
                                         {/* <h4>주문 번호: {orderInfo.purchaseNumber}</h4> */}
                                         <h3>배송 주소: {orderInfo.streetAddress}</h3>
-                                        <h3>총액: {orderInfo.total}원</h3>
+                                        <h3>총액: {formatNumber(orderInfo.total)}원</h3>
                                         <br />
                                     </div>
 
@@ -64,7 +88,7 @@ function MyPageOrders({ userOrders, myPageOrders, myPageOrdersDetail }) {
                                                             <span>{orderItem.optionContent}/{orderItem.packagingOptionContent}</span>
                                                         </td>
                                                         <td rowSpan={2}>
-                                                            <button className='MyInfoSetting'>리뷰 작성</button>
+                                                            <button onClick={(event) => openReviewForm(event, orderItem.id, orderItem.name)} className='MyInfoSetting'>리뷰 작성</button>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -72,7 +96,7 @@ function MyPageOrders({ userOrders, myPageOrders, myPageOrdersDetail }) {
                                                             <span>수량: {orderItem.productCnt}</span>
                                                         </td>
                                                         <td>
-                                                            <span>상품 총액: {orderItem.productTotalPrice}원</span>
+                                                            <span>상품 총액: {formatNumber(orderInfo.productTotalPrice)}원</span>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -84,6 +108,28 @@ function MyPageOrders({ userOrders, myPageOrders, myPageOrdersDetail }) {
                         })}
                 </div>
             ))}
+
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="주소 검색"
+                style={{
+                    content: {
+                        width: '500px',
+                        height: '500px',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)'
+                    }
+                }}
+            >
+                <ReviewInsertForm
+                    userReviewInsert={userReviewInsert}
+                />
+            </Modal>
         </div>
     );
 }

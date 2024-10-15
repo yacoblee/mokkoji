@@ -29,8 +29,6 @@ function MyPageReview({ userReview, myPageReview }) {
         setIsModalOpen(true);
     };
 
-    console.log(userReview)
-
     return (
 
         <div className='MyPageReview'>

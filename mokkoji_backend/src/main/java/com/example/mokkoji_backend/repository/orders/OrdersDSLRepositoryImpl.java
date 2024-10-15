@@ -126,7 +126,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 						address.streetAddress,
 						orders.total,
 						orders.regDate,
-						ordersDetail.productId,
+						products.id,
 						products.name,
 						ordersDetail.optionContent,
 						ordersDetail.packagingOptionContent,
