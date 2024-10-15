@@ -31,18 +31,18 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
         myPageCart("/mypage/cart")
     }, [])
 
-    const insertOrder = async (productId, optionContent, packagingOptionContent, productCnt, productTotalPrice) => {
+    const insertOrder = async (cart) => {
 
         let token = JSON.parse(sessionStorage.getItem("userData"));
 
         // 구매하기 정보 추가할 항목 생성
         const sendBasket = {// 이형태는 Cart Entity구조 와 동일함
             userId: userMain.userId, // userId 를 찾아 보내줘야함.(String)
-            productId: productId, // 해당하는 productId를 찾아 보냄.(String)
-            optionContent: optionContent, // 해당하는 상품옵션내용(String)
-            packagingOptionContent: packagingOptionContent,//해당하는 포장옵션내용(String)
-            productCnt: productCnt,//해당하는 갯수(int)
-            productTotalPrice: productTotalPrice,//총계산을 마친 금액 (int)
+            productId: cart.productId, // 해당하는 productId를 찾아 보냄.(String)
+            optionContent: cart.optionContent, // 해당하는 상품옵션내용(String)
+            packagingOptionContent: cart.packagingOptionContent,//해당하는 포장옵션내용(String)
+            productCnt: cart.productCnt,//해당하는 갯수(int)
+            productTotalPrice: cart.productTotalPrice,//총계산을 마친 금액 (int)
         };
         console.log(`${sendBasket.userId}`);
         console.log(`${sendBasket.productId}`);
@@ -51,7 +51,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
         console.log(`${sendBasket.productCnt}`);
         console.log(`${sendBasket.productTotalPrice}`);
         try {
-            const response = await apiCall(`/order/cartpage`, 'POST', sendBasket, token);
+            const response = await apiCall(`/order/page`, 'POST', sendBasket, token);
             const { product, option, packaging, productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
             //setLike(liked);
             //alert(message);
@@ -63,7 +63,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
             // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
             navigate(`/orderpage`, {
                 state: {
-                    productBuy: productBuy
+                    productBuy: cart
                 }
             });
         } catch (error) {
@@ -224,7 +224,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                             if (cart.productCnt > cart.stockCount) {
                                                 alert("상품 재고 부족으로 현재 구매가 불가능합니다.")
                                             } else {
-                                                insertOrder(cart.productId, cart.optionContent, cart.packagingOptionContent, cart.productCnt, cart.productTotalPrice)
+                                                insertOrder(cart)
                                             }
                                         }}
                                     >
