@@ -45,7 +45,8 @@ const ProductList = () => {
         let uri;
         if (filterItem.keyword.trim() === '') {
             // 카테고리 전체를 가져오기 위한 URI
-            uri = `${API_BASE_URL}/goods/${filterItem.categoryId}`;
+            //uri = `${API_BASE_URL}/goods/${filterItem.categoryId}`;
+            uri = `${API_BASE_URL}/goods/${category}`;
         } else {
             // 검색 API 호출
             uri = `${API_BASE_URL}/goods/search`;
@@ -75,10 +76,14 @@ const ProductList = () => {
     useEffect(() => {
         setFilterItem(it => ({
             ...it,
-            categoryId: category, // URL에서 변경된 카테고리를 반영
+            categoryId: 'allGoods', // URL에서 변경된 카테고리를 반영
             keyword: '', // 카테고리가 변경될 때 검색어를 초기화
         }));
-        setPage(1); // 카테고리가 변경될 때 페이지를 1로 초기화
+        if (page == 1) {
+            axiosCall();
+        } else {
+            setPage(1); // 카테고리가 변경될 때 페이지를 1로 초기화
+        }
 
     }, [category]);
 
@@ -140,8 +145,14 @@ const ProductList = () => {
                             onClick={() => {
                                 if (filterItem.keyword) {
                                     setFilterItem((it) => ({
-                                        ...it, keyword: ''
+                                        ...it, keyword: '', categoryId: items.category
                                     }));
+                                    // 카테고리 변경 시 필터의 categoryId 업데이트 및 페이지 초기화
+                                    // setFilterItem((it) => ({
+                                    //     ...it,
+                                    //     categoryId: items.category // 카테고리 업데이트
+                                    // }));
+                                    onClickSearch()
                                 }
                             }}
                             key={i}>{items.description}</NavLink>

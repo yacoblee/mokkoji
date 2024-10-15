@@ -154,6 +154,7 @@ public class ProductsServiceImpl implements ProductsService {
 			return findPageAll(requestDTO);
 		} else {
 			log.info("카테고리 별 링크 ? 현재 링크 위치 :" + categoryId);
+			requestDTO.setCategoryId(categoryId);
 			return findByCategoryId(requestDTO);
 		}
 	}
