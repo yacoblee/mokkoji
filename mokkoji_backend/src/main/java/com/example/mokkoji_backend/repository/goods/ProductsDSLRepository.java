@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface ProductsDSLRepository {
 	
-	List<ProductsDTO> findByJoinList();
-	
-	ProductsDTO findByJoinOne(Long id);
-	
 	List<ProductsDTO> recommendList(Long id);
 	
 	ProductsDTO entityToDto(Products items);
 	
 	List<SumOptionsDTO> sumOptions(Long productId);
+	
+//	ProductsDTO findByJoinOne(Long id);
+//	List<ProductsDTO> findByJoinList();
+//	
 }

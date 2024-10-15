@@ -1,10 +1,8 @@
 package com.example.mokkoji_backend.service.goods;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,6 @@ import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
-import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.Packaging;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
@@ -31,7 +28,6 @@ import com.example.mokkoji_backend.repository.goods.ProductsRepository;
 import com.example.mokkoji_backend.service.CodeService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -178,7 +174,7 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO) {
 
-//		if(requestDTO.getKeyword())
+
 		if ("allGoods".equals(requestDTO.getCategoryId())) {
 			log.info("allgoods 검색중 ?검색 키워드 :" + requestDTO.getKeyword());
 			return findByNameContaining(requestDTO);
@@ -188,48 +184,9 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 	}
 
-	// 날짜 검색
-	@Override
-	public PageResultDTO<ProductsDTO, Products> findByUploadDateBetween(PageRequestDTO requestDTO) {
-		LocalDate startDate = requestDTO.getStartDate();
-		LocalDate endDate = requestDTO.getEndDate();
 
-		LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
-		LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
 
-		Page<Products> result = repository.findByUploadDateBetween(startDateTime, endDateTime,
-				requestDTO.getPageable());
-		return new PageResultDTO<>(result, e -> dslentityToDto(e));
-	}
-
-	// 제품 상태 검색
-	@Override
-	public PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO) {
-
-		int status = Integer.parseInt(requestDTO.getState());
-		Page<Products> result = repository.findByStatus(status, requestDTO.getPageable());
-		return new PageResultDTO<>(result, e -> dslentityToDto(e));
-	}
-
-	@Override
-	public PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByNameContainingAndStatus(requestDTO.getKeyword(), requestDTO.getState(),
-				requestDTO.getPageable());
-		return new PageResultDTO<>(result, e -> dslentityToDto(e));
-	}
-
-	@Override
-	public PageResultDTO<ProductsDTO, Products> findByNameContainingAndUploadDateBetween(PageRequestDTO requestDTO) {
-		LocalDate startDate = requestDTO.getStartDate();
-		LocalDate endDate = requestDTO.getEndDate();
-
-		LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
-		LocalDateTime endDateTime = endDate != null ? endDate.atTime(23, 59, 59) : null;
-		Page<Products> result = repository.findByNameContainingAndUploadDateBetween(requestDTO.getKeyword(),
-				startDateTime, endDateTime, requestDTO.getPageable());
-		return new PageResultDTO<>(result, e -> dslentityToDto(e));
-	}
-
+// 관리자 페이지 서비스
 	@Override
 	public PageResultDTO<ProductsDTO, Products> complexSearch(PageRequestDTO requestDTO) {
 		LocalDate startDate = requestDTO.getStartDate();
@@ -244,16 +201,6 @@ public class ProductsServiceImpl implements ProductsService {
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 
-	// 관리자 페이지 서비스
-	@Override
-	public PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO) {
-		// 첫 요청 :
-		// PageRequestDTO(page=1, size=10, categoryId=allGoods,
-		// keyword=, typeSecond=null, ascending=true, ascendingSecond=true,
-		// sub_type=null, startDate=null, endDate=null)
-		log.info("관리자 페이지 검색 : " + requestDTO);
-		return complexSearch(requestDTO);
-	}
 
 	//// 추천 리스트 반환 (DSR 이용)
 	@Override

@@ -23,47 +23,7 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	private final JPAQueryFactory jpaQueryFactory;
     // 생성을 위한 Bean 설정을 DemoConfig에 추가해야함.
 	
-	@Override // 연습용
-	public List<ProductsDTO> findByJoinList() {
 
-		return jpaQueryFactory.select(
-			     Projections.bean(ProductsDTO.class, 
-			             products.id,
-			             products.categoryId,
-			             products.name,
-			             products.price, 
-			             products.sizeInfo, 
-			             products.guide,
-			             products.mainDescription, 
-			             products.subDescription, 
-			             products.likeCount, 
-			             products.status, 
-			             products.stockCount, 
-			             products.uploadDate
-			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId)).fetchJoin().fetch();
-	}
-
-	
-	@Override// 연습용
-	public ProductsDTO findByJoinOne(Long id) {
-		return jpaQueryFactory.select(
-			     Projections.bean(ProductsDTO.class, 
-			             products.id,
-			             products.categoryId,
-			             products.name,
-			             products.price, 
-			             products.sizeInfo, 
-			             products.guide,
-			             products.mainDescription, 
-			             products.subDescription, 
-			             products.likeCount, 
-			             products.status, 
-			             products.stockCount, 
-			             products.uploadDate
-			         )).from(products).join(productOptions).on(products.id.eq(productOptions.productId))
-				.where(products.id.eq(id)).fetchJoin().fetchOne();
-	}
-	
 	
 	@Override
 	public List<ProductsDTO> recommendList(Long id) {

@@ -67,47 +67,7 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 //    @EntityGraph(attributePaths = {"options"})
 	Optional<Products> findById( Long id);
     
-//    @Query("SELECT p FROM Products p WHERE "
-//            + "(:category IS NULL OR p.categoryId = :category) AND "
-//            + "(:keyword IS NULL OR p.name LIKE %:keyword% OR p.mainDescription LIKE %:keyword%) AND "
-//            + "(:startDate IS NULL OR p.uploadDate >= :startDate) AND "
-//            + "(:endDate IS NULL OR p.uploadDate <= :endDate)")
-       Page<Products> findByNameContainingAndCategoryIdAndUploadDateBetween(
-//               @Param("category") String category,
-//               @Param("keyword") String keyword,
-//               @Param("startDate") LocalDate startDate,
-//               @Param("endDate") LocalDate endDate,
-    		   String name,
-    		   String categoryId,
-    		   LocalDateTime startDate,
-    		   LocalDateTime endDate,
-               Pageable pageable);
 
-//       @Query("SELECT p FROM Products p WHERE "
-//            + "(:keyword IS NULL OR p.name LIKE %:keyword% OR p.mainDescription LIKE %:keyword%) AND "
-//            + "(:startDate IS NULL OR p.uploadDate >= :startDate) AND "
-//            + "(:endDate IS NULL OR p.uploadDate <= :endDate)")
-       Page<Products> findByNameContainingAndUploadDateBetween(
-//               @Param("keyword") String name,
-//               @Param("startDate") LocalDate startDate,
-//               @Param("endDate") LocalDate endDate,
-    		   String name,
-    		   LocalDateTime startDate,
-    		   LocalDateTime endDate,
-               Pageable pageable);
-
-//       @Query("SELECT p FROM Products p WHERE "
-//            + "(:category IS NULL OR p.categoryId = :category) AND "
-//            + "(:startDate IS NULL OR p.uploadDate >= :startDate) AND "
-//            + "(:endDate IS NULL OR p.uploadDate <= :endDate)")
-       Page<Products> findByCategoryIdAndUploadDateBetween(
-//               @Param("category") String category,
-//               @Param("startDate") LocalDate startDate,
-//               @Param("endDate") LocalDate endDate,
-    		   String categoryId ,
-    		   LocalDateTime startDate,
-    		   LocalDateTime endDate,
-               Pageable pageable);
 
        Page<Products> findByNameContainingAndStatus(String name ,String status,  Pageable pageable);
        Page<Products> findByStatus(int status,Pageable pageable);

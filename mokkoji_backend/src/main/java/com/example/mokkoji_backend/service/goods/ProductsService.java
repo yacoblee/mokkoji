@@ -1,20 +1,17 @@
 package com.example.mokkoji_backend.service.goods;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductDetailDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.goods.Products;
-import com.example.mokkoji_backend.pageTest.Criteria;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductsService {
 
@@ -49,19 +46,9 @@ public interface ProductsService {
 	PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO);
 	// 상위 검색 통합 서비스
 	PageResultDTO<ProductsDTO, Products> searchGoods(PageRequestDTO requestDTO);
-	//날짜 검색
-	PageResultDTO<ProductsDTO, Products> findByUploadDateBetween(PageRequestDTO requestDTO);
-	//제품 상태값 검색
-	PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO);
-	//이름 + 상태검색
-	//findByNameContainingAndStatus
-	PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO);
-	//이름 + 날짜 findByNameContainingAndUploadDateBetween
-	PageResultDTO<ProductsDTO, Products> findByNameContainingAndUploadDateBetween(PageRequestDTO requestDTO);
 	//통합 겁색 complexSearch
-	PageResultDTO<ProductsDTO, Products> complexSearch(PageRequestDTO requestDTO);
 	// 관리자 페이지 서비스
-	PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO);
+	PageResultDTO<ProductsDTO, Products> complexSearch(PageRequestDTO requestDTO);
 	// dto로 형성된 table내의 text 찾아오기
 	ProductDetailDTO findDetailinfo(Long id);
 	//select ONE entity
@@ -88,6 +75,20 @@ public interface ProductsService {
 	 void insertAllProduct(ProductSaveDTO productSaveDTO,
 			 MultipartFile[] mainImages,MultipartFile[] slideImages,
 			 MultipartFile uploadfilef) throws IOException ;
+	 
+	 
+	 
+	 
+	 //날짜 검색
+	 //PageResultDTO<ProductsDTO, Products> findByUploadDateBetween(PageRequestDTO requestDTO);
+	 //제품 상태값 검색
+	 //PageResultDTO<ProductsDTO, Products> findByStatus(PageRequestDTO requestDTO);
+	 //이름 + 상태검색
+	 //findByNameContainingAndStatus
+	 //PageResultDTO<ProductsDTO, Products> findByNameContainingAndStatus(PageRequestDTO requestDTO);
+	 //이름 + 날짜 findByNameContainingAndUploadDateBetween
+	 //PageResultDTO<ProductsDTO, Products> findByNameContainingAndUploadDateBetween(PageRequestDTO requestDTO);
+	 //PageResultDTO<ProductsDTO, Products> adminSearch(PageRequestDTO requestDTO);
 	//ProductsDTO findByJoinOne(Long id);
 	//List<Products> findAllProducts(Criteria cri);
 	//int countByCategoryId(String CategoryId);

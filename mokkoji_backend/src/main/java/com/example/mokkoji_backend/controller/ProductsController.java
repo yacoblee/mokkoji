@@ -65,11 +65,8 @@ public class ProductsController {
 		List<ProductsDTO> productList = service.findList();
 
 		if (productList != null && !productList.isEmpty()) {
-			log.info("/goods _ 성공했니 ?");
-			
 			return ResponseEntity.ok(productList);
 		}
-		log.info("/goods _ 실패했니 ?");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("찾을 수 없습니다.");
 	}
 
