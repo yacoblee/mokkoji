@@ -1,35 +1,26 @@
 package com.example.mokkoji_backend.controller;
 
 
-import java.io.IOException;
-import java.util.Map;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.mokkoji_backend.domain.PaymentRequestDto;
+import com.example.mokkoji_backend.domain.RegistedHistoryDTO;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.PaymentService;
 import com.example.mokkoji_backend.service.registration.RegistImageService;
 import com.example.mokkoji_backend.service.registration.RegistService;
+import com.example.mokkoji_backend.service.registration.RegistedHistoryService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
-
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,9 +32,15 @@ public class RegistController {
 	private final RegistImageService imageservice;
 	private final TokenProvider provider;
 	private final PaymentService paymentService;
-	
+	private final RegistedHistoryService registedHistoryService;
 	
 	private IamportClient iamportClient;
+
+	private final TokenProvider tokenProvider;
+
+	public String getUserIdFromHeader(String header) {
+		return tokenProvider.validateAndGetUserId(header.substring(7));
+	}
 
 	@PostConstruct
     public void init() {
@@ -119,9 +116,58 @@ public class RegistController {
         
     }
 
-    
+	// ** 마이페이지에서 사용 ================================================================
+
+	// 1. 리스트 끌고오기
+	@GetMapping("/mypage/book")
+	public ResponseEntity<?> findRegistAllList(@RequestHeader("Authorization") String header){
+		String userId = getUserIdFromHeader(header);
+
+		try{
+			List<RegistedHistoryDTO> registedHistoryDTOList = registedHistoryService.findAllRegList(userId);
+
+			log.warn(registedHistoryDTOList);
+
+			return ResponseEntity.ok(registedHistoryDTOList);
+
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : findRegistAllList");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : findRegistAllList");
+		}
+	}
 	
-	
+	// 2. 수량 수정
+	// 2.1. 성인
+	@PatchMapping("/mypage/adult/{registId}/{adultCnt}")
+	public ResponseEntity<?> changeAdultCnt(@RequestHeader("Authorization") String header, @PathVariable("registId") String registId, @PathVariable("adultCnt") int adultCnt){
+		String userId = getUserIdFromHeader(header);
+		log.info("UserId: {}, RegistId: {}, AdultCnt: {}", userId, registId, adultCnt);
+
+		try{
+			List<RegistedHistoryDTO> registedHistoryDTOList = registedHistoryService.updateAdultCntAndFindList(userId, registId, adultCnt);
+			log.warn(registedHistoryDTOList);
+			return ResponseEntity.ok(registedHistoryDTOList);
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : changeAdultCnt");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : changeAdultCnt");
+		}
+	}
+
+	// 2.2. 청소년
+	@PatchMapping("/mypage/teen/{registId}/{teenagerCnt}")
+	public ResponseEntity<?> changeTeenCnt(@RequestHeader("Authorization") String header, @PathVariable("registId") String registId, @PathVariable("teenagerCnt") int teenagerCnt){
+		String userId = getUserIdFromHeader(header);
+		log.info("UserId: {}, RegistId: {}, teenagerCnt: {}", userId, registId, teenagerCnt);
+
+		try{
+			List<RegistedHistoryDTO> registedHistoryDTOList = registedHistoryService.updateTeenCntAndFindList(userId, registId, teenagerCnt);
+			log.warn(registedHistoryDTOList);
+			return ResponseEntity.ok(registedHistoryDTOList);
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : changeTeenCnt");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : changeTeenCnt");
+		}
+	}
 
 }
 
