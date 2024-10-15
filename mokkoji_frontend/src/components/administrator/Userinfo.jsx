@@ -16,13 +16,13 @@ const Userinfo = () => {
     const { users, userAddress } = location.state || {}; // 전달된 state가 없을 경우를 대비해 기본값 설정
     console.log(dbData);
     // 초기 유저 데이터 값 
+
     const firstAdminInputUserinfo = {
         email: '', // 이메일
         phoneNumber: '', // 핸드폰 번호
         updatedAt: '', // 수정 날짜
         blockStatus: users.blockStatus || '', // 접근 제한 
         isWithdrawn: '' // 회원 탈퇴 
-
     }
     const [adminInputUserinfo, setAdminInputUserinfo] = useState(users);
 
@@ -35,9 +35,6 @@ const Userinfo = () => {
         }));
     };
 
-
-
-    console.log("!!!", adminInputUserinfo);
     // idtDefault 크기 순으로 배열안에서 재정렬 
     const getDefaultAddress = (addresses) => {
         if (addresses.length === 0) return null;
@@ -49,16 +46,17 @@ const Userinfo = () => {
     };
     const defaultAddress = getDefaultAddress(userAddress) || [];
 
-
     const [rows, setRows] = useState(defaultAddress);
-    const [currentIndex, setCurrentIndex] = useState(null);  // 현재 선택한 인덱스를 저장하는 상태
 
     // 배송지 추가 함수
     const addRow = () => {
+        const isDefaultValue = rows.length > 0
+            ? (rows[rows.length - 1].isDefault + 1) // 마지막 항목의 isDefault 값에 +1
+            : 1;  // 배열이 비어 있으면 기본값 1
         const newAddress = {
             addressId: '',  // 고유한 id 생성
-            created_at: '',
-            isDefault: '',
+            created_at: new Date().toISOString().slice(0, 10),
+            isDefault: isDefaultValue,
             locationName: '',
             postalCode: '',
             streetAddress: '',
@@ -66,24 +64,20 @@ const Userinfo = () => {
             recipientName: '',
             recipientPhone: '',
             userId: users.userId
-
         };
         setRows([...rows, newAddress]); // 새 항목을 추가
     };
-    console.log("###", rows);
 
-    const onChangeaddressValue = (e) => {
-        const { name, value, index } = e.target;
+    const onChangeaddressValue = (e, index) => {
+        const { name, value } = e.target;
         setRows((prevRows) =>
-            prevRows.map((it, i) =>
-                i === currentIndex ? {
-                    ...it, postalCode: data.zonecode,
-                    streetAddress: fullAddress
-                } : it
-            )
-        );
+            prevRows.map((row, i) =>
+                i === index ? {
+                    ...row,
+                    [name]: value,
+                } : row
+            ));
     };
-
 
     // 주소 검색 버튼 클릭 이벤트 핸들러
     const openAddress = (e) => {
@@ -110,28 +104,13 @@ const Userinfo = () => {
             }
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : ''); // 전체 주소
         }
-
-        // 해당 인덱스의 주소를 업데이트
-
-        // 해당 인덱스의 주소를 업데이트
-        // setRows(prevRows => {
-        //     const updatedRows = [...prevRows];
-        //     updatedRows[currentIndex] = {
-        //         ...updatedRows[currentIndex],
-        //         postalCode: data.zonecode,
-        //         streetAddress: fullAddress
-        //     };
-        //     return updatedRows;
-        // });
-        console.log("****", currentIndex);
         setRows((prevRows) =>
             prevRows.map((it, i) =>
                 i === currentIndex ? {
                     ...it, postalCode: data.zonecode,
                     streetAddress: fullAddress
                 } : it
-            )
-        );
+            ));
         setIsModalOpen(false);  // 모달 닫기
     };
 
@@ -142,7 +121,6 @@ const Userinfo = () => {
                 email: users.email,
             }));
         }
-
         if (!adminInputUserinfo.phoneNumber) {
             setAdminInputUserinfo((prevState) => ({
                 ...prevState,
@@ -152,9 +130,7 @@ const Userinfo = () => {
     }, [users.email, users.phoneNumber]); // email과 phoneNumber 값이 변경될 때만 실행
 
     // 주소 검색 버튼 클릭 시 모달을 열고, 인덱스를 저장함
-    const openAddressSearch = (index) => {
-        setCurrentIndex(index);  // 현재 인덱스를 상태로 저장
-
+    const openAddressSearch = () => {
         setIsModalOpen(true);
     };
 
@@ -176,6 +152,9 @@ const Userinfo = () => {
         }
     };
 
+    //유효성 검사 
+
+
     const insertDB = (e) => {
         e.preventDefault();
         let url = '/administrator/users/userinfo/userinfoupdate';
@@ -190,7 +169,6 @@ const Userinfo = () => {
             }).catch((err) => {
                 console.error("Error during API call:", err);
             })
-
     }
 
 
@@ -245,16 +223,21 @@ const Userinfo = () => {
 
                                     {rows.map((ad, index) => (
                                         <tr key={ad.addressId || index} className='userinfo-address'>
-                                            <th>배송지명<br />&#91; {ad.locationName || <input name="locationName" type="text" size="6" value={rows.locationName} />} &#93;</th>
+                                            <th>배송지명<br />&#91; <input name="locationName" id="locationName" type="text" size="6" maxLength={7} value={ad.locationName || ''}
+                                                onChange={(e) => onChangeaddressValue(e, index)} /> &#93;</th>
                                             <td colSpan="3">
-                                                <p>우편번호 &nbsp; &nbsp;&nbsp; <input type="text" name="postalCode" value={ad.postalCode} />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span className='userinfo-addressAdd' onClick={() => openAddressSearch(index)}>주소검색</span></p>
-                                                <p>기본주소 &nbsp; &nbsp;&nbsp; <input type="text" name="streetAddress" value={ad.streetAddress} size="60" /></p>
-                                                <p>상세주소 &nbsp; &nbsp;&nbsp; <input type="text" name="detailedAddress" onChange={(index)=>onChangeaddressValue(index)}size="60" onChangeaddressValue /></p>
-                                                <p>받는 사람  &nbsp;  &nbsp; <input type="text" name="recipientName" value={ad.recipientName} size="60" />
+                                                <p>우편번호 &nbsp; &nbsp;&nbsp;<input type="text" name="postalCode" value={ad.postalCode || ''} />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span className='userinfo-addressAdd' readOnly onClick={() => openAddressSearch(index)}>주소검색</span></p>
+                                                <p>기본주소 &nbsp; &nbsp;&nbsp;
+                                                    <input type="text" name="streetAddress" value={ad.streetAddress} size="60" readOnly /></p>
+                                                <p>상세주소 &nbsp; &nbsp;&nbsp;
+                                                    <input type="text" name="detailedAddress" id="detailedAddress" value={ad.detailedAddress || ''}  // value 추가
+                                                        onChange={(e) => onChangeaddressValue(e, index)} size="60" /></p>
+                                                <p>받는 사람  &nbsp;  &nbsp;
+                                                    <input type="text" name="recipientName" id="recipientName" value={ad.recipientName || ''} size="60" onChange={(e) => onChangeaddressValue(e, index)} />
                                                 </p>
-                                                <p>핸드폰 번호 <input type="text" value={ad.
-                                                    recipientPhone} size="60" />
+                                                <p>핸드폰 번호 <input type="text" name="recipientPhone" id="recipientPhone" value={ad.
+                                                    recipientPhone} size="60" onChange={(e) => onChangeaddressValue(e, index)} />
                                                 </p>
                                             </td>
                                         </tr>
