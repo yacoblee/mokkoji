@@ -36,7 +36,7 @@ function ProductStatistics({ productId }) {
             });
     }, [])
     console.log(genderFavorites);
-    const emptyData = (type) => {
+    const emptyDataPie = (type) => {
         const data = {
             labels: ['M', 'F'],
             datasets: [
@@ -122,12 +122,27 @@ function ProductStatistics({ productId }) {
     };
 
     const regDatePurchasesLine = () => {
+
+        // 최소값과 최대값 계산
+        const dates = regDatePurchases.map(gp => new Date(gp.regDate));
+        // const minDate = new Date(Math.min(...dates)); // 가장 작은 날짜
+        // const maxDate = new Date(); // 오늘 날짜로 설정 (혹은 Math.max(...dates)로 특정 최대 날짜 설정 가능)
+        const maxPurchaseCount = Math.max(...regDatePurchases.map(gp => gp.purchaseCount));
+        const today = new Date(); // 오늘 날짜
+        const todayString = today.toISOString().split('T')[0];
+        const regDatePurchasesData = [...regDatePurchases];
+        if (!regDatePurchases.some(gp => gp.regDate === todayString)) {
+            regDatePurchasesData.push({
+                regDate: todayString,
+                purchaseCount: null, // 판매량 데이터가 없는 경우 null 또는 0을 사용
+            });
+        }
         const data = {
             labels: regDatePurchases.map(gp => gp.regDate),
             datasets: [
                 {
                     label: '판매량',
-                    data: regDatePurchases.map(gp => gp.purchaseCount),
+                    data: regDatePurchasesData.map(gp => gp.purchaseCount),
                     fill: false,
                     pointBackgroundColor: 'rgba(75, 192, 192, 1)', // 포인트 색상
                     pointBorderColor: '#fff',
@@ -138,10 +153,69 @@ function ProductStatistics({ productId }) {
                 },
             ],
         };
-
-        return <Line data={data} />;
+        const options = {
+            scales: {
+                // x: {
+                //     //type: 'time', // x축을 날짜 형식으로 설정
+                //     time: {
+                //         unit: 'day', // 하루 단위로 설정
+                //     },
+                //     min: minDate, // 시작 날짜를 원하는 날짜로 설정
+                //     max: maxDate, // 오늘 날짜로 설정
+                // },
+                x: {
+                    type: 'category', // x축을 category로 설정
+                },
+                y: {
+                    beginAtZero: true, // y축이 0부터 시작하도록 설정
+                    min: 0, // y축 최소값
+                    max: maxPurchaseCount + 1, // y축 최대값(예: 판매량이 최대 100이라 가정)
+                    ticks: {
+                        stepSize: 10, // y축 간격을 고정
+                    },
+                },
+            },
+        };
+        return <Line data={data} options={options} />;
     };
+    const emptyDataLine = (type) => {
+        const today = new Date(); // 오늘 날짜
+        const todayString = today.toISOString().split('T')[0];
+        const data = {
+            labels: [todayString], // 날짜 레이블
+            datasets: [
+                {
+                    label: '판매량',
+                    data: [null], // 판매량 데이터가 없는 곳에 null 값
+                    fill: false,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgba(75, 192, 192, 0.2)',
+                    spanGaps: true, // null 데이터가 있어도 선이 이어지도록 설정
+                },
+            ],
+        };
 
+        const options = {
+            scales: {
+                x: {
+                    type: 'category',
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        };
+        return (
+            <>
+                <Line data={data} options={options} />
+                <span>해당 {type} 상태가 존재하지 않습니다.</span>
+            </>
+        )
+    }
 
     return (
         <div className='ProductStatistics'>
@@ -152,13 +226,15 @@ function ProductStatistics({ productId }) {
                 <li>{product.name}</li>
                 <li>상품 가격 </li>
                 <li>{product.price}</li>
+                <li>상품 이미지</li>
+                <li><img src={`${API_BASE_URL}/resources/productImages/${product.mainImageName}`} alt={product.name ? product.name : ''} /></li>
             </ul>
             <div className='piegender'>
                 <div>
                     <h3 className="productTitle">구매 성비</h3>
                     <div className='genderPurchases' >
                         {genderPurchases.every(it => it.purchaseCount === 0) ?
-                            emptyData('구매') : genderPurchasesPie()}
+                            emptyDataPie('구매') : genderPurchasesPie()}
                         {/* {genderPurchases.some(it => it.purchaseCount !== 0) &&
                     <div> 구매 이력 있음</div>} */}
                     </div>
@@ -167,7 +243,7 @@ function ProductStatistics({ productId }) {
                     <h3 className="productTitle">좋아요 성비</h3>
                     <div className='genderPurchases' >
                         {genderFavorites.every(it => it.favoriteCount === 0) ?
-                            emptyData('좋아요') : genderFavoritePie()}
+                            emptyDataPie('좋아요') : genderFavoritePie()}
                         {/* {genderPurchases.some(it => it.purchaseCount !== 0) &&
                     <div> 구매 이력 있음</div>} */}
                     </div>
@@ -179,7 +255,7 @@ function ProductStatistics({ productId }) {
                     <div>
                         {
                             regDatePurchases.every(it => it.purchaseCount === 0) ?
-                                <span>notting</span> :
+                                emptyDataLine('판매량') :
                                 regDatePurchasesLine()
                         }
 

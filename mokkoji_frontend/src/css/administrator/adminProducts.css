@@ -134,6 +134,10 @@
     width: 300px;
     grid-template-columns: 1fr 2fr;
 }
+.productDescription img{
+    width: 100px;
+    margin: 10px;
+}
 
 /* ====================================== */
 .fileResult img {
