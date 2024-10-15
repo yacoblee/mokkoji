@@ -69,7 +69,7 @@ public class AdminProductsController {
 	@GetMapping("/administrator/products")
 	public ResponseEntity<?> indexPage(PageRequestDTO requestDTO) {
 		// 데이터 포멧 넘침으로 인해 , dto로 변환된 list를 가져옴
-		PageResultDTO<ProductsDTO, Products> resultDTO = service.adminSearch(requestDTO);
+		PageResultDTO<ProductsDTO, Products> resultDTO = service.complexSearch(requestDTO);
 		List<ProductsDTO> productList = resultDTO.getDtoList();
 		List<Code> codeList = codeService.selectPSList();
 		if (productList != null && codeList != null) {
