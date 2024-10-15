@@ -30,9 +30,10 @@ const Admin = () => {
             <div className='adminMenu' >
                 <ul>
                 {AdminMenu.map((items, i) => (
-                    <li>
+                    <li key={i}>
                         <NavLink to={`/administrator/${items.category}`} key={i}  >{items.description}
-                        </NavLink></li>
+                        </NavLink>
+                    </li>
                 ))}
                 </ul>
             
