@@ -42,7 +42,7 @@ public class Address {
 	@Column(name = "location_name")
 	private String locationName = "집"; // 기본값으로 '집' 설정
 
-	@Column(name = "recipientName")
+	@Column(name = "recipient_name")
 	private String recipientName; 
 	
 	@Column(name = "recipient_phone")

@@ -40,34 +40,34 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	// AUTO_INCREMENT를 처리하는 애노테이션
 	
-	@Column(name = "productId", nullable = false)
+	@Column(name = "product_id", nullable = false)
 	private Long id;
 	
-	@Column(name = "productName", nullable = false)
+	@Column(name = "product_name", nullable = false)
 	private String name;
-	@Column(name = "productPrice", nullable = false)
+	@Column(name = "product_price", nullable = false)
 	private int price;
-	@Column(name = "productSizeInfo",columnDefinition = "text CHARACTER SET utf8mb4 ")
+	@Column(name = "product_size_info",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String sizeInfo;
-	@Column(name = "productGuide",columnDefinition = "text CHARACTER SET utf8mb4 ")
+	@Column(name = "product_guide",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String guide;
-	@Column(name = "productMainDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
+	@Column(name = "product_main_description",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String mainDescription;
-	@Column(name = "productAdditionalDescription",columnDefinition = "text CHARACTER SET utf8mb4 ")
+	@Column(name = "product_additional_description",columnDefinition = "text CHARACTER SET utf8mb4 ")
 	private String subDescription;
-	@Column(name = "mainImageName")
+	@Column(name = "main_image_name")
 	private String mainImageName;
-	@Column(name = "likeCount", columnDefinition = "int default 0")
+	@Column(name = "like_count", columnDefinition = "int default 0")
 	private int likeCount;
 	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
-	@Column(name = "stockCount", columnDefinition = "int default 0")
+	@Column(name = "stock_count", columnDefinition = "int default 0")
 	private int stockCount;
-	@Column(name = "uploadDate")
+	@Column(name = "upload_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@LastModifiedDate
 	private LocalDateTime uploadDate;
-	@Column(name = "categoryId")
+	@Column(name = "category_id")
 	private String categoryId;
 	
 	@Transient //SQL 구문처리에서 제외시켜줌

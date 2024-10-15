@@ -18,16 +18,16 @@ import java.io.Serializable;
 public class Code implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "mainType")
+	@Column(name = "main_type")
 	private String main_type;
 	
 	@Id
-	@Column(name = "subType")
+	@Column(name = "sub_type")
 	private String sub_type;
 	
-	@Column(name = "mainTypeName")
+	@Column(name = "main_type_name")
 	private String main_type_name;
 	
-	@Column(name = "subTypeName")
+	@Column(name = "sub_type_name")
 	private String sub_type_name;
 }

@@ -20,12 +20,12 @@ public class ProductOptions implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="productId")
+	@Column(name="product_id")
 	private Long productId;
 	@Id
-	@Column(name="optionContent")
+	@Column(name="option_content")
 	private String content;
-	@Column(name="optionPrice")
+	@Column(name="option_price")
 	private int price;
 	
 //	@ManyToOne

@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Packaging {
 	@Id
-	@Column(name = "packagingOptionContent", nullable = false)
+	@Column(name = "packaging_option_content", nullable = false)
 	private String packagingContent;
-	@Column(name = "packagingOptionPrice", nullable = false)
+	@Column(name = "packaging_option_price", nullable = false)
 	private int packagingPrice;
 }

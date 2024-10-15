@@ -22,15 +22,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductImages implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "productId", nullable = false)
+	@Column(name = "product_id", nullable = false)
 	private Long productId;
 	@Id
-	@Column(name = "imageOrder", nullable = false)
+	@Column(name = "image_order", nullable = false)
 	private int order;
 	@Id
-	@Column(name = "imageType", nullable = false)
+	@Column(name = "image_type", nullable = false)
 	private String type;
-	@Column(name = "imageName", nullable = false)
+	@Column(name = "image_name", nullable = false)
 	private String name;
 //	@Transient //SQL 구문처리에서 제외시켜줌
 //	@JsonIgnore  // JSON 직렬화에서 제외
