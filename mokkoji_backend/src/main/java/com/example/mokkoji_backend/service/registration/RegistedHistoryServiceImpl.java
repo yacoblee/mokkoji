@@ -13,7 +13,7 @@ import java.util.List;
 @Service("RegistedHistoryService")
 public class RegistedHistoryServiceImpl implements RegistedHistoryService {
 
-	private final RegistedHistoryRepository registedHistoryRepository;
+
 	private final RegistedHistoryRepositoryDSL registedHistoryRepositoryDSL;
 
 	@Override
