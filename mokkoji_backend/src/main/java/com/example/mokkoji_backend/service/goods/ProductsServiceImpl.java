@@ -217,43 +217,27 @@ public class ProductsServiceImpl implements ProductsService {
 
 	// 각 type에 따른 정보를 가져오는 메서드(detail 페이지에서 사용)
 	@Override
+	@Transactional
 	public Map<String, Object> getProductDetails(Long productId, String type) {
 		Map<String, Object> response = new HashMap<>();
 
 		Products entity = findById(productId);
+		//List<ProductOptions> options = opservice.findByProductId(productId);
+		//List<Packaging> packaging = paservice.findAll();
 
-		if (entity == null) {
-			log.error("[getProductDetails]해당하는 상품을 찾을 수 없습니다");
+		List<ProductImages> slideImage = imservice.findByProductIdAndType(productId, "slide");
+		List<ProductImages> mainImage = imservice.findByProductIdAndType(productId, "main");
+		response.put("product", entity);
+		response.put("slideImage", slideImage);
+		response.put("mainImage", mainImage);
+		response.put("recommend", findTop4ByOrderByCountDescNative(productId));
+		response.put("review", reservice.productReviews(productId));
+		response.put("option", opservice.findByProductId(productId));
+		response.put("packaging", paservice.findAll());
+		int stockCount = entity.getStockCount();
+		if (entity != null && stockCount <= 5) {
+			response.put("message", "품절 임박 , 재고가 " + stockCount + "개 남았습니다.");
 		}
-
-		if (type != null && !type.equals("form")) {
-			log.info("[/goods/{categoryId}/{productId}] 현재 타입 요청의 명은 ? : " + type);
-			List<ProductImages> image = imservice.findByProductIdAndType(productId, type);
-			response.put("image", image);
-
-			if (type.equals("main")) {
-				log.info("[/goods/{categoryId}/{productId}] 리뷰 , 디테일 , 추천 , 이미지 정보 발송 ");
-				response.put("review", reservice.productReviews(productId));
-				response.put("detail", findDetailinfo(productId));
-				response.put("recommend", findTop4ByOrderByCountDescNative(productId));
-			} else {
-				log.info("[/goods/{categoryId}/{productId}] 상품 정보 , 이미지 정보 발송 ");
-				ProductsDTO dto = dslentityToDto(entity);
-				response.put("product", dto);
-			}
-		} else {
-			log.info("[/goods/{categoryId}/{productId}] 옵션정보 , 패키지 정보 발송 ");
-			List<ProductOptions> options = opservice.findByProductId(productId);
-			response.put("option", options);
-			List<Packaging> packaging = paservice.findAll();
-			response.put("packaging", packaging);
-			// int stockCount = repository.getProductStockCount(productId);
-			int stockCount = entity.getStockCount();
-			if (entity != null && stockCount <= 5) {
-				response.put("message", "품절 임박 , 재고가 " + stockCount + "개 남았습니다.");
-			}
-		}
-
 		return response;
 	}
 	@Override

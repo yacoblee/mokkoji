@@ -22,6 +22,12 @@ const ProductDetails = () => { //===============================================
     const [product, setProduct] = useState({});
 
     const [slideimages, setSlideImages] = useState([]);
+    const [mainImage, setMainImage] = useState([]);
+    const [recommendItem, setRecommendItem] = useState([]);
+    const [review, setReview] = useState([]);
+    const [option, setOption] = useState([]);
+    const [packagings, setPackagings] = useState([]);
+    const [Ismessage, setIsMessage] = useState('');
     //세션 스토리지의 유저 데이터를 담는 변수.
     const [userId, setUserId] = useState('');
 
@@ -33,17 +39,23 @@ const ProductDetails = () => { //===============================================
         const fetchProductDetails = async () => {
             try {
                 const response = await axios.get(uri, { params: { type: 'slide' } });
-                const { product, image } = response.data;
-                setSlideImages(image);
-
-                if (product) {
-                    setProduct(product);
-                    sessionStorage.setItem('product', JSON.stringify(product));  // 세션 스토리지에 저장
-                }
+                const { product, slideImage, mainImage, recommend, review, option, packaging, message } = response.data;
+                setSlideImages(slideImage);
+                setMainImage(mainImage);
+                setRecommendItem(recommend);
+                setReview(review);
+                setOption(option);
+                setPackagings(packaging);
+                setIsMessage(message);
+                setProduct({ ...product, price: Number(product.price) || 0 });
+                //setProduct({...product,price:+product.price});
+                // if (product) {
+                //     sessionStorage.setItem('product', JSON.stringify(product));  // 세션 스토리지에 저장
+                // }
 
                 // 좋아요 상태 가져오기
-                const productData = sessionStorage.getItem('product');
-                const likeResponse = await apiCall('/goods/likedState', 'POST', productData, token);
+                //const productData = sessionStorage.getItem('product');
+                const likeResponse = await apiCall('/goods/likedState', 'POST', product, token);
                 const { liked, userId } = likeResponse.data;
                 setLike(liked);
                 setUserId(userId);
@@ -192,7 +204,8 @@ const ProductDetails = () => { //===============================================
                                     </div>
                                 </p>
                             </div>
-                            <ProductForm product={product} userId={userId} />
+                            {/* mainImage, recommend,review,option,packaging,message */}
+                            <ProductForm product={product} userId={userId} option={option} packaging={packagings} message={Ismessage} />
                         </div>
 
                     </div>
@@ -207,7 +220,7 @@ const ProductDetails = () => { //===============================================
                         <a href="#recommendations" onClick={(e) => handleScroll(e, 'recommendations')}><span>추천리스트</span></a>
                     </div>
                     <div className='ProductDetailsInfo'>
-                        <ProductDetailsInfo product={product} like={like} />
+                        <ProductDetailsInfo product={product} like={like} mainImage={mainImage} recommend={recommendItem} review={review} />
                     </div>
                 </div>
                 <Modal

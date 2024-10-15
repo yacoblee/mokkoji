@@ -8,40 +8,44 @@ import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 import { apiCall } from '../../service/apiService';
 // 선택된 상품 정보를 받는 컴포넌트
-const ProductForm = ({ product, userId }) => {
+const ProductForm = ({ product, userId, option, packaging, message }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     //const token = JSON.parse(sessionStorage.getItem('userData'));
     //console.log(`token : ${token}`)
 
     //const [slideimages, setSlideImages] = useState([]);
-    const [option, setOption] = useState([]);
-    const [packaging, setPackaging] = useState([]);
-    const [message, setMessage] = useState('');
+    const [optionList, setOptionList] = useState([]);
+    const [packagings, setPackagings] = useState([]);
+    const [Ismessage, setIsMessage] = useState('');
     useEffect(() => {
-        let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
-        const fetchProductForm = async () => {
-            axios.get(uri, {
-                params: {
-                    type: 'form'  // 여러 값을 개별적으로 보냄
-                }
-            })
-                .then(response => {
-                    const { option, packaging, message } = response.data;
-                    setOption(option);
-                    setPackaging(packaging);
-                    setMessage(message);
-                    // 콘솔 로그로 데이터 확인
-                    //console.log(option);
-                })
-                .catch(err => {
-                    //alert(err.message);
-                    console.log(err);
+        // let uri = API_BASE_URL + `/goods/${product.categoryId}/${product.id}`;
+        // const fetchProductForm = async () => {
+        //     axios.get(uri, {
+        //         params: {
+        //             type: 'form'  // 여러 값을 개별적으로 보냄
+        //         }
+        //     })
+        //         .then(response => {
+        //             const { option, packaging, message } = response.data;
+        //             setOption(option);
+        //             setPackaging(packaging);
+        //             setMessage(message);
+        //             // 콘솔 로그로 데이터 확인
+        //             //console.log(option);
+        //         })
+        //         .catch(err => {
+        //             //alert(err.message);
+        //             console.log(err);
 
-                    setPackaging([]);
+        //             setPackaging([]);
 
-                })
-        }
-        fetchProductForm();
+        //         })
+        // }
+        // fetchProductForm();
+        //여기 수정
+        setOptionList(option);
+        setPackagings(packaging);
+        setIsMessage(message);
     }, [product.id]);
     // const [user, setUser] = useState({});
     // useEffect(() => {
@@ -79,9 +83,13 @@ const ProductForm = ({ product, userId }) => {
     });
     //9.11 코드 변경
     const [count, setConut] = useState(1);
+    console.log('상품', product)
+    console.log('옵션리스트', optionList)
+    console.log('옵션', options)
+    console.log('포장', packagings)
 
     // 토탈 금액에 대한 state
-    const [totalPrice, setTotalPrice] = useState(+product.price);
+    const [totalPrice, setTotalPrice] = useState(product.price ? +product.price : 0);
 
     // select 옵션에 대한 state 함수
     const onChangeSelectItems = (e) => {
@@ -115,9 +123,9 @@ const ProductForm = ({ product, userId }) => {
     };
 
     const calculateTotalPrice = () => {
-        if (!product) return 0; // 선택된 상품이 없으면 0 반환
+        if (!product || !product.price) return 0; // 선택된 상품이 없으면 0 반환
 
-        return (product.price + options.contentSelect + options.packagingSelect) * count;
+        return (+product.price + options.contentSelect + options.packagingSelect) * count;
     };
 
     // 옵션이나 수량이 변경될 때마다 총 금액을 재계산하여 업데이트
@@ -263,7 +271,7 @@ const ProductForm = ({ product, userId }) => {
                     required
                 >
                     <option value="selectcontent" hidden>선택옵션</option>
-                    {option.map((option) => (
+                    {optionList.map((option) => (
                         <option value={option.price} key={option.content}
                             data-description={option.content}>
                             {option.content}
@@ -278,7 +286,7 @@ const ProductForm = ({ product, userId }) => {
                     required
                 >
                     <option value="selectPackage" hidden>포장여부</option>
-                    {packaging.map((packaging) => (
+                    {packagings.map((packaging) => (
                         <option value={packaging.packagingPrice} key={packaging.packagingContent}
                             data-description={packaging.packagingContent}>
                             {packaging.packagingContent}
@@ -287,7 +295,7 @@ const ProductForm = ({ product, userId }) => {
                 </select>
             </div>
             <div className='price_box'>
-                총금액 : <span className='content_price'>{formatNumber(totalPrice)}</span>원
+                총금액 : <span className='content_price'>{product.price && formatNumber(totalPrice)}</span>원
             </div>
             <div className='priceifo'>
                 <ul>
@@ -312,7 +320,7 @@ const ProductForm = ({ product, userId }) => {
                     구매하기
                 </button>
             </div>
-            {message && <div className="content_message">{message}</div>}
+            {Ismessage && <div className="content_message">{Ismessage}</div>}
             <Modal
                 isOpen={isModalLoginOpen}
                 ariaHideApp={false}

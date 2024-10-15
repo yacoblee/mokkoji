@@ -4,7 +4,7 @@ import GoodsItems from "./ProductObject";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
-const ProductDetailsInfo = ({ product }) => {
+const ProductDetailsInfo = ({ product, mainImage, review, recommend }) => {
     const { category, id } = useParams();
 
     const [mainimages, setMainImages] = useState([]);
@@ -12,26 +12,29 @@ const ProductDetailsInfo = ({ product }) => {
     const [recommendItems, setRecommendItems] = useState([]);
     const [reviews, setReviews] = useState([]);
     useEffect(() => {
-        let uri = API_BASE_URL + `/goods/${category}/${id}`;
-        axios.get(uri, {
-            params: {
-                type: 'main'  // 여러 값을 개별적으로 보냄
-            }
-        })
-            .then(response => {
-                const { image, detail, recommend, review } = response.data;
-                setReviews(review);
-                setMainImages(image);
-                setText(detail);
-                setRecommendItems(recommend);
-            })
-            .catch(err => {
-                //alert(err.message);
-                console.log(err);
+        // let uri = API_BASE_URL + `/goods/${category}/${id}`;
+        // axios.get(uri, {
+        //     params: {
+        //         type: 'main'  // 여러 값을 개별적으로 보냄
+        //     }
+        // })
+        //     .then(response => {
+        //         const { image, detail, recommend, review } = response.data;
+        //         setReviews(review);
+        //         setMainImages(image);
+        //         setText(detail);
+        //         setRecommendItems(recommend);
+        //     })
+        //     .catch(err => {
+        //         //alert(err.message);
+        //         console.log(err);
 
-                setMainImages([]);
+        //         setMainImages([]);
 
-            })
+        //     })
+        setReviews(review);
+        setMainImages(mainImage);
+        setRecommendItems(recommend);
     }, [id]);
 
     //슬라이드 구현을 위한 state
@@ -41,7 +44,7 @@ const ProductDetailsInfo = ({ product }) => {
     }, [id]);
 
     let visibleSlide = 3;//현재 보여지는 슬라이드 갯수
-
+    console.log('reviews', reviews)
     //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
     const maxSlide = 5 - visibleSlide; // 추후 카운트 해서 넣기
 
@@ -71,10 +74,10 @@ const ProductDetailsInfo = ({ product }) => {
         }, 0);
     }
     //추천 상품 보여주기.
-    const recommendItemid = product.id;
-    const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
-        .sort((a, b) => b.reviews.length - a.reviews.length)
-        .slice(0, 4);
+    // const recommendItemid = product.id;
+    // const recommendItem = GoodsItems.filter(it => it.id !== recommendItemid)
+    //     .sort((a, b) => b.reviews.length - a.reviews.length)
+    //     .slice(0, 4);
     //숫자를 금액형태로
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
@@ -89,35 +92,35 @@ const ProductDetailsInfo = ({ product }) => {
                 </h2>
                 <div className='imgInfo'  >
 
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name ? product.name : ''} />
                     <p>
-                        {text.name}
+                        {product.name}
                     </p>
                     <p>
-                        {text.mainDescription}
+                        {product.mainDescription}
                     </p>
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1].name}`} alt={product.name? product.name:''} />
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name? product.name:''} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[1].name}`} alt={product.name ? product.name : ''} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[2].name}`} alt={product.name ? product.name : ''} />
 
                     <p>
-                        {text.guide}
+                        {product.guide}
                     </p>
                     <p>
-                        {text.subDescription}
+                        {product.subDescription}
                     </p>
                     {mainimages[3] ?
-                        <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name? product.name:''} />
-                        : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />}
+                        <img src={`${API_BASE_URL}/resources/productImages/${mainimages[3].name}`} alt={product.name ? product.name : ''} />
+                        : <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name ? product.name : ''} />}
                 </div>
                 <hr />
                 <h2 id="shipping">
                     배송 / 사이즈
                 </h2>
                 <div className='deliSizeInfo' >
-                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name? product.name:''} />
+                    <img src={`${API_BASE_URL}/resources/productImages/${mainimages[0].name}`} alt={product.name ? product.name : ''} />
 
                     <div className="productSizeInfo">
-                        {text.sizeInfo}
+                        {product.sizeInfo}
                     </div>
                     <p><span>배송 정보</span><br /><br />
 
@@ -161,7 +164,7 @@ const ProductDetailsInfo = ({ product }) => {
                                 alt="left" />
                         </button>
                     }
-                    {reviews != null || reviews != [] ? reviews.map((it, i) => <>
+                    {reviews != null && reviews.length > 0 ? reviews.map((it, i) => <>
                         <div key={it.reviewId}
 
                             style={{ transform: `translateX(-${currentSlide * 101}%)` }}
@@ -192,7 +195,7 @@ const ProductDetailsInfo = ({ product }) => {
 
                             </div>
                         </div>
-                    </>) : ''}
+                    </>) : <span>현재 리뷰가 존재하지 않습니다.</span>}
                     {
                         currentSlide < maxSlide && <button style={{ right: 5 }}
                             type='button'
