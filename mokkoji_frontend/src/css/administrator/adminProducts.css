@@ -28,6 +28,7 @@
 
 .productTitle {
     position: relative;
+    font-family: 'SUITE-Regular';
     padding-left: 8px;
     margin: 10px 0;
 }
@@ -50,7 +51,8 @@
 
 .buttonwrapper button,
 .searchProductAdmin input[type="button"] {
-    padding: 2px;
+    font-family: 'SUITE-Regular';
+    padding: 4px;
     margin: 2px;
     border: 1px solid #ccc;
 }
@@ -130,6 +132,7 @@
 }
 
 .productDescription {
+    font-family: 'SUITE-Regular';
     display: grid;
     width: 300px;
     grid-template-columns: 1fr 2fr;
@@ -168,6 +171,16 @@
     width: 200px;
     height: 250px;
 }
+.pieResult{
+    font-family: 'SUITE-Regular';
+    border:1px solid #ccc ;
+    width: 350px;
+}
+.lineResult{
+    font-family: 'SUITE-Regular';
+    border:1px solid #ccc ;
+    padding: 10px;
+}
 .genderPurchasesresult span{
     padding: 2px;
     margin: 2px;
@@ -175,4 +188,5 @@
 .piegender,.linePurchases{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
