@@ -20,6 +20,7 @@ import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
+import com.example.mokkoji_backend.domain.UserAndAddressDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.Code;
 import com.example.mokkoji_backend.entity.goods.ProductImages;
@@ -62,6 +63,7 @@ public class AdminProductsController {
 	private final ProductImageService imageService;
 	private final UsersDSLRepository userDSLRepository;
 	private final AddressRepository addressRepository;
+
 	
 	
 	@GetMapping("/administrator/products")
@@ -114,7 +116,17 @@ public class AdminProductsController {
 		return ResponseEntity.ok(address);
 	}
 		
-	
+	@PostMapping("/administrator/users/userinfo/userinfoupdate")
+	public ResponseEntity<?> userinfoupdate(@RequestBody UserAndAddressDTO requestDTO){
+		log.info("update에 들어옴?");
+		List<Address> addr =  requestDTO.getUserinfoAddress();
+		Users user = requestDTO.getUserinfo();
+		log.info(user);
+		for (Address address : addr) {
+			log.info(address);
+		}
+		return ResponseEntity.ok("들어옴");
+	}
 	
 
 	@GetMapping("/administrator/psave")
