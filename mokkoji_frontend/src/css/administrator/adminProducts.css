@@ -85,9 +85,10 @@
     margin: 10px;
 }
 
-.productListUp {
+.productListUp td {
     text-align: center;
     margin: 10px;
+    border-bottom: 1px solid  #ccc;
 }
 
 /* ============================ */
@@ -158,6 +159,12 @@
 /* ---------------------------------------- */
 .clickProductDetailTd {
     cursor: pointer;
+    font-family: 'SUITE-Regular';
+    padding: 5px;
+    margin: 2px;
+    /* font-weight: 700; */
+    text-decoration: underline;
+    color: rgb(55, 55, 186);
 }
 
 .clickProductDetailTd:hover {
