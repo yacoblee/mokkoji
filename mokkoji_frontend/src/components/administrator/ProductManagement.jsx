@@ -14,7 +14,7 @@ import ProductStatistics from "./ProductStatistics";
 
 
 const ProductManagement = () => {
-  
+
   const [list, setList] = useState([]);
   const [pageMaker, setPageMaker] = useState({});
   const [page, setPage] = useState(1);
@@ -280,19 +280,26 @@ const ProductManagement = () => {
         console.log(err);
       });
   }
-  // function onClickDelete(productId) {
-  //   const uri = API_BASE_URL + "/administrator/deleteproduct?productId=" + productId;
-  //   axios.delete(uri)
-  //     .then(response => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       // handle error
-  //       console.log(error);
-  //     })
+  function onClickDelete(productId) {
+    const uri = API_BASE_URL + "/administrator/deleteproduct?productId=" + productId;
+    const con = confirm("정말 삭제 하시겠습니까 ?");
 
-  // }
+    if (con) {
+      axios.delete(uri)
+        .then(response => {
+          // handle success
+          console.log(response);
+          window.location.reload(true);
+        })
+        .catch(error => {
+          // handle error
+          console.log(error);
+        })
+    }
+
+  }
+
+
   //모달창을 관리할 state
   //상품 등록.
   const [isModalProductALLOpen, setIsModalProductALLOpen] = useState(false);
@@ -465,15 +472,15 @@ const ProductManagement = () => {
               <tr key={product.id}>
                 <td>{product.id}</td>
                 <td className="clickProductDetailTd"
-                onClick={() => onClickProductDetail(product.id)}>{product.name}</td>
+                  onClick={() => onClickProductDetail(product.id)}>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.stockCount}</td>
                 <td>{product.likeCount}</td>
                 <td>{formatToKoreanTime(product.uploadDate)}</td>
                 <td className="buttonwrapper">
                   <button onClick={() => { onClickInset(product) }}>product & option Edit</button>
-                  {/* <button onClick={() => onClickDelete(product.id)}>Delete</button> */}
                   <button onClick={() => { onClickImage(product) }}>image Edit</button>
+                  <button onClick={() => onClickDelete(product.id)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -507,7 +514,7 @@ const ProductManagement = () => {
         <div className='Modalbutton'>
           <button onClick={() => setIsModalProductALLOpen(false)}>닫기</button>
         </div>
-        <ProductRelatedStorage sendCode={code} />
+        <ProductRelatedStorage sendCode={code} setIsModalProductALLOpen={setIsModalProductALLOpen} />
       </Modal>
 
       <Modal

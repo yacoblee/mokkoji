@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../service/app-config';
 
-function ProductRelatedStorage({ sendCode }) {
+function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
     const [product, setProduct] = useState({});
     const [mainImage, setMainImage] = useState([]);
     const [slideImage, setSlideImage] = useState([]);
@@ -148,7 +148,8 @@ function ProductRelatedStorage({ sendCode }) {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('상품 저장 성공:', response.data);
+            alert(`${product.name}의 수정이 완료되었습니다.`);
+            setIsModalProductALLOpen(false);
         } catch (error) {
             console.error('상품 저장 실패:', error);
         }
