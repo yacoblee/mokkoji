@@ -63,7 +63,15 @@ public class ReviewsServiceImpl implements ReviewsService {
 
 	// 2) review 작성할 때 사용
 	@Override
-	public void insertReviews(Reviews reviews) {
+	public void insertReviews(String userId, Long productId, String reviewContent, boolean likeDislike, String reviewPhoto) {
+		Reviews reviews = Reviews.builder()
+				.userId(userId)
+				.productId(productId)
+				.reviewContent(reviewContent)
+				.likeDislike(likeDislike)
+				.reviewPhoto(reviewPhoto)
+				.build();
+
 		reviewsRepository.save(reviews);
 	}
 

@@ -11,7 +11,7 @@ public interface ReviewsService {
 
 	List<ReviewsDTO> userReviews(String userId);
 
-	void insertReviews(Reviews reviews);
+	void insertReviews(String userId, Long productId, String reviewContent, boolean likeDislike, String reviewPhoto);
 
 	void updateReviews(String userId,int reviewId, String reviewContent, boolean likeDislike, String reviewPhoto);
 
