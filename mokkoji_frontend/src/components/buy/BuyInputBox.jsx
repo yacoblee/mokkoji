@@ -60,8 +60,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 setSelectedAddressIndex(4);
             }
             setUserInfoError({
-                name: false,
-                phoneNumber: false,
+                orderName: false,
+                orderPhone: false,
                 detailedAddress: false,
                 postalCode: false,
                 deliveryMessage: false,
@@ -88,16 +88,18 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         if (type === 'new') {
             setUserInfo((prevState) => ({
                 ...prevState,
-                name: '', // 받는 사람 이름 초기화
-                phoneNumber: '', // 받는 사람 연락처 초기화
+                name: user.name || '', // 받는 사람 이름 초기화
+                orderName: '',
+                orderPhone: '',
+                phoneNumber: user.phoneNumber || '', // 받는 사람 연락처 초기화
                 streetAddress: '', // 주소 초기화
                 detailedAddress: '', // 상세 주소 초기화
                 postalCode: '', // 우편번호 초기화
                 locationName: ''
             }));
             setUserInfoError({
-                name: true,
-                phoneNumber: true,
+                orderName: true,
+                orderPhone: true,
                 detailedAddress: true,
                 postalCode: true,
                 // deliveryMessage: false,
@@ -110,14 +112,16 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                 ...prevState,
                 name: user.name || '',
                 phoneNumber: user.phoneNumber || '',
+                orderName: addressing[index].recipientName || '',
+                orderPhone: addressing[index].recipientPhone || '',
                 streetAddress: addressing[index].streetAddress || '',
                 detailedAddress: addressing[index].detailedAddress || '',
                 postalCode: addressing[index].postalCode || '',
                 locationName: addressing[index].locationName || ''
             }));
             setUserInfoError({
-                name: false,
-                phoneNumber: false,
+                orderName: false,
+                orderPhone: false,
                 detailedAddress: false,
                 postalCode: false,
             })
@@ -134,24 +138,23 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             [name]: value,
         }));
         // console.log(`Name: ${name}, Value: ${value}, Length: ${value.length}`);
-        console.log(userInfo.orderName);
-        console.log(userInfo.orderPhone)
-        if (name === 'name') {
+
+        if (name === 'orderName') {
             if (value.length < 2 || value.length > 5) {
-                setUserInfoError((error) => ({ ...error, name: true }))
+                setUserInfoError((error) => ({ ...error, orderName: true }))
             } else {
-                setUserInfoError((error) => ({ ...error, name: false }))
+                setUserInfoError((error) => ({ ...error, orderName: false }))
             }
         }
 
-        if (name === 'phoneNumber') {
+        if (name === 'orderPhone') {
             const noneNumber = /^[0-9-]$/;
             const isValidPhoneNumber = !noneNumber.test(value);
             if (isValidPhoneNumber && value.length > 8 && (value.includes('-'))) {
-                setUserInfoError((error) => ({ ...error, phoneNumber: false })); // 숫자면 들어와요
+                setUserInfoError((error) => ({ ...error, orderPhone: false })); // 숫자면 들어와요
 
             } else {
-                setUserInfoError((error) => ({ ...error, phoneNumber: true }));
+                setUserInfoError((error) => ({ ...error, orderPhone: true }));
             }
         }
         if (name === 'detailedAddress') {
@@ -216,8 +219,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         deliveryMessage: '문 앞에 놔주세요',
         buyHow: '',
     });
-    console.log(`selectBox.deliveryMessage : ${selectBox.deliveryMessage}`)
-    console.log(`selectBox.buyHow : ${selectBox.buyHow}`)
+    // console.log(`selectBox.deliveryMessage : ${selectBox.deliveryMessage}`)
+    // console.log(`selectBox.buyHow : ${selectBox.buyHow}`)
 
     //직접 입력시 인풋창을 활성화 시킬 state
     const [directInput, setDirectInput] = useState(false);
@@ -260,8 +263,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         setSelectedALLproduct(() => {
             return selectedProduct ? [...checkedCartItems, selectedProduct] : [...checkedCartItems];
         });
-        console.log("지금 여기 확인중")
-        console.log(selectedALLproduct);
+        // console.log("지금 여기 확인중")
+        // console.log(selectedALLproduct);
     }, [selectedProduct, checkedCartItems]);
 
     // 2. 버튼 활성화 여부를 관리하는 useEffect
@@ -274,7 +277,11 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         }
     }, [selectedALLproduct, userInfoError, selectBox.buyHow]);
 
+    console.log('************************');
 
+    console.log('userInfo', userInfo);
+    console.log('userError', userInfoError);
+    console.log('************************');
 
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
@@ -302,7 +309,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     streetAddress: userInfo.streetAddress,
                     userId: userId
                 };
-
+                console.log('newData', newData);
                 // 상태 업데이트가 완료될 때까지 기다립니다.
                 const updatedAddressing = await new Promise((resolve) => {
                     setAddressing((oldData) => {
@@ -413,22 +420,24 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     <label htmlFor="name">주문자</label>
                     <input
                         type="text"
-                        id='orderName'
-                        name="orderName"
-                        //minLength={2}
-                        //maxLength={5}
-                        value={userInfo.orderName}
-                        //onChange={onChangeUserInfo}
+                        id='name'
+                        name="name"
+                        minLength={2}
+                        maxLength={5}
+                        value={userInfo.name}
+                        onChange={onChangeUserInfo}
+
                         readOnly
                     />
+
                     <label htmlFor="name">주문자 연락처</label>
                     <input
                         type="text"
-                        id='orderPhone'
-                        name="orderPhone"
+                        id='phoneNumber'
+                        name="phoneNumber"
                         //minLength={2}
                         //maxLength={5}
-                        value={userInfo.orderPhone}
+                        value={userInfo.phoneNumber}
                         //onChange={onChangeUserInfo}
                         readOnly
 
@@ -436,24 +445,23 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     <label htmlFor="name">받는 사람</label>
                     <input
                         type="text"
-                        id='name'
-                        name="name"
-                        minLength={2}
-                        maxLength={5}
-                        value={userInfo.name}
+                        id='orderName'
+                        name="orderName"
+                        //minLength={2}
+                        //maxLength={5}
+                        value={userInfo.orderName}
                         onChange={onChangeUserInfo}
-                        className={userInfoError.name ? 'errors' : ''}
+                        className={userInfoError.orderName ? 'errors' : ''}
                         required
-
                     />
                     <label htmlFor="phoneNumber">받는 사람 연락처</label>
                     <input
                         type="text"
-                        id='phoneNumber'
-                        name="phoneNumber"
-                        value={userInfo.phoneNumber}
+                        id='orderPhone'
+                        name="orderPhone"
+                        value={userInfo.orderPhone}
                         onChange={onChangeUserInfo}
-                        className={userInfoError.phoneNumber ? 'errors' : ''}
+                        className={userInfoError.orderPhone ? 'errors' : ''}
                         required
                         placeholder="(-)없이 입력"
                     />
