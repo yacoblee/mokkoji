@@ -23,12 +23,13 @@ const Header = () => {
             } catch (error) {
                 setIsAdmin(false);
                 setIsLoggedIn(false);
+                console.log('로그아웃상태')
             }
         }
         fetchAdminState();
 
     }, [token])
-    
+
     console.log(isAdmin ? '관리자 ' : '일반유저');
     console.log(isLoggedIn ? '로그인상태 ' : '로그인하지않은상태');
     useEffect(() => {
@@ -60,7 +61,7 @@ const Header = () => {
     const administrator = locationNows.pathname.toLowerCase().includes('administrator');
     useEffect(() => {
         if ((!isLoggedIn && mypage) || (!isLoggedIn && buy) || (!isLoggedIn && administrator)) {
-            setIsAdmin(false);
+            //setIsAdmin(false);
             navigate('/');
         }
     }, [isLoggedIn, mypage, buy]);

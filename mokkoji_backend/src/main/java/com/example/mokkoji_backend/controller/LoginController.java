@@ -54,11 +54,11 @@ public class LoginController {
 			}
 			
 			response.put("isLogin", true);
-			
 		} else {
 			log.info("[/adminstate] 로그인 상태가 아닙니다.");
 			response.put("isLogin", false);
 			response.put("isAdmin", false);
+			//return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(response);
 		}
 		return ResponseEntity.ok(response);
 	}
