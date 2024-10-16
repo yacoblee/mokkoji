@@ -85,7 +85,7 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
 						.and(cart.packagingOptionContent.eq(packagingOptionContent)))
 				.execute();
 
-		log.info("1단계 - 업데이트된 행 수: {}", affectedRows);
+		log.info("1) cart에 대해 productCnt 업데이트 : 적용된 Row의 개수 {}", affectedRows);
 
 		// 2) 각 entity에서 price, optionPrice, packagingOptionPrice 추출
 		Integer price = jpaQueryFactory.select(products.price)
@@ -104,10 +104,10 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
 				.where(packaging.packagingContent.eq(packagingOptionContent))
 				.fetchOne();
 
-		log.info("{}, {}, {}", price, optionPrice, packagingOptionPrice);
+		log.info("2) 추출한 가격들 : price {}, optionPrice {}, packagingOptionPrice {}", price, optionPrice, packagingOptionPrice);
 		
 		// 3) 새로운 가격 계산, 업데이트
-		jpaQueryFactory.update(cart)
+		affectedRows = jpaQueryFactory.update(cart)
 				.set(cart.productTotalPrice,
 						Expressions.numberTemplate(Integer.class,
 								"{0} * ({1} + {2} + {3})",
@@ -117,6 +117,8 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
 						.and(cart.optionContent.eq(optionContent))
 						.and(cart.packagingOptionContent.eq(packagingOptionContent)))
 				.execute();
+
+		log.info("3) cart에 대해 productTotalPrice 업데이트 : 적용된 Row의 개수 {}", affectedRows);
 	}
 
 }
