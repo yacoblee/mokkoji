@@ -15,7 +15,7 @@ import java.util.Properties;
 public class NaverMainConfig {
 
 	private static final String USER_EMAIL = "yacobleee@naver.com";
-	private static final String USER_PASSWORD = "";
+	private static final String USER_PASSWORD = "!";
 
 	@Primary
 	@Bean(name = "naverEmailProperties")

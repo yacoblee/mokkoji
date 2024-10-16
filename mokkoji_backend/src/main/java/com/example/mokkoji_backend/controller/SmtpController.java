@@ -8,6 +8,7 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,12 +33,13 @@ public class SmtpController {
 	  
 
       String fromNumber = data.get("from");        
-      String messageText = data.get("text");
-	  
+      String messageText = data.get("content_name")+":"+data.get("text");
+    		  
       message.setTo("01040529406");
       message.setFrom(fromNumber);
       message.setText(messageText);
 
+      System.out.println(message);
       SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
       
       System.out.println(response);
@@ -46,19 +48,22 @@ public class SmtpController {
     }
 
     @PostMapping("/sendmail")
-    public String sendEmail(@RequestBody Map<String,String> data) {
+    public ResponseEntity<?> sendEmail(@RequestBody Map<String,String> data) {
         try {
      
         	String to = data.get("content_mail");
-        	String subject = data.get("content_main");
+        	String subject = data.get("content_main") + to;
         	String text = data.get("content_name");
-        	log.info("Send Mail INFORMATION : "+data );
-        	service.sendMessage(to, subject, text);
-
+ 
         	
-            return "Email sent successfully!";
+        	service.sendMessage(subject, text);
+
+        	log.info("Send Mail INFORMATION : "+data );
+        	
+            return ResponseEntity.ok("Success");
         } catch (Exception e) {
-            return "Failed to send email: " + e.getMessage();
+        	log.info("Failed "+e.toString());
+            return ResponseEntity.ok("Failed");
         }
     }
 	

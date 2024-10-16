@@ -17,7 +17,7 @@ public class SmtpEmailServiceImpl implements SmtpEmailService{
  
   
     @Override
-    public void sendMessage(String from, String subject, String name) {
+    public void sendMessage(String subject, String name) {
     	 SimpleMailMessage message = new SimpleMailMessage(); 
     	 message.setFrom("yacobleee@naver.com");  // 발신자 
          message.setTo("yacobleee@naver.com");  // 받는사람
@@ -25,7 +25,6 @@ public class SmtpEmailServiceImpl implements SmtpEmailService{
          message.setText(subject); // 내용 
     
          emailSender.send(message);
-    	
     }
 
 }

@@ -3,10 +3,9 @@ import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from "react-router-dom";
 import BuyComplete from "./BuyComplete";
-import axios from "axios";
 import { apiCall } from "../../service/apiService";
-import { API_BASE_URL } from "../../service/app-config";
 import moment from 'moment';
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 //selectProduct가 체크되지 않았다면 false가 반환됨.
 const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
@@ -298,7 +297,15 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
 
-    // console.log(selectBox.deliveryMessage);
+
+
+
+    const closedefault = () =>{
+        setIsModalBuyOpen(false);
+        navigate('/goods');
+    }
+
+
     //구매버튼 이벤트
     const onClickBuyButton = (e) => {
         e.preventDefault();
@@ -430,6 +437,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         if (modalContentRef.current) {
             modalContentRef.current.scrollTop = 0; // 모달이 열릴 때 스크롤을 맨 위로 설정
         }
+
+
 
     }
 
@@ -657,8 +666,9 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             <Modal
                 isOpen={isModalBuyOpen}
                 ariaHideApp={false}
-                onRequestClose={() => setIsModalBuyOpen(false)}
+                onRequestClose={closedefault}
                 contentLabel="구매 확인"
+                shouldCloseOnOverlayClick={true}
                 style={{
                     content: {
                         height: '300px',
@@ -680,7 +690,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     <button
                         onClick={() => navigate('/mypage/orders')}>구매 내역 확인</button>
 
-                    <button onClick={() => setIsModalBuyOpen(false)}>확인</button>
+                    <button onClick={() => navigate('/goods') }>확인</button>
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete userId={userId}

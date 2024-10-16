@@ -705,23 +705,41 @@ html {
     padding: 5px;
 }
 
-
-.intro_content_mail {
+.intro_contact_method{
     transform: translateX(20%);
     display: grid;
-    grid-area: 3 / 1 / 4 /1;
+    grid-area: 2 / 1 / 2 / 1;
+    grid-template-columns: auto auto; /* 각 라디오 버튼과 레이블을 한 줄로 배치 */
+    gap: 5px; /* 라디오 버튼 사이에 간격 추가 */
+    align-items: center; /* 수직 중앙 정렬 */
 }
+ 
 
+.intro_container .intro_content .intro_contact_method input{
+    border: none;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 2px solid #000;
+    color: white;
+    background-color: rgba(245, 222, 179, 0.118);
+    width: 2vw;
+ 
+}
 .intro_content_name {
     transform: translateX(20%);
     display: grid;
-    grid-area: 2 / 1 / 3 /1;
+    grid-area: 3 / 1 / 3 /1;
 }
+.intro_content_mail {
+    transform: translateX(20%);
+    display: grid;
+    grid-area: 4 / 1 / 4 /1;
+}
+
 
 .intro_content_main {
     transform: translateX(20%);
     display: grid;
-    grid-area: 4 / 1 / span 2 /1;
+    grid-area: 5 / 1 / span 2 /1;
 }
 
 .intro_content_main textarea {
@@ -731,7 +749,7 @@ html {
 
 .intro_content_btn {
     display: grid;
-    grid-area: 6 / 1 / 7 /1;
+    grid-area: 7 / 1 / 7 /1;
     justify-content: center;
 }
 
