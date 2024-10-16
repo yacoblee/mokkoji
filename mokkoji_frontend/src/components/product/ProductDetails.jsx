@@ -38,7 +38,7 @@ const ProductDetails = () => { //===============================================
         // 상품 정보 및 좋아요 상태 가져오기
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(uri, { params: { type: 'slide' } });
+                const response = await axios.get(uri, { params: { type: 'detail' } });
                 const { product, slideImage, mainImage, recommend, review, option, packaging, message } = response.data;
                 setSlideImages(slideImage);
                 setMainImage(mainImage);

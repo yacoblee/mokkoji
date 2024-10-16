@@ -1,6 +1,8 @@
 package com.example.mokkoji_backend.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mokkoji_backend.domain.UsersDTO;
@@ -31,6 +34,34 @@ public class LoginController {
 	private EmailService emailService;
 	private Users entity;
 
+	@PostMapping(value = "/adminstate")
+	public ResponseEntity<?> adminstate(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+		Map<String, Object> response = new HashMap<>();
+		
+		// 로그인 상태 분기
+		if (authHeader != null) {
+			String token = authHeader.substring(7);
+			int admin = Integer.parseInt(tokenProvider.validateAndGetAdmin(token));
+			
+			// 관리자 상태 분기
+			if(admin >0) {
+				log.info("[/adminstate] 로그인 상태 , admin 입니다. admin :" + admin);
+				response.put("isAdmin", true);
+				
+			}else {
+				log.info("[/adminstate] 로그인 상태 ,admin 이 아닙니다. admin :" + admin);
+				response.put("isAdmin", false);
+			}
+			
+			response.put("isLogin", true);
+			
+		} else {
+			log.info("[/adminstate] 로그인 상태가 아닙니다.");
+			response.put("isLogin", false);
+			response.put("isAdmin", false);
+		}
+		return ResponseEntity.ok(response);
+	}
 	
 	
 	@PostMapping(value = "/Login")
@@ -38,7 +69,7 @@ public class LoginController {
 
 		String inputPssword = userDTO.getPassword();
 		Users entity = service.selectOne(userDTO.getUserId());// 아이디 검증
-
+		//Map<String, Object> response = new HashMap<>();
 		// test를 위한 유저정보의 경우 passwordEncoder 미적용으로 비밀번호 확인을 위한 방법 2개임
 		if (entity != null && inputPssword.equals(entity.getPassword())
 				|| passwordEncoder.matches(inputPssword, entity.getPassword())) {
@@ -49,6 +80,7 @@ public class LoginController {
 			
 			final String token = tokenProvider.jwtCreate(entity.getUserId());
 			log.info("생성 토큰" + token);
+			//response.put("token", token);
 			return ResponseEntity.ok(token);
 
 		} else

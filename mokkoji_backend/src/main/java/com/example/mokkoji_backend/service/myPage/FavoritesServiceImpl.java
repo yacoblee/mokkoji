@@ -97,6 +97,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 			return false;
 		}
 	}
+	
 	// 3) 찜목록이 삭제될때 사용
 	@Override
 	@Transactional

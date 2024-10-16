@@ -3,23 +3,34 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, NavLink, useNavigate } from 'react-router-dom';
 import '../../css/header.css'
 import { apiCall } from '../../service/apiService';
+import { API_BASE_URL } from "../../service/app-config";
+import axios from "axios";
 
 const Header = () => {
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState("");
     const locationNows = useLocation();
-    const [isLoggedIn, setIsLoggedIn] = useState(() => {
-        return JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
-    });
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const token = JSON.parse(sessionStorage.getItem('userData'));
     useEffect(() => {
-        const islogin = JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
-        if (islogin) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
+        const fetchAdminState = async () => {
+            try {
+                const adminResponse = await apiCall('/adminstate', 'POST', null, token);
+                const { isAdmin, isLogin } = adminResponse.data;
+                setIsLoggedIn(isLogin);
+                setIsAdmin(isAdmin);
+            } catch (error) {
+                setIsAdmin(false);
+                setIsLoggedIn(false);
+            }
         }
-    }, [])
+        fetchAdminState();
 
+    }, [token])
+    
+    console.log(isAdmin ? '관리자 ' : '일반유저');
+    console.log(isLoggedIn ? '로그인상태 ' : '로그인하지않은상태');
     useEffect(() => {
         const handleScroll = () => {
             const header = document.getElementById('header');
@@ -49,6 +60,7 @@ const Header = () => {
 
     useEffect(() => {
         if ((!isLoggedIn && mypage) || (!isLoggedIn && buy)) {
+            setIsAdmin(false);
             navigate('/');
         }
     }, [isLoggedIn, mypage, buy]);
@@ -95,7 +107,7 @@ const Header = () => {
                                     <>
                                         <li><NavLink onClick={logout} className={({ isActive }) => (isActive ? 'active' : '')}>Logout</NavLink ></li>
                                         <li><NavLink to="/mypage" className={({ isActive }) => (isActive ? 'active' : '')}><p>Mypage</p></NavLink ></li>
-                                        <li><NavLink to="/administrator" className={({ isActive }) => (isActive ? 'active' : '')}><p>Admin</p></NavLink ></li>
+                                        {isAdmin && <li><NavLink to="/administrator" className={({ isActive }) => (isActive ? 'active' : '')}><p>Admin</p></NavLink ></li>}
                                     </>
                                     :
                                     <>

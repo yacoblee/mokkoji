@@ -65,6 +65,13 @@ public class TokenProvider {
 		return claims.getSubject(); // => id 반환 
 	}
 	
+	public String validateAndGetAdmin(String token) {
+		Claims claims = Jwts.parser()
+				.setSigningKey(SECRET_KEY)
+				.parseClaimsJws(token)
+				.getBody();
+		return claims.get("isAdmin",String.class);
+	}
 //	public String madeTokenUserId(String id) {
 //	    Users user = repository.getById(id);
 //	    return user.getIsAdmin();  // isAdmin 값 반환
