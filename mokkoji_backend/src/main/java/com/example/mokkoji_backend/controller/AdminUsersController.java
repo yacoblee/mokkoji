@@ -82,11 +82,18 @@ public class AdminUsersController {
 	@PostMapping("/administrator/users/userinfo/isWithdrawn")
 	public ResponseEntity<?> userinfoIsWithdrawn(@RequestBody UsersDTO requeseDTO){
 		Users user = userService.selectOne(requeseDTO.getUserId()); 
-		if(user.getUserId().equals(requeseDTO.getUserId())) {
+		if(user.getUserId().equals(requeseDTO.getUserId()) && user.getIsWithdrawn()== 0) {
 			user.setIsWithdrawn(1);
+			userService.userIsWithdrawnUpdate(user);
 			log.info(user);
 			return ResponseEntity.ok("회원 탈퇴 완료");
-		}else {
+		}else if(user.getIsWithdrawn()== 1) {
+			user.setIsWithdrawn(0);
+			userService.userIsWithdrawnUpdate(user);
+			return ResponseEntity.ok("회원 복구 완료");
+		}
+		
+		else {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("유저를 찾을 수 없니다");
 		}
 	}

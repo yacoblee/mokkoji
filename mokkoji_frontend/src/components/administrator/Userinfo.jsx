@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/login/UserInfo.css';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
@@ -18,7 +18,7 @@ const Userinfo = () => {
     // 초기 유저 데이터 값 
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
-
+    const navigator = useNavigate();
     const firstAdminInputUserinfo = {
         email: '', // 이메일
         phoneNumber: '', // 핸드폰 번호
@@ -261,8 +261,8 @@ const Userinfo = () => {
         apiCall(url, 'POST', data, null)
             .then((response) => {
                 console.log(response)
-                alert('탈퇴 처리가 완료되었습니다');
-                // navigator('/');
+                alert(response.data);
+                navigator('/administrator/users');
             }).catch((err) => {
                 console.error("Error during API call:", err);
             })
@@ -289,7 +289,7 @@ const Userinfo = () => {
                                         <th>회원명</th>
                                         <td>
                                             {users.name}
-                                            <button type="button" className='close-btn' onClick={isWithdrawn}>회원탈퇴</button>
+                                            <button type="button" className='close-btn' onClick={isWithdrawn}>{users.isWithdrawn === 0 ? '회원탈퇴' : '회원 복구'}</button>
                                         </td>
                                         <th>아이디</th>
                                         <td>{users.userId}</td>
