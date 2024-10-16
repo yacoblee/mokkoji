@@ -90,7 +90,7 @@ class MokkojiBackendApplicationTests {
                 .contentTitle("문의글 제목입니다.")
                 .build();
 
-        emailService.sendMessage("test","test1","test2");
+        emailService.sendMessage("test1","test2");
         System.out.println("Email sent successfully.");
         //verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class)); 
     }

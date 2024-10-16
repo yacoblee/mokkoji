@@ -5,17 +5,16 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ReserveObject from './ReserveObject';
-import Reservesource from "./ReserveSource";
 import ReservationImg from "./ReservationImg";
 import ReservationIntro from "./ReservationIntro";
 import ReservationDeatil from "./ReservationDetail";
 
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
- 
-//IMP.init('imp12042271'); 
-
 import '../../css/Reserve/reserve.css';
+
+
+
 
 const Reservation = () => {
     // const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
@@ -200,62 +199,6 @@ const Reservation = () => {
         }
     };
 
-    // const handleFormSubmit = () => {
-    //     const userData = JSON.parse(sessionStorage.getItem('LoginUserInfo'));
-
-    //     const reservationData = {
-    //         reserveItem: Reservesource[0].reserveItem,
-    //         name: Reservesource[0].name,
-    //         date: moment(date).format("YYYY-MM-DD"),
-    //         adult: btnValue.adultSelect,
-    //         teenager: btnValue.teenSelect,
-    //     };
-    //     if (!userData) {
-    //         alert('로그인 후 이용 가능합니다.');
-    //         return false;
-    //     }
-    //     // 기존 예약 필터링
-    //     if (userData && (reservationData.adult !== 0 || reservationData.teenager !== 0)) {
-
-    //         // 중복 예약 예외처리
-    //         const checkDate = userData.mypage.Reservation.find(reserve => reserve.date === reservationData.date);
-    //         if (checkDate) {
-    //             alert('중복 예약은 불가능합니다.');
-    //             return false;
-    //         }
-
-    //         let updatedReserve = userData.mypage.Reservation.filter(reserve => reserve.date !== reservationData.date);
-    //         updatedReserve.push(reservationData);
-
-    //         const updatedUser = {
-    //             ...userData,
-    //             mypage: {
-    //                 ...userData.mypage,
-    //                 Reservation: updatedReserve
-    //             }
-    //         };
-
-    //         // 업데이트정보 세션에 다시 저장
-    //         sessionStorage.setItem('LoginUserInfo', JSON.stringify(updatedUser));
-
-
-    //         existingReservations.push(reservationData);
-    //         localStorage.setItem('reservations', JSON.stringify(existingReservations));
-
-    //         // 예약 완료 후 reservationCounts 업데이트
-    //         setReservationCounts(prevCounts => {
-    //             const newCounts = { ...prevCounts };
-    //             const formattedDate = moment(date).format("YYYY-MM-DD");
-    //             newCounts[formattedDate] = (newCounts[formattedDate] || 0) + 1;
-    //             return newCounts;
-    //         });
-
-    //         alert('예약이 완료되었습니다!');
-    //     } else {
-    //         alert('예약 정보를 확인해주세요.');
-    //         return false;
-    //     }
-    // };
 
     return (
         <div className="reservation-container">
@@ -272,11 +215,7 @@ const Reservation = () => {
 
                         {/* 우즉 예약 버튼 위치 */}
                         <div className="calendar-toggle">
-                        {registsData && registsData.length > 0 ? (
-                            <p>청소년: {registsData[0].teenager} 성인: {registsData[0].adult}</p>
-                        ) : (
-                            <p>로딩 중...</p> // 데이터가 없을 때 보여줄 내용
-                        )}
+                   
                             <button type="button" onClick={toggleCalendar} className="calendar-toggle-button">
                                 날짜 확인
                             </button>
@@ -299,6 +238,13 @@ const Reservation = () => {
                                     </li>
                                     <hr />
                                 </ul>
+                            </div>
+                            <div className="personPrice">
+                            {registsData && registsData.length > 0 ? (
+                                    <p> 청소년: {registsData[0].teenager} ₩ 성인: {registsData[0].adult} ₩</p>
+                                ) : (
+                                    <p>로딩 중...</p> 
+                                )}
                             </div>
                             <button type="button" onClick={onClickPay} className="calendar-toggle-submit" disabled={loading}>
                                 {loading ? "처리 중..." : "예약하기"}

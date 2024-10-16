@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.repository.orders;
 
 import com.example.mokkoji_backend.domain.OrdersDTO;
+import com.example.mokkoji_backend.domain.productStatistics.BestSellerPurchaseDTO;
 import com.example.mokkoji_backend.domain.productStatistics.FavoriteGenderDTO;
 import com.example.mokkoji_backend.domain.productStatistics.GenderPurchaseDTO;
 import com.example.mokkoji_backend.domain.productStatistics.RegDatePurchaseDTO;
@@ -23,5 +24,7 @@ public interface OrdersDSLRepository {
 	List<TotalPurchaseDTO> findTotalYearPurchase();
 	
 	List<TotalYearMonthPurchaseDTO> findTotalYearMonthPurchase();
+	
+	List<BestSellerPurchaseDTO> findTopSellingProducts();
 	
 }

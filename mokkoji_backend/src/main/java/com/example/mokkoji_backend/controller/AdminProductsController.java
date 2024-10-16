@@ -22,6 +22,7 @@ import com.example.mokkoji_backend.domain.ProductSaveDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.domain.UserAndAddressDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
+import com.example.mokkoji_backend.domain.productStatistics.BestSellerPurchaseDTO;
 import com.example.mokkoji_backend.domain.productStatistics.TotalPurchaseDTO;
 import com.example.mokkoji_backend.domain.productStatistics.TotalYearMonthPurchaseDTO;
 import com.example.mokkoji_backend.entity.Code;
@@ -241,11 +242,13 @@ public class AdminProductsController {
 			List<TotalPurchaseDTO> monthData = orderRepository.findTotalMonthPurchase();
 			List<TotalPurchaseDTO> yearData = orderRepository.findTotalYearPurchase();
 			List<TotalYearMonthPurchaseDTO> yearMonthData = orderRepository.findTotalYearMonthPurchase();
-					
+			List<BestSellerPurchaseDTO> best = orderRepository.findTopSellingProducts();
 			
 			response.put("year", yearData);
 			response.put("month", monthData);
 			response.put("yearmonth", yearMonthData);
+			response.put("best", best);
+			
 			
 			return ResponseEntity.ok(response);
 			

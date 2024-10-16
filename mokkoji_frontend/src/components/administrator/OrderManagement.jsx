@@ -17,7 +17,13 @@ const OrderManagement = () => {
   const [yearData, setYearData] = useState([]);
   const [yearMonthData, setYearMonthData] = useState([]);
   const [isMonthly, setIsMonthly] = useState(true);
-  const [selectedYear, setSelectedYear] = useState(""); // State for selected year
+  const [selectedYear, setSelectedYear] = useState("");
+  const [bestSeller, setBestSeller] = useState([]);
+
+  useEffect(() => {
+    const currentYear = new Date().getFullYear().toString();
+    setSelectedYear(currentYear);
+  }, []);
 
   useEffect(() => {
     const uri = API_BASE_URL + "/administrator/orders";
@@ -25,12 +31,13 @@ const OrderManagement = () => {
       .then(response => {
         console.log("API Response:", response.data);
 
-        const { month, year, yearmonth } = response.data;
+        const { month, year, yearmonth, best } = response.data;
 
         setMonthData(month);
         setYearData(year);
         setYearMonthData(yearmonth);
-
+        setBestSeller(best);
+        console.log('best Data is : ', bestSeller);
         console.log("Year Month Data after setting state:", yearmonth);
       })
       .catch(err => {
@@ -38,11 +45,6 @@ const OrderManagement = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log("Updated Month Data:", monthData); // Log the updated month data
-  }, [monthData]);
-
-  // Function to filter month data based on selected year
   const getFilteredMonthData = () => {
     return yearMonthData.filter(item => item.year === selectedYear);
   };
@@ -95,7 +97,7 @@ const OrderManagement = () => {
 
   return (
     <div className="order-management">
-      <h1>Order Management</h1>
+      <h2>주문 통계 관리</h2>
       <div className="radio-group">
         <label>
           <input 
@@ -104,7 +106,7 @@ const OrderManagement = () => {
             checked={isMonthly} 
             onChange={() => {
               setIsMonthly(true);
-              setSelectedYear(""); // Reset selected year when switching to monthly
+              setSelectedYear(new Date().getFullYear().toString());
             }} 
           /> 월별
         </label>
@@ -127,7 +129,6 @@ const OrderManagement = () => {
             onChange={(e) => setSelectedYear(e.target.value)}
           >
             <option value="">All Years</option>
-            {/* Extract unique years from yearMonthData */}
             {[...new Set(yearMonthData.map(item => item.year))].map((year) => (
               <option key={year} value={year}>{year}</option>
             ))}
@@ -138,6 +139,30 @@ const OrderManagement = () => {
       <div className="chart-container">
         <Bar data={chartData} options={chartOptions} />
       </div>
+
+      <h3 className="best-subTitle">Best Seller Top 5</h3>
+      <div className="best-seller-container">
+          {bestSeller.map((image, index) => (
+            <div key={index} className="product-images">
+              <div className="product-rank">
+                {index + 1}
+              </div>
+              <img
+                src={image.preview || `${API_BASE_URL}/resources/productImages/${image.mainImageName}`}
+                alt={`Main ${index + 1}`}
+                className="product-image-item"
+              />
+              <label className="best-product-detail">
+                <p>{image.productName}</p>
+                <p>₩ {image.productPrice.toLocaleString()}</p>
+                <p>❤️ {image.likeCount} Likes</p>
+              </label>
+     
+            </div>
+          ))}
+
+ 
+        </div>
     </div>
   );
 };

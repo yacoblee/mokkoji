@@ -6,5 +6,5 @@ public interface SmtpEmailService {
 
 	//public void sendMail(EmailRendererDTO dto);
 	
-	public void sendMessage(String from, String subject, String name);
+	public void sendMessage(String subject, String name);
 }

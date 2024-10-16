@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
 
-
 const PostCard = () => {
     const imgRef = useRef(null);
-
+    
     const [formData, setFormData] = useState({
         content_name: '',
-        content_mail: '',
+        contact_info: '', // 이메일 또는 휴대폰 번호로 사용
         content_main: '',
     });
     const [errors, setErrors] = useState({});
+    const [contactMethod, setContactMethod] = useState('email'); // 이메일 또는 SMS 선택
 
     useEffect(() => {
         const img = imgRef.current;
@@ -31,13 +31,12 @@ const PostCard = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // 초기 호출
+        handleScroll();  
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -53,11 +52,17 @@ const PostCard = () => {
         if (!formData.content_name) {
             formErrors.content_name = '이름을 입력해 주세요.';
         }
-        if (!formData.content_mail) {
-            formErrors.content_mail = '이메일을 입력해 주세요.';
-        } else if (!/\S+@\S+\.\S+/.test(formData.content_mail)) {
-            formErrors.content_mail = '유효한 이메일 주소를 입력해 주세요.';
+
+        if (!formData.contact_info) {
+            formErrors.contact_info = contactMethod === 'email'
+                ? '이메일을 입력해 주세요.'
+                : '휴대폰 번호를 입력해 주세요.';
+        } else if (contactMethod === 'email' && !/\S+@\S+\.\S+/.test(formData.contact_info)) {
+            formErrors.contact_info = '유효한 이메일 주소를 입력해 주세요.';
+        } else if (contactMethod === 'sms' && !/^\d{10,11}$/.test(formData.contact_info)) {
+            formErrors.contact_info = '유효한 휴대폰 번호를 입력해 주세요.';
         }
+
         if (!formData.content_main) {
             formErrors.content_main = '내용을 입력해 주세요.';
         }
@@ -70,38 +75,58 @@ const PostCard = () => {
         const validationErrors = validate();
     
         if (Object.keys(validationErrors).length === 0) {
-            // 유효성 검사 통과
             console.log('Form data:', formData);
     
-            // 이메일 전송 데이터 설정
-            const emailData = {
-                content_mail: formData.content_mail,
-                content_main: formData.content_main,
-                content_name: formData.content_name
-            };
+            if (contactMethod === 'email') {
+                // 이메일 전송
+                const emailData = {
+                    content_mail: '회신할 주소 :'+formData.contact_info ,
+                    content_main: formData.content_main+ '\n',
+                    content_name: formData.content_name
+                };
     
-            // 이메일 전송 요청
-            axios.post(`${API_BASE_URL}/sendemail`, emailData)
-                .then((response) => {
-                    console.log(response);
-                    alert('이메일 전송 되었습니다.');
+                axios.post(`${API_BASE_URL}/sendmail`, emailData)
+                    .then((response) => {
+                        console.log(response);
+                        alert('이메일 전송 되었습니다.');
     
-                    // 폼 초기화
-                    setFormData({
-                        content_name: '',
-                        content_mail: '',
-                        content_main: '',
+                        setFormData({
+                            content_name: '',
+                            contact_info: '',
+                            content_main: '',
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        alert('이메일 전송 실패');
                     });
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('이메일 전송 실패');
-                });
+            } else if (contactMethod === 'sms') {
+                // SMS 전송
+                const smsData = {
+                    from: formData.contact_info,
+                    text: formData.content_main,
+                    content_name: formData.content_name
+                };
+    
+                axios.post(`${API_BASE_URL}/sendsms`, smsData)
+                    .then((response) => {
+                        console.log(response);
+                        alert('SMS 전송 되었습니다.');
+    
+                        setFormData({
+                            content_name: '',
+                            contact_info: '',
+                            content_main: '',
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        alert('SMS 전송 실패');
+                    });
+            }
     
             setErrors({});
         } else {
-            // 유효성 검사 실패
-            console.log('Form data: error', formData);
             setErrors(validationErrors);
         }
     };
@@ -109,12 +134,11 @@ const PostCard = () => {
     return (
         <div className="intro_container">
             <div className="intro_img" ref={imgRef}>
-                <img src="/images/main/메인-배너.jpg" alt="introduction" />
+                <img src="/images/main/main-banner.jpg" alt="introduction" />
             </div>
 
             <form onSubmit={handleSubmit}>
                 <div className="intro_content">
-
                     <div className='intro_content_head'>
                         <span>CONTACT US</span>
                     </div>
@@ -131,17 +155,54 @@ const PostCard = () => {
                             }} />
                     </div>
 
-                    <div className='intro_content_mail'>
-                        <label htmlFor="content_mail">작성자 메일</label>
-                        {errors.content_mail && <span className="error">{errors.content_mail}</span>}
-                        <input id='content_mail'
-                            type="text"
-                            value={formData.content_mail}
-                            onChange={handleChange}
-                            style={{
-                                borderBottom: errors.content_mail ? '1px solid red' : '1px solid black'
-                            }} />
+                    <div className="intro_contact_method">
+                        <label>
+                            <input
+                                type="radio"
+                                name="contactMethod"
+                                value="email"
+                                checked={contactMethod === 'email'}
+                                onChange={() => setContactMethod('email')}
+                            /> 이메일
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="contactMethod"
+                                value="sms"
+                                checked={contactMethod === 'sms'}
+                                onChange={() => setContactMethod('sms')}
+                            /> SMS
+                        </label>
                     </div>
+
+                    {/* Conditional rendering for email or phone input */}
+                    {contactMethod === 'email' ? (
+                        <div className='intro_content_mail'>
+                            <label htmlFor="contact_info">작성자 메일</label>
+                            {errors.contact_info && <span className="error">{errors.contact_info}</span>}
+                            <input id='contact_info'
+                                type="text"
+                                value={formData.contact_info}
+                                onChange={handleChange}
+                                style={{
+                                    borderBottom: errors.contact_info ? '1px solid red' : '1px solid black'
+                                }} />
+                        </div>
+                    ) : (
+                        <div className='intro_content_mail'>
+                            <label htmlFor="contact_info">휴대폰 번호</label>
+                            {errors.contact_info && <span className="error">{errors.contact_info}</span>}
+                            <input id='contact_info'
+                                type="text"
+                                value={formData.contact_info}
+                                onChange={handleChange}
+                                style={{
+                                    borderBottom: errors.contact_info ? '1px solid red' : '1px solid black'
+                                }} />
+                        </div>
+                    )}
+
                     <div className='intro_content_main'>
                         <label htmlFor="content_main">내용</label>
                         {errors.content_main && <span className="error">{errors.content_main}</span>}
@@ -163,3 +224,4 @@ const PostCard = () => {
 };
 
 export default PostCard;
+

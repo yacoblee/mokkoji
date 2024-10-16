@@ -25,7 +25,7 @@ public class TokenProvider {
 	//토큰 생성 
 	public String jwtCreate(String id) {
 		Date expriyDate = Date.from(Instant.now().plus(1,ChronoUnit.DAYS));
-		Users user = repository.getById(id);
+		Users user = repository.findById(id).get();
 		String isAdmin =user.getIsAdmin();
            System.out.println("관리자야?" +isAdmin);
 		    return Jwts.builder()
