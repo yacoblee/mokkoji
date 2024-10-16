@@ -71,9 +71,9 @@ public class LoginController {
 		Users entity = service.selectOne(userDTO.getUserId());// 아이디 검증
 		//Map<String, Object> response = new HashMap<>();
 		// test를 위한 유저정보의 경우 passwordEncoder 미적용으로 비밀번호 확인을 위한 방법 2개임
-		if (entity != null && inputPssword.equals(entity.getPassword())
-				|| passwordEncoder.matches(inputPssword, entity.getPassword())) {
-			
+		if (entity != null && inputPssword.equals(entity.getPassword())&& entity.getIsWithdrawn()== 0 && entity.getBlockStatus()== 0
+				|| passwordEncoder.matches(inputPssword, entity.getPassword()) )  {
+			log.info(entity);
 			//로그인 횟수 증가 
 			entity.setLoginCount(entity.getLoginCount()+1);
 			service.updateLoginCount(entity);
@@ -83,7 +83,14 @@ public class LoginController {
 			//response.put("token", token);
 			return ResponseEntity.ok(token);
 
-		} else
+		}else if(entity.getIsWithdrawn()== 1 ) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("탈퇴 회원입니다");
+		}else if(entity.getBlockStatus()== 1) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("관리자 접근권한 제한으로 로그인이 불가합니다. 로그인을 원하는 경우 고객센터로 문의주해주세요");
+					
+		}
+		
+		else
 			log.info("에러");
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("id 또는 비밀번호 오류");
 	}// loginJwt

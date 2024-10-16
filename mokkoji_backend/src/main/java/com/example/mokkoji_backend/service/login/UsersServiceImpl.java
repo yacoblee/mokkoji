@@ -192,13 +192,17 @@ public UsersDTO entityToDto(Users user) {
 			.loginCount(user.getLoginCount())
 			.build();
 }
+
     @Override
 	public PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO) {
 		Page<Users> result = usersDSLRepository.findUserinfoToSearch(requestDTO);
 		return new PageResultDTO<> (result, e -> entityToDto(e));
 	}
 
-
+    @Override
+    	public void userIsWithdrawnUpdate(Users entity) {
+    		 userRepository.save(entity);
+    	}
 
 
 
