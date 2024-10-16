@@ -45,6 +45,7 @@ const ProductDetailsInfo = ({ product, mainImage, review, recommend }) => {
 
     let visibleSlide = 3;//현재 보여지는 슬라이드 갯수
     console.log('reviews', reviews)
+    console.log('recommond', recommendItems)
     //슬라이드 구현 횟수 = 전체 슬라이드 갯수 - 현재 보여지는 슬라이드 갯수
     const maxSlide = 5 - visibleSlide; // 추후 카운트 해서 넣기
 

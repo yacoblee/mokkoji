@@ -53,12 +53,20 @@ const MultipleBuy = () => {
         <div className="ProductBuy" >
 
             <div>
-
+                <ul className='ProductBuyList'>
+                    <li></li>
+                    <li></li>
+                    {/* <li className='addName'></li> */}
+                    <li className='deleteName'>상품명</li>
+                    <li>상품가격</li>
+                    <li>상품정보</li>
+                    <li>포장여부</li>
+                </ul>
 
                 {checkedCartItems.map((item, index) => {
                     return (
                         <div key={index} className='buyInfo'>
-
+                            <p></p>
                             <Link to={`/goods/${item.categoryId}/${item.productId}`}
                                 className='deleteName'>
                                 <img src={`${API_BASE_URL}/resources/productImages/${item.mainImageName}`} alt={item.productName}
