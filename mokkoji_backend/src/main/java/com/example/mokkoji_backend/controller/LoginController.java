@@ -152,8 +152,7 @@ public class LoginController {
 				log.info("1. 세션에 코드 저장: " + emailService.getVerificationCode());
 				UsersDTO newusersDTO = UsersDTO.builder()
 	                      .userId(usersDTO.getUserId())
-	                      .build();
-									
+	                      .build();						
 				return ResponseEntity.ok(newusersDTO);
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("null");
