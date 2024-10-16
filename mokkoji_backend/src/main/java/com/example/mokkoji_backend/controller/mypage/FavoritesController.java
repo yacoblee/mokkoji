@@ -60,10 +60,10 @@ public class FavoritesController {
 			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
 
 			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
-			if (favoritesDTOList == null || favoritesDTOList.isEmpty()) {
-				log.warn("찜목록이 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("찜목록이 비어있음");
-			}
+//			if (favoritesDTOList == null || favoritesDTOList.isEmpty()) {
+//				log.warn("찜목록이 비어있음");
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("찜목록이 비어있음");
+//			}
 
 			// 4. 정상적인 경우
 			return ResponseEntity.ok(favoritesDTOList);

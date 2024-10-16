@@ -53,110 +53,126 @@ function MyPageBook({ myPageRegist, userRegist, bookUpdateAdult, bookUpdateTeen,
 
 
     return (
-        <div>
-            {userRegist.map((regist) => (
-                <table className='BookTableList' key={regist.registId}>
-                    <tr>
-                        <td className='BookImageCell' rowSpan={2}>
-                            <img src={`${API_BASE_URL}/resources/reserveImages/${regist.imageName}`} alt={regist.name} />
-                        </td>
-                        <td rowSpan={2}>{regist.name}</td>
-                        <td>성인</td>
-                        <td>청소년</td>
-                        <td rowSpan={2}>총 금액 : {regist.registCnt}</td>
-                        <td>예약 일자 : {moment(regist.activeDate).format("YYYY-MM-DD")} </td>
-                        <td rowSpan={2}>
-                            <button className='SelectDeleteButton' onClick={() => { bookDelete(`/mypage/${regist.registId}`) }}>
-                                삭제
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div className='MyCartCount'>
-                                <div className='MyProductCount'>
-                                    <img
-                                        src="/images/buy/minus.png"
-                                        alt="minus"
-                                        onClick={() =>
-                                            bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt - 1}`)}
-                                    />
-                                    <input type="text" min={1} value={regist.adultCnt} />
-                                    <img
-                                        src="/images/buy/plus.png"
-                                        alt="plus"
-                                        onClick={() => {
-                                            if ((regist.adultCnt + regist.teenagerCnt) >= 25) { // 활동에 따른 최대 인원수를 DTO로 가져와도 될듯?
-                                                alert("최대 인원은 25인입니다.")
-                                            } else {
-                                                bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt + 1}`)
-                                            }
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className='MyCartCount'>
-                                <div className='MyProductCount'>
-                                    <img
-                                        src="/images/buy/minus.png"
-                                        alt="minus"
-                                        onClick={() =>
-                                            bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt - 1}`)}
-                                    />
-                                    <input type="text" min={1} value={regist.teenagerCnt} />
-                                    <img
-                                        src="/images/buy/plus.png"
-                                        alt="plus"
-                                        onClick={() => {
-                                            if ((regist.adultCnt + regist.teenagerCnt) >= 25) {
-                                                alert("최대 인원은 25인입니다.")
-                                            } else {
-                                                bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt + 1}`)
-                                            }
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <button type="button" onClick={toggleCalendar} className="SelectDateChangeButton">
-                                날짜 변경
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            ))}
+        <>
+            {userRegist.length === 0 ?
+                (
+                    <div className='TextNoItems'>
+                        <h2>예약 목록이 존재하지 않습니다.</h2>
+                        <div>
+                            <Link to='/reserve'>
+                                체험활동 둘러보러 가기
+                            </Link>
+                        </div>
+                    </div>
+                ) :
+                (
+                    <div>
+                        {userRegist.map((regist) => (
+                            <table className='BookTableList' key={regist.registId}>
+                                <tr>
+                                    <td className='BookImageCell' rowSpan={2}>
+                                        <img src={`${API_BASE_URL}/resources/reserveImages/${regist.imageName}`} alt={regist.name} />
+                                    </td>
+                                    <td rowSpan={2}>{regist.name}</td>
+                                    <td>성인</td>
+                                    <td>청소년</td>
+                                    <td rowSpan={2}>총 금액 : {regist.registCnt}</td>
+                                    <td>예약 일자 : {moment(regist.activeDate).format("YYYY-MM-DD")} </td>
+                                    <td rowSpan={2}>
+                                        <button className='SelectDeleteButton' onClick={() => { bookDelete(`/mypage/${regist.registId}`) }}>
+                                            삭제
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className='MyCartCount'>
+                                            <div className='MyProductCount'>
+                                                <img
+                                                    src="/images/buy/minus.png"
+                                                    alt="minus"
+                                                    onClick={() =>
+                                                        bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt - 1}`)}
+                                                />
+                                                <input type="text" min={1} value={regist.adultCnt} />
+                                                <img
+                                                    src="/images/buy/plus.png"
+                                                    alt="plus"
+                                                    onClick={() => {
+                                                        if ((regist.adultCnt + regist.teenagerCnt) >= 25) { // 활동에 따른 최대 인원수를 DTO로 가져와도 될듯?
+                                                            alert("최대 인원은 25인입니다.")
+                                                        } else {
+                                                            bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt + 1}`)
+                                                        }
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className='MyCartCount'>
+                                            <div className='MyProductCount'>
+                                                <img
+                                                    src="/images/buy/minus.png"
+                                                    alt="minus"
+                                                    onClick={() =>
+                                                        bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt - 1}`)}
+                                                />
+                                                <input type="text" min={1} value={regist.teenagerCnt} />
+                                                <img
+                                                    src="/images/buy/plus.png"
+                                                    alt="plus"
+                                                    onClick={() => {
+                                                        if ((regist.adultCnt + regist.teenagerCnt) >= 25) {
+                                                            alert("최대 인원은 25인입니다.")
+                                                        } else {
+                                                            bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt + 1}`)
+                                                        }
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" onClick={toggleCalendar} className="SelectDateChangeButton">
+                                            날짜 변경
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        ))}
 
-            {showCalendar && (
-                <div className="reservation_calendar_inner">
-                    <Calendar
-                        className="react-calendar"
-                        onChange={onDateChange}
-                        next2Label={null}
-                        prev2Label={null}
-                        formatDay={(locale, date) => moment(date).format("DD")}
-                        value={date}
-                        minDate={today}
-                        maxDate={oneMonthLater}
-                        tileContent={({ date, view }) => {
-                            if (view === 'month') {
-                                const formattedDate = moment(date).format("YYYY-MM-DD");
-                                const count = reservationCounts[formattedDate] || 0;
-                                if (count >= 5) {
-                                    return <span style={{ fontSize: '0.7rem', color: 'red' }}>{count} / 5 팀</span>;
-                                } else {
+                        {showCalendar && (
+                            <div className="reservation_calendar_inner">
+                                <Calendar
+                                    className="react-calendar"
+                                    onChange={onDateChange}
+                                    next2Label={null}
+                                    prev2Label={null}
+                                    formatDay={(locale, date) => moment(date).format("DD")}
+                                    value={date}
+                                    minDate={today}
+                                    maxDate={oneMonthLater}
+                                    tileContent={({ date, view }) => {
+                                        if (view === 'month') {
+                                            const formattedDate = moment(date).format("YYYY-MM-DD");
+                                            const count = reservationCounts[formattedDate] || 0;
+                                            if (count >= 5) {
+                                                return <span style={{ fontSize: '0.7rem', color: 'red' }}>{count} / 5 팀</span>;
+                                            } else {
 
-                                    return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
-                                }
-                            }
-                            return null;
-                        }}
-                    />
-                </div>
-            )}
-        </div>
+                                                return <span style={{ fontSize: '0.7rem', color: '#4759a2' }}>{count} / 5 팀</span>;
+                                            }
+                                        }
+                                        return null;
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </div >
+                )
+            }
+        </> // 삼항식
     );  //return
 
 }
