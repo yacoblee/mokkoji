@@ -74,17 +74,17 @@ public class CartController {
 	} //cartListAll
 	
 	// 2) 장바구니 수량 수정
-	@PatchMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}/{productTotalPrice}")
+	@PatchMapping("/cart/{productId}/{optionContent}/{packagingOptionContent}/{productCnt}")
 //	public ResponseEntity<?> cartUpdateCount(@AuthenticationPrincipal String userId, ) {
-	public ResponseEntity<?> cartUpdateCount(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent, @PathVariable int productCnt, @PathVariable int productTotalPrice) {
+	public ResponseEntity<?> cartUpdateCount(@RequestHeader("Authorization") String header, @PathVariable long productId, @PathVariable String optionContent, @PathVariable String packagingOptionContent, @PathVariable int productCnt) {
 		String userId = getUserIdFromHeader(header);
+
+		log.info("{}, {}, {}, {}, {}", userId, productId, optionContent, packagingOptionContent, productCnt);
 
 		try {
 			// 수량 update 실행
-			cartService.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalPrice);
+			List<CartDTO> cartDTOList = cartService.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt);
 
-			// 3. update 성공 후 다시 List 출력
-			List<CartDTO> cartDTOList = cartService.userCart(userId);
 			return ResponseEntity.ok(cartDTOList);
 
 		} catch (Exception e) {

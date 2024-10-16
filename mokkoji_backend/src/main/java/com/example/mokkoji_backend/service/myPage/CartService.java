@@ -21,13 +21,13 @@ public interface CartService {
 	
 	CartDTO entityToDto (Cart cart);
 	
-	 CartDTO findentityAndNewReturnDto(Cart entity);
+	CartDTO findentityAndNewReturnDto(Cart entity);
 	 
-	 void removeIfExists(List<CartDTO> list);
-	 
-	 List<CartDTO> findentityAndNewReturnList(CartDTO dto);
+	void removeIfExists(List<CartDTO> list);
 
-	void updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount);
+	List<CartDTO> findentityAndNewReturnList(CartDTO dto);
+
+	List<CartDTO> updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt);
 
 	void deleteCart(CartId cartId);
 
