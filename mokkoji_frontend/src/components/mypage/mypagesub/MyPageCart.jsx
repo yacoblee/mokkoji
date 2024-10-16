@@ -183,7 +183,7 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                         const cartKey = `${cart.productId}-${cart.optionContent}-${cart.packagingOptionContent}`;
 
                         return (
-                            <div className="MyCartGrid" key={cartKey} >
+                            <div className="MyCartGrid" key={index} >
                                 <div className='MyCartCheck'>
                                     <input
                                         type="checkbox"
@@ -213,10 +213,10 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                 <div className='MyCartCount'>
                                     <div className='MyProductCount'>
                                         <img src="/images/buy/minus.png" alt="minus" onClick={() =>
-                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt - 1}/${cart.productTotalPrice}`)} />
+                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt - 1}`)} />
                                         <input type="text" min={1} value={cart.productCnt} />
                                         <img src="/images/buy/plus.png" alt="plus" onClick={() =>
-                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt + 1}/${cart.productTotalPrice}`)} />
+                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt + 1}`)} />
                                     </div>
                                 </div>
                                 <div className='MyCartButton'>

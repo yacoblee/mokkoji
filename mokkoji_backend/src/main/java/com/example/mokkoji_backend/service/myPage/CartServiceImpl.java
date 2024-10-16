@@ -13,6 +13,7 @@ import com.example.mokkoji_backend.repository.myPage.CartDSLRepository;
 import com.example.mokkoji_backend.repository.myPage.CartRepository;
 import com.example.mokkoji_backend.service.goods.PackagingService;
 import com.example.mokkoji_backend.service.goods.ProductoptionsService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -176,57 +177,7 @@ public class CartServiceImpl implements CartService {
 	// 1) 사용자별 cart 목록 확인시 사용
 	@Override
 	public List<CartDTO> userCart(String userId) {
-		List<Cart> cartList = cartRepository.findByUserIdOrderByCartDateDesc(userId);
-
-		List<CartDTO> cartDTOList = cartList.stream().map(item -> {
-			// Optional<Products>로 상품을 가져오기
-			Optional<Products> products = productsRepository.findById(item.getProductId());
-			CartDTO cartDTO = new CartDTO ();
-
-			// Cart에서 직접 가져옴
-			cartDTO.setUserId(item.getUserId());
-			cartDTO.setProductId(item.getProductId());
-			cartDTO.setOptionContent(item.getOptionContent());
-			cartDTO.setPackagingOptionContent(item.getPackagingOptionContent());
-			cartDTO.setProductCnt(item.getProductCnt());
-			cartDTO.setCartDate(item.getCartDate());
-
-			// ProductOptions에서 price 끌고오기
-			ProductOptionsId productOptionsId = ProductOptionsId.builder()
-					.productId(item.getProductId())
-					.content(item.getOptionContent()).build();
-			ProductOptions productOptions = productoptionsService.findById(productOptionsId).get();
-			cartDTO.setOptionPrice(productOptions.getPrice());
-
-			// ProductOptions에서 price 끌고오기
-			Packaging packaging = packagingService.findById(item.getPackagingOptionContent());
-			cartDTO.setPackagingOptionPrice(packaging.getPackagingPrice());
-
-			// Optional<Products>의 값이 존재하는 경우에만 설정
-			if (products.isPresent()) {
-				Products product = products.get();
-				cartDTO.setProductName(product.getName());
-				cartDTO.setPrice(product.getPrice());
-				cartDTO.setCategoryId(product.getCategoryId());
-				cartDTO.setMainImageName(product.getMainImageName());
-				cartDTO.setStockCount(product.getStockCount());
-			} else {
-				// 기본값 설정 또는 로깅 등 처리
-				cartDTO.setProductName(null);
-				cartDTO.setPrice(0);
-				cartDTO.setCategoryId(null);
-				cartDTO.setMainImageName(null);
-				cartDTO.setStockCount(0);
-			}
-
-			int productPrice = cartDTO.getPrice() + cartDTO.getOptionPrice() + cartDTO.getPackagingOptionPrice();
-
-			cartDTO.setProductTotalPrice(productPrice * cartDTO.getProductCnt());
-
-			return cartDTO;
-		}).collect(Collectors.toList());
-
-		return cartDTOList;
+		return cartDSLRepository.findUserCartById(userId);
 	}
 
 	// 2) cart의 총 개수 조회
@@ -237,8 +188,10 @@ public class CartServiceImpl implements CartService {
 
 	// 3) cart의 각 상품의 개수를 조정할 때 사용
 	@Override
-	public void updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt, int productTotalCount) {
-		cartRepository.updateCart(userId, productId, optionContent, packagingOptionContent, productCnt, productTotalCount);
+	@Transactional
+	public List<CartDTO> updateCart(String userId, long productId, String optionContent, String packagingOptionContent, int productCnt) {
+		cartDSLRepository.changeProductCnt(userId, productId, optionContent, packagingOptionContent, productCnt);
+		return cartDSLRepository.findUserCartById(userId);
 	}
 
 	// 4) cart의 상품을 삭제할 때 사용

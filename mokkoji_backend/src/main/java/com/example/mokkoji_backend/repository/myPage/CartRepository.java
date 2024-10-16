@@ -25,12 +25,9 @@ public interface CartRepository extends JpaRepository<Cart, CartId> {
 	@Query("UPDATE Cart AS c SET c.productCnt = :productCnt, c.productTotalPrice = :productTotalPrice WHERE c.userId = :userId AND c.productId = :productId AND c.optionContent = :optionContent AND c.packagingOptionContent = :packagingOptionContent")
 	void updateCart(@Param("userId") String userId, @Param("productId") long productId, @Param("optionContent") String optionContent, @Param("packagingOptionContent") String packagingOptionContent, @Param("productCnt") int productCnt, @Param("productTotalPrice") int productTotalPrice);
 
-
-
 	// cart 개수 계산
 	int countByUserId(String userId);
-	
-	
+
 	// 단품 구매시 장바구니 불러올때 , id를 제외한 나머지 리스트 반환
 	List<Cart> findByUserIdAndProductIdAndOptionContentAndPackagingOptionContentNot
 	(String userId, long productId, String optionContent, String packagingOptionContent);
