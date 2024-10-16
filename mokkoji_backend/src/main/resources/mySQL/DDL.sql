@@ -75,6 +75,7 @@ CREATE TABLE `users` (
                          `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '정보수정날짜',
                          `block_status` tinyint(1) DEFAULT NULL COMMENT '관리자 권한 접근제한',
                          `is_admin` tinyint(1) DEFAULT '0' COMMENT '관리자 여부 (1: 관리자, 0: 일반 사용자)',
+                         `login_count` int NOT NULL DEFAULT '0' COMMENT '로그인횟수',
                          PRIMARY KEY (`user_id`),
                          UNIQUE KEY `user_sequence` (`user_sequence`),
                          CONSTRAINT `users_chk_1` CHECK ((`gender` in (_utf8mb4'M',_utf8mb4'F')))
@@ -165,7 +166,7 @@ CREATE TABLE `registedhistory` (
                                    `regist_cnt` int DEFAULT NULL COMMENT '총합산금액',
                                    `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                    `active_date` timestamp NULL DEFAULT NULL,
-                                   `regist_id` int NOT NULL AUTO_INCREMENT,
+                                   `regist_id` varchar(150) NOT NULL,
                                    PRIMARY KEY (`regist_id`),
                                    UNIQUE KEY `registedhistory_unique` (`reg_date`),
                                    KEY `registedhistory_regist_FK` (`regist_code`),
@@ -242,17 +243,3 @@ CREATE TABLE `ordersdetail` (
                                 CONSTRAINT `ordersdetail_packaging_FK` FOREIGN KEY (`packaging_option_content`) REFERENCES `packaging` (`packaging_option_content`),
                                 CONSTRAINT `ordersdetail_productoptions_FK` FOREIGN KEY (`product_id`, `option_content`) REFERENCES `productoptions` (`product_id`, `option_content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
-
-
-
-
-
-
-
-
-
--- 10.09 효윤
-ALTER TABLE users ADD login_count INT NOT NULL DEFAULT 0 COMMENT '로그인횟수';
