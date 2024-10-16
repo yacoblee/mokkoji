@@ -20,117 +20,117 @@ const Reservation = () => {
     // const existingReservations = JSON.parse(localStorage.getItem('reservations')) || [];
     const [reservationCounts, setReservationCounts] = useState({});
     const [date, setDate] = useState(new Date());
-    const [registsData, setRegistsData] = useState([]);  
+    const [registsData, setRegistsData] = useState([]);
     const today = new Date(); // 오늘 날짜
     const oneMonthLater = moment(today).add(1, 'months').toDate();
     const [showCalendar, setShowCalendar] = useState(false);
     const [reserveImage, setReserveImage] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+
 
     useEffect(() => {
         const script = document.createElement('script');
         script.src = "https://cdn.iamport.kr/v1/iamport.js";
         script.async = true;
-    
+
         document.body.appendChild(script);
-    
+
         script.onload = () => {
-          if (window.IMP) {
-            const { IMP } = window;
-            IMP.init('imp12042271'); // 가맹점 식별코드
-          }
-        };
-    
-        return () => {
-          document.body.removeChild(script);
-        };
-      }, []);
-    
-      const onClickPay = async () => {
-        const { IMP } = window;
-    
-
-    const teenager = btnValue.teenSelect;
-    const adult = btnValue.adultSelect;
-    const personCnt = teenager + adult; // 청소년과 성인의 합
-
-    // registsData가 로딩된 상태에서만 계산
-    if (registsData.length > 0) {
-        const teenagerTotal = teenager * registsData[0].teenager; // 청소년 총 가격 계산
-        const adultTotal = adult * registsData[0].adult; // 성인 총 가격 계산
-
-        // 결제 정보를 위한 데이터 객체
-        const data = {
-            pg: "html5_inicis",
-            pay_method: "card",
-            merchant_uid: `merchant_${new Date().getTime()}`, 
-            //amount: teenagerTotal + adultTotal,  // 총 가격 
-            amount: 100,  // 테스트용 가격
-            teenager: teenager,
-            adult: adult, 
-            personCnt: personCnt,  // 총 인원수
-            reserve_date: moment(date).format("YYYY-MM-DD"),
-        };
-        setLoading(true); 
-        IMP.request_pay(data, async (rsp) => {
-            if (rsp.success) {
-                try {
-                    // 비동기 API 호출
-                    const response = await axios.post(`${API_BASE_URL}/purchase/${rsp.imp_uid}`, { 
-                        registId: data.merchant_uid,
-                        activeDate: data.reserve_date,
-                        adult: data.adult,
-                        teenager: data.teenager,
-                        personCnt: data.personCnt,
-                        registCnt: data.amount,
-                        
-                    });
-    
-                    console.log("결제 성공:", response.data);
-                    alert("결제가 완료되었습니다.");
-                } catch (error) {
-                    console.error("결제 처리 중 오류 발생:", error);
-                    alert("결제에 실패했습니다. 다시 시도해 주세요.");
-                }
-                console.log("결제 성공");
-            } else {
-                console.log("결제 실패:", rsp.error_msg);
-                alert("결제 실패: " + rsp.error_msg);
+            if (window.IMP) {
+                const { IMP } = window;
+                IMP.init('imp12042271'); // 가맹점 식별코드
             }
-            
-            setLoading(false);
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const onClickPay = async () => {
+        const { IMP } = window;
+
+
+        const teenager = btnValue.teenSelect;
+        const adult = btnValue.adultSelect;
+        const personCnt = teenager + adult; // 청소년과 성인의 합
+
+        // registsData가 로딩된 상태에서만 계산
+        if (registsData.length > 0) {
+            const teenagerTotal = teenager * registsData[0].teenager; // 청소년 총 가격 계산
+            const adultTotal = adult * registsData[0].adult; // 성인 총 가격 계산
+
+            // 결제 정보를 위한 데이터 객체
+            const data = {
+                pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: `merchant_${new Date().getTime()}`,
+                //amount: teenagerTotal + adultTotal,  // 총 가격
+                amount: 100,  // 테스트용 가격
+                teenager: teenager,
+                adult: adult,
+                personCnt: personCnt,  // 총 인원수
+                reserve_date: moment(date).format("YYYY-MM-DD"),
+            };
+            setLoading(true);
+            IMP.request_pay(data, async (rsp) => {
+                if (rsp.success) {
+                    try {
+                        // 비동기 API 호출
+                        const response = await axios.post(`${API_BASE_URL}/purchase/${rsp.imp_uid}`, {
+                            registId: data.merchant_uid,
+                            activeDate: data.reserve_date,
+                            adult: data.adult,
+                            teenager: data.teenager,
+                            personCnt: data.personCnt,
+                            registCnt: data.amount,
+
+                        });
+
+                        console.log("결제 성공:", response.data);
+                        alert("결제가 완료되었습니다.");
+                    } catch (error) {
+                        console.error("결제 처리 중 오류 발생:", error);
+                        alert("결제에 실패했습니다. 다시 시도해 주세요.");
+                    }
+                    console.log("결제 성공");
+                } else {
+                    console.log("결제 실패:", rsp.error_msg);
+                    alert("결제 실패: " + rsp.error_msg);
+                }
+
+                setLoading(false);
             });
-        }else{
+        } else {
             alert('예약 데이터 불러오는중입니다.');
         }
     }
-         
+
 
     useEffect(() => {
         let uri = API_BASE_URL + "/reserve";
         axios.get(uri)
             .then(response => {
                 const { regists, dateCounts, reserveImage } = response.data;
-               
+
                 if (dateCounts && Array.isArray(dateCounts)) {
                     const counts = {};  // 예약 카운트를 저장할 객체
                     dateCounts.forEach((data) => {
                         const formattedDate = moment(data.date).format("YYYY-MM-DD");
-                        counts[formattedDate] = data.count; 
+                        counts[formattedDate] = data.count;
                     });
                     // 예약 카운트 상태 업데이트
                     setReservationCounts(counts);
                 }
-              console.log(reserveImage);
+                console.log(reserveImage);
                 setReserveImage(reserveImage);
                 setRegistsData(regists);
             })
             .catch(err => {
                 console.log(err);
-               
+
             })
-    },[]);
+    }, []);
     // 숫자 클릭에 대한 state
     const [btnValue, setBtnValue] = useState({
         adultSelect: 0, // 성인 옵션의 갯수
@@ -165,7 +165,7 @@ const Reservation = () => {
 
     const calculateReservationCounts = () => {
         const counts = {};
-       
+
 
         setReservationCounts(counts);
     };
@@ -189,7 +189,7 @@ const Reservation = () => {
         } else {
             setDate(newDate);
         }
-        setShowCalendar(false);  
+        setShowCalendar(false);
     };
 
     const toggleCalendar = () => { // 날짜 확인 클릭되고 있음을 알려주는 이벤트
@@ -208,14 +208,14 @@ const Reservation = () => {
             </div>
             <section className="reservation">
                 <div className="reservation_img">
-                    <ReservationImg reserveImage = {reserveImage} />
+                    <ReservationImg reserveImage={reserveImage} />
                 </div>
                 <div className="reservation_calendar">
                     <form onSubmit={(event) => event.preventDefault()}>
 
                         {/* 우즉 예약 버튼 위치 */}
                         <div className="calendar-toggle">
-                   
+
                             <button type="button" onClick={toggleCalendar} className="calendar-toggle-button">
                                 날짜 확인
                             </button>
@@ -240,10 +240,10 @@ const Reservation = () => {
                                 </ul>
                             </div>
                             <div className="personPrice">
-                            {registsData && registsData.length > 0 ? (
+                                {registsData && registsData.length > 0 ? (
                                     <p> 청소년: {registsData[0].teenager} ₩ 성인: {registsData[0].adult} ₩</p>
                                 ) : (
-                                    <p>로딩 중...</p> 
+                                    <p>로딩 중...</p>
                                 )}
                             </div>
                             <button type="button" onClick={onClickPay} className="calendar-toggle-submit" disabled={loading}>
@@ -282,12 +282,12 @@ const Reservation = () => {
                 </div>
 
                 <div className="reservation_intro">
-                    <ReservationIntro regists={registsData}/>
+                    <ReservationIntro regists={registsData} />
                 </div>
             </section>
             <section className="reservation_detail">
 
-                <ReservationDeatil regists={{registsData, reserveImage}}/>
+                <ReservationDeatil regists={{ registsData, reserveImage }} />
             </section>
         </div>
     );

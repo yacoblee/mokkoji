@@ -17,14 +17,8 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface RegistedHistoryRepository extends JpaRepository<Registedhistory, String>{
 
-//	@Modifying
-//	@Transactional
-//	@Query("UPDATE Registedhistory AS r SET r.adultCnt = :adultCnt WHERE r.userId = :userId AND r.registId = :registId")
-//	void changeAdultCnt(@Param("userId") String userId, @Param("registId") int registId, @Param("adultCnt") int adultCnt);
-//
-//	@Modifying
-//	@Transactional
-//	@Query("UPDATE Registedhistory AS r SET r.teenagerCnt = :teenagerCnt WHERE r.userId = :userId AND r.registId = :registId")
-//	void changeTeenCnt(@Param("userId") String userId, @Param("registId") int registId, @Param("adultCnt") int teenagerCnt);
+	@Modifying
+	@Transactional
+	void deleteById(String registId);
 
 }

@@ -203,11 +203,11 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                     <h5>{formatNumber(+cart.price)}</h5>
                                 </div>
                                 <div className='MyCartDetail'>
-                                    <h5>{cart.optionContent} 
-                                        {+cart.optionPrice > 0 && `(+ ${formatNumber(+cart.optionPrice)}원 )` }
+                                    <h5>{cart.optionContent}
+                                        {+cart.optionPrice > 0 && `(+ ${formatNumber(+cart.optionPrice)}원 )`}
                                     </h5>
-                                    <h5>{cart.packagingOptionContent} 
-                                    {+cart.packagingOptionPrice > 0 && `(+ ${formatNumber(+cart.packagingOptionPrice)}원 )` }
+                                    <h5>{cart.packagingOptionContent}
+                                        {+cart.packagingOptionPrice > 0 && `(+ ${formatNumber(+cart.packagingOptionPrice)}원 )`}
                                     </h5>
                                 </div>
                                 <div className='MyCartCount'>

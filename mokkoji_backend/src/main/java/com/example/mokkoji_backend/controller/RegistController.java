@@ -168,6 +168,22 @@ public class RegistController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : changeTeenCnt");
 		}
 	}
+	
+	// 3. 일정 삭제
+	@DeleteMapping("/mypage/{registId}")
+	public ResponseEntity<?> deleteRegist(@RequestHeader("Authorization") String header, @PathVariable("registId") String registId){
+		String userId = getUserIdFromHeader(header);
+
+		try{
+			List<RegistedHistoryDTO> registedHistoryDTOList = registedHistoryService.deleteAndFindList(userId, registId);
+
+			return ResponseEntity.ok(registedHistoryDTOList);
+
+		} catch (Exception e) {
+			log.warn("내부 서버 오류 : deleteRegist");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : deleteRegist");
+		}
+	}
 
 }
 

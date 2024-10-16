@@ -14,4 +14,7 @@ public interface RegistedHistoryService {
 
 	@Transactional
 	List<RegistedHistoryDTO> updateTeenCntAndFindList(String userId, String registId, int teenagerCnt);
+
+	@Transactional
+	List<RegistedHistoryDTO> deleteAndFindList(String userId, String registId);
 }
