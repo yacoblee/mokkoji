@@ -5,6 +5,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { API_BASE_URL } from "../../service/app-config";
 import { getStorageData } from '../../service/apiService';
 import { apiCall } from '../../service/apiService';
+import axios from "axios";
 
 import MyPageGrid from './MyPageGrid';
 
@@ -20,6 +21,9 @@ function MyPageMain() {
     const [userMain, setUserMain] = useState({});   //userMain은 객체
     const [favoritesCnt, setFavoritesCnt] = useState();
     const [cartCnt, setCartCnt] = useState();
+
+    const [myPageNumber, setMyPageNumber] = useState(1);    // 첫 PageNation 번호(1페이지) = currentNum
+    const [myPageMaker, setMyPageMaker] = useState({});
 
 
 
@@ -55,17 +59,29 @@ function MyPageMain() {
     // favorites 데이터들을 가져옴
     const myPageLike = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        apiCall(url, 'GET', null, userToken)
-            .then((response) => {
-                //alert(`** myPageLike 성공 url=${url}`);
-                setUserFavorites(response.data);
-            }).catch((err) => {
+
+        let pageSize = 5;
+
+        axios.get(API_BASE_URL + url, {
+            params: {
+                size: pageSize,
+                page: myPageNumber, // 페이지 값은 별도 관리
+            },
+            headers: {
+                Authorization: `Bearer ${userToken}`, // JWT 토큰 추가
+            }
+        })
+            .then(response => {
+                setUserFavorites(response.data.favoritesDTOList);
+                setMyPageMaker(response.data.pageMaker)
+            })
+            .catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
                 } else if (err === 403) {
                     alert(`Server Reject : 접근권한이 없습니다. => ${err}`);
                 } else alert(`** myPageLike 시스템 오류, err = ${err}`);
-            }) //apiCall
+            });
     }; //myPageLike
 
     // 개별 삭제
@@ -440,11 +456,14 @@ function MyPageMain() {
                     element={<MyPageLike
                         userFavorites={userFavorites}
                         productIdList={productIdList}
+                        myPageNumber={myPageNumber}
+                        myPageMaker={myPageMaker}
                         myPageLike={myPageLike}
                         favoritesDelete={favoritesDelete}
                         favoritesCheckDelete={favoritesCheckDelete}
                         favoritesCheckBoxChange={favoritesCheckBoxChange}
                         favoritesAllCheckBoxChange={favoritesAllCheckBoxChange}
+                        setMyPageNumber={setMyPageNumber}
                     />}
                 />
                 <Route

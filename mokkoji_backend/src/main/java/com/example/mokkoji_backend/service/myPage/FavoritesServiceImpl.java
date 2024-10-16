@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.example.mokkoji_backend.domain.FavoritesDTO;
@@ -119,6 +122,27 @@ public class FavoritesServiceImpl implements FavoritesService {
 
 	// ** 마이페이지에서만 사용 ==========================================================================
 
+	// page용 임시 메서드
+	private FavoritesDTO entityToDTOFavorites(Favorites favorites) {
+		Products products = productsRepository.findById(favorites.getProductId()).get();
+
+		return FavoritesDTO.builder()
+				.userId(favorites.getUserId())
+				.productId(favorites.getProductId())
+				.favoriteDate(favorites.getFavoriteDate())
+				.productName(products.getName())
+				.categoryId(products.getCategoryId())
+				.mainImageName(products.getMainImageName())
+				.build();
+	}
+
+	@Override
+	public PageResultDTO<FavoritesDTO,Favorites> pageNationFavorites(String userId, PageRequestDTO pageRequestDTO) {
+		Page<Favorites> favoritesPage = favoriteRepository.findByUserIdOrderByFavoriteDateDesc(userId, pageRequestDTO.getPageable());
+
+		return new PageResultDTO<>(favoritesPage, this::entityToDTOFavorites);
+	}
+
 	// 1) 찜목록 표시할떄 사용
 	@Override
 	public List<FavoritesDTO> userFavorites(String userId) {
@@ -126,7 +150,7 @@ public class FavoritesServiceImpl implements FavoritesService {
 
 		List<FavoritesDTO> favoritesDTOList = favoritesList.stream().map(item -> {
 			// Optional<Products>로 상품을 가져오기
-			Optional<Products> products = productsRepository.findById(item.getProductId());
+					Optional<Products> products = productsRepository.findById(item.getProductId());
 			FavoritesDTO favoritesDTO = new FavoritesDTO();
 
 			favoritesDTO.setUserId(item.getUserId());
