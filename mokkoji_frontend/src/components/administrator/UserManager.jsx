@@ -274,6 +274,7 @@ const UserManagement = () => {
                             <th>이메일</th>
                             <th>로그인</th>
                             <th>접근차단</th>
+                            <th>탈퇴여부</th>
                         </tr>
                     </thead>
                     <tbody className="user-resultArea2">
@@ -291,6 +292,7 @@ const UserManagement = () => {
                                 <td>{users.email}</td>
                                 <td>{users.loginCount}</td>
                                 <td>{users.blockStatus}</td>
+                                <td>{users.isWithdrawn}</td>
                             </tr>
                         ))}
                     </tbody>
