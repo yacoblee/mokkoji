@@ -57,9 +57,9 @@ const Header = () => {
 
     const mypage = locationNows.pathname.toLowerCase().includes('mypage');
     const buy = locationNows.pathname.toLowerCase().includes('buy');
-
+    const administrator = locationNows.pathname.toLowerCase().includes('administrator');
     useEffect(() => {
-        if ((!isLoggedIn && mypage) || (!isLoggedIn && buy)) {
+        if ((!isLoggedIn && mypage) || (!isLoggedIn && buy) || (!isLoggedIn && administrator)) {
             setIsAdmin(false);
             navigate('/');
         }
