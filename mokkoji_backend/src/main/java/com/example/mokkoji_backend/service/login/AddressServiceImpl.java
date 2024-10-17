@@ -17,8 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService{
 	
-	@Autowired
+
 	private final AddressRepository repository;
+
+	private final AddressRepository addressRepository;
 	
 	@Override
 	public List<Address> findByuserId(String userId) {
@@ -30,10 +32,44 @@ public class AddressServiceImpl implements AddressService{
 	@Override
 	public void register(Address entity) {
 		repository.save(entity);
+	}
+	
+//	@Override
+//	public void userAdmimAddressUpdate(List<Address> addr) {
+//	    String userId;
+//	    List<Address> dbAddress;
+//
+//	    for (Address address : addr) {
+//	        userId = address.getUserId();
+//	        
+//	        //  userId가 동일한 DB에 저장된 모든 주소를 가져옴
+//	        dbAddress = repository.findByUserId(userId);
+//
+//	        
+//	        // DB의 모든 주소와 입력한 주소의 isDefault를 비교
+//	        for (Address dbAddr : dbAddress) {
+////	            if (address.getIsDefault() == dbAddr.getIsDefault()) {
+////	                // 동일한 isDefault 와 동일한 userId를 가진 주소를 삭제
+////	                repository.delete(dbAddr);
+////	            }
+//	        	if(addr.size()!=dbAddress.size()) {
+//	        		repository.deleteAll(dbAddress);
+//	        	}
+//	        	
+//	        	
+//	        }
+//
+//	        // 새로운 주소 저장
+//	        repository.save(address);
+//	    }
+//	}
+
+	@Override
+	public void userAdmimAddressUpdate(List<Address> addr) {
+		repository.saveAll(addr);
 		
 	}
-
-
+	
 	@Override
 	public void deleteById(int id) {
 		repository.deleteById(id);

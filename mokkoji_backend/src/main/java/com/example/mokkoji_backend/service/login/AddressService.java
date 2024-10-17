@@ -39,4 +39,7 @@ public interface AddressService {
 
 	// 7. 주소지 생성 엽력
 	List<Address> createInsertAddress(String userId, String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientPhone, String recipientName);
+
+	// 8. 관리자 페이지 주소 저장 
+	void userAdmimAddressUpdate (List<Address> addr);
 }

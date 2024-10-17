@@ -13,6 +13,17 @@ import { apiCall } from '../../service/apiService';
 
 const Membership = () => {
 
+    const getCurrentDaty = () => {
+
+        const today = new Date();
+        today.setFullYear(today.getFullYear() - 18); // 현재 연도에서 18년을 뺍니다
+        return today.toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+    }
+
+    const minBirthDate = "1900-01-01"; // 최소 생년월일
+    const maxBirthDate = getCurrentDaty(); // 최대 생년월일을 현재 날짜로 설정
+    const defaultBirthDate = "1990-01-01"; // 기본 생년월일 설정
+
     // 사용자 입력값 저장 객체
     const formData = useRef({
         //  index: '',
@@ -259,7 +270,7 @@ const Membership = () => {
                 console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
 
 
-                if (response.data === false && response.status===200) {
+                if (response.data === false && response.status === 200) {
                     alert('⚠️ 동일한 아이디가 존재합니다. 아이디를 다시 입력해주세요');
                     setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
                         inputR.current.value = ''; // 값 비우기
@@ -274,31 +285,31 @@ const Membership = () => {
                     }, 0);
                     formErrors.current.userId = false;
                     setisOkIdChek(false);
-                } 
+                }
 
             }).catch((err) => {
-             const errStatus = err.status
+                const errStatus = err.status
 
-             if(errStatus === 502){
-                alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
-                formErrors.current.userId = true;
-                setisOkIdChek(true);
-             } else if (errStatus === 500 || errStatus === 404 ){
-                alert('⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요');
-                setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
-                    inputR.current.value = ''; // 값 비우기
-                }, 0);
-                formErrors.current.userId = false;
-                setisOkIdChek(false);
-             } else{
-                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 " , err.message);
-                alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-                setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
-                    inputR.current.value = ''; // 값 비우기
-                }, 0);
-                formErrors.current.userId = false;
-                setisOkIdChek(false);
-            }
+                if (errStatus === 502) {
+                    alert('🎉 동일한 아이디가 존재하지 않습니다 회원가입을 진행해주세요');
+                    formErrors.current.userId = true;
+                    setisOkIdChek(true);
+                } else if (errStatus === 500 || errStatus === 404) {
+                    alert('⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요');
+                    setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                        inputR.current.value = ''; // 값 비우기
+                    }, 0);
+                    formErrors.current.userId = false;
+                    setisOkIdChek(false);
+                } else {
+                    console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 ", err.message);
+                    alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                    setTimeout(() => { // setTimeout을 사용하여 다음 렌더링 사이클에서 값 변경
+                        inputR.current.value = ''; // 값 비우기
+                    }, 0);
+                    formErrors.current.userId = false;
+                    setisOkIdChek(false);
+                }
 
             })
 
@@ -389,19 +400,19 @@ const Membership = () => {
             const data = formData.current;
             apiCall(url, 'POST', data, null)
                 .then((response) => {
-           
+
                     alert(`${formData.current.name}님 회원가입을 축하합니다.`);
-                   //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
+                    //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
                     window.opener.alert("회원가입이 완료되었습니다!");  // 부모 창에 알림
                     window.close();
                     navi('/Login');
                     setisOkIdChek(false);
 
                 }).catch((err) => {
-                   if(err.status === 502 || err.status === 500 ||   err.status === 404){
-                    alert("⚠️ 네트워크 에러로 인해 회원 가입을 다시 진행해주세요");
-                    navi('/Login/Membership');
-                   }
+                    if (err.status === 502 || err.status === 500 || err.status === 404) {
+                        alert("⚠️ 네트워크 에러로 인해 회원 가입을 다시 진행해주세요");
+                        navi('/Login/Membership');
+                    }
 
                 })
 
@@ -602,9 +613,12 @@ const Membership = () => {
 
                         <label htmlFor="birthDate">생년월일</label>
                         <input type="date"
+                            value={defaultBirthDate}
                             name="birthDate"
                             id="birthDate"
                             ref={birtydayR}
+                            min={minBirthDate}
+                            max={maxBirthDate}
                             onChange={getInputInfo}
                             style={{
                                 borderBottom: formErrors.current.birthDate === false ? '1px solid red' : '1px solid #aaaaaa'

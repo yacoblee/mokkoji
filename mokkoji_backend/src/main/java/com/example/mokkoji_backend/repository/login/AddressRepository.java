@@ -15,6 +15,9 @@ import org.springframework.stereotype.Repository;
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 	List<Address> findByUserId(String userId);
 
+	@Query ("SELECT COUNT(a) FROM Address a WHERE a.userId = :userId AND a.isDefault = 0")
+	 int countDefaultAddressesByUserId(@Param("userId") String userId);
+	
 	// 마이페이지 : userDetail에서 완전 기본 주소 정보를 가져오기 위한 메서드
 	Address findByUserIdAndIsDefault(String userId, int isDefault);
 	
