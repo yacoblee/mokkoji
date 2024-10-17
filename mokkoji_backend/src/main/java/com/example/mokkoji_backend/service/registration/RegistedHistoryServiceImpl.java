@@ -15,6 +15,7 @@ public class RegistedHistoryServiceImpl implements RegistedHistoryService {
 
 
 	private final RegistedHistoryRepositoryDSL registedHistoryRepositoryDSL;
+	private final RegistedHistoryRepository registedHistoryRepository;
 
 	@Override
 	public List<RegistedHistoryDTO> findAllRegList(String userId) {
@@ -32,6 +33,13 @@ public class RegistedHistoryServiceImpl implements RegistedHistoryService {
 	@Override
 	public List<RegistedHistoryDTO> updateTeenCntAndFindList(String userId, String registId, int teenagerCnt){
 		registedHistoryRepositoryDSL.changeTeenCnt(userId, registId, teenagerCnt);
+		return registedHistoryRepositoryDSL.findByUserIdList(userId);
+	}
+
+	@Transactional
+	@Override
+	public List<RegistedHistoryDTO> deleteAndFindList(String userId, String registId) {
+		registedHistoryRepository.deleteById(registId);
 		return registedHistoryRepositoryDSL.findByUserIdList(userId);
 	}
 

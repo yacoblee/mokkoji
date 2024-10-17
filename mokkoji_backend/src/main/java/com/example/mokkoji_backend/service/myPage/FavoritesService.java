@@ -1,6 +1,8 @@
 package com.example.mokkoji_backend.service.myPage;
 
 import com.example.mokkoji_backend.domain.FavoritesDTO;
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.ProductsDTO;
 import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
@@ -18,6 +20,8 @@ public interface FavoritesService {
 	boolean deleteSuccess(FavoritesId entityid);
 
 	int countFavorites(long productId);
+
+	PageResultDTO<FavoritesDTO,Favorites> pageNationFavorites(String userId, PageRequestDTO pageRequestDTO);
 
 	List<FavoritesDTO> userFavorites(String userId);
 

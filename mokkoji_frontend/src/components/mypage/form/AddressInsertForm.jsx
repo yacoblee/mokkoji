@@ -94,6 +94,14 @@ function MyPageAddressForm() {
             formData.append(key, value);
         });
 
+        // 빈 값 체크
+        for (const [key, value] of formData.entries()) {
+            if (!value) {
+                alert('모든 값을 입력해야합니다.'); // 어떤 값이 빈 값인지 알리기 위해 경고 표시
+                return; // 빈 값이 있으면 함수를 종료
+            }
+        }
+
         const token = JSON.parse(sessionStorage.getItem("userData"));
 
         try {
@@ -104,7 +112,6 @@ function MyPageAddressForm() {
                 },
             });
 
-            // alert("개인정보 수정 성공");
             window.location.href = '/mypage/address';
         } catch (error) {
             console.error('Error:', error.response);

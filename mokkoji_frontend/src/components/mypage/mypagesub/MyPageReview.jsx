@@ -48,8 +48,8 @@ function MyPageReview({ userReview, myPageReview }) {
                     <div className='TextNoItems'>
                         <h2>작성한 리뷰가 존재하지 않습니다.</h2>
                         <div>
-                            <Link to='/goods'>
-                                굿즈 둘러보러 가기
+                            <Link to='/orders'>
+                                리뷰 작성하러 가기
                             </Link>
                         </div>
                     </div>

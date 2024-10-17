@@ -56,10 +56,10 @@ public class ReviewsController {
 			List<ReviewsDTO> reviewsDTOList = reviewsService.userReviews(userId);
 
 			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
-			if (reviewsDTOList == null || reviewsDTOList.isEmpty()) {
-				log.warn("리뷰목록이 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("리뷰목록이 비어있음");
-			}
+//			if (reviewsDTOList == null || reviewsDTOList.isEmpty()) {
+//				log.warn("리뷰목록이 비어있음");
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("리뷰목록이 비어있음");
+//			}
 
 			// 4. 정상적인 경우
 			return ResponseEntity.ok(reviewsDTOList);
@@ -195,10 +195,10 @@ public class ReviewsController {
 			reviewsService.updateReviews(userId, reviewsDTO.getReviewId(), reviewsDTO.getReviewContent(), reviewsDTO.isLikeDislike(), reviewsDTO.getReviewPhoto());
 
 			List<ReviewsDTO> reviewsDTOList = reviewsService.userReviews(userId);
-			if (reviewsDTOList == null || reviewsDTOList.isEmpty()) {
-				log.warn("리뷰목록이 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("리뷰목록이 비어있음");
-			}
+//			if (reviewsDTOList == null || reviewsDTOList.isEmpty()) {
+//				log.warn("리뷰목록이 비어있음");
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("리뷰목록이 비어있음");
+//			}
 
 			return ResponseEntity.ok(reviewsDTOList);
 

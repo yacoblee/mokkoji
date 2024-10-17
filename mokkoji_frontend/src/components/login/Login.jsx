@@ -75,8 +75,6 @@ const Login = () => {
                     setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠
                     console.log("네비 이동 직전임");
                     console.log("네비 이동 후");
-                } else {
-                    throw new Error("로그인 실패: 잘못된 응답 코드");
                 }
             })
             .catch((err) => {
@@ -88,7 +86,7 @@ const Login = () => {
                 if (err == 502) {
                     alert("id 또는 password가 다릅니다, 다시 시도하세요.");
                 } else {
-                    alert(`** onLoginSubmit 시스템 오류, err=${err}`); //=> nullException이 발생함으로 여기로 에러가 떨어짐
+                    alert(`${err.data}`); //=> nullException이 발생함으로 여기로 에러가 떨어짐
 
                 }
                 setIsLoggedIn(false);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams, NavLink, Link } from 'react-router-dom';
+import { useParams, NavLink, Link, useNavigate } from 'react-router-dom';
 import '../../css/Product/ProductCategory.css';
 import { API_BASE_URL } from "../../service/app-config";
 import axios from "axios";
@@ -108,11 +108,15 @@ const ProductList = () => {
             keyword: e.target.value,
         }));
     };
-
+    const navigate = useNavigate();
     // 검색 버튼 클릭 시 API 호출
     const onClickSearch = () => {
-        setPage(1); // 검색 시 첫 페이지로 초기화
-        axiosCall();
+        if (filterItem.keyword.trim() === '') {
+            navigate(`/goods/${filterItem.categoryId}`);
+        } else {
+            setPage(1); // 검색 시 첫 페이지로 초기화
+            axiosCall();
+        }
     };
 
     const onEnterSearch = (e) => {

@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 import '../../../css/mypage/subpage/MyPageLike.css';
+import RenderPagination from '../../product/RenderPagination'
 
 import React, { useEffect } from 'react';
 import { API_BASE_URL } from "../../../service/app-config";
 
-function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete, favoritesCheckDelete, favoritesCheckBoxChange, favoritesAllCheckBoxChange }) {
+function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete, favoritesCheckDelete, favoritesCheckBoxChange, favoritesAllCheckBoxChange, myPageNumber, myPageMaker, setMyPageNumber }) {
 
     useEffect(() => {
         myPageLike("/mypage/favorites")
-    }, [])
+    }, [myPageNumber, userFavorites])
 
 
 
@@ -77,7 +78,13 @@ function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete,
                     />
                 </div>
                 <div></div>
-                <div></div>
+                <div>
+                    <RenderPagination
+                        pageMaker={myPageMaker}
+                        page={myPageNumber}
+                        setPage={setMyPageNumber}
+                    />
+                </div>
                 <div>
                     <button
                         className='SelectDeleteButton'

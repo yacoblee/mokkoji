@@ -58,10 +58,10 @@ public class CartController {
 			List<CartDTO> cartDTOList = cartService.userCart(userId);
 
 			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
-			if (cartDTOList == null || cartDTOList.isEmpty()) {
-				log.warn("장바구니가 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("장바구니가 비어있음");
-			}
+//			if (cartDTOList == null || cartDTOList.isEmpty()) {
+//				log.warn("장바구니가 비어있음");
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("장바구니가 비어있음");
+//			}
 
 			// 4. 정상적인 경우
 			return ResponseEntity.ok(cartDTOList);

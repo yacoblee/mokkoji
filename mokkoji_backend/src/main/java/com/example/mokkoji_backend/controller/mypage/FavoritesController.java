@@ -1,6 +1,9 @@
 package com.example.mokkoji_backend.controller.mypage;
 
 import com.example.mokkoji_backend.domain.FavoritesDTO;
+import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.PageResultDTO;
+import com.example.mokkoji_backend.entity.myPage.Favorites;
 import com.example.mokkoji_backend.entity.myPage.FavoritesId;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.service.login.UsersService;
@@ -16,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RestController
@@ -44,7 +49,7 @@ public class FavoritesController {
 	// 1) userId에 해당하는 favorites 최신순
 	@GetMapping("/favorites")
 //	public ResponseEntity<?> favoritesListAll(@AuthenticationPrincipal String userId) {
-	public ResponseEntity<?> favoritesListAll(@RequestHeader("Authorization") String header) {
+	public ResponseEntity<?> favoritesListAll(@RequestHeader("Authorization") String header, PageRequestDTO pageRequestDTO) {
 		// 1. 유효성 검사: userId가 null이거나 빈 값일 때
 //		if (userId == null || userId.isEmpty()) {
 //			log.warn("userId 확인 불가");
@@ -57,16 +62,16 @@ public class FavoritesController {
 
 		try {
 			// 2. 찜 목록 조회
-			List<FavoritesDTO> favoritesDTOList = favoritesService.userFavorites(userId);
+			PageResultDTO<FavoritesDTO, Favorites> pageResultDTO = favoritesService.pageNationFavorites(userId, pageRequestDTO);
 
-			// 3. null, isEmpty인 경우: 찜 목록 조회 불가
-			if (favoritesDTOList == null || favoritesDTOList.isEmpty()) {
-				log.warn("찜목록이 비어있음");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("찜목록이 비어있음");
-			}
+			List<FavoritesDTO> favoritesDTOList = pageResultDTO.getDtoList();
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("favoritesDTOList", favoritesDTOList);
+			response.put("pageMaker", pageResultDTO);
 
 			// 4. 정상적인 경우
-			return ResponseEntity.ok(favoritesDTOList);
+			return ResponseEntity.ok(response);
 
 		} catch (Exception e) {
 			// 5. 서버에서 발생한 예외 처리
