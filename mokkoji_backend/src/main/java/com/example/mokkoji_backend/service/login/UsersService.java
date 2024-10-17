@@ -48,4 +48,8 @@ public interface UsersService {
 	void updateLoginCount(Users entity);
 	
 	 PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO);
+	 
+	 void userIsWithdrawnUpdate(Users entity);
+	 
+	 void userAdmimInfoUpdate (Users entity);
 }

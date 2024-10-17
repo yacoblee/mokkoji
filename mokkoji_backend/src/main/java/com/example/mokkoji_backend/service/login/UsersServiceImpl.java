@@ -192,14 +192,22 @@ public UsersDTO entityToDto(Users user) {
 			.loginCount(user.getLoginCount())
 			.build();
 }
+
     @Override
 	public PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO) {
 		Page<Users> result = usersDSLRepository.findUserinfoToSearch(requestDTO);
 		return new PageResultDTO<> (result, e -> entityToDto(e));
 	}
 
+    @Transactional
+    	public void userIsWithdrawnUpdate(Users entity) {
+    	userRepository.save(entity);
+    	userRepository.flush();  // 데이터베이스에 강제로 반영
+    	}
 
-
-
+@Override
+public void userAdmimInfoUpdate(Users entity) {
+userRepository.save(entity);	
+}
 
 }
