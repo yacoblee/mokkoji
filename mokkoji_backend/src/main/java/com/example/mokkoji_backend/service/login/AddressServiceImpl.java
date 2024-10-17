@@ -75,7 +75,6 @@ public class AddressServiceImpl implements AddressService{
 		repository.changeDefaultSecond(userId, addressId);
 		// 3단계 - isDefault=3인 주소의 isDefault 값을 선택한 항목의 isDefault로 교체
 //		repository.changeDefaultThird(userId, isDefault);
-
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}
 
