@@ -9,24 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.UserAndAddressDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
-import com.example.mokkoji_backend.jwtToken.TokenProvider;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
-import com.example.mokkoji_backend.repository.login.UsersDSLRepository;
-import com.example.mokkoji_backend.service.CodeService;
-import com.example.mokkoji_backend.service.goods.ProductImageService;
-import com.example.mokkoji_backend.service.goods.ProductStatisticsService;
-import com.example.mokkoji_backend.service.goods.ProductoptionsService;
-import com.example.mokkoji_backend.service.goods.ProductsService;
+import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
-import com.example.mokkoji_backend.service.myPage.CartService;
-import com.example.mokkoji_backend.service.myPage.FavoritesService;
+
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 public class AdminUsersController {
 	private final UsersService userService;
 	private final AddressRepository addressRepository;
+	private final AddressService addressService;
 	
 	
 	
@@ -64,19 +57,33 @@ public class AdminUsersController {
 	public ResponseEntity<?> suchUsersAddress(@RequestBody UsersDTO requestDTO){
 		log.info("주소 찾기 들어옴?" + requestDTO);
 		List<Address> address = addressRepository.findByUserId(requestDTO.getUserId());  
+	if(address.isEmpty()){
+		return ResponseEntity.ok("주소가 존재하지 않습니다");
+	}else {
 		return ResponseEntity.ok(address);
+		
+	}
+		
 	}
 		
 	@PostMapping("/administrator/users/userinfo/userinfoupdate")
-	public ResponseEntity<?> userinfoupdate(@RequestBody UserAndAddressDTO requestDTO){
-		log.info("update에 들어옴?");
-		List<Address> addr =  requestDTO.getUserinfoAddress();
-		Users user = requestDTO.getUserinfo();
-		log.info(user);
-		for (Address address : addr) {
-			log.info(address);
-		}
-		return ResponseEntity.ok("들어옴");
+	public ResponseEntity<?> userinfoupdate(@RequestBody UserAndAddressDTO requestDTO) {
+	    
+	    List<Address> addr = requestDTO.getUserinfoAddress();
+	    Users user = requestDTO.getUserinfo();
+
+	    // 유저와 주소 정보가 유효한지 확인
+	    if (addr != null && !addr.isEmpty() && user != null) {
+	        // 유저 정보 업데이트
+	        userService.userAdmimInfoUpdate(user);
+	        // 주소 정보 업데이트
+	        addressService.userAdmimAddressUpdate(addr);
+	        return ResponseEntity.ok("저장됨");
+	    } 
+	    else {
+	        // 유효하지 않은 입력에 대한 에러 처리
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 입력입니다.");
+	    }
 	}
 	
 	@PostMapping("/administrator/users/userinfo/isWithdrawn")
@@ -84,18 +91,32 @@ public class AdminUsersController {
 		Users user = userService.selectOne(requeseDTO.getUserId()); 
 		if(user.getUserId().equals(requeseDTO.getUserId()) && user.getIsWithdrawn()== 0) {
 			user.setIsWithdrawn(1);
-			userService.userIsWithdrawnUpdate(user);
-			log.info(user);
+			user.setWithdrawalDate(requeseDTO.getWithdrawalDate());
+			userService.userIsWithdrawnUpdate(user);	
 			return ResponseEntity.ok("회원 탈퇴 완료");
 		}else if(user.getIsWithdrawn()== 1) {
 			user.setIsWithdrawn(0);
-			userService.userIsWithdrawnUpdate(user);
+			user.setWithdrawalDate(null);
+			userService.userIsWithdrawnUpdate(user);	
 			return ResponseEntity.ok("회원 복구 완료");
 		}
-		
 		else {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("유저를 찾을 수 없니다");
 		}
 	}
+	
+	
+	@PostMapping("/administrator/users/userinfo/addressdelete")
+	public ResponseEntity<?> userinfoAddressdelete (@RequestBody Address requeseDTO){
+		int userAddressId = requeseDTO.getAddressId();
+		
+		if(userAddressId>=0) {
+			addressService.deleteById(userAddressId);
+			return ResponseEntity.ok("주소 삭제 완료");
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("주소를 찾을 수 없습니다");
+		}
+	}
+	
 	
 }

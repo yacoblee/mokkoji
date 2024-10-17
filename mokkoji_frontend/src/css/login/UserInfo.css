@@ -7,17 +7,38 @@
   /* background-color: antiquewhite; */
 }
 
-.userinfo-container input {
-  height: 1.4em;
-  font-size: 1em;
-}
-
-.userinfo-title {
+.userinfo-titlearea{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 0 20px;
   padding-bottom: 20px;
   border-bottom: 1.5px solid #888 !important;
 }
 
+.userinfo-container input {
+  height: 1.4em;
+  font-size: 1em;
+}
+
+/* .userinfo-title {
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #888 !important;
+} */
+.userinfo-back{
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  background-color:  #888;
+  transition: all .5s;
+}
+
+.userinfo-back:hover{
+  background-color: #393c3a;
+}
 
 .close-btn {
   padding: 3px;
@@ -115,5 +136,28 @@
 }
 
 .address-remove:hover{
+  background-color: #393c3a;
+}
+
+.notAddress th{
+  text-align: center;
+color: red;
+}
+.btn_confirm{
+  text-align: center;
+}
+
+.btn_confirm input{
+  width: 80px;
+  height: 40px;
+  border: 0px;
+  border-radius: 5px;
+  background-color: #888;
+  transition: all .5s;
+  color: white;
+  margin-top: 30px;
+}
+
+.btn_confirm input:hover{
   background-color: #393c3a;
 }

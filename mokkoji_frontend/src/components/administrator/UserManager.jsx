@@ -155,8 +155,6 @@ const UserManagement = () => {
             .then((response) => {
                 console.log(response);
                 console.log(response.data);
-
-
                 setUsersAddress(response.data);
             })
             .catch((err) => {
@@ -167,7 +165,8 @@ const UserManagement = () => {
     }
 
     useEffect(() => {
-        if (userAddress && userAddress.length > 0 && selectedUser) {
+       // if (userAddress && userAddress.length > 0 && selectedUser) {
+             if (userAddress && userAddress.length > 0 && selectedUser) {   
             console.log('Updated userAddress:', userAddress);
 
             // 상태가 업데이트된 후에 navigate 호출

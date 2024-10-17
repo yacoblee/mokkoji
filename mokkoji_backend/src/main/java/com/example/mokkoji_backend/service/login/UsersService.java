@@ -50,4 +50,6 @@ public interface UsersService {
 	 PageResultDTO<UsersDTO, Users> findUserinfoToSearch(PageRequestDTO requestDTO);
 	 
 	 void userIsWithdrawnUpdate(Users entity);
+	 
+	 void userAdmimInfoUpdate (Users entity);
 }

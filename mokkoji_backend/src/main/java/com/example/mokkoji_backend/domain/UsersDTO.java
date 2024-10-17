@@ -23,7 +23,7 @@ public class UsersDTO {
 	private String email;
 	private int userSequence;
 	private int isWithdrawn;
-	private LocalDateTime withdrawalDate;
+	private LocalDate withdrawalDate;
 	private LocalDate updatedAt;
 	private LocalDate createdAt;
 	private int blockStatus;

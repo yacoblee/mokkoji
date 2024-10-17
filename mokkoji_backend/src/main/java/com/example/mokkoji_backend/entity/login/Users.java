@@ -53,8 +53,9 @@ public class Users {
     @Column(name = "is_withdrawn", columnDefinition = "int default 0")
     private int isWithdrawn;
 
-    @Column(name = "withdrawal_date")
-    private LocalDateTime withdrawalDate;
+    @Column(name = "withdrawal_date", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate withdrawalDate;
 
     @Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
