@@ -61,8 +61,8 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	@Transactional
-	public List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault) {
-		repository.updateAddressDetail(postalCode, streetAddress, detailedAddress, locationName, recipientName, recipientPhone, userId, isDefault);
+	public List<Address> updateAddress(String postalCode, String streetAddress, String detailedAddress, String locationName, String recipientName, String recipientPhone, String userId, int isDefault, int addressId) {
+		repository.updateAddressDetail(postalCode, streetAddress, detailedAddress, locationName, recipientName, recipientPhone, userId, isDefault, addressId);
 		return repository.findByUserIdOrderByIsDefault(userId);
 	}
 

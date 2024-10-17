@@ -128,7 +128,9 @@ public class MyPageController {
 					address.getRecipientName(),
 					address.getRecipientPhone(),
 					address.getUserId(),
-					address.getIsDefault());
+					address.getIsDefault(),
+					address.getAddressId()
+			);
 
 			return ResponseEntity.ok(addressList);
 

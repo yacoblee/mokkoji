@@ -47,7 +47,7 @@ function MyPageMain() {
 
     useEffect(() => {
         myPageMain("/mypage/user")
-    }, [])
+    }, [userMain])
 
 
 

@@ -24,8 +24,8 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 	// 마이페이지 : 주소지 업데이트
 	@Modifying
 	@Transactional
-	@Query("UPDATE Address AS a SET a.postalCode = :postalCode, a.streetAddress = :streetAddress, a.detailedAddress = :detailedAddress, a.locationName = :locationName, a.recipientName = :recipientName, a.recipientPhone = :recipientPhone WHERE a.userId = :userId AND a.isDefault = :isDefault")
-	void updateAddressDetail(@Param("postalCode") String postalCode, @Param("streetAddress") String streetAddress, @Param("detailedAddress") String detailedAddress, @Param("locationName") String locationName, @Param("recipientName") String recipientName , @Param("recipientPhone") String recipientPhone, @Param("userId") String userId, @Param("isDefault") int isDefault );
+	@Query("UPDATE Address AS a SET a.postalCode = :postalCode, a.streetAddress = :streetAddress, a.detailedAddress = :detailedAddress, a.locationName = :locationName, a.recipientName = :recipientName, a.recipientPhone = :recipientPhone WHERE a.userId = :userId AND a.isDefault = :isDefault AND a.addressId = :addressId")
+	void updateAddressDetail(@Param("postalCode") String postalCode, @Param("streetAddress") String streetAddress, @Param("detailedAddress") String detailedAddress, @Param("locationName") String locationName, @Param("recipientName") String recipientName , @Param("recipientPhone") String recipientPhone, @Param("userId") String userId, @Param("isDefault") int isDefault, @Param("addressId") int addressId );
 
 	// 마이페이지 : 기본주소 변경 1단계 - 기존 기본주소의 isDefault 값을 3으로 설정
 	@Modifying
