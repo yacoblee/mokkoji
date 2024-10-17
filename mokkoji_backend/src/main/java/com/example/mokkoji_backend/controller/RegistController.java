@@ -1,6 +1,7 @@
 package com.example.mokkoji_backend.controller;
 
 
+import com.example.mokkoji_backend.config.NaverMainConfig;
 import com.example.mokkoji_backend.domain.PaymentRequestDto;
 import com.example.mokkoji_backend.domain.RegistedHistoryDTO;
 import com.example.mokkoji_backend.jwtToken.TokenProvider;
@@ -14,6 +15,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ public class RegistController {
 	private final TokenProvider provider;
 	private final PaymentService paymentService;
 	private final RegistedHistoryService registedHistoryService;
+	private final NaverMainConfig mainConfig;
+	
 	
 	private IamportClient iamportClient;
 
@@ -44,10 +48,13 @@ public class RegistController {
 
 	@PostConstruct
     public void init() {
-        this.iamportClient = new IamportClient("2533046824212561", "Kc9bnIDch7znR6cdCX024s352Pq8YHDbfPDR0kCllDkvZEjY1iTweOxXcMHxUEX2LLa3ws5YhPYnySmk");
+        String apiKey = mainConfig.getImpkey();
+        String apiSecret = mainConfig.getImpsecretkey();
+
+        this.iamportClient = new IamportClient(apiKey, apiSecret);
     }
 	
-	
+
     @GetMapping("/reserve")
     public ResponseEntity<Map<String,Object>> getRegistsAndCounts(@RequestHeader(value = "Authorization", required = false) String authHeader) {
         String id = null; 
@@ -64,14 +71,9 @@ public class RegistController {
               
               log.info("status login success data"+id);
           } else {
-              log.info("status : no login!!! ");
+              log.info("status : does not login!!! ");
           }
     	
-    	
-    	
-    	
-    	System.out.println("Registration Image"+imageservice.findByRegistCode("04RS"));
-    	log.info("**********/reserve test");
         System.out.println("Registration Page"+registsAndCounts);
         
         
@@ -85,9 +87,7 @@ public class RegistController {
 		@RequestBody PaymentRequestDto request,
     	@PathVariable String imp_uid) throws IamportResponseException, IOException {
     	
-    	
-    	System.out.println("@@@@@@@@@@@@@@@@@@@imp_uid "+imp_uid);
-       
+
     	String id = null; 
         if (authHeader != null) {
             String token = authHeader.substring(7);
