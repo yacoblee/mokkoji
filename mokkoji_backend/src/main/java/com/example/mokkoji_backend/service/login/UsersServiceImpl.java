@@ -199,11 +199,15 @@ public UsersDTO entityToDto(Users user) {
 		return new PageResultDTO<> (result, e -> entityToDto(e));
 	}
 
-    @Override
+    @Transactional
     	public void userIsWithdrawnUpdate(Users entity) {
-    		 userRepository.save(entity);
+    	userRepository.save(entity);
+    	userRepository.flush();  // 데이터베이스에 강제로 반영
     	}
 
-
+@Override
+public void userAdmimInfoUpdate(Users entity) {
+userRepository.save(entity);	
+}
 
 }

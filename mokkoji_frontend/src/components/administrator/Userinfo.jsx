@@ -14,7 +14,6 @@ const Userinfo = () => {
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
     const { users, userAddress } = location.state || {}; // 전달된 state가 없을 경우를 대비해 기본값 설정
-    console.log(dbData);
     // 초기 유저 데이터 값 
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
@@ -23,7 +22,7 @@ const Userinfo = () => {
         email: '', // 이메일
         phoneNumber: '', // 핸드폰 번호
         updatedAt: '', // 수정 날짜
-        blockStatus: users.blockStatus || '', // 접근 제한 
+        blockStatus: users?.blockStatus || '',// 접근 제한 
         isWithdrawn: '' // 회원 탈퇴 
     }
     const [adminInputUserinfo, setAdminInputUserinfo] = useState(users);
@@ -61,17 +60,17 @@ const Userinfo = () => {
         recipientName: /^[가-힣]+$/,
         detailedAddress: /^.{3,}$/,
         recipientPhone: /^\d{2,5}-\d{3,4}-\d{4}$/,
-        locationName: /^.{2,}$/,
+        locationName: /^.{1,}$/,
 
     }
 
     const isCheckInputInfo = {
-        phoneNumber: "",
-        email: "",
-        recipientName: "",
-        detailedAddress: "",
-        recipientPhone: "",
-        locationName: ""
+        phoneNumber: true,
+        email: true,
+        recipientName: true,
+        detailedAddress: true,
+        recipientPhone: true,
+        locationName: true
 
     }
 
@@ -80,18 +79,23 @@ const Userinfo = () => {
 
 
 
-    // idtDefault 크기 순으로 배열안에서 재정렬 
+    // idtDefault 크기 순으로 배열안에서 재정렬
     const getDefaultAddress = (addresses) => {
-        if (addresses.length === 0) return null;
+        // addresses가 배열인지 확인하고, null 또는 undefined도 처리
+        if (!Array.isArray(addresses) || addresses.length === 0) return [];
 
-        // isDefault 값을 기준으로 오름차순 정렬한 후 첫 번째 항목 반환
+        // isDefault 값을 기준으로 오름차순 정렬한 후 배열 반환
         return addresses
             .slice()  // 원본 배열을 복사하여 정렬
             .sort((a, b) => a.isDefault - b.isDefault);
     };
+
+    // userAddress가 undefined 또는 null일 경우에도 방어
     const defaultAddress = getDefaultAddress(userAddress) || [];
 
+    // 초기화
     const [rows, setRows] = useState(defaultAddress);
+
 
     // 배송지 추가 함수
     const addRow = () => {
@@ -120,6 +124,7 @@ const Userinfo = () => {
             recipientName: '',
             recipientPhone: '',
             detailedAddress: '',
+            locationName: ''
         }]);
     };
 
@@ -218,33 +223,62 @@ const Userinfo = () => {
             recipientName: true,
             recipientPhone: true,
             detailedAddress: true,
+            locationName: true
         }))
     );
 
     console.log("checked", checked);
-
+    console.log("isCheckInputInfo", isCheckInputInfo);
 
     const insertDB = (e) => {
         e.preventDefault();
-        if (checked === true && isCheckInputInfo === true) {
+
+        // checkedCondition 확인(배열)
+        const checkedCondition = checked.every(it =>
+            it.detailedAddress === true &&
+            it.recipientName === true &&
+            it.recipientPhone === true &&
+            (it.locationName === undefined || it.locationName === true)
+        );
+        // isCheckInputInfo가 객체이므로, 그 값들이 모두 true인지 확인
+        const isCheckInputInfoCondition = Object.values(isCheckInputInfo).every(value => value === true);
+
+        if (checkedCondition && isCheckInputInfoCondition) {
+            console.log('유저정보', adminInputUserinfo);
+            console.log('주소정보', rows);
             let url = '/administrator/users/userinfo/userinfoupdate';
             const data = {
                 userinfo: adminInputUserinfo,
                 userinfoAddress: rows
             };
+
             apiCall(url, 'POST', data, null)
                 .then((response) => {
-                    alert('저장 완료')
-                    navigator('/');
+                    alert('저장 완료');
+                    navigator('/administrator/users');
                 }).catch((err) => {
                     console.error("Error during API call:", err);
-                })
+                });
         } else {
             alert("값을 다시 입력해주세요");
         }
-    }
+    };
+
+
+
 
     const removeAdress = (index) => {
+        console.log('삭제 행', rows[index]);
+        let url = '/administrator/users/userinfo/addressdelete'
+
+        apiCall(url, 'POST', rows[index], null)
+            .then((response) => {
+                console.log(response)
+                alert(response.data);
+                navigator('/administrator/users');
+            }).catch((err) => {
+                console.error("Error during API call:", err);
+            })
         // rows 배열에서 해당 인덱스의 항목 제거
         setRows((prevRows) => prevRows.filter((_, i) => i !== index));
 
@@ -256,7 +290,8 @@ const Userinfo = () => {
         let url = '/administrator/users/userinfo/isWithdrawn';
         const data = {
             userId: users.userId,
-            isWithdrawn: 1
+            isWithdrawn: 1,
+            withdrawalDate: new Date().toISOString().slice(0, 10)
         }
         apiCall(url, 'POST', data, null)
             .then((response) => {
@@ -267,9 +302,9 @@ const Userinfo = () => {
                 console.error("Error during API call:", err);
             })
 
-
     }
 
+    console.log("유저정보",users);
 
     return (
         <div className='userinfo-container'>
@@ -323,39 +358,45 @@ const Userinfo = () => {
                                         <td>{users.isAdmin ? "관리자" : "일반 회원"}</td>
                                     </tr>
 
-                                    {rows.map((ad, index) => (
-                                        <tr key={ad.addressId || index} className='userinfo-address'>
-                                            <th>배송지명<br />&#91; <input name="locationName" id="locationName" type="text" size="6" maxLength={7} value={ad.locationName || ''}
-                                                onChange={(e) => onChangeaddressValue(e, index)} /> &#93;<br />
-                                                <span className="address-remove" onClick={() => removeAdress(index)}> - 삭제</span></th>
+                                    {rows.length === 0 ? (<tr className='notAddress'>
+                                        <th colSpan="4" >
+                                            등록된 주소가 없습니다.
+                                        </th>
+                                    </tr>) :
+                                        (rows.map((ad, index) => (
+                                            <tr key={ad.addressId || index} className='userinfo-address'>
+                                                <th>배송지명<br />&#91; <input name="locationName" id="locationName" type="text" size="6" maxLength={7} value={ad.locationName || ''}
+                                                    onChange={(e) => onChangeaddressValue(e, index)} /> &#93;<br />
+                                                    <span className="address-remove" onClick={() => removeAdress(index)}> - 삭제</span></th>
 
-                                            <td colSpan="3">
-                                                <p>우편번호 &nbsp; &nbsp;&nbsp;<input type="text" name="postalCode" value={ad.postalCode || ''} />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span className='userinfo-addressAdd' readOnly onClick={() => openAddressSearch(index)}>주소검색</span></p>
-                                                <p>기본주소 &nbsp; &nbsp;&nbsp;
-                                                    <input type="text" name="streetAddress" value={ad.streetAddress} size="60" readOnly /></p>
-                                                <p>상세주소 &nbsp; &nbsp;&nbsp;
-                                                    <input type="text" name="detailedAddress" id="detailedAddress" value={ad.detailedAddress || ''}  // value 추가
-                                                        onChange={(e) => onChangeaddressValue(e, index)} size="60"
-                                                        style={{ borderBottom: checked[index].detailedAddress === false ? '1px solid red' : '' }} /></p>
-                                                <p className='userinfo-errmessage' style={{ display: checked[index].detailedAddress === false ? 'block' : 'none' }}>
-                                                    3글자 이상 입력하세요
-                                                </p>
-                                                <p>받는 사람  &nbsp;  &nbsp;
-                                                    <input type="text" name="recipientName" id="recipientName" value={ad.recipientName || ''} size="60" onChange={(e) => onChangeaddressValue(e, index)}
-                                                        style={{ borderBottom: checked[index].recipientName === false ? '1px solid red' : '' }} />
-                                                </p>
-                                                <p className='userinfo-errmessage' style={{ display: checked[index].recipientName === false ? 'block' : 'none' }}>한글로 입력해주세요</p>
-                                                <p>핸드폰 번호 <input type="text" name="recipientPhone" id="recipientPhone" value={ad.
-                                                    recipientPhone} size="60" onChange={(e) => onChangeaddressValue(e, index)}
-                                                    style={{
-                                                        borderBottom: checked[index].recipientPhone === false ? '1px solid red' : ''
-                                                    }} />
-                                                </p>
-                                                <p className='userinfo-errmessage' style={{ display: checked[index].recipientPhone === false ? 'block' : 'none' }}>-를 포함하여 핸드폰 번호를 다시 입력하세요</p>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                <td colSpan="3">
+                                                    <p>우편번호 &nbsp; &nbsp;&nbsp;<input type="text" name="postalCode" value={ad.postalCode || ''} />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span className='userinfo-addressAdd' readOnly onClick={() => openAddressSearch(index)}>주소검색</span></p>
+                                                    <p>기본주소 &nbsp; &nbsp;&nbsp;
+                                                        <input type="text" name="streetAddress" value={ad.streetAddress} size="60" readOnly /></p>
+                                                    <p>상세주소 &nbsp; &nbsp;&nbsp;
+                                                        <input type="text" name="detailedAddress" id="detailedAddress" value={ad.detailedAddress || ''}  // value 추가
+                                                            onChange={(e) => onChangeaddressValue(e, index)} size="60"
+                                                            style={{ borderBottom: checked[index].detailedAddress === false ? '1px solid red' : '' }} /></p>
+                                                    <p className='userinfo-errmessage' style={{ display: checked[index].detailedAddress === false ? 'block' : 'none' }}>
+                                                        3글자 이상 입력하세요
+                                                    </p>
+                                                    <p>받는 사람  &nbsp;  &nbsp;
+                                                        <input type="text" name="recipientName" id="recipientName" value={ad.recipientName || ''} size="60" onChange={(e) => onChangeaddressValue(e, index)}
+                                                            style={{ borderBottom: checked[index].recipientName === false ? '1px solid red' : '' }} />
+                                                    </p>
+                                                    <p className='userinfo-errmessage' style={{ display: checked[index].recipientName === false ? 'block' : 'none' }}>한글로 입력해주세요</p>
+                                                    <p>핸드폰 번호 <input type="text" name="recipientPhone" id="recipientPhone" value={ad.
+                                                        recipientPhone} size="60" onChange={(e) => onChangeaddressValue(e, index)}
+                                                        style={{
+                                                            borderBottom: checked[index].recipientPhone === false ? '1px solid red' : ''
+                                                        }} />
+                                                    </p>
+                                                    <p className='userinfo-errmessage' style={{ display: checked[index].recipientPhone === false ? 'block' : 'none' }}>-를 포함하여 핸드폰 번호를 다시 입력하세요</p>
+                                                </td>
+                                            </tr>
+                                        )))
+                                    }
 
                                     {defaultAddress.length < 3 && (
                                         <tr>
@@ -397,8 +438,8 @@ const Userinfo = () => {
                                         <th >로그인횟수</th>
                                         <td>{users.loginCount} 회</td>
 
-                                        <th >최근접속일</th>
-                                        <td>{users.lastLogin}</td>
+                                        <th >탈퇴날짜</th>
+                                        <td>{users.withdrawalDate==null ? `[${users.name}]님은 탈퇴회원이 아닙니다` : users.withdrawalDate}</td>
                                     </tr>
 
                                     <tr>
