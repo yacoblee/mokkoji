@@ -79,6 +79,7 @@ public class PageResultDTO<DTO, EN> {// ->최종결과
 		dtoList = result.stream().map(fn).collect(Collectors.toList());// 엔티티 리스트를 DTO 리스트로 변환
 		totalPage = result.getTotalPages();// 전체 페이지 수 설정 (repository.findAll(pageable))
 		totalElements = result.getTotalElements();
+		
 		System.out.println("0 . 검색결과 갯수 : "+result.getTotalElements());
 		makePageList(result.getPageable());// 페이지 목록 생성
         //=> stream()
