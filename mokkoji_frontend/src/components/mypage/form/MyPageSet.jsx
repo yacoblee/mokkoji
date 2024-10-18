@@ -3,9 +3,22 @@ import '../../../css/mypage/MyPageUser.css';
 import React, { useState } from 'react';
 import axios from 'axios'; // axios 추가
 import { API_BASE_URL } from "../../../service/app-config";
-
+import { useForm } from "react-hook-form";
 
 function MyPageSet({ userMain }) {
+
+
+
+    const { register, toSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } }
+        = useForm({
+            mode: "onBlur",
+            shouldFocusError: true,
+            reValidateMode: "onChange",
+            defaultValues: { email: "", password: "" },
+            criteriaMode: "all",
+        })
+
+
 
     const [userInfo, setUserInfo] = useState(userMain);
 
