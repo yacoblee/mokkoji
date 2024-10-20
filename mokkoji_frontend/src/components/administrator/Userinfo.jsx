@@ -6,7 +6,12 @@ import DaumPostcode from 'react-daum-postcode';
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 import moment from 'moment';
 import { apiCall } from '../../service/apiService';
-
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import { registerables, CategoryScale } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+// Chart.js의 ArcElement를 등록
+Chart.register(ArcElement, Tooltip, Legend);
+Chart.register(...registerables, CategoryScale);
 
 
 const Userinfo = () => {
@@ -306,6 +311,24 @@ const Userinfo = () => {
 
     }
 
+    const totalMoneyAmountPie = () => {
+        const data = {
+            labels: ['전체', `${users.name}님 구매금액`],
+            datasets: [
+                {
+                    data: [2, 98],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                },
+            ],
+        };
+
+        return <>
+            <div style={{ width: '150px', height: '150px' }}>
+                <Pie data={data} />
+            </div>
+        </>;
+    };
+
     console.log("유저정보", users);
 
     return (
@@ -449,7 +472,8 @@ const Userinfo = () => {
                                         <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원</td>
+                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원<br/>
+                                        {totalMoneyAmountPie()}</td>
                                     </tr>
 
                                     <tr>
@@ -478,10 +502,11 @@ const Userinfo = () => {
                                         <th>1회 평균 금액</th>
                                         <td>{averagePurchaseAmount}원</td>
                                     </tr>
-                                    {/* 
-                                    <tr>
+
+                                    {/* <tr>
                                         <th>관리자메모</th>
-                                        <td colSpan="3"><textarea name="memo" className="frm_textbox" rows="3"></textarea></td>
+                                        <td colSpan="3" >{totalMoneyAmountPie()}
+                                        </td>
                                     </tr> */}
 
                                 </tbody>

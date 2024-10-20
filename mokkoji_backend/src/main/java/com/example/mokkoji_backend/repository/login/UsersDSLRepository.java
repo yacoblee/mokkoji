@@ -1,5 +1,7 @@
 package com.example.mokkoji_backend.repository.login;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
@@ -11,5 +13,9 @@ public interface UsersDSLRepository {
 	
 	Page<Users> findUserinfoToSearch(PageRequestDTO requestDTO);
 	
+//	public List<UserPurchaseRank> findUserPurchaseRank(String userId) {
+//	    return '';
+	           
+	//}
 	
 }
