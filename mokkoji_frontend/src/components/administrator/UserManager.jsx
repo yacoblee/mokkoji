@@ -4,6 +4,7 @@ import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
 import { useNavigate } from 'react-router-dom';
+import UserSendMail from './UserSendMail';
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
@@ -165,8 +166,8 @@ const UserManagement = () => {
     }
 
     useEffect(() => {
-       // if (userAddress && userAddress.length > 0 && selectedUser) {
-             if (userAddress && userAddress.length > 0 && selectedUser) {   
+        // if (userAddress && userAddress.length > 0 && selectedUser) {
+        if (userAddress && userAddress.length > 0 && selectedUser) {
             console.log('Updated userAddress:', userAddress);
 
             // 상태가 업데이트된 후에 navigate 호출
@@ -177,6 +178,54 @@ const UserManagement = () => {
             console.log("Address is empty or invalid.");
         }
     }, [userAddress, selectedUser]);  // userAddress와 selectedUser가 설정될 때만 실행
+
+    const [selectUser, setSelcetUser] = useState([]);
+    const [isAllCheckUser, setIsAllCheckUser] = useState(false)
+    const allUserCheck = () => {
+        if (isAllCheckUser) {
+            // 전체 선택 해제
+            setSelcetUser([]);
+            setIsAllCheckUser(false)
+        } else {
+            const allUser = list.map(users => users);
+            setSelcetUser(allUser);
+            setIsAllCheckUser(true);
+        }
+    }
+    console.log('메일 전송 유저', selectUser);
+
+    // 개별 유저 선택/해제 함수
+    const checkSendMailUser = (user) => {
+        setSelcetUser((prevSelectedUsers) => {
+            // 유저가 이미 선택되어 있는지 확인
+            if (prevSelectedUsers.some(selected => selected.userId === user.userId)) {
+                // 선택된 유저를 선택 해제
+                const updatedUsers = prevSelectedUsers.filter(selected => selected.userId !== user.userId);
+
+                // 전체 선택 체크 해제
+                setIsAllCheckUser(updatedUsers.length === list.length);
+
+                return updatedUsers;
+            } else {
+                // 선택되지 않은 유저 추가
+                const updatedUsers = [...prevSelectedUsers, user];
+
+                // 모든 유저가 선택되면 전체 선택 체크
+                setIsAllCheckUser(updatedUsers.length === list.length);
+
+                return updatedUsers;
+            }
+        });
+    };
+
+    const moveToSendMail = () => {
+        if (selectUser.length > 0) {
+            navigate('/administrator/users/userinfo/userSendMail', { state: { userId: selectUser } });
+        } else {
+            alert('메일을 발송할 유저를 선택하세요');
+        }
+    }
+
 
     return (
         <div className="user-container">
@@ -258,12 +307,14 @@ const UserManagement = () => {
 
                 <h3 className="user-subTitle">검색 결과</h3>
                 <div className="user-button2">
-                    <button type="button">메일발송</button>
+                    <button type="button" onClick={moveToSendMail}>메일발송</button>
                     <button type="button" onClick={openNewWindow} >+ 회원추가</button>
                 </div>
                 <table className="user-resultArea">
                     <thead>
                         <tr>
+                            <th><input type='checkbox' onChange={allUserCheck} checked={isAllCheckUser} />
+                            </th>
                             <th>번호</th>
                             <th>회원명</th>
                             <th>아이디</th>
@@ -279,6 +330,11 @@ const UserManagement = () => {
                     <tbody className="user-resultArea2">
                         {list.map(users => (
                             <tr key={users.userSequence}>
+                                <td>  <input
+                                    type="checkbox"
+                                    checked={selectUser.some(selected => selected.userId === users.userId)}  // 개별 선택 상태
+                                    onChange={() => checkSendMailUser(users)}  // 유저 선택/해제
+                                /> </td>
                                 <td>{users.userSequence}</td>
                                 {/* onClick에서 users 객체를 moveToUserinfo로 전달 */}
                                 <td><a onClick={() => {

@@ -9,16 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.UserAndAddressDTO;
+import com.example.mokkoji_backend.domain.UserSendMailDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
+import com.example.mokkoji_backend.service.email.EmailService;
 import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
-
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,8 +31,7 @@ public class AdminUsersController {
 	private final UsersService userService;
 	private final AddressRepository addressRepository;
 	private final AddressService addressService;
-	
-	
+	private final EmailService emailService;
 	
 	
 	@PostMapping("/administrator/users")
@@ -39,10 +40,7 @@ public class AdminUsersController {
 		log.info("********" + requestDTO);
 		PageResultDTO<UsersDTO, Users> result = userService.findUserinfoToSearch(requestDTO);
 		List<UsersDTO> dto = result.getDtoList();
-//		if(result == null) {
-//			log.info("[suchDB] user is null");
-//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("허용된 검색 타입이 아닙니다.");
-//		}
+
 		int count = userService.countBy();
 		log.info("$$ 서치 결과"+result);
 	    Map<String, Object> response = new HashMap<>();
@@ -118,5 +116,20 @@ public class AdminUsersController {
 		}
 	}
 	
-	
+	@PostMapping("/administrator/users/userinfo/sendMail")
+	public ResponseEntity<?> adminSendMail(@RequestBody UserSendMailDTO requeseDTO){
+		log.info("들어옴?");
+		log.info(requeseDTO);
+		if(requeseDTO.getEmail().size() == requeseDTO.getName().size() && !requeseDTO.getMailContent().isEmpty() &&!requeseDTO.getMailTitle().isEmpty()) {
+			emailService.adminSendMail(requeseDTO);
+			return ResponseEntity.ok("성공적으로 메일전송이 완료 되었습니다");			
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("메일을 전송할 수 없습니다");
+		}
+	}
+
+
 }
+
+	
+

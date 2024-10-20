@@ -1,5 +1,5 @@
-import { Link,useNavigate,useLocation } from "react-router-dom";
-import { useRef,useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useRef, useEffect } from "react";
 import '../../css/login/FindPw.css';
 import axios from "axios";
 
@@ -10,8 +10,8 @@ const ResetPassword = () => {
 
     const labelPWCheckRef = useRef(null);
     const inputPWCheckRef = useRef(null);
-   
-    const location = useLocation(); 
+
+    const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
 
     // dbData가 문자열인지 확인 후, JSON 파싱
@@ -62,59 +62,59 @@ const ResetPassword = () => {
     }, [dbuserid]);
 
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     // 유저 아이디, 전화번호 유효성 조건  
- const termsPW =  /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{7,14}$/;
- // 비밀번호 찾기 버튼 눌렀을 경우 
- const UserFindPW = () => {
-     // 클릭시 유효성 검사 
+    const termsPW = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]{7,14}$/;
+    // 비밀번호 찾기 버튼 눌렀을 경우 
+    const UserFindPW = () => {
+        // 클릭시 유효성 검사 
         const inputPWvalue = inputPWRef.current.value;
-        const inputCheck =  termsPW.test(inputPWvalue);
+        const inputCheck = termsPW.test(inputPWvalue);
         const inputDoubleCheckPW = inputPWvalue == inputPWCheckRef.current.value;
-        if(!inputCheck){
+        if (!inputCheck) {
             alert("⚠️ 조건에 맞게 비밀번호를 다시 입력하세요");
-            inputPWvalue="";
-        }else if(!inputDoubleCheckPW){
+            inputPWvalue = "";
+        } else if (!inputDoubleCheckPW) {
             alert("⚠️ 입력한 비밀번호가 다릅니다. 다시 입력하세요");
             inputPWCheckRef.current.value = "";
-        
-        }else{
+
+        } else {
             const url = 'http://localhost:8080/login/findPw/verifyCode/resetPassword';
-            const data = { userId: dbuserid, password: inputPWvalue }; 
-            axios.post(url,data,{
+            const data = { userId: dbuserid, password: inputPWvalue, updatedAt: new Date().toISOString().slice(0, 10) };
+            axios.post(url, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
                 console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
                 console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
-        
+
                 // 정상적인 응답 처리 (200번대 응답)
                 console.log(response.data);
                 alert('비밀번호 변경 완료');
-                 navigate('/login');  // 상태가 맞으면 '/verifyCode'로 이동
+                navigate('/login');  // 상태가 맞으면 '/verifyCode'로 이동
             })
-            .catch((err) => {
-                // 오류 발생 시 처리
-                if (err.response) {
-                    console.log("API 오류 응답 상태 코드:", err.response.status);  // 상태 코드 출력
-                    
-                    // 404 상태 코드 처리
-                    if (err.response.status == 502) {
-                        inputPWRef.current.value = '';
-                        inputPWCheckRef.current.value = '';
-                        alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
+                .catch((err) => {
+                    // 오류 발생 시 처리
+                    if (err.response) {
+                        console.log("API 오류 응답 상태 코드:", err.response);  // 상태 코드 출력
+
+                        // 404 상태 코드 처리
+                        if (err.response.status == 502) {
+                            inputPWRef.current.value = '';
+                            inputPWCheckRef.current.value = '';
+                            alert('⚠️ 입력하신 정보와 일치하는 회원 정보를 찾을 수 없습니다.');
+                        } else {
+                            // 다른 상태 코드에 대한 처리
+                            alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                        }
                     } else {
-                        // 다른 상태 코드에 대한 처리
-                        alert('⚠️ 서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                        console.log("응답 객체에 상태 코드가 없습니다:", err.message);
                     }
-                } else {
-                    console.log("응답 객체에 상태 코드가 없습니다:", err.message);
-                }
-            });
+                });
         }
-      
-        }
+
+    }
     return (
         <div>
             <div className="findId-body">
@@ -163,7 +163,7 @@ const ResetPassword = () => {
                                 </div>
 
                                 <div>
-                                  
+
                                 </div>
 
                                 <button onClick={UserFindPW}>비밀번호 변경
