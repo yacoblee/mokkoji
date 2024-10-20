@@ -149,57 +149,32 @@ const UserManagement = () => {
         )
     }
 
-    const moveToUserinfo = (users) => {
+    const moveToUserinfo = (targetUser) => {
         let url = "/administrator/users/address";
         // 사용자 정보 상태로 저장
-        setSelectedUser(users);
+        setSelectedUser(targetUser);
         // API 호출
-        apiCall(url, 'POST', users, null)
+        apiCall(url, 'POST', targetUser, null)
             .then((response) => {
                 const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount } = response.data;
-                setUsersAddress(address);
-                setUsersOrderinfo({
-                    averagePurchaseAmount: averagePurchaseAmount,
-                    orderCount: orderCount,
-                    totalPurchaseAmount: totalPurchaseAmount
+                console.log("UsersAddress", userAddress);
+                const formattedAveragePurchaseAmount = totalPurchaseAmount.toLocaleString();
+                const formattedTotalPurchaseAmount = averagePurchaseAmount.toLocaleString();
+                // 상태가 업데이트된 후에 navigate 호출
+                navigate(`/administrator/users/userinfo`, {
+                    state: {
+                        users: targetUser,
+                        userAddress: address.length > 0 ? address : [],
+                        orderCount: orderCount,
+                        totalPurchaseAmount: formattedAveragePurchaseAmount,
+                        averagePurchaseAmount: formattedTotalPurchaseAmount
+                    }
                 });
             })
             .catch((err) => {
                 setUsersAddress(null);  // 에러 발생 시 주소 정보 초기화
             });
     }
-
-    useEffect(() => {
-        if (userAddress && userAddress.length > 0 && selectedUser) {
-            const formattedAveragePurchaseAmount = userOrderinfo.averagePurchaseAmount.toLocaleString();
-            const formattedTotalPurchaseAmount = userOrderinfo.totalPurchaseAmount.toLocaleString();
-            // 상태가 업데이트된 후에 navigate 호출
-            navigate(`/administrator/users/userinfo`, {
-                state: {
-                    users: selectedUser,
-                    userAddress: userAddress.length > 0 ? userAddress : [],
-                    orderCount: userOrderinfo.orderCount,
-                    totalPurchaseAmount: formattedAveragePurchaseAmount,
-                    averagePurchaseAmount: formattedTotalPurchaseAmount
-                }
-            });
-        }
-        else {
-            console.log("Address is empty or invalid.");
-            // const formattedAveragePurchaseAmount = userOrderinfo.averagePurchaseAmount.toLocaleString();
-            // const formattedTotalPurchaseAmount = userOrderinfo.totalPurchaseAmount.toLocaleString();
-            // // 상태가 업데이트된 후에 navigate 호출
-            // navigate(`/administrator/users/userinfo`, {
-            //     state: {
-            //         users: selectedUser,
-            //         userAddress: [],
-            //         orderCount: userOrderinfo.orderCount,
-            //         totalPurchaseAmount: formattedAveragePurchaseAmount,
-            //         averagePurchaseAmount: formattedTotalPurchaseAmount
-            //     }
-            // });
-        }
-    }, [userAddress, selectedUser, userOrderinfo]);  // userAddress와 selectedUser가 설정될 때만 실행
 
     const [selectUser, setSelcetUser] = useState([]);
     const [isAllCheckUser, setIsAllCheckUser] = useState(false)
@@ -371,12 +346,6 @@ const UserManagement = () => {
                 </table>
             </div>
             <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
-
-
-            {/* UserInfoWindow 컴포넌트 사용 */}
-            {isWindowOpen && selectedUser && (
-                <UserInfoWindow users={selectedUser} onClose={closeWindow} />
-            )}
         </div>
 
 

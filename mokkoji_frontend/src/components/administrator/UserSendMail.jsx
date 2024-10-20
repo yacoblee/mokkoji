@@ -45,9 +45,10 @@ const UserSendMail = () => {
     const formSubmit = (e) => {
         e.preventDefault();
 
-        if(inputData.mailContent.length<5||inputData.mailContent.length<5){
+        console.log("mailData", mailData);
+        if (mailData.mailTitle.length < 5 || mailData.mailContent.length < 5) {
             alert('제목과 본문내용을 최소 5글자 이상 작성하세요');
-            return ;
+            return;
         }
         let url = "/administrator/users/userinfo/sendMail"
         const data = {

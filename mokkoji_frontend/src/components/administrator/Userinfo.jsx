@@ -13,8 +13,8 @@ const Userinfo = () => {
     //부모 컴포넌트에서 넘겨준 값 처리 
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
-    console.log("전달된 정보", dbData);
-    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우를 대비해 기본값 설정
+    console.log(dbData);
+    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우 기본값 설정
     // 초기 유저 데이터 값 
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
