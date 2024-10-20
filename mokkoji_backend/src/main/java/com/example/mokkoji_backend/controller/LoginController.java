@@ -1,6 +1,5 @@
 package com.example.mokkoji_backend.controller;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -184,11 +183,11 @@ public class LoginController {
 	
 	
 	@PostMapping(value = "/login/findPw/verifyCode/resetPassword")
-	public ResponseEntity<?> passwordUpdate(@RequestBody UsersDTO usersDTO, Users userEntity) {
+	public ResponseEntity<?> passwordUpdate(@RequestBody UsersDTO usersDTO) {
 		log.info("유저 입력값" + usersDTO);
 		
 		try {
-			service.updatePassword(usersDTO.getUserId(), passwordEncoder.encode(usersDTO.getPassword()),LocalDateTime.now());
+			service.updatePassword(usersDTO.getUserId(), passwordEncoder.encode(usersDTO.getPassword()), usersDTO.getUpdatedAt());
 			log.info("비밀번호 변경완료");
 			return ResponseEntity.ok("변경완료");
 		}catch(Exception e) {

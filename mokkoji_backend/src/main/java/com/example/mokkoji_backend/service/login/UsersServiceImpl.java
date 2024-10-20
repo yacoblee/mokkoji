@@ -2,7 +2,7 @@ package com.example.mokkoji_backend.service.login;
 
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -91,7 +91,7 @@ public class UsersServiceImpl implements UsersService {
 	}// findById
 	
 	@Override
-	public void updatePassword(String userId, String password, LocalDateTime updatedAt) {
+	public void updatePassword(String userId, String password, LocalDate updatedAt) {
 		userRepository.updatePassword(userId, password, updatedAt);		
 	}
 	
@@ -199,10 +199,9 @@ public UsersDTO entityToDto(Users user) {
 		return new PageResultDTO<> (result, e -> entityToDto(e));
 	}
 
-    @Transactional
+    @Override
     	public void userIsWithdrawnUpdate(Users entity) {
-    	userRepository.save(entity);
-    	userRepository.flush();  // 데이터베이스에 강제로 반영
+    		 userRepository.save(entity);
     	}
 
 @Override

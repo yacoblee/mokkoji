@@ -1,9 +1,12 @@
 package com.example.mokkoji_backend.service.email;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
+
+import com.example.mokkoji_backend.domain.UserSendMailDTO;
 
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -94,4 +97,22 @@ public class EmailService {
     	return  resultNum;
     }
     
+    
+    public void adminSendMail(UserSendMailDTO userSendMailDTO) {
+  	  EmailService emailService = new EmailService();
+  	  String mailTitle = userSendMailDTO.getMailTitle();
+      String mailContent = userSendMailDTO.getMailContent();
+      List<String> userIds = userSendMailDTO.getUserId();
+      List<String> emails = userSendMailDTO.getEmail();
+      List<String> names = userSendMailDTO.getName();
+      
+      for(int i =0;i<userIds.size();i++) {
+    	  String userId = userIds.get(i);
+          String email = emails.get(i);
+          String name = names.get(i);
+          
+          emailService.sendEmail(email, mailTitle, mailContent);
+      }
+    
+    }
 }

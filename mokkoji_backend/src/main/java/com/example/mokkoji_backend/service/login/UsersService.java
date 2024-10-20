@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.service.login;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 import com.example.mokkoji_backend.domain.MyPageDTO;
 import com.example.mokkoji_backend.domain.PageRequestDTO;
@@ -31,7 +30,7 @@ public interface UsersService {
 	Users findByUserIdAndPhoneNumber(String userId, String phonNumber);
 
 	//** 유저 비밀번호 변경 
-	void updatePassword(String userId,String password,LocalDateTime updatedAt);
+	void updatePassword(String userId, String password, LocalDate updatedAt);
 	
 
 	// ** 사용자 정보 마이페이지 전용 객체

@@ -4,6 +4,7 @@ import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
 import { useNavigate } from 'react-router-dom';
+import UserSendMail from './UserSendMail';
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
@@ -17,9 +18,14 @@ const UserManagement = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const navigate = useNavigate();
     const [userAddress, setUsersAddress] = useState([]);
-
     const [userinfo, setUserinfo] = useState(list);
 
+    const userOrder = {
+        averagePurchaseAmount: '',
+        orderCount: '',
+        totalPurchaseAmount: ''
+    }
+    const [userOrderinfo, setUsersOrderinfo] = useState(userOrder);
     const inputData = {
         keyword: '',
         searchType: 'all',
@@ -92,7 +98,6 @@ const UserManagement = () => {
         edday.current.value = end;
     }
 
-
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -111,7 +116,6 @@ const UserManagement = () => {
                 setResponseLength(pageMaker.totalElements);
             })
             .catch((err) => {
-                console.error("Error during API call:", err);  // 에러 로그 출력
                 setList([]);  // 에러 발생 시 빈 배열로 설정
             });
     };
@@ -143,40 +147,77 @@ const UserManagement = () => {
             "_blank",
             "width=800,height=600"
         )
-
     }
 
-    const moveToUserinfo = (users) => {
+    const moveToUserinfo = (targetUser) => {
         let url = "/administrator/users/address";
         // 사용자 정보 상태로 저장
-        setSelectedUser(users);
+        setSelectedUser(targetUser);
         // API 호출
-        apiCall(url, 'POST', users, null)
+        apiCall(url, 'POST', targetUser, null)
             .then((response) => {
-                console.log(response);
-                console.log(response.data);
-                setUsersAddress(response.data);
+                const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount } = response.data;
+                console.log("UsersAddress", userAddress);
+                const formattedAveragePurchaseAmount = totalPurchaseAmount.toLocaleString();
+                const formattedTotalPurchaseAmount = averagePurchaseAmount.toLocaleString();
+                // 상태가 업데이트된 후에 navigate 호출
+                navigate(`/administrator/users/userinfo`, {
+                    state: {
+                        users: targetUser,
+                        userAddress: address.length > 0 ? address : [],
+                        orderCount: orderCount,
+                        totalPurchaseAmount: formattedAveragePurchaseAmount,
+                        averagePurchaseAmount: formattedTotalPurchaseAmount
+                    }
+                });
             })
             .catch((err) => {
-                console.error("Error during API call:", err);  // 에러 로그 출력
                 setUsersAddress(null);  // 에러 발생 시 주소 정보 초기화
             });
-
     }
 
-    useEffect(() => {
-       // if (userAddress && userAddress.length > 0 && selectedUser) {
-             if (userAddress && userAddress.length > 0 && selectedUser) {   
-            console.log('Updated userAddress:', userAddress);
-
-            // 상태가 업데이트된 후에 navigate 호출
-            navigate(`/administrator/users/userinfo`, {
-                state: { users: selectedUser, userAddress }
-            });
+    const [selectUser, setSelcetUser] = useState([]);
+    const [isAllCheckUser, setIsAllCheckUser] = useState(false)
+    const allUserCheck = () => {
+        if (isAllCheckUser) {
+            // 전체 선택 해제
+            setSelcetUser([]);
+            setIsAllCheckUser(false)
         } else {
-            console.log("Address is empty or invalid.");
+            const allUser = list.map(users => users);
+            setSelcetUser(allUser);
+            setIsAllCheckUser(true);
         }
-    }, [userAddress, selectedUser]);  // userAddress와 selectedUser가 설정될 때만 실행
+    }
+
+    // 개별 유저 선택/해제 함수
+    const checkSendMailUser = (user) => {
+        setSelcetUser((prevSelectedUsers) => {
+            // 유저가 이미 선택되어 있는지 확인
+            if (prevSelectedUsers.some(selected => selected.userId === user.userId)) {
+                // 선택된 유저를 선택 해제
+                const updatedUsers = prevSelectedUsers.filter(selected => selected.userId !== user.userId);
+                // 전체 선택 체크 해제
+                setIsAllCheckUser(updatedUsers.length === list.length);
+                return updatedUsers;
+            } else {
+                // 선택되지 않은 유저 추가
+                const updatedUsers = [...prevSelectedUsers, user];
+                // 모든 유저가 선택되면 전체 선택 체크
+                setIsAllCheckUser(updatedUsers.length === list.length);
+                return updatedUsers;
+            }
+        });
+    };
+
+    const moveToSendMail = () => {
+        if (selectUser.length > 0) {
+            navigate('/administrator/users/userinfo/userSendMail', { state: { userId: selectUser } });
+        } else {
+            alert('메일을 발송할 유저를 선택하세요');
+        }
+    }
+
 
     return (
         <div className="user-container">
@@ -258,12 +299,14 @@ const UserManagement = () => {
 
                 <h3 className="user-subTitle">검색 결과</h3>
                 <div className="user-button2">
-                    <button type="button">메일발송</button>
+                    <button type="button" onClick={moveToSendMail}>메일발송</button>
                     <button type="button" onClick={openNewWindow} >+ 회원추가</button>
                 </div>
                 <table className="user-resultArea">
                     <thead>
                         <tr>
+                            <th><input type='checkbox' onChange={allUserCheck} checked={isAllCheckUser} />
+                            </th>
                             <th>번호</th>
                             <th>회원명</th>
                             <th>아이디</th>
@@ -279,6 +322,11 @@ const UserManagement = () => {
                     <tbody className="user-resultArea2">
                         {list.map(users => (
                             <tr key={users.userSequence}>
+                                <td>  <input
+                                    type="checkbox"
+                                    checked={selectUser.some(selected => selected.userId === users.userId)}  // 개별 선택 상태
+                                    onChange={() => checkSendMailUser(users)}  // 유저 선택/해제
+                                /> </td>
                                 <td>{users.userSequence}</td>
                                 {/* onClick에서 users 객체를 moveToUserinfo로 전달 */}
                                 <td><a onClick={() => {
@@ -298,12 +346,6 @@ const UserManagement = () => {
                 </table>
             </div>
             <RenderPagination pageMaker={pageMaker} page={page} setPage={setPage} />
-
-
-            {/* UserInfoWindow 컴포넌트 사용 */}
-            {isWindowOpen && selectedUser && (
-                <UserInfoWindow users={selectedUser} onClose={closeWindow} />
-            )}
         </div>
 
 

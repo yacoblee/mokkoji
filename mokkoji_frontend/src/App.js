@@ -32,6 +32,7 @@ import MultipleBuy from './components/mypage/MultipleBuy';
 import ProductRelatedStorage from './components/administrator/ProductRelatedStorage';
 import ProductsInsert from './components/administrator/ProductsInsert.jsx';
 import Userinfo from './components/administrator/Userinfo.jsx';
+import UserSendMail from './components/administrator/UserSendMail.jsx';
 
 const App = () => {
 
@@ -66,6 +67,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="users/userinfo" element={<Userinfo />} />
+          <Route path="users/userinfo/userSendMail" element={<UserSendMail />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/insert" element={<ProductInserts />} />
           <Route path='products/allinsert' element={<ProductRelatedStorage />} />

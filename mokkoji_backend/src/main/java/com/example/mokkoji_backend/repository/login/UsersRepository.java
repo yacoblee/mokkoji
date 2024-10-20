@@ -1,5 +1,6 @@
 package com.example.mokkoji_backend.repository.login;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	@Transactional
 	@Query("UPDATE Users u SET u.password = :password, u.updatedAt = :updatedAt WHERE u.userId = :userId")
 	void updatePassword(@Param("userId") String userId, @Param("password") String password,
-			@Param("updatedAt") LocalDateTime updatedAt);
+			@Param("updatedAt") LocalDate updatedAt);
 
 	@Modifying
 	@Transactional
@@ -52,5 +53,5 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	@Query("SELECT u FROM Users u WHERE :searchType = 'phoneNumber' AND u.phoneNumber LIKE %:keyword% ")
 	List<Users> findBySearchUserPhoneNumber(@Param("keyword") String keyword, @Param("searchType") String searchType);
 
-
+	
 }
