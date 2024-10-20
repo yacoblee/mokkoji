@@ -54,5 +54,4 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	List<Users> findBySearchUserPhoneNumber(@Param("keyword") String keyword, @Param("searchType") String searchType);
 
 	
-
 }

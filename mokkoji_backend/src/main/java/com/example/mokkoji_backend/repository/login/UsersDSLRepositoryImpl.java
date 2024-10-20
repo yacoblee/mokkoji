@@ -88,5 +88,13 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 		
 		return new PageImpl<>(users, pagerable, total);
 	}
+	
+	
+//	public int usersOrderCount(String userId) {
+//		
+//		
+//		
+//		return 0;
+//	}
 
 }

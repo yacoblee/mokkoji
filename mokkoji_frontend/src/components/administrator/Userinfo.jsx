@@ -13,7 +13,8 @@ const Userinfo = () => {
     //부모 컴포넌트에서 넘겨준 값 처리 
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
-    const { users, userAddress } = location.state || {}; // 전달된 state가 없을 경우를 대비해 기본값 설정
+    console.log("전달된 정보", dbData);
+    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우를 대비해 기본값 설정
     // 초기 유저 데이터 값 
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
@@ -26,6 +27,7 @@ const Userinfo = () => {
         isWithdrawn: '' // 회원 탈퇴 
     }
     const [adminInputUserinfo, setAdminInputUserinfo] = useState(users);
+
 
     // 유효성 검사 함수
     const validateInput = (name, value) => {
@@ -304,7 +306,7 @@ const Userinfo = () => {
 
     }
 
-    console.log("유저정보",users);
+    console.log("유저정보", users);
 
     return (
         <div className='userinfo-container'>
@@ -439,15 +441,15 @@ const Userinfo = () => {
                                         <td>{users.loginCount} 회</td>
 
                                         <th >탈퇴날짜</th>
-                                        <td>{users.withdrawalDate==null ? `[${users.name}]님은 탈퇴회원이 아닙니다` : users.withdrawalDate}</td>
+                                        <td>{users.withdrawalDate == null ? `[${users.name}]님은 탈퇴회원이 아닙니다` : users.withdrawalDate}</td>
                                     </tr>
 
                                     <tr>
                                         <th >구매횟수</th>
-                                        <td>{users.purchaseCount}</td>
+                                        <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{users.totalPurchaseAmount}원</td>
+                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원</td>
                                     </tr>
 
                                     <tr>
@@ -474,7 +476,7 @@ const Userinfo = () => {
                                         </td>
 
                                         <th>1회 평균 금액</th>
-                                        <td>{users.averagePurchaseAmount}원</td>
+                                        <td>{averagePurchaseAmount}원</td>
                                     </tr>
                                     {/* 
                                     <tr>

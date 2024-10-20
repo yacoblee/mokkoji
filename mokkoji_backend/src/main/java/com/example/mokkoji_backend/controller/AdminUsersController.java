@@ -18,6 +18,7 @@ import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.example.mokkoji_backend.repository.login.AddressRepository;
+import com.example.mokkoji_backend.repository.orders.OrdersRepository;
 import com.example.mokkoji_backend.service.email.EmailService;
 import com.example.mokkoji_backend.service.login.AddressService;
 import com.example.mokkoji_backend.service.login.UsersService;
@@ -32,7 +33,7 @@ public class AdminUsersController {
 	private final AddressRepository addressRepository;
 	private final AddressService addressService;
 	private final EmailService emailService;
-	
+	private final OrdersRepository ordersRepository;
 	
 	@PostMapping("/administrator/users")
 	public ResponseEntity<?> suchDB(@RequestBody PageRequestDTO requestDTO) {
@@ -53,15 +54,32 @@ public class AdminUsersController {
 	// 유저 주소 검색 
 	@PostMapping("/administrator/users/address")
 	public ResponseEntity<?> suchUsersAddress(@RequestBody UsersDTO requestDTO){
-		log.info("주소 찾기 들어옴?" + requestDTO);
-		List<Address> address = addressRepository.findByUserId(requestDTO.getUserId());  
-	if(address.isEmpty()){
-		return ResponseEntity.ok("주소가 존재하지 않습니다");
-	}else {
-		return ResponseEntity.ok(address);
-		
-	}
-		
+	    log.info("주소 찾기 들어옴? " + requestDTO);
+	    
+	    // 주소 정보 조회
+	    List<Address> address = addressRepository.findByUserId(requestDTO.getUserId());
+
+	    // 주문 횟수와 총 구매 금액 조회
+	    Long orderCount = ordersRepository.countByUserId(requestDTO.getUserId());
+	    Long totalPurchaseAmount = ordersRepository.totalPurchaseAmount(requestDTO.getUserId());
+
+	    // 만약 totalPurchaseAmount가 null이면 0으로 처리
+	    if (totalPurchaseAmount == null) {
+	        totalPurchaseAmount = 0L;
+	    }
+
+	    Double averagePurchaseAmount = Math.floor((double) totalPurchaseAmount / orderCount);
+	    log.info("Total Purchase Amount: {}", totalPurchaseAmount);
+	    log.info("averagePurchaseAmount: {}", averagePurchaseAmount);
+	   
+	        // 주소와 주문 횟수를 함께 반환
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("address", address);
+	        response.put("orderCount", orderCount);
+	        response.put("totalPurchaseAmount", totalPurchaseAmount); 
+	        response.put("averagePurchaseAmount", averagePurchaseAmount); 
+	        return ResponseEntity.ok(response);
+	    
 	}
 		
 	@PostMapping("/administrator/users/userinfo/userinfoupdate")

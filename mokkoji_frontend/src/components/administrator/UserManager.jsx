@@ -18,9 +18,14 @@ const UserManagement = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const navigate = useNavigate();
     const [userAddress, setUsersAddress] = useState([]);
-
     const [userinfo, setUserinfo] = useState(list);
 
+    const userOrder = {
+        averagePurchaseAmount: '',
+        orderCount: '',
+        totalPurchaseAmount: ''
+    }
+    const [userOrderinfo, setUsersOrderinfo] = useState(userOrder);
     const inputData = {
         keyword: '',
         searchType: 'all',
@@ -93,7 +98,6 @@ const UserManagement = () => {
         edday.current.value = end;
     }
 
-
     // 폼 제출 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -112,7 +116,6 @@ const UserManagement = () => {
                 setResponseLength(pageMaker.totalElements);
             })
             .catch((err) => {
-                console.error("Error during API call:", err);  // 에러 로그 출력
                 setList([]);  // 에러 발생 시 빈 배열로 설정
             });
     };
@@ -144,7 +147,6 @@ const UserManagement = () => {
             "_blank",
             "width=800,height=600"
         )
-
     }
 
     const moveToUserinfo = (users) => {
@@ -154,30 +156,50 @@ const UserManagement = () => {
         // API 호출
         apiCall(url, 'POST', users, null)
             .then((response) => {
-                console.log(response);
-                console.log(response.data);
-                setUsersAddress(response.data);
+                const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount } = response.data;
+                setUsersAddress(address);
+                setUsersOrderinfo({
+                    averagePurchaseAmount: averagePurchaseAmount,
+                    orderCount: orderCount,
+                    totalPurchaseAmount: totalPurchaseAmount
+                });
             })
             .catch((err) => {
-                console.error("Error during API call:", err);  // 에러 로그 출력
                 setUsersAddress(null);  // 에러 발생 시 주소 정보 초기화
             });
-
     }
 
     useEffect(() => {
-        // if (userAddress && userAddress.length > 0 && selectedUser) {
         if (userAddress && userAddress.length > 0 && selectedUser) {
-            console.log('Updated userAddress:', userAddress);
-
+            const formattedAveragePurchaseAmount = userOrderinfo.averagePurchaseAmount.toLocaleString();
+            const formattedTotalPurchaseAmount = userOrderinfo.totalPurchaseAmount.toLocaleString();
             // 상태가 업데이트된 후에 navigate 호출
             navigate(`/administrator/users/userinfo`, {
-                state: { users: selectedUser, userAddress }
+                state: {
+                    users: selectedUser,
+                    userAddress: userAddress.length > 0 ? userAddress : [],
+                    orderCount: userOrderinfo.orderCount,
+                    totalPurchaseAmount: formattedAveragePurchaseAmount,
+                    averagePurchaseAmount: formattedTotalPurchaseAmount
+                }
             });
-        } else {
-            console.log("Address is empty or invalid.");
         }
-    }, [userAddress, selectedUser]);  // userAddress와 selectedUser가 설정될 때만 실행
+        else {
+            console.log("Address is empty or invalid.");
+            // const formattedAveragePurchaseAmount = userOrderinfo.averagePurchaseAmount.toLocaleString();
+            // const formattedTotalPurchaseAmount = userOrderinfo.totalPurchaseAmount.toLocaleString();
+            // // 상태가 업데이트된 후에 navigate 호출
+            // navigate(`/administrator/users/userinfo`, {
+            //     state: {
+            //         users: selectedUser,
+            //         userAddress: [],
+            //         orderCount: userOrderinfo.orderCount,
+            //         totalPurchaseAmount: formattedAveragePurchaseAmount,
+            //         averagePurchaseAmount: formattedTotalPurchaseAmount
+            //     }
+            // });
+        }
+    }, [userAddress, selectedUser, userOrderinfo]);  // userAddress와 selectedUser가 설정될 때만 실행
 
     const [selectUser, setSelcetUser] = useState([]);
     const [isAllCheckUser, setIsAllCheckUser] = useState(false)
@@ -192,7 +214,6 @@ const UserManagement = () => {
             setIsAllCheckUser(true);
         }
     }
-    console.log('메일 전송 유저', selectUser);
 
     // 개별 유저 선택/해제 함수
     const checkSendMailUser = (user) => {
@@ -201,18 +222,14 @@ const UserManagement = () => {
             if (prevSelectedUsers.some(selected => selected.userId === user.userId)) {
                 // 선택된 유저를 선택 해제
                 const updatedUsers = prevSelectedUsers.filter(selected => selected.userId !== user.userId);
-
                 // 전체 선택 체크 해제
                 setIsAllCheckUser(updatedUsers.length === list.length);
-
                 return updatedUsers;
             } else {
                 // 선택되지 않은 유저 추가
                 const updatedUsers = [...prevSelectedUsers, user];
-
                 // 모든 유저가 선택되면 전체 선택 체크
                 setIsAllCheckUser(updatedUsers.length === list.length);
-
                 return updatedUsers;
             }
         });
