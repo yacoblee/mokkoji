@@ -19,15 +19,29 @@ const Userinfo = () => {
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
     console.log('전달된 객체', dbData);
-    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount, purchaseRank, percentageRank, totalPurchase, totalAmount, formataveragePurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우 기본값 설정
+    const {
+        users,
+        userAddress,
+        orderCount = 0,  // 기본값 설정
+        totalPurchaseAmount = 0,  // 기본값 설정 (유저가 구매하지 않은 경우 0)
+        purchaseRank = 0,  // 기본값 설정
+        percentageRank = 0,  // 기본값 설정
+        totalAmount = 0,  // 기본값 설정
+        averagePurchaseAmount = 0  // 기본값 설정
+    } = location.state || {};
 
-    // 통계 값 처리 
-    const userPurchase = totalAmount;  // 유저의 총 구매 금액
-    const userPercentage = totalAmount > 0 ? (totalPurchaseAmount / totalAmount) * 100 : 0;  // 유저의 구매 비율
-    const otherPurchase = totalAmount - totalPurchaseAmount;  // 나머지 구매 금액
+    // 유저의 총 구매 금액
+    const userPurchase = totalPurchaseAmount || 0;  // 유저가 구매하지 않은 경우 0으로 처리
 
-    console.log('****************', formataveragePurchaseAmount, userPurchase, userPercentage, otherPurchase);
-    // 초기 유저 데이터 값
+    // 유저의 구매 비율 (총 구매 금액 중 유저가 차지하는 비율)
+    const userPercentage = totalAmount > 0 ? (userPurchase / totalAmount) * 100 : 0;  // 전체 구매 금액 대비 비율
+
+    // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
+    const otherPurchase = totalAmount - userPurchase;
+
+    // 디버깅을 위한 로그 출력
+    console.log('****************', userPurchase, userPercentage, otherPurchase);
+
 
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
@@ -326,12 +340,13 @@ const Userinfo = () => {
                 {
                     data: [otherPurchase, userPercentage],
                     backgroundColor: ['#36A2EB', '#FF6384'],
+
                 },
             ],
         };
 
         return <>
-            <div style={{ width: '150px', height: '150px' }}>
+            <div style={{ width: '300px', height: '200px' }}>
                 <Pie data={data} />
             </div>
         </>;
@@ -480,7 +495,7 @@ const Userinfo = () => {
                                         <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{formataveragePurchaseAmount == "NaN" ? '0' : formataveragePurchaseAmount}원<br />
+                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원<br />
                                         </td>
                                     </tr>
                                     <tr>
@@ -518,8 +533,8 @@ const Userinfo = () => {
                                         </td>
 
                                         <th>1회 평균 금액</th>
-                                        <td> {totalPurchaseAmount
-                                            ? `${totalPurchaseAmount}원`
+                                        <td> {averagePurchaseAmount
+                                            ? `${averagePurchaseAmount}원`
                                             : '구매 내역이 없습니다'}</td>
                                     </tr>
 

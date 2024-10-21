@@ -25,7 +25,7 @@ const UserManagement = () => {
         orderCount: '', // 구매 횟수
         totalPurchaseAmount: '', // 유저 기준 총 구매금액
         purchaseRank: '',// 구매 금액 기준 순위
-        percentageRank: '', // 백분위 순위 
+        percentapercentageRankgeRank: '', // 백분위 순위 
         totalAmount: '' // order 기준 구매 총합 
     }
     const [userOrderinfo, setUsersOrderinfo] = useState(userOrder);
@@ -162,11 +162,6 @@ const UserManagement = () => {
                 const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount, userPurchaseRank, totalAmount } = response.data;
 
                 console.log("888통계포함8888", response.data);
-                const formattedAveragePurchaseAmount = totalPurchaseAmount.toLocaleString();
-                const formattedTotalPurchaseAmount = averagePurchaseAmount && !isNaN(averagePurchaseAmount)
-                    ? averagePurchaseAmount.toLocaleString()
-                    : "0";  // averagePurchaseAmount가 NaN일 경우 "0"으로 처리
-
                 // userPurchaseRank가 null일 경우 방어 코드로 기본값 설정
                 const purchaseRank = userPurchaseRank && userPurchaseRank.purchaseRank ? userPurchaseRank.purchaseRank : 0;
                 const percentageRank = userPurchaseRank && userPurchaseRank.percentageRank ? userPurchaseRank.percentageRank : 0;
@@ -178,13 +173,12 @@ const UserManagement = () => {
                     state: {
                         users: targetUser,
                         userAddress: userAddress,
-                        orderCount: orderCount || 0,  // orderCount가 없으면 0으로 처리
-                        totalPurchaseAmount: formattedTotalPurchaseAmount,
-                        formataveragePurchaseAmount: formattedAveragePurchaseAmount,
-                        averagePurchaseAmount:averagePurchaseAmount,
+                        orderCount: orderCount || 0,
+                        totalPurchaseAmount: totalPurchaseAmount || 0,
                         purchaseRank: purchaseRank,
-                        percentageRank: percentageRank,
-                        totalAmount: totalAmount || 0  // totalAmount가 없으면 0으로 처리
+                        percentapercentageRankgeRank: percentageRank,
+                        totalAmount: totalAmount || 0,
+                        averagePurchaseAmount: averagePurchaseAmount || 0
                     }
                 });
 
