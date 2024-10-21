@@ -2,6 +2,9 @@ package com.example.mokkoji_backend.config;
 
 import jakarta.mail.Authenticator;
 import jakarta.mail.PasswordAuthentication;
+import lombok.Data;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -12,11 +15,25 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Configuration
+@Data
 public class NaverMainConfig {
 
-	private static final String USER_EMAIL = "yacobleee@naver.com";
-	private static final String USER_PASSWORD = "!";
+	private static final String USER_EMAIL = "mudsproject@naver.com";
+	private static final String USER_PASSWORD = "6SS66EPVUDZR";
+	
+	@Value("${sms.key}")
+	private String smsKey;
+	
+	@Value("${sms.secretKey}")
+	private String secretKey;
+	
+	@Value("${imp.api.key}")
+	private String impkey;
+	
+	@Value("${imp.api.secretkey}")
+	private String impsecretkey;
 
+	
 	@Primary
 	@Bean(name = "naverEmailProperties")
 	public Properties emailProperties() {
@@ -37,13 +54,12 @@ public class NaverMainConfig {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.naver.com");
 		mailSender.setPort(465);
-
 		mailSender.setUsername(USER_EMAIL);
 		mailSender.setPassword(USER_PASSWORD);
 		
 		Properties props = emailProperties();
 		mailSender.setJavaMailProperties(props);
-		System.out.println("*************** NaverConfig Props : "+props);
+		System.out.println("*************** NaverConfig Props ***************** ");
 		return mailSender;
 	}
 

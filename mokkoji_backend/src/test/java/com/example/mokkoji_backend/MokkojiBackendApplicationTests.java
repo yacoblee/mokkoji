@@ -45,6 +45,7 @@ class MokkojiBackendApplicationTests {
     @Autowired
     private ProductsService productService;
     
+
 //    //@Test
 //    public void testOptionService() {
 //    	Products entity = productService.findById(2L);
@@ -118,5 +119,7 @@ class MokkojiBackendApplicationTests {
 //        assertNotNull(response);
 //        System.out.println("SMS 전송 응답: " + response);
 //    }
+    
+   
     
 }

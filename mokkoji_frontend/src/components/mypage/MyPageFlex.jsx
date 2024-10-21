@@ -3,10 +3,14 @@ import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMobileScreenButton } from "@fortawesome/free-solid-svg-icons";
 import '../../css/mypage/MyPageUser.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function MyPageFlex({ userMain }) {
+function MyPageFlex({ userMain, myPageMain }) {
+
+    useEffect(() => {
+        myPageMain("/mypage/user")
+    }, [userMain.postalCode])
 
     return (
         <div className='MyInfoFlex'>

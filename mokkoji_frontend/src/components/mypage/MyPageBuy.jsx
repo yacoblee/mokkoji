@@ -32,8 +32,6 @@ function MyPageBuy() {
             {newCheckedGoods.map((goods) => {
                 const product = items.find(item => item.id === goods.productId);
 
-                console.log(items.length)
-
                 return (
                     <div className="PaymentGrid" key={goods.productId} >
                         <div className="BuyPhoto">

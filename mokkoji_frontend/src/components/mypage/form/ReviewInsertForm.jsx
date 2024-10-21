@@ -10,8 +10,6 @@ function ReviewInsertForm({ userReviewInsert }) {
     const [likeDislike, setLikeDislike] = useState('true'); // 'true' 또는 'false'
     const [reviewPhoto, setReviewPhoto] = useState(null);
 
-    console.log(userReviewInsert)
-
     const handleFileChange = (e) => {
         setReviewPhoto(e.target.files[0]); // 첫 번째 파일을 상태에 저장
     };
@@ -22,8 +20,6 @@ function ReviewInsertForm({ userReviewInsert }) {
 
         formData.append("productId", userReviewInsert.productId);
         formData.append("productName", userReviewInsert.productName);
-
-        console.log(JSON.stringify(formData))
 
         const token = JSON.parse(sessionStorage.getItem("userData"));
         try {

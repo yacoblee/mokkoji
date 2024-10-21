@@ -100,7 +100,8 @@ function MyPageAddressForm({ userAddressDetail }) {
             // alert("개인정보 수정 성공");
             window.location.href = '/mypage/address';
         } catch (error) {
-            console.error('Error:', error.response);
+            // console.error('Error:', error.response);
+            alert("수정 실패")
         }
     };
 

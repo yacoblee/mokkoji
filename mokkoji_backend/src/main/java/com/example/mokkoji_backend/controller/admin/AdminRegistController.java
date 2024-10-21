@@ -93,7 +93,7 @@ public class AdminRegistController {
    	        dir.mkdirs();
    	    }
     	
-    	//기존 이미지 삭제 - 테스트중
+    	//기존 이미지 삭제
 	   	 if (deleteFiles != null && !deleteFiles.isEmpty()) {
 	   	    try {
 	   	        for (String jsonString : deleteFiles) {
