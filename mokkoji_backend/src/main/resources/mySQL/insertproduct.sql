@@ -564,7 +564,7 @@ INSERT INTO productoptions(product_id, option_content,option_price)
 VALUES (19, '대',90000);
 
 -- 추가 구문 9.25 누락
-UPDATE project.products
+UPDATE products
 SET product_name='한국 전통 문양 베개 커버', product_price=25000, product_size_info='상품 크기 : 450x450mm', product_guide='* 손세탁 권장', product_main_description='한국 전통 문양이 새겨진 고급 베개 커버입니다.', product_additional_description='인테리어 소품으로 좋은 패키지에 담겨 있습니다.', main_image_name='pictureFlower5.jpg', like_count=0, status=0, stock_count=100, upload_date='2024-09-24 12:29:38', category_id='C3'
 WHERE product_id=13;
 
@@ -581,12 +581,8 @@ UPDATE users u
 JOIN ranked_users ru ON u.user_id = ru.user_id
 SET u.user_sequence = ru.new_sequence;
 
-# ALTER TABLE users MODIFY phone_number VARCHAR(20);
-# ALTER TABLE project.address ADD recipient_name varchar(50) NULL COMMENT '수령인';
 
-ALTER TABLE users ADD login_count INT NOT NULL DEFAULT 0 COMMENT '로그인횟수';
-
-INSERT INTO Users (user_id, password, name, birth_date, gender, phone_number, email, is_withdrawn, withdrawal_date, updated_at, created_at, block_status, is_admin, login_count)
+INSERT INTO users (user_id, password, name, birth_date, gender, phone_number, email, is_withdrawn, withdrawal_date, updated_at, created_at, block_status, is_admin, login_count)
 VALUES 
 ('user001', 'password001', '김철수', '1990-01-15', 'M', '010-1234-5678', 'kimcheolsu@example.com', 0, NULL, '2024-10-10', '2020-01-01', 0, '0', 10),
 ('user002', 'password002', '이영희', '1985-05-22', 'F', '010-2345-6789', 'leeyounghee@example.com',  0, NULL, '2024-10-10', '2020-02-10', 0, '0', 20),
