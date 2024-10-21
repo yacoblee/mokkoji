@@ -5,6 +5,7 @@ import { API_BASE_URL } from "../../../service/app-config";
 import { getStorageData } from '../../../service/apiService';
 import { apiCall } from '../../../service/apiService';
 import axios from 'axios'; // axios 추가
+import { useNavigate } from "react-router-dom";
 
 import '../../../css/mypage/subpage/MyPageAddress.css';
 
@@ -16,7 +17,7 @@ function MyPageAddressForm({ userAddressDetail }) {
     //모달 상태창에 대한 true , false
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     //모달창 오픈
     const openAddress = (e) => {
