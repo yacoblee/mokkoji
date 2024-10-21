@@ -22,10 +22,6 @@ const ResetPassword = () => {
     // 객체에서 dbUserID 추출
     const dbuserid = dbData?.dbUserID || "값이 없습니다";
 
-    // 로그로 값 확인
-    console.log("전달된 dbData 객체: ", dbData);   // 전체 객체 확인
-    console.log("dbUserID 값: ", dbuserid);        // dbUserID 추출 확인
-
 
 
     // input에 포커스 이벤트 발생시 라벨 밖으로 이동 
@@ -57,8 +53,7 @@ const ResetPassword = () => {
     const pRef = useRef(null)
 
     useEffect(() => {
-        // dbuserid 값이 null이 아닌지 확인
-        console.log("전달된 dbUserID: ", dbuserid);
+
     }, [dbuserid]);
 
 
@@ -86,11 +81,11 @@ const ResetPassword = () => {
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-                console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
-                console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
+                // console.log("비밀번호찾기 API 호출 성공:", response);  // 응답 전체 출력
+                // console.log("비밀번호찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
 
                 // 정상적인 응답 처리 (200번대 응답)
-                console.log(response.data);
+                //console.log(response.data);
                 alert('비밀번호 변경 완료');
                 navigate('/login');  // 상태가 맞으면 '/verifyCode'로 이동
             })

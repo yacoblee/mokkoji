@@ -41,7 +41,7 @@ const Membership = () => {
         createdAt: '',
         checkPw: ''
     })
-    console.log(formData);
+    //console.log(formData);
 
     // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
     const formErrors = useRef({
@@ -62,7 +62,7 @@ const Membership = () => {
         clausearea: ""
     });
 
-    console.log(formErrors);
+    //console.log(formErrors);
 
     // useRef 사용으로 인해 랜더링이 발생되지 않아 예외 처리가 불가능 하여, 임의의 stat 생성하여 강제로 랜더링 발생시킴
     const [forceUpdater, forceUpdate] = useState(false);
@@ -204,8 +204,7 @@ const Membership = () => {
                 return false;
         }
     };
-    console.log(formData.current.password);
-    console.log(formData.current.checkPw);
+
 
     // 입력값이 정규식과 길이가 각 조건에 부합하면 true, 아니면 false 값 저장 
     const validate = (name, value) => {
@@ -266,8 +265,8 @@ const Membership = () => {
         const data2 = { userId: inputR.current.value };
         apiCall(url1, 'POST', data2, null)
             .then((response) => {
-                console.log("아이디 중복검사 API 호출 성공:", response);  // 응답 전체 출력
-                console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
+                // console.log("아이디 중복검사 API 호출 성공:", response);  // 응답 전체 출력
+                // console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
 
 
                 if (response.data === false && response.status === 200) {
@@ -384,7 +383,6 @@ const Membership = () => {
             const phone = `${formData.current.firstNumber}-${formData.current.secondNumber}-${formData.current.lastNumber}`;
 
             formData.current.phoneNumber = phone;
-            console.log(formData.current.phoneNumber);
             //formData.current.index = userDateIndex;
 
             delete formData.current.firstNumber;

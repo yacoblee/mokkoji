@@ -18,7 +18,7 @@ const Userinfo = () => {
     //부모 컴포넌트에서 넘겨준 값 처리 
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
-    console.log('전달된 객체', dbData);
+    //console.log('전달된 객체', dbData);
     const {
         users,
         userAddress,
@@ -39,12 +39,9 @@ const Userinfo = () => {
     // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
     const otherPurchase = totalAmount - userPurchase;
 
-    // 디버깅을 위한 로그 출력
-    console.log('****************', userPurchase, userPercentage, otherPurchase);
 
 
     const [currentIndex, setCurrentIndex] = useState(0);
-    console.log("currentIndex", currentIndex)
     const navigator = useNavigate();
     const firstAdminInputUserinfo = {
         email: '', // 이메일
@@ -61,7 +58,7 @@ const Userinfo = () => {
         const regex = checkInputInfo[name]; // checkInputInfo에서 정규식 가져오기
 
         if (!regex) {
-            console.warn(`No validation rule found for field: ${name}`);
+            //console.warn(`No validation rule found for field: ${name}`);
             return ''; // 기본적으로 true 반환 (유효성 검사가 없는 필드)
         }
         return regex.test(value); // 정규식이 존재하면 test 메서드 실행
@@ -256,8 +253,6 @@ const Userinfo = () => {
         }))
     );
 
-    console.log("checked", checked);
-    console.log("isCheckInputInfo", isCheckInputInfo);
 
     const insertDB = (e) => {
         e.preventDefault();
@@ -273,8 +268,6 @@ const Userinfo = () => {
         const isCheckInputInfoCondition = Object.values(isCheckInputInfo).every(value => value === true);
 
         if (checkedCondition && isCheckInputInfoCondition) {
-            console.log('유저정보', adminInputUserinfo);
-            console.log('주소정보', rows);
             let url = '/administrator/users/userinfo/userinfoupdate';
             const data = {
                 userinfo: adminInputUserinfo,
@@ -297,12 +290,10 @@ const Userinfo = () => {
 
 
     const removeAdress = (index) => {
-        console.log('삭제 행', rows[index]);
         let url = '/administrator/users/userinfo/addressdelete'
 
         apiCall(url, 'POST', rows[index], null)
             .then((response) => {
-                console.log(response)
                 alert(response.data);
                 navigator('/administrator/users');
             }).catch((err) => {
@@ -324,7 +315,6 @@ const Userinfo = () => {
         }
         apiCall(url, 'POST', data, null)
             .then((response) => {
-                console.log(response)
                 alert(response.data);
                 navigator('/administrator/users');
             }).catch((err) => {
@@ -351,8 +341,6 @@ const Userinfo = () => {
             </div>
         </>;
     };
-
-    console.log("유저정보", users);
 
     return (
         <div className='userinfo-container'>

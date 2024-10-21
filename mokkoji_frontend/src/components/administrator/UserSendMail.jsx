@@ -23,7 +23,7 @@ const UserSendMail = () => {
         if (users.length > 0) {
             setList(users);
         } else {
-            console.error('users 배열이 전달되지 않았습니다.');
+            // console.error('users 배열이 전달되지 않았습니다.');
         }
     }, [users]);
 
@@ -34,18 +34,15 @@ const UserSendMail = () => {
             [name]: value
         }))
     }
-    console.log('전송 내용', mailData);
     // location.state 데이터 확인용
     useEffect(() => {
-        console.log('location.state:', location.state);
-        console.log('이메일', list.email);
+
     }, []);
 
 
     const formSubmit = (e) => {
         e.preventDefault();
 
-        console.log("mailData", mailData);
         if (mailData.mailTitle.length < 5 || mailData.mailContent.length < 5) {
             alert('제목과 본문내용을 최소 5글자 이상 작성하세요');
             return;
@@ -58,10 +55,10 @@ const UserSendMail = () => {
             mailTitle: mailData.mailTitle,
             mailContent: mailData.mailContent
         }
-        console.log(data);
+        //console.log(data);
         apiCall(url, 'POST', data, null)
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 alert(response.data);
                 navigator('/administrator/users');
 

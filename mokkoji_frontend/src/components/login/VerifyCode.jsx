@@ -27,7 +27,7 @@ const VerifyCode = () => {
             }
         }
     }
-    console.log('프론트 저장 데이터 ' + dbData);
+    //console.log('프론트 저장 데이터 ' + dbData);
 
     // label과 input 포커스 기능 연결 
     const LabelClick = (inputRef) => {
@@ -41,8 +41,6 @@ const VerifyCode = () => {
 
     // 비밀번호 찾기 버튼 눌렀을 경우 
     const checkverifyCode = () => {
-
-        console.log("클릭됨?" + inputCodeRef.current.value);
         const inputUserCode = inputCodeRef.current.value;
         const data = { userCode: inputUserCode }
         const url = 'http://localhost:8080/login/findPw/verifyCode';
@@ -52,7 +50,7 @@ const VerifyCode = () => {
             }
         })
             .then((response) => {
-                console.log("메일인증 호출 성공:", response.status);
+                //console.log("메일인증 호출 성공:", response.status);
                 navigate('/login/findPw/verifyCode/resetPassword', {
                     state: dbData
                 });
@@ -61,7 +59,7 @@ const VerifyCode = () => {
             .catch((error) => {
                 if (error.response) {
                     // 응답이 있는 경우 상태 코드를 로그에 출력
-                    console.log("응답 상태 코드:", error.response.status);
+                    //console.log("응답 상태 코드:", error.response.status);
 
                     if (error.response.status == 502) {
                         alert("인증번호를 다시 입력하세요");

@@ -49,7 +49,7 @@ const FindId = () => {
 
 
     // 유저 이름, 전화번호 유효성 조건  
-    const checkName =  /^[가-힣]+$/;
+    const checkName = /^[가-힣]+$/;
     const checkPN = /^\d{2,5}-\d{3,4}-\d{4}$/;
 
 
@@ -59,58 +59,56 @@ const FindId = () => {
         const isName = checkName.test(nameValue);
         const pwValue = inputPNRef.current.value;
         const isPW = checkPN.test(pwValue);
-        
-        if (isName== false){
-          alert("⚠️ 이름을 다시 입력하세요")
-            inputNameRef.current.value='';
-            inputPNRef.current.value='';
+
+        if (isName == false) {
+            alert("⚠️ 이름을 다시 입력하세요")
+            inputNameRef.current.value = '';
+            inputPNRef.current.value = '';
             return;
-        } else if(isPW==false){
+        } else if (isPW == false) {
             alert("⚠️ -를 포함하여 핸드폰 번호를 다시 입력하세요")
-            inputNameRef.current.value='';
-            inputPNRef.current.value='';
+            inputNameRef.current.value = '';
+            inputPNRef.current.value = '';
             return;
-        } 
-      
+        }
+
         // apicall 
         let url = '/Login/FindId'
-        const data = {name : inputNameRef.current.value , phoneNumber : inputPNRef.current.value }
-        apiCall(url,'POST', data, null)
-        .then((response)=>{
-            console.log("아이디 찾기 API 호출 성공:", response);  // 응답 전체 출력
-            console.log("아이디 찾기 응답 상태 코드:", response.status);  // 상태 코드 출력
+        const data = { name: inputNameRef.current.value, phoneNumber: inputPNRef.current.value }
+        apiCall(url, 'POST', data, null)
+            .then((response) => {
 
-            if(response.status === 200){
+                if (response.status === 200) {
                     setFindinguserinfo({
-                    findingName: inputNameRef.current.value,
-                    findingId: response.data
-                });
-                pRef.current.style.visibility = 'visible'
-                pRef2.current.style.visibility = 'visible'
-           }
-        }).catch((err)=>{    
-            console.log("아이디 찾기 중 오류발생 ", err);
-            const errCode = err.data
-            const errStatus = err.status;
-            console.log(errCode);
-            if(errStatus === 502){
-                pRef.current.style.visibility = 'hidden';
-                pRef2.current.style.visibility='hidden';
-                inputNameRef.current.value='';
-                inputPNRef.current.value='';
-                alert(errCode);
-            }
-            else if (errStatus === 500 || errStatus === 404 ){
-                pRef.current.style.visibility = 'hidden';
-                pRef2.current.style.visibility='hidden';
-                inputNameRef.current.value='';
-                inputPNRef.current.value='';
-                alert("⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요");
-            } else{
-                console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 " , err.message);
-                alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-            }
-        })
+                        findingName: inputNameRef.current.value,
+                        findingId: response.data
+                    });
+                    pRef.current.style.visibility = 'visible'
+                    pRef2.current.style.visibility = 'visible'
+                }
+            }).catch((err) => {
+                console.log("아이디 찾기 중 오류발생 ", err);
+                const errCode = err.data
+                const errStatus = err.status;
+                //console.log(errCode);
+                if (errStatus === 502) {
+                    pRef.current.style.visibility = 'hidden';
+                    pRef2.current.style.visibility = 'hidden';
+                    inputNameRef.current.value = '';
+                    inputPNRef.current.value = '';
+                    alert(errCode);
+                }
+                else if (errStatus === 500 || errStatus === 404) {
+                    pRef.current.style.visibility = 'hidden';
+                    pRef2.current.style.visibility = 'hidden';
+                    inputNameRef.current.value = '';
+                    inputPNRef.current.value = '';
+                    alert("⚠️ 서버에 문제가 발생하였습니다. 잠시 후 다시 시도해주세요");
+                } else {
+                    console.log("아이디 찾기 응답 객체에 상태 코드가 없습니다 ", err.message);
+                    alert('⚠️ 네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                }
+            })
     };
 
 
@@ -138,7 +136,7 @@ const FindId = () => {
                                         onClick={() => LabelClick(inputNameRef)}
                                     >이름</label>
                                     <input type="text"
-                                    placeholder="                                 공백없이 한글만 입력하세요"  
+                                        placeholder="                                 공백없이 한글만 입력하세요"
                                         maxLength={4}
                                         name="username"
                                         ref={inputNameRef}
@@ -151,7 +149,7 @@ const FindId = () => {
                                         onClick={() => LabelClick(inputNameRef)}
                                     >핸드폰 번호</label>
                                     <input type="text"
-                                    placeholder="                                 - 포함하여 번호를 입력하세요"  
+                                        placeholder="                                 - 포함하여 번호를 입력하세요"
                                         ref={inputPNRef}
                                         name='PhoneNumber'
                                         maxLength={16}
@@ -160,8 +158,8 @@ const FindId = () => {
                                 </div>
                                 <div>
                                     <p className="ptag" ref={pRef}><span className="showname">{findinguserinfo.findingName}</span>님의 아이디는 : <span className="showname">{findinguserinfo.findingId}</span>입니다.</p>
-                                    <p  ref={pRef2} className="goLogin"><Link to={'/login'}><span className="find-span">
-                                    로그인 페이지로 돌아가기</span></Link></p>
+                                    <p ref={pRef2} className="goLogin"><Link to={'/login'}><span className="find-span">
+                                        로그인 페이지로 돌아가기</span></Link></p>
                                 </div>
 
                                 <button onClick={UserFindID}>아이디 찾기</button>

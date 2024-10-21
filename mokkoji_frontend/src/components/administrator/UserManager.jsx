@@ -53,13 +53,11 @@ const UserManagement = () => {
     // 선택 값 변경 핸들러
     const selectChange = (e) => {
         const { name, value } = e.target;
-        console.log(e.target.value);
         setInput((prev) => ({
             ...prev,
             [name]: value
         }));
     };
-    console.log(input);
 
     // 날짜 버튼값 변경 핸들러
     const onClickDate = (value) => {
@@ -141,7 +139,6 @@ const UserManagement = () => {
     const reset = () => {
         setPage(1);
         setInput(inputData);
-        console.log("초기화 버튼 클릭됨");
     }
 
     const openNewWindow = () => {
@@ -161,7 +158,7 @@ const UserManagement = () => {
             .then((response) => {
                 const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount, userPurchaseRank, totalAmount } = response.data;
 
-                console.log("888통계포함8888", response.data);
+                // console.log("888통계포함8888", response.data);
                 // userPurchaseRank가 null일 경우 방어 코드로 기본값 설정
                 const purchaseRank = userPurchaseRank && userPurchaseRank.purchaseRank ? userPurchaseRank.purchaseRank : 0;
                 const percentageRank = userPurchaseRank && userPurchaseRank.percentageRank ? userPurchaseRank.percentageRank : 0;
