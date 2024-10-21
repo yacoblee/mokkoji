@@ -7,6 +7,7 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -61,12 +62,32 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		//프로젝트 내 모든 경로에 적용
 		registry.addMapping("/**")
 		.allowedOrigins("http://localhost:3000")
+//		.allowedOrigins("http://localhost:3000", "http://15.164.55.161")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
 		.allowedHeaders("*")
 		.allowCredentials(true)
 		.maxAge(MAX_AGE_SECS);
 	}//addCorsMappings : React project CORS 방침 설정
-//	
+
+	
+//  @Override
+//  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//      // 절대 경로 설정 - productImages
+//      registry.addResourceHandler("/resources/productImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/productImages/");
+//
+//      // 절대 경로 설정 - reservelImages
+//      registry.addResourceHandler("/resources/reservelImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reserveImages/");
+//
+//      // 절대 경로 설정 - reviewImages
+//      registry.addResourceHandler("/resources/reviewImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reviewImages/");
+//      // 절대 경로 설정 - reserveImages
+//      registry.addResourceHandler("/resources/reserveImages/**")
+//      .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reserveImages/");
+//  }
+	
 //	
 //	  @Override
 //	    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

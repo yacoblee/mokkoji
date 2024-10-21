@@ -226,8 +226,7 @@ const RegistManagement = () => {
       }
     })
     .then(response => {
-      alert('수정에 성공했습니다.');
-      console.log('Data submitted successfully:', response.data);
+      alert('수정에 성공했습니다.'+response.data);
     })
     .catch(error => {
       console.error('Error submitting data:', error);

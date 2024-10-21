@@ -18,8 +18,8 @@ import java.util.Properties;
 @Data
 public class NaverMainConfig {
 
-	private static final String USER_EMAIL = "yacobleee@naver.com";
-	private static final String USER_PASSWORD = "!";
+	private static final String USER_EMAIL = "mudsproject@naver.com";
+	private static final String USER_PASSWORD = "6SS66EPVUDZR";
 	
 	@Value("${sms.key}")
 	private String smsKey;
