@@ -493,7 +493,7 @@ const Userinfo = () => {
                                         <th>구매비율</th>
                                         <td>
                                             {purchaseRank
-                                                ? `상위 ${purchaseRank} % 구매고객 입니다.`
+                                                ? `상위 ${userPercentage.toFixed(2)} % 구매고객 입니다.`
                                                 : '구매 내역이 없습니다'}
                                         </td>
 
