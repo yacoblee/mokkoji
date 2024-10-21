@@ -47,7 +47,7 @@ function MyPageMain() {
 
     useEffect(() => {
         myPageMain("/mypage/user")
-    }, [userMain])
+    }, [])
 
 
 
@@ -151,7 +151,7 @@ function MyPageMain() {
             .then((response) => {
                 //alert(`** myPageCart 성공 url=${url}`);
                 setUserCart(response.data);
-                console.log(response.data)
+                // console.log(response.data)
             }).catch((err) => {
                 if (err === 502) {
                     alert(`처리도중 오류 발생, err = ${err}`);
@@ -164,7 +164,6 @@ function MyPageMain() {
     // 수량 업데이트
     const cartUpdate = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        console.log(url)
         apiCall(url, 'PATCH', null, userToken)
             .then((response) => {
                 //alert(`** cartUpdate 성공 url=${url}`);
@@ -362,7 +361,6 @@ function MyPageMain() {
 
     // List 불러오기
     const myPageRegist = (url) => {
-        console.log(url)
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
         apiCall(url, 'GET', null, userToken)
             .then((response) => {
@@ -380,7 +378,6 @@ function MyPageMain() {
     // 수량 업데이트
     const bookUpdateAdult = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        console.log(url)
         apiCall(url, 'PATCH', null, userToken)
             .then((response) => {
                 //alert(`** bookUpdateAdult 성공 url=${url}`);
@@ -396,7 +393,6 @@ function MyPageMain() {
 
     const bookUpdateTeen = (url) => {
         let userToken = JSON.parse(sessionStorage.getItem("userData"));
-        console.log(url)
         apiCall(url, 'PATCH', null, userToken)
             .then((response) => {
                 //alert(`** bookUpdateTeen 성공 url=${url}`);
@@ -448,6 +444,7 @@ function MyPageMain() {
                         myPageAddress={myPageAddress}
                         changeDefaultAddress={changeDefaultAddress}
                         addressDelete={addressDelete}
+                        myPageMain={myPageMain}
                     />}
                 />
 
