@@ -483,14 +483,16 @@ const Userinfo = () => {
                                         <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원<br />
+                                        <td>
+                                            {isNaN(totalPurchaseAmount) ? '0' : `${totalPurchaseAmount.toLocaleString('ko-KR')}`} 원
+                                            <br />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>구매비율</th>
                                         <td>
                                             {purchaseRank
-                                                ? `${users.name}님은 상위 ${purchaseRank} % 입니다.`
+                                                ? `상위 ${purchaseRank} % 구매고객 입니다.`
                                                 : '구매 내역이 없습니다'}
                                         </td>
 
@@ -521,9 +523,11 @@ const Userinfo = () => {
                                         </td>
 
                                         <th>1회 평균 금액</th>
-                                        <td> {averagePurchaseAmount
-                                            ? `${averagePurchaseAmount}원`
-                                            : '구매 내역이 없습니다'}</td>
+                                        <td>
+                                            {isNaN(averagePurchaseAmount)
+                                                ? '구매 내역이 없습니다'
+                                                : `${averagePurchaseAmount.toLocaleString('ko-KR')} 원`}
+                                        </td>
                                     </tr>
 
                                     {/* <tr>
