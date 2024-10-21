@@ -62,11 +62,11 @@ function ProductsInsert() {
         }
     };
 
-    console.log(options);
+    //console.log(options);
     const onChangeOption = (index, e) => {
         const { name, value } = e.target;
         const newOptions = [...options];
-        console.log(`name : ${name},value : ${value}`)
+        //console.log(`name : ${name},value : ${value}`)
         newOptions[index][name] = value;
         setOptions(newOptions);
         // 2. product 객체 업데이트
@@ -117,9 +117,9 @@ function ProductsInsert() {
         // 파일 추가
         if (product.uploadfilef) {
             formData.append("uploadfilef", product.uploadfilef);
-            console.log("이미지 파일이 존재함.");
+            //console.log("이미지 파일이 존재함.");
         } else {
-            console.log("이미지 파일이 존재하지 않음.");
+            //console.log("이미지 파일이 존재하지 않음.");
         }
 
         try {
@@ -134,7 +134,7 @@ function ProductsInsert() {
                 data: formData,
             });
             //const response = await axios('/insertproduct/image', formData, token);
-            console.log('업로드 성공:', response.data);
+            //console.log('업로드 성공:', response.data);
             const { selectProduct, option, image } = response.data;
             setProduct(selectProduct);
             setOptions(option);
@@ -152,8 +152,8 @@ function ProductsInsert() {
     // const addImage = () => {
     //     setImages([...images, { imageOrder: '', imageType: '', imageName: '' }]);
     // };
-    console.log(product);
-    console.log(product.options);
+    //console.log(product);
+    //console.log(product.options);
     const productMenu = [
         { category: 'allGoods', description: '전체상품' },
         { category: 'C1', description: '문구/사무' },

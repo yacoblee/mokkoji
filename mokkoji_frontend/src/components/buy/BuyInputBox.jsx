@@ -10,25 +10,25 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 //selectProduct가 체크되지 않았다면 false가 반환됨.
 const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedProduct, option, productPrice }) => {
 
-        // 결제 API
-        useEffect(() => {
-            const script = document.createElement('script');
-            script.src = "https://cdn.iamport.kr/v1/iamport.js";
-            script.async = true;
-        
-            document.body.appendChild(script);
-        
-            script.onload = () => {
-              if (window.IMP) {
+    // 결제 API
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = "https://cdn.iamport.kr/v1/iamport.js";
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        script.onload = () => {
+            if (window.IMP) {
                 const { IMP } = window;
                 IMP.init('imp12042271'); // 가맹점 식별코드 - 필수!
-              }
-            };
-        
-            return () => {
-              document.body.removeChild(script);
-            };
-          }, []);  
+            }
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
 
 
     const navigate = useNavigate()
@@ -44,7 +44,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         try {
             const response = await apiCall('/order/users', 'POST', { userId: userId }, token);
             const { userinfomation, addressList } = response.data;
-            console.log(addressList)
+            //console.log(addressList)
             setAddressing(addressList);
             setUser(userinfomation);
             setOriginalAddressing(addressList);
@@ -288,11 +288,11 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
         }
     }, [selectedALLproduct, userInfoError, selectBox.buyHow]);
 
-    console.log('************************');
+    //console.log('************************');
 
-    console.log('userInfo', userInfo);
-    console.log('userError', userInfoError);
-    console.log('************************');
+    //console.log('userInfo', userInfo);
+    //console.log('userError', userInfoError);
+    //console.log('************************');
 
     //구매 확인 버튼의 모달창.
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
@@ -300,7 +300,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
 
 
-    const closedefault = () =>{
+    const closedefault = () => {
         setIsModalBuyOpen(false);
         navigate('/goods');
     }
@@ -313,8 +313,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             SetSelectBox((it) => ({ ...it, deliveryMessage: '문 앞에 놔주세요' }))
         }
         // setIsModalBuyOpen(true);
-        console.log(selectedAddressIndex);
-        console.log(addressing);
+        //console.log(selectedAddressIndex);
+        //console.log(addressing);
 
         const updateAddressAndInsert = async () => {
             if (selectedAddressIndex === 4) {
@@ -328,7 +328,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     streetAddress: userInfo.streetAddress,
                     userId: userId
                 };
-                console.log('newData', newData);
+                //console.log('newData', newData);
                 // 상태 업데이트가 완료될 때까지 기다립니다.
                 const updatedAddressing = await new Promise((resolve) => {
                     setAddressing((oldData) => {
@@ -363,25 +363,25 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
             const purchaseAddress = {
                 userId: userId,
                 locationName: selectedAddressIndex === 4
-                ? `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
-                : addressing[selectedAddressIndex].locationName,
+                    ? `배송지_${addressing.length >= 3 ? addressing.length - 1 : addressing.length}`
+                    : addressing[selectedAddressIndex].locationName,
             }
 
             const data = {
                 pg: "html5_inicis",
                 pay_method: "card",
-                merchant_uid: `merchant_${new Date().getTime()}`, 
+                merchant_uid: `merchant_${new Date().getTime()}`,
                 //amount: totalPrice,  // 총 가격 
                 amount: 100,  // 테스트용 가격
                 addressList: currentAddressing,
 
 
             };
-            
-            if(selectBox.buyHow == '신용 카드'){
+
+            if (selectBox.buyHow == '신용 카드') {
 
                 IMP.request_pay(data, async (rsp) => {
-                    if (rsp.success) { 
+                    if (rsp.success) {
                         try {
                             const requestData = {
                                 addressList: currentAddressing,
@@ -390,23 +390,23 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                                 purchaseAddress: purchaseAddress,
                             };
                             const response = await apiCall(url, 'POST', requestData, token);
-                            console.log("구매 성공:", response.data);
-                            if(response.data.success){
+                            //console.log("구매 성공:", response.data);
+                            if (response.data.success) {
                                 alert("구매가 완료되었습니다.");
                                 setIsModalBuyOpen(true);
-                            }else{
+                            } else {
                                 return false;
                             }
                         } catch (error) {
-                            console.error("구매 실패:", error);
+                            //console.error("구매 실패:", error);
                             alert("구매 처리 중 오류가 발생했습니다.");
                         }
                     } else {
-                        console.log("결제 실패:", rsp.error_msg);
+                        //console.log("결제 실패:", rsp.error_msg);
                         alert("결제 실패: " + rsp.error_msg);
                     }
                 });
-            }else{
+            } else {
                 try {
                     const requestData = {
                         addressList: currentAddressing,
@@ -415,16 +415,16 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         purchaseAddress: purchaseAddress,
                     };
                     const response = await apiCall(url, 'POST', requestData, token);
-                    console.log("구매 성공:", response.data);
-                    if(response.data.success){
-                        alert("구매가 완료되었습니다.");
+                    //console.log("구매 성공:", response.data);
+                    if (response.data.success) {
+                        //alert("구매가 완료되었습니다.");
                         setIsModalBuyOpen(true);
-                    }else{
+                    } else {
                         return false;
                     }
                 } catch (error) {
                     console.error("구매 실패:", error);
-                    alert("구매 처리 중 오류가 발생했습니다.");
+                    //alert("구매 처리 중 오류가 발생했습니다.");
                 }
             }
         };
@@ -617,7 +617,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                             value='신용 카드'
                             onChange={onChangeRadioBox} />
                         <label htmlFor="CreditCard">신용 카드</label>
-                        <input type="radio" name='buyHow' id='KakaoPay'
+                        {/* <input type="radio" name='buyHow' id='KakaoPay'
                             value='카카오페이'
                             onChange={onChangeRadioBox} />
                         <label htmlFor="KakaoPay">카카오 페이</label>
@@ -628,12 +628,15 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         <input type="radio" name='buyHow' id='phonePayment'
                             value='휴대폰 결제'
                             onChange={onChangeRadioBox} />
-                        <label htmlFor="phonePayment">휴대폰 결제</label>
+                        <label htmlFor="phonePayment">휴대폰 결제</label> */}
                         <input type="radio" name='buyHow' id='accountTransfer'
                             value='계좌이체'
                             onChange={onChangeRadioBox} />
                         <label htmlFor="accountTransfer">계좌 이체</label>
                     </div>
+                    <div>주의)</div>
+                    <p>현재 신용카드 결제는 결제 API를 통해 처리되며, 최소 결제 금액은 100원으로 설정되어 있습니다.<br></br>
+                        계좌 이체시 해당 구매 내역이 자동으로 데이터베이스에 저장됩니다. </p>
                 </div>
                 <div className='buttonBox'>
                     <button disabled={isBuyButtonDisabled}
@@ -690,7 +693,7 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                     <button
                         onClick={() => navigate('/mypage/orders')}>구매 내역 확인</button>
 
-                    <button onClick={() => navigate('/goods') }>확인</button>
+                    <button onClick={() => navigate('/goods')}>확인</button>
                 </div>
                 <div ref={modalContentRef} style={{ height: '100%', width: '100%', overflow: 'auto' }}>
                     <BuyComplete userId={userId}

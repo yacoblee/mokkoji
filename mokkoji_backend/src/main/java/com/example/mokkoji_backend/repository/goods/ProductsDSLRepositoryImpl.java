@@ -36,7 +36,7 @@ public class ProductsDSLRepositoryImpl implements ProductsDSLRepository {
 	             products.mainDescription,
 	             products.mainImageName
 
-				)).from(products).where(products.id.ne(id)).orderBy(products.status.desc()).limit(4).fetch();
+				)).from(products).where(products.id.ne(id).and(products.status.eq(0))).orderBy(products.status.desc()).limit(4).fetch();
 	}
 	
 	@Override

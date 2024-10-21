@@ -25,7 +25,7 @@ const ProductImageSave = () => {
         setCode(sendcode);
     }, [])
 
-    console.log(code);
+    //console.log(code);
 
     const handleImageChange = (index, e, imageType) => {
         const { name, value, type, files } = e.target;
@@ -111,13 +111,13 @@ const ProductImageSave = () => {
         }
 
     };
-    useEffect(() => {
-        console.log("메인", mainImage);
-    }, [mainImage]);
+    // useEffect(() => {
+    //     console.log("메인", mainImage);
+    // }, [mainImage]);
 
-    useEffect(() => {
-        console.log("슬라이드", slideImage);
-    }, [slideImage]);
+    // useEffect(() => {
+    //     console.log("슬라이드", slideImage);
+    // }, [slideImage]);
 
 
     const addImage = (string) => {
@@ -191,7 +191,7 @@ const ProductImageSave = () => {
 
         // 네트워크 요청을 보내기 전, FormData 내용 확인
         formData.forEach((value, key) => {
-            console.log(`Key: ${key}, Value: ${value}`);
+            //console.log(`Key: ${key}, Value: ${value}`);
         });
 
 

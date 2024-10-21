@@ -89,11 +89,11 @@ const ProductDetails = () => { //===============================================
                 const response = await apiCall('/goods/liked', 'POST', { userId: userId, productId: product.id }, token);
                 const { liked } = response.data;
                 setLike(liked);
-                alert(`insert 성공`);
+                //alert(`insert 성공`);
             } catch (error) {
                 setLike(false);
                 console.log(`insert Like error =>${error.message}`)
-                alert(`insert 실패`);
+                //alert(`insert 실패`);
             }
         };
 
@@ -104,11 +104,11 @@ const ProductDetails = () => { //===============================================
                 //const response = await apiCall(`/goods/liked?userId=${userId}&productId=${product.id}`, 'DELETE', null, token);
                 const { liked } = response.data;
                 setLike(liked);
-                alert(`delte 성공`);
+                //alert(`delte 성공`);
             } catch (error) {
                 setLike(false);
                 console.log(`delete Like error =>${error.message}`)
-                alert(`delete 살패`);
+                //alert(`delete 살패`);
             }
         }
 

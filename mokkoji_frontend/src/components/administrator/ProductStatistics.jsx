@@ -37,7 +37,7 @@ function ProductStatistics({ productId }) {
                 console.log(err);
             });
     }, [])
-    console.log(genderFavorites);
+    //console.log(genderFavorites);
     const emptyDataPie = (type) => {
         const data = {
             labels: ['M', 'F'],
@@ -126,8 +126,8 @@ function ProductStatistics({ productId }) {
 
 
 
-    console.log("**************")
-    console.log(genderPurchases);
+    //console.log("**************")
+    //console.log(genderPurchases);
     const genderFavoritePie = () => {
         // genderPurchases가 빈 배열일 때는 렌더링하지 않도록 조건부 렌더링
         if (!genderFavorites || genderFavorites.length === 0) {
@@ -177,7 +177,7 @@ function ProductStatistics({ productId }) {
                 purchaseCount: 0, // 판매량 데이터가 없는 경우 null 또는 0을 사용
             });
         }
-        console.log('regDatePurchasesData', regDatePurchasesData);
+        //console.log('regDatePurchasesData', regDatePurchasesData);
         const data = {
             labels: regDatePurchases.map(gp => gp.regDate),
             datasets: [
@@ -272,7 +272,7 @@ function ProductStatistics({ productId }) {
             </>
         )
     }
-    console.log('sumOptions', sumOptions);
+    //console.log('sumOptions', sumOptions);
     return (
         <div className='ProductStatistics'>
             <h1 className="productMainTitle">상품 정보</h1>

@@ -19,7 +19,7 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
     };
     useEffect(() => {
         setCode(sendCode);
-        console.log("code :", code);
+        //console.log("code :", code);
         setProduct((prevState) => ({
             ...prevState,
             status: '0',
@@ -138,9 +138,9 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
         formData.append("productData", new Blob([JSON.stringify(productData)], { type: "application/json" }));
         if (product.uploadfilef) {
             formData.append("uploadfilef", product.uploadfilef);
-            console.log("이미지 파일이 존재함.");
+            //console.log("이미지 파일이 존재함.");
         } else {
-            console.log("이미지 파일이 존재하지 않음.");
+            //console.log("이미지 파일이 존재하지 않음.");
         }
         try {
             const response = await axios.post(`${API_BASE_URL}/administrator/saveallproduct`, formData, {
@@ -163,10 +163,10 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
         { category: 'C5', description: '주방/식기' },
     ];
 
-    console.log(mainImage);
-    console.log(slideImage);
-    console.log(options);
-    console.log(product);
+    //console.log(mainImage);
+    //console.log(slideImage);
+    //console.log(options);
+    //console.log(product);
     return (
         <div className='ProductRelatedStorage'>
             <h1 className="productMainTitle">상품 등록</h1>

@@ -60,7 +60,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		
 		registry.addMapping("/**")
 		//혜미 서버 주소
-		//.allowedOrigins("http://54.180.140.63:3000 ", "http://54.180.140.63")
+		//.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
 		.allowedOrigins("http://localhost:3000")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
 		.allowedHeaders("*")

@@ -40,7 +40,7 @@ const ProductList = () => {
 
     // API 호출 함수
     const axiosCall = () => {
-        console.log("axiosCall_ProductList.jsx _ keyword : " + filterItem.keyword.trim());
+        //console.log("axiosCall_ProductList.jsx _ keyword : " + filterItem.keyword.trim());
 
         let uri;
         if (filterItem.keyword.trim() === '') {

@@ -35,7 +35,7 @@ if (hostname === "localhost") {
   backendHost = "http://localhost:8080";
 } else {
   //혜미 서버
-  //backendHost = "http://54.180.140.63:8080";
+  //backendHost = "http://13.209.236.187:8080";
 }
 
 export const API_BASE_URL = `${backendHost}`;
