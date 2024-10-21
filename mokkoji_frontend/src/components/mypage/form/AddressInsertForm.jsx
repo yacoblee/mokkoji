@@ -114,7 +114,8 @@ function MyPageAddressForm() {
 
             window.location.href = '/mypage/address';
         } catch (error) {
-            console.error('Error:', error.response);
+            // console.error('Error:', error.response);
+            alert("입력 실패")
         }
     };
 
