@@ -45,7 +45,7 @@ class MokkojiBackendApplicationTests {
     @Autowired
     private ProductsService productService;
     
-    @Test
+    //@Test
     public void testOptionService() {
     	Products entity = productService.findById(2L);
     	

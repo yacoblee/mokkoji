@@ -1,12 +1,8 @@
 package com.example.mokkoji_backend.config;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,7 +19,9 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	public void addViewControllers(ViewControllerRegistry registry) {
 		//WebMvcConfigurer.super.addViewControllers(registry);
 		//boot3에서는 @GetMapping({ "/", "/home" }) 가능해져서 메서드를 따로 정의할 필요가 없음.
-		registry.addViewController("/").setViewName("redirect:/");
+		//registry.addViewController("/").setViewName("redirect:/");
+		//registry.addViewController("/").setViewName("redirect:/home");
+
 	}//addViewControllers
 	
 	
@@ -59,14 +57,32 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	public void addCorsMappings(CorsRegistry registry) {
 		//WebMvcConfigurer.super.addCorsMappings(registry);
 		//프로젝트 내 모든 경로에 적용
+		
 		registry.addMapping("/**")
+		//혜미 서버 주소
+		//.allowedOrigins("http://54.180.140.63:3000 ", "http://54.180.140.63")
 		.allowedOrigins("http://localhost:3000")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
 		.allowedHeaders("*")
 		.allowCredentials(true)
 		.maxAge(MAX_AGE_SECS);
 	}//addCorsMappings : React project CORS 방침 설정
-//	
+	
+	//혜미 경로 
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        // 절대 경로 설정 - productImages
+//        registry.addResourceHandler("/resources/productImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/productImages/");
+//
+//        // 절대 경로 설정 - reservelImages
+//        registry.addResourceHandler("/resources/reservelImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reserveImages/");
+//
+//        // 절대 경로 설정 - reviewImages
+//        registry.addResourceHandler("/resources/reviewImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reviewImages/");
+//    }
 //	
 //	  @Override
 //	    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
