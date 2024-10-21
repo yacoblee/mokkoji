@@ -9,7 +9,8 @@ function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete,
 
     useEffect(() => {
         myPageLike("/mypage/favorites")
-    }, [myPageNumber, userFavorites])
+        // console.log("여기입니다")
+    }, [myPageNumber, userFavorites.length])
 
 
 

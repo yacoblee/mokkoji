@@ -94,6 +94,9 @@ public class MyPageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류 : userUpdate");
 		}
 	}
+	
+	// 2.3. 비밀번호 호출
+	
 
 	
 	// 3. 주소지 관련

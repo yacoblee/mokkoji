@@ -101,9 +101,6 @@ function MyPageSet({ userMain }) {
                 <div className='ListTitle'>이름</div>
                 <div>{userInfo.name} ({userInfo.gender})</div>
 
-                <div className='ListTitle'>비밀번호</div>
-                <div>따로 제작 필요</div>
-
                 <div className='ListTitle'>생일</div>
                 <div>{userInfo.birthDate}</div>
 
