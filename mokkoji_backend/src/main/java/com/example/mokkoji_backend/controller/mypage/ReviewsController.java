@@ -77,8 +77,6 @@ public class ReviewsController {
 	public ResponseEntity<?> reviewInsert(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO, HttpServletRequest request) throws IOException {
 		String userId = getUserIdFromHeader(header);
 
-		log.warn(reviewsDTO);
-
 		// 2) Upload File 처리 *********************************
 		// 2.1) 물리적 실제 저장위치 확인 : file1
 		String realPath = request.getServletContext().getRealPath("/");
@@ -99,7 +97,7 @@ public class ReviewsController {
 			String basicImagePath = realPath + "basicImage.jpg";
 
 			FileInputStream fin = new FileInputStream(new File(basicImagePath));
-			// => basicImage 를 읽어 파일입력 바이트스트림 생성
+			// => basicImage를 읽어 파일입력 바이트스트림 생성
 			FileOutputStream fout = new FileOutputStream(file);
 			// => 목적지(realPath+"basicman.png") 파일출력 바이트스트림 생성
 			FileCopyUtils.copy(fin, fout);
@@ -129,7 +127,6 @@ public class ReviewsController {
 					reviewsDTO.getReviewContent(),
 					reviewsDTO.isLikeDislike(),
 					reviewsDTO.getReviewPhoto());
-
 			List<ReviewsDTO> reviewsDTOList = reviewsService.userReviews(userId);
 
 			return ResponseEntity.ok(reviewsDTOList);
