@@ -165,6 +165,13 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.4</version>  <!-- 최신 버전 사용 -->
 		</dependency>
+
+		<!-- test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
