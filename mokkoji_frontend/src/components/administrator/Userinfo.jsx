@@ -328,7 +328,7 @@ const Userinfo = () => {
             labels: ['전체', `${users.name}`],
             datasets: [
                 {
-                    data: [otherPurchase, userPercentage],
+                    data: [otherPurchase, userPurchase],
                     backgroundColor: ['#36A2EB', '#FF6384'],
 
                 },
@@ -338,6 +338,7 @@ const Userinfo = () => {
         return <>
             <div style={{ width: '300px', height: '200px' }}>
                 <Pie data={data} />
+                {/* 유저 결제 비율 :{userPercentage.toFixed(2)} */}
             </div>
         </>;
     };
