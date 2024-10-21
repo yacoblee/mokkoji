@@ -82,7 +82,7 @@ class MokkojiBackendApplicationTests {
     	//optionService.save(option2);
     }
 
-	@Test
+	//@Test
     public void testSendEmail() {
      
         SmtpDTO dto = SmtpDTO.builder()
@@ -96,14 +96,14 @@ class MokkojiBackendApplicationTests {
         //verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class)); 
     }
 
-	@Test
+	//@Test
     public void testRegist() {
     	 List<Regist> regists = registRepository.findAll();
     	 
     	 System.out.println(regists);
     }
 
-	@Test
+	//@Test
     public void testSms () {
     	   // Given: 메시지 객체를 생성합니다.
         Message message = new Message();

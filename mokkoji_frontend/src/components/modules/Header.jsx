@@ -23,15 +23,15 @@ const Header = () => {
             } catch (error) {
                 setIsAdmin(false);
                 setIsLoggedIn(false);
-                console.log('로그아웃상태')
+                //console.log('로그아웃상태')
             }
         }
         fetchAdminState();
 
     }, [token])
 
-    console.log(isAdmin ? '관리자 ' : '일반유저');
-    console.log(isLoggedIn ? '로그인상태 ' : '로그인하지않은상태');
+    //console.log(isAdmin ? '관리자 ' : '일반유저');
+    //console.log(isLoggedIn ? '로그인상태 ' : '로그인하지않은상태');
     useEffect(() => {
         const handleScroll = () => {
             const header = document.getElementById('header');
@@ -74,7 +74,7 @@ const Header = () => {
             .then((response) => {
                 sessionStorage.setItem("isLoggedIn", "false");
                 sessionStorage.removeItem("userData");
-                console.log(response);
+                //console.log(response);
                 alert('로그아웃 성공');
                 setIsLoggedIn(false);
                 setLoginInfo('');

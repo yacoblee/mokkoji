@@ -73,7 +73,7 @@ const ProductManagement = () => {
         setList(productList);
         setPageMaker(pageMaker);
         setCode(code);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch(err => {
         console.log(err);
@@ -192,7 +192,7 @@ const ProductManagement = () => {
     }))
   }
 
-  console.log(pageRequest);
+  //console.log(pageRequest);
 
   const searchProductAdmin = () => {
     // 기본 폼 제출 동작 막기
@@ -215,7 +215,7 @@ const ProductManagement = () => {
     setPage(1);  // 페이지도 초기화
     setSearchRequest(true);
   };
-  console.log(searchRequest);
+  //console.log(searchRequest);
   useEffect(() => {
     if (searchRequest) {
       searchData();
@@ -288,7 +288,7 @@ const ProductManagement = () => {
       axios.delete(uri)
         .then(response => {
           // handle success
-          console.log(response);
+          //console.log(response);
           window.location.reload(true);
         })
         .catch(error => {
@@ -445,7 +445,7 @@ const ProductManagement = () => {
             <button type="button" onClick={resetPageRequest}>초기화</button>
             <button type="button" onClick={() => {
               setIsModalProductALLOpen(true);
-              console.log("모달 열림 상태:", isModalProductALLOpen); // 상태값 확인용
+              //console.log("모달 열림 상태:", isModalProductALLOpen); // 상태값 확인용
             }}>
               상품 등록
             </button>
@@ -459,6 +459,7 @@ const ProductManagement = () => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>status</th>
               <th>Name</th>
               <th>Price</th>
               <th>StockCount</th>
@@ -471,6 +472,7 @@ const ProductManagement = () => {
             {list.map(product => (
               <tr key={product.id}>
                 <td>{product.id}</td>
+                <td>{code.find((e) => e.sub_type == product.status).sub_type_name}</td>
                 <td className="clickProductDetailTd"
                   onClick={() => onClickProductDetail(product.id)}>{product.name}</td>
                 <td>{product.price}</td>

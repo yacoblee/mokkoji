@@ -22,6 +22,8 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	//@EntityGraph(attributePaths = {"options"})
 	List<Products> findAll();
 	
+	List<Products> findByStatus(int status);
+	
 	@Query("SELECT new com.example.mokkoji_backend.domain.ProductsDTO"
 		       + "(p.id, p.name, p.price, p.mainImageName, p.categoryId, p.likeCount) FROM Products p")
 		List<ProductsDTO> findList();
@@ -38,8 +40,13 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 	
 	Page<Products> findByCategoryIdAndNameContaining(String categoryId , String name , Pageable pageable);
 	Page<Products> findByNameContaining(String name, Pageable pageable);
+	//staus 추가하여 넣기
+	Page<Products> findByStatus(int status,Pageable pageable);
+	Page<Products> findByCategoryIdAndStatus(String categoryId, int status, Pageable pageable);
+	Page<Products> findByCategoryIdAndStatusAndNameContaining(String categoryId , int status, String name , Pageable pageable);
+	Page<Products> findByStatusAndNameContaining(int status ,String name, Pageable pageable);
 	
-    @Query("SELECT p.stockCount FROM Products p WHERE p.id = :id ")
+	@Query("SELECT p.stockCount FROM Products p WHERE p.id = :id ")
     int getProductStockCount(@Param("id") Long id);
 	
 	List<Products> findByStockCountLessThanEqual(int stockCount);
@@ -70,7 +77,7 @@ public interface ProductsRepository extends JpaRepository<Products, Long>{
 
 
        Page<Products> findByNameContainingAndStatus(String name ,String status,  Pageable pageable);
-       Page<Products> findByStatus(int status,Pageable pageable);
+       //Page<Products> findByStatus(int status,Pageable pageable);
        
        @Query("SELECT p FROM Products p WHERE " +
                "(:name IS NULL OR p.name LIKE %:name%) AND " +

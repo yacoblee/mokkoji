@@ -58,6 +58,9 @@ public class ProductsServiceImpl implements ProductsService {
 	public List<Products> findAll() {
 		return repository.findAll();
 	}
+	public List<Products> getAvailableProducts(){
+		return repository.findByStatus(0);
+	}
 
 	// 전체 리스트 dto 반환
 	@Override
@@ -130,14 +133,14 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 1. 전체 링크(allGoods)
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findPageAll(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findAll(requestDTO.getPageable());
+		Page<Products> result = repository.findByStatus(0,requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 
 	//// 2. 카테고리 링크
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryId(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryId(requestDTO.getCategoryId(), requestDTO.getPageable());
+		Page<Products> result = repository.findByCategoryIdAndStatus(requestDTO.getCategoryId(),0, requestDTO.getPageable());
 		List<Products> dtoList = result.getContent();
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -158,7 +161,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 카테고리 , 이름 검색
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByCategoryIdAndNameContaining(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByCategoryIdAndNameContaining(requestDTO.getCategoryId(),
+		Page<Products> result = repository.findByCategoryIdAndStatusAndNameContaining(requestDTO.getCategoryId(),0,
 				requestDTO.getKeyword(), requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
@@ -166,7 +169,7 @@ public class ProductsServiceImpl implements ProductsService {
 	//// 이름 검색
 	@Override
 	public PageResultDTO<ProductsDTO, Products> findByNameContaining(PageRequestDTO requestDTO) {
-		Page<Products> result = repository.findByNameContaining(requestDTO.getKeyword(), requestDTO.getPageable());
+		Page<Products> result = repository.findByStatusAndNameContaining(0,requestDTO.getKeyword(), requestDTO.getPageable());
 		return new PageResultDTO<>(result, e -> dslentityToDto(e));
 	}
 

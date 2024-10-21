@@ -19,7 +19,7 @@ const ProductMainList = ({ title, sort }) => {
         axios.get(uri)
             .then(response => {
                 setList(response.data)
-                console.log(response.data);
+                //console.log(response.data);
             })
             .catch(err => {
                 //alert(err.message);

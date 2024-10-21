@@ -59,7 +59,7 @@ const ProductBuy = () => {
 
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
-        console.log(checkedCartItems);
+        //console.log(checkedCartItems);
     }, [checkedCartItems, filterPrice]);
 
     // 총 금액 및 배송비 상태 업데이트 함수
@@ -97,7 +97,7 @@ const ProductBuy = () => {
 
         // 계산된 총 금액을 updatePrice를 통해 최종 금액 도출
         updatePrices(totalPrice);
-        console.log(checkedCartItems);
+        //console.log(checkedCartItems);
     }, [dto, userCart, amount, checkedCartItems, filterPrice]);
     //옵션이 바뀌고 나면 업데이트, 카트아이템이 바뀔때 마다 업데이트,
     // 옵션이 바뀌어 filerprice가 바뀌면 업데이트
@@ -146,17 +146,15 @@ const ProductBuy = () => {
     const updateDtoAndCart = async () => {
         let url = "/order/bringcart"
         try {
-            console.log(dto);
+            //console.log(dto);
             //(url: any, method: any, requestData: any, token: any):
             const response = await apiCall(url, 'POST', dto, token);
             const { cartList } = response.data;
             //setDto(updateDto);
             setUserCart(cartList);
-            if (cartList) {
-                //alert("가져오기 성공");
-            }
-            console.log("성공했니");
-            console.log(cartList);
+            
+            //console.log("성공했니");
+            //console.log(cartList);
         } catch (error) {
             alert("가져오기 실패");
 

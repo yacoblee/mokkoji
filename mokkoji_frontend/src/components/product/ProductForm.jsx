@@ -83,10 +83,10 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
     });
     //9.11 코드 변경
     const [count, setConut] = useState(1);
-    console.log('상품', product)
-    console.log('옵션리스트', optionList)
-    console.log('옵션', options)
-    console.log('포장', packagings)
+    //console.log('상품', product)
+    //console.log('옵션리스트', optionList)
+    //console.log('옵션', options)
+    //console.log('포장', packagings)
 
     // 토탈 금액에 대한 state
     const [totalPrice, setTotalPrice] = useState(product.price ? +product.price : 0);
@@ -173,8 +173,8 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
             setIsModalOptionOpen(true);
             return;
         }
-        console.log(`content.contentSelect : ${content.contentSelect}`)
-        console.log(`content.contentSelect : ${content.packagingSelect}`)
+        //console.log(`content.contentSelect : ${content.contentSelect}`)
+        //console.log(`content.contentSelect : ${content.packagingSelect}`)
         const token = JSON.parse(sessionStorage.getItem('userData'));
 
         const insertOrder = async () => {
@@ -187,20 +187,20 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
                 productCnt: count,//해당하는 갯수(int)
                 productTotalPrice: totalPrice,//총계산을 마친 금액 (int)
             };
-            console.log(`${sendBasket.userId}`);
-            console.log(`${sendBasket.productId}`);
-            console.log(`${sendBasket.optionContent}`);
-            console.log(`${sendBasket.packagingOptionContent}`);
-            console.log(`${sendBasket.productCnt}`);
-            console.log(`${sendBasket.productTotalPrice}`);
+            //console.log(`${sendBasket.userId}`);
+            //console.log(`${sendBasket.productId}`);
+            //console.log(`${sendBasket.optionContent}`);
+            //console.log(`${sendBasket.packagingOptionContent}`);
+            //console.log(`${sendBasket.productCnt}`);
+            //console.log(`${sendBasket.productTotalPrice}`);
             try {
                 const response = await apiCall(`/order/page`, 'POST', sendBasket, token);
                 const { product, option, packaging, productBuy } = response.data; //(products Entity)(productOptions Entity)(packaing Entity)를 받아 state에 넣어줌.
                 //setLike(liked);
                 //alert(message);
-                console.log(product);
-                console.log(option);
-                console.log(packaging);
+                //console.log(product);
+                //console.log(option);
+                //console.log(packaging);
                 //alert('insertOrder 성공');
                 // 구매 페이지로 이동하며 선택한 옵션과 수량, 총 금액을 전달
                 navigate(`/orderpage`, {
@@ -211,7 +211,7 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
             } catch (error) {
                 //setLike(false);
                 console.log(`insert order error =>${error.message}`)
-                alert(`insertOrder 실패`);
+                //alert(`insertOrder 실패`);
             }
         }
         insertOrder();
@@ -225,9 +225,9 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
             setIsLoginModalOpen(true);
             return;
         }
-        console.log(`왼쪽 내용 : ${content.contentSelect}`)
-        console.log(`오른쪽 내용 : ${content.packagingSelect}`)
-        console.log(`위의 내용이 없으면 옵션 값이 넘어가지 못해서 모달창이 떠욘`)
+        //console.log(`왼쪽 내용 : ${content.contentSelect}`)
+        //console.log(`오른쪽 내용 : ${content.packagingSelect}`)
+        //console.log(`위의 내용이 없으면 옵션 값이 넘어가지 못해서 모달창이 떠욘`)
         if (!content.contentSelect || !content.packagingSelect) {
             setIsModalOptionOpen(true);
             return;
@@ -251,7 +251,7 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
             } catch (error) {
                 //setLike(false);
                 console.log(`insert Like error =>${error.message}`)
-                alert(`insert Like_ProductForm error =>${error.message}`);
+                //alert(`insert Like_ProductForm error =>${error.message}`);
             }
         }
         insertCart();
