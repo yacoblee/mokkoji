@@ -156,11 +156,11 @@ const UserManagement = () => {
         // API 호출
         apiCall(url, 'POST', targetUser, null)
             .then((response) => {
+                //console.log(response.data);
                 const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount, userPurchaseRank, totalAmount } = response.data;
 
                 // console.log("888통계포함8888", response.data);
                 // userPurchaseRank가 null일 경우 방어 코드로 기본값 설정
-                const purchaseRank = userPurchaseRank && userPurchaseRank.purchaseRank ? userPurchaseRank.purchaseRank : 0;
                 const percentageRank = userPurchaseRank && userPurchaseRank.percentageRank ? userPurchaseRank.percentageRank : 0;
 
                 // address 배열이 null이거나 비어 있는 경우 처리
@@ -172,8 +172,7 @@ const UserManagement = () => {
                         userAddress: userAddress,
                         orderCount: orderCount || 0,
                         totalPurchaseAmount: totalPurchaseAmount || 0,
-                        purchaseRank: purchaseRank,
-                        percentapercentageRankgeRank: percentageRank,
+                        percentageRank: percentageRank,
                         totalAmount: totalAmount || 0,
                         averagePurchaseAmount: averagePurchaseAmount || 0
                     }

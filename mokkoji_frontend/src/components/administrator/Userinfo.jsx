@@ -24,20 +24,22 @@ const Userinfo = () => {
         userAddress,
         orderCount = 0,  // 기본값 설정
         totalPurchaseAmount = 0,  // 기본값 설정 (유저가 구매하지 않은 경우 0)
-        purchaseRank = 0,  // 기본값 설정
+        // purchaseRank = 0,  // 기본값 설정
         percentageRank = 0,  // 기본값 설정
         totalAmount = 0,  // 기본값 설정
         averagePurchaseAmount = 0  // 기본값 설정
     } = location.state || {};
 
-    // 유저의 총 구매 금액
-    const userPurchase = totalPurchaseAmount || 0;  // 유저가 구매하지 않은 경우 0으로 처리
+    const userPercentage = totalAmount > 0 ? (totalPurchaseAmount / totalAmount) * 100 : 0;
 
-    // 유저의 구매 비율 (총 구매 금액 중 유저가 차지하는 비율)
-    const userPercentage = totalAmount > 0 ? (userPurchase / totalAmount) * 100 : 0;  // 전체 구매 금액 대비 비율
+    // // 유저의 총 구매 금액
+    // const userPurchase = totalPurchaseAmount || 0;  // 유저가 구매하지 않은 경우 0으로 처리
 
-    // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
-    const otherPurchase = totalAmount - userPurchase;
+    // // 유저의 구매 비율 (총 구매 금액 중 유저가 차지하는 비율)
+    // const userPercentage = totalAmount > 0 ? (userPurchase / totalAmount) * 100 : 0;  // 전체 구매 금액 대비 비율
+
+    // // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
+    // const otherPurchase = totalAmount - userPurchase;
 
 
 
@@ -328,7 +330,7 @@ const Userinfo = () => {
             labels: ['전체', `${users.name}`],
             datasets: [
                 {
-                    data: [otherPurchase, userPurchase],
+                    data: [100 - userPercentage, userPercentage],
                     backgroundColor: ['#36A2EB', '#FF6384'],
 
                 },
@@ -490,14 +492,14 @@ const Userinfo = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>구매비율</th>
+                                        <th>구매 순위</th>
                                         <td>
-                                            {purchaseRank
-                                                ? `상위 ${userPercentage.toFixed(2)} % 구매고객 입니다.`
+                                            {percentageRank
+                                                ? `상위 ${percentageRank} % 구매고객 입니다.`
                                                 : '구매 내역이 없습니다'}
                                         </td>
 
-                                        <th >통계차트</th>
+                                        <th >구매 금액 비율</th>
                                         <td>{totalMoneyAmountPie()}</td>
                                     </tr>
                                     <tr>
