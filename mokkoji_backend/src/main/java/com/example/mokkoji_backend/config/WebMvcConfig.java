@@ -62,11 +62,13 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		//혜미 서버 주소
 		//.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
 		.allowedOrigins("http://localhost:3000")
+//		.allowedOrigins("http://localhost:3000", "http://15.164.55.161")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
 		.allowedHeaders("*")
 		.allowCredentials(true)
 		.maxAge(MAX_AGE_SECS);
 	}//addCorsMappings : React project CORS 방침 설정
+
 	
 	//혜미 경로 
 //    @Override
@@ -83,6 +85,27 @@ public class WebMvcConfig implements WebMvcConfigurer{
 //        registry.addResourceHandler("/resources/reviewImages/**")
 //                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reviewImages/");
 //    }
+
+	//승현 경로 
+//  @Override
+//  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//      // 절대 경로 설정 - productImages
+//      registry.addResourceHandler("/resources/productImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/productImages/");
+//
+//      // 절대 경로 설정 - reservelImages
+//      registry.addResourceHandler("/resources/reservelImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reserveImages/");
+//
+//      // 절대 경로 설정 - reviewImages
+//      registry.addResourceHandler("/resources/reviewImages/**")
+//              .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reviewImages/");
+//      // 절대 경로 설정 - reserveImages
+//      registry.addResourceHandler("/resources/reserveImages/**")
+//      .addResourceLocations("file:/home/ec2-user/mokkoji/mokkoji_backend/src/main/webapp/resources/reserveImages/");
+//  }
+	
+
 //	
 //	  @Override
 //	    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

@@ -61,7 +61,6 @@ public class PaymentService {
             .activeDate(activeDate)   
             .build();
        
-        System.out.println("@@@@@@@@@@@history :"+history);
         registedHistoryRepository.save(history);
     }
 }

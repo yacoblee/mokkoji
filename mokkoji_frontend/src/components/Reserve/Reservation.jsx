@@ -93,7 +93,6 @@ const Reservation = () => {
                         console.error("결제 처리 중 오류 발생:", error);
                         alert("결제에 실패했습니다. 다시 시도해 주세요.");
                     }
-                    console.log("결제 성공");
                 } else {
                     console.log("결제 실패:", rsp.error_msg);
                     alert("결제 실패: " + rsp.error_msg);
@@ -122,7 +121,6 @@ const Reservation = () => {
                     // 예약 카운트 상태 업데이트
                     setReservationCounts(counts);
                 }
-                console.log(reserveImage);
                 setReserveImage(reserveImage);
                 setRegistsData(regists);
             })
