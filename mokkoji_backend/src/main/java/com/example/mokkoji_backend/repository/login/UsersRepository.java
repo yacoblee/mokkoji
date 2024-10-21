@@ -54,4 +54,18 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	List<Users> findBySearchUserPhoneNumber(@Param("keyword") String keyword, @Param("searchType") String searchType);
 
 	
+	@Query(value = "SELECT "
+	        + "RANK() OVER (ORDER BY total_purchase DESC) AS user_rank, "  // 'rank' -> 'user_rank'로 변경
+	        + "user_id, "
+	        + "total_purchase, "
+	        + "(RANK() OVER (ORDER BY total_purchase DESC) / total_users) * 100 AS percentage_rank "
+	        + "FROM ( "
+	        + "    SELECT user_id, SUM(total) AS total_purchase "
+	        + "    FROM orders "
+	        + "    GROUP BY user_id "
+	        + ") AS purchase_totals, "
+	        + "(SELECT COUNT(DISTINCT user_id) AS total_users FROM orders) AS total_users "
+	        + "WHERE user_id = :userId", nativeQuery = true)
+	List<Object[]> findUserPurchaseRank(@Param("userId") String userId);
+	
 }

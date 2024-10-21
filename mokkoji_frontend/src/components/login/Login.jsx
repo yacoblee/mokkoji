@@ -21,7 +21,6 @@ const Login = () => {
     const loginP = useRef(null);
     useEffect(() => {
         if (isLoggedIn) {
-            console.log("네비 이동 직전임");
             window.location.href = '/';
         }
     }, [isLoggedIn]);  // isLoggedIn 값이 변경되면 페이지 이동
@@ -61,11 +60,10 @@ const Login = () => {
         const data = { userId: inputId, password: inputPw };
 
         e.preventDefault();
-        console.log("API 호출 직전");  // 이 로그가 출력되는지 확인
         apiCall(url, 'POST', data, null)
             .then((response) => {
-                console.log("API 호출 성공:", response);  // 응답 전체 출력
-                console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
+                //console.log("API 호출 성공:", response);  // 응답 전체 출력
+                //console.log("응답 상태 코드:", response.status);  // 상태 코드 출력
 
                 // 서버에서 200 OK 응답을 받았는지 확인
                 if (response.status === 200) {
@@ -73,8 +71,7 @@ const Login = () => {
                     alert('로그인 성공');
                     sessionStorage.setItem("userData", JSON.stringify(response.data));  // response.data 사용
                     setIsLoggedIn(true); //-> 상태값 미변화로 인한 이동제한이 원인일 수 있어 넣어둠
-                    console.log("네비 이동 직전임");
-                    console.log("네비 이동 후");
+
                 }
             })
             .catch((err) => {

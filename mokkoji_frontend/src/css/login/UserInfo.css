@@ -161,3 +161,8 @@ color: red;
 .btn_confirm input:hover{
   background-color: #393c3a;
 }
+
+.totalMoneyAmountPie{
+  width: 150px;
+  height: 150px;
+}

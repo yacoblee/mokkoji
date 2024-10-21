@@ -22,5 +22,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 	@Query("SELECT SUM(o.total) FROM Orders o WHERE o.userId = :userId")
 	Long totalPurchaseAmount(String userId);
 	
-	
+	@Query("SELECT SUM(o.total) FROM Orders o")
+	Long totalAmount();
 }

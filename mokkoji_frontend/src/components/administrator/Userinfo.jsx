@@ -6,18 +6,42 @@ import DaumPostcode from 'react-daum-postcode';
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 import moment from 'moment';
 import { apiCall } from '../../service/apiService';
-
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import { registerables, CategoryScale } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+// Chart.js의 ArcElement를 등록
+Chart.register(ArcElement, Tooltip, Legend);
+Chart.register(...registerables, CategoryScale);
 
 
 const Userinfo = () => {
     //부모 컴포넌트에서 넘겨준 값 처리 
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
-    console.log(dbData);
-    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우 기본값 설정
-    // 초기 유저 데이터 값 
+    //console.log('전달된 객체', dbData);
+    const {
+        users,
+        userAddress,
+        orderCount = 0,  // 기본값 설정
+        totalPurchaseAmount = 0,  // 기본값 설정 (유저가 구매하지 않은 경우 0)
+        purchaseRank = 0,  // 기본값 설정
+        percentageRank = 0,  // 기본값 설정
+        totalAmount = 0,  // 기본값 설정
+        averagePurchaseAmount = 0  // 기본값 설정
+    } = location.state || {};
+
+    // 유저의 총 구매 금액
+    const userPurchase = totalPurchaseAmount || 0;  // 유저가 구매하지 않은 경우 0으로 처리
+
+    // 유저의 구매 비율 (총 구매 금액 중 유저가 차지하는 비율)
+    const userPercentage = totalAmount > 0 ? (userPurchase / totalAmount) * 100 : 0;  // 전체 구매 금액 대비 비율
+
+    // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
+    const otherPurchase = totalAmount - userPurchase;
+
+
+
     const [currentIndex, setCurrentIndex] = useState(0);
-    console.log("currentIndex", currentIndex)
     const navigator = useNavigate();
     const firstAdminInputUserinfo = {
         email: '', // 이메일
@@ -34,7 +58,7 @@ const Userinfo = () => {
         const regex = checkInputInfo[name]; // checkInputInfo에서 정규식 가져오기
 
         if (!regex) {
-            console.warn(`No validation rule found for field: ${name}`);
+            //console.warn(`No validation rule found for field: ${name}`);
             return ''; // 기본적으로 true 반환 (유효성 검사가 없는 필드)
         }
         return regex.test(value); // 정규식이 존재하면 test 메서드 실행
@@ -229,8 +253,6 @@ const Userinfo = () => {
         }))
     );
 
-    console.log("checked", checked);
-    console.log("isCheckInputInfo", isCheckInputInfo);
 
     const insertDB = (e) => {
         e.preventDefault();
@@ -246,8 +268,6 @@ const Userinfo = () => {
         const isCheckInputInfoCondition = Object.values(isCheckInputInfo).every(value => value === true);
 
         if (checkedCondition && isCheckInputInfoCondition) {
-            console.log('유저정보', adminInputUserinfo);
-            console.log('주소정보', rows);
             let url = '/administrator/users/userinfo/userinfoupdate';
             const data = {
                 userinfo: adminInputUserinfo,
@@ -270,12 +290,10 @@ const Userinfo = () => {
 
 
     const removeAdress = (index) => {
-        console.log('삭제 행', rows[index]);
         let url = '/administrator/users/userinfo/addressdelete'
 
         apiCall(url, 'POST', rows[index], null)
             .then((response) => {
-                console.log(response)
                 alert(response.data);
                 navigator('/administrator/users');
             }).catch((err) => {
@@ -297,7 +315,6 @@ const Userinfo = () => {
         }
         apiCall(url, 'POST', data, null)
             .then((response) => {
-                console.log(response)
                 alert(response.data);
                 navigator('/administrator/users');
             }).catch((err) => {
@@ -306,7 +323,24 @@ const Userinfo = () => {
 
     }
 
-    console.log("유저정보", users);
+    const totalMoneyAmountPie = () => {
+        const data = {
+            labels: ['전체', `${users.name}`],
+            datasets: [
+                {
+                    data: [otherPurchase, userPercentage],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+
+                },
+            ],
+        };
+
+        return <>
+            <div style={{ width: '300px', height: '200px' }}>
+                <Pie data={data} />
+            </div>
+        </>;
+    };
 
     return (
         <div className='userinfo-container'>
@@ -449,9 +483,20 @@ const Userinfo = () => {
                                         <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원</td>
+                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원<br />
+                                        </td>
                                     </tr>
+                                    <tr>
+                                        <th>구매비율</th>
+                                        <td>
+                                            {purchaseRank
+                                                ? `${users.name}님은 상위 ${purchaseRank} % 입니다.`
+                                                : '구매 내역이 없습니다'}
+                                        </td>
 
+                                        <th >통계차트</th>
+                                        <td>{totalMoneyAmountPie()}</td>
+                                    </tr>
                                     <tr>
                                         <th >접근차단여부</th>
                                         <td>
@@ -476,12 +521,15 @@ const Userinfo = () => {
                                         </td>
 
                                         <th>1회 평균 금액</th>
-                                        <td>{averagePurchaseAmount}원</td>
+                                        <td> {averagePurchaseAmount
+                                            ? `${averagePurchaseAmount}원`
+                                            : '구매 내역이 없습니다'}</td>
                                     </tr>
-                                    {/* 
-                                    <tr>
+
+                                    {/* <tr>
                                         <th>관리자메모</th>
-                                        <td colSpan="3"><textarea name="memo" className="frm_textbox" rows="3"></textarea></td>
+                                        <td colSpan="3" >{totalMoneyAmountPie()}
+                                        </td>
                                     </tr> */}
 
                                 </tbody>
@@ -515,6 +563,7 @@ const Userinfo = () => {
                 <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
                 <DaumPostcode onComplete={(data) => handleComplete(data, currentIndex)} />
             </Modal>
+
         </div>
     );
 };

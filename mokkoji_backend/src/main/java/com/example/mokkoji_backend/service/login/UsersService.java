@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.example.mokkoji_backend.domain.MyPageDTO;
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
+import com.example.mokkoji_backend.domain.UserPurchaseRankDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 
@@ -51,4 +52,6 @@ public interface UsersService {
 	 void userIsWithdrawnUpdate(Users entity);
 	 
 	 void userAdmimInfoUpdate (Users entity);
+	 
+	 UserPurchaseRankDTO getUserPurchaseRank(String userId);
 }

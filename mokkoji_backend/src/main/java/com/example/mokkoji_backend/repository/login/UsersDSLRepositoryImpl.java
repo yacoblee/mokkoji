@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.repository.login;
 
 import static com.example.mokkoji_backend.entity.login.QUsers.users;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.example.mokkoji_backend.domain.PageRequestDTO;
+import com.example.mokkoji_backend.domain.UserPurchaseRankDTO;
 import com.example.mokkoji_backend.entity.login.Users;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 		if (keyword != null && !keyword.isEmpty()) {
 			switch (searchType) {
 			case "all":
-				builder.and(users.userId.containsIgnoreCase(keyword)
-						.or(users.name.containsIgnoreCase(keyword))
+				builder.and(users.userId.containsIgnoreCase(keyword).or(users.name.containsIgnoreCase(keyword))
 						.or(users.phoneNumber.containsIgnoreCase(keyword)));
 				break;
 			case "userId":
@@ -52,7 +52,7 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 				throw new IllegalArgumentException("Invalid searchType: " + searchType);
 			}
 		}
-		if(startDate != null && endDate != null) {
+		if (startDate != null && endDate != null) {
 			switch (dateSearchType) {
 			case "createdAt":
 				builder.and(users.createdAt.between(startDate, endDate));
@@ -60,41 +60,29 @@ public class UsersDSLRepositoryImpl implements UsersDSLRepository {
 			case "updatedAt":
 				builder.and(users.updatedAt.between(startDate, endDate));
 				break;
-			
+
 			default:
 				throw new IllegalArgumentException("dateSearchType value: " + dateSearchType);
 			}
 		}
-		if(isAdmin==0) {
+		if (isAdmin == 0) {
 			builder.and(users.isAdmin.eq("0"));
-		}else if( isAdmin==1) {
+		} else if (isAdmin == 1) {
 			builder.and(users.isAdmin.eq("1"));
-		}else if(isAdmin==2) {
-		   
-		}
-		else {
+		} else if (isAdmin == 2) {
+
+		} else {
 			throw new IllegalArgumentException("isAdmin value: " + isAdmin);
 		}
 
-	QueryResults<Users> result = jpaQueryFactory.selectFrom(users)
-                .where(builder)
-                .offset(pagerable.getOffset())
-                .limit(pagerable.getPageSize())
-                .fetchResults();
-	
+		QueryResults<Users> result = jpaQueryFactory.selectFrom(users).where(builder).offset(pagerable.getOffset())
+				.limit(pagerable.getPageSize()).fetchResults();
 
 		List<Users> users = result.getResults();
 		long total = result.getTotal();
-		
+
 		return new PageImpl<>(users, pagerable, total);
 	}
-	
-	
-//	public int usersOrderCount(String userId) {
-//		
-//		
-//		
-//		return 0;
-//	}
+
 
 }
