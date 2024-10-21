@@ -18,9 +18,17 @@ const Userinfo = () => {
     //부모 컴포넌트에서 넘겨준 값 처리 
     const location = useLocation();
     let dbData = location.state;  // 전달된 dbData 객체
-    console.log(dbData);
-    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우 기본값 설정
-    // 초기 유저 데이터 값 
+    console.log('전달된 객체', dbData);
+    const { users, userAddress, averagePurchaseAmount, orderCount, totalPurchaseAmount, purchaseRank, percentageRank, totalPurchase, totalAmount, formataveragePurchaseAmount } = location.state || {}; // 전달된 state가 없을 경우 기본값 설정
+
+    // 통계 값 처리 
+    const userPurchase = totalAmount;  // 유저의 총 구매 금액
+    const userPercentage = totalAmount > 0 ? (totalPurchaseAmount / totalAmount) * 100 : 0;  // 유저의 구매 비율
+    const otherPurchase = totalAmount - totalPurchaseAmount;  // 나머지 구매 금액
+
+    console.log('****************', formataveragePurchaseAmount, userPurchase, userPercentage, otherPurchase);
+    // 초기 유저 데이터 값
+
     const [currentIndex, setCurrentIndex] = useState(0);
     console.log("currentIndex", currentIndex)
     const navigator = useNavigate();
@@ -313,10 +321,10 @@ const Userinfo = () => {
 
     const totalMoneyAmountPie = () => {
         const data = {
-            labels: ['전체', `${users.name}님 구매금액`],
+            labels: ['전체', `${users.name}`],
             datasets: [
                 {
-                    data: [2, 98],
+                    data: [otherPurchase, userPercentage],
                     backgroundColor: ['#36A2EB', '#FF6384'],
                 },
             ],
@@ -472,10 +480,20 @@ const Userinfo = () => {
                                         <td>{orderCount} 회</td>
 
                                         <th >총구매금액</th>
-                                        <td>{totalPurchaseAmount == "NaN" ? '0' : totalPurchaseAmount}원<br/>
-                                        {totalMoneyAmountPie()}</td>
+                                        <td>{formataveragePurchaseAmount == "NaN" ? '0' : formataveragePurchaseAmount}원<br />
+                                        </td>
                                     </tr>
+                                    <tr>
+                                        <th>구매비율</th>
+                                        <td>
+                                            {purchaseRank
+                                                ? `${users.name}님은 상위 ${purchaseRank} % 입니다.`
+                                                : '구매 내역이 없습니다'}
+                                        </td>
 
+                                        <th >통계차트</th>
+                                        <td>{totalMoneyAmountPie()}</td>
+                                    </tr>
                                     <tr>
                                         <th >접근차단여부</th>
                                         <td>
@@ -500,7 +518,9 @@ const Userinfo = () => {
                                         </td>
 
                                         <th>1회 평균 금액</th>
-                                        <td>{averagePurchaseAmount}원</td>
+                                        <td> {totalPurchaseAmount
+                                            ? `${totalPurchaseAmount}원`
+                                            : '구매 내역이 없습니다'}</td>
                                     </tr>
 
                                     {/* <tr>
@@ -540,6 +560,7 @@ const Userinfo = () => {
                 <button className='modalbtn' onClick={() => setIsModalOpen(false)}>X</button>
                 <DaumPostcode onComplete={(data) => handleComplete(data, currentIndex)} />
             </Modal>
+
         </div>
     );
 };

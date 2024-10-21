@@ -21,9 +21,12 @@ const UserManagement = () => {
     const [userinfo, setUserinfo] = useState(list);
 
     const userOrder = {
-        averagePurchaseAmount: '',
-        orderCount: '',
-        totalPurchaseAmount: ''
+        averagePurchaseAmount: '',// 평균 주문 금액
+        orderCount: '', // 구매 횟수
+        totalPurchaseAmount: '', // 유저 기준 총 구매금액
+        purchaseRank: '',// 구매 금액 기준 순위
+        percentageRank: '', // 백분위 순위 
+        totalAmount: '' // order 기준 구매 총합 
     }
     const [userOrderinfo, setUsersOrderinfo] = useState(userOrder);
     const inputData = {
@@ -156,20 +159,35 @@ const UserManagement = () => {
         // API 호출
         apiCall(url, 'POST', targetUser, null)
             .then((response) => {
-                const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount } = response.data;
-                console.log("UsersAddress", userAddress);
+                const { address, orderCount, totalPurchaseAmount, averagePurchaseAmount, userPurchaseRank, totalAmount } = response.data;
+
+                console.log("888통계포함8888", response.data);
                 const formattedAveragePurchaseAmount = totalPurchaseAmount.toLocaleString();
-                const formattedTotalPurchaseAmount = averagePurchaseAmount.toLocaleString();
-                // 상태가 업데이트된 후에 navigate 호출
+                const formattedTotalPurchaseAmount = averagePurchaseAmount && !isNaN(averagePurchaseAmount)
+                    ? averagePurchaseAmount.toLocaleString()
+                    : "0";  // averagePurchaseAmount가 NaN일 경우 "0"으로 처리
+
+                // userPurchaseRank가 null일 경우 방어 코드로 기본값 설정
+                const purchaseRank = userPurchaseRank && userPurchaseRank.purchaseRank ? userPurchaseRank.purchaseRank : 0;
+                const percentageRank = userPurchaseRank && userPurchaseRank.percentageRank ? userPurchaseRank.percentageRank : 0;
+
+                // address 배열이 null이거나 비어 있는 경우 처리
+                const userAddress = address && address.length > 0 ? address : [];
+                // navigate 호출
                 navigate(`/administrator/users/userinfo`, {
                     state: {
                         users: targetUser,
-                        userAddress: address.length > 0 ? address : [],
-                        orderCount: orderCount,
-                        totalPurchaseAmount: formattedAveragePurchaseAmount,
-                        averagePurchaseAmount: formattedTotalPurchaseAmount
+                        userAddress: userAddress,
+                        orderCount: orderCount || 0,  // orderCount가 없으면 0으로 처리
+                        totalPurchaseAmount: formattedTotalPurchaseAmount,
+                        formataveragePurchaseAmount: formattedAveragePurchaseAmount,
+                        averagePurchaseAmount:averagePurchaseAmount,
+                        purchaseRank: purchaseRank,
+                        percentageRank: percentageRank,
+                        totalAmount: totalAmount || 0  // totalAmount가 없으면 0으로 처리
                     }
                 });
+
             })
             .catch((err) => {
                 setUsersAddress(null);  // 에러 발생 시 주소 정보 초기화

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.mokkoji_backend.domain.PageRequestDTO;
 import com.example.mokkoji_backend.domain.PageResultDTO;
 import com.example.mokkoji_backend.domain.UserAndAddressDTO;
+import com.example.mokkoji_backend.domain.UserPurchaseRankDTO;
 import com.example.mokkoji_backend.domain.UserSendMailDTO;
 import com.example.mokkoji_backend.domain.UsersDTO;
 import com.example.mokkoji_backend.entity.login.Address;
@@ -41,13 +43,12 @@ public class AdminUsersController {
 		log.info("********" + requestDTO);
 		PageResultDTO<UsersDTO, Users> result = userService.findUserinfoToSearch(requestDTO);
 		List<UsersDTO> dto = result.getDtoList();
-
 		int count = userService.countBy();
 		log.info("$$ 서치 결과"+result);
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("users", dto );
 	    response.put("pageMaker", result);
-	    response.put("count", count);
+	    response.put("count", count); 
 		return ResponseEntity.ok(response);
 	}
 	
@@ -71,13 +72,20 @@ public class AdminUsersController {
 	    Double averagePurchaseAmount = Math.floor((double) totalPurchaseAmount / orderCount);
 	    log.info("Total Purchase Amount: {}", totalPurchaseAmount);
 	    log.info("averagePurchaseAmount: {}", averagePurchaseAmount);
-	   
+
+	    UserPurchaseRankDTO userPurchaseRank = userService.getUserPurchaseRank(requestDTO.getUserId());
+	 
+	    Long totalAmount = ordersRepository.totalAmount();
+		log.info("$$$$$$$$$$$$ Total amount: {}", totalAmount);
+		log.info("$$$$$$$$$$$$ userPurchaseRank: {}", userPurchaseRank);
 	        // 주소와 주문 횟수를 함께 반환
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("address", address);
 	        response.put("orderCount", orderCount);
 	        response.put("totalPurchaseAmount", totalPurchaseAmount); 
 	        response.put("averagePurchaseAmount", averagePurchaseAmount); 
+	        response.put("userPurchaseRank", userPurchaseRank);
+	        response.put("totalAmount", totalAmount);
 	        return ResponseEntity.ok(response);
 	    
 	}
