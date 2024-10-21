@@ -58,7 +58,7 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	        + "RANK() OVER (ORDER BY total_purchase DESC) AS user_rank, "  // 'rank' -> 'user_rank'로 변경
 	        + "user_id, "
 	        + "total_purchase, "
-	        + "(RANK() OVER (ORDER BY total_purchase DESC) / total_users) * 100 AS percentage_rank "
+	        + "ROUND((RANK() OVER (ORDER BY total_purchase DESC) / total_users) * 100, 2) AS percentage_rank "
 	        + "FROM ( "
 	        + "    SELECT user_id, SUM(total) AS total_purchase "
 	        + "    FROM orders "
