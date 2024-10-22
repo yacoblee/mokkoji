@@ -77,7 +77,7 @@ function MyPageBook({ myPageRegist, userRegist, bookUpdateAdult, bookUpdateTeen,
                                     <td>성인</td>
                                     <td>청소년</td>
                                     <td rowSpan={2}>총 금액 : {regist.registCnt}</td>
-                                    <td>예약 일자 : {moment(regist.activeDate).format("YYYY-MM-DD")} </td>
+                                    <td>예약 일자 : {moment(date).format("YYYY-MM-DD")} </td>
                                     <td rowSpan={2}>
                                         <button className='SelectDeleteButton' onClick={() => { bookDelete(`/mypage/${regist.registId}`) }}>
                                             삭제

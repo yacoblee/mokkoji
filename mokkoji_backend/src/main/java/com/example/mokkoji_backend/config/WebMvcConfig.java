@@ -60,7 +60,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		
 		registry.addMapping("/**")
 		//혜미 서버 주소
-		.allowedOrigins("http://52.79.165.192:3000 ", "http://52.79.165.192")
+		//.allowedOrigins("http://52.79.165.192:3000 ", "http://52.79.165.192")
 		.allowedOrigins("http://localhost:3000")
 //		.allowedOrigins("http://localhost:3000", "http://15.164.55.161")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
@@ -71,20 +71,20 @@ public class WebMvcConfig implements WebMvcConfigurer{
 
 	
 	//혜미 경로 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 절대 경로 설정 - productImages
-        registry.addResourceHandler("/resources/productImages/**")
-                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/productImages/");
-
-        // 절대 경로 설정 - reservelImages
-        registry.addResourceHandler("/resources/reservelImages/**")
-                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reserveImages/");
-
-        // 절대 경로 설정 - reviewImages
-        registry.addResourceHandler("/resources/reviewImages/**")
-                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reviewImages/");
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        // 절대 경로 설정 - productImages
+//        registry.addResourceHandler("/resources/productImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/productImages/");
+//
+//        // 절대 경로 설정 - reservelImages
+//        registry.addResourceHandler("/resources/reservelImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reserveImages/");
+//
+//        // 절대 경로 설정 - reviewImages
+//        registry.addResourceHandler("/resources/reviewImages/**")
+//                .addResourceLocations("file:/home/ubuntu/backend/src/main/webapp/resources/reviewImages/");
+//    }
 
 	//승현 경로 
 //  @Override
