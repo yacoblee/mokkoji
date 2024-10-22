@@ -21,7 +21,7 @@ function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete,
                 <div>
                     <input
                         type="checkbox"
-                        checked={productIdList.length === userFavorites.length}
+                        checked={productIdList.length === 0 ? false : productIdList.length === userFavorites.length}
                         onChange={favoritesAllCheckBoxChange}
                     />
                 </div>
@@ -74,7 +74,7 @@ function MyPageLike({ userFavorites, productIdList, myPageLike, favoritesDelete,
                 <div>
                     <input
                         type="checkbox"
-                        checked={productIdList.length === userFavorites.length}
+                        checked={productIdList.length === 0 ? false : productIdList.length === userFavorites.length}
                         onChange={favoritesAllCheckBoxChange}
                     />
                 </div>

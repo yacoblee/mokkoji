@@ -599,3 +599,143 @@ VALUES
 ('user013', 'password013', '박상민', '1979-04-04', 'M', '010-4567-8901', 'parksangmin@example.com',  1, '2023-01-15 10:00:00', '2023-01-14', '2020-01-15', 1, '0', 5),
 ('user014', 'password014', '서지현', '1991-11-23', 'F', '010-5678-9012', 'seojihyun@example.com', 0, NULL, '2024-09-25', '2021-01-01', 0, '0', 6),
 ('user015', 'password015', '류수영', '1985-02-14', 'M', '010-6789-0123', 'ryusuyoung@example.com',  0, NULL, '2024-08-30', '2021-03-10', 0, '0', 13);
+
+
+
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(9, 'user1', 5, 336000, '네이버 페이', '2024-10-04 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(10, 'user1', 15, 74000, '신용 카드', '2024-10-04 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(11, 'user1', 5, 8000, '카카오페이', '2024-10-04 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(12, 'user1', 5, 25000, '카카오페이', '2024-10-04 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(13, 'user1', 5, 72000, '카카오페이', '2024-10-04 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(14, 'user1', 5, 37000, '네이버 페이', '2024-10-07 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(15, 'user1', 5, 46000, '네이버 페이', '2024-10-07 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(16, 'user1', 5, 114000, '네이버 페이', '2024-10-07 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(17, 'user001', 16, 171000, '네이버 페이', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(18, 'user001', 17, 50000, '네이버 페이', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(19, 'user001', 16, 37000, '신용 카드', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(20, 'user002', 18, 88000, '네이버 페이', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(21, 'user004', 19, 194300, '신용 카드', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(22, 'hyemi4251', 7, 95000, '신용 카드', '2024-10-14 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(23, 'user005', 21, 50200, '네이버 페이', '2024-10-15 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(24, 'user005', 22, 50200, '네이버 페이', '2024-10-15 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(25, 'user1', 5, 169000, '네이버 페이', '2024-10-15 00:00:00', '1');
+INSERT INTO project.orders
+(purchase_number, user_id, address_id, total, `method`, reg_date, purchase_status)
+VALUES(26, 'user1', 5, 127000, '카카오페이', '2024-10-21 00:00:00', '1');
+
+
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(9, 9, 'L', '굿즈 천 포장', 3, 165000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(9, 12, '백자색', '굿즈 부직포 가방', 3, 171000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(10, 15, '검정색', '굿즈 부직포 가방', 2, 74000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(11, 3, '좋은 생각(퍼플)', '굿즈 부직포 가방', 1, 5000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(12, 14, '검정색', '굿즈 부직포 가방', 1, 22000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(13, 9, 'M', '굿즈 부직포 가방', 1, 50000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(13, 14, '검정색', '굿즈 부직포 가방', 1, 22000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(14, 15, '노란색', '굿즈 부직포 가방', 1, 37000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(15, 3, '하트 뿅뿅(블루)', '굿즈 기본 포장', 3, 9000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(15, 15, '노란색', '굿즈 부직포 가방', 1, 37000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(16, 12, '청자색', '굿즈 부직포 가방', 2, 114000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(17, 12, '청자색', '굿즈 부직포 가방', 3, 171000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(18, 9, 'M', '굿즈 부직포 가방', 1, 50000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(19, 15, '노란색', '굿즈 부직포 가방', 1, 37000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(20, 1, '취객선비 3인방 변색 잔세트', '굿즈 부직포 가방', 1, 28000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(20, 1, '취객선비 3인방 변색 잔세트', '굿즈 천 포장', 2, 60000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(21, 2, '테스트중2', '굿즈 천 포장', 3, 72300);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(21, 14, '검정색', '굿즈 기본 포장', 1, 20000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(21, 18, '흰색', '굿즈 천 포장', 3, 102000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(22, 1, '취객선비 3인방 변색 잔세트', '굿즈 천 포장', 3, 90000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(22, 3, '좋은 생각(퍼플)', '굿즈 부직포 가방', 1, 5000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(23, 13, '흑백 줄무늬', '굿즈 기본 포장', 2, 50200);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(24, 13, '흑백 줄무늬', '굿즈 기본 포장', 2, 50200);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(25, 3, '하트 뿅뿅(블루)', '굿즈 부직포 가방', 2, 10000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(25, 9, 'L', '굿즈 부직포 가방', 3, 159000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(26, 12, '청자색', '굿즈 부직포 가방', 1, 57000);
+INSERT INTO project.ordersdetail
+(purchase_number, product_id, option_content, packaging_option_content, product_cnt, product_total_price)
+VALUES(26, 15, '검정색', '굿즈 기본 포장', 2, 70000);

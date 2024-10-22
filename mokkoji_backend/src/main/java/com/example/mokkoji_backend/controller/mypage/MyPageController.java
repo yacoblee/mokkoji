@@ -130,7 +130,7 @@ public class MyPageController {
 					address.getLocationName(),
 					address.getRecipientName(),
 					address.getRecipientPhone(),
-					address.getUserId(),
+					userId,
 					address.getIsDefault(),
 					address.getAddressId()
 			);

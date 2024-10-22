@@ -8,7 +8,6 @@ import com.example.mokkoji_backend.domain.RegistedHistoryDTO;
 
 
 public interface RegistedHistoryRepositoryDSL {
-
 	
 	// 특정 유저의 예약 내역 조회
 //	List<Registedhistory> findByUser_UserId(String userId);

@@ -38,6 +38,9 @@ if (hostname === "localhost") {
   //backendHost = "http://13.209.236.187:8080";
   // 승현
   // backendHost = "http://3.37.182.103:8080";
+  // 효윤
+  //backendHost = "http://52.79.165.192:8080";
+
 }
 
 export const API_BASE_URL = `${backendHost}`;

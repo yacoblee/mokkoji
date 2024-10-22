@@ -1,7 +1,6 @@
 package com.example.mokkoji_backend.repository.orders;
 
 import com.example.mokkoji_backend.entity.orders.Orders;
-import com.example.mokkoji_backend.entity.orders.OrdersId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
