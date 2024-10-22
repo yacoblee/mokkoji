@@ -95,8 +95,8 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
 
     //배송지 선택에 따라 input값을 변환.
     const onChangeAddressing = (index, type) => {
-        console.log(userInfo.orderName);
-        console.log(userInfo.orderPhone);
+        //console.log(userInfo.orderName);
+        //console.log(userInfo.orderPhone);
         if (type === 'new') {
             setUserInfo((prevState) => ({
                 ...prevState,
@@ -415,10 +415,10 @@ const BuyInputBox = ({ userId, totalPrice, amount, checkedCartItems, selectedPro
                         cartList: selectedALLproduct,
                         purchaseAddress: purchaseAddress,
                     };
-                    console.log("addressList", requestData.addressList)
-                    console.log("order", requestData.order)
-                    console.log("cartList", requestData.cartList)
-                    console.log("purchaseAddress", requestData.purchaseAddress)
+                    //console.log("addressList", requestData.addressList)
+                    //console.log("order", requestData.order)
+                    //console.log("cartList", requestData.cartList)
+                    //console.log("purchaseAddress", requestData.purchaseAddress)
                     const response = await apiCall(url, 'POST', requestData, token);
                     //console.log("구매 성공:", response.data);
                     if (response.data.success) {
