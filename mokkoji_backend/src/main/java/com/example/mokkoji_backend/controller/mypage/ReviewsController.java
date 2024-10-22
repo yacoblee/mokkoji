@@ -81,7 +81,7 @@ public class ReviewsController {
 		// 2.1) 물리적 실제 저장위치 확인 : file1
 		String realPath = request.getServletContext().getRealPath("/");
 
-		realPath += "resources\\reviewImages\\" ;
+		realPath += "resources" + File.separator + "reviewImages" + File.separator;
 
 		// 2.2) realPath 존재확인 및 생성
 		File file = new File(realPath);
