@@ -62,7 +62,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		//로컬 주소
 		//.allowedOrigins("http://localhost:3000")
 		//혜미 서버 주소13.209.236.187
-		//.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
+		.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
 		//효윤 서버 주소
 		//.allowedOrigins("http://52.79.165.192:3000 ", "http://52.79.165.192")
 		//승현 서버 주소
