@@ -143,7 +143,7 @@ const UserManagement = () => {
 
     const openNewWindow = () => {
         const newWindow = window.open(
-            "http://localhost:3000/Login/Membership",
+            "http://52.79.165.192:3000/Login/Membership",
             "_blank",
             "width=800,height=600"
         )
