@@ -59,14 +59,15 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		//프로젝트 내 모든 경로에 적용
 		
 		registry.addMapping("/**")
+		//로컬 주소
+		//.allowedOrigins("http://localhost:3000")
 		//혜미 서버 주소13.209.236.187
-		.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
+		//.allowedOrigins("http://13.209.236.187:3000 ", "http://13.209.236.187")
 		//효윤 서버 주소
 		//.allowedOrigins("http://52.79.165.192:3000 ", "http://52.79.165.192")
 		//승현 서버 주소
 //		.allowedOrigins("http://localhost:3000", "http://15.164.55.161")
 		.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
-		//.allowedOrigins("http://localhost:3000")
 		.allowedHeaders("*")
 		.allowCredentials(true)
 		.maxAge(MAX_AGE_SECS);
