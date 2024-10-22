@@ -212,8 +212,15 @@ function MyPageCart({ userMain, userCart, cartKeyList, cartCheckDelete, myPageCa
                                 </div>
                                 <div className='MyCartCount'>
                                     <div className='MyProductCount'>
-                                        <img src="/images/buy/minus.png" alt="minus" onClick={() =>
-                                            cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt - 1}`)} />
+                                        <img
+                                            src="/images/buy/minus.png"
+                                            alt="minus"
+                                            onClick={() =>
+                                                cart.productCnt === 1
+                                                    ? alert('상품 수량은 1보다 적을 수 없습니다.')
+                                                    : cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt - 1}`)
+                                            }
+                                        />
                                         <input type="text" min={1} value={cart.productCnt} />
                                         <img src="/images/buy/plus.png" alt="plus" onClick={() =>
                                             cartUpdate(`/mypage/cart/${cart.productId}/${cart.optionContent}/${cart.packagingOptionContent}/${cart.productCnt + 1}`)} />

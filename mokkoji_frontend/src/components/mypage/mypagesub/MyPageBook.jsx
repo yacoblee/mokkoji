@@ -92,7 +92,10 @@ function MyPageBook({ myPageRegist, userRegist, bookUpdateAdult, bookUpdateTeen,
                                                     src="/images/buy/minus.png"
                                                     alt="minus"
                                                     onClick={() =>
-                                                        bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt - 1}`)}
+                                                        regist.adultCnt === 1
+                                                            ? alert('성인 수는 1보다 적을 수 없습니다.')
+                                                            : bookUpdateAdult(`/mypage/adult/${regist.registId}/${regist.adultCnt - 1}`)
+                                                    }
                                                 />
                                                 <input type="text" min={1} value={regist.adultCnt} />
                                                 <img
@@ -116,7 +119,10 @@ function MyPageBook({ myPageRegist, userRegist, bookUpdateAdult, bookUpdateTeen,
                                                     src="/images/buy/minus.png"
                                                     alt="minus"
                                                     onClick={() =>
-                                                        bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt - 1}`)}
+                                                        regist.teenagerCnt === 1
+                                                            ? alert('청소년 수는 1보다 적을 수 없습니다.')
+                                                            : bookUpdateTeen(`/mypage/teen/${regist.registId}/${regist.teenagerCnt - 1}`)
+                                                    }
                                                 />
                                                 <input type="text" min={1} value={regist.teenagerCnt} />
                                                 <img
