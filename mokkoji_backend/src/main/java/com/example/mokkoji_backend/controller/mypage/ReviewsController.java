@@ -7,9 +7,11 @@ import com.example.mokkoji_backend.service.myPage.CartService;
 import com.example.mokkoji_backend.service.myPage.FavoritesService;
 import com.example.mokkoji_backend.service.myPage.ReviewsService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,8 @@ public class ReviewsController {
 	private ReviewsService reviewsService;
 	@Resource(name = "UsersService")
 	private UsersService usersService;
+
+	private final ServletContext servletContext;
 
 	private TokenProvider tokenProvider;
 
@@ -74,14 +78,15 @@ public class ReviewsController {
 	// 2) Review 입력
 	@Transactional
 	@PostMapping("/reviews")
-	public ResponseEntity<?> reviewInsert(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO, HttpServletRequest request) throws IOException {
+	public ResponseEntity<?> reviewInsert(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO) throws IOException {
 		String userId = getUserIdFromHeader(header);
 
 		// 2) Upload File 처리 *********************************
 		// 2.1) 물리적 실제 저장위치 확인 : file1
-		String realPath = request.getServletContext().getRealPath("/");
-
+		String realPath = servletContext.getRealPath("/");
 		realPath += "resources" + File.separator + "reviewImages" + File.separator;
+
+		log.warn(realPath);
 
 		// 2.2) realPath 존재확인 및 생성
 		File file = new File(realPath);
@@ -140,16 +145,15 @@ public class ReviewsController {
 	// 3) Review 수정
 	@Transactional
 	@PatchMapping("/review")
-	public ResponseEntity<?> reviewUpdate(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO, HttpServletRequest request) throws IOException {
+	public ResponseEntity<?> reviewUpdate(@RequestHeader("Authorization") String header, ReviewsDTO reviewsDTO) throws IOException {
 		String userId = getUserIdFromHeader(header);
 
 		log.warn(reviewsDTO.toString());
 
 		// 2) Upload File 처리 *********************************
 		// 2.1) 물리적 실제 저장위치 확인 : file1
-		String realPath = request.getServletContext().getRealPath("/");
-
-		realPath += "resources\\reviewImages\\" ;
+		String realPath = servletContext.getRealPath("/");
+		realPath += "resources" + File.separator + "reviewImages" + File.separator;
 
 		// 2.2) realPath 존재확인 및 생성
 		File file = new File(realPath);
