@@ -398,13 +398,25 @@ const Membership = () => {
             const data = formData.current;
             apiCall(url, 'POST', data, null)
                 .then((response) => {
-
-                    alert(`${formData.current.name}님 회원가입을 축하합니다.`);
-                    //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
-                    window.opener.alert("회원가입이 완료되었습니다!");  // 부모 창에 알림
-                    window.close();
-                    navi('/Login');
-                    setisOkIdChek(false);
+                    if (window.opener) {
+                        // 부모 창에서 알림 띄우고 홈으로 이동시킴
+                        window.opener.alert("회원가입이 완료되었습니다!");
+                        window.opener.location.href = '/';
+            
+                        // 창을 닫음 (팝업일 때만)
+                        window.close();
+                    } else {
+                        alert(`${formData.current.name}님 회원가입을 축하합니다.`);
+                        // 팝업이 아닌 경우, 홈으로 리디렉션
+                        window.location.href = `/`;
+                    }
+                    // alert(`${formData.current.name}님 회원가입을 축하합니다.`);
+                    // window.location.href = `/`;
+                    // //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
+                    // window.opener.alert("회원가입이 완료되었습니다!");  // 부모 창에 알림
+                    // window.close();
+                    // navi('/Login');
+                    // setisOkIdChek(false);
 
                 }).catch((err) => {
                     if (err.status === 502 || err.status === 500 || err.status === 404) {
@@ -611,13 +623,14 @@ const Membership = () => {
 
                         <label htmlFor="birthDate">생년월일</label>
                         <input type="date"
-                            value={defaultBirthDate}
+                            value={formData.current.birthDate}
                             name="birthDate"
                             id="birthDate"
                             ref={birtydayR}
                             min={minBirthDate}
                             max={maxBirthDate}
                             onChange={getInputInfo}
+
                             style={{
                                 borderBottom: formErrors.current.birthDate === false ? '1px solid red' : '1px solid #aaaaaa'
                             }}
