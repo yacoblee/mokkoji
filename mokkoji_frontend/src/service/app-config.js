@@ -36,9 +36,9 @@ if (hostname === "localhost") {
 } else {
   //혜미 서버
   //backendHost = "http://13.209.236.187:8080";
-  // 승현
+  // 승현 서버
   // backendHost = "http://3.37.182.103:8080";
-  // 효윤
+  // 효윤 서버
   //backendHost = "http://52.79.165.192:8080";
 
 }
