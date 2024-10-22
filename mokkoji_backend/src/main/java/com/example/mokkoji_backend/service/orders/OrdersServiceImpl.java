@@ -51,17 +51,42 @@ public class OrdersServiceImpl implements OrdersService {
 		Orders order = request.getOrder();
 		List<CartDTO> cart = request.getCartList();
 		Address purchaseAddress = request.getPurchaseAddress();
-
+		System.out.println("purchaseAddress"+purchaseAddress);
+		for (Address add : addr) {
+			System.out.println("addr =>"+add);
+		}
+		
+		System.out.println("order"+order);
+		for (CartDTO cartDTO : cart) {
+			System.out.println("cartDTO =>"+cartDTO);
+		}
 		if (addr != null) {
 			if (addr.size() > 3) {
 				Address add = addr.get(2);
+				add = addressService.findUserAddressDetail(add.getUserId(), 2);
+				System.out.println("*********삭제될 아이디");
+				System.out.println(add);
 				addressService.deleteById(add.getAddressId());
 				addr.remove(2);
 				System.out.println("두개 이상.");
+				System.out.println("*********새로 저장될 주소");
+				Address newaddress = addr.get(2);
+				newaddress.setIsDefault(2);
+				//newaddress.setAddressId(null);
+				//addr.add(2, newaddress);
+				for (Address save : addr) {
+					System.out.println(save);
+				}
 			}
 			for (Address add : addr) {
 				addressService.register(add);
-
+			}
+			List<Address> newaddr = addressService.findByuserId(order.getUserId());
+			System.out.println("*********new addr");
+			if(newaddr!=null) {
+				for (Address address : newaddr) {
+					System.out.println(address);
+				}
 			}
 		}
 		if (cart != null) {
@@ -84,8 +109,8 @@ public class OrdersServiceImpl implements OrdersService {
 				purchaseAddress = addressService.findByUserIdAndLocationName(purchaseAddress.getUserId(),
 						purchaseAddress.getLocationName());
 				System.out.println("************************");
-				System.out.println(purchaseAddress);
-				order.setAddressId(purchaseAddress.getAddressId());
+				//System.out.println(purchaseAddress);
+				//order.setAddressId(purchaseAddress.getAddressId());
 				order = insertOrders(order);
 				System.out.println("buyList_  Purchase Number: " + order.getPurchaseNumber());
 				orderDetailSerivce.insertDtoList(cart, order.getPurchaseNumber());

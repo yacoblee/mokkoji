@@ -40,8 +40,8 @@ public class Orders{
 	@Column(name = "user_id")
 	private String userId;
 	//@Id
-	@Column(name = "address_id")
-	private int addressId;
+	@Column(name = "street_address")
+	private String streetAddress;
 
 	@Column(name = "total")
 	private int total;
