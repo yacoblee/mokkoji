@@ -72,6 +72,7 @@ public class RegistedHistoryRepositoryDSLImpl implements RegistedHistoryReposito
 				.on(registedhistory.registCode.eq(regist.registCode)
 						.and(registImages.imageOrder.eq(1))
 						.and(registImages.imageType.eq("main")))
+				.where(registedhistory.userId.eq(userId))
 			    .fetch();
     }
 	
