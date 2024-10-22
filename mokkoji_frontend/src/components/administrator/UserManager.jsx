@@ -142,8 +142,11 @@ const UserManagement = () => {
     }
 
     const openNewWindow = () => {
-        const newWindow = window.open(
-            "http://localhost:3000/Login/Membership",
+        window.open(
+
+            //혜미주소
+            "http://13.209.236.187/Login/Membership",
+            //"http://localhost:3000/Login/Membership",
             "_blank",
             "width=800,height=600"
         )

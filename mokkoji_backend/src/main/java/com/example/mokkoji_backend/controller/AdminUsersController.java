@@ -72,7 +72,7 @@ public class AdminUsersController {
 	    Double averagePurchaseAmount = Math.floor((double) totalPurchaseAmount / orderCount);
 	    log.info("Total Purchase Amount: {}", totalPurchaseAmount);
 	    log.info("averagePurchaseAmount: {}", averagePurchaseAmount);
-
+	    log.info("$$$$$$$$$$$$ requestDTO.getUserId(): {}", requestDTO.getUserId());
 	    UserPurchaseRankDTO userPurchaseRank = userService.getUserPurchaseRank(requestDTO.getUserId());
 	 
 	    Long totalAmount = ordersRepository.totalAmount();

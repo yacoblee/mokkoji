@@ -71,7 +71,46 @@ const ProductList = () => {
                 setList([]);
             });
     };
-
+    const [currentCategory, setCurrentCategory] = useState(category);
+    // NavLink 클릭 핸들러
+    const navClick = (newCategory) => {
+        //console.log('currentCategory', currentCategory)
+        //console.log('newCategory', newCategory)
+        //console.log('filterItem', filterItem)
+        if (newCategory === currentCategory) {
+            // 같은 카테고리를 두 번 클릭한 경우, 검색어 초기화 및 요청
+            // if(filterItem.keyword){
+            //     window.location.reload(); // 현재 페이지를 강제 새로고침
+            // }else{
+            //     setFilterItem({ ...filterItem, keyword: '' });
+            //     navigate(`/goods/${newCategory}`);
+            // }
+            setFilterItem({ ...filterItem, keyword: '' })
+            if(filterItem.keyword){
+                window.location.reload();
+            }else{
+                navigate(`/goods/${newCategory}`);
+            }
+            //navigate(`/goods/${newCategory}`, { replace: true });
+            // 상태 초기화 후 navigate로 다시 이동
+            // setFilterItem({ ...filterItem, keyword: '' });
+            // setPage(1);
+            // setTimeout(() => {
+            //     navigate(`/goods/${newCategory}`, { replace: true });
+            // }, 100); // 딜레이를 줘서 부드럽게 리다이렉트
+        } else {
+            // 다른 카테고리를 클릭한 경우
+            setFilterItem({ ...filterItem, keyword: '' })
+            setCurrentCategory(newCategory);
+            navigate(`/goods/${newCategory}`);
+            //window.location.href = `/goods/${newCategory}`;
+        }
+    };
+    // useEffect(() => {
+    //     if (filterItem.keyword === '' || category !== currentCategory) {
+    //         axiosCall(); // 검색어가 비었거나 카테고리가 변경된 경우에만 API 요청
+    //     }
+    // }, [filterItem.keyword]);
     // 카테고리 변경 시 필터와 페이지 초기화 및 API 호출
     useEffect(() => {
         setFilterItem(it => ({
@@ -89,8 +128,9 @@ const ProductList = () => {
 
     // 페이지 또는 카테고리가 변경될 때 API 호출
     useEffect(() => {
+
         axiosCall();
-    }, [page, filterItem.categoryId]); // 페이지와 카테고리 변경 시 호출
+    }, [page]); // 페이지와 카테고리 변경 시 호출
 
     // 카테고리 선택 변경 처리
     const onChangeCategoryId = (e) => {
@@ -139,7 +179,6 @@ const ProductList = () => {
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
-
     return (
         <>
             <div className='MenuNsearch' style={{ marginTop: "150px" }}>
@@ -147,17 +186,21 @@ const ProductList = () => {
                     {productMenu.map((items, i) => (
                         <NavLink to={`/goods/${items.category}`}
                             onClick={() => {
-                                if (filterItem.keyword) {
-                                    setFilterItem((it) => ({
-                                        ...it, keyword: '', categoryId: items.category
-                                    }));
-                                    // 카테고리 변경 시 필터의 categoryId 업데이트 및 페이지 초기화
-                                    // setFilterItem((it) => ({
-                                    //     ...it,
-                                    //     categoryId: items.category // 카테고리 업데이트
-                                    // }));
-                                    onClickSearch()
-                                }
+                                // if (filterItem.keyword) {
+                                //     // setFilterItem((it) => ({
+                                //     //     ...it, keyword: '', categoryId: items.category
+                                //     // }));
+                                //     setFilterItem((it) => ({
+                                //         ...it, keyword: '', categoryId: 'allGoods'
+                                //     }));
+                                //     // 카테고리 변경 시 필터의 categoryId 업데이트 및 페이지 초기화
+                                //     // setFilterItem((it) => ({
+                                //     //     ...it,
+                                //     //     categoryId: items.category // 카테고리 업데이트
+                                //     // }));
+                                //     onClickSearch()
+                                // }
+                                navClick(items.category);
                             }}
                             key={i}>{items.description}</NavLink>
                     ))}

@@ -53,19 +53,25 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 	@Query("SELECT u FROM Users u WHERE :searchType = 'phoneNumber' AND u.phoneNumber LIKE %:keyword% ")
 	List<Users> findBySearchUserPhoneNumber(@Param("keyword") String keyword, @Param("searchType") String searchType);
 
-	
-	@Query(value = "SELECT "
-	        + "RANK() OVER (ORDER BY total_purchase DESC) AS user_rank, "  // 'rank' -> 'user_rank'로 변경
-	        + "user_id, "
-	        + "total_purchase, "
-	        + "ROUND((RANK() OVER (ORDER BY total_purchase DESC) / total_users) * 100, 2) AS percentage_rank "
-	        + "FROM ( "
-	        + "    SELECT user_id, SUM(total) AS total_purchase "
-	        + "    FROM orders "
-	        + "    GROUP BY user_id "
-	        + ") AS purchase_totals, "
-	        + "(SELECT COUNT(DISTINCT user_id) AS total_users FROM orders) AS total_users "
-	        + "WHERE user_id = :userId", nativeQuery = true)
-	List<Object[]> findUserPurchaseRank(@Param("userId") String userId);
+	@Query(value = "WITH purchase_totals AS ( " 
+            + "    SELECT user_id, SUM(total) AS total_purchase " 
+            + "    FROM orders " 
+            + "    GROUP BY user_id " 
+            + "), ranked_users AS ( "
+            + "    SELECT user_id, total_purchase, "
+            + "           RANK() OVER (ORDER BY total_purchase DESC) AS user_rank "
+            + "    FROM purchase_totals "
+            + "), total_users AS ( "
+            + "    SELECT COUNT(*) AS total_users "
+            + "    FROM ranked_users "
+            + ") "
+            + "SELECT ru.user_rank, "
+            + "       ru.user_id, "
+            + "       ru.total_purchase, "
+            + "       ROUND((ru.user_rank / tu.total_users) * 100, 2) AS percentage_rank "
+            + "FROM ranked_users ru, total_users tu "
+            + "WHERE ru.user_id = :userId", nativeQuery = true)
+List<Object[]> findUserPurchaseRank(@Param("userId") String userId);
+
 	
 }

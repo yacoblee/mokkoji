@@ -53,7 +53,8 @@ const Userinfo = () => {
         isWithdrawn: '' // 회원 탈퇴 
     }
     const [adminInputUserinfo, setAdminInputUserinfo] = useState(users);
-
+    //console.log('adminInputUserinfo', adminInputUserinfo)
+    //console.log('isCheckInputInfo', isCheckInputInfo)
 
     // 유효성 검사 함수
     const validateInput = (name, value) => {
@@ -74,7 +75,8 @@ const Userinfo = () => {
             updatedAt: new Date().toISOString().slice(0, 10)
         }));
         const isValid = validateInput(name, value);
-        setChecked((it) => ({
+        //console.log('isValid', isValid)
+        setUserInfoChecked((it) => ({
             ...it,
             [name]: isValid
         }));
@@ -101,12 +103,6 @@ const Userinfo = () => {
         locationName: true
 
     }
-
-
-
-
-
-
     // idtDefault 크기 순으로 배열안에서 재정렬
     const getDefaultAddress = (addresses) => {
         // addresses가 배열인지 확인하고, null 또는 undefined도 처리
@@ -117,12 +113,27 @@ const Userinfo = () => {
             .slice()  // 원본 배열을 복사하여 정렬
             .sort((a, b) => a.isDefault - b.isDefault);
     };
-
     // userAddress가 undefined 또는 null일 경우에도 방어
     const defaultAddress = getDefaultAddress(userAddress) || [];
-
     // 초기화
     const [rows, setRows] = useState(defaultAddress);
+    const [checked, setChecked] = useState(
+        rows.map(() => ({
+            recipientName: true,
+            recipientPhone: true,
+            detailedAddress: true,
+            locationName: true
+        }))
+    );
+    const [userInfoChecked, setUserInfoChecked] = useState(isCheckInputInfo);
+    //console.log('checked', checked)
+
+
+
+
+
+
+
 
 
     // 배송지 추가 함수
@@ -171,6 +182,10 @@ const Userinfo = () => {
 
         // checked 상태 업데이트
         setChecked((prevChecked) => {
+            //console.log("[아아]prevChecked : ", prevChecked);
+            //console.log("[아아아]typeof prevChecked : ", typeof (prevChecked));
+            //console.log("[아아아아아]index : ", index);
+
             return prevChecked.map((check, i) =>
                 i === index ? { ...check, [name]: isValid } : check
             );
@@ -246,14 +261,6 @@ const Userinfo = () => {
         }
     };
 
-    const [checked, setChecked] = useState(
-        rows.map(() => ({
-            recipientName: true,
-            recipientPhone: true,
-            detailedAddress: true,
-            locationName: true
-        }))
-    );
 
 
     const insertDB = (e) => {

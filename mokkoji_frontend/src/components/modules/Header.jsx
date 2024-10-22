@@ -60,11 +60,14 @@ const Header = () => {
     const buy = locationNows.pathname.toLowerCase().includes('buy');
     const administrator = locationNows.pathname.toLowerCase().includes('administrator');
     useEffect(() => {
-        if ((!isLoggedIn && mypage) || (!isLoggedIn && buy) || (!isLoggedIn && administrator)) {
+        if ((!isLoggedIn && mypage) || (!isLoggedIn && buy) || (!isLoggedIn && administrator) || (!isAdmin && administrator)) {
             //setIsAdmin(false);
+            // console.log('로그인상태 ', isLoggedIn)
+            // console.log('관리자 상태 ', isAdmin)
+            // console.log('administrator', administrator)
             navigate('/');
         }
-    }, [isLoggedIn, mypage, buy]);
+    }, [isLoggedIn, mypage, buy, isAdmin]);
 
     if (locationNows.pathname.toLowerCase().includes('login')) return null;
 
