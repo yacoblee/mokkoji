@@ -85,7 +85,7 @@ public class OrdersServiceImpl implements OrdersService {
 						purchaseAddress.getLocationName());
 				System.out.println("************************");
 				System.out.println(purchaseAddress);
-				order.setAddressId(purchaseAddress.getAddressId());
+				order.setStreetAddress(purchaseAddress.getStreetAddress());
 				order = insertOrders(order);
 				System.out.println("buyList_  Purchase Number: " + order.getPurchaseNumber());
 				orderDetailSerivce.insertDtoList(cart, order.getPurchaseNumber());

@@ -129,7 +129,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 				.select(Projections.bean(OrdersDTO.class,
 						orders.purchaseNumber,
 						orders.userId,
-						orders.addressId,
+						orders.streetAddress,
 						address.streetAddress,
 						orders.total,
 						orders.regDate,
@@ -144,7 +144,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 				.from(orders)
 				.leftJoin(ordersDetail).on(orders.purchaseNumber.eq(ordersDetail.purchaseNumber))  // Orders와 OrdersDetail을 JOIN
 				.leftJoin(products).on(ordersDetail.productId.eq(products.id))  // OrdersDetail과 Product를 JOIN
-				.leftJoin(address).on(orders.addressId.eq(address.addressId))  // Orders와 Address를 JOIN
+				.leftJoin(address).on(orders.streetAddress.eq(address.streetAddress))  // Orders와 Address를 JOIN
 				.where(orders.userId.eq(userId))  // 특정 userId로 필터링
 				.orderBy(orders.regDate.desc()) // 최신순
 				.fetch();  // 결과 반환
