@@ -35,7 +35,7 @@ CREATE TABLE `products` (
                             `upload_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '업로드 날짜',
                             `category_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '카테고리',
                             PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- project.regist definition
@@ -119,15 +119,13 @@ CREATE TABLE `favorites` (
 CREATE TABLE `orders` (
                           `purchase_number` int NOT NULL AUTO_INCREMENT COMMENT '주문번호',
                           `user_id` varchar(100) DEFAULT NULL COMMENT '유저 아이디',
-                          `address_id` int NOT NULL COMMENT '배송지 아이디',
+                          `street_address` varchar(255) NOT NULL COMMENT '배송지 아이디',
                           `total` int DEFAULT NULL COMMENT '구매발생 총 금액',
                           `method` varchar(150) DEFAULT NULL COMMENT '결제 방식',
                           `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '구매 날짜',
                           `purchase_status` varchar(100) DEFAULT NULL COMMENT '구매 상태',
                           PRIMARY KEY (`purchase_number`),
                           KEY `orders_customer_FK` (`user_id`),
-                          KEY `orders_addresses_FK` (`address_id`),
-                          CONSTRAINT `orders_addresses_FK` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`),
                           CONSTRAINT `orders_customer_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
