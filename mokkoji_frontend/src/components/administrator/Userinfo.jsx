@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import DaumPostcode from 'react-daum-postcode';
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-import moment from 'moment';
 import { apiCall } from '../../service/apiService';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import { registerables, CategoryScale } from 'chart.js';
@@ -24,24 +23,12 @@ const Userinfo = () => {
         userAddress,
         orderCount = 0,  // 기본값 설정
         totalPurchaseAmount = 0,  // 기본값 설정 (유저가 구매하지 않은 경우 0)
-        // purchaseRank = 0,  // 기본값 설정
         percentageRank = 0,  // 기본값 설정
         totalAmount = 0,  // 기본값 설정
         averagePurchaseAmount = 0  // 기본값 설정
     } = location.state || {};
 
     const userPercentage = totalAmount > 0 ? (totalPurchaseAmount / totalAmount) * 100 : 0;
-
-    // // 유저의 총 구매 금액
-    // const userPurchase = totalPurchaseAmount || 0;  // 유저가 구매하지 않은 경우 0으로 처리
-
-    // // 유저의 구매 비율 (총 구매 금액 중 유저가 차지하는 비율)
-    // const userPercentage = totalAmount > 0 ? (userPurchase / totalAmount) * 100 : 0;  // 전체 구매 금액 대비 비율
-
-    // // 나머지 구매 금액 (다른 구매자들이 차지하는 금액)
-    // const otherPurchase = totalAmount - userPurchase;
-
-
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigator = useNavigate();
@@ -50,7 +37,8 @@ const Userinfo = () => {
         phoneNumber: '', // 핸드폰 번호
         updatedAt: '', // 수정 날짜
         blockStatus: users?.blockStatus || '',// 접근 제한 
-        isWithdrawn: '' // 회원 탈퇴 
+        isWithdrawn: '',// 회원 탈퇴 
+        updatedAt: new Date().toISOString().slice(0, 10)
     }
     const [adminInputUserinfo, setAdminInputUserinfo] = useState(users);
     //console.log('adminInputUserinfo', adminInputUserinfo)

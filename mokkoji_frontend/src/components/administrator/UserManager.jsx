@@ -4,7 +4,6 @@ import { apiCall } from '../../service/apiService';
 import moment from 'moment';
 import RenderPagination from "../product/RenderPagination";
 import { useNavigate } from 'react-router-dom';
-import UserSendMail from './UserSendMail';
 
 const UserManagement = () => {
     const [list, setList] = useState([]);  // 리스트 상태 초기화
@@ -20,6 +19,7 @@ const UserManagement = () => {
     const [userAddress, setUsersAddress] = useState([]);
     const [userinfo, setUserinfo] = useState(list);
 
+    // db에서 가져온 통계값 저장할 변수 
     const userOrder = {
         averagePurchaseAmount: '',// 평균 주문 금액
         orderCount: '', // 구매 횟수

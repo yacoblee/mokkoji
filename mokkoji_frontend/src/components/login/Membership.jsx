@@ -22,7 +22,6 @@ const Membership = () => {
 
     const minBirthDate = "1900-01-01"; // 최소 생년월일
     const maxBirthDate = getCurrentDaty(); // 최대 생년월일을 현재 날짜로 설정
-    const defaultBirthDate = "1990-01-01"; // 기본 생년월일 설정
 
     // 사용자 입력값 저장 객체
     const formData = useRef({
@@ -41,7 +40,7 @@ const Membership = () => {
         createdAt: '',
         checkPw: ''
     })
-    //console.log(formData);
+    //console.log("formData", formData);
 
     // 사용자 입력값 유효성 검사 후 상태값 저장하는 객체 
     const formErrors = useRef({
@@ -259,14 +258,18 @@ const Membership = () => {
     // 아이디 중복체크 확인 상태값 
     const [isOkIdChek, setisOkIdChek] = useState(false);
     const inputR = useRef(null);
-
     const IsSameId = () => {
+        if (!formErrors.current.userId) {
+            alert("⚠️아이디를 다시 입력해주세요");
+            inputR.current.value = '';
+            return;
+        }
         let url1 = "/Login/selectOne";
         const data2 = { userId: inputR.current.value };
         apiCall(url1, 'POST', data2, null)
             .then((response) => {
-                // console.log("아이디 중복검사 API 호출 성공:", response);  // 응답 전체 출력
-                // console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
+                console.log("아이디 중복검사 API 호출 성공:", response);  // 응답 전체 출력
+                console.log("아이디 중복검사 응답 상태 코드:", response.status);  // 상태 코드 출력
 
 
                 if (response.data === false && response.status === 200) {
@@ -313,10 +316,6 @@ const Membership = () => {
             })
 
     }
-
-
-
-
 
 
 
@@ -402,21 +401,16 @@ const Membership = () => {
                         // 부모 창에서 알림 띄우고 홈으로 이동시킴
                         window.opener.alert("회원가입이 완료되었습니다!");
                         window.opener.location.href = '/';
-            
+
                         // 창을 닫음 (팝업일 때만)
                         window.close();
                     } else {
                         alert(`${formData.current.name}님 회원가입을 축하합니다.`);
                         // 팝업이 아닌 경우, 홈으로 리디렉션
-                        window.location.href = `/`;
+                        // window.location.href = `/`;
+                        navi('/Login');
                     }
-                    // alert(`${formData.current.name}님 회원가입을 축하합니다.`);
-                    // window.location.href = `/`;
-                    // //관리자 페이지>회원정보관리>회원가입 완료시 window창 닫음  
-                    // window.opener.alert("회원가입이 완료되었습니다!");  // 부모 창에 알림
-                    // window.close();
-                    // navi('/Login');
-                    // setisOkIdChek(false);
+
 
                 }).catch((err) => {
                     if (err.status === 502 || err.status === 500 || err.status === 404) {

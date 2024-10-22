@@ -173,6 +173,7 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public void userIsWithdrawnUpdate(Users entity) {
 		userRepository.save(entity);
+		
 	}
 
 	@Override
