@@ -334,17 +334,7 @@ public class ProductsServiceImpl implements ProductsService {
 				opservice.deleteById(optionId);
 			}
 		}
-		List<ProductImages> imageList = imservice.findByProductId(id);
-		if(imageList!=null) {
-			for (ProductImages image : imageList) {
-				ProductImagesId imageId = ProductImagesId
-						.builder().productId(image.getProductId())
-						.order(image.getOrder())
-						.type(image.getType())
-						.build();
-				imservice.deleteById(imageId);
-			}
-		}
+		imservice.deleteImagesByProductId(id);
 		deleteById(id);
 	}
 	@Override
@@ -376,6 +366,7 @@ public class ProductsServiceImpl implements ProductsService {
 			log.info(option);
 		}
 
+		//이미지 처리
 		 if (mainImages != null) imservice.saveImageListWithProduct(mainImages, productId, "main");
 		 if (slideImages != null) imservice.saveImageListWithProduct(slideImages, productId, "slide");
 	

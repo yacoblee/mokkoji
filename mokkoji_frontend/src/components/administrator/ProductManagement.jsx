@@ -290,6 +290,8 @@ const ProductManagement = () => {
           //console.log(response);
           //window.location.reload(true);
           window.location.href = '/administrator/products';
+          //navigate('/administrator/products');
+          //window.location.reload(true);
         })
         .catch(error => {
           // handle error

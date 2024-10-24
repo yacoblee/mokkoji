@@ -33,6 +33,7 @@ public class ProductImageServiceImpl implements ProductImageService {
 	private String getProductImagesRealPath() {
 	    String realPath = servletContext.getRealPath("/");
 	    realPath += "resources" + File.separator + "productImages" + File.separator;
+	    log.info("realPath :"+realPath);
 	    return realPath;
 	}
 	

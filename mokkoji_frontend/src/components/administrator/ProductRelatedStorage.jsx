@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../service/app-config';
+import { useNavigate } from 'react-router-dom';
 
 function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
     const [product, setProduct] = useState({});
@@ -9,7 +10,8 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
     const [options, setOptions] = useState([{ content: '', price: '' }]);
     const [code, setCode] = useState([]);
     const [imagePreview, setImagePreview] = useState(''); // 미리보기 이미지
-
+    const navigate = useNavigate();
+    //navigate('/administrator/products');
     const onChangeProduct = (e) => {
         const { name, value } = e.target;
         setProduct((prevState) => ({
@@ -152,6 +154,8 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
 
             setIsModalProductALLOpen(false);
             window.location.href = '/administrator/products';
+            //navigate('/administrator/products');
+            //window.location.reload(true);
         } catch (error) {
             console.error('상품 저장 실패:', error);
         }
