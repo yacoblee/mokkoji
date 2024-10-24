@@ -12,7 +12,7 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
     // 세션 스토리지에서 현재 로그인된 사용자 데이터를 가져옴
     //const token = JSON.parse(sessionStorage.getItem('userData'));
     //console.log(`token : ${token}`)
-
+    const token = JSON.parse(sessionStorage.getItem('userData'));
     //const [slideimages, setSlideImages] = useState([]);
     const [optionList, setOptionList] = useState([]);
     const [packagings, setPackagings] = useState([]);
@@ -146,10 +146,12 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
 
     // 세션 스토리지에서 사용자의 로그인 상태를 확인하여 업데이트
     useEffect(() => {
-        if (userId) {
+        if (token) {
             setUserLogin(true);
+        }else{
+            setUserLogin(false);
         }
-    }, [userId]);
+    }, [token]);
 
     //모달창을 관리할 state
     //로그인 필요합니다
@@ -175,7 +177,7 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
         }
         //console.log(`content.contentSelect : ${content.contentSelect}`)
         //console.log(`content.contentSelect : ${content.packagingSelect}`)
-        const token = JSON.parse(sessionStorage.getItem('userData'));
+        
 
         const insertOrder = async () => {
             // 구매하기 정보 추가할 항목 생성
@@ -248,6 +250,7 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
                 //const { message } = response.data;
                 //setLike(liked);
                 //alert(message);
+                setIsModalBasketOpen(true);
             } catch (error) {
                 //setLike(false);
                 console.log(`insert Like error =>${error.message}`)
@@ -255,7 +258,6 @@ const ProductForm = ({ product, userId, option, packaging, message }) => {
             }
         }
         insertCart();
-        setIsModalBasketOpen(true);
     }
 
 

@@ -110,6 +110,10 @@ public class ProductImageServiceImpl implements ProductImageService {
 		List<ProductImages> list = findByProductId(productId);
 		for (ProductImages image : list) {
 			deleteEntity(image);
+			File oldfile = new File(getProductImagesRealPath()+image.getName());
+			if(oldfile.isFile()) {
+				oldfile.delete();
+			}//이전 파일 삭제 로직
 		}
 	}
 	

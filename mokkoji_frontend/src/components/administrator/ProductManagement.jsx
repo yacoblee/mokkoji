@@ -195,7 +195,6 @@ const ProductManagement = () => {
   //console.log(pageRequest);
 
   const searchProductAdmin = () => {
-    // 기본 폼 제출 동작 막기
     setPageRequest(prev => ({ ...prev, page: 1 }));
     setPage(1);
     searchData();
@@ -289,7 +288,8 @@ const ProductManagement = () => {
         .then(response => {
           // handle success
           //console.log(response);
-          window.location.reload(true);
+          //window.location.reload(true);
+          window.location.href = '/administrator/products';
         })
         .catch(error => {
           // handle error

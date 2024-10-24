@@ -34,10 +34,6 @@ const ProductImageSave = () => {
         let otherImages = imageType === 'mainImage' ? [...slideImage] : [...mainImage];
 
         if (name === 'type') {
-            // if((imageType =='mainImage'&& slideImage.length>4 || mainImage.length<=3)||
-            // (imageType =='slideImage'&& (mainImage.length<3 || mainImage.length>=4))){
-            //     alert('이미지 갯수 초과'); return;
-            // }
 
             if (imageType == 'mainImage') {
                 if (slideImage.length > 4) {
@@ -83,11 +79,6 @@ const ProductImageSave = () => {
             }
         } else {
             if (type === 'file') {
-                // const reader = new FileReader();
-                // currentImages[index][name] = files[0];
-                // reader.onloadend = () => {
-                //     currentImages[index][preview] =reader.result;
-                // }
                 const reader = new FileReader();
                 currentImages[index][name] = files[0];  // 파일 저장
                 reader.onloadend = () => {
@@ -186,6 +177,8 @@ const ProductImageSave = () => {
             }
             return rest;  // 파일이 아닌 경우 그대로 처리
         });
+        //console.log('combinedImages', combinedImages);
+        //console.log('formData_imagesData', imagesData);
         // JSON 데이터를 문자열로 변환하여 추가
         formData.append('images', JSON.stringify(imagesData));  // JSON으로 전송
 

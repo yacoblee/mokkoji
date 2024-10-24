@@ -149,7 +149,9 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
                 },
             });
             alert(`${product.name}의 수정이 완료되었습니다.`);
+
             setIsModalProductALLOpen(false);
+            window.location.href = '/administrator/products';
         } catch (error) {
             console.error('상품 저장 실패:', error);
         }
@@ -233,7 +235,7 @@ function ProductRelatedStorage({ sendCode, setIsModalProductALLOpen }) {
                                 <input
                                     type="radio"
                                     name="status"
-                                    value={product.status || ''}
+                                    value={item.sub_type}
                                     id={`code_${item.sub_type}`}
                                     checked={product.status == `${item.sub_type}`}
                                     onChange={onChangeProduct}
