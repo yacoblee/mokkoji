@@ -25,8 +25,8 @@ const UserManagement = () => {
         orderCount: '', // 구매 횟수
         totalPurchaseAmount: '', // 유저 기준 총 구매금액
         purchaseRank: '',// 구매 금액 기준 순위
-        percentapercentageRankgeRank: '', // 백분위 순위 
-        totalAmount: '' // order 기준 구매 총합 
+        percentapercentageRankgeRank: '', // 백분위 순위
+        totalAmount: '' // order 기준 구매 총합
     }
     const [userOrderinfo, setUsersOrderinfo] = useState(userOrder);
     const inputData = {
@@ -145,9 +145,9 @@ const UserManagement = () => {
 
         window.open(
             //로컬주소
-            //"http://localhost:3000/Login/Membership",
+            "http://localhost:3000/Login/Membership",
             //혜미주소
-            "http://13.209.236.187/Login/Membership",
+            // "http://13.209.236.187/Login/Membership",
             //승현주소
             // "http://15.164.55.161/Login/Membership",
 
